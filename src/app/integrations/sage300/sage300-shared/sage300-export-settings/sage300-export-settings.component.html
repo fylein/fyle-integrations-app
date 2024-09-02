@@ -90,7 +90,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select default Job'"
                                 [appName]="appName"
-                                [isMultiLineOption]="sage300ImportCodeFields.includes(sage300Field.JOB)"
+                                [isMultiLineOption]="true"
                                 [formControllerName]="'defaultJobName'">
                             </app-configuration-select-field>
                         </div>
@@ -110,7 +110,7 @@
                         [iconPath]="'list'"
                         [placeholder]="'Select A/P account'"
                         [appName]="appName"
-                        [isMultiLineOption]="sage300ImportCodeFields.includes(sage300Field.ACCOUNT)"
+                        [isMultiLineOption]="true"
                         [formControllerName]="'defaultReimbursableAP'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -231,7 +231,7 @@
                                     [showClearIcon]="true"
                                     [iconPath]="'list'"
                                     [placeholder]="'Select Default Job'"
-                                    [isMultiLineOption]="sage300ImportCodeFields.includes(sage300Field.JOB)"
+                                    [isMultiLineOption]="true"
                                     [appName]="appName"
                                     [formControllerName]="'defaultJobName'">
                                 </app-configuration-select-field>
@@ -253,7 +253,7 @@
                         [iconPath]="'list'"
                         [placeholder]="'Select A/P account'"
                         [appName]="appName"
-                        [isMultiLineOption]="sage300ImportCodeFields.includes(sage300Field.ACCOUNT)"
+                        [isMultiLineOption]="true"
                         [formControllerName]="'defaultCCCAP'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -272,7 +272,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select default vendor'"
                                 [appName]="appName"
-                                [isMultiLineOption]="sage300ImportCodeFields.includes(Sage300ExportSettingDestinationOptionKey.VENDOR)"
+                                [isMultiLineOption]="true"
                                 [formControllerName]="'defaultVendorName'">
                             </app-configuration-select-field>
                         </div>

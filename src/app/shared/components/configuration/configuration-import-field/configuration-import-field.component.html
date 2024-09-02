@@ -77,7 +77,7 @@
                     <div [ngClass]="{'tw-pt-16-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
-                    <div class="lg:tw-w-30-vw md:tw-w-28-vw">
+                    <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
@@ -119,9 +119,9 @@
                     <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
                         <div class="tw-flex">
                             <div>
-                                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon>
+                                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'Line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
                             </div>
-                            <div class="tw-pl-8-px">
+                            <div class="tw-pl-20-px">
                                 <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{helper.sentenseCaseConversion('Dependent Field')}}<app-mandatory-field></app-mandatory-field> </p>
                                 <input type="text" [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']" class="tw-text-14-px tw-text-input-read-only-text !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px" value="{{helper.sentenseCaseConversion(dependentField.source_field)}}" disabled>
                             </div>
@@ -171,15 +171,15 @@
             Add more fields
         </a>
     </div>
-    <div *ngIf="appName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
+    <div *ngIf="appName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0 && setupImportCodeCounter()">
         <div class="tw-pt-24-px">
             <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                 <div>
                     <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                        Configure how each dimension's values should be imported
+                        Configure import method
                     </h4>
                     <p class="tw-text-14-px tw-text-text-muted">
-                        You can import either the names of your chart of accounts or both names and codes, based on how your employees identify these values.
+                        You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
                     </p>
                 </div>
                 <div class="tw-pt-16-px">
@@ -189,17 +189,17 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && appName === AppName.SAGE300">
             <div *ngFor="let defaultField of defaultImportFields">
-                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value">
+                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value && importCodeFieldConfig[defaultField.destination_field]">
                     <app-configuration-select-field
                         [appName]="appName"
                         [form]="form"
                         [isDisableTextRequired]="false"
                         [options]="getImportCodeSelectorOptions(defaultField.destination_field)"
-                        [placeholder]="'Select the how to import ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()"
-                        [label]="'How to import the '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' from ' + appName + '?'"
-                        [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
+                        [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()"
+                        [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' from ' + appName + '?'"
+                        [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' or both the names and codes.'"
                         [isMultiLineOption]="true"
                         [isFieldMandatory]="true"
                         [isimportSettings]="true"
@@ -217,9 +217,9 @@
                             [isDisableTextRequired]="false"
                             [form]="getFormGroup(expenseField)"
                             [options]="getImportCodeSelectorOptions(expenseField.value.destination_field)"
-                            [placeholder]="'Select the how to import ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
+                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' from ' + appName + '?'"
+                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' or both the names and codes.' + getContentForJob(expenseField.value.destination_field)"
                             [isMultiLineOption]="true"
                             [isimportSettings]="true"
                             [isFieldMandatory]="true"

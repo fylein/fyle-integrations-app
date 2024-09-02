@@ -180,7 +180,7 @@ export class MappingService {
     };
 
     if (value) {
-      if (appName === AppName.SAGE300) {
+      if (appName && ([AppName.SAGE300] as string[]).includes(appName)) {
         params.value = value;
       } else {
         params.value__icontains = value;
