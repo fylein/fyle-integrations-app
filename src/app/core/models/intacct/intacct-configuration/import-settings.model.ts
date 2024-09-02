@@ -9,7 +9,8 @@ const emptyDestinationAttribute = { id: null, name: null };
 export type Configuration = {
     import_vendors_as_merchants: boolean,
     import_categories: boolean,
-    import_tax_codes: boolean
+    import_tax_codes: boolean,
+    import_code_fields: string[]
 }
 
 export type ImportSettingGeneralMapping = {
@@ -97,7 +98,8 @@ export class ImportSettings {
                 configurations: {
                     import_categories: isCategoryImportEnabled,
                     import_tax_codes: importSettingsForm.value.importTaxCodes ? importSettingsForm.value.importTaxCodes : false,
-                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false
+                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false,
+                    import_code_fields: importSettingsForm.value.importCodeFields
                 },
                 general_mappings: {
                     default_tax_code: importSettingsForm.value.importTaxCodes ? {

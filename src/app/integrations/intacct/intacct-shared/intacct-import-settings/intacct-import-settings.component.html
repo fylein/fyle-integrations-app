@@ -43,7 +43,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories"></p-inputSwitch>
+                <p-inputSwitch formControlName="importCategories" (onChange)="addImportCodeField($event, 'ACCOUNT')"></p-inputSwitch>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
@@ -195,6 +195,51 @@
                 </a>
             </div>
         </div>
+
+        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importCodeField.length > 0">
+            <div class="tw-pt-24-px">
+                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                    <div>
+                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
+                            Configure import method
+                        </h4>
+                        <p class="tw-text-14-px tw-text-text-muted">
+                            You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
+                        </p>
+                    </div>
+                    <div class="tw-pt-16-px">
+                        <app-configuration-info-label
+                            [infoText]="'This is a one-time setup and cannot be modified once the values are imported to Fyle.'">
+                        </app-configuration-info-label>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="importCodeFields">
+                m,m,m
+                <div *ngFor="let intacctImportCodeField of importCodeFieldGetter.controls; let i = index" [formGroupName]="i">
+                    lklkl
+                    jbmnb{{intacctImportCodeField.value.source_field}} ,mn{{intacctImportCodeConfig[intacctImportCodeField.value.source_field]}}
+                    <div *ngIf="intacctImportCodeConfig[intacctImportCodeField.value.source_field]">
+                        <app-configuration-select-field
+                            [appName]="appName"
+                            [form]="importSettingsForm"
+                            [isDisableTextRequired]="false"
+                            [options]="importCodeSelectorOptions[intacctImportCodeField.value.source_field]"
+                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase()"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' from ' + appName + '?'"
+                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' or both the names and codes.'"
+                            [isMultiLineOption]="true"
+                            [isFieldMandatory]="true"
+                            [isimportSettings]="true"
+                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() + ' should be imported'"
+                            [isDisabled]="!intacctImportCodeConfig[intacctImportCodeField.value.source_field]"
+                            [formControllerName]="'import_code'">
+                        </app-configuration-select-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>    
     </form>
 </div>
