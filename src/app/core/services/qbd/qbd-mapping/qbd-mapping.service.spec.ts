@@ -4,7 +4,7 @@ import { QbdMappingService } from './qbd-mapping.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
-import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { QBDExportSettingResponse, QBDExportSettingResponse2 } from 'src/app/integrations/qbd/qbd-shared/qbd-export-setting/qbd-export-setting.fixture';
 
 xdescribe('QbdMappingService', () => {
@@ -30,7 +30,7 @@ xdescribe('QbdMappingService', () => {
   });
 
   it('getMapping function check', () => {
-    const mappingResponse:MappingResponse = {
+    const mappingResponse:QBDMappingResponse = {
       "count": 16,
       "next": "http://localhost:8008/api/workspaces/4/qbd_mappings/?attribute_type=CORPORATE_CARD&limit=10&offset=10",
       "previous": "null",
@@ -78,7 +78,7 @@ xdescribe('QbdMappingService', () => {
   });
 
     it('getMapping function check', () => {
-    const mappingResponse:MappingResponse = {
+    const mappingResponse:QBDMappingResponse = {
       "count": 16,
       "next": "http://localhost:8008/api/workspaces/4/qbd_mappings/?attribute_type=CORPORATE_CARD&limit=10&offset=10",
       "previous": "null",
@@ -142,7 +142,7 @@ xdescribe('QbdMappingService', () => {
   });
 
   it('postMapping function check', () => {
-    const postMappingResponse: Mapping = {
+    const postMappingResponse: QBDMapping = {
       "id": 59,
       "attribute_type": "CORPORATE_CARD",
       "source_value": "Bank of America - 1319",
@@ -153,7 +153,7 @@ xdescribe('QbdMappingService', () => {
       "workspace": 4
     };
 
-    const postMappingPayload: MappingPost = {
+    const postMappingPayload: QBDMappingPost = {
       attribute_type: "CORPORATE_CARD",
       destination_value: "eefw",
       source_id: "baccK5ssSzxv1g",
@@ -170,7 +170,7 @@ xdescribe('QbdMappingService', () => {
   });
 
   it('getMappingStats function check', () => {
-    const mappingStat: MappingStats = {
+    const mappingStat: QBDMappingStats = {
       "all_attributes_count": 16,
       "unmapped_attributes_count": 12
     };

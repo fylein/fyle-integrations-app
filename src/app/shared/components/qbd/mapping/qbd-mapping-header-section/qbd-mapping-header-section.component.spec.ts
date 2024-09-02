@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MappingHeaderSectionComponent } from './mapping-header-section.component';
+import { QbdMappingHeaderSectionComponent } from './qbd-mapping-header-section.component';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { of } from 'rxjs';
 
-xdescribe('MappingHeaderSectionComponent', () => {
-  let component: MappingHeaderSectionComponent;
-  let fixture: ComponentFixture<MappingHeaderSectionComponent>;
+describe('QbdMappingHeaderSectionComponent', () => {
+  let component: QbdMappingHeaderSectionComponent;
+  let fixture: ComponentFixture<QbdMappingHeaderSectionComponent>;
 
   beforeEach(async () => {
     const service1 = {
@@ -15,14 +15,14 @@ xdescribe('MappingHeaderSectionComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [ MappingHeaderSectionComponent, SnakeCaseToSpaceCasePipe ],
+      declarations: [ QbdMappingHeaderSectionComponent, SnakeCaseToSpaceCasePipe ],
       providers: [
         { provide: QbdMappingService, useValue: service1 }
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MappingHeaderSectionComponent);
+    fixture = TestBed.createComponent(QbdMappingHeaderSectionComponent);
     component = fixture.componentInstance;
     component.mappingStats = {
       all_attributes_count: 10,
