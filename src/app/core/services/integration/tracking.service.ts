@@ -52,7 +52,7 @@ export class TrackingService {
 }
 
   get tracking() {
-    return (window as any).analytics;
+    return (window as any).mixpanel;
   }
 
   eventTrack(action: string, trackingApp?: TrackingApp, properties: any = {}): void {
@@ -61,19 +61,28 @@ export class TrackingService {
       ...flattenedObject,
       Asset: 'Integration Settings Web'
     };
-    if (this.tracking) {
-      this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
+    try {
+      if (this.tracking) {
+        this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
+      }
+    } catch (e) {
+      console.error('Tracking error:', e);
     }
   }
 
   onOpenLandingPage(email: string | undefined, orgId: number, orgName: string, fyleOrgId: string): void {
-    if (this.tracking) {
-      this.tracking.identify(email, {
-        orgId,
-        orgName,
-        fyleOrgId
-      });
-      this.identityEmail = email;
+    try {
+      if (this.tracking) {
+        this.tracking.identify(email);
+        this.tracking.people.set({
+          orgId,
+          orgName,
+          fyleOrgId
+        });
+        this.identityEmail = email;
+      }
+    } catch (e) {
+      console.error('Tracking error:', e);
     }
     this.eventTrack('Opened Landing Page');
   }

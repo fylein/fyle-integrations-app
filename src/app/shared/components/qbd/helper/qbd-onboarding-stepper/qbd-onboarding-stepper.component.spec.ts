@@ -7,11 +7,11 @@ import { SharedModule } from 'primeng/api';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
-import { OnboardingStepperComponent } from './onboarding-stepper.component';
+import { QbdOnboardingStepperComponent } from './qbd-onboarding-stepper.component';
 
-xdescribe('OnboardingStepperComponent', () => {
-  let component: OnboardingStepperComponent;
-  let fixture: ComponentFixture<OnboardingStepperComponent>;
+describe('QbdOnboardingStepperComponent', () => {
+  let component: QbdOnboardingStepperComponent;
+  let fixture: ComponentFixture<QbdOnboardingStepperComponent>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/onboarding' };
   let router: Router;
   let service2: any;
@@ -23,7 +23,7 @@ xdescribe('OnboardingStepperComponent', () => {
     localStorage.setItem('QBDOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ OnboardingStepperComponent ],
+      declarations: [ QbdOnboardingStepperComponent ],
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: QbdWorkspaceService, useValue: service2 }
@@ -31,7 +31,7 @@ xdescribe('OnboardingStepperComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingStepperComponent);
+    fixture = TestBed.createComponent(QbdOnboardingStepperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

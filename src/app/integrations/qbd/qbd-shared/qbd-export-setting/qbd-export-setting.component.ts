@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { QBDExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -353,7 +353,7 @@ export class QbdExportSettingComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
-    const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
+    const exportSettingPayload = QBDExportSettingModel.constructPayload(this.exportSettingsForm);
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');

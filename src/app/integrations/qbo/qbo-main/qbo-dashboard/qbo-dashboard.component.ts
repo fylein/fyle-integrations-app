@@ -10,6 +10,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 @Component({
   selector: 'app-qbo-dashboard',
@@ -67,11 +68,14 @@ export class QboDashboardComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  importCodeFields: any;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private qboExportSettingsService: QboExportSettingsService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private importSettingService: QboImportSettingsService
   ) { }
 
   export() {
@@ -123,7 +127,8 @@ export class QboDashboardComponent implements OnInit {
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
-      this.qboExportSettingsService.getExportSettings()
+      this.qboExportSettingsService.getExportSettings(),
+      this.importSettingService.getImportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -136,6 +141,8 @@ export class QboDashboardComponent implements OnInit {
       };
 
       this.isLoading = false;
+
+      this.importCodeFields = responses[6].workspace_general_settings?.import_code_fields;
 
       const queuedTasks: QBOTaskLog[] = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;

@@ -37,4 +37,9 @@ export class QboImportSettingsService {
   getQBOFields(): Observable<IntegrationField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/qbo/fields/`, {});
   }
+
+  getImportCodeFieldConfig() {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(`/v2/workspaces/${workspaceId}/import_settings/import_code_fields_config/`, {});
+  }
 }

@@ -43,7 +43,7 @@
                     <ng-template let-value pTemplate="selectedItem">
                         <div *ngIf="value">
                             <p>
-                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}</span>
+                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}: </span>
                                 {{ value[optionLabel] }} 
                             </p>
                         </div>
