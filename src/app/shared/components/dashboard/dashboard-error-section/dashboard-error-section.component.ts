@@ -158,7 +158,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.groupedError = groupedError;
     this.sourceField = sourceField;
     this.destinationField = this.destinationFieldMap[this.sourceField];
-    this.isMultiLineOption = this.destinationField !== FyleField.VENDOR ? this.importCodeFields?.includes(this.destinationField) : false;
+    this.isMultiLineOption = this.importCodeFields?.includes(this.destinationField);
 
     if (this.destinationOptionsVersion === 'v1') {
       this.getDestinationOptionsV1(errorType);
