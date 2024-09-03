@@ -163,7 +163,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     return this.importSettingsForm.get('importCodeFields') as FormArray;
   }
 
-  addImportCodeField(event: InputSwitchChangeEvent, sourceField: string) {
+  addImportCodeField(event: any, sourceField: string) {
     // Get the reference to the FormArray from the form
     const importCodeFieldsArray = this.importSettingsForm.get('importCodeFields') as FormArray;
 
@@ -210,6 +210,9 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   removeFilter(expenseField: AbstractControl) {
+    if ((expenseField as FormGroup).controls.import_to_fyle.value) {
+      this.addImportCodeField({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
+    }
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     event?.stopPropagation();

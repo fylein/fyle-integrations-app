@@ -94,12 +94,18 @@ export class ImportSettings {
             isCategoryImportEnabled = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field === 'CATEGORY' && field.import_to_fyle).length > 0 ? true : false;
         }
 
+        const importCodeFields = importSettingsForm.value.importCodeFields;
+
+        const importCodeFieldArray = importCodeFields.filter((field: { import_code: any; }) => field.import_code).map((value: { source_field: any; }) => {
+            return value.source_field;
+        });
+
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
                     import_categories: isCategoryImportEnabled,
                     import_tax_codes: importSettingsForm.value.importTaxCodes ? importSettingsForm.value.importTaxCodes : false,
                     import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false,
-                    import_code_fields: importSettingsForm.value.importCodeFields
+                    import_code_fields: importCodeFieldArray
                 },
                 general_mappings: {
                     default_tax_code: importSettingsForm.value.importTaxCodes ? {
