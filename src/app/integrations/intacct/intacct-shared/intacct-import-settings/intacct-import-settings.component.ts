@@ -92,12 +92,12 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   importCodeField: FormGroup[] = [];
 
-  acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT]
+  acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
 
   existingFields: string[] = ['employee id', 'organisation name', 'employee name', 'employee email', 'expense date', 'expense date', 'expense id', 'report id', 'employee id', 'department', 'state', 'reporter', 'report', 'purpose', 'vendor', 'category', 'category code', 'mileage distance', 'mileage unit', 'flight from city', 'flight to city', 'flight from date', 'flight to date', 'flight from class', 'flight to class', 'hotel checkin', 'hotel checkout', 'hotel location', 'hotel breakfast', 'currency', 'amount', 'foreign currency', 'foreign amount', 'tax', 'approver', 'project', 'billable', 'cost center', 'cost center code', 'approved on', 'reimbursable', 'receipts', 'paid date', 'expense created date'];
 
   readonly brandingConfig = brandingConfig;
-  
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   intacctImportCodeConfig: any;
@@ -166,20 +166,20 @@ export class IntacctImportSettingsComponent implements OnInit {
   addImportCodeField(event: InputSwitchChangeEvent, sourceField: string) {
     // Get the reference to the FormArray from the form
     const importCodeFieldsArray = this.importSettingsForm.get('importCodeFields') as FormArray;
-  
+
     if (event.checked && this.acceptedImportCodeField.includes(sourceField)) {
       // Create a new FormGroup
       const value = this.formBuilder.group({
         source_field: [sourceField],
         import_code: [ImportSettingsModel.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
       });
-  
+
       // Push the new FormGroup into the FormArray
       importCodeFieldsArray.push(value);
     } else {
       // Find the index of the FormGroup to be removed
       const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
-  
+
       // If found, remove the FormGroup from the FormArray
       if (index !== -1) {
         importCodeFieldsArray.removeAt(index);
@@ -526,7 +526,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
       searchOption: [''],
-      importCodeFields:  this.formBuilder.array(this.importCodeField)
+      importCodeFields: this.formBuilder.array(this.importCodeField)
     });
     if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
@@ -585,7 +585,7 @@ export class IntacctImportSettingsComponent implements OnInit {
 
         const mappingSettings: MappingSetting[] = this.importSettings.mapping_settings;
 
-        this.intacctImportCodeConfig = importCodeFieldConfig
+        this.intacctImportCodeConfig = importCodeFieldConfig;
 
         for (const setting of mappingSettings) {
           const { source_field, destination_field, import_to_fyle } = setting;
