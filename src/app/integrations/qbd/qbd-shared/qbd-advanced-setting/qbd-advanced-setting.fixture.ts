@@ -1,5 +1,5 @@
 import { QBDScheduleFrequency } from "src/app/core/models/enum/enum.model";
-import { EmailOptions, QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
+import { QBDEmailOptions, QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
 
 
 export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
@@ -52,4 +52,4 @@ export const errorResponse = {
     }
 };
 
-export const QBDEmailOptioResponse: EmailOptions[] = [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}];
+export const QBDEmailOptioResponse: QBDEmailOptions[] = [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}];

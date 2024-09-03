@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OnboardingStepperComponent } from '../../qbd/helper/onboarding-stepper/onboarding-stepper.component';
+import { QbdOnboardingStepperComponent } from '../../qbd/helper/qbd-onboarding-stepper/qbd-onboarding-stepper.component';
 
 xdescribe('OnboardingStepperComponent', () => {
-  let component: OnboardingStepperComponent;
-  let fixture: ComponentFixture<OnboardingStepperComponent>;
+  let component: QbdOnboardingStepperComponent;
+  let fixture: ComponentFixture<QbdOnboardingStepperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingStepperComponent ]
+      declarations: [ QbdOnboardingStepperComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingStepperComponent);
+    fixture = TestBed.createComponent(QbdOnboardingStepperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
