@@ -225,10 +225,12 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   removeFilter(expenseField: AbstractControl) {
+    if ((expenseField as FormGroup).controls.import_to_fyle.value) {
+      this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
+    }
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
-    this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
     event?.stopPropagation();
     this.isXeroProjectMapped = false;
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -236,12 +238,14 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
     this.onShowWarningForDependentFields(event, formGroup);
-    this.onImportToFyleToggleChange(event, formGroup?.get('destination_field')?.value);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
     if (!event.checked && this.appName === AppName.SAGE300) {
       formGroup?.get('import_code')?.clearValidators();
+    }
+    if (this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value) {
+      this.onImportToFyleToggleChange(event, formGroup?.get('destination_field')?.value);
     }
   }
 
