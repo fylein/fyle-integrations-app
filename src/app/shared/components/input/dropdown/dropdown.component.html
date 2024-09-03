@@ -7,12 +7,12 @@
         [disabled]="isDisabled"
         [formControlName]="formControllerName">
         <ng-template pTemplate="item" let-item>
-            <div>
-                <span #textElement
-                    class="tw-flex tw-justify-between tw-items-center"
-                    [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                    [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
-                    tooltipPosition="top">
+            <div  #textElement
+            class="tw-flex tw-justify-between tw-items-center"
+            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+            [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
+            tooltipPosition="top">
+                <span>
                     {{ item[displayKey] }}
                 </span>
                 <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ item['subLabel'] }}o</p>
