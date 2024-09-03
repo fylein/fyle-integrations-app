@@ -1,4 +1,4 @@
-export type AccountingExportsResult = {
+export type QBDAccountingExportsResult = {
     id: number;
     type: string;
     fund_source: string;
@@ -16,7 +16,7 @@ export type QbdExportTriggerResponse = {
     count: number;
     next: string | null;
     previous: string | null;
-    results: AccountingExportsResult[]
+    results: QBDAccountingExportsResult[]
 }
 
 export type QbdAccountingExportDownload = {
