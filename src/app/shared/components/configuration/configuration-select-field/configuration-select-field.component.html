@@ -31,10 +31,10 @@
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                     <ng-template let-options pTemplate="item">
-                        <div>
-                            <span #textElement
-                                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                                [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                        <div #textElement
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                        [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            <span>
                                 {{options[optionLabel]}}
                             </span>
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
@@ -73,10 +73,10 @@
                     }" [disabled]="isDisabled">
                     
                     <ng-template let-option pTemplate="item">
-                        <div>
-                            <span #textElement
-                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                        <div #textElement
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                        [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                            <span>
                             {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}</span>
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
                         </div>

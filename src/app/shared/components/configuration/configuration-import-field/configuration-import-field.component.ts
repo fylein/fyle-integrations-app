@@ -191,7 +191,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.onImportToFyleToggleChange({checked: true});
+      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
       if (this.appName === AppName.SAGE300) {
         (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
       }
@@ -225,10 +225,12 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   removeFilter(expenseField: AbstractControl) {
+    if ((expenseField as FormGroup).controls.import_to_fyle.value) {
+      this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
+    }
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
-    this.onImportToFyleToggleChange({checked: false});
     event?.stopPropagation();
     this.isXeroProjectMapped = false;
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -242,10 +244,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
     if (!event.checked && this.appName === AppName.SAGE300) {
       formGroup?.get('import_code')?.clearValidators();
     }
+    if (this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value) {
+      this.onImportToFyleToggleChange(event, formGroup?.get('destination_field')?.value);
+    }
   }
 
-  onImportToFyleToggleChange(event: any): void {
-    if (this.appName === AppName.SAGE300) {
+  onImportToFyleToggleChange(event: any, destinationField: string): void {
+    if (this.appName === AppName.SAGE300 && this.importCodeFieldConfig[destinationField]) {
       event.checked ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
     }
   }
@@ -300,7 +305,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
         }
       }
     });
-    return true;
   }
 
   ngOnInit(): void {
