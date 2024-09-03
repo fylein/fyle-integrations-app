@@ -40,10 +40,10 @@
                         </div>
                     </ng-template>
                     <ng-template let-options pTemplate="item">
-                        <div>
-                            <span #textElement
-                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
+                        <div #textElement
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                        [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
+                            <span>
                             {{options.value}}
                             </span>
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>

@@ -191,7 +191,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.onImportToFyleToggleChange({checked: true});
+      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_value')?.value);
       if (this.appName === AppName.SAGE300) {
         (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
       }
@@ -228,7 +228,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
-    this.onImportToFyleToggleChange({checked: false});
+    this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
     event?.stopPropagation();
     this.isXeroProjectMapped = false;
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -244,9 +244,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  onImportToFyleToggleChange(event: any): void {
+  onImportToFyleToggleChange(event: any, destinationField: string): void {
     if (this.appName === AppName.SAGE300) {
-      event.checked ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
+      event.checked && this.importCodeFieldConfig[destinationField] ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
     }
   }
 
