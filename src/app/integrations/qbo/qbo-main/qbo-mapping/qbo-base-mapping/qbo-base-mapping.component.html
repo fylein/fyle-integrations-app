@@ -8,6 +8,6 @@
     [appName]="AppName.QBO"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
     [displayName]="displayName"
-    [isMultiLineOption]="true"
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY ? true : false"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()">
 </app-generic-mapping-v2>
