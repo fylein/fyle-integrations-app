@@ -39,7 +39,7 @@ describe('QboComponent', () => {
           clientInformation: {},
           closed: false,
           customElements: {} as any,
-          devicePixelRatio: 1,
+          devicePixelRatio: 1
           // Add more properties as needed
         } as Window;
       }

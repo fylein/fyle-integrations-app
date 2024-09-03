@@ -130,18 +130,18 @@ describe('QboEmployeeSettingsComponent', () => {
       autoMapEmployee: [AutoMapEmployeeOptions.EMAIL],
       searchOption: ['']
     });
-  
+
     spyOn(employeeSettingsService, 'postEmployeeSettings').and.returnValue(of(mockEmployeeSettingResponse));
     spyOn(component as any, 'exportSettingAffected').and.returnValue(false);
-  
+
     component.save();
-  
+
     tick();
-  
+
     expect(employeeSettingsService.postEmployeeSettings).toHaveBeenCalledWith(mockEmployeeSettingPayload);
     expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Employee settings saved successfully');
   }));
-  
+
   it('should handle error when saving employee settings', fakeAsync(() => {
     component.isOnboarding = true;
     component.employeeSettingForm = TestBed.inject(FormBuilder).group({
@@ -149,14 +149,14 @@ describe('QboEmployeeSettingsComponent', () => {
       autoMapEmployee: [AutoMapEmployeeOptions.EMAIL],
       searchOption: ['']
     });
-  
+
     spyOn(employeeSettingsService, 'postEmployeeSettings').and.returnValue(throwError('Error'));
     spyOn(component as any, 'exportSettingAffected').and.returnValue(false);
-  
+
     component.save();
-  
+
     tick();
-  
+
     expect(employeeSettingsService.postEmployeeSettings).toHaveBeenCalledWith(mockEmployeeSettingPayload);
     expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving employee settings, please try again later');
     expect(component.isSaveInProgress).toBeFalse();
@@ -173,11 +173,11 @@ describe('QboEmployeeSettingsComponent', () => {
       autoMapEmployee: [AutoMapEmployeeOptions.EMAIL],
       searchOption: ['']
     });
-  
+
     spyOn(component as any, 'exportSettingAffected').and.returnValue(true);
-  
+
     component.save();
-  
+
     expect(component.isConfirmationDialogVisible).toBeTrue();
     expect(component.warningDialogText).toContain('You are changing your employee representation');
   });
@@ -190,16 +190,16 @@ describe('QboEmployeeSettingsComponent', () => {
       autoMapEmployee: [AutoMapEmployeeOptions.EMAIL],
       searchOption: ['']
     });
-  
+
     spyOn(employeeSettingsService, 'postEmployeeSettings').and.returnValue(of(mockEmployeeSettingResponse));
     spyOn(component as any, 'exportSettingAffected').and.returnValue(true);
-  
+
     component.save();
     expect(component.isConfirmationDialogVisible).toBeTrue();
-  
+
     component.acceptWarning({ hasAccepted: true, event: ConfigurationWarningEvent.CLONE_SETTINGS });
     tick();
-  
+
     expect(employeeSettingsService.postEmployeeSettings).toHaveBeenCalledWith(mockEmployeeSettingPayload);
     expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Employee settings saved successfully');
     expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/main/configuration/export_settings']);
@@ -212,15 +212,15 @@ describe('QboEmployeeSettingsComponent', () => {
       autoMapEmployee: [AutoMapEmployeeOptions.EMAIL],
       searchOption: ['']
     });
-  
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+    // eslint-disable-next-line dot-notation
     expect(component['exportSettingAffected']()).toBeTrue();
-  
+
     component.employeeSettingForm.patchValue({
       employeeMapping: EmployeeFieldMapping.EMPLOYEE
     });
-  
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+    // eslint-disable-next-line dot-notation
     expect(component['exportSettingAffected']()).toBeFalse();
   });
 
