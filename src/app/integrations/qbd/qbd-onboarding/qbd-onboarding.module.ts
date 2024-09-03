@@ -8,6 +8,7 @@ import { QbdOnboardingFieldSettingComponent } from './qbd-onboarding-field-setti
 import { QbdOnboardingAdvancedSettingComponent } from './qbd-onboarding-advanced-setting/qbd-onboarding-advanced-setting.component';
 import { QbdLandingComponent } from './qbd-onboarding-landing/qbd-landing.component';
 import { QbdSharedModule } from '../qbd-shared/qbd-shared.module';
+import { QbdAutoOnboardingComponent } from "./qbd-auto-onboarding/qbd-auto-onboarding.component";
 
 
 @NgModule({
@@ -22,7 +23,9 @@ import { QbdSharedModule } from '../qbd-shared/qbd-shared.module';
     CommonModule,
     OnboardingRoutingModule,
     SharedModule,
-    QbdSharedModule
-  ]
+    QbdSharedModule,
+    QbdAutoOnboardingComponent,
+    QbdAutoOnboardingComponent
+]
 })
 export class QbdOnboardingModule { }

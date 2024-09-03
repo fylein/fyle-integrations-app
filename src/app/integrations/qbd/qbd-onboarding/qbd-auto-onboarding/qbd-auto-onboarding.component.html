@@ -1,0 +1,48 @@
+<p-dialog 
+  [(visible)]="displayDialog"
+  [dismissableMask]="true"
+  [showHeader]="false"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{width: '468px'}"
+>
+  <div [formGroup]="customFieldForm">
+    <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+      <div class="tw-flex tw-justify-between tw-items-center">
+        <p class="tw-text-20-px tw-font-500">AI Onboarding</p>
+      </div>
+    </div>
+    
+    <div class="tw-p-24-px">
+      <div *ngIf="!showTextArea">
+        <p class="tw-pb-16-px tw-text-sub-text-color tw-text-14-px">
+          Do you want to explain how you use your accounting software, and let our Fyle AI Onboard the org for you?
+        </p>
+        <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+          <button type="button" class="cancel-btn" (click)="onNoClick()">
+            No
+          </button>
+          <button type="button" class="save-btn" pButton (click)="onYesClick()">
+            Yes
+          </button>
+        </div>
+      </div>
+      
+      <div *ngIf="showTextArea">
+        <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
+          Explain how you use your accounting software <span class="tw-text-mandatory-field-color">*</span>
+        </p>
+        <textarea pInputTextarea formControlName="explanation" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px" rows="5" [autoResize]="true" placeholder="Enter your explanation"></textarea>
+        
+        <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+          <button type="button" class="cancel-btn" (click)="onNoClick()">
+            Cancel
+          </button>
+          <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid" (click)="onSubmit()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

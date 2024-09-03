@@ -1,0 +1,117 @@
+:host ::ng-deep {
+    .p-dialog {
+      .p-dialog-content {
+        padding: 0;
+      }
+    }
+  
+    .tw-p-24-px {
+      padding: 24px;
+    }
+  
+    .tw-border-b-1-px {
+      border-bottom-width: 1px;
+    }
+  
+    .tw-border-b-box-color {
+      border-bottom-color: #e0e0e0;
+    }
+  
+    .tw-flex {
+      display: flex;
+    }
+  
+    .tw-justify-between {
+      justify-content: space-between;
+    }
+  
+    .tw-items-center {
+      align-items: center;
+    }
+  
+    .tw-text-20-px {
+      font-size: 20px;
+    }
+  
+    .tw-font-500 {
+      font-weight: 500;
+    }
+  
+    .tw-cursor-pointer {
+      cursor: pointer;
+    }
+  
+    .tw-text-sub-text-color {
+      color: #4a4a4a;
+    }
+  
+    .tw-text-14-px {
+      font-size: 14px;
+    }
+  
+    .tw-pb-8-px {
+      padding-bottom: 8px;
+    }
+  
+    .tw-pb-16-px {
+      padding-bottom: 16px;
+    }
+  
+    .tw-pt-24-px {
+      padding-top: 24px;
+    }
+  
+    .tw-w-420-px {
+      width: 420px;
+    }
+  
+    .tw-border {
+      border: 1px solid #e0e0e0;
+    }
+  
+    .tw-px-10-px {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    .tw-py-12-px {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+  
+    .tw-text-mandatory-field-color {
+      color: #ff0000;
+    }
+  
+    .cancel-btn {
+      padding: 8px 16px;
+      background-color: #ffffff;
+      color: #2c304d;
+      border: 1px solid #dfe1e6;
+      border-radius: 4px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+  
+    .save-btn {
+      padding: 8px 16px;
+      background-color: #2c304d;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  
+    .error-box {
+      border-color: #ff0000;
+    }
+  
+    .normal-box {
+      border-color: #e0e0e0;
+    }
+  }
