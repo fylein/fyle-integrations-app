@@ -41,7 +41,7 @@ export type QBDExportSettingPost = {
     credit_card_expense_date: QBDExportDateType | null,
 }
 
-export class ExportSettingModel {
+export class QBDExportSettingModel {
     static constructPayload(exportSettingsForm: FormGroup): QBDExportSettingPost {
       const exportSettingPayload: QBDExportSettingPost = {
             reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,

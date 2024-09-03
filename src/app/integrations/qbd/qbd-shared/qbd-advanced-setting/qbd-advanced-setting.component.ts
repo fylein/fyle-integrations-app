@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent, TrackingApp, AppName } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingModel, QBDAdvancedSettingsGet, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDAdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -51,7 +51,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose", "merchant"];
 
-  adminEmails: EmailOptions[];
+  adminEmails: QBDEmailOptions[];
 
   weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
@@ -177,7 +177,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   getAdminEmails() {
     this.isLoading= true;
-    this.orgService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
+    this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOptions[]) => {
       this.adminEmails = emailResponse;
       this.getSettingsAndSetupForm();
     });
@@ -235,7 +235,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
-    const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
+    const advancedSettingPayload = QBDAdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');

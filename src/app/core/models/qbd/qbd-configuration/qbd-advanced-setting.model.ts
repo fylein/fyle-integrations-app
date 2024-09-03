@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { QBDScheduleFrequency } from "../../enum/enum.model";
 
-export type EmailOptions = {
+export type QBDEmailOptions = {
     name: string,
     email: string
 }
@@ -10,7 +10,7 @@ export type QBDAdvancedSettingsPost = {
     expense_memo_structure: string[],
     top_memo_structure: string[] | null,
     schedule_is_enabled: boolean,
-    emails_selected: EmailOptions[],
+    emails_selected: QBDEmailOptions[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,
@@ -25,7 +25,7 @@ export type QBDAdvancedSettingsGet = {
     top_memo_structure: string[],
     schedule_is_enabled: boolean,
     schedule_id: number | null,
-    emails_selected: EmailOptions[],
+    emails_selected: QBDEmailOptions[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,
@@ -51,7 +51,7 @@ function getFrequencyTime(advancedSettingForm: FormGroup) {
     return null;
 }
 
-export class AdvancedSettingModel {
+export class QBDAdvancedSettingModel {
     static constructPayload(advancedSettingForm: FormGroup): QBDAdvancedSettingsPost {
         const topMemo: string[] = [];
         topMemo.push(advancedSettingForm.value.topMemoStructure);

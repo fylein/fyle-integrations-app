@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -19,7 +19,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   selectedEmail: string | null;
 
-  @Input() options: EmailOptions[];
+  @Input() options: QBDEmailOptions[];
 
   @Input() form: FormGroup;
 
@@ -52,7 +52,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   showDialog: boolean;
 
-  emails: EmailOptions[];
+  emails: QBDEmailOptions[];
 
   readonly brandingConfig = brandingConfig;
 
@@ -98,7 +98,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
   }
 
-  private assignSelectedEmail(emails: EmailOptions[]): void {
+  private assignSelectedEmail(emails: QBDEmailOptions[]): void {
     if (emails.length) {
       this.selectedEmail = emails[0].email;
     } else {
@@ -108,14 +108,14 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   private createEmailAdditionWatcher(): void {
     this.assignSelectedEmail(this.form.value.email);
-    this.form.controls.email.valueChanges.subscribe((emails: EmailOptions[]) => {
+    this.form.controls.email.valueChanges.subscribe((emails: QBDEmailOptions[]) => {
       this.assignSelectedEmail(emails);
     });
   }
 
-  private getEmailOptions(additionalEmails: EmailOptions[], adminEmails: EmailOptions[]): EmailOptions[] {
-    return additionalEmails.concat(adminEmails).filter((email: EmailOptions, index: number, self: EmailOptions[]) => {
-      return index === self.findIndex((e: EmailOptions) => {
+  private getEmailOptions(additionalEmails: QBDEmailOptions[], adminEmails: QBDEmailOptions[]): QBDEmailOptions[] {
+    return additionalEmails.concat(adminEmails).filter((email: QBDEmailOptions, index: number, self: QBDEmailOptions[]) => {
+      return index === self.findIndex((e: QBDEmailOptions) => {
         return e.email === email.email;
       });
     });

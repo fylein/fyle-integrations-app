@@ -17,7 +17,7 @@ export type QBDFieldMappingPost = {
     item_type: string | null
 }
 
-export class FieldMappingModel {
+export class QBDFieldMappingModel {
   static constructPayload(fieldMappingForm: FormGroup): QBDFieldMappingPost {
     const fieldMappingPayload: QBDFieldMappingPost = {
       class_type: fieldMappingForm.get('classType')?.value ? fieldMappingForm.get('classType')?.value : null,

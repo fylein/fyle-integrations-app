@@ -4,7 +4,7 @@ import { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { Observable, Subject } from 'rxjs';
 import { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 
 const advancedSettingsCache$ = new Subject<void>();
 @Injectable({
@@ -31,7 +31,7 @@ export class XeroAdvancedSettingsService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, advancedSettingPayload);
   }
 
-  getWorkspaceAdmins(): Observable<[EmailOptions]> {
+  getWorkspaceAdmins(): Observable<[QBDEmailOptions]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});
   }
 
