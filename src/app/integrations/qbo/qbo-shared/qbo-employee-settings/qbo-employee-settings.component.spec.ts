@@ -213,14 +213,14 @@ describe('QboEmployeeSettingsComponent', () => {
       searchOption: ['']
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // @ts-ignore
     expect(component['exportSettingAffected']()).toBeTrue();
-  
+
     component.employeeSettingForm.patchValue({
       employeeMapping: EmployeeFieldMapping.EMPLOYEE
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // @ts-ignore
     expect(component['exportSettingAffected']()).toBeFalse();
   });
 
