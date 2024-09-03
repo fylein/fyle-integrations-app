@@ -213,14 +213,14 @@ describe('QboEmployeeSettingsComponent', () => {
       searchOption: ['']
     });
 
-    // @ts-ignore
+    // eslint-disable-next-line dot-notation
     expect(component['exportSettingAffected']()).toBeTrue();
 
     component.employeeSettingForm.patchValue({
       employeeMapping: EmployeeFieldMapping.EMPLOYEE
     });
 
-    // @ts-ignore
+    // eslint-disable-next-line dot-notation
     expect(component['exportSettingAffected']()).toBeFalse();
   });
 
