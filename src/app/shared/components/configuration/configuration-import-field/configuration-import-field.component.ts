@@ -191,7 +191,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_value')?.value);
+      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
       if (this.appName === AppName.SAGE300) {
         (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
       }
@@ -236,6 +236,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
     this.onShowWarningForDependentFields(event, formGroup);
+    this.onImportToFyleToggleChange(event, formGroup?.get('destination_field')?.value);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
@@ -245,8 +246,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onImportToFyleToggleChange(event: any, destinationField: string): void {
-    if (this.appName === AppName.SAGE300) {
-      event.checked && this.importCodeFieldConfig[destinationField] ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
+    if (this.appName === AppName.SAGE300 && this.importCodeFieldConfig[destinationField]) {
+      event.checked ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
     }
   }
 
@@ -300,7 +301,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
         }
       }
     });
-    return true;
   }
 
   ngOnInit(): void {
