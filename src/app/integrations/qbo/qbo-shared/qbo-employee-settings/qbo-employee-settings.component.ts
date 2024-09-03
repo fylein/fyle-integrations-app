@@ -98,7 +98,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
   private constructPayloadAndSave(): void {
     const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
     this.isSaveInProgress = true;
-  
+
     this.employeeSettingService.postEmployeeSettings(employeeSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee settings saved successfully');
