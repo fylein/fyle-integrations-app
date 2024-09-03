@@ -223,4 +223,24 @@ describe('QboEmployeeSettingsComponent', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(component['exportSettingAffected']()).toBeFalse();
   });
+
+  it('should save employee settings and navigate to export settings when onboarding', fakeAsync(() => {
+    component.isOnboarding = true;
+    component.employeeSettingForm = TestBed.inject(FormBuilder).group({
+      employeeMapping: [mockEmployeeSettingPayload.workspace_general_settings.employee_field_mapping],
+      autoMapEmployee: [mockEmployeeSettingPayload.workspace_general_settings.auto_map_employees],
+      searchOption: ['']
+    });
+
+    spyOn(employeeSettingsService, 'postEmployeeSettings').and.returnValue(of(mockEmployeeSettingResponse));
+
+    component.save();
+    component.acceptWarning(mockWarning);
+    tick();
+
+    expect(employeeSettingsService.postEmployeeSettings).toHaveBeenCalledWith(mockEmployeeSettingPayload);
+    expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Employee settings saved successfully');
+    expect(workspaceService.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.EXPORT_SETTINGS);
+    expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/export_settings']);
+  }));
 });
