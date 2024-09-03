@@ -48,6 +48,17 @@ export class DashboardExportSectionComponent implements OnInit {
     this.export.emit(true);
   }
 
+  private logoPathsMap = new Map<AppName, string>([
+    [AppName.NETSUITE, 'assets/logos/netsuite-logo.png'],
+    [AppName.QBO, 'assets/logos/email/qbo.png'],
+    [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
+    [AppName.XERO, 'assets/logos/xero-logo.png']
+  ]);
+
+  get logoPath(): string {
+    return this.logoPathsMap.get(this.appName) || '';
+  }
+
   private constructImportStates() {
     if (this.reimbursableImportState === ReimbursableImportState.PAID && this.cccImportState === CCCImportState.PAID) {
       this.importStates = ReimbursableImportState.PAID;
