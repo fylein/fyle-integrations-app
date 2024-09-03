@@ -25,8 +25,8 @@ import { SearchPipe } from './pipes/search.pipe';
 import { PaginatorComponent } from './components/helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './components/helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './components/helper/mandatory-error-message/mandatory-error-message.component';
-import { ZeroStateWithIllustrationComponent } from './components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
-import { OnboardingStepperComponent } from './components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
+import { ZeroStateWithIllustrationComponent } from './components/helper/zero-state-with-illustration/zero-state-with-illustration.component';
+import { QbdOnboardingStepperComponent } from './components/qbd/helper/qbd-onboarding-stepper/qbd-onboarding-stepper.component';
 import { OnboardingSteppersComponent } from './components/helper/onboarding-stepper/onboarding-stepper.component';
 import { ConfigurationToggleFieldComponent } from './components/configuration/configuration-toggle-field/configuration-toggle-field.component';
 import { ConfigurationSelectFieldComponent } from './components/configuration/configuration-select-field/configuration-select-field.component';
@@ -39,9 +39,9 @@ import { ConfigurationMultiSelectComponent } from './components/configuration/co
 import { ConfigurationLabelComponent } from './components/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
-import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
+import { QbdMappingTableComponent } from './components/qbd/mapping/qbd-mapping-table/qbd-mapping-table.component';
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
-import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
+import { QbdMappingHeaderSectionComponent } from './components/qbd/mapping/qbd-mapping-header-section/qbd-mapping-header-section.component';
 import { TableModule } from 'primeng/table';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
@@ -106,7 +106,7 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    OnboardingStepperComponent,
+    QbdOnboardingStepperComponent,
     OnboardingSteppersComponent,
     ConfigurationToggleFieldComponent,
     ConfigurationSelectFieldComponent,
@@ -119,9 +119,9 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     AppLandingPageBodyComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
-    MappingTableComponent,
+    QbdMappingTableComponent,
     MappingFilterComponent,
-    MappingHeaderSectionComponent,
+    QbdMappingHeaderSectionComponent,
     SkipExportComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
@@ -206,7 +206,7 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    OnboardingStepperComponent,
+    QbdOnboardingStepperComponent,
     OnboardingSteppersComponent,
     ConfigurationToggleFieldComponent,
     ConfigurationSelectFieldComponent,
@@ -224,9 +224,9 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     NetsuiteConnectorComponent,
     NetsuiteSubsidiaryMappingComponent,
     IntacctLocationEntityComponent,
-    MappingTableComponent,
+    QbdMappingTableComponent,
     MappingFilterComponent,
-    MappingHeaderSectionComponent,
+    QbdMappingHeaderSectionComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
     DashboardExportSectionComponent,

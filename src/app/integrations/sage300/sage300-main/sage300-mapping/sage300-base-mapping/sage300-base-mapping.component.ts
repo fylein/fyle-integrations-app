@@ -72,7 +72,7 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
-      this.isMultiLineOption = this.destinationField !== FyleField.VENDOR ? importSettingsResponse.import_settings.import_code_fields?.includes(this.destinationField) : false;
+      this.isMultiLineOption = importSettingsResponse.import_settings.import_code_fields?.includes(this.destinationField);
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((response: any) => {
         this.destinationOptions = response.results;
         this.isLoading = false;
