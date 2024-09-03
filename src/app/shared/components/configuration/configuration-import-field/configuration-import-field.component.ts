@@ -244,9 +244,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  onImportToFyleToggleChange(event: any, source_field: string): void {
+  onImportToFyleToggleChange(event: any, destinationField: string): void {
     if (this.appName === AppName.SAGE300) {
-      event.checked && this.importCodeFieldConfig[source_field] ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
+      event.checked && this.importCodeFieldConfig[destinationField] ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
     }
   }
 
