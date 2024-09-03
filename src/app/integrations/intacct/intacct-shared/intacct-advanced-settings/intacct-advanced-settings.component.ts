@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment';
 import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -130,6 +131,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
+  }
+
+  isOverflowing(element: any, mapping: DestinationAttribute): string {
+    return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
   refreshDimensions(isRefresh: boolean) {

@@ -651,7 +651,9 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costTypeFieldOption[0].attribute_type !== 'custom_field') {
       this.showDependentFieldWarning = true;
     }
-    this.addImportCodeField(event, formGroup.value.destination_field);
+    if (formGroup.value.source_field) {
+      this.addImportCodeField(event, formGroup.value.destination_field);
+    }
   }
 
   save(): void {

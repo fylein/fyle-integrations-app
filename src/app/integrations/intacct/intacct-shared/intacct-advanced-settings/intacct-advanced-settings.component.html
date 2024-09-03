@@ -167,11 +167,27 @@
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
                   formControlName="defaultDepartment" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.department}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
-                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-                            <p>
-                                {{ item.value }}
-                            </p>
-                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
+                            <div *ngIf="value">
+                                <p>
+                                    <span *ngIf="value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
+                                    {{ value?.value }} 
+                                </p>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                            </div>
+                            <div *ngIf="!value" class="tw-text-placeholder">
+                                Select an option
+                            </div>
+                        </ng-template>
+                        <ng-template let-options pTemplate="item">
+                            <div #textElement
+                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                            [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
+                                <span>
+                                {{options.value}}
+                                </span>
+                                <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+                            </div>
                         </ng-template>
                     </p-dropdown>
                     <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
