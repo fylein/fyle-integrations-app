@@ -108,7 +108,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
       } else if (this.exportSettingAffected()) {
         this.router.navigate(['/integrations/qbo/main/configuration/export_settings']);
       }
-    }, () => {
+    }, (error) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving employee settings, please try again later');
     });
