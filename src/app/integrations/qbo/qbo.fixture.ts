@@ -1,5 +1,5 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 
 export const mockUser: MinimalUser = {
@@ -80,7 +80,7 @@ export const mockEmployeeSettingResponse: QBOEmployeeSettingGet = {
     }
   ];
 
-  export const mockExportSettings = {
+  export const mockExportSettings1 = {
     workspace_general_settings: {
       reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL
     }
