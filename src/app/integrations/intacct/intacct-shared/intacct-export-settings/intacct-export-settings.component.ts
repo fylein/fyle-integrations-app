@@ -153,7 +153,7 @@ export class IntacctExportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   brandingContent = brandingContent;
-  
+
   isMultiLineOption: boolean;
 
   constructor(
@@ -648,7 +648,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
-      this.isMultiLineOption = brandingConfig.brandId !== 'co' ? true : false
+      this.isMultiLineOption = brandingConfig.brandId !== 'co' ? true : false;
       this.getSettingsAndSetupForm();
 
     });
