@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
@@ -38,6 +39,8 @@ export class IntacctBaseMappingComponent implements OnInit {
   cccExpenseObject: IntacctCorporateCreditCardExpensesObject | null;
 
   acceptedCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
+
+  brandingConfig = brandingConfig;
 
   constructor(
     private route: ActivatedRoute,

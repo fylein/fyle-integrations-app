@@ -52,7 +52,7 @@
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"
                                 [isAdvanceSearchEnabled]="true"
-                                [isMultiLineOption]="true"
+                                [isMultiLineOption]="isMultiLineOption"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
@@ -164,7 +164,7 @@
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"
                             [isAdvanceSearchEnabled]="true"
-                            [isMultiLineOption]="true"
+                            [isMultiLineOption]="isMultiLineOption"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.BILL">
@@ -197,7 +197,7 @@
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"
                             [isAdvanceSearchEnabled]="true"
-                            [isMultiLineOption]="true"
+                            [isMultiLineOption]="isMultiLineOption"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">

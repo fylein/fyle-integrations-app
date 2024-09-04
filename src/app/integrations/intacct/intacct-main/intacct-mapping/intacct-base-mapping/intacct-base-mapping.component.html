@@ -7,6 +7,6 @@
     [showAutoMapEmployee]="showAutoMapEmployee"
     [appName]="appName"
     [isCategoryMappingGeneric]="false"
-    [isMultiLineOption]="acceptedCodeField.includes(destinationField)"
+    [isMultiLineOption]="acceptedCodeField.includes(destinationField) && brandingConfig.brandId !== 'co' ? true : false"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()">
 </app-generic-mapping-v2>
