@@ -69,7 +69,6 @@
                                 [placeholder]="'Select expense payment type'"
                                 [formControllerName]="'reimbursableExpensePaymentType'"
                                 [isAdvanceSearchEnabled]="true"
-                                [isMultiLineOption]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
@@ -223,7 +222,6 @@
                             [placeholder]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCardPlaceholder"
                             [formControllerName]="'chargeCard'"
                             [isAdvanceSearchEnabled]="true"
-                            [isMultiLineOption]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
