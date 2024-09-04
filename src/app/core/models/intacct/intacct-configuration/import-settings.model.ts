@@ -101,11 +101,7 @@ export class ImportSettings {
             return value.source_field;
         });
 
-        if (dependentFieldSetting?.is_import_enabled && !(importCodeFieldArray.includes('COST_CODE') && !(importCodeFieldArray.includes('COST_TYPE')))) {
-            importCodeFieldArray.concat(['COST_CODE', 'COST_TYPE'])
-        }
-
-        const finalimportCodeFieldArray: string[] = importSettingsForm.value.importCodeField.concat(importCodeFieldArray)
+        const finalimportCodeFieldArray: string[] = importSettingsForm.value.importCodeField.concat(importCodeFieldArray);
 
         // Actual Payload
         const importSettingPayload: ImportSettingPost = {

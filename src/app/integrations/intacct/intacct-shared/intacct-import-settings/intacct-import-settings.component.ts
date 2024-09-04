@@ -529,7 +529,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
       searchOption: [''],
-      importCodeField:[importSettings.configurations.import_code_fields],
+      importCodeField: [importSettings.configurations.import_code_fields],
       importCodeFields: this.formBuilder.array(this.importCodeField)
     });
     if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
