@@ -101,7 +101,7 @@ export class ImportSettings {
             return value.source_field;
         });
 
-        const finalimportCodeFieldArray: string[] = importSettingsForm.value.importCodeField.concat(importCodeFieldArray);
+        const finalimportCodeFieldArray: string[] = importSettingsForm.value.importCodeField.filter((value: string) => value!=='COST_CODE' && value !== 'COST_TYPE').concat(importCodeFieldArray);
 
         // Actual Payload
         const importSettingPayload: ImportSettingPost = {
