@@ -142,7 +142,7 @@ export class QboDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      this.importCodeFields = responses[6].workspace_general_settings?.import_code_fields;
+      this.importCodeFields = responses[6].workspace_general_settings.import_code_fields;
 
       const queuedTasks: QBOTaskLog[] = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
