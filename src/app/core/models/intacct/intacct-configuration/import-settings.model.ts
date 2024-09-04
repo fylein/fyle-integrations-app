@@ -105,7 +105,7 @@ export class ImportSettings {
                     import_categories: isCategoryImportEnabled,
                     import_tax_codes: importSettingsForm.value.importTaxCodes ? importSettingsForm.value.importTaxCodes : false,
                     import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false,
-                    import_code_fields: importCodeFieldArray
+                    import_code_fields: importSettingsForm.value.importCodeField.concat(importCodeFieldArray)
                 },
                 general_mappings: {
                     default_tax_code: importSettingsForm.value.importTaxCodes ? {
