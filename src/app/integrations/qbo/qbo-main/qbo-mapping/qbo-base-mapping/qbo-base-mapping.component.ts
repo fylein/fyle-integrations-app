@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingDisplayName, AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -40,6 +41,8 @@ export class QboBaseMappingComponent implements OnInit {
   displayName: string | undefined = undefined;
 
   isMultiLineOption: boolean;
+
+  brandingConfig = brandingConfig;
 
   constructor(
     private route: ActivatedRoute,

@@ -55,7 +55,7 @@
                                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
-                                    [isMultiLineOption]="true"
+                                    [isMultiLineOption]="isMultilineOption"
                                     [placeholder]="'Select bank account'"
                                     [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
@@ -75,7 +75,7 @@
                                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
-                                    [isMultiLineOption]="true"
+                                    [isMultiLineOption]="isMultilineOption"
                                     [placeholder]="'Select Expense Account'"
                                     [formControllerName]="'qboExpenseAccount'">
                                 </app-configuration-select-field>
@@ -96,7 +96,7 @@
                                     [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
                                     [iconPath]="'list'"
                                     [placeholder]="'Select accounts payable'"
-                                    [isMultiLineOption]="true"
+                                    [isMultiLineOption]="isMultilineOption"
                                     [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
@@ -205,7 +205,7 @@
                               [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
                               [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
                               [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
-                              [isMultiLineOption]="true"
+                              [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'defaultCCCAccount'">
                             </app-configuration-select-field>
                         </div>
@@ -225,7 +225,7 @@
                               [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                               [subLabel]="'Post all your company debit card transactions to a default debit card account.'"
                               [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
-                              [isMultiLineOption]="true"
+                              [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'defaultDebitCardAccount'">
                             </app-configuration-select-field>
                         </div>
@@ -264,7 +264,7 @@
                               [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                               [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + brandingContent.corporateCard.accountsPayableSubLabel"
                               [placeholder]="'Select accounts payable'"
-                              [isMultiLineOption]="true"
+                              [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'accountsPayable'">
                             </app-configuration-select-field>
                         </div>
