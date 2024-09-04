@@ -180,7 +180,7 @@ export class MappingService {
     };
 
     if (value) {
-      if (appName && ([AppName.SAGE300, AppName.INTACCT] as string[]).includes(appName)) {
+      if (appName && ([AppName.SAGE300, AppName.QBO, AppName.INTACCT] as string[]).includes(appName)) {
         params.value = value;
       } else {
         params.value__icontains = value;
