@@ -95,9 +95,9 @@
                                 <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
-                      <p *ngIf="(expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')) || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                      <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')) || (!expenseField.get('source_field')?.value && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         {{brandingConfig.brandName}} Fields should be unique
-                        </p>
+                      </p>
                     </div>
                 <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
             </div>
