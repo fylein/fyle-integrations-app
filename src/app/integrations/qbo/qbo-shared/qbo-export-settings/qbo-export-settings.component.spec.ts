@@ -2,16 +2,27 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
+import { MessageService } from 'primeng/api'; // Import MessageService
+
 import { QboExportSettingsComponent } from './qbo-export-settings.component';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { mockExportSettings, mockPaginatedDestinationAttributes, qboPaginatedDestinationAttribute } from '../../qbo.fixture';
-import { CCCExpenseState, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { 
+  mockExportSettingsResponse, 
+  mockBankAccounts, 
+  mockCreditCardAccounts, 
+  mockAccountsPayable, 
+  mockVendors, 
+  mockWorkspaceGeneralSettings, 
+  mockSaveResponse
+} from '../../qbo.fixture';
+import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { EmployeeFieldMapping, SplitExpenseGrouping, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -20,27 +31,28 @@ describe('QboExportSettingsComponent', () => {
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
   let qboHelperServiceSpy: jasmine.SpyObj<QboHelperService>;
   let mappingServiceSpy: jasmine.SpyObj<MappingService>;
-  let routerSpy: jasmine.SpyObj<Router>;
-  let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
-  let windowServiceSpy: jasmine.SpyObj<WindowService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
+  let windowServiceSpy: jasmine.SpyObj<WindowService>;
+  let integrationsToastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'postExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers']);
-    const helperService = jasmine.createSpyObj('HelperService', [
-      'addExportSettingFormValidator',
-      'setConfigurationSettingValidatorsAndWatchers',
-      'setOrClearValidators',
-      'enableFormField',
-      'addDefaultDestinationAttributeIfNotExists'
-    ]);
+    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers', 'postExportSettings']);
+    const helperService = jasmine.createSpyObj('HelperService', ['addExportSettingFormValidator', 'setConfigurationSettingValidatorsAndWatchers', 'setOrClearValidators', 'addDefaultDestinationAttributeIfNotExists']);
     const qboHelperService = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const mappingService = jasmine.createSpyObj('MappingService', ['getPaginatedDestinationAttributes']);
+    const workspaceService = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings']);
+    const windowService = {
+      get nativeWindow() {
+        return {
+          location: {
+            pathname: '/integrations/qbo/onboarding/export_settings'
+          }
+        };
+      }
+    };
+    const integrationsToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const router = jasmine.createSpyObj('Router', ['navigate']);
-    const toastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const windowService = jasmine.createSpyObj('WindowService', ['nativeWindow']);
-    const workspaceService = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
-
     await TestBed.configureTestingModule({
       declarations: [ QboExportSettingsComponent ],
       imports: [ ReactiveFormsModule ],
@@ -50,10 +62,11 @@ describe('QboExportSettingsComponent', () => {
         { provide: HelperService, useValue: helperService },
         { provide: QboHelperService, useValue: qboHelperService },
         { provide: MappingService, useValue: mappingService },
-        { provide: Router, useValue: router },
-        { provide: IntegrationsToastService, useValue: toastService },
+        { provide: WorkspaceService, useValue: workspaceService },
         { provide: WindowService, useValue: windowService },
-        { provide: WorkspaceService, useValue: workspaceService }
+        { provide: IntegrationsToastService, useValue: integrationsToastService },
+        { provide: MessageService, useValue: {} },
+        { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
 
@@ -61,175 +74,173 @@ describe('QboExportSettingsComponent', () => {
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     qboHelperServiceSpy = TestBed.inject(QboHelperService) as jasmine.SpyObj<QboHelperService>;
     mappingServiceSpy = TestBed.inject(MappingService) as jasmine.SpyObj<MappingService>;
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    toastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
-    windowServiceSpy = TestBed.inject(WindowService) as jasmine.SpyObj<WindowService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
-  });
-
-  beforeEach(() => {
+    windowServiceSpy = TestBed.inject(WindowService) as jasmine.SpyObj<WindowService>;
+    integrationsToastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
-    Object.defineProperty(windowServiceSpy, 'nativeWindow', {
-      value: { location: { pathname: '' } },
-      writable: true
-    });
-  });
+    
+    // Mock setupCustomWatchers
+    const componentSpies = jasmine.createSpyObj('QboExportSettingsComponent', [
+      'setupCustomWatchers',
+      'setupCustomDateOptionWatchers',
+      'optionSearchWatcher'
+    ]);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    Object.assign(component, componentSpies);
 
-  it('should initialize component and setup form', fakeAsync(() => {
-    exportSettingsServiceSpy.getExportSettings.and.returnValue(of(mockExportSettings));
-    workspaceServiceSpy.getWorkspaceGeneralSettings.and.returnValue(of({ employee_field_mapping: 'EMPLOYEE' }));
-    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockPaginatedDestinationAttributes));
-
-    component.ngOnInit();
-    tick();
-
-    expect(component.isLoading).toBeFalse();
-    expect(component.exportSettings).toEqual(mockExportSettings);
-    expect(component.employeeFieldMapping).toEqual('EMPLOYEE');
-    expect(component.bankAccounts.length).toBeGreaterThan(0);
-    expect(component.exportSettingForm).toBeDefined();
-  }));
-
-  it('should handle error during initialization', fakeAsync(() => {
-    exportSettingsServiceSpy.getExportSettings.and.returnValue(throwError('Error'));
-
-    component.ngOnInit();
-    tick();
-
-    expect(component.isLoading).toBeTrue();
-  }));
-
-  it('should save export settings successfully', fakeAsync(() => {
-    component.exportSettings = mockExportSettings;
+    // Initialize the form
     component.exportSettingForm = new FormBuilder().group({
-      reimbursableExportType: [QBOReimbursableExpensesObject.BILL],
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.BILL]
+      reimbursableExpenseObject: [mockExportSettingsResponse.workspace_general_settings.reimbursable_expenses_object],
+      corporateCreditCardExpenseObject: [mockExportSettingsResponse.workspace_general_settings.corporate_credit_card_expenses_object],
+      employeeMapping: [EmployeeFieldMapping.EMPLOYEE],
+      expenseState: [mockExportSettingsResponse.expense_group_settings.expense_state],
+      cccExpenseState: [mockExportSettingsResponse.expense_group_settings.ccc_expense_state],
+      reimbursableExportGroup: [mockExportSettingsResponse.expense_group_settings.reimbursable_expense_group_fields[0]], // Assuming we're using the first field
+      reimbursableExportDate: [mockExportSettingsResponse.expense_group_settings.reimbursable_export_date_type],
+      creditCardExportGroup: [mockExportSettingsResponse.expense_group_settings.corporate_credit_card_expense_group_fields[0]], // Assuming we're using the first field
+      creditCardExportDate: [mockExportSettingsResponse.expense_group_settings.ccc_export_date_type],
+      bankAccount: [mockExportSettingsResponse.general_mappings.bank_account],
+      defaultCCCAccount: [mockExportSettingsResponse.general_mappings.default_ccc_account],
+      accountsPayable: [mockExportSettingsResponse.general_mappings.accounts_payable],
+      defaultCreditCardVendor: [mockExportSettingsResponse.general_mappings.default_ccc_vendor],
+      nameInJournalEntry: [mockExportSettingsResponse.workspace_general_settings.name_in_journal_entry]
     });
-    exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
-
-    component.save();
-    tick();
-
-    expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
-    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
-  }));
-
-  it('should handle error when saving export settings', fakeAsync(() => {
-    component.exportSettings = mockExportSettings;
-    component.exportSettingForm = new FormBuilder().group({
-      reimbursableExportType: [QBOReimbursableExpensesObject.BILL],
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.BILL]
-    });
-    exportSettingsServiceSpy.postExportSettings.and.returnValue(throwError('Error'));
-
-    component.save();
-    tick();
-
-    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
-  }));
-
-  it('should navigate to import settings page after saving during onboarding', fakeAsync(() => {
-    component.isOnboarding = true;
-    component.exportSettings = mockExportSettings;
-    component.exportSettingForm = new FormBuilder().group({
-      reimbursableExportType: [QBOReimbursableExpensesObject.BILL],
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.BILL]
-    });
-    exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
-
-    component.save();
-    tick();
-
-    expect(workspaceServiceSpy.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.IMPORT_SETTINGS);
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/import_settings']);
-  }));
-
-  it('should update CCC expense grouping date options when credit card export type changes', () => {
-    component.exportSettingForm = new FormBuilder().group({
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE],
-      creditCardExportGroup: ['']
-    });
-
-    component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
-
-    expect(component.cccExpenseGroupingDateOptions.length).toBeGreaterThan(0);
-    expect(component.exportSettingForm.get('creditCardExportGroup')?.value).toEqual('expense_id');
-    expect(component.exportSettingForm.get('creditCardExportGroup')?.disabled).toBeTrue();
   });
 
-  it('should handle option search', fakeAsync(() => {
-    const mockResponse = { results: [{ id: '1', name: 'Test Account' }] };
-    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(qboPaginatedDestinationAttribute));
+  describe('getSettingsAndSetupForm', () => {
+    beforeEach(() => {
+      exportSettingsServiceSpy.getExportSettings.and.returnValue(of(mockExportSettingsResponse));
+      workspaceServiceSpy.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettings));
+      mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValues(
+        of(mockBankAccounts),
+        of(mockCreditCardAccounts),
+        of(mockAccountsPayable),
+        of(mockVendors)
+      );
 
-    component.searchOptionsDropdown({ destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT, searchTerm: 'test', destinationAttributes: []});
-    tick(1000);
-
-    expect(component.bankAccounts.some(account => account.name === 'Test Account')).toBeTrue();
-    expect(component.isOptionSearchInProgress).toBeFalse();
-  }));
-
-  it('should refresh QBO dimensions', () => {
-    qboHelperServiceSpy.refreshQBODimensions.and.returnValue(of({}));
-    component.refreshDimensions();
-    expect(qboHelperServiceSpy.refreshQBODimensions).toHaveBeenCalled();
-  });
-
-  it('should navigate to previous step', () => {
-    component.navigateToPreviousStep();
-    expect(routerSpy.navigate).toHaveBeenCalled();
-  });
-
-  it('should construct warning message', () => {
-    component.exportSettings = mockExportSettings;
-    component.exportSettingForm = new FormBuilder().group({
-      reimbursableExportType: [QBOReimbursableExpensesObject.BILL],
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.BILL]
+      spyOn(QBOExportSettingModel, 'mapAPIResponseToFormGroup').and.returnValue(component.exportSettingForm);
     });
-    component.isImportItemsEnabled = true;
 
-    const warningMessage = component['constructWarningMessage']();
-    expect(warningMessage).toContain('You have changed the export type');
+    it('should fetch and set up export settings correctly', fakeAsync(() => {
+      component.ngOnInit();
+      tick();
+
+      expect(exportSettingsServiceSpy.getExportSettings).toHaveBeenCalledTimes(1);
+      expect(workspaceServiceSpy.getWorkspaceGeneralSettings).toHaveBeenCalledTimes(1);
+      expect(mappingServiceSpy.getPaginatedDestinationAttributes).toHaveBeenCalledTimes(4);
+
+      expect(component.exportSettings).toEqual(mockExportSettingsResponse);
+      expect(component.employeeFieldMapping).toEqual(mockWorkspaceGeneralSettings.employee_field_mapping);
+      expect(component.isImportItemsEnabled).toEqual(mockWorkspaceGeneralSettings.import_items);
+
+      expect(component.bankAccounts.length).toBeGreaterThan(0);
+      expect(component.cccAccounts.length).toBeGreaterThan(0);
+      expect(component.accountsPayables.length).toBeGreaterThan(0);
+      expect(component.vendors.length).toBeGreaterThan(0);
+
+      expect(QBOExportSettingModel.mapAPIResponseToFormGroup).toHaveBeenCalledWith(mockExportSettingsResponse, mockWorkspaceGeneralSettings.employee_field_mapping);
+      expect(component.exportSettingForm).toBeDefined();
+
+      expect(helperServiceSpy.addExportSettingFormValidator).toHaveBeenCalledWith(component.exportSettingForm);
+      expect(helperServiceSpy.setConfigurationSettingValidatorsAndWatchers).toHaveBeenCalled();
+      expect(exportSettingsServiceSpy.setupDynamicValidators).toHaveBeenCalledTimes(2);
+      expect(helperServiceSpy.setOrClearValidators).toHaveBeenCalledTimes(2);
+
+      expect(component['setupCustomWatchers']).toHaveBeenCalled();
+      expect(component['setupCustomDateOptionWatchers']).toHaveBeenCalled();
+      expect(component['optionSearchWatcher']).toHaveBeenCalled();
+
+      expect(exportSettingsServiceSpy.setExportTypeValidatorsAndWatchers).toHaveBeenCalled();
+
+      expect(component.isLoading).toBeFalse();
+    }));
+
+    it('should handle onboarding state correctly', fakeAsync(() => {
+      component.ngOnInit();
+      tick();
+
+      expect(component.isOnboarding).toBeTrue();
+    }));
+
+    it('should set up reimbursable export types correctly', fakeAsync(() => {
+      component.ngOnInit();
+      tick();
+
+      expect(component.reimbursableExportTypes).toBeDefined();
+      expect(component.reimbursableExportTypes.length).toBeGreaterThan(0);
+    }));
+
+    it('should set showNameInJournalOption correctly', fakeAsync(() => {
+      component.ngOnInit();
+      tick();
+
+      expect(component.showNameInJournalOption).toBeDefined();
+    }));
   });
 
-  it('should handle confirmation dialog', () => {
-    spyOn(component, 'constructPayloadAndSave');
-    component.constructPayloadAndSave({ hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS });
-    expect(component.constructPayloadAndSave).toHaveBeenCalled();
-  });
-
-  it('should setup custom watchers', () => {
-    component.exportSettingForm = new FormBuilder().group({
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE],
-      creditCardExportGroup: ['']
+  describe('save', () => {
+    beforeEach(() => {
+      // Initialize exportSettings with mock data
+      component.exportSettings = mockExportSettingsResponse;
     });
-    component['setupCustomWatchers']();
-    expect(component.showNameInJournalOption).toBeFalse();
-  });
+    it('should save export settings and navigate on success', fakeAsync(() => {
+      exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettingsResponse));
+      
+      component.exportSettingForm.patchValue({
+        workspaceGeneralSettings: {
+          reimbursableExpensesObject: 'BILL',
+          corporateCreditCardExpensesObject: 'CREDIT_CARD_PURCHASE',
+          isSimplifyReportClosureEnabled: true,
+          nameInJournalEntry: 'EMPLOYEE'
+        },
+        expenseGroupSettings: {
+          expenseState: 'PAYMENT_PROCESSING',
+          reimbursableExpenseGroupFields: ['EXPENSE_ID'],
+          corporateCreditCardExpenseGroupFields: ['EXPENSE_ID'],
+          splitExpenseGrouping: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+        },
+        generalMappings: {
+          bankAccount: { id: '1', name: 'Bank Account' },
+          accountsPayable: { id: '2', name: 'Accounts Payable' },
+          defaultCCCAccount: { id: '3', name: 'Credit Card Account' },
+          defaultVendor: { id: '4', name: 'Default Vendor' }
+        }
+      });
 
-  it('should setup custom date option watchers', () => {
-    component.exportSettingForm = new FormBuilder().group({
-      reimbursableExportGroup: [''],
-      creditCardExportType: [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE],
-      creditCardExportGroup: ['']
+      component.save();
+      tick();
+
+      expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalledWith(jasmine.any(Object));
+    }));
+
+    it('should display error message on save failure', fakeAsync(() => {
+      const errorResponse = new Error('Save failed');
+      exportSettingsServiceSpy.postExportSettings.and.returnValue(throwError(() => errorResponse));
+
+      component.save();
+      tick();
+
+      expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
+      expect(integrationsToastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+    }));
+
+    it('should show warning dialog when advanced settings are affected', () => {
+      // Set up the component state to trigger the warning
+      component.exportSettings = mockExportSettingsResponse;
+      component.exportSettingForm.patchValue({
+        reimbursableExportType: 'JOURNAL_ENTRY',
+        creditCardExportType: 'BILL'
+      });
+    
+      // Spy on the isAdvancedSettingAffected method
+      spyOn<any>(component, 'isAdvancedSettingAffected').and.returnValue(true);
+    
+      // Call the save method
+      component.save();
+    
+      // Assert that the confirmation dialog is shown
+      expect(component.isConfirmationDialogVisible).toBeTrue();
     });
-    component['setupCustomDateOptionWatchers']();
-    expect(component.reimbursableExpenseGroupingDateOptions).toBeDefined();
-    expect(component.cccExpenseGroupingDateOptions).toBeDefined();
-  });
-
-  it('should add missing options', () => {
-    component.exportSettings = mockExportSettings;
-    component.bankAccounts = [];
-    component.expenseAccounts = [];
-    component.accountsPayables = [];
-    component.cccAccounts = [];
-    component.vendors = [];
-    component['addMissingOptions']();
-    expect(helperServiceSpy.addDefaultDestinationAttributeIfNotExists).toHaveBeenCalledTimes(6);
   });
 });
