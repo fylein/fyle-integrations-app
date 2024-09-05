@@ -92,7 +92,7 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   importCodeField: FormGroup[] = [];
 
-  acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
+  acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT, IntacctCategoryDestination.EXPENSE_TYPE];
 
   existingFields: string[] = ['employee id', 'organisation name', 'employee name', 'employee email', 'expense date', 'expense date', 'expense id', 'report id', 'employee id', 'department', 'state', 'reporter', 'report', 'purpose', 'vendor', 'category', 'category code', 'mileage distance', 'mileage unit', 'flight from city', 'flight to city', 'flight from date', 'flight to date', 'flight from class', 'flight to class', 'hotel checkin', 'hotel checkout', 'hotel location', 'hotel breakfast', 'currency', 'amount', 'foreign currency', 'foreign amount', 'tax', 'approver', 'project', 'billable', 'cost center', 'cost center code', 'approved on', 'reimbursable', 'receipts', 'paid date', 'expense created date'];
 
@@ -104,6 +104,18 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567: Meals & Entertainment'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Meals & Entertainment'
+      }
+    ],
+    "EXPENSE_TYPE": [
       {
         label: 'Import Codes + Names',
         value: true,
@@ -166,6 +178,10 @@ export class IntacctImportSettingsComponent implements OnInit {
   addImportCodeField(event: any, sourceField: string) {
     // Get the reference to the FormArray from the form
     const importCodeFieldsArray = this.importSettingsForm.get('importCodeFields') as FormArray;
+
+    if (sourceField === IntacctCategoryDestination.GL_ACCOUNT) {
+      sourceField = IntacctCategoryDestination.ACCOUNT;
+    }
 
     if (event.checked && this.acceptedImportCodeField.includes(sourceField)) {
       // Create a new FormGroup
@@ -536,6 +552,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
     }
 
+    if (this.importSettings.configurations.import_code_fields.length > 0 && !this.importSettings.configurations.import_code_fields.includes(this.intacctCategoryDestination) && this.intacctImportCodeConfig[this.intacctCategoryDestination] && this.importSettings.configurations.import_categories) {
+      this.addImportCodeField({checked: true}, this.intacctCategoryDestination);
+    }
+
     // Disable toggle for expense fields that are dependent
     const expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
 
@@ -619,6 +639,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         } else {
           this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
         }
+
         this.initializeForm(importSettings);
       }
     );
