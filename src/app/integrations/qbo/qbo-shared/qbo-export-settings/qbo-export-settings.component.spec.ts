@@ -10,13 +10,13 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { 
-  mockExportSettingsResponse, 
-  mockBankAccounts, 
-  mockCreditCardAccounts, 
-  mockAccountsPayable, 
-  mockVendors, 
-  mockWorkspaceGeneralSettings, 
+import {
+  mockExportSettingsResponse,
+  mockBankAccounts,
+  mockCreditCardAccounts,
+  mockAccountsPayable,
+  mockVendors,
+  mockWorkspaceGeneralSettings,
   mockSaveResponse
 } from '../../qbo.fixture';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
@@ -79,7 +79,7 @@ describe('QboExportSettingsComponent', () => {
     integrationsToastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
-    
+
     // Mock setupCustomWatchers
     const componentSpies = jasmine.createSpyObj('QboExportSettingsComponent', [
       'setupCustomWatchers',
@@ -146,9 +146,11 @@ describe('QboExportSettingsComponent', () => {
       expect(helperServiceSpy.setConfigurationSettingValidatorsAndWatchers).toHaveBeenCalled();
       expect(exportSettingsServiceSpy.setupDynamicValidators).toHaveBeenCalledTimes(2);
       expect(helperServiceSpy.setOrClearValidators).toHaveBeenCalledTimes(2);
-
+      // eslint-disable-next-line dot-notation
       expect(component['setupCustomWatchers']).toHaveBeenCalled();
+      // eslint-disable-next-line dot-notation
       expect(component['setupCustomDateOptionWatchers']).toHaveBeenCalled();
+      // eslint-disable-next-line dot-notation
       expect(component['optionSearchWatcher']).toHaveBeenCalled();
 
       expect(exportSettingsServiceSpy.setExportTypeValidatorsAndWatchers).toHaveBeenCalled();
@@ -186,7 +188,7 @@ describe('QboExportSettingsComponent', () => {
     });
     it('should save export settings and navigate on success', fakeAsync(() => {
       exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettingsResponse));
-      
+
       component.exportSettingForm.patchValue({
         workspaceGeneralSettings: {
           reimbursableExpensesObject: 'BILL',
@@ -232,13 +234,13 @@ describe('QboExportSettingsComponent', () => {
         reimbursableExportType: 'JOURNAL_ENTRY',
         creditCardExportType: 'BILL'
       });
-    
+
       // Spy on the isAdvancedSettingAffected method
       spyOn<any>(component, 'isAdvancedSettingAffected').and.returnValue(true);
-    
+
       // Call the save method
       component.save();
-    
+
       // Assert that the confirmation dialog is shown
       expect(component.isConfirmationDialogVisible).toBeTrue();
     });
