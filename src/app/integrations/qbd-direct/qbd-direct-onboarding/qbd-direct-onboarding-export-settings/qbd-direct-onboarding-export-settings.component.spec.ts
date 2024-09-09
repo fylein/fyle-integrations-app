@@ -11,7 +11,7 @@ describe('QbdDirectOnboardingExportSettingsComponent', () => {
       imports: [QbdDirectOnboardingExportSettingsComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectOnboardingExportSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

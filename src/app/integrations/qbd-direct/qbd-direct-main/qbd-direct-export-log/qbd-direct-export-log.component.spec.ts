@@ -11,7 +11,7 @@ describe('QbdDirectExportLogComponent', () => {
       imports: [QbdDirectExportLogComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectExportLogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

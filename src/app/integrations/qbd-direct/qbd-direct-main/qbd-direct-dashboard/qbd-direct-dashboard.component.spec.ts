@@ -11,7 +11,7 @@ describe('QbdDirectDashboardComponent', () => {
       imports: [QbdDirectDashboardComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

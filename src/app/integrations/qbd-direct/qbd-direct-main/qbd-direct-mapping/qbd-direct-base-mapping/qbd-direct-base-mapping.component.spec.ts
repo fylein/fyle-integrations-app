@@ -11,7 +11,7 @@ describe('QbdDirectBaseMappingComponent', () => {
       imports: [QbdDirectBaseMappingComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectBaseMappingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

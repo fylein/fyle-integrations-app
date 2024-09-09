@@ -11,7 +11,7 @@ describe('QbdDirectConfigurationComponent', () => {
       imports: [QbdDirectConfigurationComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectConfigurationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
