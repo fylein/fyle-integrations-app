@@ -4,6 +4,91 @@ import config from './config.json';
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
 export const fyleContents = {
+    qbd_direct: {
+        landing: {
+            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            guideHeaderText: 'Guide to setup your integrations'
+        },
+        configuration: {
+            connector: {
+                configurationHeaderText: 'Connect to NetSuite Tenant',
+                configurationSubHeaderText: 'Connect to the NetSuite Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and NetSuite Tenant cannot be changed once the configuration steps are complete.',
+                stepName: 'Connect to NetSuite',
+                subLabel: 'Expenses will be posted to the NetSuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+            },
+            exportSetting: {
+                stepName: 'Export Settings',
+                headerText: ' Export Corporate Card Expenses',
+                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite',
+                corporateCard: {
+                    creditCardExpenseLabel: 'How should the expenses be exported?',
+                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
+                    creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                    expenseState: 'Select export state',
+                    creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
+                    creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    creditCardExpenseSubLabel: 'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.',
+                    cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
+                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
+                    defaultDebitCardAccountLabel: 'Set Employee Payables Account as',
+                    defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
+                    defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
+                    accountsPayableLabel: 'Set Vendor Payables Account as',
+                    journalOptionLabel: 'Name in Journal Entry',
+                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
+                }
+            },
+            importSetting: {
+                stepName: 'Import Settings',
+                headerText: '',
+                contentText: 'In this section, you can choose the fields required to be imported from NetSuite to ' + brandingConfig.brandName + '. ',
+                importCategoriesLabel: ' as Categories in ' + brandingConfig.brandName,
+                importCategoriesSubLabel: ' will be available as Categories in ' + brandingConfig.brandName + '.',
+                importCustomersLabel: 'Import Customers from NetSuite',
+                importCustomersSubLabel: 'The Customers in NetSuite will be imported as Projects in Fyle and will be a selectable field while creating an expense',
+                taxCodeLabel: 'Import Tax from NetSuite',
+                taxCodeSubLabel: 'The imported Tax codes from NetSuite will be set as Tax group in ',
+                defaultTaxCodeLabel: 'Select Default Tax Code',
+                importSuppliersAsMerchantsLabel: 'Import Suppliers from NetSuite as Merchants',
+                importSuppliersAsMerchantsSubLabel: 'The Suppliers in NetSuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
+                notes: 'NOTE: To export billable expenses from Fyle, import Customers from NetSuite as Projects in Fyle.',
+                toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                importVendorsAsMerchantsLabel: 'Import Vendors from NetSuite',
+                importNetsuiteEmployeesLabel: 'Import NetSuite Employee as Employee in ' + brandingConfig.brandName,
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite Employee will be available as Employee in ' + brandingConfig.brandName+ '.',
+                customSegmentHeader: 'Add Custom Segment/List/Record',
+                importProjectsLabel: 'Import Projects from NetSuite',
+                importItemsLabel: 'Import Items from NetSuite'
+            },
+            advancedSettings: {
+                stepName: 'Advanced Settings',
+                contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
+                scheduleAutoExport: 'Schedule automatic export',
+                email: 'Send error notification to',
+                paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                autoCreateVendorsLabel: 'Auto create ',
+                autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on NetSuite',
+                billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
+                postEntriesCurrentPeriod: 'Post entries in the next open accounting period',
+                dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in NetSuite.',
+                dfvLabel: 'Default Field Values',
+                changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.',
+                defaultPaymentAccount: 'Select Payment Bank Account',
+                memoStructureLabel: 'Set the line item-level description field in NetSuite',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite.',
+                customizationSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite, You can choose what data points need to be exported and what shouldn\'t be.',
+                automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to NetSuite.',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
+                preferenceLabel: 'Other Preferences',
+                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from Fyle. (when there is no employee record found, or when the accounting period is closed).',
+                previewDescriptionFieldLabel: 'Preview of the Description Field',
+                autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
+            }
+        }
+    },
     netsuite: {
         landing: {
             contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
