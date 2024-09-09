@@ -90,7 +90,8 @@ export enum AppName {
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
-  XERO = 'Xero'
+  XERO = 'Xero',
+  QBD_DIRECT = 'QuickBooks Desktop Direct'
 }
 
 export enum AppNameInService {
@@ -780,7 +781,8 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'TP'
+  TRAVELPERK = 'TP',
+  QBD_DIRECT = 'QBDD'
 }
 
 export enum ReimbursableImportState {
