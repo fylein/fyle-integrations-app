@@ -35,7 +35,8 @@ import { Router } from '@angular/router';
     SharedModule,
     RippleModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    Sage300ConfigurationModule
+    Sage300ConfigurationModule,
+    HttpClientModule
   ],
   providers: [
     MessageService,

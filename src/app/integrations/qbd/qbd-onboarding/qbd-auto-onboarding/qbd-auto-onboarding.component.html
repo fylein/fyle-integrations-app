@@ -1,48 +1,57 @@
 <p-dialog 
-  [(visible)]="displayDialog"
-  [dismissableMask]="true"
-  [showHeader]="false"
-  [modal]="true"
-  [draggable]="false"
-  [style]="{width: '468px'}"
+[(visible)]="displayConfirmDialog"
+[dismissableMask]="true"
+[modal]="true"
+[draggable]="false"
+[resizable]="false"
+[style]="{width: '400px', padding: '1rem'}"
+styleClass="ai-onboarding-dialog"
 >
-  <div [formGroup]="customFieldForm">
-    <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
-      <div class="tw-flex tw-justify-between tw-items-center">
-        <p class="tw-text-20-px tw-font-500">AI Onboarding</p>
-      </div>
-    </div>
-    
-    <div class="tw-p-24-px">
-      <div *ngIf="!showTextArea">
-        <p class="tw-pb-16-px tw-text-sub-text-color tw-text-14-px">
-          Do you want to explain how you use your accounting software, and let our Fyle AI Onboard the org for you?
-        </p>
-        <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
-          <button type="button" class="cancel-btn" (click)="onNoClick()">
-            No
-          </button>
-          <button type="button" class="save-btn" pButton (click)="onYesClick()">
-            Yes
-          </button>
-        </div>
-      </div>
-      
-      <div *ngIf="showTextArea">
-        <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
-          Explain how you use your accounting software <span class="tw-text-mandatory-field-color">*</span>
-        </p>
-        <textarea pInputTextarea formControlName="explanation" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px" rows="5" [autoResize]="true" placeholder="Enter your explanation"></textarea>
-        
-        <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
-          <button type="button" class="cancel-btn" (click)="onNoClick()">
-            Cancel
-          </button>
-          <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid" (click)="onSubmit()">
-            Submit
-          </button>
-        </div>
-      </div>
+<ng-template pTemplate="header">
+  <h2>AI Onboarding</h2>
+</ng-template>
+<p>Do you want to use AI Onboarding?</p>
+<ng-template pTemplate="footer">
+  <button pButton (click)="onConfirmYes()" label="Yes" class="p-button-rounded p-button-primary"></button>
+  <button pButton (click)="onConfirmNo()" label="No" class="p-button-rounded p-button-secondary"></button>
+</ng-template>
+</p-dialog>
+
+<!-- AI Onboarding Chat Dialog -->
+<p-dialog 
+[(visible)]="displayChatDialog"
+[dismissableMask]="true"
+[showHeader]="false"
+[modal]="true"
+[draggable]="false"
+[resizable]="false"
+[style]="{width: '500px'}"
+styleClass="modern-chat-dialog"
+>
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>QBD AI Onboarding</h2>
+  </div>
+  
+  <div class="chat-messages" #chatMessages>
+    <div *ngFor="let message of messages" 
+         [@messageAnimation]
+         [ngClass]="{'ai-message': message.sender === 'ai', 'user-message': message.sender === 'user'}">
+      {{ message.content }}
     </div>
   </div>
+  
+  <div class="chat-input" [ngClass]="{'first-response': isFirstResponse}">
+    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+      <textarea 
+        pInputTextarea 
+        formControlName="userInput" 
+        [autoResize]="true"
+        placeholder="Type your answer here..."
+        (keydown.enter)="onEnterKey($event)"
+      ></textarea>
+      <button type="submit" pButton [disabled]="!chatForm.valid" *ngIf="showSendButton">Send</button>
+    </form>
+  </div>
+</div>
 </p-dialog>
