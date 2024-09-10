@@ -22,7 +22,7 @@
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
 
-                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
+                    <div class="tw-pr-24-px tw-pl-64-px tw-pt-0 tw-pb-24-px" *ngIf="importSettingForm.value.importCategories">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
                                 {{brandingContent.chartOfAccountTypes}}
@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                    <!-- <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
                         <app-configuration-select-field
                             [appName]="appName"
                             [form]="importSettingForm"
@@ -58,7 +58,7 @@
                             [isDisabled]="!qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
                             [formControllerName]="'importCategoryCode'">
                         </app-configuration-select-field>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
