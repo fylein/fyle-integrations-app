@@ -548,7 +548,8 @@ export enum AppUrl {
   INTEGRATION = 'integration',
   QBO = 'qbo',
   NETSUITE = 'netsuite',
-  XERO = 'xero'
+  XERO = 'xero',
+  QBD_DIRECT = 'qbd_direct'
 }
 
 export enum Sage300ExportType {
