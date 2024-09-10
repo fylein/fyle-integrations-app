@@ -10,7 +10,7 @@ export type QBOImportSettingWorkspaceGeneralSetting = {
   import_vendors_as_merchants: boolean,
   charts_of_accounts: string[],
   import_tax_codes: boolean,
-  import_code_fields: string[]
+  import_code_fields?: string[]
 }
 
 export type QBOImportSettingGeneralMapping = {
@@ -54,7 +54,8 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
       searchOption: new FormControl(''),
       importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-      importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
+      // ImportCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
+      importCategoryCode: new FormControl(null)
     });
   }
 
@@ -69,8 +70,8 @@ export class QBOImportSettingModel extends ImportSettingsModel {
         import_items: importSettingsForm.get('importItems')?.value,
         charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
-        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
-        import_code_fields: importSettingsForm.get('importCodeFields')?.value
+        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value
+        // Import_code_fields: importSettingsForm.get('importCodeFields')?.value
       },
       mapping_settings: mappingSettings,
       general_mappings: {
