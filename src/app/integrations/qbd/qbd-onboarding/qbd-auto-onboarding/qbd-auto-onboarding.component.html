@@ -1,14 +1,18 @@
 <p-dialog 
 [(visible)]="displayConfirmDialog"
-[dismissableMask]="true"
+[closable]="false"
+[closeOnEscape]="false"
 [modal]="true"
 [draggable]="false"
 [resizable]="false"
-[style]="{width: '400px', padding: '1rem'}"
-styleClass="ai-onboarding-dialog"
+[style]="{width: '400px'}"
+styleClass="ai-onboarding-dialog confirm-dialog"
 >
 <ng-template pTemplate="header">
-  <h2>AI Onboarding</h2>
+  <div class="dialog-header">
+    <h2>AI Onboarding</h2>
+    <span class="close-icon" (click)="closeConfirmDialog()">&#10005;</span>
+  </div>
 </ng-template>
 <p>Do you want to use AI Onboarding?</p>
 <ng-template pTemplate="footer">
@@ -20,24 +24,31 @@ styleClass="ai-onboarding-dialog"
 <!-- AI Onboarding Chat Dialog -->
 <p-dialog 
 [(visible)]="displayChatDialog"
-[dismissableMask]="true"
+[closable]="false"
+[closeOnEscape]="false"
 [showHeader]="false"
 [modal]="true"
 [draggable]="false"
 [resizable]="false"
 [style]="{width: '500px'}"
-styleClass="modern-chat-dialog"
+styleClass="ai-onboarding-dialog chat-dialog"
 >
 <div class="chat-container">
   <div class="chat-header">
     <h2>QBD AI Onboarding</h2>
+    <span class="close-icon" (click)="closeChatDialog()">&#10005;</span>
   </div>
   
   <div class="chat-messages" #chatMessages>
     <div *ngFor="let message of messages" 
-         [@messageAnimation]
-         [ngClass]="{'ai-message': message.sender === 'ai', 'user-message': message.sender === 'user'}">
+         [ngClass]="{'ai-message': message.sender === 'ai', 'user-message': message.sender === 'user'}"
+         [@messageAnimation]>
       {{ message.content }}
+    </div>
+    <div *ngIf="isLoading" class="loading-indicator" [@messageAnimation]>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
   
@@ -54,4 +65,28 @@ styleClass="modern-chat-dialog"
     </form>
   </div>
 </div>
+</p-dialog>
+
+<!-- New confirmation popup -->
+<p-dialog 
+[(visible)]="showCloseConfirmation"
+[closable]="false"
+[closeOnEscape]="false"
+[modal]="true"
+[draggable]="false"
+[resizable]="false"
+[style]="{width: '400px'}"
+styleClass="ai-onboarding-dialog confirm-dialog"
+>
+<ng-template pTemplate="header">
+  <div class="dialog-header">
+    <h2>Confirm Action</h2>
+    <span class="close-icon" (click)="confirmClose(false)">&#10005;</span>
+  </div>
+</ng-template>
+<p>Are you sure you want to close and proceed with manual onboarding?</p>
+<ng-template pTemplate="footer">
+  <button pButton (click)="confirmClose(true)" label="Yes" class="p-button-rounded p-button-primary"></button>
+  <button pButton (click)="confirmClose(false)" label="No" class="p-button-rounded p-button-secondary"></button>
+</ng-template>
 </p-dialog>

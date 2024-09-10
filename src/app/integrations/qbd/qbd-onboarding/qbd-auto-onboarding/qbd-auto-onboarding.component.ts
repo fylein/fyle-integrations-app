@@ -9,6 +9,7 @@ import { QbdOnboardingService } from 'src/app/core/services/qbd/qbd-helper.servi
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { Router } from '@angular/router';
 
 interface Message {
   sender: 'ai' | 'user';
@@ -27,6 +28,12 @@ export interface ExportSettings {
   reimbursable_expense_grouped_by: string | null;
   reimbursable_expense_state: string | null;
   reimbursable_expenses_export_type: string | null;
+}
+
+interface FinalResponse {
+  output_export_settings?: any;
+  output_field_mapping?: any;
+  output_advanced_settings?: any;
 }
 
 @Component({
@@ -56,6 +63,7 @@ export class QbdAutoOnboardingComponent implements OnInit {
   displayConfirmDialog: boolean = false;
   displayChatDialog: boolean = false;
   chatForm: FormGroup;
+  showCloseConfirmation: boolean = false;
 
   messages: Message[] = [];
   currentQuestionIndex = 0;
@@ -75,10 +83,16 @@ export class QbdAutoOnboardingComponent implements OnInit {
 
   conversationId: number = 1;
 
+  finalResponsesReceived: number = 0;
+  finalResponses: FinalResponse = {};
+
+  isLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private qbdOnboardingService: QbdOnboardingService,
-    private qbdExportSettings: QbdExportSettingService
+    private qbdExportSettings: QbdExportSettingService,
+    private router: Router,
   ) {
     this.chatForm = this.fb.group({
       userInput: ['', Validators.required]
@@ -96,12 +110,13 @@ export class QbdAutoOnboardingComponent implements OnInit {
 
   onConfirmNo() {
     this.displayConfirmDialog = false;
+    this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
     // You can add any additional logic here if needed when the user declines
   }
 
   startOnboarding() {
     this.displayChatDialog = true;
-    this.askQuestion();
+    this.initializeChat();
   }
 
   private scrollToBottom(): void {
@@ -118,26 +133,55 @@ export class QbdAutoOnboardingComponent implements OnInit {
     if (this.chatForm.valid) {
       const userInput = this.chatForm.get('userInput')?.value;
       this.addMessage('user', userInput);
-
-      this.qbdOnboardingService.sendMessage(userInput, this.conversationId).subscribe(
-        (response) => {
-          if (response.output_type === 'CONVERSATION') {
-            const output = response.output as { question: string };
-            this.addMessage('ai', output.question);
-          } else if (response.output_type === 'FINAL') {
-            this.addMessage('ai', 'We have successfully set up your QBD Accounting Software.');
-            this.sendExportSettings(response.output as ExportSettings);
+      this.chatForm.reset();
+      this.isLoading = true;
+  
+      setTimeout(() => {
+        this.qbdOnboardingService.sendMessage(userInput, this.conversationId).subscribe(
+          (response) => {
+            this.isLoading = false;
+            if (response.output_type === 'CONVERSATION') {
+              const output = response.output as { question: string };
+              this.addMessage('ai', output.question);
+            } else if (response.output_type === 'FINAL') {
+              this.handleFinalResponse(response.output);
+            }
+            this.showSendButton = true;
+            this.isFirstResponse = false;
+          },
+          (error) => {
+            this.isLoading = false;
+            console.error('Error:', error);
+            this.addMessage('ai', 'Sorry, there was an error processing your request.');
           }
-          this.chatForm.reset();
-          this.showSendButton = true;
-          this.isFirstResponse = false;
-        },
-        (error) => {
-          console.error('Error:', error);
-          this.addMessage('ai', 'Sorry, there was an error processing your request.');
-        }
-      );
+        );
+      }, 1000); // 1 second delay
     }
+  }
+
+  private handleFinalResponse(output: any) {
+    this.finalResponsesReceived++;
+
+    if (output.output_export_settings) {
+      this.finalResponses.output_export_settings = output.output_export_settings;
+    } else if (output.output_field_mapping) {
+      this.finalResponses.output_field_mapping = output.output_field_mapping;
+    } else if (output.output_advanced_settings) {
+      this.finalResponses.output_advanced_settings = output.output_advanced_settings;
+    }
+
+    if (this.finalResponsesReceived === 3) {
+      this.completeOnboarding();
+    } else {
+      this.addMessage('ai', 'Great! Let\'s continue with the next set of questions.');
+    }
+  }
+
+  private completeOnboarding() {
+    this.addMessage('ai', 'We have successfully set up your QBD Accounting Software.');
+    this.sendExportSettings(this.finalResponses.output_export_settings);
+    // You might want to send other settings as well
+    this.conversationComplete = true;
   }
 
   private convertToQBDExportSettingPost(settings: ExportSettings): QBDExportSettingPost {
@@ -182,14 +226,30 @@ export class QbdAutoOnboardingComponent implements OnInit {
   }
 
   closeChatDialog() {
-    this.displayChatDialog = false;
+    this.showCloseConfirmation = true;
+  }
+
+  confirmClose(confirmed: boolean) {
+    this.showCloseConfirmation = false;
+    if (confirmed) {
+      this.displayChatDialog = false;
+      this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
+    }
+    // If not confirmed, just close the confirmation dialog and do nothing else
   }
 
   askQuestion() {
-    // Remove this method or keep it empty as we're now using the API for questions
+    // If you want to ask a specific question after the initial greeting, you can add it here
+    // For now, we'll leave it empty as we're using the API for questions
   }
 
   ngOnInit() {
     this.showConfirmDialog();
+  }
+
+  private initializeChat() {
+    this.messages = []; // Clear any existing messages
+    this.addMessage('ai', 'Hey admin, tell us how you use your quickbooks desktop software?');
+    this.askQuestion();
   }
 }

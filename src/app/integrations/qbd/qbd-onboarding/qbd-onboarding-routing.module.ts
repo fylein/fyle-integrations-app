@@ -6,6 +6,7 @@ import { QbdOnboardingExportSettingComponent } from './qbd-onboarding-export-set
 import { QbdOnboardingFieldSettingComponent } from './qbd-onboarding-field-setting/qbd-onboarding-field-setting.component';
 import { QbdLandingComponent } from './qbd-onboarding-landing/qbd-landing.component';
 import { QbdOnboardingComponent } from './qbd-onboarding.component';
+import { QbdAutoOnboardingComponent } from './qbd-auto-onboarding/qbd-auto-onboarding.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'landing',
         component: QbdLandingComponent
+      },
+      {
+        path: 'auto_onboard',
+        component: QbdAutoOnboardingComponent
       },
       {
         path: 'export_settings',
