@@ -359,10 +359,11 @@ export class QboCloneSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.cloneSetting.import_settings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.cloneQboImportCodeFieldCodeConfig));
-      } if (isImportCategoriesEnabled) {
-		    this.helperService.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+        // This.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.cloneSetting.import_settings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.cloneQboImportCodeFieldCodeConfig));
       }
+      // If (isImportCategoriesEnabled) {
+		  //   This.helperService.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+      // }
     });
   }
 
@@ -433,14 +434,14 @@ export class QboCloneSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.qboConnectorService.getQBOCredentials(),
       this.configurationService.getAdditionalEmails(),
-      this.qboImportSettingsService.getQBOFields(),
-      this.qboImportSettingsService.getImportCodeFieldConfig()
-    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields, qboImportCodeFieldCodeConfig]) => {
+      this.qboImportSettingsService.getQBOFields()
+      // This.qboImportSettingsService.getImportCodeFieldConfig()
+    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields]) => {
 
       const workspaceId = +this.workspaceService.getWorkspaceId();
       this.workspaceService.setWorkspaceId(cloneSetting.workspace_id);
 
-      this.qboImportSettingsService.getImportCodeFieldConfig().subscribe((cloneQboImportCodeFieldCodeConfig) => {
+      // This.qboImportSettingsService.getImportCodeFieldConfig().subscribe((cloneQboImportCodeFieldCodeConfig) => {
         this.cloneSetting = cloneSetting;
         this.workspaceService.setWorkspaceId(workspaceId);
 
@@ -487,9 +488,9 @@ export class QboCloneSettingsComponent implements OnInit {
         if (qboCredentials && qboCredentials.country !== 'US') {
           this.isTaxGroupSyncAllowed = true;
         }
-        this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
-        this.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
-        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, cloneQboImportCodeFieldCodeConfig);
+        // This.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
+        // This.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
+        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, this.cloneQboImportCodeFieldCodeConfig);
         this.fyleFields = fyleFieldsResponse;
         this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
         this.setupImportSettingFormWatcher();
@@ -507,7 +508,7 @@ export class QboCloneSettingsComponent implements OnInit {
         this.setupAdvancedSettingFormWatcher();
 
         this.isLoading = false;
-      });
+      // });
     });
   }
 

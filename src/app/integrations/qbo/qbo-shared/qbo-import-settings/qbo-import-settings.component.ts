@@ -152,7 +152,7 @@ export class QboImportSettingsComponent implements OnInit {
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
-      this.updateImportCodeFieldConfig();
+      // This.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.ADVANCED_CONFIGURATION);
         this.router.navigate([`/integrations/qbo/onboarding/advanced_settings`]);
@@ -220,10 +220,11 @@ export class QboImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
-      } if (isImportCategoriesEnabled) {
-		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+        // This.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
       }
+      // If (isImportCategoriesEnabled) {
+		  //   This.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+      // }
     });
   }
 
@@ -268,9 +269,9 @@ export class QboImportSettingsComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.qboConnectorService.getQBOCredentials(),
       this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo'),
-      this.importSettingService.getQBOFields(),
-      this.importSettingService.getImportCodeFieldConfig()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes, qboFields, importCodeFieldConfig]) => {
+      this.importSettingService.getQBOFields()
+      // This.importSettingService.getImportCodeFieldConfig()
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes, qboFields]) => {
       this.qboFields = qboFields;
       this.importSettings = importSettingsResponse;
       this.workspaceGeneralSettings = workspaceGeneralSettings;
@@ -281,11 +282,11 @@ export class QboImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
+      // This.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
-      this.updateImportCodeFieldConfig();
+      // This.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;
