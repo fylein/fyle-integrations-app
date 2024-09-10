@@ -19,13 +19,13 @@ export const c1Contents = {
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'Configure how and when expenses from Expense Management can be exported to NetSuite.',
+                contentText: 'Configure how and when expenses from Expense Management can be exported to QuickBooks Desktop.',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
-                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
+                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Desktop.',
                     creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                     expenseState: 'Select export state',
-                    creditCardExpenseSubLabel: 'Choose the type of NetSuite transaction to export your expenses.',
+                    creditCardExpenseSubLabel: 'Choose the type of QuickBooks Desktop transaction to export your expenses.',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from Expense Management?',
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
@@ -35,8 +35,8 @@ export const c1Contents = {
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
                     accountsPayableLabel: 'Set vendor payables account as',
-                    journalOptionLabel: 'Name in journal entry',
-                    journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
+                    journalOptionLabel: 'Set the purchased from field to',
+                    journalOptionSubLabel: 'Select how the vendor or employee should be represented as payee for the credit card purchase.'
                 }
             },
             importSetting: {

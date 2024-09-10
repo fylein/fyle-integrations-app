@@ -19,15 +19,15 @@ export const fyleContents = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite',
+                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
-                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
+                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Desktop.',
                     creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                     expenseState: 'Select export state',
                     creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
                     creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    creditCardExpenseSubLabel: 'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.',
+                    creditCardExpenseSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
                     defaultCCCAccountLabel: 'Set Default Credit Card Account as',
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
@@ -35,8 +35,8 @@ export const fyleContents = {
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
                     defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
                     accountsPayableLabel: 'Set Vendor Payables Account as',
-                    journalOptionLabel: 'Name in Journal Entry',
-                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
+                    journalOptionLabel: 'Set the purchased from field to',
+                    journalOptionSubLabel: 'Select how the vendor or employee should be represented as payee for the credit card purchase.'
                 }
             },
             importSetting: {

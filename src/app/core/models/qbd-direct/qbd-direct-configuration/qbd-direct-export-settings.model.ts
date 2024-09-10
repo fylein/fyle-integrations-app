@@ -31,12 +31,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static expenseGroupingFieldOptions(): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Report',
-            value: QBDExpenseGroupedBy.REPORT
+                label: 'Report',
+                value: QBDExpenseGroupedBy.REPORT
             },
             {
-            label: 'Expense',
-            value: QBDExpenseGroupedBy.EXPENSE
+                label: 'Expense',
+                value: QBDExpenseGroupedBy.EXPENSE
             }
         ];
     }
@@ -44,12 +44,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static reimbursableExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Spend Date',
-            value: QBDExportDateType.SPENT_AT
+                label: 'Spend Date',
+                value: QBDExportDateType.SPENT_AT
             },
             {
-            label: 'Date of export',
-            value: QBDExportDateType.LAST_SPENT_AT
+                label: 'Date of export',
+                value: QBDExportDateType.LAST_SPENT_AT
             }
         ];
     }
@@ -57,12 +57,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static creditCardExportTypes(): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Credit Card Purchase',
-            value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+                label: 'Credit Card Purchase',
+                value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
             },
             {
-            label: 'Journal Entry',
-            value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+                label: 'Journal Entry',
+                value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
             }
         ];
     }
@@ -70,12 +70,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static reimbursableExportTypes(): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Bill',
-            value: QBDReimbursableExpensesObject.BILL
+                label: 'Bill',
+                value: QBDReimbursableExpensesObject.BILL
             },
             {
-            label: 'Journal Entry',
-            value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
+                label: 'Journal Entry',
+                value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
             }
         ];
     }
@@ -83,12 +83,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static cccEntityNameOptions(): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Employee',
-            value: QBDEntity.EMPLOYEE
+                label: 'Employee',
+                value: QBDEntity.EMPLOYEE
             },
             {
-            label: 'Vendor',
-            value: QBDEntity.VENDOR
+                label: 'Vendor',
+                value: QBDEntity.VENDOR
             }
         ];
     }
@@ -96,12 +96,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static cccExpenseStateOptions(is_simplify_report_closure_enabled: boolean): QBDExportSettingFormOption[] {
         return [
             {
-            label: 'Approved',
-            value: CCCExpenseState.APPROVED
+                label: 'Approved',
+                value: CCCExpenseState.APPROVED
             },
             {
-            label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-            value: CCCExpenseState.PAID
+                label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+                value: CCCExpenseState.PAID
             }
         ];
     }
@@ -109,12 +109,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static expenseStateOptions(is_simplify_report_closure_enabled: boolean): QBDExportSettingFormOption[] {
         return [
             {
-            label: is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-            value: ExpenseState.PAYMENT_PROCESSING
+                label: is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+                value: ExpenseState.PAYMENT_PROCESSING
             },
             {
-            label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-            value: ExpenseState.PAID
+                label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+                value: ExpenseState.PAID
             }
         ];
     }
@@ -123,18 +123,18 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
           return [
             {
-              label: 'Card Transaction Post date',
-              value: QBDExportDateType.POSTED_AT
+                label: 'Card Transaction Post date',
+                value: QBDExportDateType.POSTED_AT
             },
             {
-              label: 'Spend Date',
-              value: QBDExportDateType.SPENT_AT
+                label: 'Spend Date',
+                value: QBDExportDateType.SPENT_AT
             }
           ];
         } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
           return this.reimbursableExpenseGroupingDateOptions().concat([{
-            label: 'Card Transaction Post date',
-            value: QBDExportDateType.POSTED_AT
+                label: 'Card Transaction Post date',
+                value: QBDExportDateType.POSTED_AT
           }]);
         }
         return [this.reimbursableExpenseGroupingDateOptions()[1]];
@@ -155,10 +155,10 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null): FormGroup {
         return new FormGroup({
             reimbursableExportType: new FormControl(exportSettings?.reimbursable_expenses_export_type),
-            reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type || false),
+            reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
             reimbursableExportGroup: new FormControl(exportSettings?.reimbursable_expense_grouped_by ? exportSettings?.reimbursable_expense_grouped_by : null),
             reimbursableExportDate: new FormControl(exportSettings?.reimbursable_expense_date ? exportSettings?.reimbursable_expense_date : null),
-            creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type || false),
+            creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type ? true : false),
             creditCardExportType: new FormControl(exportSettings?.credit_card_expense_export_type ? exportSettings?.credit_card_expense_export_type : null),
             creditCardExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions()[1].value),
             creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
