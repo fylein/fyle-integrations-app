@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -16,6 +16,7 @@ import { filter, forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -74,7 +75,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private router: Router,
     private exportSettingService: QbdExportSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    // Private workspaceService: QbdWorkspaceService,
+    private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     public helperService: HelperService,
@@ -82,11 +83,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   ) { }
 
   save() {
-    throw new Error('Method not implemented.');
+    this.isSaveInProgress = true;
+      const exportSettingPayload = QbdDirectExportSettingModel.constructPayload(this.exportSettingsForm);
+      this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QbdDirectExportSettingGet) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
+          this.router.navigate([`/integrations/qbd_direct/onboarding/import_settings`]);
+        }
+      }, () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
   }
 
   navigateToPreviousStep() {
-    throw new Error('Method not implemented.');
+    this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
   }
 
   refreshDimensions() {}

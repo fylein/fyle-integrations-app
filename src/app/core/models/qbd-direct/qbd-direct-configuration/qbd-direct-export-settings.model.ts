@@ -171,4 +171,24 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             searchOption: new FormControl([])
         });
     }
+
+    static constructPayload(exportSettingsForm: FormGroup): QbdDirectExportSettingsPost {
+        const exportSettingPayload: QbdDirectExportSettingsPost = {
+            reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+            bank_account_name: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : null,
+            mileage_account_name: exportSettingsForm.get('mileageAccountName')?.value ? exportSettingsForm.get('mileageAccountName')?.value : null,
+            reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
+            reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
+            reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
+            credit_card_expense_export_type: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
+            credit_card_expense_state: exportSettingsForm.get('creditCardExpenseState')?.value ? exportSettingsForm.get('creditCardExpenseState')?.value : null,
+            credit_card_entity_name_preference: exportSettingsForm.get('creditCardEntityName')?.value ? exportSettingsForm.get('creditCardEntityName')?.value : null,
+            credit_card_account_name: exportSettingsForm.get('creditCardAccount')?.value ? exportSettingsForm.get('creditCardAccount')?.value : null,
+            credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
+            credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
+            is_simplify_report_closure_enabled: false
+        };
+
+        return exportSettingPayload;
+    }
 }
