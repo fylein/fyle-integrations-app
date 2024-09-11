@@ -11,12 +11,12 @@ styleClass="ai-onboarding-dialog confirm-dialog"
 <ng-template pTemplate="header">
   <div class="dialog-header">
     <h2>AI Onboarding</h2>
-    <span class="close-icon" (click)="closeConfirmDialog()">&#10005;</span>
+    <!-- <span class="close-icon" (click)="closeConfirmDialog()">&#10005;</span> -->
   </div>
 </ng-template>
 <p>Do you want to use AI Onboarding?</p>
 <ng-template pTemplate="footer">
-  <button pButton (click)="onConfirmYes()" label="Yes" class="p-button-rounded p-button-primary"></button>
+  <button pButton (click)="onConfirmYes()" label="Yes, sure" class="p-button-rounded p-button-primary"></button>
   <button pButton (click)="onConfirmNo()" label="No" class="p-button-rounded p-button-secondary"></button>
 </ng-template>
 </p-dialog>
@@ -89,4 +89,22 @@ styleClass="ai-onboarding-dialog confirm-dialog"
   <button pButton (click)="confirmClose(true)" label="Yes" class="p-button-rounded p-button-primary"></button>
   <button pButton (click)="confirmClose(false)" label="No" class="p-button-rounded p-button-secondary"></button>
 </ng-template>
+</p-dialog>
+
+<!-- Redirect Progress Dialog -->
+<p-dialog 
+  [(visible)]="showRedirectProgress"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [showHeader]="false"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '400px'}"
+  styleClass="ai-onboarding-dialog redirect-dialog"
+>
+  <div class="redirect-content">
+    <p>Redirecting to export settings...</p>
+    <!-- <p-progressBar mode="indeterminate"></p-progressBar> -->
+  </div>
 </p-dialog>

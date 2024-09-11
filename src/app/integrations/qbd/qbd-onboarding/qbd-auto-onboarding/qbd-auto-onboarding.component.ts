@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -9,7 +9,12 @@ import { QbdOnboardingService } from 'src/app/core/services/qbd/qbd-helper.servi
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
+import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
+import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 
 interface Message {
   sender: 'ai' | 'user';
@@ -58,7 +63,9 @@ interface FinalResponse {
     ])
   ]
 })
-export class QbdAutoOnboardingComponent implements OnInit {
+export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
+  private routerSubscription: Subscription;
+
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
   displayConfirmDialog: boolean = false;
   displayChatDialog: boolean = false;
@@ -87,15 +94,23 @@ export class QbdAutoOnboardingComponent implements OnInit {
   finalResponses: FinalResponse = {};
 
   isLoading: boolean = false;
+  showRedirectProgress: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private qbdOnboardingService: QbdOnboardingService,
     private qbdExportSettings: QbdExportSettingService,
     private router: Router,
+    private qbdFieldMappingService: QbdFieldMappingService,
+    private qbdAdvancedSettingsService: QbdAdvancedSettingService,
   ) {
     this.chatForm = this.fb.group({
       userInput: ['', Validators.required]
+    });
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.cleanupDialogs();
+      }
     });
   }
   
@@ -110,8 +125,14 @@ export class QbdAutoOnboardingComponent implements OnInit {
 
   onConfirmNo() {
     this.displayConfirmDialog = false;
-    this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
-    // You can add any additional logic here if needed when the user declines
+    this.showRedirectProgress = true;
+
+    // Simulate a delay before redirecting (e.g., 2 seconds)
+    setTimeout(() => {
+      this.showRedirectProgress = false;
+      // Navigate to export settings page (update the route as needed)
+      this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
+    }, 2000);
   }
 
   startOnboarding() {
@@ -160,15 +181,19 @@ export class QbdAutoOnboardingComponent implements OnInit {
   }
 
   private handleFinalResponse(output: any) {
-    this.finalResponsesReceived++;
-
     if (output.output_export_settings) {
+      console.log('output.output_export_settings', output.output_export_settings);
       this.finalResponses.output_export_settings = output.output_export_settings;
+      this.sendExportSettings(output.output_export_settings);
     } else if (output.output_field_mapping) {
       this.finalResponses.output_field_mapping = output.output_field_mapping;
+      this.sendFieldMapping(output.output_field_mapping);
     } else if (output.output_advanced_settings) {
       this.finalResponses.output_advanced_settings = output.output_advanced_settings;
+      this.sendAdvancedSettings(output.output_advanced_settings);
     }
+
+    this.finalResponsesReceived++;
 
     if (this.finalResponsesReceived === 3) {
       this.completeOnboarding();
@@ -178,9 +203,7 @@ export class QbdAutoOnboardingComponent implements OnInit {
   }
 
   private completeOnboarding() {
-    this.addMessage('ai', 'We have successfully set up your QBD Accounting Software.');
-    this.sendExportSettings(this.finalResponses.output_export_settings);
-    // You might want to send other settings as well
+    // This method is now only responsible for marking the conversation as complete
     this.conversationComplete = true;
   }
 
@@ -201,13 +224,75 @@ export class QbdAutoOnboardingComponent implements OnInit {
     };
   }
 
+  private checkAllSettingsSent() {
+    if (this.settingsSent.exportSettings && this.settingsSent.fieldMapping && this.settingsSent.advancedSettings) {
+      this.addMessage('ai', 'We have successfully set up your QBD Accounting Software.');
+      this.conversationComplete = true;
+    }
+  }
+
   private sendExportSettings(settings: ExportSettings) {
     const payload = this.convertToQBDExportSettingPost(settings);
     this.qbdExportSettings.postQbdExportSettings(payload).subscribe(
-      () => console.log('Export settings sent successfully'),
+      () => {
+        console.log('Export settings sent successfully');
+        this.checkAllSettingsSent();
+      },
       error => console.error('Error sending export settings:', error)
     );
   }
+
+  private convertToQBDFieldMappingPost(fieldMapping: any): QBDFieldMappingPost {
+    return {
+      class_type: fieldMapping.class_type,
+      project_type: fieldMapping.project_type,
+      item_type: fieldMapping.item_type,
+    };
+  }
+
+  private sendFieldMapping(fieldMapping: any) {
+    const payload = this.convertToQBDFieldMappingPost(fieldMapping);
+    this.qbdFieldMappingService.postQbdFieldMapping(payload).subscribe(
+      () => {
+        console.log('Field mapping sent successfully');
+        this.settingsSent.fieldMapping = true;
+        this.checkAllSettingsSent();
+      },
+      error => console.error('Error sending field mapping:', error)
+    );
+  }
+
+  private settingsSent = {
+    exportSettings: false,
+    fieldMapping: false,
+    advancedSettings: false
+  };
+
+  private convertToQBDAdvancedSettingsPost(advancedSettings: any): QBDAdvancedSettingsPost {
+    return {
+      expense_memo_structure: advancedSettings.expense_memo_structure,
+      top_memo_structure: advancedSettings.top_memo_structure,
+      schedule_is_enabled: advancedSettings.schedule_is_enabled,
+      emails_selected: advancedSettings.emails_selected,
+      day_of_month: advancedSettings.day_of_month,
+      day_of_week: advancedSettings.day_of_week,
+      frequency: advancedSettings.frequency,
+      time_of_day: advancedSettings.time_of_day,
+    };
+  }
+
+  private sendAdvancedSettings(advancedSettings: any) {
+    const payload = this.convertToQBDAdvancedSettingsPost(advancedSettings);
+    this.qbdAdvancedSettingsService.postQbdAdvancedSettings(payload).subscribe(
+      () => {
+        console.log('Advanced settings sent successfully');
+        this.settingsSent.advancedSettings = true;
+        this.checkAllSettingsSent();
+      },
+      error => console.error('Error sending advanced settings:', error)
+    );
+  }
+  
 
   addMessage(sender: 'ai' | 'user', content: string) {
     this.messages.push({ sender, content });
@@ -227,15 +312,37 @@ export class QbdAutoOnboardingComponent implements OnInit {
 
   closeChatDialog() {
     this.showCloseConfirmation = true;
+    // We don't need to enable body scroll here anymore
   }
 
   confirmClose(confirmed: boolean) {
     this.showCloseConfirmation = false;
     if (confirmed) {
-      this.displayChatDialog = false;
+      this.cleanupDialogs();
       this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
     }
-    // If not confirmed, just close the confirmation dialog and do nothing else
+    // If not confirmed, we just close the confirmation dialog and do nothing else
+  }
+
+  private cleanupDialogs() {
+    this.displayChatDialog = false;
+    this.showCloseConfirmation = false;
+    this.displayConfirmDialog = false;
+    this.enableBodyScroll();
+  }
+
+  private enableBodyScroll() {
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
+    document.body.classList.remove('p-overflow-hidden');
+    
+    // Force enable scrolling
+    document.body.style.overflow = 'auto';
+    document.body.style.height = 'auto';
+    
+    // Remove any modal backdrops that might be left
+    const backdrops = document.querySelectorAll('.p-component-overlay');
+    backdrops.forEach(el => el.remove());
   }
 
   askQuestion() {
@@ -245,6 +352,13 @@ export class QbdAutoOnboardingComponent implements OnInit {
 
   ngOnInit() {
     this.showConfirmDialog();
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+    this.cleanupDialogs();
   }
 
   private initializeChat() {
