@@ -87,6 +87,24 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         return time;
     }
 
+    static getFrequencyTime(advancedSettingForm: FormGroup) {
+        if (advancedSettingForm.get('frequency')?.value){
+            const currentDate = `${advancedSettingForm.controls.timeOfDay.value} ${advancedSettingForm.controls.meridiem.value}`; // Create a new Date object with the Export Date and time in IST
+            const date = new Date(`01/01/2000 ${currentDate}`);
+
+            const hours = date.getUTCHours();
+            const minutes = date.getUTCMinutes();
+
+            // Convert the hours to a 2-digit string
+            const hour = hours.toString().padStart(2, '0');
+            const minute = minutes.toString().padStart(2, '0');
+            // Create the 24-hour GMT time string
+            const gmtTime24 = `${hour}:${minute}:00`;
+            return gmtTime24;
+        }
+        return null;
+    }
+
     static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet): FormGroup {
 
         const resultTime = this.initialTime(advancedSettings?.time_of_day);
@@ -103,6 +121,26 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             search: new FormControl(''),
             searchOption: new FormControl('')
         });
+    }
+
+    static constructPayload (advancedSettingForm: FormGroup): QbdDirectAdvancedSettingsPost {
+
+        const topMemo: string[] = [];
+        topMemo.push(advancedSettingForm.value.topMemoStructure);
+        const time = this.getFrequencyTime(advancedSettingForm);
+
+        const advancedSettingPayload: QbdDirectAdvancedSettingsPost = {
+            expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
+            top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
+            schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
+            emails_selected: advancedSettingForm.get('email')?.value ? advancedSettingForm.get('email')?.value : null,
+            day_of_month: advancedSettingForm.get('dayOfMonth')?.value ? advancedSettingForm.get('dayOfMonth')?.value : null,
+            day_of_week: advancedSettingForm.get('dayOfWeek')?.value ? advancedSettingForm.get('dayOfWeek')?.value : null,
+            frequency: advancedSettingForm.get('frequency')?.value ? advancedSettingForm.get('frequency')?.value : null,
+            time_of_day: advancedSettingForm.get('frequency')?.value ? time : null
+        };
+
+        return advancedSettingPayload;
     }
 }
 
