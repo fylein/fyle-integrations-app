@@ -83,15 +83,15 @@ export class QbdDashboardComponent implements OnInit {
 
   iifOptions = [
     { label: 'Export IIF file', icon: 'pi-file-export', action: () => this.triggerExports() },
-    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() },
+    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() }
   ];
 
   configOptions = [
-    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() },
+    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() }
   ];
 
   supportOptions = [
-    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() },
+    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() }
   ];
 
   constructor(
@@ -278,7 +278,6 @@ export class QbdDashboardComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event);
     if (event.metaKey && event.key === 'f') {
       event.preventDefault();
       this.toggleSpotlight();
@@ -287,7 +286,6 @@ export class QbdDashboardComponent implements OnInit {
 
   toggleSpotlight() {
     this.isSpotlightOpen = !this.isSpotlightOpen;
-    console.log('anish', this.isSpotlightOpen);
     if (this.isSpotlightOpen) {
       setTimeout(() => document.getElementById('spotlight-input')?.focus(), 0);
     }

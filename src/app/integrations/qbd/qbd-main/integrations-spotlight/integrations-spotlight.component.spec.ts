@@ -11,7 +11,7 @@ describe('IntegrationsSpotlightComponent', () => {
       imports: [IntegrationsSpotlightComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(IntegrationsSpotlightComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

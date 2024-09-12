@@ -14,10 +14,15 @@ import { Subject } from 'rxjs';
 })
 export class IntegrationsSpotlightComponent {
   @Input() isSpotlightOpen = false;
+
   @Input() iifOptions: any[] = [];
+
   @Input() configOptions: any[] = [];
+
   @Input() supportOptions: any[] = [];
+
   @Output() toggleSpotlight = new EventEmitter<void>();
+
   @Output() selectOption = new EventEmitter<any>();
 
   searchQuery = '';
@@ -41,7 +46,6 @@ export class IntegrationsSpotlightComponent {
     if (this.isSpotlightOpen) {
       this.toggleSpotlight.emit();
     }
-    console.log('anish', this.isSpotlightOpen);
   }
 
   onSelectOption(option: any) {
@@ -107,6 +111,7 @@ export class IntegrationsSpotlightComponent {
   }
 
   filteredOptions: any[] = [];
+
   private searchSubject = new Subject<string>();
 
   constructor(private http: HttpClient) {

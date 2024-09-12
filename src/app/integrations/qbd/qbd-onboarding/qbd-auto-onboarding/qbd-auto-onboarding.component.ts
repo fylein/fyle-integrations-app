@@ -67,13 +67,19 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
 
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
+
   displayConfirmDialog: boolean = false;
+
   displayChatDialog: boolean = false;
+
   chatForm: FormGroup;
+
   showCloseConfirmation: boolean = false;
 
   messages: Message[] = [];
+
   currentQuestionIndex = 0;
+
   conversationComplete = false;
 
   questions: string[] = [
@@ -86,14 +92,17 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   ];
 
   showSendButton: boolean = false;
+
   isFirstResponse: boolean = true;
 
   conversationId: string;
 
   finalResponsesReceived: number = 0;
+
   finalResponses: FinalResponse = {};
 
   isLoading: boolean = false;
+
   showRedirectProgress: boolean = false;
 
   constructor(
@@ -102,7 +111,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     private qbdExportSettings: QbdExportSettingService,
     private router: Router,
     private qbdFieldMappingService: QbdFieldMappingService,
-    private qbdAdvancedSettingsService: QbdAdvancedSettingService,
+    private qbdAdvancedSettingsService: QbdAdvancedSettingService
   ) {
     this.chatForm = this.fb.group({
       userInput: ['', Validators.required]
@@ -113,7 +122,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
   showConfirmDialog() {
     this.displayConfirmDialog = true;
   }
@@ -143,7 +152,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   private scrollToBottom(): void {
     try {
       this.chatMessagesContainer.nativeElement.scrollTop = this.chatMessagesContainer.nativeElement.scrollHeight;
-    } catch(err) { }
+    } catch (err) { }
   }
 
   ngAfterViewChecked() {
@@ -156,7 +165,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       this.addMessage('user', userInput);
       this.chatForm.reset();
       this.isLoading = true;
-  
+
       setTimeout(() => {
         this.qbdOnboardingService.sendMessage(userInput, this.conversationId).subscribe(
           (response) => {
@@ -170,7 +179,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
             }
             this.showSendButton = true;
             this.isFirstResponse = false;
-            console.log(this.conversationId, response);
           },
           (error) => {
             this.isLoading = false;
@@ -195,12 +203,12 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       this.sendAdvancedSettings(output.output_advanced_settings);
     }
 
-    // this.finalResponsesReceived++;
+    // This.finalResponsesReceived++;
 
-    // if (this.finalResponsesReceived === 3) {
+    // If (this.finalResponsesReceived === 3) {
       this.completeOnboarding();
     // } else {
-      // this.addMessage('ai', 'Great! Let\'s continue with the next set of questions.');
+      // This.addMessage('ai', 'Great! Let\'s continue with the next set of questions.');
     // }
   }
 
@@ -223,7 +231,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       credit_card_entity_name_preference: null, // This field is not present in ExportSettings
       credit_card_account_name: settings.credit_card_account_name,
       credit_card_expense_grouped_by: settings.credit_card_expense_grouped_by as QBDExpenseGroupedBy,
-      credit_card_expense_date: settings.credit_card_expense_date as QBDExportDateType,
+      credit_card_expense_date: settings.credit_card_expense_date as QBDExportDateType
     };
   }
 
@@ -249,7 +257,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     return {
       class_type: fieldMapping.class_type,
       project_type: fieldMapping.project_type,
-      item_type: fieldMapping.item_type,
+      item_type: fieldMapping.item_type
     };
   }
 
@@ -280,7 +288,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       day_of_month: advancedSettings.day_of_month,
       day_of_week: advancedSettings.day_of_week,
       frequency: advancedSettings.frequency,
-      time_of_day: advancedSettings.time_of_day,
+      time_of_day: advancedSettings.time_of_day
     };
   }
 
@@ -288,14 +296,13 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     const payload = this.convertToQBDAdvancedSettingsPost(advancedSettings);
     this.qbdAdvancedSettingsService.postQbdAdvancedSettings(payload).subscribe(
       () => {
-        console.log('Advanced settings sent successfully');
         this.settingsSent.advancedSettings = true;
         this.checkAllSettingsSent();
       },
       error => console.error('Error sending advanced settings:', error)
     );
   }
-  
+
 
   addMessage(sender: 'ai' | 'user', content: string) {
     this.messages.push({ sender, content });
@@ -338,11 +345,11 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     document.body.style.removeProperty('overflow');
     document.body.style.removeProperty('padding-right');
     document.body.classList.remove('p-overflow-hidden');
-    
+
     // Force enable scrolling
     document.body.style.overflow = 'auto';
     document.body.style.height = 'auto';
-    
+
     // Remove any modal backdrops that might be left
     const backdrops = document.querySelectorAll('.p-component-overlay');
     backdrops.forEach(el => el.remove());
