@@ -51,28 +51,23 @@ export class IntegrationsSpotlightComponent implements OnInit {
   }
 
   onSelectOption(option: any) {
-    console.log('onSelectOption called with option:', option);
     option.action();
     this.closeSpotlight();
   }
 
   onSearchInput() {
-    console.log('onSearchInput called with query:', this.searchQuery);
     this.searchSubject.next(this.searchQuery);
   }
 
   private performSearch(query: string) {
-    console.log('performSearch called with query:', query);
     this.filteredOptions = [];
     if (!query) {
-      console.log('Query is empty, showing all options');
       // If query is empty, show all options
       this.filteredOptions = [...this.iifOptions, ...this.configOptions, ...this.supportOptions];
       return;
     }
 
     const lowerQuery = query.toLowerCase();
-    console.log('Lowercase query:', lowerQuery);
 
     // Filter local options
     this.filteredOptions = [
@@ -80,14 +75,11 @@ export class IntegrationsSpotlightComponent implements OnInit {
       ...this.configOptions.filter(option => option.label.toLowerCase().includes(lowerQuery)),
       ...this.supportOptions.filter(option => option.label.toLowerCase().includes(lowerQuery))
     ];
-    console.log('Filtered local options:', this.filteredOptions);
 
     // Fetch additional results from the server
     this.http.post('api/workspaces/2/spotlight/query/', { query }).subscribe(
       (response: any) => {
-        console.log('Server response:', response);
-        // ... existing code to process server response ...
-        console.log('Final filtered options:', this.filteredOptions);
+        this.filteredOptions = [...this.filteredOptions, ...response];
       },
       error => {
         console.error('Error fetching search results:', error);
@@ -104,13 +96,12 @@ export class IntegrationsSpotlightComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(query => {
-      console.log('searchSubject emitted query:', query);
       this.performSearch(query);
     });
   }
 
   ngOnInit() {
     // Perform initial search
-    // this.performSearch(this.searchQuery);
+    // This.performSearch(this.searchQuery);
   }
 }

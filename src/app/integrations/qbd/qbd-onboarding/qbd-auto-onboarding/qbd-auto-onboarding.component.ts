@@ -155,11 +155,9 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   private scrollToBottom(): void {
     try {
       this.chatMessagesContainer.nativeElement.scrollTop = this.chatMessagesContainer.nativeElement.scrollHeight;
-    } catch (err) { }
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
+    } catch (error) {
+      console.error('Error scrolling to bottom:', error);
+    }
   }
 
   sendMessage() {
@@ -194,9 +192,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   }
 
   private handleFinalResponse(output: any) {
-    console.log('output', output);
     if (output.output_export_settings) {
-      console.log('output.output_export_settings', output.output_export_settings);
       this.finalResponses.output_export_settings = output.output_export_settings;
       this.sendExportSettings(output.output_export_settings);
     } if (output.output_field_mapping) {
@@ -250,7 +246,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     const payload = this.convertToQBDExportSettingPost(settings);
     this.qbdExportSettings.postQbdExportSettings(payload).subscribe(
       () => {
-        console.log('Export settings sent successfully');
         this.checkAllSettingsSent();
       },
       error => console.error('Error sending export settings:', error)
@@ -269,7 +264,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     const payload = this.convertToQBDFieldMappingPost(fieldMapping);
     this.qbdFieldMappingService.postQbdFieldMapping(payload).subscribe(
       () => {
-        console.log('Field mapping sent successfully');
         this.settingsSent.fieldMapping = true;
         this.checkAllSettingsSent();
       },
@@ -298,7 +292,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
 
   private sendAdvancedSettings(advancedSettings: any) {
     const payload = this.convertToQBDAdvancedSettingsPost(advancedSettings);
-    console.log('payload', payload);
     this.qbdAdvancedSettingsService.postQbdAdvancedSettings(payload).subscribe(
       () => {
         this.settingsSent.advancedSettings = true;
@@ -392,7 +385,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     this.initializeChat();
     this.qbdOnboardingService.deleteMessage(this.conversationId).subscribe(
       (response) => {
-        console.log('response', response);
       },
       (error) => {
         console.error('Error deleting chat:', error);
