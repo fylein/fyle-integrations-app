@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, HostListener } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
 import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -11,7 +11,6 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qbd-dashboard',
@@ -70,37 +69,12 @@ export class QbdDashboardComponent implements OnInit {
 
   hideCalendar: boolean;
 
-  isSpotlightOpen = false;
-
-  searchQuery = '';
-
-  defaultOptions = [
-    { label: 'Export IIF file', icon: 'pi-file-export', action: () => this.triggerExports() },
-    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() },
-    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() },
-    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() }
-  ];
-
-  iifOptions = [
-    { label: 'Export IIF file', icon: 'pi-file-export', action: () => this.triggerExports() },
-    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() }
-  ];
-
-  configOptions = [
-    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() }
-  ];
-
-  supportOptions = [
-    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() }
-  ];
-
   constructor(
     private iifLogsService: QbdIifLogsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingService: QbdAdvancedSettingService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService,
-    private router: Router
+    private trackingService: TrackingService
   ) { }
 
   showCalendar(event: Event) {
@@ -274,49 +248,6 @@ export class QbdDashboardComponent implements OnInit {
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;
     });
-  }
-
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.metaKey && event.key === 'f') {
-      event.preventDefault();
-      this.toggleSpotlight();
-    }
-  }
-
-  toggleSpotlight() {
-    this.isSpotlightOpen = !this.isSpotlightOpen;
-    if (this.isSpotlightOpen) {
-      setTimeout(() => document.getElementById('spotlight-input')?.focus(), 0);
-    }
-  }
-
-  onSearchInput() {
-    // Implement search logic here
-    // This method will be called every time the user types in the search input
-  }
-
-  selectOption(option: any) {
-    option.action();
-    this.toggleSpotlight();
-  }
-
-  scrollToIIFLogs() {
-    // Implement scrolling to IIF logs section
-    const iifLogsElement = document.querySelector('.tw-mt-40-px');
-    if (iifLogsElement) {
-      iifLogsElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  navigateToConfiguration() {
-    // Navigate to the configuration page
-    this.router.navigate(['/qbd/configuration']);
-  }
-
-  openHelp() {
-    // Open help documentation or support
-    window.open('https://www.example.com/help', '_blank');
   }
 
   ngOnInit(): void {
