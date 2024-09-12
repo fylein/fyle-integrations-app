@@ -1,1 +1,123 @@
-<p>qbd-direct-advanced-settings works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div>
+        <app-configuration-step-header 
+            [headerText]="brandingContent.stepName"
+            [contentText]="brandingContent.contentText"
+            [showSyncButton]="isOnboarding"
+            [appName]="appName.QBD_DIRECT">
+        </app-configuration-step-header>
+    </div>
+    <div>
+        <form [formGroup]="advancedSettingsForm">
+            <div class="tw-p-24-px">
+                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
+                    <app-configuration-toggle-field 
+                        [form]="advancedSettingsForm"
+                        [label]="'Schedule automatic export'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
+                        [formControllerName]="'exportSchedule'">
+                    </app-configuration-toggle-field>
+                </div>
+                <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="advancedSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'Frequency'"
+                        [label]="'How frequently do you want the IIF file to be generated?'"
+                        [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                        [options]="frequencyOption"
+                        [iconPath]="'arrow-rotate'"
+                        [placeholder]="'Select frequency'"
+                        [formControllerName]="'frequency'"></app-configuration-select-field>
+    
+                        <div *ngIf="advancedSettingsForm.value.frequency">
+                            <div class="tw-pl-22-px">
+                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.DAILY" >
+                                    <app-configuration-select-field
+                                    [form]="advancedSettingsForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'Time'"
+                                    [label]="'Select the time of the day for the IIF file to be generated'"
+                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [options]="weeklyOptions"
+                                    [formControllerName]="'timeOfDay'"></app-configuration-select-field>
+                                </div>
+                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.WEEKLY" >
+                                    <app-configuration-select-field
+                                    [form]="advancedSettingsForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'day'"
+                                    [label]="'Select the time of the week for the IIF file to be generated'"
+                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [options]="weeklyOptions"
+                                    [placeholder]="'Select Weekly frequency'"
+                                    [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
+                                </div>
+                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.MONTHLY" >
+                                    <app-configuration-select-field
+                                    [form]="advancedSettingsForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'date'"
+                                    [label]="'Select the time of the month for the IIF file to be generated'"
+                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [options]="frequencyIntervals"
+                                    [placeholder]="'Select Monthly frequency'"
+                                    [formControllerName]="'dayOfMonth'"></app-configuration-select-field> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-email-multi-select-field
+                            [form]="advancedSettingsForm"
+                            [appName]="appName.QBD_DIRECT"
+                            [label]="'Select an email address that should receive the IIF file'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'email for export'"
+                            [subLabel]="'You can select the email address from the given list, or add new one to receive the IIF file via email.'"
+                            [options]="adminEmails"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select email address'"
+                            [formControllerName]="'email'">
+                        </app-email-multi-select-field>
+                    </div>
+                </div>
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <app-configuration-select-field
+                    [form]="advancedSettingsForm"
+                    [label]="'Select the Top level MEMO field data for QuickBooks Desktop'"
+                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>Top-level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'top level memo'"
+                    [simpleOptions]="defaultTopMemoOptions"
+                    [iconPath]="'list'"
+                    [placeholder]="'Select Top Memo Type'"
+                    [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
+                </div>
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <app-configuration-multi-select
+                    [form]="advancedSettingsForm"
+                    [isFieldMandatory]="true"
+                    [customErrorMessage]="'Please select atleast one memo type from the list'"
+                    [label]="'Set the Line-Item level MEMO field data for QuickBooks Desktop.*'"
+                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [options]="defaultMemoFields"
+                    [iconPath]="'list'"
+                    [placeholder]="'Select Memo Types'"
+                    [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
+                    <div class="tw-p-24-px">
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop Memo field</p>
+                        <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+                            <span>{{ memoPreviewText }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+        </form>
+    </div>
+</div>

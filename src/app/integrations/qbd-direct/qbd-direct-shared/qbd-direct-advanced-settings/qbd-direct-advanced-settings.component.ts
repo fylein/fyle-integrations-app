@@ -1,19 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, ConfigurationCta, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-qbd-direct-advanced-settings',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, SharedModule],
   templateUrl: './qbd-direct-advanced-settings.component.html',
   styleUrl: './qbd-direct-advanced-settings.component.scss'
 })
@@ -21,7 +23,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   isOnboarding: any;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   advancedSettingsForm: FormGroup;
 
@@ -53,9 +55,11 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly AppName = AppName;
+  readonly appName = AppName;
 
-  qbdDirectAdvancedSettings: import("/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model").QBDAdvancedSettingsGet;
+  readonly brandingContent = brandingContent.qbd_direct.configuration.advancedSettings;
+
+  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
 
   constructor(
     private advancedSettingsService: QbdAdvancedSettingService,
@@ -66,41 +70,42 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     // Private workspaceService: WorkspaceService
   ) { }
 
+  save() {}
+
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
-    QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields);
+    this.memoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields);
+      this.memoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     });
   }
 
   private frequencyWatcher() {
     this.advancedSettingsForm.controls.frequency.valueChanges.subscribe((frequency) => {
       if (frequency=== this.frequencyOption[1].value) {
-        this.advancedSettingsForm.controls.dayOfWeek.setValidators(Validators.required);
-        this.advancedSettingsForm.controls.dayOfMonth.clearValidators();
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'dayOfWeek');
+        this.helper.clearValidatorAndResetValue(this.advancedSettingsForm, 'dayOfMonth');
       } else if (frequency === this.frequencyOption[2].value) {
-        this.advancedSettingsForm.controls.dayOfWeek.clearValidators();
-        this.advancedSettingsForm.controls.dayOfMonth.setValidators(Validators.required);
+        this.helper.clearValidatorAndResetValue(this.advancedSettingsForm, 'dayOfWeek');
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'dayOfMonth');
       }
     });
   }
 
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
-      this.advancedSettingsForm.controls.email.setValidators(Validators.required);
-      this.advancedSettingsForm.controls.frequency.setValidators(Validators.required);
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'frequency');
     }
     this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected: any) => {
       if (isScheduledSelected) {
-        this.advancedSettingsForm.controls.email.setValidators(Validators.required);
-        this.advancedSettingsForm.controls.frequency.setValidators(Validators.required);
+          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
+          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'frequency');
       } else {
-        this.advancedSettingsForm.controls.frequency.clearValidators();
-        this.advancedSettingsForm.controls.frequency.setValue(null);
-        this.advancedSettingsForm.controls.email.clearValidators();
-        this.advancedSettingsForm.controls.email.setValue([]);
+          this.helper.clearValidatorAndResetValue(this.advancedSettingsForm, 'frequency');
+          this.advancedSettingsForm.controls.email.clearValidators();
+          this.advancedSettingsForm.controls.email.setValue([]);
       }
     });
   }
