@@ -31,5 +31,17 @@ export class QbdConfigurationComponent implements OnInit {
     this.router.navigateByUrl(this.modules[0].routerLink);
   }
 
+  // Add these properties
+  isSpotlightOpen = false;
+  
+  // Add these methods
+  toggleSpotlight(): void {
+    this.isSpotlightOpen = !this.isSpotlightOpen;
+  }
 
+  selectOption(option: any): void {
+    // Implement the logic for handling the selected option
+    console.log('Selected option:', option);
+    // Add your specific logic here
+  }
 }

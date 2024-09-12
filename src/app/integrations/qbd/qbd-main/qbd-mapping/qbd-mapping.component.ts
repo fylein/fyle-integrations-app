@@ -23,6 +23,18 @@ export class QbdMappingComponent implements OnInit {
     private router: Router
   ) { }
 
+  isSpotlightOpen = false;
+
+  toggleSpotlight(): void {
+    this.isSpotlightOpen = !this.isSpotlightOpen;
+  }
+
+  selectOption(event: any): void {
+    // Handle the selected option from the spotlight
+    console.log('Selected option:', event);
+    // Implement the logic for handling the selected option
+  }
+
   ngOnInit(): void {
     this.activeModule = this.mappingPages[0];
     this.router.navigateByUrl(this.mappingPages[0].routerLink);

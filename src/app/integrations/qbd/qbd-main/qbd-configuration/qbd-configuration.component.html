@@ -5,6 +5,13 @@
         <app-sub-menu [activeModule]="activeModule" [modules]="modules" ></app-sub-menu>
     </div>
     <div>
+        <app-integrations-spotlight
+            [isSpotlightOpen]="isSpotlightOpen"
+            (toggleSpotlight)="toggleSpotlight()"
+            (selectOption)="selectOption($event)">
+    </app-integrations-spotlight>
+    </div>
+    <div>
         <router-outlet></router-outlet>
     </div>
 </div>

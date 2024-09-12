@@ -10,9 +10,6 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { QbdSharedModule } from './qbd-shared/qbd-shared.module';
-import { QbdAutoOnboardingComponent } from './qbd-onboarding/qbd-auto-onboarding/qbd-auto-onboarding.component';
-
-
 @NgModule({
   declarations: [
     QbdMainComponent,
