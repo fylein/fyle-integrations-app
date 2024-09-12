@@ -463,3 +463,22 @@ textarea {
     font-size: 24px !important; // Adjust this value as needed
   }
 }
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.fyle-logo {
+  margin-right: 10px;
+}
+
+.copilot-text {
+  margin: 0;
+}
