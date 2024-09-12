@@ -9,6 +9,7 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { IntegrationsSpotlightComponent } from './integrations-spotlight/integrations-spotlight.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TableModule } from 'primeng/table';
     DropdownModule,
     TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    MainRoutingModule
+    MainRoutingModule,
+    IntegrationsSpotlightComponent
   ]
 })
 export class QbdMainModule { }

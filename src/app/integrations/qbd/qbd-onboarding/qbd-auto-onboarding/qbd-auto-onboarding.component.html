@@ -16,8 +16,8 @@ styleClass="ai-onboarding-dialog confirm-dialog"
 </ng-template>
 <p>Do you want to use AI Onboarding?</p>
 <ng-template pTemplate="footer">
-  <button pButton (click)="onConfirmYes()" label="Yes, sure" class="p-button-rounded p-button-primary"></button>
-  <button pButton (click)="onConfirmNo()" label="No" class="p-button-rounded p-button-secondary"></button>
+  <button pButton (click)="onConfirmYes()" label="Yes" type="button" class="p-button-raised"></button>
+  <button pButton (click)="onConfirmNo()" label="No" type="button" class="p-button-raised outline-sm"></button>
 </ng-template>
 </p-dialog>
 
@@ -86,8 +86,8 @@ styleClass="ai-onboarding-dialog confirm-dialog"
 </ng-template>
 <p>Are you sure you want to close and proceed with manual onboarding?</p>
 <ng-template pTemplate="footer">
-  <button pButton (click)="confirmClose(true)" label="Yes" class="p-button-rounded p-button-primary"></button>
-  <button pButton (click)="confirmClose(false)" label="No" class="p-button-rounded p-button-secondary"></button>
+  <button pButton (click)="confirmClose(true)" label="Yes" class="p-button-raised"></button>
+  <button pButton (click)="confirmClose(false)" label="No" class="p-button-raised outline-sm"></button>
 </ng-template>
 </p-dialog>
 

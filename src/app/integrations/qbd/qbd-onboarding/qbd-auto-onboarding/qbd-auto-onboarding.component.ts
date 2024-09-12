@@ -88,7 +88,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   showSendButton: boolean = false;
   isFirstResponse: boolean = true;
 
-  conversationId: number = 1;
+  conversationId: string;
 
   finalResponsesReceived: number = 0;
   finalResponses: FinalResponse = {};
@@ -160,15 +160,17 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.qbdOnboardingService.sendMessage(userInput, this.conversationId).subscribe(
           (response) => {
+            this.conversationId = response.conversation_id;
             this.isLoading = false;
-            if (response.output_type === 'CONVERSATION') {
-              const output = response.output as { question: string };
+            if (response.content.output_type === 'CONVERSATION') {
+              const output = response.content.output as { question: string };
               this.addMessage('ai', output.question);
-            } else if (response.output_type === 'FINAL') {
-              this.handleFinalResponse(response.output);
+            } else if (response.content.output_type === 'FINAL') {
+              this.handleFinalResponse(response.content);
             }
             this.showSendButton = true;
             this.isFirstResponse = false;
+            console.log(this.conversationId, response);
           },
           (error) => {
             this.isLoading = false;
@@ -193,18 +195,19 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       this.sendAdvancedSettings(output.output_advanced_settings);
     }
 
-    this.finalResponsesReceived++;
+    // this.finalResponsesReceived++;
 
-    if (this.finalResponsesReceived === 3) {
+    // if (this.finalResponsesReceived === 3) {
       this.completeOnboarding();
-    } else {
-      this.addMessage('ai', 'Great! Let\'s continue with the next set of questions.');
-    }
+    // } else {
+      // this.addMessage('ai', 'Great! Let\'s continue with the next set of questions.');
+    // }
   }
 
   private completeOnboarding() {
     // This method is now only responsible for marking the conversation as complete
     this.conversationComplete = true;
+    this.router.navigate(['/integrations/qbd/main/dashboard']);
   }
 
   private convertToQBDExportSettingPost(settings: ExportSettings): QBDExportSettingPost {
