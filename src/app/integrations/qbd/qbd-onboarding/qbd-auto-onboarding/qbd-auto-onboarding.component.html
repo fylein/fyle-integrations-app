@@ -1,28 +1,4 @@
 <p-dialog 
-[(visible)]="displayConfirmDialog"
-[closable]="false"
-[closeOnEscape]="false"
-[modal]="true"
-[draggable]="false"
-[resizable]="false"
-[style]="{width: '400px'}"
-styleClass="ai-onboarding-dialog confirm-dialog"
->
-<ng-template pTemplate="header">
-  <div class="dialog-header">
-    <h2>AI Onboarding</h2>
-    <!-- <span class="close-icon" (click)="closeConfirmDialog()">&#10005;</span> -->
-  </div>
-</ng-template>
-<p>Do you want to use AI Onboarding?</p>
-<ng-template pTemplate="footer">
-  <button pButton (click)="onConfirmYes()" label="Yes" type="button" class="p-button-raised"></button>
-  <button pButton (click)="onConfirmNo()" label="No" type="button" class="p-button-raised outline-sm"></button>
-</ng-template>
-</p-dialog>
-
-<!-- AI Onboarding Chat Dialog -->
-<p-dialog 
 [(visible)]="displayChatDialog"
 [closable]="false"
 [closeOnEscape]="false"
@@ -30,14 +6,15 @@ styleClass="ai-onboarding-dialog confirm-dialog"
 [modal]="true"
 [draggable]="false"
 [resizable]="false"
-[style]="{width: '500px'}"
+[style]="{width: '900px'}"
 styleClass="ai-onboarding-dialog chat-dialog"
 >
 <div class="chat-container">
   <div class="chat-header">
-    <h2>QBD AI Onboarding</h2>
-    <span class="close-icon" (click)="closeChatDialog()">&#10005;</span>
+    <h2 class="copilot-text">Fyle Copilot</h2>
+    <span class="pi-xl-times fyle" (click)="closeChatDialog()"></span>
   </div>
+  
   
   <div class="chat-messages" #chatMessages>
     <div *ngFor="let message of messages" 
@@ -54,14 +31,27 @@ styleClass="ai-onboarding-dialog chat-dialog"
   
   <div class="chat-input" [ngClass]="{'first-response': isFirstResponse}">
     <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-      <textarea 
-        pInputTextarea 
-        formControlName="userInput" 
-        [autoResize]="true"
-        placeholder="Type your answer here..."
-        (keydown.enter)="onEnterKey($event)"
-      ></textarea>
-      <button type="submit" pButton [disabled]="!chatForm.valid" *ngIf="showSendButton">Send</button>
+      <div class="input-container">
+        <textarea 
+          pInputTextarea 
+          formControlName="userInput" 
+          [autoResize]="true"
+          placeholder="Type your answer here..."
+          (keydown.enter)="onEnterKey($event)"
+        ></textarea>
+        <div class="button-container">
+          <button pButton type="submit" class="p-button-rounded p-button-text custom-height large-icon tw-pl-24">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span 
+            class="pi-bin fyle custom-height-bin" 
+            (click)="closeChatDialog()" 
+          ></span>
+        </div>
+      </div>
     </form>
   </div>
 </div>

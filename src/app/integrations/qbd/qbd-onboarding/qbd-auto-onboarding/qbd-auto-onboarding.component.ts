@@ -15,6 +15,7 @@ import { QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configurati
 import { QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { SharedModule } from "../../../../shared/shared.module";
 
 interface Message {
   sender: 'ai' | 'user';
@@ -56,7 +57,8 @@ interface FinalResponse {
     ReactiveFormsModule,
     DialogModule,
     ButtonModule,
-    InputTextareaModule
+    InputTextareaModule,
+    SharedModule
   ],
   templateUrl: './qbd-auto-onboarding.component.html',
   styleUrls: ['./qbd-auto-onboarding.component.scss'],
@@ -76,7 +78,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
 
   displayConfirmDialog: boolean = false;
 
-  displayChatDialog: boolean = false;
+  displayChatDialog: boolean = true;
 
   chatForm: FormGroup;
 
@@ -131,11 +133,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
 
   showConfirmDialog() {
     this.displayConfirmDialog = true;
-  }
-
-  onConfirmYes() {
-    this.displayConfirmDialog = false;
-    this.startOnboarding();
   }
 
   onConfirmNo() {
@@ -311,7 +308,6 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     );
   }
 
-
   addMessage(sender: 'ai' | 'user', content: string) {
     this.messages.push({ sender, content });
     setTimeout(() => this.scrollToBottom(), 0);
@@ -370,6 +366,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.showConfirmDialog();
+    this.startOnboarding();
   }
 
   ngOnDestroy() {
@@ -383,5 +380,10 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     this.messages = []; // Clear any existing messages
     this.addMessage('ai', 'Hey admin, tell us how you use your quickbooks desktop software?');
     this.askQuestion();
+  }
+
+  clearChat() {
+    this.messages = [];
+    this.initializeChat();
   }
 }

@@ -36,6 +36,14 @@ p {
     content: url('./assets/icons/co/grv-close-medium.svg') !important;
 }
 
+.pi-xl-times.fyle {
+    content: url('./assets/icons/co/grv-close.svg') !important;
+}
+
+.pi-bin.fyle {
+    content: url('./assets/icons/bin.svg') !important;
+}
+
 [data-theme='fyle'] {
     .pi-times-circle {
         content: url('./assets/icons/cross-xs-small.svg') !important;

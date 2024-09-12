@@ -23,9 +23,7 @@ import { QbdAutoOnboardingComponent } from "./qbd-auto-onboarding/qbd-auto-onboa
     CommonModule,
     OnboardingRoutingModule,
     SharedModule,
-    QbdSharedModule,
-    QbdAutoOnboardingComponent,
-    QbdAutoOnboardingComponent
+    QbdSharedModule
 ]
 })
 export class QbdOnboardingModule { }

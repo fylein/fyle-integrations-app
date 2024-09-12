@@ -51,30 +51,9 @@ export class IntegrationsSpotlightComponent implements OnInit {
   }
 
   onSelectOption(option: any) {
-    if (option.action) {
-      this.actionSelected.emit(option.action);
-      this.closeSpotlight();
-    } else {
-      if (option.category === 'Action') {
-        this.http.post('/actions', { CODE: option.code }).subscribe(
-          () => {
-            console.log('Action triggered successfully');
-            this.selectOption.emit(option);
-          },
-          error => console.error('Error triggering action:', error)
-        );
-      } else if (option.category === 'Help') {
-        this.http.post('/help', { query: option.label }).subscribe(
-          (response: any) => {
-            console.log('Help message:', response.Message);
-            this.selectOption.emit({ ...option, helpMessage: response.Message });
-          },
-          error => console.error('Error fetching help:', error)
-        );
-      } else if (option.category === 'Navigation') {
-        this.selectOption.emit(option);
-      }
-    }
+    console.log('onSelectOption called with option:', option);
+    option.action();
+    this.closeSpotlight();
   }
 
   onSearchInput() {
@@ -104,7 +83,7 @@ export class IntegrationsSpotlightComponent implements OnInit {
     console.log('Filtered local options:', this.filteredOptions);
 
     // Fetch additional results from the server
-    this.http.post('/query', { query }).subscribe(
+    this.http.post('api/workspaces/2/spotlight/query/', { query }).subscribe(
       (response: any) => {
         console.log('Server response:', response);
         // ... existing code to process server response ...

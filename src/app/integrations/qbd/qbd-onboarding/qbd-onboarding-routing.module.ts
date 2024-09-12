@@ -18,10 +18,6 @@ const routes: Routes = [
         component: QbdLandingComponent
       },
       {
-        path: 'auto_onboard',
-        component: QbdAutoOnboardingComponent
-      },
-      {
         path: 'export_settings',
         component: QbdOnboardingExportSettingComponent
       },

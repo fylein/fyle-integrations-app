@@ -4,6 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdAdvancedSettingComponent } from './qbd-advanced-setting/qbd-advanced-setting.component';
 import { QbdExportSettingComponent } from './qbd-export-setting/qbd-export-setting.component';
 import { QbdFieldMappingComponent } from './qbd-field-mapping/qbd-field-mapping.component';
+import { QbdAutoOnboardingComponent } from "../qbd-onboarding/qbd-auto-onboarding/qbd-auto-onboarding.component";
 
 @NgModule({
   declarations: [
@@ -13,8 +14,9 @@ import { QbdFieldMappingComponent } from './qbd-field-mapping/qbd-field-mapping.
   ],
   imports: [
     CommonModule,
-    SharedModule
-  ],
+    SharedModule,
+    QbdAutoOnboardingComponent
+],
   exports: [
     QbdAdvancedSettingComponent,
     QbdExportSettingComponent,
