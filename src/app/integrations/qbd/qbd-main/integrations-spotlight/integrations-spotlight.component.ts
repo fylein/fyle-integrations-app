@@ -96,28 +96,6 @@ export class IntegrationsSpotlightComponent implements OnInit {
   ];
 
   private performSearch(query: string) {
-<<<<<<< Updated upstream
-    this.filteredOptions = [];
-    if (!query) {
-      // If query is empty, show all options
-      this.filteredOptions = [...this.iifOptions, ...this.configOptions, ...this.supportOptions];
-      return;
-    }
-
-    const lowerQuery = query.toLowerCase();
-
-    // Filter local options
-    this.filteredOptions = [
-      ...this.iifOptions.filter(option => option.label.toLowerCase().includes(lowerQuery)),
-      ...this.configOptions.filter(option => option.label.toLowerCase().includes(lowerQuery)),
-      ...this.supportOptions.filter(option => option.label.toLowerCase().includes(lowerQuery))
-    ];
-
-    // Fetch additional results from the server
-    this.http.post('api/workspaces/2/spotlight/query/', { query }).subscribe(
-      (response: any) => {
-        this.filteredOptions = [...this.filteredOptions, ...response];
-=======
     console.log('performSearch called with query:', query);
     this.helperService.setBaseApiURL(AppUrl.QBD);
 
@@ -128,7 +106,6 @@ export class IntegrationsSpotlightComponent implements OnInit {
         this.configOptions = this.getUniqueByKey([...response['navigations'], ...this.defaultConfigOptions], 'code');
         this.supportOptions = this.getUniqueByKey([...response['help'], ...this.defaultSupportOptions], 'code');
 
->>>>>>> Stashed changes
       },
       error => {
         console.error('Error fetching search results:', error);
@@ -143,18 +120,6 @@ export class IntegrationsSpotlightComponent implements OnInit {
 
   private searchSubject = new Subject<string>();
 
-<<<<<<< Updated upstream
-  constructor(private http: HttpClient) {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(query => {
-      this.performSearch(query);
-    });
-  }
-
-=======
->>>>>>> Stashed changes
   ngOnInit() {
     // Perform initial search
     // This.performSearch(this.searchQuery);
