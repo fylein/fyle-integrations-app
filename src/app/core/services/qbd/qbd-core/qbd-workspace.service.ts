@@ -41,4 +41,8 @@ export class QbdWorkspaceService {
   syncFyleDimensions() {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/sync_dimensions/`, {});
   }
+
+  spotlightQuery(query: string) {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/query/`, { query });
+  }
 }

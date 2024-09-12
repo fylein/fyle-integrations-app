@@ -11,32 +11,23 @@
         (input)="onSearchInput()"
       >
     </div>
-    <div class="search-results" *ngIf="!searchQuery">
+    <div class="search-results">
       <h3 class="search-result-heading">IIF Actions</h3>
       <div class="search-result-item" *ngFor="let option of iifOptions" (click)="onSelectOption(option)">
-        <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.label }}</span>
+         
+        <span>{{ option.title }}</span>
       </div>
       
       <h3 class="search-result-heading">Tweak Settings</h3>
       <div class="search-result-item" *ngFor="let option of configOptions" (click)="onSelectOption(option)">
-        <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.label }}</span>
+         
+        <span>{{ option.title }}</span>
       </div>
       
       <h3 class="search-result-heading">Support</h3>
       <div class="search-result-item" *ngFor="let option of supportOptions" (click)="onSelectOption(option)">
-        <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.label }}</span>
-      </div>
-    </div>
-    <div class="search-results" *ngIf="searchQuery">
-      <div class="search-result-item" *ngFor="let option of filteredOptions" (click)="onSelectOption(option)">
-        <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.label }}</span>
-      </div>
-      <div *ngIf="filteredOptions.length === 0" class="no-results">
-        No results found
+         
+        <span>{{ option.title }}</span>
       </div>
     </div>
   </div>

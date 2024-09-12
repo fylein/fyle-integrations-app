@@ -74,25 +74,6 @@ export class QbdDashboardComponent implements OnInit {
 
   searchQuery = '';
 
-  defaultOptions = [
-    { label: 'Export IIF file', icon: 'pi-file-export', action: () => this.triggerExports() },
-    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() },
-    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() },
-    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() }
-  ];
-
-  iifOptions = [
-    { label: 'Export IIF file', icon: 'pi-file-export', action: () => this.triggerExports() },
-    { label: 'View IIF logs', icon: 'pi-list', action: () => this.scrollToIIFLogs() }
-  ];
-
-  configOptions = [
-    { label: 'Configuration', icon: 'pi-cog', action: () => this.navigateToConfiguration() }
-  ];
-
-  supportOptions = [
-    { label: 'Help', icon: 'pi-question-circle', action: () => this.openHelp() }
-  ];
 
   constructor(
     private iifLogsService: QbdIifLogsService,

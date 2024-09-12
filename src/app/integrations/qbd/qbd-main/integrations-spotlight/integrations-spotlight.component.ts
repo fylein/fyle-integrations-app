@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
+import { AppUrl, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-integrations-spotlight',
@@ -15,12 +18,6 @@ import { Subject } from 'rxjs';
 export class IntegrationsSpotlightComponent implements OnInit {
   @Input() isSpotlightOpen = false;
 
-  @Input() iifOptions: any[] = [];
-
-  @Input() configOptions: any[] = [];
-
-  @Input() supportOptions: any[] = [];
-
   @Output() toggleSpotlight = new EventEmitter<void>();
 
   @Output() selectOption = new EventEmitter<any>();
@@ -28,6 +25,23 @@ export class IntegrationsSpotlightComponent implements OnInit {
   @Output() actionSelected = new EventEmitter<string>();
 
   searchQuery = '';
+
+  constructor(
+    private http: HttpClient,
+    private workspaceService: QbdWorkspaceService,
+    private helperService: HelperService
+  ) {
+      // Logic from the first constructor
+      this.searchSubject.pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      ).subscribe(query => {
+        console.log('searchSubject emitted query:', query);
+        this.performSearch(query);
+      });
+      
+      // You can add any additional logic required for workspaceService and helperService here
+  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -47,6 +61,10 @@ export class IntegrationsSpotlightComponent implements OnInit {
   closeSpotlight() {
     if (this.isSpotlightOpen) {
       this.toggleSpotlight.emit();
+      this.configOptions = [...this.defaultSupportOptions];
+      this.iifOptions = [...this.defaultIifOptions];
+      this.supportOptions = [...this.defaultSupportOptions];
+      this.searchQuery= '';
     }
   }
 
@@ -58,8 +76,27 @@ export class IntegrationsSpotlightComponent implements OnInit {
   onSearchInput() {
     this.searchSubject.next(this.searchQuery);
   }
+  
+  getUniqueByKey(array: any[], key: string): any[] {
+    return Array.from(
+      array.reduce((map, item) => map.set(item[key], item), new Map()).values()
+    );
+  }
+
+  defaultIifOptions = [
+    { title: 'Export IIF file', code: 'trigger_export', description: 'Export the current data to an IIF file.' }
+  ];
+
+  defaultConfigOptions = [
+    { title: 'Configuration', code: 'go_to_settings', description: 'Go to the configuration page.' }
+  ];
+
+  defaultSupportOptions = [
+    {code: 'date_filter_help', title: 'How to filter IIF files by date', description: 'How to filter by date in QBD?' }
+  ];
 
   private performSearch(query: string) {
+<<<<<<< Updated upstream
     this.filteredOptions = [];
     if (!query) {
       // If query is empty, show all options
@@ -80,6 +117,18 @@ export class IntegrationsSpotlightComponent implements OnInit {
     this.http.post('api/workspaces/2/spotlight/query/', { query }).subscribe(
       (response: any) => {
         this.filteredOptions = [...this.filteredOptions, ...response];
+=======
+    console.log('performSearch called with query:', query);
+    this.helperService.setBaseApiURL(AppUrl.QBD);
+
+    // Fetch additional results from the server
+    this.workspaceService.spotlightQuery(query).subscribe((response: any) => {
+        console.log('Server response:', response);
+        this.iifOptions = this.getUniqueByKey([...response['actions'], ...this.defaultIifOptions], 'code');
+        this.configOptions = this.getUniqueByKey([...response['navigations'], ...this.defaultConfigOptions], 'code');
+        this.supportOptions = this.getUniqueByKey([...response['help'], ...this.defaultSupportOptions], 'code');
+
+>>>>>>> Stashed changes
       },
       error => {
         console.error('Error fetching search results:', error);
@@ -87,10 +136,14 @@ export class IntegrationsSpotlightComponent implements OnInit {
     );
   }
 
-  filteredOptions: any[] = [];
+  iifOptions: any[] = [...this.defaultIifOptions];
+  configOptions: any[] = [...this.defaultConfigOptions];
+  supportOptions: any[] = [...this.defaultSupportOptions];
+
 
   private searchSubject = new Subject<string>();
 
+<<<<<<< Updated upstream
   constructor(private http: HttpClient) {
     this.searchSubject.pipe(
       debounceTime(300),
@@ -100,6 +153,8 @@ export class IntegrationsSpotlightComponent implements OnInit {
     });
   }
 
+=======
+>>>>>>> Stashed changes
   ngOnInit() {
     // Perform initial search
     // This.performSearch(this.searchQuery);
