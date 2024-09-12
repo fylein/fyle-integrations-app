@@ -6,7 +6,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { AppUrl, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl } from 'src/app/core/models/enum/enum.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-integrations-spotlight',
@@ -29,7 +30,8 @@ export class IntegrationsSpotlightComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private workspaceService: QbdWorkspaceService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private routerService: Router
   ) {
       // Logic from the first constructor
       this.searchSubject.pipe(
@@ -61,15 +63,22 @@ export class IntegrationsSpotlightComponent implements OnInit {
   closeSpotlight() {
     if (this.isSpotlightOpen) {
       this.toggleSpotlight.emit();
-      this.configOptions = [...this.defaultSupportOptions];
+      this.configOptions = [...this.defaultConfigOptions];
       this.iifOptions = [...this.defaultIifOptions];
       this.supportOptions = [...this.defaultSupportOptions];
       this.searchQuery= '';
     }
   }
 
-  onSelectOption(option: any) {
-    option.action();
+  onSelectOption(input: any) {
+    console.log(input);
+    if (input.type == 'action') {
+      this.performAction(input.code);
+    } else if (input.type == 'navigation') {
+      this.performNavigate(input.url);
+    } else if (input.type == 'help') {
+      this.performHelp(input.description);
+    }
     this.closeSpotlight();
   }
 
@@ -84,15 +93,15 @@ export class IntegrationsSpotlightComponent implements OnInit {
   }
 
   defaultIifOptions = [
-    { title: 'Export IIF file', code: 'trigger_export', description: 'Export the current data to an IIF file.', icon: "pi-file-export" }
+    { type: "action", title: 'Export IIF file', code: 'trigger_export', description: 'Export the current data to an IIF file.', icon: "pi-file-export" }
   ];
 
   defaultConfigOptions = [
-    { title: 'Configuration', code: 'go_to_settings', description: 'Go to the configuration page.', icon: "pi-external-link" }
+    { type: "navigation", title: 'Configuration', code: 'go_to_settings', description: 'Go to the configuration page.', icon: "pi-external-link", url: '/configuration/export_settings' }
   ];
 
   defaultSupportOptions = [
-    {code: 'date_filter_help', title: 'How to filter IIF files by date', description: 'How to filter by date in QBD?', icon: "pi-info-circle" }
+    { type: "help", code: 'date_filter_help', title: 'How to filter IIF files by date', description: 'How to filter by date in QBD?', icon: "pi-info-circle" }
   ];
 
   private performSearch(query: string) {
@@ -109,6 +118,33 @@ export class IntegrationsSpotlightComponent implements OnInit {
       },
       error => {
         console.error('Error fetching search results:', error);
+      }
+    );
+  }
+
+  private performAction(code: string) {
+    this.helperService.setBaseApiURL(AppUrl.QBD);
+    this.workspaceService.spotlightAction(code).subscribe((response: any) => {
+        console.log('Server response:', response);
+      },
+      error => {
+        console.error('Error performing action:', error);
+      }
+    );
+  }
+
+  private performNavigate(code: string) {
+    console.log(code);
+  this.routerService.navigate(['/integrations/qbd/main/' + code]);
+  }  
+
+  private performHelp(query: string) {
+    this.helperService.setBaseApiURL(AppUrl.QBD);
+    this.workspaceService.spotlightHelp(query).subscribe((response: any) => {
+        console.log('Server response:', response);
+      },
+      error => {
+        console.error('Error fetching help:', error);
       }
     );
   }

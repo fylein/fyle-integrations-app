@@ -15,19 +15,29 @@
       <h3 class="search-result-heading">Actions</h3>
       <div class="search-result-item" *ngFor="let option of iifOptions" (click)="onSelectOption(option)">
         <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.title }}</span>
+        <div>
+          <span class="tw-font-500">{{ option.title }}</span><br/>
+          <span class="search-result-item-description tw-text-8-px">{{ option.description }}</span>
+        </div>
+        
       </div>
       
       <h3 class="search-result-heading">Navigation</h3>
       <div class="search-result-item" *ngFor="let option of configOptions" (click)="onSelectOption(option)">
         <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.title }}</span>
+        <div>
+          <span class="tw-font-500">{{ option.title }}</span><br/>
+          <span class="search-result-item-description tw-text-8-px">{{ option.description }}</span>
+        </div>
       </div>
       
       <h3 class="search-result-heading">Help</h3>
       <div class="search-result-item" *ngFor="let option of supportOptions" (click)="onSelectOption(option)">
         <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.title }}</span>
+        <div>
+          <span class="tw-font-500">{{ option.title }}</span><br/>
+          <span class="search-result-item-description tw-text-8-px">{{ option.description }}</span>
+        </div>
       </div>
     </div>
   </div>

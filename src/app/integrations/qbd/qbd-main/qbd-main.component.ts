@@ -41,15 +41,23 @@ export class QbdMainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.qbdservice.getQbdExportSettings().subscribe((exportSetting: QBDExportSettingGet) => {
-      if (exportSetting.credit_card_expense_state) {
-        this.mappingService.getMappingPagesForSideNavBar.emit(true);
-      } else {
-        this.mappingService.getMappingPagesForSideNavBar.emit(false);
-      }
+    // this.qbdservice.getQbdExportSettings().subscribe((exportSetting: QBDExportSettingGet) => {
+    //   if (exportSetting.credit_card_expense_state) {
+    //     this.mappingService.getMappingPagesForSideNavBar.emit(true);
+    //   } else {
+    //     this.mappingService.getMappingPagesForSideNavBar.emit(false);
+    //   }
+    // get current route
+    const currentRoute = this.router.url;
+    console.log('currentRoute', currentRoute);
+    if (currentRoute.includes('mapping')) {
+      this.activeModule = this.activeModules[2];
+      this.router.navigateByUrl(this.activeModules[2].routerLink);
+    } else {
       this.activeModule = this.activeModules[0];
       this.router.navigateByUrl(this.activeModules[0].routerLink);
-    });
+    }
+    // });
   }
 
 }
