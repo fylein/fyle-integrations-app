@@ -33,7 +33,7 @@ export class QbdConfigurationComponent implements OnInit {
 
   // Add these properties
   isSpotlightOpen = false;
-  
+
   // Add these methods
   toggleSpotlight(): void {
     this.isSpotlightOpen = !this.isSpotlightOpen;

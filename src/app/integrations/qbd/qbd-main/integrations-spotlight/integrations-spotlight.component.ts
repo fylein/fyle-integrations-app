@@ -41,6 +41,7 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   @Output() actionSelected = new EventEmitter<string>();
 
   isLoading: boolean = false;
+
   showShimmer: boolean = false;
 
   searchQuery = '';
@@ -88,12 +89,11 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   }
 
   onSelectOption(input: any) {
-    console.log(input);
-    if (input.type == 'action') {
+    if (input.type === 'action') {
       this.performAction(input.code);
-    } else if (input.type == 'navigation') {
+    } else if (input.type === 'navigation') {
       this.performNavigate(input.url);
-    } else if (input.type == 'help') {
+    } else if (input.type === 'help') {
       this.performHelp(input.description);
       return; // Don't close spotlight when showing help message
     }
@@ -104,7 +104,7 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
     this.showShimmer = true; // Show shimmer when search input changes
     this.searchSubject.next(this.searchQuery);
   }
-  
+
   getUniqueByKey(array: any[], key: string): any[] {
     return Array.from(
       array.reduce((map, item) => map.set(item[key], item), new Map()).values()
@@ -124,16 +124,14 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   ];
 
   private performSearch(query: string) {
-    console.log('performSearch called with query:', query);
     this.helperService.setBaseApiURL(AppUrl.QBD);
     this.showShimmer = true; // Ensure shimmer is shown before API call
 
     this.workspaceService.spotlightQuery(query).subscribe(
       (response: any) => {
-        console.log('Server response:', response);
-        this.iifOptions = this.getUniqueByKey([...response['actions'], ...this.defaultIifOptions], 'code');
-        this.configOptions = this.getUniqueByKey([...response['navigations'], ...this.defaultConfigOptions], 'code');
-        this.supportOptions = this.getUniqueByKey([...response['help'], ...this.defaultSupportOptions], 'code');
+        this.iifOptions = this.getUniqueByKey([...response.actions, ...this.defaultIifOptions], 'code');
+        this.configOptions = this.getUniqueByKey([...response.navigations, ...this.defaultConfigOptions], 'code');
+        this.supportOptions = this.getUniqueByKey([...response.help, ...this.defaultSupportOptions], 'code');
         this.showShimmer = false; // Hide shimmer after data is loaded
       },
       error => {
@@ -146,7 +144,6 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   private performAction(code: string) {
     this.helperService.setBaseApiURL(AppUrl.QBD);
     this.workspaceService.spotlightAction(code).subscribe((response: any) => {
-        console.log('Server response:', response);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, response.message);
       },
       error => {
@@ -157,9 +154,8 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   }
 
   private performNavigate(code: string) {
-    console.log(code);
   this.routerService.navigate(['/integrations/qbd/main/' + code]);
-  }  
+  }
 
   private performHelp(query: string) {
     this.helperService.setBaseApiURL(AppUrl.QBD);
@@ -194,10 +190,13 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   }
 
   iifOptions: any[] = [...this.defaultIifOptions];
+
   configOptions: any[] = [...this.defaultConfigOptions];
+
   supportOptions: any[] = [...this.defaultSupportOptions];
 
   private searchSubject = new Subject<string>();
+
   private searchSubscription: Subscription;
 
   ngOnInit() {

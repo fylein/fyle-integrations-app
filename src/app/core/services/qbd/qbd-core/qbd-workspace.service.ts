@@ -50,8 +50,7 @@ export class QbdWorkspaceService {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/action/`, { code });
   }
 
-  spotlightHelp(query: string)
-  {
+  spotlightHelp(query: string) {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/help/`, { query });
   }
 
