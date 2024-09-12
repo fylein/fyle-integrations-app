@@ -1,4 +1,4 @@
-import { Component, HostListener, Output, EventEmitter, Input } from '@angular/core';
+import { Component, HostListener, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
   templateUrl: './integrations-spotlight.component.html',
   styleUrl: './integrations-spotlight.component.scss'
 })
-export class IntegrationsSpotlightComponent {
+export class IntegrationsSpotlightComponent implements OnInit {
   @Input() isSpotlightOpen = false;
 
   @Input() iifOptions: any[] = [];
@@ -24,6 +24,8 @@ export class IntegrationsSpotlightComponent {
   @Output() toggleSpotlight = new EventEmitter<void>();
 
   @Output() selectOption = new EventEmitter<any>();
+
+  @Output() actionSelected = new EventEmitter<string>();
 
   searchQuery = '';
 
@@ -49,63 +51,67 @@ export class IntegrationsSpotlightComponent {
   }
 
   onSelectOption(option: any) {
-    if (option.category === 'Action') {
-      this.http.post('/actions', { CODE: option.code }).subscribe(
-        () => {
-          console.log('Action triggered successfully');
-          this.selectOption.emit(option);
-        },
-        error => console.error('Error triggering action:', error)
-      );
-    } else if (option.category === 'Help') {
-      this.http.post('/help', { query: option.label }).subscribe(
-        (response: any) => {
-          console.log('Help message:', response.Message);
-          this.selectOption.emit({ ...option, helpMessage: response.Message });
-        },
-        error => console.error('Error fetching help:', error)
-      );
-    } else if (option.category === 'Navigation') {
-      this.selectOption.emit(option);
+    if (option.action) {
+      this.actionSelected.emit(option.action);
+      this.closeSpotlight();
+    } else {
+      if (option.category === 'Action') {
+        this.http.post('/actions', { CODE: option.code }).subscribe(
+          () => {
+            console.log('Action triggered successfully');
+            this.selectOption.emit(option);
+          },
+          error => console.error('Error triggering action:', error)
+        );
+      } else if (option.category === 'Help') {
+        this.http.post('/help', { query: option.label }).subscribe(
+          (response: any) => {
+            console.log('Help message:', response.Message);
+            this.selectOption.emit({ ...option, helpMessage: response.Message });
+          },
+          error => console.error('Error fetching help:', error)
+        );
+      } else if (option.category === 'Navigation') {
+        this.selectOption.emit(option);
+      }
     }
   }
 
   onSearchInput() {
+    console.log('onSearchInput called with query:', this.searchQuery);
     this.searchSubject.next(this.searchQuery);
   }
 
   private performSearch(query: string) {
+    console.log('performSearch called with query:', query);
+    this.filteredOptions = [];
     if (!query) {
-      this.filteredOptions = [];
+      console.log('Query is empty, showing all options');
+      // If query is empty, show all options
+      this.filteredOptions = [...this.iifOptions, ...this.configOptions, ...this.supportOptions];
       return;
     }
 
+    const lowerQuery = query.toLowerCase();
+    console.log('Lowercase query:', lowerQuery);
+
+    // Filter local options
+    this.filteredOptions = [
+      ...this.iifOptions.filter(option => option.label.toLowerCase().includes(lowerQuery)),
+      ...this.configOptions.filter(option => option.label.toLowerCase().includes(lowerQuery)),
+      ...this.supportOptions.filter(option => option.label.toLowerCase().includes(lowerQuery))
+    ];
+    console.log('Filtered local options:', this.filteredOptions);
+
+    // Fetch additional results from the server
     this.http.post('/query', { query }).subscribe(
       (response: any) => {
-        this.filteredOptions = [
-          ...response.actions.map((action: any) => ({
-            label: action.title,
-            icon: 'pi-bolt',
-            category: 'Action',
-            code: action.code
-          })),
-          ...response.help.map((help: any) => ({
-            label: help.title,
-            icon: 'pi-question-circle',
-            category: 'Help',
-            description: help.description
-          })),
-          ...response.navigation.map((nav: any) => ({
-            label: nav.title,
-            icon: 'pi-link',
-            category: 'Navigation',
-            url: nav.url
-          }))
-        ];
+        console.log('Server response:', response);
+        // ... existing code to process server response ...
+        console.log('Final filtered options:', this.filteredOptions);
       },
       error => {
         console.error('Error fetching search results:', error);
-        this.filteredOptions = [];
       }
     );
   }
@@ -118,6 +124,14 @@ export class IntegrationsSpotlightComponent {
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged()
-    ).subscribe(query => this.performSearch(query));
+    ).subscribe(query => {
+      console.log('searchSubject emitted query:', query);
+      this.performSearch(query);
+    });
+  }
+
+  ngOnInit() {
+    // Perform initial search
+    // this.performSearch(this.searchQuery);
   }
 }
