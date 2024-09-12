@@ -18,7 +18,7 @@ styleClass="ai-onboarding-dialog chat-dialog"
       </svg>
       <h2 class="copilot-text">Fyle Copilot</h2>
     </div>
-    <span class="pi-xl-times fyle" (click)="closeChatDialog()"></span>
+    <span class="pi-xl-times fyle tw-cursor-pointer" (click)="closeChatDialog()"></span>
   </div>
   
   
@@ -35,28 +35,28 @@ styleClass="ai-onboarding-dialog chat-dialog"
     </div>
   </div>
   
-  <div class="chat-input" [ngClass]="{'first-response': isFirstResponse}">
+  <div class="chat-input !tw-mb-8-px" [ngClass]="{'first-response': isFirstResponse}">
     <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
       <div class="input-container">
-        <textarea 
-          pInputTextarea 
-          formControlName="userInput" 
-          [autoResize]="true"
-          placeholder="Type your answer here..."
-          (keydown.enter)="onEnterKey($event)"
-        ></textarea>
-        <div class="button-container">
-          <button pButton type="submit" class="p-button-rounded p-button-text custom-height large-icon tw-pl-24">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="textarea-wrapper">
+          <textarea 
+            pInputTextarea 
+            formControlName="userInput" 
+            placeholder="Type your answer here..."
+            (keydown.enter)="onEnterKey($event)"
+          ></textarea>
+          <button type="submit" class="send-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <span 
-            class="pi-bin fyle custom-height-bin" 
-            (click)="deleteChat()" 
-          ></span>
         </div>
+        <span 
+          class="pi-bin fyle custom-height-bin bin-icon tw-cursor-pointer" 
+          (click)="deleteChat()" 
+          title="Delete this chat"
+        ></span>
       </div>
     </form>
   </div>
