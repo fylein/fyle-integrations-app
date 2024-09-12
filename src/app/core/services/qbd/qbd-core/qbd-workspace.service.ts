@@ -45,4 +45,9 @@ export class QbdWorkspaceService {
   spotlightQuery(query: string) {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/query/`, { query });
   }
+
+  spotlightAction(code: string) {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/action/`, { code });
+  }
+
 }

@@ -84,15 +84,15 @@ export class IntegrationsSpotlightComponent implements OnInit {
   }
 
   defaultIifOptions = [
-    { title: 'Export IIF file', code: 'trigger_export', description: 'Export the current data to an IIF file.' }
+    { title: 'Export IIF file', code: 'trigger_export', description: 'Export the current data to an IIF file.', icon: "pi-file-export" }
   ];
 
   defaultConfigOptions = [
-    { title: 'Configuration', code: 'go_to_settings', description: 'Go to the configuration page.' }
+    { title: 'Configuration', code: 'go_to_settings', description: 'Go to the configuration page.', icon: "pi-external-link" }
   ];
 
   defaultSupportOptions = [
-    {code: 'date_filter_help', title: 'How to filter IIF files by date', description: 'How to filter by date in QBD?' }
+    {code: 'date_filter_help', title: 'How to filter IIF files by date', description: 'How to filter by date in QBD?', icon: "pi-info-circle" }
   ];
 
   private performSearch(query: string) {
