@@ -8,7 +8,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { QbdOnboardingService } from 'src/app/core/services/qbd/qbd-helper.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
-import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
@@ -21,18 +21,24 @@ interface Message {
   content: string;
 }
 
-export interface ExportSettings {
-  bank_account_name: string | null;
-  credit_card_account_name: string | null;
-  credit_card_expense_date: string | null;
-  credit_card_expense_export_type: string | null;
-  credit_card_expense_grouped_by: string | null;
-  credit_card_expense_state: string | null;
-  mileage_account_name: string | null;
-  reimbursable_expense_date: string | null;
-  reimbursable_expense_grouped_by: string | null;
-  reimbursable_expense_state: string | null;
-  reimbursable_expenses_export_type: string | null;
+export type ExportSettings = {
+  id: number,
+  created_at: Date,
+  updated_at: Date,
+  is_simplify_report_closure_enabled: boolean,
+  reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
+  bank_account_name: string | null,
+  mileage_account_name : string | null,
+  reimbursable_expense_state: ExpenseState | null,
+  reimbursable_expense_date: QBDExportDateType | null,
+  reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
+  credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject | null,
+  credit_card_expense_state: CCCExpenseState | null,
+  credit_card_entity_name_preference: QBDEntity | null,
+  credit_card_account_name: string | null,
+  credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
+  credit_card_expense_date: QBDExportDateType | null,
+  workspace: number
 }
 
 interface FinalResponse {
@@ -191,14 +197,15 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   }
 
   private handleFinalResponse(output: any) {
+    console.log('output', output);
     if (output.output_export_settings) {
       console.log('output.output_export_settings', output.output_export_settings);
       this.finalResponses.output_export_settings = output.output_export_settings;
       this.sendExportSettings(output.output_export_settings);
-    } else if (output.output_field_mapping) {
+    } if (output.output_field_mapping) {
       this.finalResponses.output_field_mapping = output.output_field_mapping;
       this.sendFieldMapping(output.output_field_mapping);
-    } else if (output.output_advanced_settings) {
+    } if (output.output_advanced_settings) {
       this.finalResponses.output_advanced_settings = output.output_advanced_settings;
       this.sendAdvancedSettings(output.output_advanced_settings);
     }
@@ -228,7 +235,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
       reimbursable_expense_grouped_by: settings.reimbursable_expense_grouped_by as QBDExpenseGroupedBy,
       credit_card_expense_export_type: settings.credit_card_expense_export_type as QBDCorporateCreditCardExpensesObject,
       credit_card_expense_state: settings.credit_card_expense_state as CCCExpenseState,
-      credit_card_entity_name_preference: null, // This field is not present in ExportSettings
+      credit_card_entity_name_preference: settings.credit_card_entity_name_preference as QBDEntity, // This field is not present in ExportSettings
       credit_card_account_name: settings.credit_card_account_name,
       credit_card_expense_grouped_by: settings.credit_card_expense_grouped_by as QBDExpenseGroupedBy,
       credit_card_expense_date: settings.credit_card_expense_date as QBDExportDateType
@@ -294,6 +301,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
 
   private sendAdvancedSettings(advancedSettings: any) {
     const payload = this.convertToQBDAdvancedSettingsPost(advancedSettings);
+    console.log('payload', payload);
     this.qbdAdvancedSettingsService.postQbdAdvancedSettings(payload).subscribe(
       () => {
         this.settingsSent.advancedSettings = true;
