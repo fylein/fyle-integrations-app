@@ -386,4 +386,17 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     this.messages = [];
     this.initializeChat();
   }
+
+  deleteChat() {
+    this.messages = [];
+    this.initializeChat();
+    this.qbdOnboardingService.deleteMessage(this.conversationId).subscribe(
+      (response) => {
+        console.log('response', response);
+      },
+      (error) => {
+        console.error('Error deleting chat:', error);
+      }
+    );
+  }
 }

@@ -25,12 +25,17 @@ export class QbdOnboardingService {
   ) { }
 
   sendMessage(userInput: string, conversationId?: string): Observable<OnboardingResponse> {
-
       return this.http.post<OnboardingResponse>(`${this.apiUrl}/workspaces/${this.workspaceService.getWorkspaceId()}/conversations/`, {
         conversation_id: conversationId,
         content: userInput
       });
 
+  }
+
+  deleteMessage(conversationId: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/workspaces/${this.workspaceService.getWorkspaceId()}/conversations/`, {
+      body: { conversation_id: conversationId }
+    });
   }
 
   saveExportSettings(settings: ExportSettings): Observable<any> {
