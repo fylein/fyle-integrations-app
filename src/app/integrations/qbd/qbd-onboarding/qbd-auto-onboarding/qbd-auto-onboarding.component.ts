@@ -160,6 +160,10 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
   sendMessage() {
     if (this.chatForm.valid) {
       const userInput = this.chatForm.get('userInput')?.value;
