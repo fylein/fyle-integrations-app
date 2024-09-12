@@ -16,8 +16,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
                     <app-configuration-toggle-field 
                         [form]="advancedSettingsForm"
-                        [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
+                        [label]="brandingContent.scheduleAutoExport" 
+                        [subLabel]="brandingContent.frequencySubLabel"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
                 </div>
@@ -75,7 +75,7 @@
                         <app-email-multi-select-field
                             [form]="advancedSettingsForm"
                             [appName]="appName.QBD_DIRECT"
-                            [label]="'Select an email address that should receive the IIF file'"
+                            [label]="brandingContent.email"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'email for export'"
                             [subLabel]="'You can select the email address from the given list, or add new one to receive the IIF file via email.'"
@@ -89,13 +89,13 @@
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-select-field
                     [form]="advancedSettingsForm"
-                    [label]="'Select the Top level MEMO field data for QuickBooks Desktop'"
-                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>Top-level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [label]="'Select the top level memo field data for QuickBooks Desktop'"
+                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'list'"
-                    [placeholder]="'Select Top Memo Type'"
+                    [placeholder]="'Select top memo type'"
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -103,14 +103,14 @@
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
                     [customErrorMessage]="'Please select atleast one memo type from the list'"
-                    [label]="'Set the Line-Item level MEMO field data for QuickBooks Desktop.*'"
-                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [label]="brandingContent.memoStructureLabel"
+                    [subLabel]="brandingContent.memoStructureSubLabel"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
-                    [placeholder]="'Select Memo Types'"
+                    [placeholder]="'Select memo types'"
                     [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop Memo field</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{brandingContent.previewDescriptionFieldLabel}}</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                             <span>{{ memoPreviewText }}</span>
                         </div>
