@@ -15,7 +15,9 @@
       <ng-container *ngIf="!showShimmer; else shimmerTemplate">
         <ng-container *ngIf="!isHelpClicked;">
           <h3 class="search-result-heading">Actions</h3>
-          <div class="search-result-item" *ngFor="let option of iifOptions" (click)="onSelectOption(option)">
+          <div class="search-result-item" *ngFor="let option of iifOptions; let i = index" 
+               (click)="onSelectOption(option)"
+               [class.active]="i === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
             <div>
               <span class="tw-font-500">{{ option.title }}</span><br/>
@@ -23,21 +25,23 @@
           </div>
         </ng-container>
         
-        
         <ng-container *ngIf="!isHelpClicked;">
           <h3 class="search-result-heading">Navigation</h3>
-          <div class="search-result-item" *ngFor="let option of configOptions" (click)="onSelectOption(option)">
+          <div class="search-result-item" *ngFor="let option of configOptions; let i = index" 
+               (click)="onSelectOption(option)"
+               [class.active]="i + iifOptions.length === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
             <div>
               <span class="tw-font-500">{{ option.title }}</span><br/>
             </div>
           </div>
-
         </ng-container>
         
         <ng-container *ngIf="!isHelpClicked;">
           <h3 class="search-result-heading">Help</h3>
-          <div class="search-result-item" *ngFor="let option of supportOptions" (click)="onSelectOption(option)">
+          <div class="search-result-item" *ngFor="let option of supportOptions; let i = index" 
+               (click)="onSelectOption(option)"
+               [class.active]="i + iifOptions.length + configOptions.length === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
             <div>
               <span class="tw-font-500">{{ option.title }}</span><br/>

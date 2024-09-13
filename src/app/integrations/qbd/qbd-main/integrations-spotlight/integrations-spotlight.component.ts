@@ -56,6 +56,9 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
 
   isLoadingHelp: boolean = false;
 
+  activeIndex: number = -1;
+  allOptions: any[] = [];
+
   constructor(
     private http: HttpClient,
     private workspaceService: QbdWorkspaceService,
@@ -72,6 +75,23 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
     if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
       event.preventDefault();
       this.toggleSpotlight.emit();
+    } else if (this.isSpotlightOpen) {
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          this.navigateOptions(1);
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          this.navigateOptions(-1);
+          break;
+        case 'Enter':
+          event.preventDefault();
+          if (this.activeIndex >= 0 && this.activeIndex < this.allOptions.length) {
+            this.onSelectOption(this.allOptions[this.activeIndex]);
+          }
+          break;
+      }
     }
   }
 
@@ -110,6 +130,7 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   onSearchInput() {
     this.showShimmer = true; // Show shimmer when search input changes
     this.searchSubject.next(this.searchQuery);
+    this.activeIndex = -1; // Reset active index when search input changes
   }
 
   getUniqueByKey(array: any[], key: string): any[] {
@@ -139,6 +160,7 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
         this.iifOptions = this.getUniqueByKey([...response.actions, ...this.defaultIifOptions], 'code');
         this.configOptions = this.getUniqueByKey([...response.navigations, ...this.defaultConfigOptions], 'code');
         this.supportOptions = this.getUniqueByKey([...response.help, ...this.defaultSupportOptions], 'code');
+        this.updateAllOptions();
         this.showShimmer = false; // Hide shimmer after data is loaded
       },
       error => {
@@ -146,6 +168,29 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
         this.showShimmer = false; // Hide shimmer on error
       }
     );
+  }
+
+  private updateAllOptions() {
+    this.allOptions = [...this.iifOptions, ...this.configOptions, ...this.supportOptions];
+  }
+
+  private navigateOptions(direction: number) {
+    this.activeIndex += direction;
+    if (this.activeIndex < 0) {
+      this.activeIndex = this.allOptions.length - 1;
+    } else if (this.activeIndex >= this.allOptions.length) {
+      this.activeIndex = 0;
+    }
+    this.scrollToActiveOption();
+  }
+
+  private scrollToActiveOption() {
+    setTimeout(() => {
+      const activeElement = document.querySelector('.search-result-item.active');
+      if (activeElement) {
+        activeElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    });
   }
 
   private performAction(code: string) {
