@@ -80,7 +80,7 @@
 }
 
 .search-result-heading {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #5d6b98;
   padding: 12px 16px 8px;
@@ -244,6 +244,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 12px; // Add some margin to the right of the icon
   }
 
   .ai-logo {
@@ -266,7 +267,7 @@
 
   .help-content {
     padding: 1.5rem;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
     color: #374151;
   }
@@ -290,6 +291,11 @@
   }
 }
 
+::ng-deep .custom-close-icon .p-dialog-header-icon {
+  width: 18px;
+  height: 18px;
+}
+
 .typing-indicator {
   display: inline-block;
   margin-bottom: 10px;
@@ -307,7 +313,7 @@
 }
 
 .typing-indicator span:nth-of-type(1) {
-  animation: 10s blink infinite 0.3333s;
+  animation: s blink infinite 0.3333s;
 }
 
 .typing-indicator span:nth-of-type(2) {
@@ -322,4 +328,53 @@
   50% {
     opacity: 1;
   }
+}
+
+::ng-deep .curved-dialog {
+  &.p-dialog {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .p-dialog-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .p-dialog-content {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .p-dialog-header-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .p-dialog-header-close-icon {
+    font-size: 18px;
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* Additional styles to ensure header corners are rounded */
+::ng-deep .p-dialog-header {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+::ng-deep .p-dialog-content {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+::ng-deep body .p-dialog.curved-dialog .p-dialog-header {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+::ng-deep body .p-dialog.curved-dialog .p-dialog-content {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }

@@ -8,7 +8,7 @@
         id="spotlight-input"
         type="text"
         [(ngModel)]="searchQuery"
-        placeholder="Ask AI..."
+        placeholder="Spotlight Search..."
         (keydown.escape)="onToggleSpotlight()"
         (input)="onSearchInput()"
       >
@@ -79,7 +79,7 @@
   [resizable]="false"
   (onHide)="closeHelpDialog()"
   [style]="{width: '600px'}"
-  styleClass="help-dialog modern-chat-dialog"
+  styleClass="help-dialog modern-chat-dialog custom-close-icon curved-dialog"
 >
 <ng-template pTemplate="header">
   <div class="dialog-header">
