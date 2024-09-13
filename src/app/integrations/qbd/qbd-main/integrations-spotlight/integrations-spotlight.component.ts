@@ -157,9 +157,9 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy, AfterV
 
     this.workspaceService.spotlightQuery(query).subscribe(
       (response: any) => {
-        this.iifOptions = this.getUniqueByKey([...response.actions, ...this.defaultIifOptions], 'code');
-        this.configOptions = this.getUniqueByKey([...response.navigations, ...this.defaultConfigOptions], 'code');
-        this.supportOptions = this.getUniqueByKey([...response.help, ...this.defaultSupportOptions], 'code');
+        this.iifOptions = this.getUniqueByKey([...response.actions], 'code');
+        this.configOptions = this.getUniqueByKey([...response.navigations], 'code');
+        this.supportOptions = this.getUniqueByKey([...response.help], 'code');
         this.updateAllOptions();
         this.showShimmer = false; // Hide shimmer after data is loaded
       },
