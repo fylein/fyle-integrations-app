@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
 import { Cacheable } from 'ts-cacheable';
@@ -54,4 +54,21 @@ export class QbdWorkspaceService {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/help/`, { query });
   }
 
+  samePageOptions(page_name: string): Observable<any> {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/suggest_actions/`, { page_name });
+  }
+
+  private defaultOptionsSubject = new BehaviorSubject<any>(null);
+  defaultOptions$ = this.defaultOptionsSubject.asObservable();
+
+  initializeDefaultOptions(page_name: string): void {
+    this.samePageOptions(page_name).subscribe(
+      (options) => {
+        this.defaultOptionsSubject.next(options);
+      },
+      (error) => {
+        console.error('Error fetching default options:', error);
+      }
+    );
+  }
 }

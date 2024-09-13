@@ -1,4 +1,4 @@
-import { Component, HostListener, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, Output, EventEmitter, Input, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -31,7 +31,7 @@ export class SafeHtmlPipe implements PipeTransform {
   templateUrl: './integrations-spotlight.component.html',
   styleUrls: ['./integrations-spotlight.component.scss']
 })
-export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
+export class IntegrationsSpotlightComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isSpotlightOpen = false;
 
   @Output() toggleSpotlight = new EventEmitter<void>();
@@ -63,6 +63,8 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   helpMessage: string = '';
   typedMessage: SafeHtml = '';
   typingSpeed: number = 30; // milliseconds per character
+
+  @ViewChild('spotlightInput') spotlightInput: ElementRef;
 
   constructor(
     private http: HttpClient,
@@ -98,13 +100,6 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
           break;
       }
     }
-  }
-
-  onToggleSpotlight(event?: MouseEvent) {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.closeSpotlight();
   }
 
   closeSpotlight() {
@@ -298,6 +293,23 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit() {
+    this.focusInput();
+  }
+
+  onToggleSpotlight() {
+    this.isSpotlightOpen = !this.isSpotlightOpen;
+    if (this.isSpotlightOpen) {
+      setTimeout(() => this.focusInput(), 0);
+    }
+  }
+
+  private focusInput() {
+    if (this.spotlightInput && this.isSpotlightOpen) {
+      this.spotlightInput.nativeElement.focus();
     }
   }
 
