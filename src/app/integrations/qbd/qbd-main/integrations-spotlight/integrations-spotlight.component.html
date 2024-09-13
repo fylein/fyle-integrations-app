@@ -13,30 +13,39 @@
     </div>
     <div class="search-results">
       <ng-container *ngIf="!showShimmer; else shimmerTemplate">
-        <h3 class="search-result-heading">Actions</h3>
-        <div class="search-result-item" *ngFor="let option of iifOptions" (click)="onSelectOption(option)">
-          <i class="pi" [ngClass]="option.icon"></i>
-          <div>
-            <span class="tw-font-500">{{ option.title }}</span><br/>
+        <ng-container *ngIf="!isHelpClicked;">
+          <h3 class="search-result-heading">Actions</h3>
+          <div class="search-result-item" *ngFor="let option of iifOptions" (click)="onSelectOption(option)">
+            <i class="pi" [ngClass]="option.icon"></i>
+            <div>
+              <span class="tw-font-500">{{ option.title }}</span><br/>
+            </div>
           </div>
-        </div>
+        </ng-container>
         
-        <h3 class="search-result-heading">Navigation</h3>
-        <div class="search-result-item" *ngFor="let option of configOptions" (click)="onSelectOption(option)">
-          <i class="pi" [ngClass]="option.icon"></i>
-          <div>
-            <span class="tw-font-500">{{ option.title }}</span><br/>
-          </div>
-        </div>
         
-        <h3 class="search-result-heading">Help</h3>
-        <div class="search-result-item" *ngFor="let option of supportOptions" (click)="onSelectOption(option)">
-          <i class="pi" [ngClass]="option.icon"></i>
-          <div>
-            <span class="tw-font-500">{{ option.title }}</span><br/>
-            <span class="search-result-item-description !tw-text-14-px !tw-text-sub-text-color">Description: {{ option.description }}</span>
+        <ng-container *ngIf="!isHelpClicked;">
+          <h3 class="search-result-heading">Navigation</h3>
+          <div class="search-result-item" *ngFor="let option of configOptions" (click)="onSelectOption(option)">
+            <i class="pi" [ngClass]="option.icon"></i>
+            <div>
+              <span class="tw-font-500">{{ option.title }}</span><br/>
+            </div>
           </div>
-        </div>
+
+        </ng-container>
+        
+        <ng-container *ngIf="!isHelpClicked;">
+          <h3 class="search-result-heading">Help</h3>
+          <div class="search-result-item" *ngFor="let option of supportOptions" (click)="onSelectOption(option)">
+            <i class="pi" [ngClass]="option.icon"></i>
+            <div>
+              <span class="tw-font-500">{{ option.title }}</span><br/>
+              <span class="search-result-item-description !tw-text-14-px !tw-text-sub-text-color">Description: {{ option.description }}</span>
+            </div>
+          </div>
+        </ng-container>
+        
       </ng-container>
       
       <ng-template #shimmerTemplate>
@@ -51,35 +60,20 @@
         </div>
       </ng-template>
     </div>
-  </div>
-  
-  <p-dialog 
-  [(visible)]="showMessageDialog" 
-  [modal]="true" 
-  [style]="{width: '75vw', height:'50vw' ,backgroundColor: 'white'}" 
-  [draggable]="false" 
-  [resizable]="false"
-  header="Help Information"
-  (onHide)="closeMessageDialog()"
-  styleClass="help-dialog"
-  [dismissableMask]="true"
-  (onMaskClick)="onDialogMaskClick($event)">
-  <div class="help-content">
-    <ng-container *ngIf="!isLoadingHelp; else loadingTemplate">
-      <p class="tw-text-18-px" [innerHTML]="message"></p>
-    </ng-container>
-    <ng-template #loadingTemplate>
-      <div class="shimmer-wrapper">
-        <div class="shimmer shimmer-title"></div>
-        <div *ngFor="let i of [1,2,3,4,5]" class="shimmer-line-container">
-          <div class="shimmer shimmer-text shimmer-short"></div>
-          <div class="shimmer shimmer-text"></div>
+
+    <div class="dialog-overlay" *ngIf="isHelpClicked">
+      <div>
+        <h3 class="search-result-heading" *ngIf="isHelpClicked">Help</h3>
+        <h4 class="tw-text-20-px tw-p-10-px tw-text-500" *ngIf="isHelpClicked">{{ helpQueryTitle }}</h4>
+        <div class="dialog-content help-content">
+          <ng-container *ngIf="!isLoadingHelp else shimmerTemplate">
+            <p class="tw-text-base tw-leading-relaxed tw-p-4 tw-bg-white tw-rounded tw-shadow-md" [innerHTML]="message"></p>
+          </ng-container>
         </div>
       </div>
-    </ng-template>
+    </div>
+
   </div>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-text" (click)="closeMessageDialog()"></button>
-  </ng-template>
-</p-dialog>
+  
+  
 </div>

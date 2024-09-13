@@ -42,9 +42,13 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
 
+  isHelpClicked: boolean = false;
+
   showShimmer: boolean = false;
 
   searchQuery = '';
+
+  helpQueryTitle = '';
 
   message: SafeHtml;
 
@@ -85,6 +89,9 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
       this.iifOptions = [...this.defaultIifOptions];
       this.supportOptions = [...this.defaultSupportOptions];
       this.searchQuery= '';
+      this.message = '';
+      this.isHelpClicked = false;
+      this.helpQueryTitle = '';
     }
   }
 
@@ -158,9 +165,11 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   }
 
   private performHelp(query: string) {
+    this.isHelpClicked = true;
     this.helperService.setBaseApiURL(AppUrl.QBD);
     this.isLoadingHelp = true;
     this.showMessageDialog = true;
+    this.helpQueryTitle = query;
     this.workspaceService.spotlightHelp(query).subscribe(
       (response: any) => {
         this.message = this.sanitizer.bypassSecurityTrustHtml(
@@ -176,6 +185,8 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, "Error fetching help information");
         this.isLoadingHelp = false;
         this.showMessageDialog = false;
+        this.isHelpClicked = false;
+        this.helpQueryTitle = '';
       }
     );
   }
