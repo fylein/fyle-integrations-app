@@ -194,7 +194,7 @@
     .chat-container {
       display: flex;
       flex-direction: column;
-      height: 700px;
+      height: 600px;
       width: 900px !important;
       min-height: 600px;
       background-color: white;
@@ -481,4 +481,132 @@ textarea {
 
 .copilot-text {
   margin: 0;
+}
+
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+
+  textarea {
+    width: 100%;
+    height: 24px;
+    resize: none;
+    overflow: hidden;
+    border-radius: 12px; // Adjust for desired roundness
+    border: 1px solid #ccc; // Adjust color as needed
+    font-size: 14px; // Adjust as needed
+    line-height: 24px; // Match the height for vertical centering
+    vertical-align: middle; // Help with vertical alignment
+  }
+
+  .send-button {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      path {
+        stroke: #000000; // Change stroke color to black
+      }
+    }
+
+    &:hover {
+      background: none; // Ensure no background on hover
+    }
+  }
+}
+
+// Override PrimeNG styles if necessary
+:host ::ng-deep {
+  .p-inputtextarea {
+    resize: none !important;
+    overflow: hidden !important;
+  }
+
+  // Remove any PrimeNG button hover effects
+  .p-button:enabled:hover {
+    background: none;
+    color: inherit;
+    border-color: transparent;
+  }
+
+  // More specific overrides for PrimeNG buttons
+  .p-button:enabled:hover,
+  .p-button:not(button):not(a):not(.p-disabled):hover {
+    background: none;
+    color: inherit;
+    border-color: transparent;
+  }
+
+  // Override for any global styles
+  button:hover {
+    background: none !important;
+    color: inherit !important;
+  }
+}
+
+.bin-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// If the above doesn't work, you might need to use ::ng-deep
+:host ::ng-deep {
+  .bin-icon {
+    font-size: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Custom tooltip styles */
+.bin-icon {
+  position: relative;
+}
+
+.bin-icon::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.bin-icon:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
