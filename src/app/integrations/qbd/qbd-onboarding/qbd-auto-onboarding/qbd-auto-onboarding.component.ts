@@ -219,7 +219,7 @@ export class QbdAutoOnboardingComponent implements OnInit, OnDestroy {
   private completeOnboarding() {
     // This method is now only responsible for marking the conversation as complete
     this.conversationComplete = true;
-    this.router.navigate(['/integrations/qbd/main/dashboard']);
+    this.router.navigate(['/integrations/qbd/onboarding/done']);
   }
 
   private convertToQBDExportSettingPost(settings: ExportSettings): QBDExportSettingPost {
