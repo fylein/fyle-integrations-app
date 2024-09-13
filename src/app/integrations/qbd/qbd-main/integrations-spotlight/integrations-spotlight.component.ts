@@ -29,7 +29,7 @@ export class SafeHtmlPipe implements PipeTransform {
   standalone: true,
   imports: [CommonModule, FormsModule, DialogModule],
   templateUrl: './integrations-spotlight.component.html',
-  styleUrl: './integrations-spotlight.component.scss'
+  styleUrls: ['./integrations-spotlight.component.scss']
 })
 export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
   @Input() isSpotlightOpen = false;
@@ -58,6 +58,11 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
 
   activeIndex: number = -1;
   allOptions: any[] = [];
+
+  showHelpDialog: boolean = false;
+  helpMessage: string = '';
+  typedMessage: SafeHtml = '';
+  typingSpeed: number = 30; // milliseconds per character
 
   constructor(
     private http: HttpClient,
@@ -115,13 +120,13 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSelectOption(input: any) {
-    if (input.type === 'action') {
-      this.performAction(input.code);
-    } else if (input.type === 'navigation') {
-      this.performNavigate(input.url);
-    } else if (input.type === 'help') {
-      this.performHelp(input.description);
+  onSelectOption(option: any) {
+    if (option.type === 'action') {
+      this.performAction(option.code);
+    } else if (option.type === 'navigation') {
+      this.performNavigate(option.url);
+    } else if (option.type === 'help') {
+      this.performHelp(option.description);
       return; // Don't close spotlight when showing help message
     }
     this.closeSpotlight();
@@ -213,32 +218,57 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
     this.isHelpClicked = true;
     this.helperService.setBaseApiURL(AppUrl.QBD);
     this.isLoadingHelp = true;
-    this.showMessageDialog = true;
     this.helpQueryTitle = query;
     this.workspaceService.spotlightHelp(query).subscribe(
       (response: any) => {
-        this.message = this.sanitizer.bypassSecurityTrustHtml(
-          response.message
-            .split('\n')
-            .map((line: string) => `<p>${this.linkify(line.trim())}</p>`)
-            .join('')
-        );
+        this.helpMessage = response.message;
         this.isLoadingHelp = false;
+        this.showHelpDialog = true;
+        this.typeMessage();
       },
       error => {
         console.error('Error fetching help:', error);
         this.toastService.displayToastMessage(ToastSeverity.ERROR, "Error fetching help information");
         this.isLoadingHelp = false;
-        this.showMessageDialog = false;
         this.isHelpClicked = false;
         this.helpQueryTitle = '';
       }
     );
   }
 
-  private linkify(text: string): string {
+  typeMessage() {
+    const lines = this.helpMessage.split('\n');
+    let formattedMessage = '';
+    let currentIndex = 0;
+
+    const typeNextCharacter = () => {
+      if (currentIndex < lines.length) {
+        const line = lines[currentIndex].trim();
+        if (line) {
+          formattedMessage += `<p class="typing-animation">${this.formatLine(line)}</p>`;
+          this.typedMessage = this.sanitizer.bypassSecurityTrustHtml(formattedMessage);
+        }
+        currentIndex++;
+      }
+      
+      if (currentIndex < lines.length) {
+        setTimeout(typeNextCharacter, this.typingSpeed);
+      }
+    };
+
+    typeNextCharacter();
+  }
+
+  formatLine(line: string): string {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, url => `<a href="${url}" target="_blank" class="light-blue-link">${url}</a>`);
+    return line.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="link-preview">${url}</a>`);
+  }
+
+  closeHelpDialog() {
+    this.showHelpDialog = false;
+    this.typedMessage = '';
+    this.isHelpClicked = false;
+    this.helpQueryTitle = '';
   }
 
   closeMessageDialog() {
@@ -257,11 +287,12 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(1000),
+      debounceTime(300),
       distinctUntilChanged()
     ).subscribe(query => {
       this.performSearch(query);
     });
+    this.updateAllOptions(); // Initialize allOptions
   }
 
   ngOnDestroy() {

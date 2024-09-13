@@ -1,12 +1,14 @@
 <div class="spotlight-overlay" [class.show]="isSpotlightOpen" (click)="closeSpotlight()" *ngIf="isSpotlightOpen">
   <div class="spotlight-container" [class.show]="isSpotlightOpen" (click)="$event.stopPropagation()">
     <div class="search-input-container">
-      <i class="pi pi-search search-icon"></i>
+      <svg class="ai-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+      </svg>
       <input
         id="spotlight-input"
         type="text"
         [(ngModel)]="searchQuery"
-        placeholder="Search..."
+        placeholder="Ask AI..."
         (keydown.escape)="onToggleSpotlight()"
         (input)="onSearchInput()"
       >
@@ -17,10 +19,11 @@
           <h3 class="search-result-heading">Actions</h3>
           <div class="search-result-item" *ngFor="let option of iifOptions; let i = index" 
                (click)="onSelectOption(option)"
-               [class.active]="i === activeIndex">
+               [class.active]="allOptions.indexOf(option) === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
-            <div>
-              <span class="tw-font-500">{{ option.title }}</span><br/>
+            <div class="content">
+              <div class="title">{{ option.title }}</div>
+              <div class="description">{{ option.description }}</div>
             </div>
           </div>
         </ng-container>
@@ -29,10 +32,11 @@
           <h3 class="search-result-heading">Navigation</h3>
           <div class="search-result-item" *ngFor="let option of configOptions; let i = index" 
                (click)="onSelectOption(option)"
-               [class.active]="i + iifOptions.length === activeIndex">
+               [class.active]="allOptions.indexOf(option) === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
-            <div>
-              <span class="tw-font-500">{{ option.title }}</span><br/>
+            <div class="content">
+              <div class="title">{{ option.title }}</div>
+              <div class="description">{{ option.description }}</div>
             </div>
           </div>
         </ng-container>
@@ -41,43 +45,53 @@
           <h3 class="search-result-heading">Help</h3>
           <div class="search-result-item" *ngFor="let option of supportOptions; let i = index" 
                (click)="onSelectOption(option)"
-               [class.active]="i + iifOptions.length + configOptions.length === activeIndex">
+               [class.active]="allOptions.indexOf(option) === activeIndex">
             <i class="pi" [ngClass]="option.icon"></i>
-            <div>
-              <span class="tw-font-500">{{ option.title }}</span><br/>
-              <span class="search-result-item-description !tw-text-14-px !tw-text-sub-text-color">Description: {{ option.description }}</span>
+            <div class="content">
+              <div class="title">{{ option.title }}</div>
+              <div class="description">{{ option.description }}</div>
             </div>
           </div>
         </ng-container>
-        
       </ng-container>
       
       <ng-template #shimmerTemplate>
-        <div class="shimmer-container">
-          <div class="shimmer-item" *ngFor="let i of [1,2,3,4,5]">
-            <div class="shimmer-icon"></div>
-            <div class="shimmer-text">
-              <div class="shimmer-line"></div>
-              <div class="shimmer-line shimmer-line-short"></div>
-            </div>
-          </div>
-        </div>
+        <!-- Add shimmer effect here -->
       </ng-template>
     </div>
-
-    <div class="dialog-overlay" *ngIf="isHelpClicked">
-      <div>
-        <h3 class="search-result-heading" *ngIf="isHelpClicked">Help</h3>
-        <h4 class="tw-text-20-px tw-p-10-px tw-text-500" *ngIf="isHelpClicked">{{ helpQueryTitle }}</h4>
-        <div class="dialog-content help-content">
-          <ng-container *ngIf="!isLoadingHelp else shimmerTemplate">
-            <p class="tw-text-base tw-leading-relaxed tw-p-4 tw-bg-white tw-rounded tw-shadow-md" [innerHTML]="message"></p>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-
   </div>
-  
-  
 </div>
+
+<div class="ai-loading-overlay" *ngIf="isLoadingHelp">
+  <div class="ai-loading-content">
+    <svg class="ai-animated-icon" viewBox="0 0 24 24" width="24" height="24">
+      <path class="ai-brain" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+    </svg>
+    <p>Fetching latest information from Integrations Knowledge Base...</p>
+  </div>
+</div>
+
+<p-dialog 
+  [(visible)]="showHelpDialog" 
+  [modal]="true" 
+  [baseZIndex]="10000"
+  [draggable]="false" 
+  [resizable]="false"
+  (onHide)="closeHelpDialog()"
+  [style]="{width: '600px'}"
+  styleClass="help-dialog modern-chat-dialog"
+>
+<ng-template pTemplate="header">
+  <div class="dialog-header">
+    <div class="logo-container">
+      <svg class="ai-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+      </svg>
+    </div>
+    <h2>{{ helpQueryTitle }}</h2>
+  </div>
+</ng-template>
+  <div class="help-content">
+    <div class="ai-response" [innerHTML]="typedMessage"></div>
+  </div>
+</p-dialog>
