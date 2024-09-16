@@ -55,7 +55,7 @@ export class QbdWorkspaceService {
   }
 
   samePageOptions(page_name: string): Observable<any> {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/suggest_actions/`, { page_name });
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/spotlight/suggest_actions/`, { user_query: page_name });
   }
 
   private defaultOptionsSubject = new BehaviorSubject<any>(null);

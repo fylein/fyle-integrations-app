@@ -287,7 +287,7 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy, AfterV
     ).subscribe(query => {
       this.performSearch(query);
     });
-    this.updateAllOptions(); // Initialize allOptions
+    this.updateAllOptions();
   }
 
   ngOnDestroy() {
@@ -314,7 +314,6 @@ export class IntegrationsSpotlightComponent implements OnInit, OnDestroy, AfterV
   }
 
   onDialogMaskClick(event: any) {
-    // Check if the click target is the mask (overlay) itself
     if (event.target.classList.contains('p-dialog-mask')) {
       this.closeMessageDialog();
     }

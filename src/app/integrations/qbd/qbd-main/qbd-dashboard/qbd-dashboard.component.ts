@@ -12,6 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { Router } from '@angular/router';
+import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
   selector: 'app-qbd-dashboard',
@@ -74,6 +75,7 @@ export class QbdDashboardComponent implements OnInit {
 
   searchQuery = '';
 
+  lastUrlSegment: string;
 
   constructor(
     private iifLogsService: QbdIifLogsService,
@@ -81,7 +83,8 @@ export class QbdDashboardComponent implements OnInit {
     private advancedSettingService: QbdAdvancedSettingService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private router: Router
+    private router: Router,
+    private workspaceService: QbdWorkspaceService
   ) { }
 
   showCalendar(event: Event) {
@@ -300,7 +303,23 @@ export class QbdDashboardComponent implements OnInit {
     window.open('https://www.example.com/help', '_blank');
   }
 
+  getLastUrlSegment(): void {
+    const urlSegments = this.router.url.split('/');
+    this.lastUrlSegment = urlSegments[urlSegments.length - 1];
+    
+    // Now you can send this to your API
+    this.sendLastSegmentToApi(this.lastUrlSegment);
+  }
+
+  sendLastSegmentToApi(segment: string): void {
+    console.log(segment);
+    this.workspaceService.samePageOptions(segment).subscribe((response) => {
+      console.log(response);
+    });
+  }
+
   ngOnInit(): void {
+    this.getLastUrlSegment();
     this.setUpDashboard();
   }
 
