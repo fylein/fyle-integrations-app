@@ -9,7 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QBOOnboardingState, AppUrl } from 'src/app/core/models/enum/enum.model';
-import { mockUser, mockWorkspace } from './qbo.fixture';
+import { mockUser, mockWorkspace, testOnboardingState } from './qbo.fixture';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -108,17 +108,7 @@ describe('QboComponent', () => {
   }));
 
   it('should navigate to correct route based on onboarding state', fakeAsync(() => {
-    const testCases = [
-      { state: QBOOnboardingState.CONNECTION, route: '/integrations/qbo/onboarding/landing' },
-      { state: QBOOnboardingState.MAP_EMPLOYEES, route: '/integrations/qbo/onboarding/employee_settings' },
-      { state: QBOOnboardingState.EXPORT_SETTINGS, route: '/integrations/qbo/onboarding/export_settings' },
-      { state: QBOOnboardingState.IMPORT_SETTINGS, route: '/integrations/qbo/onboarding/import_settings' },
-      { state: QBOOnboardingState.ADVANCED_CONFIGURATION, route: '/integrations/qbo/onboarding/advanced_settings' },
-      { state: QBOOnboardingState.CLONE_SETTINGS, route: '/integrations/qbo/onboarding/clone_settings' },
-      { state: QBOOnboardingState.COMPLETE, route: '/integrations/qbo/main' }
-    ];
-
-    testCases.forEach(({ state, route }) => {
+    testOnboardingState.forEach(({ state, route }) => {
       routerSpy.navigateByUrl.calls.reset();
       const testWorkspace = { ...mockWorkspace, onboarding_state: state };
       workspaceServiceSpy.getWorkspace.and.returnValue(of([testWorkspace]));
