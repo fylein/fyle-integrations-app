@@ -450,7 +450,7 @@ export class QboExportSettingsComponent implements OnInit {
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
-      // This.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
+      this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
       this.setupCustomWatchers();
 
