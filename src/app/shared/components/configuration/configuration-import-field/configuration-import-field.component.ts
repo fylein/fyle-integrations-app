@@ -308,7 +308,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.form.controls?.dependentFieldImportToggle) {
+    if (this.form.controls?.dependentFieldImportToggle?.value) {
       this.form.controls?.dependentFieldImportToggle.disable();
     }
     if (this.appName !== AppName.SAGE300) {
