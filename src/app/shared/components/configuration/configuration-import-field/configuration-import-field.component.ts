@@ -215,7 +215,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   getOptions(expenseField: AbstractControl): FyleField[] {
-    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.get('import_to_fyle')?.value) {
+    console.log("Op", expenseField)
+    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO) {
       return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
     } else if (expenseField.get('source_field')?.value === 'CATEGORY') {
       return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
@@ -276,6 +277,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   disableDestinationFields() {
     this.expenseFieldsGetter.controls.forEach((expenseField) => {
+      console.log(expenseField)
       expenseField.get('destination_field')?.disable();
       if ((expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)) {
         expenseField.get('source_field')?.disable();
