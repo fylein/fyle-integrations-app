@@ -6,7 +6,7 @@ import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, Trac
 import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
 import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
-import { HelperService, PollDimensionsSyncStatusParams } from 'src/app/core/services/common/helper.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -117,35 +117,15 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     this.isRefreshDimensionInProgress = true;
 
-    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe(
-      () => {
-        console.log('Netsuite dimensions refreshed successfully');
-      },
-      (error) => {
-        console.error('Failed to refresh Netsuite dimensions:', error);
-        // Consider how to handle this error (e.g., show a warning to the user)
-      }
-    );
+    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe();
 
-    const org = this.storageService.get('org');
-    if (!org || !org.fyle_org_id) {
-      console.error('Failed to get fyle_org_id from storage');
-      // Handle this error appropriately
-      return;
-    }
-
+    const fyleOrgId = this.storageService.get('org').fyle_org_id;
     this.helperService.pollDimensionsSyncStatus({
       onPollingComplete: () => {
         this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
       },
-      onPollingError: (error: Error) => {
-        console.error('Polling for dimension sync failed:', error);
-        this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
-      },
-      getWorkspacesObserver: () => this.workspaceService.getWorkspace(org.fyle_org_id),
-      maxAttempts: 10, // Limit the number of polling attempts
-      intervalMs: 5000 // Poll every 5 seconds
-    } as PollDimensionsSyncStatusParams);
+      getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
+    });
   }
 
   private setupPage() {
