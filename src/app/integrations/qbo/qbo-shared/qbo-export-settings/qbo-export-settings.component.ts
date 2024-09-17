@@ -113,6 +113,8 @@ export class QboExportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.exportSetting;
 
+  isMultilineOption: boolean;
+
   constructor(
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
@@ -447,6 +449,8 @@ export class QboExportSettingsComponent implements OnInit {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
+
+      // This.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
       this.setupCustomWatchers();
 

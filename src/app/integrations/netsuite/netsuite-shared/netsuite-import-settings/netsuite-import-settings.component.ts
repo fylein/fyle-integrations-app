@@ -255,7 +255,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
       this.workspaceService.getConfiguration(),
-      this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_ITEM, 'v2')
+      this.mappingService.getPaginatedDestinationAttributes(NetsuiteFyleField.TAX_ITEM)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, workspaceGeneralSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
@@ -293,8 +293,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         this.isImportMerchantsAllowed = true;
       }
 
+      this.taxCodes = destinationAttribute.results;
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
-      this.taxCodes = destinationAttribute;
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
