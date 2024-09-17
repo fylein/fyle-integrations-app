@@ -508,8 +508,8 @@ export class QboCloneSettingsComponent implements OnInit {
         this.setupAdvancedSettingFormWatcher();
 
         this.isLoading = false;
-      });
-    // });
+      // });
+    });
   }
 
   ngOnInit(): void {
