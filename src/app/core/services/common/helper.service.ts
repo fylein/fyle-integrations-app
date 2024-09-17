@@ -15,7 +15,7 @@ import { TitleCasePipe } from '@angular/common';
 import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
 import { Observable, interval, take } from 'rxjs';
 
-type PollDimensionsSyncStatusParams = {
+export type PollDimensionsSyncStatusParams = {
   onPollingComplete: () => void
   getWorkspacesObserver: () => Observable<{destination_synced_at: any}[]>
 }
