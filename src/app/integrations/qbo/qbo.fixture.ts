@@ -484,10 +484,10 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
 
   export const mockExportSettingsResponse: any = {
     workspace_general_settings: {
-      reimbursable_expenses_object: 'BILL',
-      corporate_credit_card_expenses_object: 'BILL',
+      reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL,
+      corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.BILL,
       is_simplify_report_closure_enabled: true,
-      name_in_journal_entry: 'EMPLOYEE'
+      name_in_journal_entry: NameInJournalEntry.EMPLOYEE
     },
     expense_group_settings: {
       reimbursable_expense_group_fields: [
@@ -503,11 +503,11 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
         'verified_at',
         'report_id'
       ],
-      expense_state: 'PAYMENT_PROCESSING',
-      ccc_expense_state: 'APPROVED',
-      reimbursable_export_date_type: 'spent_at',
-      ccc_export_date_type: 'verified_at',
-      split_expense_grouping: 'MULTIPLE_LINE_ITEM'
+      expense_state: ExpenseState.PAYMENT_PROCESSING,
+      ccc_expense_state: CCCExpenseState.APPROVED,
+      reimbursable_export_date_type: ExportDateType.SPENT_AT,
+      ccc_export_date_type: ExportDateType.VERIFIED_AT,
+      split_expense_grouping: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
     },
     general_mappings: {
       accounts_payable: {
