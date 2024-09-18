@@ -87,7 +87,7 @@ export class QboBaseMappingComponent implements OnInit {
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      // This.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
+      this.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
 
       if (this.destinationField === AccountingField.ACCOUNT) {
         this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
