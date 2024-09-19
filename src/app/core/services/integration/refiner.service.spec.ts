@@ -8,7 +8,7 @@ import { UserService } from '../misc/user.service';
 import { RefinerService } from './refiner.service';
 import { WorkspaceService } from '../common/workspace.service';
 
-xdescribe('RefinerService', () => {
+describe('RefinerService', () => {
   let service: RefinerService;
 
   beforeEach(() => {

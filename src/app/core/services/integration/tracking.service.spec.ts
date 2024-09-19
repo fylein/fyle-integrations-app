@@ -3,7 +3,7 @@ import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent } from '../../mo
 
 import { TrackingService } from './tracking.service';
 
-xdescribe('TrackingService', () => {
+describe('TrackingService', () => {
   let service: TrackingService;
 
   beforeEach(() => {
