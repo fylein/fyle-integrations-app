@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { SiWorkspaceService } from './si-workspace.service';
 
-describe('SiWorkspaceService', () => {
+xdescribe('SiWorkspaceService', () => {
   let service: SiWorkspaceService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

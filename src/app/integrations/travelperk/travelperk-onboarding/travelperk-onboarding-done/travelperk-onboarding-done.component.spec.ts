@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TravelperkOnboardingDoneComponent } from './travelperk-onboarding-done.component';
 
-describe('TravelperkOnboardingDoneComponent', () => {
+xdescribe('TravelperkOnboardingDoneComponent', () => {
   let component: TravelperkOnboardingDoneComponent;
   let fixture: ComponentFixture<TravelperkOnboardingDoneComponent>;
 

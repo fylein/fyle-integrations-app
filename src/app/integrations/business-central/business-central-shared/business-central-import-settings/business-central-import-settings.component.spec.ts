@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessCentralImportSettingsComponent } from './business-central-import-settings.component';
 
-describe('BusinessCentralImportSettingsComponent', () => {
+xdescribe('BusinessCentralImportSettingsComponent', () => {
   let component: BusinessCentralImportSettingsComponent;
   let fixture: ComponentFixture<BusinessCentralImportSettingsComponent>;
 

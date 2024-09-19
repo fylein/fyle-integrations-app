@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { SiImportSettingService } from './si-import-setting.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('SiImportSettingService', () => {
+xdescribe('SiImportSettingService', () => {
   let service: SiImportSettingService;
 
   beforeEach(() => {

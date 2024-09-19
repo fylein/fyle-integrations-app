@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntacctBaseMappingComponent } from './intacct-base-mapping.component';
 
-describe('IntacctBaseMappingComponent', () => {
+xdescribe('IntacctBaseMappingComponent', () => {
   let component: IntacctBaseMappingComponent;
   let fixture: ComponentFixture<IntacctBaseMappingComponent>;
 

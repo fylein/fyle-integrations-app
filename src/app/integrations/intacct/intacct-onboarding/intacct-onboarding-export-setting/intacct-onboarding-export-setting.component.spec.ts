@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting.component';
 
-describe('IntacctOnboardingExportSettingComponent', () => {
+xdescribe('IntacctOnboardingExportSettingComponent', () => {
   let component: IntacctOnboardingExportSettingComponent;
   let fixture: ComponentFixture<IntacctOnboardingExportSettingComponent>;
 

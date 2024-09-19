@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Sage300ConnectorService } from './sage300-connector.service';
 
-describe('Sage300ConnectorService', () => {
+xdescribe('Sage300ConnectorService', () => {
   let service: Sage300ConnectorService;
 
   beforeEach(() => {

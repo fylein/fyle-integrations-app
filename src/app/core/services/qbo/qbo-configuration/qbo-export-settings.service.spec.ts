@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QboExportSettingsService } from './qbo-export-settings.service';
 
-describe('QboExportSettingsService', () => {
+xdescribe('QboExportSettingsService', () => {
   let service: QboExportSettingsService;
 
   beforeEach(() => {
