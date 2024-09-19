@@ -57,20 +57,20 @@ export type IntacctDependentImportFields = {
 
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup, existingDependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
-        const expenseFieldArray = importSettingsForm.value.expenseFields;
+        const expenseFieldArray = importSettingsForm.get('expenseFields')?.getRawValue();
 
         // First filter out objects where import_to_fyle is false
         const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.destination_field && field.source_field);
 
         // Then map over the filtered array
         const mappingSettings = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field !== 'CATEGORY').map((field: MappingSetting) => {
-          return {
-            source_field: field.source_field.toUpperCase(),
-            destination_field: field.destination_field,
-            import_to_fyle: field.import_to_fyle,
-            is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
-            source_placeholder: field.source_placeholder
-          };
+            return {
+                source_field: field.source_field.toUpperCase(),
+                destination_field: field.destination_field,
+                import_to_fyle: field.import_to_fyle,
+                is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
+                source_placeholder: field.source_placeholder
+            };
         });
 
         let dependentFieldSetting = null;
