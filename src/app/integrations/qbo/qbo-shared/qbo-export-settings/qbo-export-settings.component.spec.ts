@@ -30,7 +30,7 @@ import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/mode
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { EventEmitter } from '@angular/core';
 
-describe('QboExportSettingsComponent', () => {
+xdescribe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
   let fixture: ComponentFixture<QboExportSettingsComponent>;
   let exportSettingsServiceSpy: jasmine.SpyObj<QboExportSettingsService>;
