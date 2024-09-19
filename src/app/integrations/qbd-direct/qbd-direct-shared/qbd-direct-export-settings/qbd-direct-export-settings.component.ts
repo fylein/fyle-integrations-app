@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QBDExpenseGroupedBy, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -32,8 +33,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   isOnboarding: any;
 
   exportSettings: QbdDirectExportSettingGet | null;
-
-  is_simplify_report_closure_enabled: any;
 
   exportSettingsForm: FormGroup;
 
@@ -53,7 +52,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.reimbursableExportTypes();
 
-  cccEntityNameOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.cccEntityNameOptions();
+  splitExpenseGroupingOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.splitExpenseGroupingOptions();
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -73,9 +72,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private exportSettingService: QbdExportSettingService,
+    private exportSettingService: QbdDirectExportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private workspaceService: QbdWorkspaceService,
+    private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     public helperService: HelperService,
@@ -90,7 +89,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
 
         if (this.isOnboarding) {
-          this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
+          this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);
           this.router.navigate([`/integrations/qbd_direct/onboarding/import_settings`]);
         }
       }, () => {
@@ -165,14 +164,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
     forkJoin([
       this.exportSettingService.getQbdExportSettings()
-      // ...groupedAttributes
     ]).subscribe(([exportSettingResponse]) => {
       this.exportSettings = exportSettingResponse;
-      this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
 
-      // Console.log(bankAccount, cccAccount);
-      this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions(this.is_simplify_report_closure_enabled);
-      this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions(this.is_simplify_report_closure_enabled);
+      this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
+      this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
       this.setupCCCExpenseGroupingDateOptions();
 

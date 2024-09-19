@@ -112,20 +112,6 @@
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'Name in which purchase done'"
-                        [label]="brandingContent.corporateCard.journalOptionLabel"
-                        [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
-                        [options]="cccEntityNameOptions"
-                        [iconPath]="'list'"
-                        [placeholder]="'Select a name in journal entry'"
-                        [formControllerName]="'creditCardEntityName'">
-                    </app-configuration-select-field>
-                </div>
-
-                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                    <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="brandingContent.corporateCard.creditCardExpenseStateLabel"
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseStateSubLabel"
@@ -164,6 +150,20 @@
                         [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
                         [formControllerName]="'creditCardExportDate'">
                     </app-configuration-select-field>
+                </div>
+
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingsForm.value.cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE">
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [showClearIcon]="true"
+                        [mandatoryErrorListName]="'split expense grouping'"
+                        [label]="'How should the split expenses be grouped?'"
+                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [options]="splitExpenseGroupingOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'Select split expense grouping'"
+                        [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
                 </div>
             </div>
             <app-configuration-step-footer

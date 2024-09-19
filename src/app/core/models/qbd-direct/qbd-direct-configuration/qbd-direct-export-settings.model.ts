@@ -1,22 +1,18 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 
 export type QbdDirectExportSettingsPost = {
-    is_simplify_report_closure_enabled: boolean,
-    reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
-    bank_account_name: string | null,
-    mileage_account_name : string | null,
+    reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
     reimbursable_expense_state: ExpenseState | null,
     reimbursable_expense_date: QBDExportDateType | null,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject | null,
     credit_card_expense_state: CCCExpenseState | null,
-    credit_card_entity_name_preference: QBDEntity | null,
-    credit_card_account_name: string | null,
     credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
     credit_card_expense_date: QBDExportDateType | null,
+    split_expense_grouping?: SplitExpenseGrouping
 }
 
 export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
@@ -80,40 +76,40 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         ];
     }
 
-    static cccEntityNameOptions(): QBDExportSettingFormOption[] {
+    static splitExpenseGroupingOptions(): QBDExportSettingFormOption[] {
         return [
             {
-                label: 'Employee',
-                value: QBDEntity.EMPLOYEE
+              label: 'Single Line Item',
+              value: SplitExpenseGrouping.SINGLE_LINE_ITEM
             },
             {
-                label: 'Vendor',
-                value: QBDEntity.VENDOR
+              label: 'Multiple Line Item',
+              value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
             }
         ];
     }
 
-    static cccExpenseStateOptions(is_simplify_report_closure_enabled: boolean): QBDExportSettingFormOption[] {
+    static cccExpenseStateOptions(): QBDExportSettingFormOption[] {
         return [
             {
                 label: 'Approved',
                 value: CCCExpenseState.APPROVED
             },
             {
-                label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+                label: 'Closed',
                 value: CCCExpenseState.PAID
             }
         ];
     }
 
-    static expenseStateOptions(is_simplify_report_closure_enabled: boolean): QBDExportSettingFormOption[] {
+    static expenseStateOptions(): QBDExportSettingFormOption[] {
         return [
             {
-                label: is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+                label: 'Processing',
                 value: ExpenseState.PAYMENT_PROCESSING
             },
             {
-                label: is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+                label: 'Closed',
                 value: ExpenseState.PAID
             }
         ];
@@ -143,8 +139,8 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
 
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
-          reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'bankAccount', 'mileageAccountName'],
-          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState', 'creditCardEntityName', 'creditCardAccount']
+          reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState']
         };
 
         const exportModuleRule: ExportModuleRule[] = [];
@@ -154,39 +150,32 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
 
     static mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null): FormGroup {
         return new FormGroup({
-            reimbursableExportType: new FormControl(exportSettings?.reimbursable_expenses_export_type),
-            reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
+            reimbursableExportType: new FormControl(exportSettings?.reimbursable_expense_export_type),
+            reimbursableExpense: new FormControl(exportSettings?.reimbursable_expense_export_type ? true : false),
             reimbursableExportGroup: new FormControl(exportSettings?.reimbursable_expense_grouped_by ? exportSettings?.reimbursable_expense_grouped_by : null),
             reimbursableExportDate: new FormControl(exportSettings?.reimbursable_expense_date ? exportSettings?.reimbursable_expense_date : null),
             creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type ? true : false),
             creditCardExportType: new FormControl(exportSettings?.credit_card_expense_export_type ? exportSettings?.credit_card_expense_export_type : null),
             creditCardExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions()[1].value),
             creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
-            bankAccount: new FormControl(exportSettings?.bank_account_name ? exportSettings?.bank_account_name : null),
-            mileageAccountName: new FormControl(exportSettings?.mileage_account_name ? exportSettings?.mileage_account_name : null),
-            creditCardEntityName: new FormControl(exportSettings?.credit_card_entity_name_preference ? exportSettings?.credit_card_entity_name_preference : null),
-            creditCardAccount: new FormControl(exportSettings?.credit_card_account_name ? exportSettings?.credit_card_account_name : null),
             reimbursableExpenseState: new FormControl(exportSettings?.reimbursable_expense_state ? exportSettings?.reimbursable_expense_state : null),
             creditCardExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
+            splitExpenseGrouping: new FormControl(exportSettings?.split_expense_grouping ? exportSettings?.split_expense_grouping : SplitExpenseGrouping.MULTIPLE_LINE_ITEM),
             searchOption: new FormControl([])
         });
     }
 
     static constructPayload(exportSettingsForm: FormGroup): QbdDirectExportSettingsPost {
         const exportSettingPayload: QbdDirectExportSettingsPost = {
-            reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
-            bank_account_name: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : null,
-            mileage_account_name: exportSettingsForm.get('mileageAccountName')?.value ? exportSettingsForm.get('mileageAccountName')?.value : null,
+            reimbursable_expense_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
             reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
             reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
             reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
             credit_card_expense_export_type: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
             credit_card_expense_state: exportSettingsForm.get('creditCardExpenseState')?.value ? exportSettingsForm.get('creditCardExpenseState')?.value : null,
-            credit_card_entity_name_preference: exportSettingsForm.get('creditCardEntityName')?.value ? exportSettingsForm.get('creditCardEntityName')?.value : null,
-            credit_card_account_name: exportSettingsForm.get('creditCardAccount')?.value ? exportSettingsForm.get('creditCardAccount')?.value : null,
             credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
             credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
-            is_simplify_report_closure_enabled: false
+            split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
         };
 
         return exportSettingPayload;
