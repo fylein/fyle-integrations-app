@@ -309,7 +309,7 @@ export class SkipExportComponent implements OnInit {
     }
 
     const valueField = this.skipExportForm.getRawValue();
-    if (this.showAddButton && this.expenseFilters.length > 1) {
+    if (this.showAddButton && this.expenseFilters?.length > 1) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[1].rank)
       .subscribe((skipExport1: SkipExport) => {
