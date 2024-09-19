@@ -215,7 +215,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   getOptions(expenseField: AbstractControl): FyleField[] {
-    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.get('import_to_fyle')?.value) {
+    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO) {
       return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
     } else if (expenseField.get('source_field')?.value === 'CATEGORY') {
       return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
@@ -308,7 +308,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.form.controls?.dependentFieldImportToggle) {
+    if (this.form.controls?.dependentFieldImportToggle?.value) {
       this.form.controls?.dependentFieldImportToggle.disable();
     }
     if (this.appName !== AppName.SAGE300) {
