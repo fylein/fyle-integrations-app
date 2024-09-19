@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-landing-page-body',

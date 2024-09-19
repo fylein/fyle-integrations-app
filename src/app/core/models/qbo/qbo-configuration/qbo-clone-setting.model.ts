@@ -1,11 +1,16 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 import { MappingSetting } from "../../db/mapping-setting.model";
-import { QBOExportSettingGet, QBOExportSettingModel, QBOExportSettingPost } from "./qbo-export-setting.model";
-import { QBOImportSettingGet, QBOImportSettingModel, QBOImportSettingPost } from "./qbo-import-setting.model";
-import { QBOAdvancedSettingGet, QBOAdvancedSettingModel, QBOAdvancedSettingPost } from "./qbo-advanced-setting.model";
-import { QBOEmployeeSettingGet, QBOEmployeeSettingModel, QBOEmployeeSettingPost } from "./qbo-employee-setting.model";
+import type { QBOExportSettingGet, QBOExportSettingPost } from "./qbo-export-setting.model";
+import { QBOExportSettingModel } from "./qbo-export-setting.model";
+import type { QBOImportSettingGet, QBOImportSettingPost } from "./qbo-import-setting.model";
+import { QBOImportSettingModel } from "./qbo-import-setting.model";
+import type { QBOAdvancedSettingGet, QBOAdvancedSettingPost } from "./qbo-advanced-setting.model";
+import { QBOAdvancedSettingModel } from "./qbo-advanced-setting.model";
+import type { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "./qbo-employee-setting.model";
+import { QBOEmployeeSettingModel } from "./qbo-employee-setting.model";
 
-export type QBOCloneSetting = {
+export interface QBOCloneSetting {
     workspace_id: number,
     export_settings: QBOExportSettingGet,
     import_settings: QBOImportSettingGet,
@@ -13,7 +18,7 @@ export type QBOCloneSetting = {
     employee_mappings: QBOEmployeeSettingGet
 }
 
-export type QBOCloneSettingPost = {
+export interface QBOCloneSettingPost {
     export_settings: QBOExportSettingPost,
     import_settings: QBOImportSettingPost,
     advanced_configurations: QBOAdvancedSettingPost,

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { Observable, Subject } from 'rxjs';
-import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
-import { BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
-import { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
+import type { BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
+import type { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 
 const businessCentralCredentialsCache$ = new Subject<void>();
 

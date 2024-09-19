@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../misc/user.service';
-import { AppName } from '../../models/enum/enum.model';
+import type { UserService } from '../misc/user.service';
+import type { AppName } from '../../models/enum/enum.model';
 import { SiWorkspaceService } from '../si/si-core/si-workspace.service';
-import { MinimalUser } from '../../models/db/user.model';
+import type { MinimalUser } from '../../models/db/user.model';
 import { IntacctWorkspace } from '../../models/intacct/db/workspaces.model';
 
 @Injectable({

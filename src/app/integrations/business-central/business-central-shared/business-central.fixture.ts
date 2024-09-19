@@ -1,9 +1,10 @@
-import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from "src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model";
-import { BusinessCentralExportSettingGet } from "src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model";
-import { BusinessCentralImportSettingsGet } from "src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model";
-import { BusinessCentralDestinationAttributes } from "src/app/core/models/business-central/db/business-central-destination-attribute.model";
-import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
-import { ExpenseFilterResponse, ConditionField } from "src/app/core/models/common/advanced-settings.model";
+import type { BusinessCentralAdvancedSettingsGet } from "src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model";
+import { BusinessCentralAdvancedSettingsModel } from "src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model";
+import type { BusinessCentralExportSettingGet } from "src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model";
+import type { BusinessCentralImportSettingsGet } from "src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model";
+import type { BusinessCentralDestinationAttributes } from "src/app/core/models/business-central/db/business-central-destination-attribute.model";
+import type { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
+import type { ExpenseFilterResponse, ConditionField } from "src/app/core/models/common/advanced-settings.model";
 import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, JoinOption, Operator } from "src/app/core/models/enum/enum.model";
 
 export const exportSettingsResponse: BusinessCentralExportSettingGet = {

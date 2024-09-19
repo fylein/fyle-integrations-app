@@ -1,5 +1,5 @@
-import { MinimalUser } from "../models/db/user.model";
-import { Token } from "../models/misc/token.model";
+import type { MinimalUser } from "../models/db/user.model";
+import type { Token } from "../models/misc/token.model";
 
 export const tokenResponse = {
   access_token: 'fylee',

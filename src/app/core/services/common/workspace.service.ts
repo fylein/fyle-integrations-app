@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
-import { Observable } from 'rxjs';
+import type { StorageService } from './storage.service';
+import type { Observable } from 'rxjs';
 import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
-import { ApiService } from './api.service';
-import { HelperService } from './helper.service';
-import { AppUrlMap } from '../../models/integrations/integrations.model';
+import type { ApiService } from './api.service';
+import type { HelperService } from './helper.service';
+import type { AppUrlMap } from '../../models/integrations/integrations.model';
 import { Workspace } from '../../models/db/workspaces.model';
 import { XeroWorkspace } from '../../models/xero/db/xero-workspace.model';
 
@@ -22,12 +22,12 @@ export class WorkspaceService {
    }
 
   importFyleAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, { refresh });
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getWorkspace(orgId: string): any {
-    return this.apiService.get('/workspaces/', {org_id: orgId});
+    return this.apiService.get('/workspaces/', { org_id: orgId });
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app

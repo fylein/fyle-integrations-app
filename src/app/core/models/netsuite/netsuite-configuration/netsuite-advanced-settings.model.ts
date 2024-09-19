@@ -1,14 +1,15 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import type { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, PaymentSyncDirection } from "../../enum/enum.model";
-import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import type { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model";
+import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 import { environment } from "src/environments/environment";
 
 
-export type NetsuiteAdvancedSettingConfiguration = {
+export interface NetsuiteAdvancedSettingConfiguration {
   sync_fyle_to_netsuite_payments: boolean,
   sync_netsuite_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
@@ -17,7 +18,7 @@ export type NetsuiteAdvancedSettingConfiguration = {
   memo_structure: string[]
 }
 
-export type NetsuiteAdvancedSettingGeneralMapping = {
+export interface NetsuiteAdvancedSettingGeneralMapping {
     vendor_payment_account: DefaultDestinationAttribute,
     netsuite_location: DefaultDestinationAttribute,
     netsuite_location_level: string,
@@ -30,34 +31,34 @@ export type NetsuiteAdvancedSettingGeneralMapping = {
     use_employee_location: boolean
 }
 
-export type NetsuiteAdvancedSettingWorkspaceSchedule = {
+export interface NetsuiteAdvancedSettingWorkspaceSchedule {
   enabled: boolean,
   interval_hours: number,
   emails_selected: string[] | null,
   additional_email_options: EmailOption[]
 }
 
-export type NetsuiteAdvancedSettingWorkspaceSchedulePost = {
+export interface NetsuiteAdvancedSettingWorkspaceSchedulePost {
   hours: number;
   schedule_enabled: boolean;
   emails_selected: string[];
   email_added: EmailOption
 }
 
-export type NetsuiteAdvancedSettingPost = {
+export interface NetsuiteAdvancedSettingPost {
   configuration: NetsuiteAdvancedSettingConfiguration,
   general_mappings: NetsuiteAdvancedSettingGeneralMapping,
   workspace_schedules: NetsuiteAdvancedSettingWorkspaceSchedule,
 }
 
-export type NetsuiteAdvancedSettingGet = {
+export interface NetsuiteAdvancedSettingGet {
   configuration: NetsuiteAdvancedSettingConfiguration,
   general_mappings: NetsuiteAdvancedSettingGeneralMapping,
   workspace_schedules: NetsuiteAdvancedSettingWorkspaceSchedule,
   workspace_id:number
 }
 
-export type NetsuiteAdvancedSettingAddEmailModel = {
+export interface NetsuiteAdvancedSettingAddEmailModel {
   workspaceId: number;
   hours: number;
   schedulEnabled: boolean;
@@ -151,7 +152,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
   }
 
   static constructPayload(advancedSettingsForm: FormGroup): NetsuiteAdvancedSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
 
     const advancedSettingPayload: NetsuiteAdvancedSettingPost = {
       configuration: {

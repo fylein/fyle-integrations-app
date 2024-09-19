@@ -1,10 +1,10 @@
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, NameInJEField } from "../../enum/enum.model";
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
 import { brandingContent } from "src/app/branding/branding-config";
-import { SelectFormOption } from "../../common/select-form-option.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
 
-export type BusinessCentralExportSetting = {
+export interface BusinessCentralExportSetting {
     reimbursable_expenses_export_type: BusinessCentralExportType,
     reimbursable_expense_state: ExpenseState,
     reimbursable_expense_date: ExportDateType,
@@ -31,7 +31,7 @@ export interface BusinessCentralExportSettingGet extends BusinessCentralExportSe
 
 export interface BusinessCentralExportSettingPost extends BusinessCentralExportSetting {}
 
-export type BusinessCentralExportSettingFormOption = {
+export interface BusinessCentralExportSettingFormOption {
     label: string,
     value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType | AutoMapEmployeeOptions | NameInJEField;
 }

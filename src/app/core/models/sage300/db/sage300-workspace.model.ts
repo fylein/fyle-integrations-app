@@ -1,5 +1,5 @@
-import { Sage300OnboardingState } from "../../enum/enum.model";
-import { Workspace } from "../../db/workspaces.model";
+import type { Sage300OnboardingState } from "../../enum/enum.model";
+import type { Workspace } from "../../db/workspaces.model";
 
 export interface Sage300Workspace extends Workspace {
     cluster_domain: string,

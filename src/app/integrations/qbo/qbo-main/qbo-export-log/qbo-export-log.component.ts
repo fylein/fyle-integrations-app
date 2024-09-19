@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -11,8 +12,8 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 export class QboExportLogComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/qbo/main/export_log/complete'},
-    {label: 'Skipped', routerLink: '/integrations/qbo/main/export_log/skipped'}
+    { label: 'Completed', routerLink: '/integrations/qbo/main/export_log/complete' },
+    { label: 'Skipped', routerLink: '/integrations/qbo/main/export_log/skipped' }
   ];
 
   activeModule: MenuItem;

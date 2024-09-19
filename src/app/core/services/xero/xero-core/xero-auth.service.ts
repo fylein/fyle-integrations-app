@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { Token } from 'src/app/core/models/misc/token.model';
-import { Observable } from 'rxjs';
-import { HelperService } from '../../common/helper.service';
+import type { ApiService } from '../../common/api.service';
+import type { Token } from 'src/app/core/models/misc/token.model';
+import type { Observable } from 'rxjs';
+import type { HelperService } from '../../common/helper.service';
 import { AppUrl } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({

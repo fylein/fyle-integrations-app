@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -13,8 +14,8 @@ export class Sage300ExportLogComponent implements OnInit {
   isLoading: boolean = false;
 
   modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/sage300/main/export_log/complete_export_log'},
-    {label: 'Skipped', routerLink: '/integrations/sage300/main/export_log/skip_export_log'}
+    { label: 'Completed', routerLink: '/integrations/sage300/main/export_log/complete_export_log' },
+    { label: 'Skipped', routerLink: '/integrations/sage300/main/export_log/skip_export_log' }
   ];
 
   activeModule: MenuItem;

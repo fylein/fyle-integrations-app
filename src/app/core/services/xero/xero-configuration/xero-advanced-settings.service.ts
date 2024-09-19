@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { Observable, Subject } from 'rxjs';
-import { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
-import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import type { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 
 const advancedSettingsCache$ = new Subject<void>();
 @Injectable({

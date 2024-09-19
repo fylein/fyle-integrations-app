@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { brandingConfig } from 'src/app/branding/branding-config';
 

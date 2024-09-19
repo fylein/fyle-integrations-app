@@ -1,4 +1,4 @@
-export type AllowedAppsConfiguration = {
+export interface AllowedAppsConfiguration {
     [brandingId: string]: {
         [envId: string]: {
             INTACCT: boolean;
@@ -12,4 +12,4 @@ export type AllowedAppsConfiguration = {
             BAMBOO: boolean;
         }
     }
-};
+}

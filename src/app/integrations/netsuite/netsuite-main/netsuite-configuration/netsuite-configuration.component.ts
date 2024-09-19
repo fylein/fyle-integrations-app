@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -12,9 +13,9 @@ export class NetsuiteConfigurationComponent implements OnInit {
   readonly brandingContent = brandingContent.netsuite.configuration;
 
   modules: MenuItem[] = [
-    {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/export_settings'},
-    {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/import_settings'},
-    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/netsuite/main/configuration/advanced_settings'}
+    { label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/export_settings' },
+    { label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/import_settings' },
+    { label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/netsuite/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem = this.modules[0];

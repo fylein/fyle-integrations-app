@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-export type QBOConnector = {
+export interface QBOConnector {
   code: string;
   realm_id: string;
 }

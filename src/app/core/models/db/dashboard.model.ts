@@ -1,5 +1,6 @@
-import { AccountingErrorType, CCCExpenseState, CCCImportState, DefaultImportFields, ExpenseState, ExportErrorSourceType, FyleField, ReimbursableImportState, XeroCCCExpenseState } from "../enum/enum.model";
-import { AccountingGroupedErrors, Error } from "./error.model";
+import type { ExportErrorSourceType } from "../enum/enum.model";
+import { AccountingErrorType, CCCExpenseState, CCCImportState, DefaultImportFields, ExpenseState, FyleField, ReimbursableImportState, XeroCCCExpenseState } from "../enum/enum.model";
+import type { AccountingGroupedErrors, Error } from "./error.model";
 
 export class DashboardModel {
     static parseAPIResponseToGroupedError(errors: Error[]): AccountingGroupedErrors {

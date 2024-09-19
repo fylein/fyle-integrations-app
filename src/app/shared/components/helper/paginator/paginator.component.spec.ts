@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { PaginatorComponent } from './paginator.component';
 
@@ -26,7 +27,7 @@ xdescribe('PaginatorComponent', () => {
 
   it('pageSizeChanges function change', () => {
     spyOn(component.pageSizeChangeEvent, 'emit');
-    expect(component.pageSizeChanges({value: 10})).toBeUndefined();
+    expect(component.pageSizeChanges({ value: 10 })).toBeUndefined();
     expect(component.pageSizeChangeEvent.emit).toHaveBeenCalled();
   });
 

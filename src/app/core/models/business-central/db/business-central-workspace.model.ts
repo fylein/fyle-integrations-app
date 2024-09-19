@@ -1,5 +1,5 @@
-import { Workspace } from "../../db/workspaces.model";
-import { BusinessCentralOnboardingState } from "../../enum/enum.model";
+import type { Workspace } from "../../db/workspaces.model";
+import type { BusinessCentralOnboardingState } from "../../enum/enum.model";
 
 export interface BusinessCentralWorkspace extends Workspace {
     business_central_currency: string,
@@ -13,7 +13,7 @@ export interface BusinessCentralWorkspace extends Workspace {
     business_central_company_id: string
 }
 
-export type BusinessCentralCompanyPost = {
+export interface BusinessCentralCompanyPost {
     company_id: string,
     company_name: string
 }

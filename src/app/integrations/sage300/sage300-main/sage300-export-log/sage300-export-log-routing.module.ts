@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Sage300ExportLogComponent } from './sage300-export-log.component';
 import { Sage300SkippedExportLogComponent } from './sage300-skipped-export-log/sage300-skipped-export-log.component';
 import { Sage300CompleteExportLogComponent } from './sage300-complete-export-log/sage300-complete-export-log.component';

@@ -1,6 +1,6 @@
-import { ExportMode } from "../../enum/enum.model";
+import type { ExportMode } from "../../enum/enum.model";
 
-export type LastExport = {
+export interface LastExport {
   id: number;
   last_exported_at: Date;
   next_export_at: Date;
@@ -11,4 +11,4 @@ export type LastExport = {
   workspace: number;
   created_at: Date;
   updated_at: Date;
-};
+}

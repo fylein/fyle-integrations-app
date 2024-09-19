@@ -1,19 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, EmployeeFieldMapping, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { EmployeeFieldMapping, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, FyleField, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { QBOEmployeeSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import { QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
+import type { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 
 @Component({
   selector: 'app-qbo-employee-settings',

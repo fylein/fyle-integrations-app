@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 
 @Component({
   selector: 'app-travelperk-main',
@@ -15,7 +16,7 @@ export class TravelperkMainComponent implements OnInit {
   appName: AppName = AppName.TRAVELPERK;
 
   modules: MenuItem[] = [
-    {label: 'Configuration', routerLink: '/integrations/travelperk/main/configuration'}
+    { label: 'Configuration', routerLink: '/integrations/travelperk/main/configuration' }
   ];
 
   activeModule: MenuItem;

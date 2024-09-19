@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { WorkspaceService } from './workspace.service';
-import { Observable, from } from 'rxjs';
-import { HelperService } from './helper.service';
-import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
-import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
-import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
+import type { ApiService } from './api.service';
+import type { WorkspaceService } from './workspace.service';
+import type { Observable } from 'rxjs';
+import { from } from 'rxjs';
+import type { HelperService } from './helper.service';
+import type { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
+import type { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
+import type { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
 import { AccountingDisplayName, AppName, AppUrl, MappingState } from '../../models/enum/enum.model';
-import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
-import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
-import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
-import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
+import type { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
+import type { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
+import type { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
+import type { MappingSettingResponse } from '../../models/db/mapping-setting.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
-import { AppName } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import type { AppName } from 'src/app/core/models/enum/enum.model';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-dashboard-export-log-dialog',

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { SiWorkspaceService } from './si-workspace.service';
-import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
-import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
-import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
-import { CategoryMappingsResponse } from 'src/app/core/models/intacct/db/category-mapping-response.model';
-import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/intacct/db/employee-mapping.model';
-import { MappingSource } from 'src/app/core/models/intacct/db/mapping-source.model';
-import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
+import type { Observable } from 'rxjs';
+import { from } from 'rxjs';
+import type { SiWorkspaceService } from './si-workspace.service';
+import type { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
+import type { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
+import type { MappingSetting, MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
+import type { CategoryMappingsResponse } from 'src/app/core/models/intacct/db/category-mapping-response.model';
+import type { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/intacct/db/employee-mapping.model';
+import type { MappingSource } from 'src/app/core/models/intacct/db/mapping-source.model';
+import type { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
-import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/intacct/db/category-mapping.model';
-import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/intacct/db/expense-attribute.model';
-import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { ApiService } from '../../common/api.service';
+import type { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/intacct/db/category-mapping.model';
+import type { ExtendedExpenseAttributeResponse } from 'src/app/core/models/intacct/db/expense-attribute.model';
+import type { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'

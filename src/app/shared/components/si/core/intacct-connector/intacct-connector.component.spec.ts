@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { IntacctConnectorComponent } from './intacct-connector.component';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
@@ -6,7 +7,7 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
-import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
+import type { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
 import { IntacctComponent } from 'src/app/integrations/intacct/intacct.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';

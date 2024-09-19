@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SafeHtml } from '@angular/platform-browser';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-configuration-step-sub-header',

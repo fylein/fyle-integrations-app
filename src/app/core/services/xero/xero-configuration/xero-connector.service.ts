@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
-import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
+import type { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { environment } from 'src/environments/environment';
-import { TenantMapping, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { TenantMapping, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 const xeroCredentialsCache = new Subject<void>();
 
@@ -27,7 +28,7 @@ export class XeroConnectorService {
   })
   connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {code: code, redirect_uri: environment.xero_oauth_redirect_uri});
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, { code: code, redirect_uri: environment.xero_oauth_redirect_uri });
   }
 
   @Cacheable({
@@ -50,7 +51,7 @@ export class XeroConnectorService {
   }
 
   getXeroTenants(): Observable<DestinationAttribute[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {attribute_type__exact: 'TENANT'});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, { attribute_type__exact: 'TENANT' });
   }
 
   postXeroTenants(): Observable<DestinationAttribute[]> {

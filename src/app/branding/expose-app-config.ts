@@ -1,4 +1,4 @@
-import { AllowedAppsConfiguration } from "../core/models/branding/expose-app-configuration.model";
+import type { AllowedAppsConfiguration } from "../core/models/branding/expose-app-configuration.model";
 
 export const exposeAppConfig: AllowedAppsConfiguration = {
     fyle: {

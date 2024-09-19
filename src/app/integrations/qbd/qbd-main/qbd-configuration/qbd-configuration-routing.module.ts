@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QbdConfigurationAdvancedSettingComponent } from './qbd-configuration-advanced-setting/qbd-configuration-advanced-setting.component';
 import { QbdConfigurationExportSettingComponent } from './qbd-configuration-export-setting/qbd-configuration-export-setting.component';
 import { QbdConfigurationFieldSettingComponent } from './qbd-configuration-field-setting/qbd-configuration-field-setting.component';

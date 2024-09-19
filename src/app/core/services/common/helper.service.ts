@@ -1,21 +1,23 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiService } from './api.service';
+import type { Router } from '@angular/router';
+import type { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
-import { AppUrlMap } from '../../models/integrations/integrations.model';
+import type { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, BusinessCentralExportType, ExpenseGroupingFieldOption, ExpenseState, FyleField, ProgressPhase, Sage300ExportType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from '../../models/enum/enum.model';
-import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import type { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import type { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
-import { StorageService } from './storage.service';
+import type { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
+import type { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
-import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
-import { Observable, interval, take } from 'rxjs';
+import type { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
+import type { Observable } from 'rxjs';
+import { interval, take } from 'rxjs';
 
-type PollDimensionsSyncStatusParams = {
+interface PollDimensionsSyncStatusParams {
   onPollingComplete: () => void
   getWorkspacesObserver: () => Observable<{destination_synced_at: any}[]>
 }
@@ -259,7 +261,7 @@ export class HelperService {
    * If the destination attribute with `destination_id` does not exist in `options`, add it
    */
   addDestinationAttributeIfNotExists(
-    {options, destination_id, value}: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
+    { options, destination_id, value }: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
   ) {
     if (
       destination_id &&
@@ -280,7 +282,7 @@ export class HelperService {
    * If the default destination attribute with `destination_id` does not exist in `options`, add it
    */
   addDefaultDestinationAttributeIfNotExists(
-    {options, newOption}: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
+    { options, newOption }: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
   ) {
     if (
       newOption.id && options &&
@@ -301,7 +303,7 @@ export class HelperService {
    * Terminates either when dimensions have been refreshed, when refresh dimensions fails,
    * or when polling times out - whichever occurs first.
    */
-  pollDimensionsSyncStatus({onPollingComplete, getWorkspacesObserver}: PollDimensionsSyncStatusParams) {
+  pollDimensionsSyncStatus({ onPollingComplete, getWorkspacesObserver }: PollDimensionsSyncStatusParams) {
 
     /** Time (in ms) to wait before each request while polling for refresh dimensions status */
     const DIMENSIONS_POLLING_INTERVAL = 3000;
@@ -315,7 +317,7 @@ export class HelperService {
       {
         next: (_tick) => {
           getWorkspacesObserver().subscribe(workspaces => {
-            const {destination_synced_at} = workspaces[0];
+            const { destination_synced_at } = workspaces[0];
             if (destination_synced_at !== null) {
               onPollingComplete();
               pollingSubscription.unsubscribe();

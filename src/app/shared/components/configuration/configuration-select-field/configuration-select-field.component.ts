@@ -1,21 +1,23 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
-import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, DestinationOptionKey, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
-import { SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import type { OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { AbstractControl, FormGroup } from '@angular/forms';
+import type { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import type { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import type { DestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
+import type { SafeHtml } from '@angular/platform-browser';
+import type { Router } from '@angular/router';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { TitleCasePipe } from '@angular/common';
-import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import type { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import type { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
-import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import type { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
+import type { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 
 @Component({
   selector: 'app-configuration-select-field',

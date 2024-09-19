@@ -1,17 +1,18 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
-import { MappingSetting } from "../../db/mapping-setting.model";
-import { MappingDestinationField, MappingSourceField, XeroFyleField } from "../../enum/enum.model";
-import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
-import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import type { MappingSetting } from "../../db/mapping-setting.model";
+import type { MappingDestinationField, MappingSourceField } from "../../enum/enum.model";
+import { XeroFyleField } from "../../enum/enum.model";
+import type { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
+import type { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
 import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
-import { IntegrationField } from "../../db/mapping.model";
+import type { IntegrationField } from "../../db/mapping.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 import { ExportSettingModel } from "../../common/export-settings.model";
 
 
-export type XeroImportSettingWorkspaceGeneralSetting = {
+export interface XeroImportSettingWorkspaceGeneralSetting {
   import_categories: boolean,
   charts_of_accounts: string[],
   import_tax_codes: boolean,
@@ -19,11 +20,11 @@ export type XeroImportSettingWorkspaceGeneralSetting = {
   import_suppliers_as_merchants: boolean
 }
 
-export type XeroImportSettingGeneralMapping = {
+export interface XeroImportSettingGeneralMapping {
   default_tax_code: DefaultDestinationAttribute
 }
 
-export type XeroImportSettingMappingSetting = {
+export interface XeroImportSettingMappingSetting {
   source_field: MappingSourceField | string,
   destination_field: MappingDestinationField | string,
   import_to_fyle: boolean,
@@ -31,13 +32,13 @@ export type XeroImportSettingMappingSetting = {
   source_placeholder: string | null
 }
 
-export type XeroImportSettingPost = {
+export interface XeroImportSettingPost {
   workspace_general_settings: XeroImportSettingWorkspaceGeneralSetting,
   general_mappings: ImportSettingGeneralMapping,
   mapping_settings: XeroImportSettingMappingSetting[]
 }
 
-export type ExpenseFieldsFormOption = {
+export interface ExpenseFieldsFormOption {
   source_field: MappingSourceField | string,
   destination_field: MappingDestinationField | string,
   import_to_fyle: boolean,
@@ -45,7 +46,7 @@ export type ExpenseFieldsFormOption = {
   source_placeholder: string | null
 }
 
-export type XeroImportSettingGet = {
+export interface XeroImportSettingGet {
   workspace_general_settings: XeroWorkspaceGeneralSetting,
   general_mappings: XeroImportSettingGeneralMapping,
   mapping_settings: MappingSetting[],
@@ -91,7 +92,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
 
   static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
 
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
     const COA = importSettingsForm.get('chartOfAccountTypes')?.value.map((name: string) => name.toUpperCase());
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);

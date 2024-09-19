@@ -1,9 +1,9 @@
 
-import { IntacctErrorType } from "../../enum/enum.model";
-import { ExpenseGroup } from "./expense-group.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
+import type { IntacctErrorType } from "../../enum/enum.model";
+import type { ExpenseGroup } from "./expense-group.model";
+import type { ExpenseAttribute } from "./expense-attribute.model";
 
-export type Error = {
+export interface Error {
   id: number;
   type: IntacctErrorType;
   expense_group: ExpenseGroup;
@@ -15,20 +15,20 @@ export type Error = {
   created_at: Date;
   updated_at: Date;
   article_link: string;
-};
+}
 
-export type GroupedErrors = {
+export interface GroupedErrors {
   [IntacctErrorType.EMPLOYEE_MAPPING]: Error[];
   [IntacctErrorType.CATEGORY_MAPPING]: Error[];
   [IntacctErrorType.INTACCT_ERROR]: Error[];
 }
 
-export type ErrorStat = {
+export interface ErrorStat {
   resolvedCount: number;
   totalCount: number;
 }
 
-export type GroupedErrorStat = {
+export interface GroupedErrorStat {
   [IntacctErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
   [IntacctErrorType.CATEGORY_MAPPING]: null | ErrorStat;
 }

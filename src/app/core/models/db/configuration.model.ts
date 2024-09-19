@@ -1,4 +1,4 @@
-import { AutoMapEmployeeOptions, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../enum/enum.model";
+import type { AutoMapEmployeeOptions, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../enum/enum.model";
 
 export interface IntacctConfiguration {
     id: number;

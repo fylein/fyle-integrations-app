@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { AbstractControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
-import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import type { ConditionField, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
+import { CustomOperatorOption, JoinOptions } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
+import type { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 
 @Component({
   selector: 'app-skip-export',
@@ -44,7 +47,7 @@ export class SkipExportComponent implements OnInit {
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [{value: JoinOptions.AND}, {value: JoinOptions.OR}];
+  joinByOptions = [{ value: JoinOptions.AND }, { value: JoinOptions.OR }];
 
   customOperatorOptions = [
     {
@@ -479,7 +482,7 @@ export class SkipExportComponent implements OnInit {
         } else {
           this.isDisabledChip1 = false;
           this.skipExportForm.controls.value1.setValidators(Validators.required);
-          this.skipExportForm.controls.value1.setValue(null, {emitEvent: false});
+          this.skipExportForm.controls.value1.setValue(null, { emitEvent: false });
         }
       }
     );
@@ -497,7 +500,7 @@ export class SkipExportComponent implements OnInit {
         } else {
           this.isDisabledChip2 = false;
           this.skipExportForm.controls.value2.setValidators([Validators.required]);
-          this.skipExportForm.controls.value2.setValue(null, {emitEvent: false});
+          this.skipExportForm.controls.value2.setValue(null, { emitEvent: false });
         }
       }
     );
@@ -551,7 +554,7 @@ export class SkipExportComponent implements OnInit {
       operator1: [selectedOperator1],
       value1: [valueFC1],
       customFieldType1: [customFieldTypeFC1],
-      join_by: [{value: joinByFC}],
+      join_by: [{ value: joinByFC }],
       condition2: [joinByFC ? conditionArray[1] : ''],
       operator2: [joinByFC && selectedOperator2 ? selectedOperator2 : ''],
       value2: [valueFC2],

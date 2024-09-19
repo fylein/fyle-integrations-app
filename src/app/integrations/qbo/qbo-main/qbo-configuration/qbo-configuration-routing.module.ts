@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QboConfigurationComponent } from './qbo-configuration.component';
 import { QboEmployeeSettingsComponent } from '../../qbo-shared/qbo-employee-settings/qbo-employee-settings.component';
 import { QboExportSettingsComponent } from '../../qbo-shared/qbo-export-settings/qbo-export-settings.component';

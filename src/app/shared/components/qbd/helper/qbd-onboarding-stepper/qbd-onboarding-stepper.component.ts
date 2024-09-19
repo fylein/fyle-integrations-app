@@ -1,9 +1,10 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import type { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
   selector: 'app-qbd-onboarding-stepper',

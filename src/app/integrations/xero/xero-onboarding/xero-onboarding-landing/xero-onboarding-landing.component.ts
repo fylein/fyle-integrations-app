@@ -1,15 +1,16 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
-import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
+import type { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

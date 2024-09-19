@@ -1,4 +1,4 @@
-export type XeroCredentials = {
+export interface XeroCredentials {
     id: number;
     refresh_token: string;
     company_name: string;
@@ -6,4 +6,4 @@ export type XeroCredentials = {
     created_at: Date;
     updated_at: Date;
     workspace: number;
-  };
+  }

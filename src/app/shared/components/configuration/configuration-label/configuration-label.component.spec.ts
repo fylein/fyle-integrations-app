@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { QBDExportDateType } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationLabelComponent } from './configuration-label.component';

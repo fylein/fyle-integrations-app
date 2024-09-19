@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { QbdGenericMappingComponent } from './qbd-generic-mapping.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -75,7 +76,7 @@ xdescribe('QbdGenericMappingComponent', () => {
 
   it('postMapping function check', () => {
     expect(component.postMapping(postMappingPayload)).toBeUndefined();
-    spyOn(mappingService, 'postMappings').and.returnValue(throwError({Error}));
+    spyOn(mappingService, 'postMappings').and.returnValue(throwError({ Error }));
     expect(component.postMapping(postMappingPayload)).toBeUndefined();
   });
 

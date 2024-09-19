@@ -1,20 +1,22 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
-import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
-import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
-import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
+import type { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
+import type { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import { NetsuiteSubsidiaryMappingModel } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import type { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
+import type { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
+import type { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
 
 @Component({
   selector: 'app-netsuite-subsidiary-mapping',

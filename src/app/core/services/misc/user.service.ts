@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MinimalUser } from '../../models/db/user.model';
-import { StorageService } from '../common/storage.service';
+import type { MinimalUser } from '../../models/db/user.model';
+import type { StorageService } from '../common/storage.service';
 
 @Injectable({
   providedIn: 'root'

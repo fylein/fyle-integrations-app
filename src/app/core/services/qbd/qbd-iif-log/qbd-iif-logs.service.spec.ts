@@ -2,7 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QbdExportTriggerResponse, QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
+import type { QbdExportTriggerResponse } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
+import { QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdIifLogsService } from './qbd-iif-logs.service';
@@ -79,7 +80,7 @@ xdescribe('QbdIifLogsService', () => {
   });
 
   it('getQbdAccountingExports service check attributes check', () => {
-    const state= ['string'], limit= 1, offset= 10, selectedDateFilter={dateRange: 'This Week', startDate: new Date("2023-02-17"), endDate: new Date("2023-02-27")};
+    const state= ['string'], limit= 1, offset= 10, selectedDateFilter={ dateRange: 'This Week', startDate: new Date("2023-02-17"), endDate: new Date("2023-02-27") };
     const response: QbdExportTriggerResponse = {
       count: 2,
       next: null,

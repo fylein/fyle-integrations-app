@@ -1,9 +1,9 @@
-import { DestinationAttribute } from "./destination-attribute.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { MappingPrimaryKey } from "./mapping.model";
+import type { DestinationAttribute } from "./destination-attribute.model";
+import type { ExpenseAttribute } from "./expense-attribute.model";
+import type { MappingPrimaryKey } from "./mapping.model";
 
 
-export type CategoryMappingPost = {
+export interface CategoryMappingPost {
   source_category: MappingPrimaryKey;
   destination_account: MappingPrimaryKey;
   destination_expense_head: MappingPrimaryKey;

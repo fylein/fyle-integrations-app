@@ -1,6 +1,6 @@
-import { MappingDestinationField, MappingSourceField, SageIntacctField } from "../../enum/enum.model";
+import type { MappingDestinationField, MappingSourceField, SageIntacctField } from "../../enum/enum.model";
 
-export type MappingSetting = {
+export interface MappingSetting {
   id: number;
   created_at: Date;
   updated_at: Date;
@@ -12,7 +12,7 @@ export type MappingSetting = {
   source_placeholder: string | null
 }
 
-export type MappingSettingPost = {
+export interface MappingSettingPost {
   source_field: MappingSourceField | string;
   destination_field: MappingDestinationField | string;
   import_to_fyle: boolean;
@@ -20,23 +20,23 @@ export type MappingSettingPost = {
   source_placeholder: string | null
 }
 
-export type MinimalMappingSetting = {
+export interface MinimalMappingSetting {
   source_field: MappingSourceField | string;
   destination_field: MappingDestinationField | SageIntacctField | string;
-};
+}
 
-export type MappingSettingResponse = {
+export interface MappingSettingResponse {
   count: number;
   next: string;
   previous: string;
   results: MappingSetting[];
-};
+}
 
-export type MappingSettingList = {
+export interface MappingSettingList {
   id?: number;
   intacctField: MappingDestinationField | string,
   fyleField: MappingSourceField | string,
   index: number,
   existingMapping: boolean,
   isDeleteButtonAllowed: boolean
-};
+}

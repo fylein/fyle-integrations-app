@@ -1,10 +1,11 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { WorkspaceService } from '../../common/workspace.service';
-import { ApiService } from '../../common/api.service';
-import { QBOExportSettingGet, QBOExportSettingModel, QBOExportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
-import { ExportModuleRule } from 'src/app/core/models/common/export-settings.model';
-import { FormGroup } from '@angular/forms';
+import type { Observable } from 'rxjs';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { ApiService } from '../../common/api.service';
+import type { QBOExportSettingGet, QBOExportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import type { ExportModuleRule } from 'src/app/core/models/common/export-settings.model';
+import type { FormGroup } from '@angular/forms';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 
 @Injectable({

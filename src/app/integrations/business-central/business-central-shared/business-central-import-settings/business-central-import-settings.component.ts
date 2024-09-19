@@ -1,21 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
-import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
+import type { BusinessCentralImportSettingsGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
+import { BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
 import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
-import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import type { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
+import type { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { businessCentralFieldsResponse, fyleFieldsResponse, importSettingsResponse } from '../business-central.fixture';
-import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
+import type { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 
 @Component({
   selector: 'app-business-central-import-settings',

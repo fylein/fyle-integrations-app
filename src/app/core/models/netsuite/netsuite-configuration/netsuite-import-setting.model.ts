@@ -1,14 +1,15 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
-import { MappingSetting } from "../../db/mapping-setting.model";
-import { IntegrationField } from "../../db/mapping.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import type { ImportSettingMappingRow } from "../../common/import-settings.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
+import type { MappingSetting } from "../../db/mapping-setting.model";
+import type { IntegrationField } from "../../db/mapping.model";
+import type { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { NetSuiteExportSettingModel } from "./netsuite-export-setting.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
 import { NetsuiteCustomSegmentOption } from "../../enum/enum.model";
 
 
-export type NetsuiteImportSettingConfiguration = {
+export interface NetsuiteImportSettingConfiguration {
     import_categories: boolean,
     import_vendors_as_merchants: boolean,
     import_tax_items: boolean,
@@ -16,25 +17,25 @@ export type NetsuiteImportSettingConfiguration = {
     import_netsuite_employees: boolean
   }
 
-  export type NetsuiteImportSettingGeneralMapping = {
+  export interface NetsuiteImportSettingGeneralMapping {
     default_tax_code: DefaultDestinationAttribute
   }
 
-  export type NetsuiteImportSettingPost = {
+  export interface NetsuiteImportSettingPost {
     configuration: NetsuiteImportSettingConfiguration,
     general_mappings: NetsuiteImportSettingGeneralMapping,
     mapping_settings: ImportSettingMappingRow[] | []
   }
 
 
-  export type NetsuiteImportSettingGet = {
+  export interface NetsuiteImportSettingGet {
     configuration: NetsuiteImportSettingConfiguration,
     general_mappings: NetsuiteImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
     workspace_id: number
   }
 
-  export type CustomSegment = {
+  export interface CustomSegment {
     id?: number;
     name?: string;
     segment_type: string;
@@ -43,7 +44,7 @@ export type NetsuiteImportSettingConfiguration = {
     created_at?: Date;
     updated_at?: Date;
     workspace?: number;
-  };
+  }
 
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
 
@@ -91,7 +92,7 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
       static constructPayload(importSettingsForm: FormGroup): NetsuiteImportSettingPost {
         const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
-        const emptyDestinationAttribute = {id: null, name: null};
+        const emptyDestinationAttribute = { id: null, name: null };
 
         return {
           configuration: {

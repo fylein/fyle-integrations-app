@@ -1,9 +1,9 @@
-import { SelectFormOption } from "../../common/select-form-option.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
 import { TravelPerkUserRole } from "../../enum/enum.model";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { PaginatedResponse } from "../../db/paginated-response.model";
+import type { PaginatedResponse } from "../../db/paginated-response.model";
 
-export type TravelperkPaymentProfileSetting = {
+export interface TravelperkPaymentProfileSetting {
     profile_name: string,
 	user_role: TravelPerkUserRole | null,
 	is_import_enabled: boolean

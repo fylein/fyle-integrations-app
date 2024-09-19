@@ -1,4 +1,4 @@
-import { DestinationAttributeDetail } from "./error.model";
+import type { DestinationAttributeDetail } from "./error.model";
 
 export interface ExpenseAttribute {
     id: number;
@@ -15,11 +15,11 @@ export interface ExpenseAttribute {
     workspace: number;
 }
 
-export type ExpenseAttributeDetail = {
+export interface ExpenseAttributeDetail {
   location: string;
   full_name: string;
   department_id: string;
   department: string;
   department_code: string;
   employee_code: string;
-};
+}

@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { SkipExportList } from 'src/app/core/models/intacct/db/expense-group.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { SkipExportList } from 'src/app/core/models/intacct/db/expense-group.model';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-skipped-export-log-table',

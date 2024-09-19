@@ -1,6 +1,6 @@
-import { FormGroup } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
 
-export type QBDFieldMappingGet = {
+export interface QBDFieldMappingGet {
     id: number,
     created_at: Date,
     updated_at: Date,
@@ -11,7 +11,7 @@ export type QBDFieldMappingGet = {
     workspace: number
 }
 
-export type QBDFieldMappingPost = {
+export interface QBDFieldMappingPost {
     class_type: string | null,
     project_type: string | null,
     item_type: string | null

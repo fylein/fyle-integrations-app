@@ -1,15 +1,15 @@
-import { Expense } from "../intacct/db/expense.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import type { Expense } from "../intacct/db/expense.model";
+import type { PaginatedResponse } from "./paginated-response.model";
 
-export type ExpenseGroupDescription = {
+export interface ExpenseGroupDescription {
   claim_number: string;
   employee_email: string;
   expense_id: string;
   report_id: string;
   settlement_id: string;
-};
+}
 
-export type ExpenseGroup = {
+export interface ExpenseGroup {
   export_url: string;
   id: number;
   fund_source: string;
@@ -22,13 +22,13 @@ export type ExpenseGroup = {
   updated_at: Date;
   workspace: number;
   expenses: Expense[];
-};
+}
 
 export interface ExpenseGroupResponse extends PaginatedResponse {
   results: ExpenseGroup[];
 }
 
-export type ExpenseGroupParam = {
+export interface ExpenseGroupParam {
   limit: number;
   offset: number;
   tasklog__status?: string;
@@ -44,7 +44,7 @@ export type ExpenseGroupParam = {
   expenses__claim_number?: string;
 }
 
-export type SkipExportParam = {
+export interface SkipExportParam {
   limit: number;
   offset: number;
   org_id: string;

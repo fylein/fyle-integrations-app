@@ -1,6 +1,6 @@
-import { BusinessCentralOnboardingState } from "../../enum/enum.model";
+import type { BusinessCentralOnboardingState } from "../../enum/enum.model";
 
-export type BusinessCentralOnboardingStepperMap = {
+export interface BusinessCentralOnboardingStepperMap {
     [BusinessCentralOnboardingState.CONNECTION]: number,
     [BusinessCentralOnboardingState.COMPANY_SELECTION]: number,
     [BusinessCentralOnboardingState.EXPORT_SETTINGS]: number,

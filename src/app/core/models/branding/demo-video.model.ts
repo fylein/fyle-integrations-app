@@ -1,4 +1,4 @@
-export type DemoVideo = {
+export interface DemoVideo {
     [brandingId: string]: {
         onboarding: {
             INTACCT: string;
@@ -10,4 +10,4 @@ export type DemoVideo = {
             NETSUITE: string;
         }
     }
-};
+}

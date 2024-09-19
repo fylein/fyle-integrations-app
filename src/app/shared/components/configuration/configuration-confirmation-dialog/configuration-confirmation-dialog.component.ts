@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-configuration-confirmation-dialog',
@@ -29,7 +30,7 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   constructor() { }
 
   acceptWarning(isWarningAccepted: boolean) {
-    this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
+    this.warningAccepted.emit({ hasAccepted: isWarningAccepted, event: this.event });
   }
 
   ngOnInit(): void {

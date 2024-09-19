@@ -3,7 +3,8 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
-import { HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
+import type { HttpErrorResponse } from '@angular/common/http';
+import { HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 xdescribe('ApiService', () => {
@@ -34,7 +35,7 @@ xdescribe('ApiService', () => {
   });
 
   it('should do a get call', () => {
-    service.get('/org/', {id: 'xyz'}).subscribe(value => {
+    service.get('/org/', { id: 'xyz' }).subscribe(value => {
       expect(value).toEqual({});
     });
 
@@ -112,7 +113,7 @@ xdescribe('ApiService', () => {
   });
 
   it('should handle error', () => {
-    const errors = new ErrorEvent('Some Error XYZ', { message: 'Bad request', error: new Error('Error')});
+    const errors = new ErrorEvent('Some Error XYZ', { message: 'Bad request', error: new Error('Error') });
 
     const response: HttpErrorResponse = {
       error: errors,

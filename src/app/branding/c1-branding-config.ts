@@ -1,7 +1,7 @@
-import { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
-import { DemoVideo } from "../core/models/branding/demo-video.model";
-import { FeatureConfiguration } from "../core/models/branding/feature-configuration.model";
-import { KbArticle } from "../core/models/branding/kb-article.model";
+import type { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
+import type { DemoVideo } from "../core/models/branding/demo-video.model";
+import type { FeatureConfiguration } from "../core/models/branding/feature-configuration.model";
+import type { KbArticle } from "../core/models/branding/kb-article.model";
 import config from './config.json';
 
 const brandingConfig = config as BrandingConfiguration;

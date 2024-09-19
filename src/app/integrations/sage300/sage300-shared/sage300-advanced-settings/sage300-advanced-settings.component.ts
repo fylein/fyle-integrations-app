@@ -1,21 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import type { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName, ConfigurationCta, CustomOperatorOption, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import type { Sage300AdvancedSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
+import type { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { Router } from '@angular/router';
-import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { Router } from '@angular/router';
+import type { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
-import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
+import type { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 
 @Component({
   selector: 'app-sage300-advanced-settings',

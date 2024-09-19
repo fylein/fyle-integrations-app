@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NetsuiteConfigurationComponent } from './netsuite-configuration.component';
 import { NetsuiteExportSettingsComponent } from '../../netsuite-shared/netsuite-export-settings/netsuite-export-settings.component';
 import { NetsuiteImportSettingsComponent } from '../../netsuite-shared/netsuite-import-settings/netsuite-import-settings.component';

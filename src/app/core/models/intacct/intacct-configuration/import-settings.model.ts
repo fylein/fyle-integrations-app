@@ -1,22 +1,22 @@
-import { FormGroup } from "@angular/forms";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import type { FormGroup } from "@angular/forms";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { FyleField } from "../../enum/enum.model";
 import { brandingConfig } from "src/app/branding/branding-config";
-import { ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
+import type { ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 
 const emptyDestinationAttribute = { id: null, name: null };
 
-export type Configuration = {
+export interface Configuration {
     import_vendors_as_merchants: boolean,
     import_categories: boolean,
     import_tax_codes: boolean
 }
 
-export type ImportSettingGeneralMapping = {
+export interface ImportSettingGeneralMapping {
     default_tax_code: DefaultDestinationAttribute
 }
 
-export type MappingSetting = {
+export interface MappingSetting {
     source_field: string,
     destination_field: string,
     import_to_fyle: boolean,
@@ -24,16 +24,16 @@ export type MappingSetting = {
     source_placeholder: null
 }
 
-export type DependentFieldSetting = {
+export interface DependentFieldSetting {
     is_import_enabled: boolean,
     cost_code_field_name: string,
     cost_code_placeholder: string,
     cost_type_field_name: string,
     cost_type_placeholder: string,
     workspace: number
-  };
+  }
 
-export type ImportSettingGet = {
+export interface ImportSettingGet {
     configurations: Configuration,
     general_mappings: ImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
@@ -41,14 +41,14 @@ export type ImportSettingGet = {
     workspace_id: number
 }
 
-export type ImportSettingPost = {
+export interface ImportSettingPost {
     configurations: Configuration,
     general_mappings: ImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
     dependent_field_settings: DependentFieldSetting | null
   }
 
-export type IntacctDependentImportFields = {
+export interface IntacctDependentImportFields {
     options: ImportSettingsCustomFieldRow[],
     source_field: string,
     formController: string,

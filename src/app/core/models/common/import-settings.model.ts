@@ -1,32 +1,32 @@
 import { FormGroup, FormControl } from "@angular/forms";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 import { BusinessCentralImportSettingsGet } from "../business-central/business-central-configuration/business-central-import-settings.model";
-import { IntegrationField } from "../db/mapping.model";
+import type { IntegrationField } from "../db/mapping.model";
 import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage300-import-settings.model";
 
-export type ImportDefaultField = {
+export interface ImportDefaultField {
   destination_field: string,
   source_field: string,
   formController: string,
   import_code?: string
 }
 
-export type ExpenseField = {
+export interface ExpenseField {
     attribute_type: string;
     display_name: string;
     source_placeholder: string | null;
     is_dependent: boolean;
-  };
+  }
 
-  export type ExpenseFieldFormArray = {
+  export interface ExpenseFieldFormArray {
     source_field: string;
     destination_field: string;
     import_to_fyle: boolean;
     is_custom: boolean;
     source_placeholder: string;
-};
+}
 
-export type ImportSettingMappingRow = {
+export interface ImportSettingMappingRow {
   destination_field: string,
   import_to_fyle: boolean,
   is_custom: boolean,
@@ -35,16 +35,16 @@ export type ImportSettingMappingRow = {
   import_code?: boolean
 }
 
-export type ImportSettingsCustomFieldRow = {
+export interface ImportSettingsCustomFieldRow {
   attribute_type: string,
   display_name: string,
   source_placeholder: string | null,
   is_dependent: boolean
 }
 
-export type ImportCodeFieldConfigType = {
+export interface ImportCodeFieldConfigType {
   [key: string]: boolean;
-};
+}
 
 export class ImportSettingsModel {
 

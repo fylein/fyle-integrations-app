@@ -1,7 +1,7 @@
-import { IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from "../enum/enum.model";
+import type { IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from "../enum/enum.model";
 
-export type PreviewPage = {
+export interface PreviewPage {
   fyleExpense?: boolean,
   intacctReimburse?: IntacctReimbursableExpensesObject | null,
   intacctCCC?: IntacctCorporateCreditCardExpensesObject | null
-};
+}

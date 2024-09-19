@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Expense } from 'src/app/core/models/intacct/db/expense.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

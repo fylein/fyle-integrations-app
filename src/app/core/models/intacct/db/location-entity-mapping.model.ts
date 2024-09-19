@@ -1,4 +1,4 @@
-export type LocationEntityMapping = {
+export interface LocationEntityMapping {
     id?: number;
     location_entity_name: string;
     country_name: string | null;
@@ -6,4 +6,4 @@ export type LocationEntityMapping = {
     created_at?: Date;
     updated_at?: Date;
     workspace: number;
-  };
+  }

@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import type { OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-configuration-toggle-field',

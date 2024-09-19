@@ -36,12 +36,12 @@ type Story = StoryObj<MainMenuComponent>;
 export const simple: Story = {
   args: {
     modules: [
-      {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
-      {label: 'Export Log', routerLink: '/integrations/qbo/main/export_log'},
-      {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
-      {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
+      { label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard' },
+      { label: 'Export Log', routerLink: '/integrations/qbo/main/export_log' },
+      { label: 'Mapping', routerLink: '/integrations/qbo/main/mapping' },
+      { label: 'Configuration', routerLink: '/integrations/qbo/main/configuration' }
     ],
-    activeItem: {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
+    activeItem: { label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard' },
     appName: AppName.QBO,
     isDropdrownRequired: false
   }

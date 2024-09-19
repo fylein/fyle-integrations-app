@@ -1,6 +1,6 @@
-import { Sage300OnboardingState } from "../../../enum/enum.model";
+import type { Sage300OnboardingState } from "../../../enum/enum.model";
 
-export type Sage300OnboardingStepperMap = {
+export interface Sage300OnboardingStepperMap {
     [Sage300OnboardingState.CONNECTION]: number,
     [Sage300OnboardingState.EXPORT_SETTINGS]: number,
     [Sage300OnboardingState.IMPORT_SETTINGS]: number,

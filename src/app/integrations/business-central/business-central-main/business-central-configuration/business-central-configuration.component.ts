@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-business-central-configuration',
@@ -9,9 +10,9 @@ import { MenuItem } from 'primeng/api';
 export class BusinessCentralConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/business_central/main/configuration/export_settings'},
-    {label: 'Import Settings', routerLink: '/integrations/business_central/main/configuration/import_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
+    { label: 'Export Settings', routerLink: '/integrations/business_central/main/configuration/export_settings' },
+    { label: 'Import Settings', routerLink: '/integrations/business_central/main/configuration/import_settings' },
+    { label: 'Advanced Settings', routerLink: '/integrations/business_central/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem = this.modules[0];

@@ -1,9 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
 import { brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';

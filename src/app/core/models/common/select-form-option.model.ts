@@ -1,15 +1,15 @@
-export type SelectFormOption = {
+export interface SelectFormOption {
   label: string;
   value: string | null | number | boolean;
   subLabel?: string;
 }
 
-export type SelectFormLabel = {
+export interface SelectFormLabel {
   label: string;
   value: string;
 }
 
-export type EmailOption = {
+export interface EmailOption {
   email: string;
   name: string;
-};
+}

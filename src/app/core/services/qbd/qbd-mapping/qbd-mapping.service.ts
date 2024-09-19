@@ -1,10 +1,10 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
-import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
-import { Observable } from 'rxjs';
-import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import type { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
+import type { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import type { Observable } from 'rxjs';
+import type { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
-import { ApiService } from '../../common/api.service';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 
 @Component({
   selector: 'app-netsuite-main',
@@ -19,10 +20,10 @@ export class NetsuiteMainComponent implements OnInit {
   readonly brandingContent = brandingContent.common;
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/netsuite/main/dashboard'},
-    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/netsuite/main/export_log'},
-    {label: 'Mapping', routerLink: '/integrations/netsuite/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/netsuite/main/configuration'}
+    { label: 'Dashboard', routerLink: '/integrations/netsuite/main/dashboard' },
+    { label: this.brandingContent.exportLogTabName, routerLink: '/integrations/netsuite/main/export_log' },
+    { label: 'Mapping', routerLink: '/integrations/netsuite/main/mapping' },
+    { label: 'Configuration', routerLink: '/integrations/netsuite/main/configuration' }
   ];
 
   activeModule: MenuItem;

@@ -1,29 +1,30 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { JoinOption, Operator } from "../enum/enum.model";
+import type { Operator } from "../enum/enum.model";
+import { JoinOption } from "../enum/enum.model";
 import { environment } from "src/environments/environment";
 
-export type EmailOption = {
+export interface EmailOption {
     email: string;
     name: string;
-};
+}
 
 export  interface HourOption {
   label: string;
   value: number;
 }
 
-export type skipExportValidator = {
+export interface skipExportValidator {
   isChanged: string[];
   isNotChanged: string[];
 }
 
-export type ConditionField = {
+export interface ConditionField {
   field_name: string;
   type: string;
   is_custom: boolean;
-};
+}
 
-export type ExpenseFilterPost = {
+export interface ExpenseFilterPost {
     condition: string;
     operator: Operator;
     values: string | string[]
@@ -31,9 +32,9 @@ export type ExpenseFilterPost = {
     join_by:JoinOption | null;
     is_custom: boolean;
     custom_field_type: string | null;
-};
+}
 
-export type ExpenseFilterPayload = {
+export interface ExpenseFilterPayload {
     condition: ConditionField,
     operator: Operator,
     value: string[]
@@ -48,24 +49,24 @@ export interface ExpenseFilter extends ExpenseFilterPost {
     workspace: number
 }
 
-export type ExpenseFilterResponse = {
+export interface ExpenseFilterResponse {
     count: number,
     next: string | null,
     previous: string | null,
     results: ExpenseFilter[]
-};
+}
 
-export type SkipExportValidatorRule = {
+export interface SkipExportValidatorRule {
   condition1: string[];
   condition2: string[];
   operator1: string[];
   operator2: string[];
-};
+}
 
-export type AdvancedSettingValidatorRule = {
+export interface AdvancedSettingValidatorRule {
   paymentSync: string;
   exportSchedule: string;
-};
+}
 
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {

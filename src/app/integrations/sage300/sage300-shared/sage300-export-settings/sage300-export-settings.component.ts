@@ -1,21 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportSettingDestinationOptionKey, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
-import { ExportSettingModel as CommonExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
+import type { ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import type { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel as CommonExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import type { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 
 @Component({
   selector: 'app-sage300-export-settings',

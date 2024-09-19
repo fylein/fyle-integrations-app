@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import type { Router } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
-import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import type { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -169,7 +173,7 @@ export class QboExportSettingsComponent implements OnInit {
       return;
     }
 
-    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS});
+    this.constructPayloadAndSave({ hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS });
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
@@ -387,13 +391,13 @@ export class QboExportSettingsComponent implements OnInit {
   private addMissingOptions() {
     if (this.exportSettings.general_mappings) {
       // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.bank_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.qbo_expense_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.bankAccounts, newOption: this.exportSettings.general_mappings.bank_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.qbo_expense_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable });
 
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor });
     }
   }
 

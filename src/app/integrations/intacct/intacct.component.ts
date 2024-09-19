@@ -1,14 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import type { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { AppcuesService } from 'src/app/core/services/integration/appcues.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
+import type { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
   selector: 'app-intacct',

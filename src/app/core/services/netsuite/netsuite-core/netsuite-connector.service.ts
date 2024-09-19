@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
-import { ApiService } from '../../common/api.service';
-import { StorageService } from '../../common/storage.service';
+import type { ApiService } from '../../common/api.service';
+import type { StorageService } from '../../common/storage.service';
 import { NetsuiteCredential } from 'src/app/core/models/netsuite/db/netsuite-credentials.model';
-import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
-import { Observable, Subject } from 'rxjs';
-import { NetsuiteConnectorGet, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { NetsuiteConnectorGet, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import type { WorkspaceService } from '../../common/workspace.service';
 
 
 const netsuiteCredentialCache = new Subject<void>();

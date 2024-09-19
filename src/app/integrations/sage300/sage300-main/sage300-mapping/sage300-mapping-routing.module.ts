@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Sage300MappingComponent } from './sage300-mapping.component';
 import { Sage300BaseMappingComponent } from './sage300-base-mapping/sage300-base-mapping.component';
 

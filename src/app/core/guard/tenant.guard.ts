@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { forkJoin, Observable, throwError } from 'rxjs';
+import type { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { forkJoin, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { ToastSeverity, XeroOnboardingState } from '../models/enum/enum.model';
-import { XeroConnectorService } from '../services/xero/xero-configuration/xero-connector.service';
-import { WorkspaceService } from '../services/common/workspace.service';
-import { IntegrationsToastService } from '../services/common/integrations-toast.service';
+import type { XeroConnectorService } from '../services/xero/xero-configuration/xero-connector.service';
+import type { WorkspaceService } from '../services/common/workspace.service';
+import type { IntegrationsToastService } from '../services/common/integrations-toast.service';
 
 @Injectable({
   providedIn: 'root'

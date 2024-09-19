@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { Observable } from 'rxjs';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 import { Cacheable } from 'ts-cacheable';
 
 @Injectable({

@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import type { QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import type { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 @Component({
   selector: 'app-qbo-base-mapping',

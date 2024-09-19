@@ -1,4 +1,4 @@
-import { Org } from "../../models/org/org.model";
+import type { Org } from "../../models/org/org.model";
 
 export const orgMockData: Org = {
     id: 1,

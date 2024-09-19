@@ -1,7 +1,7 @@
-import { NetsuiteDestinationAttribute } from "./destination-attribute.model";
-import { NetsuiteSubsidiaryMappingPost } from "../netsuite-configuration/netsuite-connector.model";
+import type { NetsuiteDestinationAttribute } from "./destination-attribute.model";
+import type { NetsuiteSubsidiaryMappingPost } from "../netsuite-configuration/netsuite-connector.model";
 
-export type SubsidiaryMapping = {
+export interface SubsidiaryMapping {
     id?: number;
     subsidiary_name: string;
     country_name: string | null;
@@ -9,7 +9,7 @@ export type SubsidiaryMapping = {
     created_at?: Date;
     updated_at?: Date;
     workspace: number;
-};
+}
 
 
 export class NetsuiteSubsidiaryMappingModel {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IntacctConfigurationComponent } from './intacct-configuration.component';
 import { IntacctExportSettingsComponent } from '../../intacct-shared/intacct-export-settings/intacct-export-settings.component';
 import { IntacctImportSettingsComponent } from '../../intacct-shared/intacct-import-settings/intacct-import-settings.component';

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { AbstractControl, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
-import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import type { AppName } from 'src/app/core/models/enum/enum.model';
+import type { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 
 @Component({
   selector: 'app-configuration-schedule-export',

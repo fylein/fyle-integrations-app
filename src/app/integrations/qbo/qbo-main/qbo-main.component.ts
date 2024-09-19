@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-main',
@@ -19,10 +20,10 @@ export class QboMainComponent implements OnInit {
   readonly brandingContent = brandingContent.common;
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
-    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log'},
-    {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
+    { label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard' },
+    { label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log' },
+    { label: 'Mapping', routerLink: '/integrations/qbo/main/mapping' },
+    { label: 'Configuration', routerLink: '/integrations/qbo/main/configuration' }
   ];
 
   activeModule: MenuItem;

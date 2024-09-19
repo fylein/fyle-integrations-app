@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NetsuiteExportLogComponent } from './netsuite-export-log.component';
 import { NetsuiteCompleteExportLogsComponent } from './netsuite-complete-export-logs/netsuite-complete-export-logs.component';
 import { NetsuiteSkippedExportLogComponent } from './netsuite-skipped-export-log/netsuite-skipped-export-log.component';

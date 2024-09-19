@@ -1,6 +1,6 @@
-import { MinimalUser } from "src/app/core/models/db/user.model";
+import type { MinimalUser } from "src/app/core/models/db/user.model";
 import { AutoMapEmployeeOptions, EmployeeFieldMapping, QBOOnboardingState, QBOReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
-import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
+import type { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',

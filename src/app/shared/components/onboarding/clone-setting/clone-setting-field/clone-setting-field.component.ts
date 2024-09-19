@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import type { OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 
 @Component({

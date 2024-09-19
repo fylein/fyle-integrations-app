@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { MappingFilterComponent } from './mapping-filter.component';
 import { UntypedFormBuilder } from '@angular/forms';

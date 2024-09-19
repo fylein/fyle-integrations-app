@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QbdOnboardingAdvancedSettingComponent } from './qbd-onboarding-advanced-setting/qbd-onboarding-advanced-setting.component';
 import { QbdOnboardingDoneComponent } from './qbd-onboarding-done/qbd-onboarding-done.component';
 import { QbdOnboardingExportSettingComponent } from './qbd-onboarding-export-setting/qbd-onboarding-export-setting.component';

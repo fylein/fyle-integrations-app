@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MessageService } from 'primeng/api';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-error',

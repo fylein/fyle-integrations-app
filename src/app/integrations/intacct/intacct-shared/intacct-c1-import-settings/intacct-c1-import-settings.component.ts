@@ -1,21 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, FyleField } from 'src/app/core/models/enum/enum.model';
-import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
-import { ImportSettingGet, ImportSettingPost, ImportSettings, IntacctDependentImportFields, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import type { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
+import type { ImportSettingGet, ImportSettingPost, IntacctDependentImportFields, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
+import type { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import type { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import type { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
   selector: 'app-intacct-c1-import-settings',

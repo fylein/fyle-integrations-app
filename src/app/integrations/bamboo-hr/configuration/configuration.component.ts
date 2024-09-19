@@ -1,12 +1,15 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DropdownFilterOptions } from 'primeng/dropdown';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { DropdownFilterOptions } from 'primeng/dropdown';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import type { BambooHRConfiguration, BambooHRConfigurationPost, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { BambooHrModel } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
   selector: 'app-configuration',

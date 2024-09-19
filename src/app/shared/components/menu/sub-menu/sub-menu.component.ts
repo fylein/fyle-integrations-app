@@ -1,6 +1,7 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-sub-menu',

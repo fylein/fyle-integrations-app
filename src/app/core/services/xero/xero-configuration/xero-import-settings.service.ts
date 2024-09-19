@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { XeroImportSettingGet, XeroImportSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
-import { Observable, Subject } from 'rxjs';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { XeroImportSettingGet, XeroImportSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { IntegrationField } from 'src/app/core/models/db/mapping.model';
+import type { IntegrationField } from 'src/app/core/models/db/mapping.model';
 
 const xeroImportSettingGetCache$ = new Subject<void>();
 

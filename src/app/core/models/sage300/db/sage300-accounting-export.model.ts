@@ -1,5 +1,5 @@
-import { AccountingExport } from "../../db/accounting-export.model";
-import { PaginatedResponse } from "../../db/paginated-response.model";
+import type { AccountingExport } from "../../db/accounting-export.model";
+import type { PaginatedResponse } from "../../db/paginated-response.model";
 
 export interface Sage300AccountingExport extends AccountingExport {
     sage_300_errors: any;

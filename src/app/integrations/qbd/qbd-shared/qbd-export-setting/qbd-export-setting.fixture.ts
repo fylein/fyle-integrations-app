@@ -1,5 +1,5 @@
 import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
-import { QBDExportSettingGet } from "src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model";
+import type { QBDExportSettingGet } from "src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model";
 
 export const QBDExportSettingResponse:QBDExportSettingGet = {
     id: 1,

@@ -1,18 +1,18 @@
 
-import { DestinationAttribute } from "../../db/destination-attribute.model";
-import { FyleField, MappingState, SageIntacctField } from "../../enum/enum.model";
-import { EmployeeMapping } from "./employee-mapping.model";
-import { Error } from "./error.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { MinimalMappingSetting } from "./mapping-setting.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
+import type { FyleField, MappingState, SageIntacctField } from "../../enum/enum.model";
+import type { EmployeeMapping } from "./employee-mapping.model";
+import type { Error } from "./error.model";
+import type { ExpenseAttribute } from "./expense-attribute.model";
+import type { MinimalMappingSetting } from "./mapping-setting.model";
 
-export type MappingPost = {
+export interface MappingPost {
   source_type: string;
   source_value: string;
   destination_type: string;
   destination_id: string;
   destination_value: string;
-};
+}
 
 export interface MappingIntacct extends MappingPost {
   id: number;
@@ -23,14 +23,14 @@ export interface MappingIntacct extends MappingPost {
   workspace: number;
 }
 
-export type MappingResponse = {
+export interface MappingResponse {
   count: number;
   next: string;
   previous: string;
   results: EmployeeMapping[];
-};
+}
 
-export type MappingList = {
+export interface MappingList {
   fyle: {
     id: number;
     value: string;
@@ -45,19 +45,19 @@ export type MappingList = {
   autoMapped: boolean;
   state: MappingState;
   index: number;
-};
+}
 
-export type MappingStats = {
+export interface MappingStats {
   all_attributes_count: number;
   unmapped_attributes_count: number;
-};
+}
 
-export type ResolveMappingError = {
+export interface ResolveMappingError {
   sourceType: FyleField;
   destinationType: SageIntacctField | FyleField;
   fyleAttributes: Error[];
   workspaceId: string;
-};
+}
 
 export class MappingModel {
   static constructPayload(mappingSetting: MinimalMappingSetting, mappingRow: MappingList): MappingPost {

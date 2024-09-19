@@ -1,14 +1,15 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
-import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
+import type { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportSettingModel } from "../../common/export-settings.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import type { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
-import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
+import type { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
 
 
-export type NetsuiteExportSettingWorkspaceGeneralSettingPost = {
+export interface NetsuiteExportSettingWorkspaceGeneralSettingPost {
     employee_field_mapping: EmployeeFieldMapping,
     reimbursable_expenses_object: NetsuiteReimbursableExpensesObject | null,
     auto_map_employees: ExportSettingFormOption | null,
@@ -17,7 +18,7 @@ export type NetsuiteExportSettingWorkspaceGeneralSettingPost = {
 }
 
 
-export type NetsuiteExportSettingGeneralMapping = {
+export interface NetsuiteExportSettingGeneralMapping {
     reimbursable_account: DefaultDestinationAttribute,
     default_ccc_account: DefaultDestinationAttribute,
     accounts_payable: DefaultDestinationAttribute,
@@ -25,14 +26,14 @@ export type NetsuiteExportSettingGeneralMapping = {
 }
 
 
-export type NetSuiteExportSettingPost = {
+export interface NetSuiteExportSettingPost {
     expense_group_settings: ExpenseGroupSettingPost,
     configuration: NetsuiteExportSettingWorkspaceGeneralSettingPost,
     general_mappings: NetsuiteExportSettingGeneralMapping
   }
 
 
-export type NetSuiteExportSettingGet = {
+export interface NetSuiteExportSettingGet {
     expense_group_settings: ExpenseGroupSettingGet,
     configuration: NetsuiteExportSettingWorkspaceGeneralSettingPost,
     general_mappings: NetsuiteExportSettingGeneralMapping,
@@ -291,7 +292,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static constructPayload(exportSettingsForm: FormGroup): NetSuiteExportSettingPost {
-        const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+        const emptyDestinationAttribute: DefaultDestinationAttribute = { id: null, name: null };
         const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
         if (brandingConfig.brandId === 'co') {

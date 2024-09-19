@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
+import type { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
 import { Cacheable } from 'ts-cacheable';
-import { StorageService } from '../../common/storage.service';
-import { ApiService } from '../../common/api.service';
+import type { StorageService } from '../../common/storage.service';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class QbdWorkspaceService {
 
   @Cacheable()
   getQBDWorkspace(orgId: string): Observable<QBDWorkspace> {
-    return this.apiService.get('/workspaces/', {org_id: orgId});
+    return this.apiService.get('/workspaces/', { org_id: orgId });
   }
 
   postQBDWorkspace(): Observable<QBDWorkspace> {

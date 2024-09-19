@@ -1,6 +1,6 @@
 import { BusinessCentralWorkspace } from "./business-central-workspace.model";
 
-export type BusinessCentralCredential = {
+export interface BusinessCentralCredential {
     id: number;
     refresh_token: string;
     is_expired: boolean;

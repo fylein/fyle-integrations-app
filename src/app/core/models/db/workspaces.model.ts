@@ -1,4 +1,4 @@
-export type Workspace = {
+export interface Workspace {
   id: number;
   name: string;
   user: number[];

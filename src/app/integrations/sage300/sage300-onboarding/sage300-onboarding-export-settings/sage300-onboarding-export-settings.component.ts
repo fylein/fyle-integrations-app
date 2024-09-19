@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
   selector: 'app-sage300-onboarding-export-settings',

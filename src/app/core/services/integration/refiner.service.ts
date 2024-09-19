@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MinimalUser } from '../../models/db/user.model';
-import { AppName, RefinerSurveyType } from '../../models/enum/enum.model';
-import { UserService } from '../misc/user.service';
+import type { MinimalUser } from '../../models/db/user.model';
+import type { AppName, RefinerSurveyType } from '../../models/enum/enum.model';
+import type { UserService } from '../misc/user.service';
 
 @Injectable({
   providedIn: 'root'

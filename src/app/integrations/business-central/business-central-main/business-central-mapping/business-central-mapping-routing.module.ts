@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BusinessCentralMappingComponent } from './business-central-mapping.component';
 import { BusinessCentralBaseMappingComponent } from './business-central-base-mapping/business-central-base-mapping.component';
 

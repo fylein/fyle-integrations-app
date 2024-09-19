@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
 
 @Component({
   selector: 'app-netsuite-onboarding-done',

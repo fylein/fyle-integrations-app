@@ -1,5 +1,5 @@
-import { NetsuiteOnboardingState } from "../../enum/enum.model";
-import { Workspace } from "../../db/workspaces.model";
+import type { NetsuiteOnboardingState } from "../../enum/enum.model";
+import type { Workspace } from "../../db/workspaces.model";
 
 export interface NetsuiteWorkspace extends Workspace {
     fyle_org_id: string;

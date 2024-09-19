@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { WorkspaceService } from './workspace.service';
-import { Observable, from } from 'rxjs';
+import type { ApiService } from './api.service';
+import type { WorkspaceService } from './workspace.service';
+import type { Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { Error, ErrorResponse } from '../../models/db/error.model';
-import { HelperService } from './helper.service';
+import type { HelperService } from './helper.service';
 import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
-import { AppName, TaskLogState } from '../../models/enum/enum.model';
-import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
+import type { TaskLogState } from '../../models/enum/enum.model';
+import { AppName } from '../../models/enum/enum.model';
+import type { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +35,10 @@ export class DashboardService {
 
   getExportErrors(version?: 'v1'): Observable<any> {
     if (version === 'v1') {
-      return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+      return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, { is_resolved: false });
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, { is_resolved: false });
   }
 
   private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null, appName?: AppName): Observable<any> {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QboMappingComponent } from './qbo-mapping.component';
 import { QboBaseMappingComponent } from './qbo-base-mapping/qbo-base-mapping.component';
 

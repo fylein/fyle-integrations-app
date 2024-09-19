@@ -1,4 +1,4 @@
-export type IntacctExports = {
+export interface IntacctExports {
     id: number;
     type: string;
     fund_source: string;
@@ -12,7 +12,7 @@ export type IntacctExports = {
     download?: string
 }
 
-export type IntacctExportTriggerResponse = {
+export interface IntacctExportTriggerResponse {
     count: number;
     next: string | null;
     previous: string | null;

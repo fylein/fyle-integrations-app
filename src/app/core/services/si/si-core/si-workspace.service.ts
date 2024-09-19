@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
+import type { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { Cacheable } from 'ts-cacheable';
-import { StorageService } from '../../common/storage.service';
-import { Configuration } from 'src/app/core/models/intacct/db/configuration.model';
+import type { StorageService } from '../../common/storage.service';
+import type { Configuration } from 'src/app/core/models/intacct/db/configuration.model';
 import { HelperService } from '../../common/helper.service';
-import { ApiService } from '../../common/api.service';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +31,11 @@ export class SiWorkspaceService {
 
   @Cacheable()
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false});
+    return this.apiService.get('/workspaces/', { org_id: orgId, is_polling: false });
   }
 
   getWorkspaceWithoutCache(orgId: string, isPolling = false): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling});
+    return this.apiService.get('/workspaces/', { org_id: orgId, is_polling: isPolling });
   }
 
   postWorkspace(): Observable<IntacctWorkspace> {

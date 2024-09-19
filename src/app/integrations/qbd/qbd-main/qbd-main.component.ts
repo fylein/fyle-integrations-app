@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api/menuitem';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api/menuitem';
 import { AppName } from 'src/app/core/models/enum/enum.model';
-import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
-import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
-import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import type { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import type { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
+import type { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
 @Component({
   selector: 'app-main',
@@ -14,9 +15,9 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 export class QbdMainComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/qbd/main/dashboard'},
-    {label: 'Configuration', routerLink: '/integrations/qbd/main/configuration'},
-    {label: 'Mapping', routerLink: '/integrations/qbd/main/mapping'}
+    { label: 'Dashboard', routerLink: '/integrations/qbd/main/dashboard' },
+    { label: 'Configuration', routerLink: '/integrations/qbd/main/configuration' },
+    { label: 'Mapping', routerLink: '/integrations/qbd/main/mapping' }
   ];
 
   activeModules: MenuItem[];

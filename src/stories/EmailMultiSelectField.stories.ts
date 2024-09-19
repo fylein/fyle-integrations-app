@@ -39,12 +39,12 @@ type Story = StoryObj<EmailMultiSelectFieldComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({exportScheduleFrequency: new FormControl(1), exportSchedule: new FormControl(true), email: new FormControl([{email: 'ashwin.t@fyle.in', name: 'Ashwin'}]), search: new FormControl('')})),
+    form: setupStoryBookFormGroup(new FormGroup({ exportScheduleFrequency: new FormControl(1), exportSchedule: new FormControl(true), email: new FormControl([{ email: 'ashwin.t@fyle.in', name: 'Ashwin' }]), search: new FormControl('') })),
     isFieldMandatory: false,
     mandatoryErrorListName: 'automatic export method',
     label: 'Set up export frequency',
     subLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online',
     formControllerName: 'exportScheduleFrequency',
-    options: [{email: 'ashwin.t@fyle.in', name: 'Ashwin'}]
+    options: [{ email: 'ashwin.t@fyle.in', name: 'Ashwin' }]
   }
 };

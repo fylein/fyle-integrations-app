@@ -1,4 +1,4 @@
-export type KbArticle = {
+export interface KbArticle {
     [brandingId: string]: {
         topLevelArticles: {
             BAMBOO_HR: string;
@@ -67,4 +67,4 @@ export type KbArticle = {
             },
         }
     }
-};
+}

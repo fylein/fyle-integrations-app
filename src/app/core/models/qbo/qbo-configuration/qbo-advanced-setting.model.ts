@@ -1,14 +1,15 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import type { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { QBOPaymentSyncDirection } from "../../enum/enum.model";
 import { ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import type { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model";
+import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 
-export type QBOAdvancedSettingWorkspaceGeneralSetting = {
+export interface QBOAdvancedSettingWorkspaceGeneralSetting {
   sync_fyle_to_qbo_payments: boolean,
   sync_qbo_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
@@ -18,38 +19,38 @@ export type QBOAdvancedSettingWorkspaceGeneralSetting = {
   memo_structure: string[]
 }
 
-export type QBOAdvancedSettingGeneralMapping = {
+export interface QBOAdvancedSettingGeneralMapping {
   bill_payment_account: DefaultDestinationAttribute
 }
 
-export type QBOAdvancedSettingWorkspaceSchedule = {
+export interface QBOAdvancedSettingWorkspaceSchedule {
   enabled: boolean,
   interval_hours: number,
   emails_selected: string[] | null,
   additional_email_options: EmailOption[]
 }
 
-export type QBOAdvancedSettingWorkspaceSchedulePost = {
+export interface QBOAdvancedSettingWorkspaceSchedulePost {
   hours: number;
   schedule_enabled: boolean;
   emails_selected: string[];
   email_added: EmailOption
 }
 
-export type QBOAdvancedSettingPost = {
+export interface QBOAdvancedSettingPost {
   workspace_general_settings: QBOAdvancedSettingWorkspaceGeneralSetting,
   general_mappings: QBOAdvancedSettingGeneralMapping,
   workspace_schedules: QBOAdvancedSettingWorkspaceSchedule,
 }
 
-export type QBOAdvancedSettingGet = {
+export interface QBOAdvancedSettingGet {
   workspace_general_settings: QBOAdvancedSettingWorkspaceGeneralSetting,
   general_mappings: QBOAdvancedSettingGeneralMapping,
   workspace_schedules: QBOAdvancedSettingWorkspaceSchedule,
   workspace_id:number
 }
 
-export type QBOAdvancedSettingAddEmailModel = {
+export interface QBOAdvancedSettingAddEmailModel {
   workspaceId: number;
   hours: number;
   schedulEnabled: boolean;
@@ -112,7 +113,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
   }
 
   static constructPayload(advancedSettingsForm: FormGroup): QBOAdvancedSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
     const advancedSettingPayload: QBOAdvancedSettingPost = {
       workspace_general_settings: {
         sync_fyle_to_qbo_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === QBOPaymentSyncDirection.FYLE_TO_QBO ? true : false,

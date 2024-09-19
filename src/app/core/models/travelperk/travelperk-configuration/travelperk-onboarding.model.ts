@@ -1,6 +1,6 @@
-import { TravelPerkOnboardingState } from "../../enum/enum.model";
+import type { TravelPerkOnboardingState } from "../../enum/enum.model";
 
-export type TravelPerkOnboardingStepperMap = {
+export interface TravelPerkOnboardingStepperMap {
     [TravelPerkOnboardingState.CONNECTION]: number,
     [TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS]: number,
     [TravelPerkOnboardingState.ADVANCED_SETTINGS]: number,

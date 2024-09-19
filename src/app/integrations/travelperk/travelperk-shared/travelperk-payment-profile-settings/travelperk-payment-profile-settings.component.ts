@@ -1,16 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import type { TravelperkPaymentProfileSettingResponse } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
-import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',

@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, CCCImportState, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
-import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import type { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
+import type { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import type { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import type { AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
+import { Error } from 'src/app/core/models/db/error.model';
+import type { CCCImportState, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import type { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import type { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

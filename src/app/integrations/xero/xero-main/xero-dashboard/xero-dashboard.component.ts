@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
-import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
+import type { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import type { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import type { CCCImportState, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingField, AppName, AppUrl, ExpenseState, ExportState, FyleReferenceType, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
-import { XeroTaskLog, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
-import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
+import type { XeroTaskLog, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import type { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
+import type { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
+import type { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 @Component({
   selector: 'app-xero-dashboard',
   templateUrl: './xero-dashboard.component.html',

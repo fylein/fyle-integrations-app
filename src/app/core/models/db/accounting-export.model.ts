@@ -1,12 +1,13 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
-import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
-import { Expense } from "../intacct/db/expense.model";
+import type { AccountingExportStatus } from "../enum/enum.model";
+import { AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
+import type { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
+import type { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
-import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
+import type { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
-import { ExpenseGroup } from "./expense-group.model";
+import type { ExpenseGroup } from "./expense-group.model";
 import { XeroWorkspace } from "../xero/db/xero-workspace.model";
 
 export interface AccountingExportCount {
@@ -47,7 +48,7 @@ export interface AccountingExport {
     fund_source: FundSource;
 }
 
-export type AccountingExportGetParam = {
+export interface AccountingExportGetParam {
     type__in: string[],
     status__in: string[],
     id__in?: number[],

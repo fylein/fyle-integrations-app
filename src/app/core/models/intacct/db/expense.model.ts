@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-export type Expense = {
+export interface Expense {
   id: number;
   employee_email: string;
   employee_name: string;
@@ -41,7 +41,7 @@ export type Expense = {
   corporate_card_id: string;
   is_skipped: boolean;
   report_title: string;
-};
+}
 
 export interface ExpenseList {
   expenseID: string;

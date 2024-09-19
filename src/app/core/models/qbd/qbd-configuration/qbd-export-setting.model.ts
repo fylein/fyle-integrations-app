@@ -1,12 +1,12 @@
-import { FormGroup } from "@angular/forms";
-import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency } from "../../enum/enum.model";
+import type { FormGroup } from "@angular/forms";
+import type { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency } from "../../enum/enum.model";
 
-export type QBDExportSettingFormOption = {
+export interface QBDExportSettingFormOption {
     label: string,
     value: ExpenseState | QBDReimbursableExpensesObject | QBDCorporateCreditCardExpensesObject | QBDExportDateType | QBDExpenseGroupedBy | QBDScheduleFrequency | QBDFyleField | string | QBDEntity;
 }
 
-export type QBDExportSettingGet = {
+export interface QBDExportSettingGet {
     id: number,
     created_at: Date,
     updated_at: Date,
@@ -26,7 +26,7 @@ export type QBDExportSettingGet = {
     workspace: number
 }
 
-export type QBDExportSettingPost = {
+export interface QBDExportSettingPost {
     reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
     bank_account_name: string | null,
     mileage_account_name : string | null,

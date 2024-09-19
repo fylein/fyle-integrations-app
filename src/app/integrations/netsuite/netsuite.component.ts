@@ -1,13 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteWorkspace } from 'src/app/core/models/netsuite/db/netsuite-workspace.model';
-import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import type { NetsuiteWorkspace } from 'src/app/core/models/netsuite/db/netsuite-workspace.model';
+import type { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 
 
 @Component({

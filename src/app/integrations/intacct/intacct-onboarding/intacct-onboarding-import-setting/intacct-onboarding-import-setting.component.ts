@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-intacct-onboarding-import-setting',

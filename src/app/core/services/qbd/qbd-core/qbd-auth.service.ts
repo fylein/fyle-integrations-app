@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Token } from 'src/app/core/models/misc/token.model';
-import { ApiService } from '../../common/api.service';
+import type { Observable } from 'rxjs';
+import type { Token } from 'src/app/core/models/misc/token.model';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'

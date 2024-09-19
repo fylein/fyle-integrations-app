@@ -1,4 +1,4 @@
-export type XeroWorkspaceGeneralSetting = {
+export interface XeroWorkspaceGeneralSetting {
     id?: number;
     reimbursable_expenses_object: string;
     corporate_credit_card_expenses_object: string;
@@ -19,4 +19,4 @@ export type XeroWorkspaceGeneralSetting = {
     created_at?: Date;
     updated_at?: Date;
     workspace?: number;
-  };
+  }

@@ -1,21 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
+import type { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import type { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { Expense } from 'src/app/core/models/intacct/db/expense.model';
-import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import type { Paginator } from 'src/app/core/models/misc/paginator.model';
+import type { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
-import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { PaginatorService } from 'src/app/core/services/common/paginator.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
+import type { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import type { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-xero-complete-export-log',

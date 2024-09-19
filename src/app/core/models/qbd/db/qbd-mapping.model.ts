@@ -1,9 +1,9 @@
-export type QBDMappingPost = {
+export interface QBDMappingPost {
   attribute_type: string;
   source_value: string;
   source_id: string;
   destination_value: string | null;
-};
+}
 
 export interface QBDMapping extends QBDMappingPost {
   id: number;
@@ -12,17 +12,17 @@ export interface QBDMapping extends QBDMappingPost {
   workspace: number;
 }
 
-export type QBDMappingResponse = {
+export interface QBDMappingResponse {
   count: number;
   next: string;
   previous: string;
   results: QBDMapping[];
-};
+}
 
-export type QBDMappingStats = {
+export interface QBDMappingStats {
   all_attributes_count: number;
   unmapped_attributes_count: number;
-};
+}
 
 export class QBDMappingModel {
   static constructPayload(mapping: QBDMapping): QBDMappingPost {

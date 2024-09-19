@@ -1,4 +1,4 @@
-export type ContentConfiguration = {
+export interface ContentConfiguration {
     [brandingId: string]: {
         netsuite: {
             landing: {

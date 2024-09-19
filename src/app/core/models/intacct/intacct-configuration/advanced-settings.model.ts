@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 
@@ -12,21 +12,21 @@ import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
     value: number;
   }
 
-  export type EmailOption = {
+  export interface EmailOption {
     email: string;
     name: string;
   }
 
-  export type AdvancedSettingFormOption = {
+  export interface AdvancedSettingFormOption {
     label: string,
     value: string | null | PaymentSyncDirection
 }
 
-export type ConditionField = {
+export interface ConditionField {
   field_name: string;
   type: string;
   is_custom: boolean;
-};
+}
 
 export enum Operator {
   IsNull = "isnull",
@@ -52,7 +52,7 @@ export enum CustomOperatorOption {
   IsNotEmpty = "is_not_empty"
 }
 
-export type SkipExport = {
+export interface SkipExport {
   id?: number;
   condition: string;
   custom_field_type: any;
@@ -61,12 +61,12 @@ export type SkipExport = {
   rank: number;
   join_by: JoinOption.AND | JoinOption.OR | null;
   is_custom: boolean;
-};
+}
 
-export type ExpenseFilterResponse = {
+export interface ExpenseFilterResponse {
   count: number;
   results: SkipExport[];
-};
+}
 
 export interface Configuration {
     change_accounting_period: boolean;
@@ -97,14 +97,14 @@ export interface Configuration {
     additional_email_options: EmailOption[];
   }
 
-export type AdvancedSettingsGet = {
+export interface AdvancedSettingsGet {
     configurations: Configuration;
     general_mappings: AdvancedSettingGeneralMapping;
     workspace_schedules: WorkspaceSchedules;
     workspace_id: number;
 }
 
-export type AdvancedSettingsPost = {
+export interface AdvancedSettingsPost {
     configurations: Configuration;
     general_mappings: AdvancedSettingGeneralMapping;
     workspace_schedules: WorkspaceSchedules;

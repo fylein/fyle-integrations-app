@@ -1,4 +1,4 @@
-export type Org = {
+export interface Org {
     id: number;
     name: string;
     user: number[];
@@ -14,6 +14,6 @@ export type Org = {
     updated_at: Date;
 }
 
-export type GeneratedToken = {
+export interface GeneratedToken {
     token: string
 }

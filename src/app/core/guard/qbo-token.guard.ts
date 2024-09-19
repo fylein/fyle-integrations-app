@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
-import { WorkspaceService } from '../services/common/workspace.service';
-import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
+import type { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, map, throwError } from 'rxjs';
+import type { WorkspaceService } from '../services/common/workspace.service';
+import type { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
-import { IntegrationsToastService } from '../services/common/integrations-toast.service';
+import type { IntegrationsToastService } from '../services/common/integrations-toast.service';
 import { QBOOnboardingState, ToastSeverity } from '../models/enum/enum.model';
 
 @Injectable({

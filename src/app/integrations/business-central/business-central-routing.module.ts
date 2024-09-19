@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BusinessCentralComponent } from './business-central.component';
 import { BusinessCentralTokenGuard } from 'src/app/core/guard/business-central-token.guard';
 

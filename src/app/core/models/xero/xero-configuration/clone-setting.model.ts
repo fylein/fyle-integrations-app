@@ -1,18 +1,21 @@
-import { FormGroup } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
 import { MappingSetting } from "../../db/mapping-setting.model";
-import { XeroAdvancedSettingGet, XeroAdvancedSettingModel, XeroAdvancedSettingPost } from "./xero-advanced-settings.model";
-import { XeroExportSettingGet, XeroExportSettingModel, XeroExportSettingPost } from "./xero-export-settings.model";
-import { XeroImportSettingGet, XeroImportSettingModel, XeroImportSettingPost } from "./xero-import-settings.model";
+import type { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from "./xero-advanced-settings.model";
+import { XeroAdvancedSettingModel } from "./xero-advanced-settings.model";
+import type { XeroExportSettingGet, XeroExportSettingPost } from "./xero-export-settings.model";
+import { XeroExportSettingModel } from "./xero-export-settings.model";
+import type { XeroImportSettingGet, XeroImportSettingPost } from "./xero-import-settings.model";
+import { XeroImportSettingModel } from "./xero-import-settings.model";
 
 
-export type XeroCloneSetting = {
+export interface XeroCloneSetting {
     workspace_id: number,
     export_settings: XeroExportSettingGet,
     import_settings: XeroImportSettingGet,
     advanced_settings: XeroAdvancedSettingGet
 }
 
-export type XeroCloneSettingPost = {
+export interface XeroCloneSettingPost {
     export_settings: XeroExportSettingPost,
     import_settings: XeroImportSettingPost,
     advanced_settings: XeroAdvancedSettingPost

@@ -1,23 +1,24 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import type { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportSettingModel } from "../../common/export-settings.model";
 import { brandingContent } from "src/app/branding/branding-config";
 
-export type XeroExpenseGroupSettingPost = {
+export interface XeroExpenseGroupSettingPost {
   ccc_expense_state: XeroCCCExpenseState;
   reimbursable_expense_group_fields?: string[] | null;
   reimbursable_export_date_type: ExportDateType | null;
   corporate_credit_card_expense_group_fields?: string[] | null;
   ccc_export_date_type: ExportDateType | null;
   reimbursable_expense_state: ExpenseState
-};
+}
 
 export interface XeroExpenseGroupSettingGet extends XeroExpenseGroupSettingPost {}
 
-export type XeroExportSettingWorkspaceGeneralSettingPost = {
+export interface XeroExportSettingWorkspaceGeneralSettingPost {
   reimbursable_expenses_object: XeroReimbursableExpensesObject | null,
   corporate_credit_card_expenses_object: XeroCorporateCreditCardExpensesObject | null,
   auto_map_employees: AutoMapEmployeeOptions | null,
@@ -27,17 +28,17 @@ export interface XeroExportSettingWorkspaceGeneralSetting extends XeroExportSett
   is_simplify_report_closure_enabled: boolean
 }
 
-export type XeroExportSettingGeneralMapping = {
+export interface XeroExportSettingGeneralMapping {
   bank_account: DefaultDestinationAttribute
 }
 
-export type XeroExportSettingPost = {
+export interface XeroExportSettingPost {
   expense_group_settings: XeroExpenseGroupSettingPost,
   workspace_general_settings: XeroExportSettingWorkspaceGeneralSettingPost,
   general_mappings: XeroExportSettingGeneralMapping
 }
 
-export type XeroExportSettingGet = {
+export interface XeroExportSettingGet {
   expense_group_settings: XeroExpenseGroupSettingGet,
   workspace_general_settings: XeroExportSettingWorkspaceGeneralSetting,
   general_mappings: XeroExportSettingGeneralMapping,
@@ -209,7 +210,7 @@ export class XeroExportSettingModel {
   }
 
   static constructPayload(exportSettingsForm: FormGroup): XeroExportSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
     const exportSettingPayload: XeroExportSettingPost = {
       expense_group_settings: {
         reimbursable_expense_state: exportSettingsForm.get('expenseState')?.value,

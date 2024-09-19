@@ -1,16 +1,16 @@
-import { PaginatedResponse } from "../../db/paginated-response.model";
-import { FyleReferenceType } from "../../enum/enum.model";
-import { Expense } from "./expense.model";
+import type { PaginatedResponse } from "../../db/paginated-response.model";
+import type { FyleReferenceType } from "../../enum/enum.model";
+import type { Expense } from "./expense.model";
 
-export type ExpenseGroupDescription = {
+export interface ExpenseGroupDescription {
   claim_number: string;
   employee_email: string;
   expense_id: string;
   report_id: string;
   settlement_id: string;
-};
+}
 
-export type ExpenseGroup = {
+export interface ExpenseGroup {
   id: number;
   fund_source: string;
   description: ExpenseGroupDescription;
@@ -22,14 +22,14 @@ export type ExpenseGroup = {
   updated_at: Date;
   workspace: number;
   expenses: Expense[];
-};
+}
 
-export type ExpenseGroupResponse = {
+export interface ExpenseGroupResponse {
   count: number;
   next: string;
   previous: string;
   results: ExpenseGroup[];
-};
+}
 
 export interface ExpenseGroupList {
   index?: number;
@@ -52,7 +52,7 @@ export interface SkipExportList {
   fyleUrl: string;
 }
 
-export type SkipExportLog = {
+export interface SkipExportLog {
   employee_name: string;
   employee_email: string;
   claim_number: string;
@@ -60,12 +60,12 @@ export type SkipExportLog = {
   fund_source: string;
   expense_id: string;
   org_id: string;
-};
+}
 
 export interface SkipExportLogResponse extends PaginatedResponse {
   results: SkipExportLog[];
 }
 
-export type ExportableExpenseGroup = {
+export interface ExportableExpenseGroup {
   exportable_expense_group_ids: number[];
-};
+}

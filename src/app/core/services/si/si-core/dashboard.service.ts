@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { firstValueFrom, from, Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { firstValueFrom, from } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
-import { SiWorkspaceService } from './si-workspace.service';
-import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
-import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
-import { TaskGetParams, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
-import { Error } from 'src/app/core/models/intacct/db/error.model';
-import { ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
-import { ApiService } from '../../common/api.service';
+import type { SiWorkspaceService } from './si-workspace.service';
+import type { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
+import type { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import type { TaskGetParams, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
+import type { Error } from 'src/app/core/models/intacct/db/error.model';
+import type { ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class DashboardService {
   }
 
   getExportErrors(): Observable<Error[]> {
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, { is_resolved: false });
   }
 
   syncExpensesFromFyle(): Observable<{}> {

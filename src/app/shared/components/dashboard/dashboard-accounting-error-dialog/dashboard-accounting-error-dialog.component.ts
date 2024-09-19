@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { brandingContent } from 'src/app/branding/branding-config';
-import { Expense, ExpenseModel } from 'src/app/core/models/intacct/db/expense.model';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import { ExpenseModel } from 'src/app/core/models/intacct/db/expense.model';
 
 @Component({
   selector: 'app-dashboard-accounting-error-dialog',

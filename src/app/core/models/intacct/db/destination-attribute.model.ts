@@ -1,6 +1,6 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
 
-type IntacctDestinationAttributeDetail = {
+interface IntacctDestinationAttributeDetail {
   email?: string;
   customer_id?: string;
   customer_name?: string;
@@ -8,20 +8,20 @@ type IntacctDestinationAttributeDetail = {
   gl_account_title?: string;
   is_reimbursable?: boolean;
   country?: string;
-};
+}
 
 export interface IntacctDestinationAttribute extends DestinationAttribute {
   detail: IntacctDestinationAttributeDetail;
 }
 
-export type PaginatedintacctDestinationAttribute = {
+export interface PaginatedintacctDestinationAttribute {
   count: number;
   next: string;
   previous: string;
   results: IntacctDestinationAttribute[];
-};
+}
 
-export type ExportSettingDestinationAttributeOption = {
+export interface ExportSettingDestinationAttributeOption {
   'VENDOR': IntacctDestinationAttribute[],
   'ACCOUNT': IntacctDestinationAttribute[],
   'EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
@@ -29,7 +29,7 @@ export type ExportSettingDestinationAttributeOption = {
   'CHARGE_CARD': IntacctDestinationAttribute[],
 }
 
-export type GroupedDestinationAttribute = {
+export interface GroupedDestinationAttribute {
   ACCOUNT: IntacctDestinationAttribute[],
   EXPENSE_TYPE: IntacctDestinationAttribute[],
   EXPENSE_PAYMENT_TYPE: IntacctDestinationAttribute[],
@@ -43,4 +43,4 @@ export type GroupedDestinationAttribute = {
   ITEM: IntacctDestinationAttribute[],
   PAYMENT_ACCOUNT: IntacctDestinationAttribute[],
   EMPLOYEE: IntacctDestinationAttribute[]
-};
+}

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

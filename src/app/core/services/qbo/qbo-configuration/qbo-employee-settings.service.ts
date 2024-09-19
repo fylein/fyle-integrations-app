@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 const employeeSettingsCache$ = new Subject<void>();
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
+import type {
   HttpRequest,
   HttpHandler,
   HttpEvent,
@@ -7,12 +7,13 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Token } from '../models/misc/token.model';
-import { AuthService } from '../services/common/auth.service';
+import type { JwtHelperService } from '@auth0/angular-jwt';
+import type { Token } from '../models/misc/token.model';
+import type { AuthService } from '../services/common/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

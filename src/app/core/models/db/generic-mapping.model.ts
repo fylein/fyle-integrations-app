@@ -1,18 +1,18 @@
 
 import { FyleField } from "../enum/enum.model";
-import { CategoryMappingPost } from "./category-mapping.model";
-import { DestinationAttribute } from "./destination-attribute.model";
-import { EmployeeMappingPost } from "./employee-mapping.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
+import type { CategoryMappingPost } from "./category-mapping.model";
+import type { DestinationAttribute } from "./destination-attribute.model";
+import type { EmployeeMappingPost } from "./employee-mapping.model";
+import type { ExpenseAttribute } from "./expense-attribute.model";
+import type { ExtendedGenericMapping } from "./extended-generic-mapping.model";
 
-export type GenericMappingPost = {
+export interface GenericMappingPost {
     source_type: string;
     source_value: string;
     destination_type: string;
     destination_id: string;
     destination_value: string;
-};
+}
 
 export interface GenericMapping {
   created_at: Date;
@@ -25,10 +25,10 @@ export interface GenericMapping {
   workspace: number;
 }
 
-export type MinimalMappingSetting = {
+export interface MinimalMappingSetting {
   source_field: string;
   destination_field: string;
-};
+}
 
 export class MappingClass {
 

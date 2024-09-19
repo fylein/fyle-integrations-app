@@ -1,20 +1,22 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import type { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
+import type { UserService } from 'src/app/core/services/misc/user.service';
+import type { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
+import type { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import type { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { interval, take } from 'rxjs';
-import { HelperService } from 'src/app/core/services/common/helper.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-intacct-location-entity',

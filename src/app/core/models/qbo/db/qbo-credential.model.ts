@@ -1,4 +1,4 @@
-export type QBOCredential = {
+export interface QBOCredential {
     id: number;
     refresh_token: string;
     is_expired: boolean;

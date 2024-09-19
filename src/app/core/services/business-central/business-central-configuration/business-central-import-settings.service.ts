@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { HelperService } from '../../common/helper.service';
-import { Subject, Observable } from 'rxjs';
-import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { HelperService } from '../../common/helper.service';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 
 const businessCentralImportSettingGetCache$ = new Subject<void>();

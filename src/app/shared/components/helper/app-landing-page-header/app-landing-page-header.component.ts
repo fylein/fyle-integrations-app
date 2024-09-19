@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { SafeResourceUrl } from '@angular/platform-browser';
+import type { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-landing-page-header',

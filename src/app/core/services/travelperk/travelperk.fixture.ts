@@ -1,5 +1,5 @@
 import { TravelPerkOnboardingState } from "../../models/enum/enum.model";
-import { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from "../../models/travelperk/travelperk.model";
+import type { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from "../../models/travelperk/travelperk.model";
 import { orgMockData } from "../org/org.fixture";
 
 export const travelperkMockData: Travelperk = {

@@ -31,7 +31,7 @@ type Story = StoryObj<ConfigurationCustomFieldCreationDialogComponent>;
 
 export const simple: Story = {
   args: {
-    customFieldForm: setupStoryBookFormGroup(new FormGroup({attribute_type: new FormControl(''), display_name: new FormControl(''), source_placeholder: new FormControl('')})),
+    customFieldForm: setupStoryBookFormGroup(new FormGroup({ attribute_type: new FormControl(''), display_name: new FormControl(''), source_placeholder: new FormControl('') })),
     showCustomFieldCreationDialog: true
   }
 };

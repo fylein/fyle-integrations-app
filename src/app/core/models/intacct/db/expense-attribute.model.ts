@@ -1,16 +1,16 @@
-import { MappingIntacct } from "./mapping.model";
+import type { MappingIntacct } from "./mapping.model";
 
 
-export type ExpenseAttributeDetail = {
+export interface ExpenseAttributeDetail {
   location: string;
   full_name: string;
   department_id: string;
   department: string;
   department_code: string;
   employee_code: string;
-};
+}
 
-export type ExpenseAttribute = {
+export interface ExpenseAttribute {
   id: number;
   attribute_type: string;
   display_name: string;
@@ -22,19 +22,19 @@ export type ExpenseAttribute = {
   updated_at: Date;
   workspace: number;
   detail: ExpenseAttributeDetail;
-};
+}
 
-export type MinimalExpenseAttribute = {
+export interface MinimalExpenseAttribute {
   id: number
-};
+}
 
 export interface ExtendedExpenseAttribute extends ExpenseAttribute {
   mapping: MappingIntacct[];
 }
 
-export type ExtendedExpenseAttributeResponse = {
+export interface ExtendedExpenseAttributeResponse {
   count: number;
   next: string;
   previous: string;
   results: ExtendedExpenseAttribute[];
-};
+}

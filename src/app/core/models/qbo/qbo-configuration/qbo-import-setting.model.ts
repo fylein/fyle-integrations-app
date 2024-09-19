@@ -1,10 +1,11 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
-import { MappingSetting } from "../../db/mapping-setting.model";
-import { IntegrationField } from "../../db/mapping.model";
+import type { ImportCodeFieldConfigType, ImportSettingMappingRow } from "../../common/import-settings.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import type { MappingSetting } from "../../db/mapping-setting.model";
+import type { IntegrationField } from "../../db/mapping.model";
 
-export type QBOImportSettingWorkspaceGeneralSetting = {
+export interface QBOImportSettingWorkspaceGeneralSetting {
   import_categories: boolean,
   import_items: boolean,
   import_vendors_as_merchants: boolean,
@@ -13,18 +14,18 @@ export type QBOImportSettingWorkspaceGeneralSetting = {
   import_code_fields: string[]
 }
 
-export type QBOImportSettingGeneralMapping = {
+export interface QBOImportSettingGeneralMapping {
   default_tax_code: DefaultDestinationAttribute
 }
 
-export type QBOImportSettingPost = {
+export interface QBOImportSettingPost {
   workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
   general_mappings: QBOImportSettingGeneralMapping,
   mapping_settings: ImportSettingMappingRow[] | []
 }
 
 
-export type QBOImportSettingGet = {
+export interface QBOImportSettingGet {
   workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
   general_mappings: QBOImportSettingGeneralMapping,
   mapping_settings: MappingSetting[],
@@ -59,7 +60,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
   }
 
   static constructPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 

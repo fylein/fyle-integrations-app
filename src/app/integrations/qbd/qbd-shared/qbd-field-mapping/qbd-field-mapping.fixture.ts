@@ -1,4 +1,4 @@
-import { QBDFieldMappingGet } from "src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model";
+import type { QBDFieldMappingGet } from "src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model";
 
 
 export const QBDFieldMappingResponse: QBDFieldMappingGet = {

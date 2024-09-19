@@ -1,5 +1,5 @@
-import { QBOOnboardingState } from "../../enum/enum.model";
-import { Workspace } from "../../db/workspaces.model";
+import type { QBOOnboardingState } from "../../enum/enum.model";
+import type { Workspace } from "../../db/workspaces.model";
 
 export interface QBOWorkspace extends Workspace {
     fyle_org_id: string;

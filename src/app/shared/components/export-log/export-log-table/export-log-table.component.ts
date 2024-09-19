@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import type { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
+import type { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
-import { Expense } from 'src/app/core/models/intacct/db/expense.model';
-import { WindowService } from 'src/app/core/services/common/window.service';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import type { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-export-log-table',

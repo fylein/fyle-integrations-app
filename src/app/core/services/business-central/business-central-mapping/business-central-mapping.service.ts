@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { HelperService } from '../../common/helper.service';
-import { Observable } from 'rxjs/internal/Observable';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { HelperService } from '../../common/helper.service';
+import type { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,6 @@ export class BusinessCentralMappingService {
   }
 
   importBusinessCentralAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, { refresh });
   }
 }

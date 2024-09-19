@@ -1,4 +1,4 @@
-export type QBDAccountingExportsResult = {
+export interface QBDAccountingExportsResult {
     id: number;
     type: string;
     fund_source: string;
@@ -12,21 +12,21 @@ export type QBDAccountingExportsResult = {
     download?: string
 }
 
-export type QbdExportTriggerResponse = {
+export interface QbdExportTriggerResponse {
     count: number;
     next: string | null;
     previous: string | null;
     results: QBDAccountingExportsResult[]
 }
 
-export type QbdAccountingExportDownload = {
+export interface QbdAccountingExportDownload {
     download_url: string;
     file_id: string;
     accounting_export_id: number;
     workspace_id: number;
 }
 
-export type QbdExportTriggerGet = {
+export interface QbdExportTriggerGet {
     message: string;
     new_expenses_imported: boolean;
 }

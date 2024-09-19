@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
-import { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

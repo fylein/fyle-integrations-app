@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { IntegrationsToastService } from '../../common/integrations-toast.service';
-import { BusinessCentralMappingService } from '../business-central-mapping/business-central-mapping.service';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { IntegrationsToastService } from '../../common/integrations-toast.service';
+import type { BusinessCentralMappingService } from '../business-central-mapping/business-central-mapping.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class BusinessCentralHelperService {
   ) { }
 
   refreshBusinessCentralDimensions(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, { refresh });
   }
 
   importAttributes(isRefresh: boolean): void {

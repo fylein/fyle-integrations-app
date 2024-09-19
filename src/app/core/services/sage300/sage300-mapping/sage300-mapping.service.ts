@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { Observable } from 'rxjs';
-import { HelperService } from '../../common/helper.service';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { Observable } from 'rxjs';
+import type { HelperService } from '../../common/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,6 @@ export class Sage300MappingService {
   }
 
   importSage300Attributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage300/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage300/import_attributes/`, { refresh });
   }
 }

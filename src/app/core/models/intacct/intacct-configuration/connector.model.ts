@@ -1,7 +1,7 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { SageIntacctCredential } from "../db/sage-credentials.model";
+import type { SageIntacctCredential } from "../db/sage-credentials.model";
 
-export type LocationEntityPost = {
+export interface LocationEntityPost {
   location_entity_name: string,
   destination_id: string,
   country_name: null | string,
@@ -13,7 +13,7 @@ export class IntacctConnectorModel {
   static mapAPIResponseToFormGroup(sageIntacctConnection: SageIntacctCredential | null): FormGroup {
     const isDisabled = sageIntacctConnection?.si_company_id ? true : false;
     return new FormGroup({
-      companyID: new FormControl({value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null, disabled: isDisabled}, Validators.required),
+      companyID: new FormControl({ value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null, disabled: isDisabled }, Validators.required),
       userID: new FormControl('', Validators.required),
       userPassword: new FormControl('', Validators.required)
     });

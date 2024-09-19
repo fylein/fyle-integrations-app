@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { Observable, Subject } from 'rxjs';
-import { QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
-import { ApiService } from '../../common/api.service';
-import { IntegrationField } from 'src/app/core/models/db/mapping.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import type { ApiService } from '../../common/api.service';
+import type { IntegrationField } from 'src/app/core/models/db/mapping.model';
 
 const qboImportSettingGetCache$ = new Subject<void>();
 

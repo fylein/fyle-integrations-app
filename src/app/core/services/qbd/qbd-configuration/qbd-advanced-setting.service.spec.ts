@@ -4,7 +4,7 @@ import { QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdAdvancedSettingService } from './qbd-advanced-setting.service';
-import { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import type { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 
 xdescribe('QbdAdvancedSettingService', () => {
   let service: QbdAdvancedSettingService;
@@ -45,7 +45,7 @@ xdescribe('QbdAdvancedSettingService', () => {
       ],
       schedule_is_enabled: false,
       schedule_id: null,
-      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+      emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
       workspace: 1,
       day_of_month: null,
       day_of_week: "MONDAY",
@@ -76,7 +76,7 @@ xdescribe('QbdAdvancedSettingService', () => {
         "purpose"
       ],
       schedule_is_enabled: false,
-      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+      emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
       day_of_month: null,
       day_of_week: "MONDAY",
       frequency: QBDScheduleFrequency.WEEKLY,
@@ -99,7 +99,7 @@ xdescribe('QbdAdvancedSettingService', () => {
       schedule_is_enabled: false,
       interval_hours: 100,
       schedule_id: null,
-      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+      emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
       day_of_month: null,
       day_of_week: "MONDAY",
       frequency: QBDScheduleFrequency.WEEKLY,

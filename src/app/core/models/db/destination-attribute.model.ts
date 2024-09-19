@@ -1,8 +1,8 @@
-import { BusinessCentralDestinationAttributes } from "../business-central/db/business-central-destination-attribute.model";
-import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import type { BusinessCentralDestinationAttributes } from "../business-central/db/business-central-destination-attribute.model";
+import type { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
+import type { PaginatedResponse } from "./paginated-response.model";
 
-export type DestinationAttributeDetail = {
+export interface DestinationAttributeDetail {
   email: string;
   customer_id: string;
   customer_name: string;
@@ -10,9 +10,9 @@ export type DestinationAttributeDetail = {
   gl_account_title: string;
   is_reimbursable: boolean;
   country: string;
-};
+}
 
-export type DestinationAttribute = {
+export interface DestinationAttribute {
   id: number;
   attribute_type: string;
   display_name: string;
@@ -24,18 +24,18 @@ export type DestinationAttribute = {
   updated_at: Date;
   workspace: number;
 
-};
+}
 
-export type DefaultDestinationAttribute = {
+export interface DefaultDestinationAttribute {
   id: string | null,
   name: string | null,
-};
+}
 
 export interface PaginatedDestinationAttribute extends PaginatedResponse {
   results: DestinationAttribute[];
 }
 
-export type GroupedDestinationAttribute = {
+export interface GroupedDestinationAttribute {
   ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   EXPENSE_TYPE: Sage300DestinationAttributes[],
   EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
@@ -56,4 +56,4 @@ export type GroupedDestinationAttribute = {
   ACCOUNTS_PAYABLE: DestinationAttribute[],
   TAX_CODE: DestinationAttribute[],
   COMPANY: BusinessCentralDestinationAttributes[]
-};
+}

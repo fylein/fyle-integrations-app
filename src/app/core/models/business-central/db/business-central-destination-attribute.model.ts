@@ -1,10 +1,11 @@
-import { DestinationAttribute, GroupedDestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
+import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
-type EmployeeMappingDetail = {
+interface EmployeeMappingDetail {
     email: string | null;
 }
 
-type TaxMappingDetails = {
+interface TaxMappingDetails {
     customer_id: string | null,
     customer_name: string | null
 }

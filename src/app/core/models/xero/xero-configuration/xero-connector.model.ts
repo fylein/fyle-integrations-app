@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-export type XeroConnector = {
+export interface XeroConnector {
     code: string;
 }
 

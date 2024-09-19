@@ -1,9 +1,9 @@
-import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
-import { MappingDestination } from "./mapping-destination.model";
-import { MappingSource } from "./mapping-source.model";
+import type { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
+import type { MappingDestination } from "./mapping-destination.model";
+import type { MappingSource } from "./mapping-source.model";
 
 
-export type CategoryMappingPost = {
+export interface CategoryMappingPost {
   source_category: MappingSource;
   destination_account?: MappingDestination;
   destination_expense_head?: MappingDestination;
@@ -16,7 +16,7 @@ export interface CategoryMapping extends CategoryMappingPost {
   id: number;
 }
 
-export type CategoryMappingResult = {
+export interface CategoryMappingResult {
   id: number;
   categorymapping: CategoryMapping[];
   attribute_type?: string;
@@ -29,4 +29,4 @@ export type CategoryMappingResult = {
   updated_at?: Date;
   workspace?: number;
   detail?: ExpenseAttributeDetail;
-};
+}

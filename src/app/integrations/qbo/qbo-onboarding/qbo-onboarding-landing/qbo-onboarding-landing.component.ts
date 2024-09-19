@@ -1,15 +1,17 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { NavigationExtras, Router } from '@angular/router';
+import type { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
-import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
+import type { QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
+import { QBOConnectorModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

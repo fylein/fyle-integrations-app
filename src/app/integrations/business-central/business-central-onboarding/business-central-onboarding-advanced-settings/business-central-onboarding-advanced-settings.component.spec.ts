@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { BusinessCentralOnboardingAdvancedSettingsComponent } from './business-central-onboarding-advanced-settings.component';
 

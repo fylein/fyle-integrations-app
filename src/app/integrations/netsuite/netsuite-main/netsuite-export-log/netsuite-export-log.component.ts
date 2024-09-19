@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -11,8 +12,8 @@ import { brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding
 export class NetsuiteExportLogComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/netsuite/main/export_log/complete'},
-    {label: 'Skipped', routerLink: '/integrations/netsuite/main/export_log/skipped'}
+    { label: 'Completed', routerLink: '/integrations/netsuite/main/export_log/complete' },
+    { label: 'Skipped', routerLink: '/integrations/netsuite/main/export_log/skipped' }
   ];
 
   activeModule: MenuItem;

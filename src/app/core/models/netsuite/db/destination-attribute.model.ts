@@ -1,8 +1,8 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
 
-type NetsuiteDestinationAttributeDetail = {
+interface NetsuiteDestinationAttributeDetail {
   country?: string;
-};
+}
 
 export interface NetsuiteDestinationAttribute extends DestinationAttribute {
   detail: NetsuiteDestinationAttributeDetail;

@@ -2,7 +2,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterPost } from "../../common/advanced-settings.model";
 import { JoinOption, Operator } from "../../enum/enum.model";
 
-export type BusinessCentralAdvancedSettings = {
+export interface BusinessCentralAdvancedSettings {
     top_memo_structure: string[],
     expense_memo_structure: string[],
     schedule_is_enabled: boolean,

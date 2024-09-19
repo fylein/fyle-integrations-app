@@ -1,23 +1,27 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import type { Router } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import type { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
-import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
+import type { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 
 @Component({
   selector: 'app-netsuite-export-settings',
@@ -219,7 +223,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   save(): void {
-    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
+    this.constructPayloadAndSave({ hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS });
   }
 
   private updateCCCExpenseGroupingDateOptions(selectedValue: NetSuiteCorporateCreditCardExpensesObject): void {
@@ -340,10 +344,10 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   addMissingOptions() {
     if (this.exportSettings.general_mappings) {
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.reimbursable_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.creditCardVendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.bankAccounts, newOption: this.exportSettings.general_mappings.reimbursable_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable });
+      this.helperService.addDefaultDestinationAttributeIfNotExists({ options: this.creditCardVendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor });
     }
   }
 

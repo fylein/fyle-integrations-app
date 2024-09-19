@@ -1,4 +1,4 @@
-export type Paginator = {
+export interface Paginator {
     limit: number,
     offset: number
-};
+}

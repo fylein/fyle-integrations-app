@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import type { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-intacct-connector',

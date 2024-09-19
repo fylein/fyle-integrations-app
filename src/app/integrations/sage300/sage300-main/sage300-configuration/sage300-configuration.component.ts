@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api/menuitem';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MenuItem } from 'primeng/api/menuitem';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -10,9 +11,9 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class Sage300ConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/sage300/main/configuration/export_settings'},
-    {label: 'Import Settings', routerLink: '/integrations/sage300/main/configuration/import_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
+    { label: 'Export Settings', routerLink: '/integrations/sage300/main/configuration/export_settings' },
+    { label: 'Import Settings', routerLink: '/integrations/sage300/main/configuration/import_settings' },
+    { label: 'Advanced Settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem = this.modules[0];

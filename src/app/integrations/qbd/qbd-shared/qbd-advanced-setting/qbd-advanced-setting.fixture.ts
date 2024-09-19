@@ -1,5 +1,5 @@
 import { QBDScheduleFrequency } from "src/app/core/models/enum/enum.model";
-import { QBDEmailOptions, QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
+import type { QBDEmailOptions, QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
 
 
 export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
@@ -21,7 +21,7 @@ export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
     day_of_week: "MONDAY",
     frequency: QBDScheduleFrequency.WEEKLY,
     time_of_day: "12:00:00",
-    emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+    emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
     workspace: 1,
     schedule_id: null
 };
@@ -52,4 +52,4 @@ export const errorResponse = {
     }
 };
 
-export const QBDEmailOptioResponse: QBDEmailOptions[] = [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}];
+export const QBDEmailOptioResponse: QBDEmailOptions[] = [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }];

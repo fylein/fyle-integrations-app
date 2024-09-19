@@ -1,5 +1,5 @@
 import { IntacctOnboardingState } from "src/app/core/models/enum/enum.model";
-import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
+import type { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,

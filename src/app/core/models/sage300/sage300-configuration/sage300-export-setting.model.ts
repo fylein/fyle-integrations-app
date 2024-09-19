@@ -1,24 +1,25 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject } from "../../enum/enum.model";
+import type { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject } from "../../enum/enum.model";
 import { Sage300DestinationAttributes } from "../db/sage300-destination-attribuite.model";
-import { DestinationAttribute, GroupedDestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
+import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
-export type Sage300ExportSettingFormOption = {
+export interface Sage300ExportSettingFormOption {
     label: string,
     value: ExpenseState | CCCExpenseState | IntacctCorporateCreditCardExpensesObject | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
-export type ExportSettingValidatorRule = {
+export interface ExportSettingValidatorRule {
   reimbursableExpense: string[];
   creditCardExpense: string[];
-};
+}
 
-export type ExportModuleRule = {
+export interface ExportModuleRule {
   formController: string,
   requiredValue: Record<string, string[]>
-};
+}
 
-type Sage300ExportSetting = {
+interface Sage300ExportSetting {
   reimbursable_expenses_export_type: Sage300ExportType,
   reimbursable_expense_state: ExpenseState,
   reimbursable_expense_date: Sage300ExpenseDate,
@@ -41,7 +42,7 @@ type Sage300ExportSetting = {
   default_vendor_id: string,
   default_job_name: string,
   default_job_id: string
-};
+}
 
 export interface Sage300ExportSettingGet extends Sage300ExportSetting {
     id: number,

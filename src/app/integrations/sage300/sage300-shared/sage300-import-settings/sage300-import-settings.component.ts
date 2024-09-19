@@ -1,21 +1,25 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import type { Sage300ImportSettingGet, Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300ImportSettingModel, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import type { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import type { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
+import type { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { fyleFieldsResponse, importSettingsResponse, sage300FieldsResponse } from '../fixture';
 import { catchError, forkJoin, of } from 'rxjs';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-sage300-import-settings',

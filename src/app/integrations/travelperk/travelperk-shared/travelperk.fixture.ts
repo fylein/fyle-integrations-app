@@ -1,7 +1,7 @@
 import { FyleField, TravelPerkExpenseGroup, TravelPerkUserRole } from "src/app/core/models/enum/enum.model";
-import { TravelperkAdvancedSettingGet } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
-import { TravelperkPaymentProfileSettingResponse } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
-import { TravelperkDestinationAttribuite } from "src/app/core/models/travelperk/travelperk.model";
+import type { TravelperkAdvancedSettingGet } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
+import type { TravelperkPaymentProfileSettingResponse } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
+import type { TravelperkDestinationAttribuite } from "src/app/core/models/travelperk/travelperk.model";
 
 export const travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingResponse = {
     next: '',
@@ -79,8 +79,8 @@ export const travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet = 
     "org": 1,
     "id": 1,
     category_mappings: {
-        "Cars": {"name": "xyz", "id": '123'},
-        "Stays": {"name": "xyz", "id": '278'}
+        "Cars": { "name": "xyz", "id": '123' },
+        "Stays": { "name": "xyz", "id": '278' }
     }
 };
 

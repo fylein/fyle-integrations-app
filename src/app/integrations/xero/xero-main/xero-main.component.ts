@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
 @Component({
   selector: 'app-xero-main',
@@ -18,10 +19,10 @@ export class XeroMainComponent implements OnInit {
   readonly brandingContent = brandingContent.common;
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/xero/main/dashboard'},
-    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log'},
-    {label: 'Mapping', routerLink: '/integrations/xero/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/xero/main/configuration'}
+    { label: 'Dashboard', routerLink: '/integrations/xero/main/dashboard' },
+    { label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log' },
+    { label: 'Mapping', routerLink: '/integrations/xero/main/mapping' },
+    { label: 'Configuration', routerLink: '/integrations/xero/main/configuration' }
   ];
 
   activeModule: MenuItem;

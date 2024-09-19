@@ -1,14 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-business-central',

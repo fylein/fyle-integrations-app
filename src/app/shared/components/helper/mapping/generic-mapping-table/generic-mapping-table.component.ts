@@ -1,17 +1,20 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import type { ElementRef, OnInit } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
-import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
+import type { GenericMapping } from 'src/app/core/models/db/generic-mapping.model';
+import { MappingClass } from 'src/app/core/models/db/generic-mapping.model';
+import type { MappingStats } from 'src/app/core/models/db/mapping.model';
+import type { IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -151,7 +154,7 @@ export class GenericMappingTableComponent implements OnInit {
   searchOptions(event: any) {
     if (event.filter) {
       this.isSearching = true;
-      this.optionSearchUpdate.next({searchTerm: (event.filter as string).trim()});
+      this.optionSearchUpdate.next({ searchTerm: (event.filter as string).trim() });
     }
   }
 
@@ -212,7 +215,7 @@ export class GenericMappingTableComponent implements OnInit {
         this.displayErrorToast();
       });
     } else {
-      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: this.destinationField});
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, { source_field: this.sourceField, destination_field: this.destinationField });
 
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);

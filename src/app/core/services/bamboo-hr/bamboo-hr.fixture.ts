@@ -1,4 +1,4 @@
-import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection } from "../../models/bamboo-hr/bamboo-hr.model";
+import type { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection } from "../../models/bamboo-hr/bamboo-hr.model";
 
 export const bambooHrMockData: BambooHr = {
     id: 1,

@@ -1,20 +1,21 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { PaginatorService } from 'src/app/core/services/common/paginator.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { Paginator } from 'src/app/core/models/misc/paginator.model';
+import type { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import type { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import type { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { environment } from 'src/environments/environment';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { UserService } from 'src/app/core/services/misc/user.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage300-skipped-export-log',

@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { QbdOnboardingStepperComponent } from '../../qbd/helper/qbd-onboarding-stepper/qbd-onboarding-stepper.component';
 
 xdescribe('OnboardingStepperComponent', () => {

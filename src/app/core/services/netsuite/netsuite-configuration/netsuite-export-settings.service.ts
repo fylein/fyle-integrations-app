@@ -1,10 +1,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { NetSuiteExportSettingGet, NetSuiteExportSettingModel, NetSuiteExportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { FormGroup } from '@angular/forms';
-import { ExportModuleRule } from 'src/app/core/models/common/export-settings.model';
+import type { Observable } from 'rxjs';
+import type { NetSuiteExportSettingGet, NetSuiteExportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { FormGroup } from '@angular/forms';
+import type { ExportModuleRule } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 
 

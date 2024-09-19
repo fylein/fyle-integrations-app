@@ -1,4 +1,4 @@
-import type { AbstractControl} from "@angular/forms";
+import type { AbstractControl } from "@angular/forms";
 import { FormArray, FormGroup, FormRecord } from "@angular/forms";
 
 export const setupStoryBookFormGroup = <TControl extends AbstractControl>(control: TControl): TControl => {

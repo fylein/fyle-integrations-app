@@ -1,13 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
-import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
+import type { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
+import type { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-qbd',

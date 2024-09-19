@@ -1,14 +1,15 @@
-import { PaginatedResponse } from "../../db/paginated-response.model";
-import { TaskLog } from "../../db/task-log.model";
-import { TaskLogState, TaskLogType } from "../../enum/enum.model";
+import type { PaginatedResponse } from "../../db/paginated-response.model";
+import type { TaskLog } from "../../db/task-log.model";
+import type { TaskLogType } from "../../enum/enum.model";
+import { TaskLogState } from "../../enum/enum.model";
 
 
-export type XeroError = {
+export interface XeroError {
   expense_group_id: number;
   short_description: string;
   long_description: string;
   type: string;
-};
+}
 
 export interface XeroTaskLog extends TaskLog {
   bill: number;
@@ -25,10 +26,10 @@ export interface XeroTaskResponse extends PaginatedResponse {
   results: XeroTaskLog[];
 }
 
-export type TaskGetParams = {
+export interface TaskGetParams {
   limit?: number;
   offset?: number;
   status__in?: string[];
   expense_group_id__in?: number[];
   type__in?: string[];
-};
+}

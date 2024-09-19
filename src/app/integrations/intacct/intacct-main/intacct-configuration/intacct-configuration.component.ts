@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -19,9 +20,9 @@ export class IntacctConfigurationComponent implements OnInit {
   readonly brandingContent = brandingContent;
 
   modules: MenuItem[] = [
-    {label: this.brandingContent.configuration.exportSetting.stepName, routerLink: '/integrations/intacct/main/configuration/export_settings'},
-    {label: this.brandingContent.configuration.importSetting.stepName, routerLink: '/integrations/intacct/main/configuration/import_settings'},
-    {label: this.brandingContent.configuration.advancedSettings.stepName, routerLink: '/integrations/intacct/main/configuration/advanced_settings'}
+    { label: this.brandingContent.configuration.exportSetting.stepName, routerLink: '/integrations/intacct/main/configuration/export_settings' },
+    { label: this.brandingContent.configuration.importSetting.stepName, routerLink: '/integrations/intacct/main/configuration/import_settings' },
+    { label: this.brandingContent.configuration.advancedSettings.stepName, routerLink: '/integrations/intacct/main/configuration/advanced_settings' }
     // {label: 'Connection', routerLink: '/integrations/intacct/main/configuration/connector'}
   ];
 

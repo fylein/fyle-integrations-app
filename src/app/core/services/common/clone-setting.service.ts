@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
-import { WorkspaceService } from './workspace.service';
-import { CloneSettingExist } from '../../models/common/clone-setting.model';
-import { QBOCloneSetting, QBOCloneSettingPost } from '../../models/qbo/qbo-configuration/qbo-clone-setting.model';
-import { XeroCloneSetting, XeroCloneSettingPost } from '../../models/xero/xero-configuration/clone-setting.model';
+import type { Observable } from 'rxjs';
+import type { ApiService } from './api.service';
+import type { WorkspaceService } from './workspace.service';
+import type { CloneSettingExist } from '../../models/common/clone-setting.model';
+import type { QBOCloneSettingPost } from '../../models/qbo/qbo-configuration/qbo-clone-setting.model';
+import { QBOCloneSetting } from '../../models/qbo/qbo-configuration/qbo-clone-setting.model';
+import type { XeroCloneSettingPost } from '../../models/xero/xero-configuration/clone-setting.model';
+import { XeroCloneSetting } from '../../models/xero/xero-configuration/clone-setting.model';
 
 @Injectable({
   providedIn: 'root'

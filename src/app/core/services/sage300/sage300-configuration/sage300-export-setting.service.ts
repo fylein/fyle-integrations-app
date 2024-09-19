@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { HelperService } from '../../common/helper.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import type { ApiService } from '../../common/api.service';
+import type { HelperService } from '../../common/helper.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { Observable } from 'rxjs/internal/Observable';
+import type { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
-import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import type { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingContent } from 'src/app/branding/branding-config';
 
 const sage300ExportSettingGetCache = new Subject<void>();

@@ -1,23 +1,27 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExpenseField, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import type { ExpenseField } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
-import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
-import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
-import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
-import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
+import type { XeroImportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
+import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { OrgService } from 'src/app/core/services/org/org.service';
+import type { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
+import type { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
+import type { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
 @Component({
   selector: 'app-xero-import-settings',

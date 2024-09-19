@@ -1,6 +1,6 @@
-import { DestinationAttributeDetail } from "./destination-attribute-detail.model";
+import type { DestinationAttributeDetail } from "./destination-attribute-detail.model";
 
-export type MappingDestination = {
+export interface MappingDestination {
   id?: number | null;
   attribute_type?: string;
   display_name?: string;
@@ -11,4 +11,4 @@ export type MappingDestination = {
   updated_at?: Date;
   workspace?: number;
   detail?: DestinationAttributeDetail;
-};
+}

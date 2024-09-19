@@ -1,9 +1,10 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
-import { WindowService } from './window.service';
-import { NavigationStart, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import type { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
+import type { WindowService } from './window.service';
+import type { Router } from '@angular/router';
+import { NavigationStart } from '@angular/router';
+import type { Location } from '@angular/common';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 
 

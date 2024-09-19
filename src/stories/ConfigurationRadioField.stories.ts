@@ -30,7 +30,7 @@ type Story = StoryObj<ConfigurationRadioFieldComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({reimbursableExportType: new FormControl()})),
+    form: setupStoryBookFormGroup(new FormGroup({ reimbursableExportType: new FormControl() })),
     isFieldMandatory: true,
     mandatoryErrorListName: 'how expenses to be exported',
     label: 'How should the expenses be exported?',

@@ -1,13 +1,13 @@
-import { PaginatedResponse } from '../../db/paginated-response.model';
-import { TaskLog } from '../../db/task-log.model';
+import type { PaginatedResponse } from '../../db/paginated-response.model';
+import type { TaskLog } from '../../db/task-log.model';
 
-export type NetsuiteMappingError = {
+export interface NetsuiteMappingError {
   expense_group_id: number;
   message: string;
   row: number;
   type: string;
   value: string;
-};
+}
 
 export interface NetsuiteTaskLog extends TaskLog {
   task_id: string;

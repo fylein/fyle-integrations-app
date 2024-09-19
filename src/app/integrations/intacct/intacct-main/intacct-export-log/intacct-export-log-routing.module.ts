@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IntacctExportLogComponent } from './intacct-export-log.component';
 import { IntacctSkipExportLogComponent } from './intacct-skip-export-log/intacct-skip-export-log.component';
 import { IntacctCompletedExportLogComponent } from './intacct-completed-export-log/intacct-completed-export-log.component';

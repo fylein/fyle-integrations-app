@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
-import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
-import { ApiService } from '../../common/api.service';
+import type { Observable } from 'rxjs';
+import type { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import type { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'

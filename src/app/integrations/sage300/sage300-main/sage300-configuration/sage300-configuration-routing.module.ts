@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Sage300ConfigurationComponent } from './sage300-configuration.component';
 import { Sage300ExportSettingsComponent } from '../../sage300-shared/sage300-export-settings/sage300-export-settings.component';
 import { Sage300ImportSettingsComponent } from '../../sage300-shared/sage300-import-settings/sage300-import-settings.component';

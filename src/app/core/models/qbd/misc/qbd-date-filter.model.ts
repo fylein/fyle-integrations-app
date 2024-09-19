@@ -1,10 +1,10 @@
-export type DateFilter = {
+export interface DateFilter {
   dateRange: string;
   startDate: Date;
   endDate: Date;
-};
+}
 
-export type SelectedDateFilter = {
+export interface SelectedDateFilter {
   startDate: Date;
   endDate: Date;
-};
+}

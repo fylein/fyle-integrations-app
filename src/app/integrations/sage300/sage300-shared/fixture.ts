@@ -1,9 +1,9 @@
-import { ConditionField, EmailOption, ExpenseFilterResponse} from "src/app/core/models/common/advanced-settings.model";
-import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
+import type { ConditionField, EmailOption, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
+import type { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
 import { JoinOption, Operator } from "src/app/core/models/enum/enum.model";
-import { Sage300DestinationAttributes } from "src/app/core/models/sage300/db/sage300-destination-attribuite.model";
-import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model";
-import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
+import type { Sage300DestinationAttributes } from "src/app/core/models/sage300/db/sage300-destination-attribuite.model";
+import type { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model";
+import type { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
 export const importSettingsResponse: Sage300ImportSettingGet = {
     "import_settings": {

@@ -35,7 +35,7 @@ type Story = StoryObj<DropdownComponent>;
 export const preFilled: Story = {
   args: {
     placeholder: 'Select an option',
-    options: [{key: 'hehe', value: 'hehe'}, {'key': 'haha', 'value': 'haha'}],
+    options: [{ key: 'hehe', value: 'hehe' }, { 'key': 'haha', 'value': 'haha' }],
     form: form,
     formControllerName: 'emotion',
     displayKey: 'key'
@@ -48,7 +48,7 @@ const newFieldForm = setupStoryBookFormGroup(new FormGroup({
 export const newField: Story = {
   args: {
     placeholder: 'Select an option',
-    options: [{key: 'hehe', value: 'hehe'}, {'key': 'haha', 'value': 'haha'}],
+    options: [{ key: 'hehe', value: 'hehe' }, { 'key': 'haha', 'value': 'haha' }],
     form: newFieldForm,
     formControllerName: 'emotion',
     displayKey: 'key'

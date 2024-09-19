@@ -1,4 +1,4 @@
-export type DestinationAttributeDetail = {
+export interface DestinationAttributeDetail {
   email: string;
   customer_id: string;
   customer_name: string;
@@ -6,4 +6,4 @@ export type DestinationAttributeDetail = {
   gl_account_title: string;
   is_reimbursable: boolean;
   country: string;
-};
+}

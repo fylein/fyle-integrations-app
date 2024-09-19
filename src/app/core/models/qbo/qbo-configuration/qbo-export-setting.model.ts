@@ -1,18 +1,21 @@
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import type { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
-import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
+import type { ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
+import { ExpenseGroupSettingGet } from "../../db/expense-group-setting.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import type { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportSettingModel } from "../../common/export-settings.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 
-export type QBOExportSettingWorkspaceGeneralSettingPost = {
+export interface QBOExportSettingWorkspaceGeneralSettingPost {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
   corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject | null
   name_in_journal_entry: NameInJournalEntry;
 }
 
-export type QBOExportSettingGeneralMapping = {
+export interface QBOExportSettingGeneralMapping {
   bank_account: DefaultDestinationAttribute,
   default_ccc_account: DefaultDestinationAttribute,
   accounts_payable: DefaultDestinationAttribute,
@@ -27,13 +30,13 @@ export interface QBOExpenseGroupSettingPost extends ExpenseGroupSettingPost {
 
 export interface QBOExpenseGroupSettingGet extends QBOExpenseGroupSettingPost {}
 
-export type QBOExportSettingPost = {
+export interface QBOExportSettingPost {
   expense_group_settings: QBOExpenseGroupSettingPost,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping
 }
 
-export type QBOExportSettingGet = {
+export interface QBOExportSettingGet {
   expense_group_settings: QBOExpenseGroupSettingGet,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping,
@@ -265,7 +268,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   }
 
   static constructPayload(exportSettingsForm: FormGroup): QBOExportSettingPost {
-    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute: DefaultDestinationAttribute = { id: null, name: null };
     let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
 
     if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {

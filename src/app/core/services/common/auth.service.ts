@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MinimalUser } from '../../models/db/user.model';
-import { ClusterDomainWithToken, Token } from '../../models/misc/token.model';
-import { UserService } from '../misc/user.service';
-import { ApiService } from './api.service';
-import { StorageService } from './storage.service';
+import type { Observable } from 'rxjs';
+import type { MinimalUser } from '../../models/db/user.model';
+import type { ClusterDomainWithToken, Token } from '../../models/misc/token.model';
+import type { UserService } from '../misc/user.service';
+import type { ApiService } from './api.service';
+import type { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

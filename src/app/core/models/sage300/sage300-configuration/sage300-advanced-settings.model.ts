@@ -2,7 +2,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ExpenseFilterPost, ExpenseFilterPayload, ConditionField } from "../../common/advanced-settings.model";
 import { JoinOption, Operator } from "../../enum/enum.model";
 
-export type Sage300AdvancedSetting = {
+export interface Sage300AdvancedSetting {
   memo_structure: string[],
   schedule_is_enabled: boolean,
   auto_create_vendor: boolean,

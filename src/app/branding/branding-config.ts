@@ -1,8 +1,8 @@
-import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
-import { ContentConfiguration } from '../core/models/branding/content-configuration.model';
-import { DemoVideo } from '../core/models/branding/demo-video.model';
-import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
-import { KbArticle } from '../core/models/branding/kb-article.model';
+import type { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
+import type { ContentConfiguration } from '../core/models/branding/content-configuration.model';
+import type { DemoVideo } from '../core/models/branding/demo-video.model';
+import type { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
+import type { KbArticle } from '../core/models/branding/kb-article.model';
 import { c1Contents } from './c1-contents-config';
 import config from './config.json';
 import { fyleContents } from './fyle-contents-config';

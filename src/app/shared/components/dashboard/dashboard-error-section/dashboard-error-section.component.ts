@@ -1,18 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
-import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
-import { Expense } from 'src/app/core/models/intacct/db/expense.model';
-import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
+import type { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
+import { ErrorModel } from 'src/app/core/models/db/error.model';
+import type { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
+import type { AppUrl } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import type { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
+import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
+import type { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import type { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-dashboard-error-section',

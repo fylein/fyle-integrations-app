@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';

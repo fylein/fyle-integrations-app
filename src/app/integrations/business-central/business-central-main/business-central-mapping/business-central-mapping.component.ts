@@ -1,10 +1,11 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
@@ -17,8 +18,8 @@ export class BusinessCentralMappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/business_central/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/business_central/main/mapping/category'}
+    { label: 'Employee', routerLink: '/integrations/business_central/main/mapping/employee' },
+    { label: 'Category', routerLink: '/integrations/business_central/main/mapping/category' }
   ];
 
   activeModule: MenuItem;

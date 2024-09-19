@@ -1,11 +1,11 @@
-import { FormGroup } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
 
-export type EmailOption = {
+export interface EmailOption {
   email: string;
   name: string;
 }
 
-export type BambooHr = {
+export interface BambooHr {
   id: number;
   org: number;
   folder_id: string;
@@ -16,7 +16,7 @@ export type BambooHr = {
   updated_at: Date;
 }
 
-export type BambooHRConfiguration = {
+export interface BambooHRConfiguration {
   id: number;
   org: number;
   recipe_id: string;
@@ -26,13 +26,13 @@ export type BambooHRConfiguration = {
   emails_selected: EmailOption[];
 }
 
-export type BambooHRConfigurationPost = {
+export interface BambooHRConfigurationPost {
   org: number;
   additional_email_options: EmailOption[];
   emails_selected: EmailOption[];
 }
 
-export type BambooHrConnection = {
+export interface BambooHrConnection {
   input: {
     api_token : string;
     subdomain: string;

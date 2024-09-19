@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import type { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 
 @Component({

@@ -1,6 +1,6 @@
-import { ConfigurationWarningEvent } from "../enum/enum.model";
+import type { ConfigurationWarningEvent } from "../enum/enum.model";
 
-export type ConfigurationWarningOut = {
+export interface ConfigurationWarningOut {
     hasAccepted: boolean,
     event: ConfigurationWarningEvent
-};
+}

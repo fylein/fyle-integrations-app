@@ -31,7 +31,7 @@ type Story = StoryObj<ToggleComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({field: new FormControl(true)})),
+    form: setupStoryBookFormGroup(new FormGroup({ field: new FormControl(true) })),
     formControllerName: 'field'
   }
 };

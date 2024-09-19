@@ -1,27 +1,27 @@
-import { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
+import type { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
 
-export type IntegrationsView = {
+export interface IntegrationsView {
     [IntegrationView.ACCOUNTING]: boolean,
     [IntegrationView.ALL]: boolean,
     [IntegrationView.HRMS]: boolean,
     [IntegrationView.TRAVEL]: boolean
 }
 
-export type IntegrationCallbackUrl = {
+export interface IntegrationCallbackUrl {
     [AccountingIntegrationApp.NETSUITE]: [string, string],
     [AccountingIntegrationApp.QBO]: [string, string],
     [AccountingIntegrationApp.SAGE_INTACCT]: [string, string],
     [AccountingIntegrationApp.XERO]: [string, string]
 }
 
-export type AccountingIntegrationEvent = {
+export interface AccountingIntegrationEvent {
     [AccountingIntegrationApp.NETSUITE]: ClickEvent,
     [AccountingIntegrationApp.QBO]: ClickEvent,
     [AccountingIntegrationApp.SAGE_INTACCT]: ClickEvent,
     [AccountingIntegrationApp.XERO]: ClickEvent
 }
 
-export type InAppIntegrationUrlMap = {
+export interface InAppIntegrationUrlMap {
     [InAppIntegration.BAMBOO_HR]: string,
     [InAppIntegration.QBD]: string,
     [InAppIntegration.TRAVELPERK]: string,
@@ -33,7 +33,7 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.XERO]: string
 }
 
-export type AppUrlMap = {
+export interface AppUrlMap {
     [AppUrl.BAMBOO_HR]: string | null,
     [AppUrl.QBD]: string,
     [AppUrl.TRAVELPERK]: string | null,

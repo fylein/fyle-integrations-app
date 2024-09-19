@@ -1,8 +1,8 @@
 import { AccountingErrorType } from "../enum/enum.model";
-import { AccountingExport } from "./accounting-export.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import type { AccountingExport } from "./accounting-export.model";
+import type { ExpenseAttribute } from "./expense-attribute.model";
+import type { ExtendedGenericMapping } from "./extended-generic-mapping.model";
+import type { PaginatedResponse } from "./paginated-response.model";
 
 export interface DestinationAttributeDetail {
   user_id?: string;
@@ -32,18 +32,18 @@ export interface ErrorResponse extends PaginatedResponse {
   results: Error[];
 }
 
-export type ErrorStat = {
+export interface ErrorStat {
     resolvedCount: number;
     totalCount: number;
   }
 
-export type AccountingGroupedErrors = {
+export interface AccountingGroupedErrors {
     [AccountingErrorType.EMPLOYEE_MAPPING]: Error[];
     [AccountingErrorType.CATEGORY_MAPPING]: Error[];
     [AccountingErrorType.ACCOUNTING_ERROR]: Error[];
   }
 
-export type AccountingGroupedErrorStat = {
+export interface AccountingGroupedErrorStat {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
     [AccountingErrorType.CATEGORY_MAPPING]: null | ErrorStat;
   }

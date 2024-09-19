@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QboComponent } from './qbo.component';
 import { QboTokenGuard } from 'src/app/core/guard/qbo-token.guard';
 

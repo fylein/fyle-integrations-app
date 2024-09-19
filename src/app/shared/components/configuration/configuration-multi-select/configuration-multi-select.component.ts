@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({

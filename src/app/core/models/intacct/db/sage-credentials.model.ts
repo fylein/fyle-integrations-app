@@ -1,4 +1,4 @@
-export type SageIntacctCredential = {
+export interface SageIntacctCredential {
     id?: number;
     si_user_id: string;
     si_company_id: string;
@@ -7,4 +7,4 @@ export type SageIntacctCredential = {
     created_at?: Date;
     updated_at?: Date;
     workspace?: number;
-  };
+  }

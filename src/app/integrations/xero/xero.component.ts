@@ -1,14 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import type { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { UserService } from 'src/app/core/services/misc/user.service';
+import type { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
 @Component({
   selector: 'app-xero',

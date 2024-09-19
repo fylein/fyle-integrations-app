@@ -1,18 +1,19 @@
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, FyleField } from "../../enum/enum.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
+import type { EmployeeFieldMapping } from "../../enum/enum.model";
+import { AutoMapEmployeeOptions, FyleField } from "../../enum/enum.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
-export type QBOEmployeeSettingWorkspaceGeneralSetting = {
+export interface QBOEmployeeSettingWorkspaceGeneralSetting {
   employee_field_mapping: EmployeeFieldMapping,
   auto_map_employees: AutoMapEmployeeOptions
 }
 
-export type QBOEmployeeSettingPost = {
+export interface QBOEmployeeSettingPost {
   workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting;
 }
 
-export type QBOEmployeeSettingGet = {
+export interface QBOEmployeeSettingGet {
   workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting,
   workspace_id: number
 }

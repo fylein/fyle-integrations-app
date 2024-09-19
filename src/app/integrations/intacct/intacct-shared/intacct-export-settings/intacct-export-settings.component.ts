@@ -1,21 +1,26 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import type { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import type { DomSanitizer } from '@angular/platform-browser';
+import type { Router } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
-import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import type { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, IntacctExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import type { ExportSettingFormOption, ExportSettingGet, IntacctExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import type { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import type { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-intacct-export-settings',

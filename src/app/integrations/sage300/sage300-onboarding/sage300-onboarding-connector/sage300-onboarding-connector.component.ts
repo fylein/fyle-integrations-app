@@ -1,15 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
-import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
-import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
+import type { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
+import type { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
 
 @Component({
   selector: 'app-sage300-onboarding-connector',
@@ -82,7 +84,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.connectSage300Form = this.formBuilder.group({
         userID: [sage300Cred.username, Validators.required],
         companyID: [sage300Cred.identifier, Validators.required],
-        userPassword: [{value: sage300Cred.password, disabled: true}]
+        userPassword: [{ value: sage300Cred.password, disabled: true }]
       });
       this.isSage300Connected = true;
       this.isLoading = false;

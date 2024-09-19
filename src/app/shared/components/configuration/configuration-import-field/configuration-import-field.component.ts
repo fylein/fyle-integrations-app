@@ -1,16 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import type { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import type { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { Router } from '@angular/router';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import type { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { WindowService } from 'src/app/core/services/common/window.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { Router } from '@angular/router';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -191,7 +194,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
+      this.onImportToFyleToggleChange({ checked: true }, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
       if (this.appName === AppName.SAGE300) {
         (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
       }
@@ -226,7 +229,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   removeFilter(expenseField: AbstractControl) {
     if ((expenseField as FormGroup).controls.import_to_fyle.value) {
-      this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
+      this.onImportToFyleToggleChange({ checked: false }, (expenseField as FormGroup).controls.destination_field.value);
     }
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { WorkspaceService } from './workspace.service';
-import { ApiService } from './api.service';
-import { HelperService } from './helper.service';
-import { Observable } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilterPost, ExpenseFilter } from '../../models/common/advanced-settings.model';
+import type { WorkspaceService } from './workspace.service';
+import type { ApiService } from './api.service';
+import type { HelperService } from './helper.service';
+import type { Observable } from 'rxjs';
+import type { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilterPost, ExpenseFilter } from '../../models/common/advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'

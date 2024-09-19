@@ -1,15 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import type { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import type { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { BambooHrModel } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, AppUrl, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
   selector: 'app-bamboo-hr',

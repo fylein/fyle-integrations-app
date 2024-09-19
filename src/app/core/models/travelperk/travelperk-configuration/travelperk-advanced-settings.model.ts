@@ -1,7 +1,7 @@
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TravelPerkExpenseGroup } from "../../enum/enum.model";
-import { SelectFormLabel, SelectFormOption } from "../../common/select-form-option.model";
-import { TravelperkDestinationAttribuite } from "../travelperk.model";
+import type { SelectFormLabel, SelectFormOption } from "../../common/select-form-option.model";
+import type { TravelperkDestinationAttribuite } from "../travelperk.model";
 
 interface TravelperkCategoryMapping {
     [key: string]:  {
@@ -10,7 +10,7 @@ interface TravelperkCategoryMapping {
     };
 }
 
-export type TravelperkAdvancedSetting = {
+export interface TravelperkAdvancedSetting {
     default_employee_name: string,
 	default_employee_id: string,
 	default_category_name: string,
@@ -27,12 +27,12 @@ export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting 
     org: number
 }
 
-type TravelperkAdvancedSettingArray = {
+interface TravelperkAdvancedSettingArray {
     destination_name: SelectFormLabel;
     source_name: TravelperkDestinationAttribuite | null;
 }
 
-type TravelperkAdvancedSettingFormArray = {
+interface TravelperkAdvancedSettingFormArray {
     destinationName: SelectFormLabel;
     sourceName: TravelperkDestinationAttribuite | null;
 }

@@ -1,9 +1,9 @@
-import { CategoryMapping } from './category-mapping.model';
-import { EmployeeMapping } from './employee-mapping.model';
-import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
-import { MappingIntacct } from './mapping.model';
+import type { CategoryMapping } from './category-mapping.model';
+import type { EmployeeMapping } from './employee-mapping.model';
+import type { ExpenseAttributeDetail } from './expense-attribute-detail.model';
+import type { MappingIntacct } from './mapping.model';
 
-export type GenericMappingV2 = {
+export interface GenericMappingV2 {
   id: number;
   attribute_type: string;
   display_name: string;
@@ -15,7 +15,7 @@ export type GenericMappingV2 = {
   updated_at: Date;
   workspace: number;
   detail: ExpenseAttributeDetail;
-};
+}
 
 export interface ExtendedGenericMappingV2 extends GenericMappingV2 {
   mapping?: MappingIntacct[];
@@ -23,7 +23,7 @@ export interface ExtendedGenericMappingV2 extends GenericMappingV2 {
   categorymapping?: CategoryMapping[];
 }
 
-export type GenericMappingV2Response = {
+export interface GenericMappingV2Response {
   count: number;
   next: string;
   previous: string;

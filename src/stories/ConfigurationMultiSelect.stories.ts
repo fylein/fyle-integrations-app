@@ -35,7 +35,7 @@ export const simple: Story = {
     label: 'Select the accounts from QuickBooks Online to import as categories',
     options: QBOImportSettingModel.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
-    form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
+    form: setupStoryBookFormGroup(new FormGroup({ chartOfAccountTypes: new FormControl(['Expense']) })),
     formControllerName: 'chartOfAccountTypes'
   }
 };

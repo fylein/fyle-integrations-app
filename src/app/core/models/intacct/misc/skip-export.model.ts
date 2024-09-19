@@ -1,7 +1,7 @@
-import { ConditionField, JoinOption, Operator } from "../intacct-configuration/advanced-settings.model";
+import type { ConditionField, JoinOption, Operator } from "../intacct-configuration/advanced-settings.model";
 
 
-export type SkipExport = {
+export interface SkipExport {
   id?: number;
   condition: string;
   custom_field_type: any;
@@ -10,7 +10,7 @@ export type SkipExport = {
   rank: number;
   join_by: JoinOption.AND | JoinOption.OR | null;
   is_custom: boolean;
-};
+}
 
 export function constructPayload1(valueField: {
   condition1: ConditionField,

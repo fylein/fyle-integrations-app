@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingStepperMap } from 'src/app/core/models/business-central/business-central-configuration/business-central-onboarding.model';
+import type { BusinessCentralOnboardingStepperMap } from 'src/app/core/models/business-central/business-central-configuration/business-central-onboarding.model';
 import { BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
   providedIn: 'root'

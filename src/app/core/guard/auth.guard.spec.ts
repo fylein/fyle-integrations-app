@@ -21,8 +21,8 @@ describe('AuthGuard', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule],
       providers: [
-        {provide: AuthService, useValue: service1},
-        {provide: Router, useValue: router}
+        { provide: AuthService, useValue: service1 },
+        { provide: Router, useValue: router }
       ]
     });
 

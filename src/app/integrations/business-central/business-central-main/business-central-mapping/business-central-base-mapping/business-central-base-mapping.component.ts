@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import type { BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingField, AppName, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
 
 @Component({
   selector: 'app-business-central-base-mapping',

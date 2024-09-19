@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
-import { QBDMapping, QBDMappingModel, QBDMappingPost } from 'src/app/core/models/qbd/db/qbd-mapping.model';
-import { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
+import type { QBDMapping, QBDMappingPost } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDMappingModel } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import type { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
 import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 

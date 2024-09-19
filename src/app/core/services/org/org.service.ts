@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import type { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import type { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
-import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
-import { AppName, AppUrl } from '../../models/enum/enum.model';
-import { GeneratedToken, Org } from '../../models/org/org.model';
-import { ApiService } from '../common/api.service';
-import { StorageService } from '../common/storage.service';
-import { HelperService } from '../common/helper.service';
+import type { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
+import type { AppName } from '../../models/enum/enum.model';
+import { AppUrl } from '../../models/enum/enum.model';
+import type { GeneratedToken, Org } from '../../models/org/org.model';
+import type { ApiService } from '../common/api.service';
+import type { StorageService } from '../common/storage.service';
+import type { HelperService } from '../common/helper.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

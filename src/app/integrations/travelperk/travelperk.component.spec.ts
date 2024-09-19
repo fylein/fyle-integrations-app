@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
@@ -49,9 +50,9 @@ xdescribe('TravelperkComponent', () => {
         HttpClientModule, HttpClientTestingModule
       ],
       providers: [
-        {provide: TravelperkService, useValue: service1},
-        {provide: OrgService, useValue: service2 },
-        {provide: EventsService, useValue: service3},
+        { provide: TravelperkService, useValue: service1 },
+        { provide: OrgService, useValue: service2 },
+        { provide: EventsService, useValue: service3 },
         MessageService
       ]
     })

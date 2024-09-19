@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
-import { MappingStats } from 'src/app/core/models/db/mapping.model';
+import type { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({

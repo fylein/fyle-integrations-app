@@ -1,8 +1,8 @@
 import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { XeroOnboardingState } from "../../enum/enum.model";
-import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
+import type { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
-type XeroOnboardingStepperMap = {
+interface XeroOnboardingStepperMap {
     [XeroOnboardingState.CONNECTION]: number,
     [XeroOnboardingState.TENANT_MAPPING]: number,
     [XeroOnboardingState.EXPORT_SETTINGS]: number,
@@ -10,7 +10,7 @@ type XeroOnboardingStepperMap = {
     [XeroOnboardingState.ADVANCED_CONFIGURATION]: number,
     [XeroOnboardingState.COMPLETE]: number,
     [XeroOnboardingState.CLONE_SETTINGS]: number
-};
+}
 
 export class XeroOnboardingModel {
     brandingContent = brandingContent.configuration;

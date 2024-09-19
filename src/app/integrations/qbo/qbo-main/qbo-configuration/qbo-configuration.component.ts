@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -12,10 +13,10 @@ export class QboConfigurationComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration;
 
   modules: MenuItem[] = [
-    {label: 'Map Employees', routerLink: '/integrations/qbo/main/configuration/employee_settings'},
-    {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/qbo/main/configuration/export_settings'},
-    {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/qbo/main/configuration/import_settings'},
-    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
+    { label: 'Map Employees', routerLink: '/integrations/qbo/main/configuration/employee_settings' },
+    { label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/qbo/main/configuration/export_settings' },
+    { label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/qbo/main/configuration/import_settings' },
+    { label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/qbo/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem = this.modules[0];

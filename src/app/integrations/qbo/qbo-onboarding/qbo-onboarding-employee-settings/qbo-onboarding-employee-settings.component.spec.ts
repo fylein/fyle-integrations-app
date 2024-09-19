@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { QboOnboardingEmployeeSettingsComponent } from './qbo-onboarding-employee-settings.component';
 

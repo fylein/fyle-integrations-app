@@ -1,6 +1,7 @@
 
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NetsuiteOnboardingComponent } from './netsuite-onboarding.component';
 import { NetsuiteOnboardingLandingComponent } from './netsuite-onboarding-landing/netsuite-onboarding-landing.component';
 import { NetsuiteOnboardingConnectorComponent } from './netsuite-onboarding-connector/netsuite-onboarding-connector.component';

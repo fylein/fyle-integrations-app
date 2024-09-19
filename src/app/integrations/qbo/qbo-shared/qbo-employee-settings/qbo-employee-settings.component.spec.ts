@@ -1,4 +1,5 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { QboEmployeeSettingsComponent } from './qbo-employee-settings.component';
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { ApiService } from 'src/app/core/services/common/api.service';
 import { employeeSettingsPayload, mockDestinationAttributes, mockEmployeeSettingPayload, mockEmployeeSettingResponse, mockEmployeeSettings, mockExportSettings, qboEmployeeSettingResponse } from '../../qbo.fixture';
-import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import type { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('QboEmployeeSettingsComponent', () => {

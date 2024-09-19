@@ -1,10 +1,14 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
-import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { AppName } from 'src/app/core/models/enum/enum.model';
+import { MappingState } from 'src/app/core/models/enum/enum.model';
+import type { MappingAlphabeticalFilterAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
+import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-mapping-filter',

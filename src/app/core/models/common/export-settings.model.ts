@@ -1,22 +1,23 @@
-import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { DestinationOptionKey, ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
-import { SelectFormOption } from "./select-form-option.model";
+import type { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
+import type { DestinationOptionKey } from "../enum/enum.model";
+import { ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
+import type { SelectFormOption } from "./select-form-option.model";
 
-export type ExportSettingValidatorRule = {
+export interface ExportSettingValidatorRule {
     reimbursableExpense: string[];
     creditCardExpense: string[];
-};
+}
 
-export type ExportModuleRule = {
+export interface ExportModuleRule {
     formController: string,
     requiredValue: Record<string, string[]>
-};
+}
 
-export type ExportSettingOptionSearch = {
+export interface ExportSettingOptionSearch {
   searchTerm: string,
   destinationAttributes: any[],
   destinationOptionKey: DestinationOptionKey;
-};
+}
 
 export class ExportSettingModel {
     static getSplitExpenseGroupingOptions(): SelectFormOption[] {

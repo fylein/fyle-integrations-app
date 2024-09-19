@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ClickEvent, Page } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -13,9 +14,9 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 export class QbdConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/qbd/main/configuration/export_settings'},
-    {label: 'Field Mapping', routerLink: '/integrations/qbd/main/configuration/field_mapping'},
-    {label: 'Advanced Settings', routerLink: '/integrations/qbd/main/configuration/advanced_settings'}
+    { label: 'Export Settings', routerLink: '/integrations/qbd/main/configuration/export_settings' },
+    { label: 'Field Mapping', routerLink: '/integrations/qbd/main/configuration/field_mapping' },
+    { label: 'Advanced Settings', routerLink: '/integrations/qbd/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem;

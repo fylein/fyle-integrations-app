@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -10,8 +11,8 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class TravelperkConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Payment Profile Settings', routerLink: '/integrations/travelperk/main/configuration/payment_profile_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/travelperk/main/configuration/advanced_settings'}
+    { label: 'Payment Profile Settings', routerLink: '/integrations/travelperk/main/configuration/payment_profile_settings' },
+    { label: 'Advanced Settings', routerLink: '/integrations/travelperk/main/configuration/advanced_settings' }
   ];
 
   activeModule: MenuItem = this.modules[0];

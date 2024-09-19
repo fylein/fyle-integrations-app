@@ -1,6 +1,6 @@
-import { User } from "../db/user.model";
+import type { User } from "../db/user.model";
 
-export type Token = {
+export interface Token {
   access_token: string;
   expires_in: number;
   refresh_token: string;
@@ -8,7 +8,7 @@ export type Token = {
   user: User;
 }
 
-export type ClusterDomainWithToken = {
+export interface ClusterDomainWithToken {
   cluster_domain: string;
   tokens: Token;
 }

@@ -1,13 +1,14 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { AdvancedSettingValidatorRule, AdvancedSettingsModel, EmailOption } from "../../common/advanced-settings.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import type { AdvancedSettingValidatorRule, EmailOption } from "../../common/advanced-settings.model";
+import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import type { SelectFormOption } from "../../common/select-form-option.model";
+import type { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
 import { ExportSettingModel } from "../../common/export-settings.model";
 
 
-export type XeroAdvancedSettingWorkspaceGeneralSetting = {
+export interface XeroAdvancedSettingWorkspaceGeneralSetting {
   sync_fyle_to_xero_payments: boolean,
   sync_xero_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
@@ -15,11 +16,11 @@ export type XeroAdvancedSettingWorkspaceGeneralSetting = {
   auto_create_merchant_destination_entity: boolean
 }
 
-export type XeroAdvancedSettingGeneralMapping = {
+export interface XeroAdvancedSettingGeneralMapping {
   payment_account: DefaultDestinationAttribute
 }
 
-export type XeroAdvancedSettingWorkspaceSchedule = {
+export interface XeroAdvancedSettingWorkspaceSchedule {
   enabled: boolean,
   interval_hours: number,
   start_datetime: Date,
@@ -27,27 +28,27 @@ export type XeroAdvancedSettingWorkspaceSchedule = {
   additional_email_options: EmailOption[]
 }
 
-export type XeroAdvancedSettingWorkspaceSchedulePost = {
+export interface XeroAdvancedSettingWorkspaceSchedulePost {
   hours: number;
   schedule_enabled: boolean;
   emails_selected: string[];
   email_added: EmailOption[]
 }
 
-export type XeroAdvancedSettingPost = {
+export interface XeroAdvancedSettingPost {
   workspace_general_settings: XeroAdvancedSettingWorkspaceGeneralSetting,
   general_mappings: XeroAdvancedSettingGeneralMapping,
   workspace_schedules: XeroAdvancedSettingWorkspaceSchedule,
 }
 
-export type XeroAdvancedSettingGet = {
+export interface XeroAdvancedSettingGet {
   workspace_general_settings: XeroAdvancedSettingWorkspaceGeneralSetting,
   general_mappings: XeroAdvancedSettingGeneralMapping,
   workspace_schedules: XeroAdvancedSettingWorkspaceSchedule,
   workspace_id:number
 }
 
-export type XeroAdvancedSettingAddEmailModel = {
+export interface XeroAdvancedSettingAddEmailModel {
   workspaceId: number;
   hours: number;
   schedulEnabled: boolean;
@@ -119,7 +120,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
   }
 
   static constructPayload(advancedSettingsForm: FormGroup): XeroAdvancedSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute = { id: null, name: null };
     const advancedSettingPayload: XeroAdvancedSettingPost = {
       workspace_general_settings: {
         sync_fyle_to_xero_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_XERO ? true : false,

@@ -1,7 +1,7 @@
 import { environment } from "src/environments/environment";
-import { BusinessCentralCompanyPost } from "../db/business-central-workspace.model";
+import type { BusinessCentralCompanyPost } from "../db/business-central-workspace.model";
 
-export type BusinessCentralConnector = {
+export interface BusinessCentralConnector {
   code: string;
   callback_url: string;
   workspace: number

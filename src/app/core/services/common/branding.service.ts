@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import type { Title } from '@angular/platform-browser';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
 const faviconMap = {

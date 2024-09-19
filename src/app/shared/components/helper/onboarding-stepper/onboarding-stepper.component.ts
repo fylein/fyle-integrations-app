@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import type { Router } from '@angular/router';
+import { Route } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
   selector: 'app-onboarding-steppers',

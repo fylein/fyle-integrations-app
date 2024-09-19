@@ -1,9 +1,9 @@
 import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { NetsuiteOnboardingState } from "../../enum/enum.model";
-import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
+import type { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
 
-type NetsuiteOnboardingStepperMap = {
+interface NetsuiteOnboardingStepperMap {
     [NetsuiteOnboardingState.CONNECTION]: number,
     [NetsuiteOnboardingState.SUBSIDIARY]: number,
     [NetsuiteOnboardingState.EXPORT_SETTINGS]: number,

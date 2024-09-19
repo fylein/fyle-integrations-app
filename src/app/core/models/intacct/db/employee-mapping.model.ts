@@ -1,9 +1,9 @@
-import { IntacctDestinationAttribute } from './destination-attribute.model';
-import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
-import { MappingDestination } from './mapping-destination.model';
-import { MappingSource } from './mapping-source.model';
+import type { IntacctDestinationAttribute } from './destination-attribute.model';
+import type { ExpenseAttributeDetail } from './expense-attribute-detail.model';
+import type { MappingDestination } from './mapping-destination.model';
+import type { MappingSource } from './mapping-source.model';
 
-export type EmployeeMapping = {
+export interface EmployeeMapping {
   id: number;
   source_employee: MappingSource;
   destination_employee: IntacctDestinationAttribute;
@@ -11,9 +11,9 @@ export type EmployeeMapping = {
   destination_card_account?: IntacctDestinationAttribute;
   workspace: number;
   isOptionSearchInProgress?: boolean;
-};
+}
 
-export type EmployeeMappingResult = {
+export interface EmployeeMappingResult {
   id: number;
   employeemapping: EmployeeMapping[];
   attribute_type?: string;
@@ -26,24 +26,24 @@ export type EmployeeMappingResult = {
   updated_at?: Date;
   workspace?: number;
   detail?: ExpenseAttributeDetail;
-};
+}
 
-export type EmployeeMappingsResponse = {
+export interface EmployeeMappingsResponse {
   count: number;
   next: string;
   previous: string;
   results: EmployeeMappingResult[];
-};
+}
 
-export type EmployeeMappingPost = {
+export interface EmployeeMappingPost {
   source_employee: MappingSource;
   destination_employee?: MappingDestination | {id: null};
   destination_vendor?: MappingDestination | {id: null};
   destination_card_account?: MappingDestination | {id: null};
   workspace: number;
-};
+}
 
-export type DropdownOptionSearch = {
+export interface DropdownOptionSearch {
   searchTerm: string,
   employeeMapping: EmployeeMapping,
-};
+}

@@ -1,6 +1,6 @@
-import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
+import type { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
 
-export type MappingSource = {
+export interface MappingSource {
   id: number;
   attribute_type?: string;
   display_name?: string;
@@ -12,4 +12,4 @@ export type MappingSource = {
   updated_at?: Date;
   workspace?: number;
   detail?: ExpenseAttributeDetail;
-};
+}

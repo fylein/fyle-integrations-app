@@ -4,7 +4,7 @@ import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, E
 import { environment } from 'src/environments/environment';
 
 import { QbdExportSettingService } from './qbd-export-setting.service';
-import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import type { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 xdescribe('QbdExportSettingService', () => {
   let service: QbdExportSettingService;

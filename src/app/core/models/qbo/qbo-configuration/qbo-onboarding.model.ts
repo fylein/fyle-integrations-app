@@ -1,8 +1,8 @@
 import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { QBOOnboardingState } from "../../enum/enum.model";
-import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
+import type { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
-type QBOOnboardingStepperMap = {
+interface QBOOnboardingStepperMap {
     [QBOOnboardingState.CONNECTION]: number,
     [QBOOnboardingState.MAP_EMPLOYEES]: number,
     [QBOOnboardingState.EXPORT_SETTINGS]: number,

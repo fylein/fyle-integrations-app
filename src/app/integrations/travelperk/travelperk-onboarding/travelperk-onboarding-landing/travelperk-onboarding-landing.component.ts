@@ -1,14 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingKbArticles, brandingConfig, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { OrgService } from 'src/app/core/services/org/org.service';
+import type { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

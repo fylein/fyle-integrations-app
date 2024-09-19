@@ -1,6 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import type { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { catchError } from 'rxjs';
 import { throwError } from 'rxjs';
 
 let API_BASE_URL: string;

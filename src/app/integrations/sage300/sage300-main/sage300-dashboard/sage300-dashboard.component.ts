@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
-import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, CCCImportState, FyleField, LoaderType, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
-import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
+import type { AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
+import { Error } from 'src/app/core/models/db/error.model';
+import type { CCCImportState, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, FyleField, LoaderType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import type { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import type { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { Sage300AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import type { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import type { Sage300AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
-import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
+import type { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import type { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 
 @Component({
   selector: 'app-sage300-dashboard',

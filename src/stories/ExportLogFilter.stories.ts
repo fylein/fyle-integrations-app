@@ -33,6 +33,6 @@ type Story = StoryObj<ExportLogFilterComponent>;
 
 export const simple: Story = {
   args: {
-    exportLogForm: setupStoryBookFormGroup(new FormGroup({searchOption: new FormControl(), dateRange: new FormControl(), start: new FormControl(), end: new FormControl()}))
+    exportLogForm: setupStoryBookFormGroup(new FormGroup({ searchOption: new FormControl(), dateRange: new FormControl(), start: new FormControl(), end: new FormControl() }))
   }
 };

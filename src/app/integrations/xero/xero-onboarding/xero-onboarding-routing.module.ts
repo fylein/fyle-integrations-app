@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { XeroOnboardingAdvancedSettingsComponent } from './xero-onboarding-advanced-settings/xero-onboarding-advanced-settings.component';
 import { XeroOnboardingConnectorComponent } from './xero-onboarding-connector/xero-onboarding-connector.component';
 import { XeroOnboardingDoneComponent } from './xero-onboarding-done/xero-onboarding-done.component';

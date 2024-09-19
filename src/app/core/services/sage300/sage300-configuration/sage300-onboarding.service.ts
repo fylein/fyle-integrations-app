@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { Sage300OnboardingStepperMap } from 'src/app/core/models/sage300/sage300-configuration/sage300-onboarding-stepper/sage300-onboarding-stepper.model';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import type { Sage300OnboardingStepperMap } from 'src/app/core/models/sage300/sage300-configuration/sage300-onboarding-stepper/sage300-onboarding-stepper.model';
+import type { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
   providedIn: 'root'

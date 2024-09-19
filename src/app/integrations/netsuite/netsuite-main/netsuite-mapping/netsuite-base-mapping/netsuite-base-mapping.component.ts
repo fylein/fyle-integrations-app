@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingDisplayName, AccountingField, AppName, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteCategoryDestination, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteExportSettingWorkspaceGeneralSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { NetsuiteExportSettingWorkspaceGeneralSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-netsuite-base-mapping',

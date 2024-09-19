@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { orgMockData } from '../core/services/org/org.fixture';
@@ -55,7 +56,7 @@ xdescribe('IntegrationsComponent', () => {
 
   it('should navigate to integrations landing page', () => {
     // @ts-ignore
-    component.windowReference = { location: {pathname: '/integrations'}};
+    component.windowReference = { location: { pathname: '/integrations' } };
 
     expect((component as any).navigate()).toBeUndefined();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/landing']);

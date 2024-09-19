@@ -1,7 +1,8 @@
-import { Org} from 'src/app/core/models/org/org.model';
-import { FyleField, TravelPerkExpenseGroup, TravelPerkOnboardingState, TravelPerkUserRole } from '../enum/enum.model';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { FyleField, TravelPerkOnboardingState } from '../enum/enum.model';
+import { TravelPerkExpenseGroup, TravelPerkUserRole } from '../enum/enum.model';
 
-export type Travelperk = {
+export interface Travelperk {
     id: number;
     folder_id: string;
     package_id: string;
@@ -15,7 +16,7 @@ export type Travelperk = {
     updated_at: Date;
 }
 
-export type TravelperkConfiguration = {
+export interface TravelperkConfiguration {
     id: number,
     org: Org,
     recipe_id: string,
@@ -24,7 +25,7 @@ export type TravelperkConfiguration = {
 }
 
 
-export type WorkatoConnectionStatus = {
+export interface WorkatoConnectionStatus {
     wk: boolean,
     type: string,
     payload: {
@@ -35,7 +36,7 @@ export type WorkatoConnectionStatus = {
     }
 }
 
-export type TravelperkDestinationAttribuite = {
+export interface TravelperkDestinationAttribuite {
     id: number,
     attribute_type: FyleField,
     value: string,

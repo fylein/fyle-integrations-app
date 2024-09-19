@@ -1,4 +1,4 @@
-export type FeatureConfiguration = {
+export interface FeatureConfiguration {
     [brandingId: string]: {
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
+import type { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 
 @Component({
   selector: 'app-oauth-travelperk',

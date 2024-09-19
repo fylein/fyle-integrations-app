@@ -1,6 +1,6 @@
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
+import type { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
 
-export type NetsuiteConfiguration = {
+export interface NetsuiteConfiguration {
   id: number;
   import_projects: boolean;
   created_at: Date;
@@ -30,4 +30,4 @@ export type NetsuiteConfiguration = {
   name_in_journal_entry: NameInJournalEntry;
   is_simplify_report_closure_enabled: boolean;
   allow_intercompany_vendors: boolean;
-};
+}

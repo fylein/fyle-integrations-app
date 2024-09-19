@@ -36,7 +36,7 @@ export const simple: Story = {
     isFieldMandatory: true,
     label: 'HH2 User ID',
     placeholder: 'Enter HH2 User ID',
-    form: setupStoryBookFormGroup(new FormGroup({userID: new FormControl('')}))
+    form: setupStoryBookFormGroup(new FormGroup({ userID: new FormControl('') }))
   }
 };
 
@@ -47,7 +47,7 @@ export const password: Story = {
     isFieldMandatory: true,
     label: 'HH2 Password',
     placeholder: 'Enter HH2 Password',
-    form: setupStoryBookFormGroup(new FormGroup({userID: new FormControl('')})),
+    form: setupStoryBookFormGroup(new FormGroup({ userID: new FormControl('') })),
     type: 'password'
   }
 };

@@ -1,4 +1,4 @@
-export type OnboardingStepper = {
+export interface OnboardingStepper {
     active: boolean,
     completed: boolean,
     step: string,

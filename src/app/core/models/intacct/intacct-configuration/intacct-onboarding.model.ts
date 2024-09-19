@@ -1,8 +1,8 @@
 import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { IntacctOnboardingState } from "../../enum/enum.model";
-import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
+import type { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
-type IntacctOnboardingStepperMap = {
+interface IntacctOnboardingStepperMap {
     [IntacctOnboardingState.CONNECTION]: number,
     [IntacctOnboardingState.LOCATION_ENTITY]: number,
     [IntacctOnboardingState.EXPORT_SETTINGS]: number,

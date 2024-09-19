@@ -1,7 +1,7 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import type { DestinationAttribute } from "../../db/destination-attribute.model";
 
 /* Tslint:disable */
-export type TenantMapping = {
+export interface TenantMapping {
     id: number;
     tenant_name: string;
     tenant_id: string;
@@ -9,9 +9,9 @@ export type TenantMapping = {
     created_at: Date;
     updated_at: Date;
     workspace: number;
-};
+}
 
-export type TenantMappingPost = {
+export interface TenantMappingPost {
     tenant_id: string;
     tenant_name: string;
 }

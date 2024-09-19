@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FyleField, IntacctCategoryDestination, IntacctErrorType, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CategoryMappingPost } from 'src/app/core/models/intacct/db/category-mapping.model';
-import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { EmployeeMappingPost } from 'src/app/core/models/intacct/db/employee-mapping.model';
-import { Error } from 'src/app/core/models/intacct/db/error.model';
-import { ExpenseAttribute } from 'src/app/core/models/intacct/db/expense-attribute.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import type { CategoryMappingPost } from 'src/app/core/models/intacct/db/category-mapping.model';
+import type { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import type { EmployeeMappingPost } from 'src/app/core/models/intacct/db/employee-mapping.model';
+import type { Error } from 'src/app/core/models/intacct/db/error.model';
+import type { ExpenseAttribute } from 'src/app/core/models/intacct/db/expense-attribute.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import type { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
   selector: 'app-dashboard-mapping-resolve',

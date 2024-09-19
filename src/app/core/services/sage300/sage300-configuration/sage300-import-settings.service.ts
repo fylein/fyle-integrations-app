@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../common/api.service';
-import { HelperService } from '../../common/helper.service';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { ApiService } from '../../common/api.service';
+import type { HelperService } from '../../common/helper.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { Observable } from 'rxjs/internal/Observable';
+import type { Observable } from 'rxjs/internal/Observable';
 import { Subject } from 'rxjs';
-import { Sage300ImportSettingGet, Sage300ImportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import type { Sage300ImportSettingGet, Sage300ImportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 
 const sage300ImportSettingGetCache = new Subject<void>();
 

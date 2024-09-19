@@ -24,7 +24,7 @@ xdescribe('AuthService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         AuthService,
-        { provide: UserService, useValue: service1},
+        { provide: UserService, useValue: service1 },
         { provide: Router, useValue: routerSpy }
       ]
     });

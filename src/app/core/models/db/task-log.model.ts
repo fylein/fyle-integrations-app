@@ -1,7 +1,7 @@
-import { TaskLogState } from "../enum/enum.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import type { TaskLogState } from "../enum/enum.model";
+import type { PaginatedResponse } from "./paginated-response.model";
 
-export type TaskLog = {
+export interface TaskLog {
   created_at: Date;
   detail: any;
   expense_group: number;
@@ -9,13 +9,13 @@ export type TaskLog = {
   status: TaskLogState;
   updated_at: Date;
   workspace: number;
-};
+}
 
 export interface TaskResponse extends PaginatedResponse {
   results: TaskLog[];
 }
 
-export type TaskLogGetParams = {
+export interface TaskLogGetParams {
   limit?: number;
   offset?: number;
   status__in?: string[];
@@ -23,4 +23,4 @@ export type TaskLogGetParams = {
   type__in?: string[];
   expense_group_ids?: number[];
   task_type?: string[];
-};
+}

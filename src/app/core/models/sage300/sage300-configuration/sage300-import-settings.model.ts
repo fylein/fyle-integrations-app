@@ -1,22 +1,23 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from "../../common/import-settings.model";
-import { IntegrationField } from "../../db/mapping.model";
+import type { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
+import type { IntegrationField } from "../../db/mapping.model";
 
-export type Sage300DefaultFields = {
+export interface Sage300DefaultFields {
     destination_field: string,
     source_field: string,
     formController: string,
     import_code: string
 }
 
-export type Sage300DependentImportFields = {
+export interface Sage300DependentImportFields {
     options: ImportSettingsCustomFieldRow[],
     source_field: string,
     formController: string,
     isDisabled: boolean
 }
 
-export type Sage300ImportSettingsDependentFieldSetting = {
+export interface Sage300ImportSettingsDependentFieldSetting {
     cost_code_field_name: string,
     cost_code_placeholder: string,
     cost_category_field_name: string,
@@ -24,7 +25,7 @@ export type Sage300ImportSettingsDependentFieldSetting = {
     is_import_enabled: boolean
 }
 
-export type Sage300ImportSetting = {
+export interface Sage300ImportSetting {
     import_settings: {
         import_categories: boolean,
         import_vendors_as_merchants: boolean,

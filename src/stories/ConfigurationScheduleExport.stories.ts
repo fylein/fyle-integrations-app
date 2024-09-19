@@ -35,7 +35,7 @@ type Story = StoryObj<ConfigurationScheduleExportComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({exportScheduleFrequency: new FormControl(1), exportSchedule: new FormControl(true), email: new FormControl([{email: 'ashwin.t@fyle.in', name: 'Ashwin'}]), search: new FormControl('')})),
+    form: setupStoryBookFormGroup(new FormGroup({ exportScheduleFrequency: new FormControl(1), exportSchedule: new FormControl(true), email: new FormControl([{ email: 'ashwin.t@fyle.in', name: 'Ashwin' }]), search: new FormControl('') })),
     isFieldMandatory: false,
     mandatoryErrorListName: 'automatic export method',
     label: 'Set up export frequency',
@@ -48,6 +48,6 @@ export const simple: Story = {
     }),
     isEmailPresent: true,
     formControllerName: 'exportScheduleFrequency',
-    adminEmails: [{email: 'ashwin.t@fyle.in', name: 'Ashwin'}]
+    adminEmails: [{ email: 'ashwin.t@fyle.in', name: 'Ashwin' }]
   }
 };

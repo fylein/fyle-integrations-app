@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, mergeMap, of, reduce, takeWhile } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { from, mergeMap, of, reduce, takeWhile } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Cacheable } from 'ts-cacheable';
-import { UserService } from '../../misc/user.service';
-import { SiWorkspaceService } from '../si-core/si-workspace.service';
-import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
-import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
+import type { UserService } from '../../misc/user.service';
+import type { SiWorkspaceService } from '../si-core/si-workspace.service';
+import type { TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { FyleReferenceType } from 'src/app/core/models/enum/enum.model';
+import type { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import type { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
+import type { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
-import { ApiService } from '../../common/api.service';
+import type { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +66,7 @@ export class ExportLogService {
   getSkipExportLogs(limit: number, offset: number): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, { limit, offset });
   }
 
   getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {

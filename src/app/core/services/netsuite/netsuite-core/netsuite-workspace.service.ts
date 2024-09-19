@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from '../../common/storage.service';
-import { ApiService } from '../../common/api.service';
+import type { StorageService } from '../../common/storage.service';
+import type { ApiService } from '../../common/api.service';
 import { Cacheable } from 'ts-cacheable';
 import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { WorkspaceService } from '../../common/workspace.service';
+import type { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
   providedIn: 'root'

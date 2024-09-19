@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { XeroAdvancedSettingsComponent } from '../../xero-shared/xero-advanced-settings/xero-advanced-settings.component';
 import { XeroExportSettingsComponent } from '../../xero-shared/xero-export-settings/xero-export-settings.component';
 import { XeroImportSettingsComponent } from '../../xero-shared/xero-import-settings/xero-import-settings.component';

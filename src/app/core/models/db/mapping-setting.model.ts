@@ -1,6 +1,6 @@
-import { PaginatedResponse } from "./paginated-response.model";
+import type { PaginatedResponse } from "./paginated-response.model";
 
-export type MappingSetting = {
+export interface MappingSetting {
   id: number;
   created_at: Date;
   updated_at: Date;

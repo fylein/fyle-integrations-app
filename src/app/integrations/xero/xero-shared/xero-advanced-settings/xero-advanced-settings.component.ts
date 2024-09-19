@@ -1,19 +1,21 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { FormGroup } from '@angular/forms';
+import type { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
-import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroFyleField, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
-import { XeroAdvancedSettingGet, XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
-import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import type { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
+import type { XeroAdvancedSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import { XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
+import type { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
 @Component({
   selector: 'app-xero-advanced-settings',

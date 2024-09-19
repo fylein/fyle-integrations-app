@@ -1,6 +1,6 @@
 import { QBDScheduleFrequency } from "src/app/core/models/enum/enum.model";
-import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from "src/app/core/models/qbd/db/qbd-iif-logs.model";
-import { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
+import type { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from "src/app/core/models/qbd/db/qbd-iif-logs.model";
+import type { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
 
 
 export const getQbdAccountingExports: QbdExportTriggerResponse = {
@@ -90,7 +90,7 @@ export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
     day_of_week: "MONDAY",
     frequency: QBDScheduleFrequency.WEEKLY,
     time_of_day: "12:00:00",
-    emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+    emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
     workspace: 1,
     schedule_id: null
 };
@@ -114,7 +114,7 @@ export const QBDAdvancedSettingResponse2:QBDAdvancedSettingsGet = {
     day_of_week: "MONDAY",
     frequency: QBDScheduleFrequency.MONTHLY,
     time_of_day: "12:00:00",
-    emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+    emails_selected: [{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }],
     workspace: 1,
     schedule_id: null
 };

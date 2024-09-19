@@ -1,20 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
 import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
-import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { ExportModuleRule, ExportSettingModel, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
+import type { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import { BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import type { ExportModuleRule, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { AppName, BCExportSettingDestinationOptionKey, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { FormGroup } from '@angular/forms';
-import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
+import type { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { FormGroup } from '@angular/forms';
+import type { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import type { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import type { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-business-central-export-settings',

@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
-import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, AppUrl, CCCExpenseState, CCCImportState, ExpenseState, QBOTaskLogType, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { QBOTaskLog, QBOTaskResponse } from 'src/app/core/models/qbo/db/qbo-task-log.model';
-import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
-import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
+import type { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import type { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import type { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
+import { ErrorResponse } from 'src/app/core/models/db/error.model';
+import type { CCCImportState, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, CCCExpenseState, ExpenseState, QBOTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import type { QBOTaskLog, QBOTaskResponse } from 'src/app/core/models/qbo/db/qbo-task-log.model';
+import type { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import type { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import type { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import type { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import type { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 @Component({
   selector: 'app-qbo-dashboard',

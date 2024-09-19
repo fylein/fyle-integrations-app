@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BusinessCentralConfigurationComponent } from './business-central-configuration.component';
 import { BusinessCentralImportSettingsComponent } from '../../business-central-shared/business-central-import-settings/business-central-import-settings.component';
 import { BusinessCentralAdvancedSettingsComponent } from '../../business-central-shared/business-central-advanced-settings/business-central-advanced-settings.component';

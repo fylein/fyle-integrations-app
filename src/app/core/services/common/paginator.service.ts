@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
-import { PaginatorPage } from '../../models/enum/enum.model';
-import { Paginator } from "src/app/core/models/misc/paginator.model";
+import type { StorageService } from './storage.service';
+import type { PaginatorPage } from '../../models/enum/enum.model';
+import type { Paginator } from "src/app/core/models/misc/paginator.model";
 
 @Injectable({
   providedIn: 'root'

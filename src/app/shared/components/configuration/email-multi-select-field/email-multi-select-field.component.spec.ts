@@ -1,5 +1,6 @@
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { DebugElement } from '@angular/core';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -23,11 +24,11 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
     component = fixture.componentInstance;
     el = fixture.debugElement;
     formbuilder = TestBed.inject(FormBuilder);
-    component.options = [{name: 'dhaarani', email: "dhaarani@fylehq.com"}];
+    component.options = [{ name: 'dhaarani', email: "dhaarani@fylehq.com" }];
     component.formControllerName = 'email';
     component.form = formbuilder.group({
-      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
-      additionalEmails: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
+      email: [[{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }]],
+      additionalEmails: [[{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }]],
       search: []
     });
     fixture.detectChanges();
@@ -67,7 +68,7 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   it('removeEmail function check', () => {
     expect(component.removeEmail()).toBeUndefined();
     component.form = formbuilder.group({
-      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}, {name: 'shwetabhww', email: "shwetabhoop.kumar@fylehq.com"}]],
+      email: [[{ name: 'shwetabh', email: "shwetabh.kumar@fylehq.com" }, { name: 'shwetabhww', email: "shwetabhoop.kumar@fylehq.com" }]],
       search: []
     });
     fixture.detectChanges();

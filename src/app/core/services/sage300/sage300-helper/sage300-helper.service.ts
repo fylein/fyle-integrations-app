@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WorkspaceService } from '../../common/workspace.service';
-import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
-import { IntegrationsToastService } from '../../common/integrations-toast.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
+import type { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({

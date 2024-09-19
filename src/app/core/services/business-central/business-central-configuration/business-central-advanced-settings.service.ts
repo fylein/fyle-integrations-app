@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { ApiService } from '../../common/api.service';
-import { WorkspaceService } from '../../common/workspace.service';
-import { HelperService } from '../../common/helper.service';
-import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { ApiService } from '../../common/api.service';
+import type { WorkspaceService } from '../../common/workspace.service';
+import type { HelperService } from '../../common/helper.service';
+import type { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
 

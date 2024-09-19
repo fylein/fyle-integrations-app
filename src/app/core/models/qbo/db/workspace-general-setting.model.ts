@@ -1,6 +1,6 @@
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from "../../enum/enum.model";
+import type { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from "../../enum/enum.model";
 
-export type QBOWorkspaceGeneralSetting = {
+export interface QBOWorkspaceGeneralSetting {
   id: number;
   import_projects: boolean;
   created_at: Date;
@@ -28,4 +28,4 @@ export type QBOWorkspaceGeneralSetting = {
   skip_cards_mapping: boolean;
   name_in_journal_entry: NameInJournalEntry;
   is_simplify_report_closure_enabled: boolean;
-};
+}

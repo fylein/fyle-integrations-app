@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { QboExportLogComponent } from './qbo-export-log.component';
 import { QboCompleteExportLogComponent } from './qbo-complete-export-log/qbo-complete-export-log.component';
 import { QboSkippedExportLogComponent } from './qbo-skipped-export-log/qbo-skipped-export-log.component';

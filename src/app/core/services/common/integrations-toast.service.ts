@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import type { MessageService } from 'primeng/api';
+import type { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'

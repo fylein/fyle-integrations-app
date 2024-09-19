@@ -34,7 +34,7 @@ export const simple: Story = {
   args: {
     options: QBOImportSettingModel.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
-    form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
+    form: setupStoryBookFormGroup(new FormGroup({ chartOfAccountTypes: new FormControl(['Expense']) })),
     formControllerName: 'chartOfAccountTypes',
     disabledOption: 'Expense'
   }

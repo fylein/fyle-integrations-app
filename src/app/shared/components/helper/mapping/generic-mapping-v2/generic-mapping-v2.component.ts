@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
+import type { MappingStats } from 'src/app/core/models/db/mapping.model';
+import type { AppName, FyleField } from 'src/app/core/models/enum/enum.model';
+import { MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import type { Paginator } from 'src/app/core/models/misc/paginator.model';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { PaginatorService } from 'src/app/core/services/common/paginator.service';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';

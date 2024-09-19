@@ -1,8 +1,9 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
-import { IntegrationField } from "../../db/mapping.model";
+import type { ImportSettingMappingRow } from "../../common/import-settings.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
+import type { IntegrationField } from "../../db/mapping.model";
 
-export type BusinessCentralImportSettings = {
+export interface BusinessCentralImportSettings {
     import_settings: {
         import_categories: boolean,
         import_vendors_as_merchants: boolean

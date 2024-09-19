@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
-import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
-import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
-import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
-import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/qbd-field-mapping.model';
-import { LocationEntityPost } from '../../models/intacct/intacct-configuration/connector.model';
-import { ExportSettingPost } from '../../models/intacct/intacct-configuration/export-settings.model';
-import { ImportSettingPost } from '../../models/intacct/intacct-configuration/import-settings.model';
-import { AdvancedSettingsPost } from '../../models/intacct/intacct-configuration/advanced-settings.model';
-import { Sage300ExportSettingPost } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
-import { Sage300ImportSettingPost } from '../../models/sage300/sage300-configuration/sage300-import-settings.model';
-import { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
-import { BusinessCentralExportSettingPost } from '../../models/business-central/business-central-configuration/business-central-export-setting.model';
-import { BusinessCentralImportSettingsPost } from '../../models/business-central/business-central-configuration/business-central-import-settings.model';
-import { BusinessCentralAdvancedSettingsPost } from '../../models/business-central/business-central-configuration/business-central-advanced-settings.model';
-import { NetsuiteSubsidiaryMappingPost } from '../../models/netsuite/netsuite-configuration/netsuite-connector.model';
-import { TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
-import { TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import type { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
+import { TrackingApp } from '../../models/enum/enum.model';
+import type { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
+import type { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import type { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
+import type { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/qbd-field-mapping.model';
+import type { LocationEntityPost } from '../../models/intacct/intacct-configuration/connector.model';
+import type { ExportSettingPost } from '../../models/intacct/intacct-configuration/export-settings.model';
+import type { ImportSettingPost } from '../../models/intacct/intacct-configuration/import-settings.model';
+import type { AdvancedSettingsPost } from '../../models/intacct/intacct-configuration/advanced-settings.model';
+import type { Sage300ExportSettingPost } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import type { Sage300ImportSettingPost } from '../../models/sage300/sage300-configuration/sage300-import-settings.model';
+import type { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import type { BusinessCentralExportSettingPost } from '../../models/business-central/business-central-configuration/business-central-export-setting.model';
+import type { BusinessCentralImportSettingsPost } from '../../models/business-central/business-central-configuration/business-central-import-settings.model';
+import type { BusinessCentralAdvancedSettingsPost } from '../../models/business-central/business-central-configuration/business-central-advanced-settings.model';
+import type { NetsuiteSubsidiaryMappingPost } from '../../models/netsuite/netsuite-configuration/netsuite-connector.model';
+import type { TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import type { TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -93,7 +94,7 @@ export class TrackingService {
 
   trackTimeSpent(trackingApp: TrackingApp, page: Page, sessionStartTime: Date): void {
     const differenceInMs = new Date().getTime() - sessionStartTime.getTime();
-    this.eventTrack(`Time Spent on ${page} page`, trackingApp, {durationInSeconds: differenceInMs / 1000});
+    this.eventTrack(`Time Spent on ${page} page`, trackingApp, { durationInSeconds: differenceInMs / 1000 });
   }
 
   onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[] | TravelperkAdvancedSettingPost): void {

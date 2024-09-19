@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { HelperService } from 'src/app/core/services/common/helper.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-preview-dialog',

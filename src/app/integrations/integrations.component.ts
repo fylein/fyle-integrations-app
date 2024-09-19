@@ -1,13 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MinimalUser } from '../core/models/db/user.model';
-import { Org } from '../core/models/org/org.model';
-import { StorageService } from '../core/services/common/storage.service';
-import { WindowService } from '../core/services/common/window.service';
-import { TrackingService } from '../core/services/integration/tracking.service';
-import { UserService } from '../core/services/misc/user.service';
-import { OrgService } from '../core/services/org/org.service';
-import { EventsService } from '../core/services/common/events.service';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MinimalUser } from '../core/models/db/user.model';
+import type { Org } from '../core/models/org/org.model';
+import type { StorageService } from '../core/services/common/storage.service';
+import type { WindowService } from '../core/services/common/window.service';
+import type { TrackingService } from '../core/services/integration/tracking.service';
+import type { UserService } from '../core/services/misc/user.service';
+import type { OrgService } from '../core/services/org/org.service';
+import type { EventsService } from '../core/services/common/events.service';
 
 @Component({
   selector: 'app-integrations',

@@ -1,6 +1,6 @@
-import { AutoMapEmployeeOptions, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../../enum/enum.model";
+import type { AutoMapEmployeeOptions, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../../enum/enum.model";
 
-export type Configuration = {
+export interface Configuration {
   id: number;
   workspace: number;
   employee_field_mapping: FyleField;
@@ -19,4 +19,4 @@ export type Configuration = {
   import_vendors_as_merchants: boolean;
   created_at: Date;
   updated_at: Date;
-};
+}

@@ -1,7 +1,7 @@
-import { MappingDestination } from './mapping-destination.model';
-import { MappingSource } from './mapping-source.model';
+import type { MappingDestination } from './mapping-destination.model';
+import type { MappingSource } from './mapping-source.model';
 
-export type GeneralMapping = {
+export interface GeneralMapping {
   id?: number;
   source?: MappingSource;
   source_value?: string;
@@ -13,4 +13,4 @@ export type GeneralMapping = {
   created_at?: Date;
   updated_at?: Date;
   workspace?: number;
-};
+}

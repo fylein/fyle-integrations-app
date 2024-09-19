@@ -1,4 +1,4 @@
-export type MinimalUser = {
+export interface MinimalUser {
   email: string;
   access_token: string;
   refresh_token: string;

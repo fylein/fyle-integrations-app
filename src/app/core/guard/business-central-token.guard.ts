@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
-import { BusinessCentralConnectorService } from '../services/business-central/business-central-configuration/business-central-connector.service';
-import { IntegrationsToastService } from '../services/common/integrations-toast.service';
-import { WorkspaceService } from '../services/common/workspace.service';
+import type { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { catchError, forkJoin, map, throwError } from 'rxjs';
+import type { BusinessCentralConnectorService } from '../services/business-central/business-central-configuration/business-central-connector.service';
+import type { IntegrationsToastService } from '../services/common/integrations-toast.service';
+import type { WorkspaceService } from '../services/common/workspace.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { AppUrl, BusinessCentralOnboardingState, ToastSeverity } from '../models/enum/enum.model';
-import { HelperService } from '../services/common/helper.service';
+import type { HelperService } from '../services/common/helper.service';
 
 @Injectable({
   providedIn: 'root'

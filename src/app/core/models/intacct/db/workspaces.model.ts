@@ -1,5 +1,5 @@
-import { Workspace } from "../../db/workspaces.model";
-import { IntacctOnboardingState } from "../../enum/enum.model";
+import type { Workspace } from "../../db/workspaces.model";
+import type { IntacctOnboardingState } from "../../enum/enum.model";
 
 export interface IntacctWorkspace extends Workspace {
     last_synced_at: Date;

@@ -1,4 +1,4 @@
-export type NetsuiteCredential = {
+export interface NetsuiteCredential {
     id: number;
     ns_account_id: string;
     ns_consumer_key: string;

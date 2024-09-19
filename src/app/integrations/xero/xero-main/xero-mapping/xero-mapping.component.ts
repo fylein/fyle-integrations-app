@@ -1,10 +1,11 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
+import type { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
@@ -18,8 +19,8 @@ export class XeroMappingComponent implements OnInit {
   isLoading: boolean = true;
 
   mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/xero/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/xero/main/mapping/category'}
+    { label: 'Employee', routerLink: '/integrations/xero/main/mapping/employee' },
+    { label: 'Category', routerLink: '/integrations/xero/main/mapping/category' }
   ];
 
   activeModule: MenuItem;

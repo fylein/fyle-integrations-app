@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import type { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({

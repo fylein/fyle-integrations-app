@@ -1,21 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import type { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page, ThemeOption } from 'src/app/core/models/enum/enum.model';
-import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
-import { EventsService } from 'src/app/core/services/common/events.service';
+import type { InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
+import { AccountingIntegrationEvent } from 'src/app/core/models/integrations/integrations.model';
+import type { EventsService } from 'src/app/core/services/common/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import type { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
-import { Org } from 'src/app/core/models/org/org.model';
-import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
-import { Token } from 'src/app/core/models/misc/token.model';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import type { Org } from 'src/app/core/models/org/org.model';
+import type { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
+import type { StorageService } from 'src/app/core/services/common/storage.service';
+import type { Token } from 'src/app/core/models/misc/token.model';
+import type { MinimalUser } from 'src/app/core/models/db/user.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
-import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import type { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
+import type { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
-import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import type { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 
 @Component({
   selector: 'app-landing',

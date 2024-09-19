@@ -42,7 +42,7 @@ export const toggle: Story = {
   args: {
     iconSource: 'arrow-tail-down',
     label: 'Import Tax from QuickBooks Online',
-    form: setupStoryBookFormGroup(new FormGroup({taxCode: new FormControl(true)})),
+    form: setupStoryBookFormGroup(new FormGroup({ taxCode: new FormControl(true) })),
     formControllerName: 'taxCode',
     inputType: InputType.TOGGLE,
     tooltipText: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'
@@ -53,9 +53,9 @@ export const dropdown: Story = {
   args: {
     iconSource: 'calendar',
     label: 'Set the Credit Card export date as',
-    options: [{label: 'Transaction date', value: 'transaction_date'}, {label: 'Expense date', value: 'expense_date'}],
+    options: [{ label: 'Transaction date', value: 'transaction_date' }, { label: 'Expense date', value: 'expense_date' }],
     placeholder: 'Select export date',
-    form: setupStoryBookFormGroup(new FormGroup({creditCardExportDate: new FormControl(null)})),
+    form: setupStoryBookFormGroup(new FormGroup({ creditCardExportDate: new FormControl(null) })),
     formControllerName: 'emotion',
     inputType: InputType.DROPDOWN,
     dropdownDisplayKey: 'label',
@@ -68,7 +68,7 @@ export const multiSelect: Story = {
     label: 'Select the accounts from QuickBooks Online to import as categories',
     options: QBOImportSettingModel.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
-    form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
+    form: setupStoryBookFormGroup(new FormGroup({ chartOfAccountTypes: new FormControl(['Expense']) })),
     formControllerName: 'chartOfAccountTypes',
     inputType: InputType.MULTI_SELECT,
     dropdownDisplayKey: 'label',

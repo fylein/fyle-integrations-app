@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { AbstractControl, FormGroup } from '@angular/forms';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
+import type { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
 import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
-import { HelperService } from 'src/app/core/services/common/helper.service';
+import type { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-configuration-skip-export',
@@ -41,7 +42,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [{label: 'AND', value: JoinOption.AND}, {label: 'OR', value: JoinOption.OR}];
+  joinByOptions = [{ label: 'AND', value: JoinOption.AND }, { label: 'OR', value: JoinOption.OR }];
 
   customOperatorOptions = [
     {

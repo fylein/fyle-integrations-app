@@ -1,4 +1,5 @@
-import { FormGroup, Validators } from "@angular/forms";
+import type { FormGroup } from "@angular/forms";
+import { Validators } from "@angular/forms";
 
 export class HelperUtility {
     static markControllerAsRequired(form: FormGroup, controllerName: string): void {

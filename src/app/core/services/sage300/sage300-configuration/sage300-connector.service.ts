@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HelperService } from '../../common/helper.service';
-import { Observable, Subject } from 'rxjs';
-import { ApiService } from '../../common/api.service';
-import { StorageService } from '../../common/storage.service';
+import type { HelperService } from '../../common/helper.service';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { ApiService } from '../../common/api.service';
+import type { StorageService } from '../../common/storage.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
-import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
+import type { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 
 const sage300CredentialCache = new Subject<void>();
 

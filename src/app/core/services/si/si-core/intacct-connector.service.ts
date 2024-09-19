@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
+import type { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import type { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { SiWorkspaceService } from './si-workspace.service';
-import { StorageService } from '../../common/storage.service';
+import type { SiWorkspaceService } from './si-workspace.service';
+import type { StorageService } from '../../common/storage.service';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
-import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
-import { ApiService } from '../../common/api.service';
+import type { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
+import type { ApiService } from '../../common/api.service';
 
 
 const sageIntacctCredentialCache = new Subject<void>();
