@@ -1,22 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QBDExpenseGroupedBy, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
-import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { filter, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
@@ -154,13 +150,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
-    const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT'];
-
-    const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
-
-    destinationAttributes.forEach((destinationAttribute) => {
-      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
-    });
 
     forkJoin([
       this.exportSettingService.getQbdExportSettings()

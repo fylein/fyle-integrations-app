@@ -16,8 +16,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
                     <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field [form]="exportSettingsForm"
-                            [label]="'Export Reimbursable Expenses'"
-                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Quickbooks Desktop.'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseSubLabel"
                             [formControllerName]="'reimbursableExpense'" 
                             [isSectionHeader]="true">
                         </app-configuration-toggle-field>
@@ -28,11 +28,11 @@
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export module'"
-                                [label]="'How should the expenses be exported?'"
-                                [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your ' + brandingConfig.brandName +' expenses'"
+                                [label]="brandingContent.reimbursable.reimbursableExpenseTypeLabel"
+                                [subLabel]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
                                 [options]="reimbursableExportTypes" 
                                 [iconPath]="'list'"
-                                [placeholder]="'Choose the type of transaction in Quickbooks Desktop to export your ' + brandingConfig.brandName +' expenses'"
+                                [placeholder]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
                                 [formControllerName]="'reimbursableExportType'" 
                                 [appName]="appName"
                                 [showExportPreview]="false">
@@ -44,8 +44,8 @@
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseStateLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseStateSubLabel"
                             [options]="expenseStateOptions" 
                             [iconPath]="'list'" 
                             [placeholder]="'Select export state'"
@@ -57,8 +57,8 @@
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
-                            [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (report)'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseGroupLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseGroupSubLabel"
                             [options]="reimbursableExpenseGroupingFieldOptions" 
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'" 
@@ -70,8 +70,8 @@
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the ' + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
-                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Quickbooks Desktop.'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseDateLabel + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ' date as'"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseDateSubLabel"
                             [options]="reimbursableExpenseGroupingDateOptions" [iconPath]="'calendar'"
                             [placeholder]="'Select the date of the ' + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase)"
                             [formControllerName]="'reimbursableExportDate'">
@@ -96,7 +96,7 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
-                            [label]="brandingContent.corporateCard.creditCardExpenseLabel"
+                            [label]="brandingContent.corporateCard.creditCardExpenseTypeLabel"
                             [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
@@ -117,7 +117,7 @@
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseStateSubLabel"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'list'"
-                        [placeholder]="brandingContent.corporateCard.expenseState"
+                        [placeholder]="'Select export state'"
                         [formControllerName]="'creditCardExpenseState'">
                     </app-configuration-select-field>
                 </div>
@@ -127,8 +127,8 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
-                        [label]="'How should the expenses be grouped?'"
-                        [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
+                        [label]="brandingContent.corporateCard.creditCardExpenseGroupLabel"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseGroupSubLabel"
                         [options]="creditCardExpenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
@@ -143,8 +143,8 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingsForm.value.creditCardExportType | lowercase))  + ' date as'"
-                        [subLabel]="'The selected date will reflect in the corporate card expenses exported to Quickbooks Desktop.'"
+                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase) : (exportSettingsForm.value.creditCardExportType | lowercase))  + ' date as'"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseDateSubLabel"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
@@ -158,8 +158,8 @@
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
                         [mandatoryErrorListName]="'split expense grouping'"
-                        [label]="'How should the split expenses be grouped?'"
-                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [label]="brandingContent.corporateCard.creditCardExpenseSplitLabel"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseSplitSubLabel"
                         [options]="splitExpenseGroupingOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select split expense grouping'"

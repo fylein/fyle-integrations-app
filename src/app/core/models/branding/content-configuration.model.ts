@@ -16,23 +16,31 @@ export type ContentConfiguration = {
                     stepName: string;
                     headerText: string;
                     contentText: string;
+                    reimbursable: {
+                        reimbursableExpenseLabel: string;
+                        reimbursableExpenseSubLabel: string;
+                        reimbursableExpenseTypeLabel: string;
+                        reimbursableExpenseTypeSubLabel: string;
+                        reimbursableExpenseStateLabel: string;
+                        reimbursableExpenseStateSubLabel: string;
+                        reimbursableExpenseDateLabel: string;
+                        reimbursableExpenseDateSubLabel:string;
+                        reimbursableExpenseGroupLabel: string;
+                        reimbursableExpenseGroupSubLabel: string;
+                    },
                     corporateCard: {
                         creditCardExpenseLabel: string;
-                        cccExpenseBankAccountSubLabel: string;
-                        creditCardExportTypeSubLabel: string;
-                        expenseState: string;
                         creditCardExpenseSubLabel: string;
-                        cccExpenseStateSubLabel: string;
-                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseTypeLabel: string;
+                        creditCardExpenseTypeSubLabel: string;
                         creditCardExpenseStateLabel: string;
-                        defaultCCCVendorLabel: string;
-                        defaultCCCAccountLabel: string;
-                        defaultCCCAccountPlaceholder: string;
-                        journalOptionLabel: string;
-                        journalOptionSubLabel: string;
-                        defaultDebitCardAccountLabel: string;
-                        defaultDebitCardAccountPlaceholder: string;
-                        accountsPayableLabel: string
+                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseDateLabel: string;
+                        creditCardExpenseDateSubLabel: string;
+                        creditCardExpenseGroupLabel: string;
+                        creditCardExpenseGroupSubLabel: string;
+                        creditCardExpenseSplitLabel: string;
+                        creditCardExpenseSplitSubLabel: string;
                     }
                 },
                 importSetting: {
