@@ -2,11 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { InputSwitchChangeEvent } from 'primeng/inputswitch';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, DefaultImportFields, SageIntacctField } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, SageIntacctField, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
@@ -260,7 +259,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     const defaultFieldData: MappingSetting = {
       source_field: '',
       destination_field: '',
-      import_to_fyle: true,
+      import_to_fyle: false,
       is_custom: false,
       source_placeholder: null
     };
@@ -299,6 +298,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.customFieldControl.disable();
       this.customFieldForDependentField = false;
     } else {
+      this.addImportCodeField({checked: true}, this.customFieldControl.get('destination_field')?.value);
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
         display_name: this.customFieldForm.value.attribute_type,
@@ -552,7 +552,12 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
     }
 
-    if (this.importSettings.configurations.import_code_fields.length > 0 && !this.importSettings.configurations.import_code_fields.includes(this.intacctCategoryDestination) && this.intacctImportCodeConfig[this.intacctCategoryDestination] && this.importSettings.configurations.import_categories) {
+    let sourceField = this.intacctCategoryDestination;
+    if (sourceField === IntacctCategoryDestination.GL_ACCOUNT) {
+      sourceField = IntacctCategoryDestination.ACCOUNT;
+    }
+
+    if (this.importSettings.configurations.import_code_fields && this.importSettings.configurations.import_code_fields.length > 0 && !this.importSettings.configurations.import_code_fields.includes(sourceField) && this.intacctImportCodeConfig[sourceField] && this.importSettings.configurations.import_categories) {
       this.addImportCodeField({checked: true}, this.intacctCategoryDestination);
     }
 
@@ -634,7 +639,7 @@ export class IntacctImportSettingsComponent implements OnInit {
           }
         }
 
-        if (configuration.employee_field_mapping==='EMPLOYEE') {
+        if (configuration.reimbursable_expenses_object === IntacctReimbursableExpensesObject.EXPENSE_REPORT || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
           this.intacctCategoryDestination = IntacctCategoryDestination.EXPENSE_TYPE;
         } else {
           this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
