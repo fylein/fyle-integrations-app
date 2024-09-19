@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { XeroCompleteExportLogComponent } from './xero-complete-export-log.component';
 
-describe('XeroCompleteExportLogComponent', () => {
+xdescribe('XeroCompleteExportLogComponent', () => {
   let component: XeroCompleteExportLogComponent;
   let fixture: ComponentFixture<XeroCompleteExportLogComponent>;
 

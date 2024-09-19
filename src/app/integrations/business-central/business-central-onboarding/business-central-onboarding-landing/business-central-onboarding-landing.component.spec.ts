@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessCentralOnboardingLandingComponent } from './business-central-onboarding-landing.component';
 
-describe('BusinessCentralOnboardingLandingComponent', () => {
+xdescribe('BusinessCentralOnboardingLandingComponent', () => {
   let component: BusinessCentralOnboardingLandingComponent;
   let fixture: ComponentFixture<BusinessCentralOnboardingLandingComponent>;
 

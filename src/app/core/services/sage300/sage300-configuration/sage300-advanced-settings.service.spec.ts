@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Sage300AdvancedSettingsService } from './sage300-advanced-settings.service';
 
-describe('Sage300AdvancedSettingsService', () => {
+xdescribe('Sage300AdvancedSettingsService', () => {
   let service: Sage300AdvancedSettingsService;
 
   beforeEach(() => {

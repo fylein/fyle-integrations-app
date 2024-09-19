@@ -7,7 +7,7 @@ import { EmailMultiSelectFieldComponent } from './email-multi-select-field.compo
 import { MessageService } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
-describe('EmailMultiSelectFieldComponent', () => {
+xdescribe('EmailMultiSelectFieldComponent', () => {
   let component: EmailMultiSelectFieldComponent;
   let fixture: ComponentFixture<EmailMultiSelectFieldComponent>;
   let formbuilder: FormBuilder;

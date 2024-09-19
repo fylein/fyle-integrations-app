@@ -530,6 +530,9 @@ export class IntacctExportSettingsComponent implements OnInit {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+        if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+          this.setCCExpenseDateOptions(this.exportSettingsForm?.value.cccExportType);
+        }
       }
     });
   }

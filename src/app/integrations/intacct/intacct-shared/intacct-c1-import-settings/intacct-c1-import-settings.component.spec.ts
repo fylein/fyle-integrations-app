@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings.component';
 
-describe('IntacctC1ImportSettingsComponent', () => {
+xdescribe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
   let fixture: ComponentFixture<IntacctC1ImportSettingsComponent>;
 

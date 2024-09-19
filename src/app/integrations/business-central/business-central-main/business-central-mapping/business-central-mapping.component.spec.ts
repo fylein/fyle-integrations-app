@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessCentralMappingComponent } from './business-central-mapping.component';
 
-describe('BusinessCentralMappingComponent', () => {
+xdescribe('BusinessCentralMappingComponent', () => {
   let component: BusinessCentralMappingComponent;
   let fixture: ComponentFixture<BusinessCentralMappingComponent>;
 

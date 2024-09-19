@@ -12,7 +12,8 @@ export const orgMockData: Org = {
     is_sendgrid_connected: true,
     allow_travelperk: true,
     created_at: new Date(),
-    updated_at: new Date()
+    updated_at: new Date(),
+    allow_dynamics: true
 };
 
 export const generateTokenData = {

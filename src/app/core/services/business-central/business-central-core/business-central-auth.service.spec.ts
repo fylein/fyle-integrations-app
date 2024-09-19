@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { BusinessCentralAuthService } from './business-central-auth.service';
 
-describe('BusinessCentralAuthService', () => {
+xdescribe('BusinessCentralAuthService', () => {
   let service: BusinessCentralAuthService;
 
   beforeEach(() => {

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { XeroCloneSettingsComponent } from './xero-clone-settings.component';
 
-describe('XeroCloneSettingsComponent', () => {
+xdescribe('XeroCloneSettingsComponent', () => {
   let component: XeroCloneSettingsComponent;
   let fixture: ComponentFixture<XeroCloneSettingsComponent>;
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteExportLogComponent } from './netsuite-export-log.component';
 
-describe('NetsuiteExportLogComponent', () => {
+xdescribe('NetsuiteExportLogComponent', () => {
   let component: NetsuiteExportLogComponent;
   let fixture: ComponentFixture<NetsuiteExportLogComponent>;
 

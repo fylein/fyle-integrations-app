@@ -1,6 +1,9 @@
-import { Mapping, MappingPost, MappingResponse, MappingStats } from "src/app/core/models/qbd/db/mapping.model";
+import { MappingStats } from "src/app/core/models/db/mapping.model";
+import { QBDMapping, QBDMappingPost, QBDMappingResponse } from "src/app/core/models/qbd/db/qbd-mapping.model";
 
-export const getMappingResponse: MappingResponse = {
+
+
+export const getMappingResponse: QBDMappingResponse = {
     "count": 16,
     "next": "http://localhost:8008/api/workspaces/4/qbd_mappings/?attribute_type=CORPORATE_CARD&limit=10&offset=10",
     "previous": "null",
@@ -43,7 +46,7 @@ export const getMappingStatsResponse: MappingStats = {
     "unmapped_attributes_count": 12
 };
 
-export const postMappingResponse: Mapping = {
+export const postMappingResponse: QBDMapping = {
     "id": 59,
     "attribute_type": "CORPORATE_CARD",
     "source_value": "Bank of America - 1319",
@@ -54,7 +57,7 @@ export const postMappingResponse: Mapping = {
     "workspace": 4
 };
 
-export const postMappingPayload: MappingPost = {
+export const postMappingPayload: QBDMappingPost = {
     attribute_type: "CORPORATE_CARD",
     destination_value: "eefw",
     source_id: "baccK5ssSzxv1g",

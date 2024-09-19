@@ -1,6 +1,7 @@
 import { QBDScheduleFrequency } from "src/app/core/models/enum/enum.model";
 import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from "src/app/core/models/qbd/db/qbd-iif-logs.model";
-import { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/advanced-setting.model";
+import { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
+
 
 export const getQbdAccountingExports: QbdExportTriggerResponse = {
     count: 2,

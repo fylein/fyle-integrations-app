@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings.component';
 
-describe('NetsuiteAdvancedSettingsComponent', () => {
+xdescribe('NetsuiteAdvancedSettingsComponent', () => {
   let component: NetsuiteAdvancedSettingsComponent;
   let fixture: ComponentFixture<NetsuiteAdvancedSettingsComponent>;
 

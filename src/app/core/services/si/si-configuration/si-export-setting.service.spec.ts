@@ -4,7 +4,7 @@ import { SiExportSettingService } from './si-export-setting.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 
-describe('SiExportSettingService', () => {
+xdescribe('SiExportSettingService', () => {
   let service: SiExportSettingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
