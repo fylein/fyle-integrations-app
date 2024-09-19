@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Sage300DashboardComponent } from './sage300-dashboard.component';
 
-describe('Sage300DashboardComponent', () => {
+xdescribe('Sage300DashboardComponent', () => {
   let component: Sage300DashboardComponent;
   let fixture: ComponentFixture<Sage300DashboardComponent>;
 

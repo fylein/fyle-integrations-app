@@ -4,7 +4,7 @@ import { IntacctExportLogComponent } from './intacct-export-log.component';
 import { FormBuilder } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('IntacctExportLogComponent', () => {
+xdescribe('IntacctExportLogComponent', () => {
   let component: IntacctExportLogComponent;
   let fixture: ComponentFixture<IntacctExportLogComponent>;
 

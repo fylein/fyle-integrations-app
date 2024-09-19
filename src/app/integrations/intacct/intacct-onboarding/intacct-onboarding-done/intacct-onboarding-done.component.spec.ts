@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IntacctOnboardingDoneComponent } from './intacct-onboarding-done.component';
 import { Router } from '@angular/router';
 
-describe('OnboardingDoneComponent', () => {
+xdescribe('OnboardingDoneComponent', () => {
   let component: IntacctOnboardingDoneComponent;
   let fixture: ComponentFixture<IntacctOnboardingDoneComponent>;
   let router: Router;

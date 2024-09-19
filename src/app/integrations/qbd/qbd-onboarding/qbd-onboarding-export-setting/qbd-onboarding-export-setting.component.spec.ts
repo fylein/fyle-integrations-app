@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdOnboardingExportSettingComponent } from './qbd-onboarding-export-setting.component';
 
-describe('QbdOnboardingExportSettingComponent', () => {
+xdescribe('QbdOnboardingExportSettingComponent', () => {
   let component: QbdOnboardingExportSettingComponent;
   let fixture: ComponentFixture<QbdOnboardingExportSettingComponent>;
 

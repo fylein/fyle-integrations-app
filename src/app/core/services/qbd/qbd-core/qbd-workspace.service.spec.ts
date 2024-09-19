@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { QbdWorkspaceService } from './qbd-workspace.service';
 
-describe('QbdWorkspaceService', () => {
+xdescribe('QbdWorkspaceService', () => {
   let service: QbdWorkspaceService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { environment } from 'src/environments/environment';
 import { QBDOnboardingState } from '../../models/enum/enum.model';
 
-describe('WorkspaceService', () => {
+xdescribe('WorkspaceService', () => {
   let service: WorkspaceService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

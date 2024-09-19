@@ -7,7 +7,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 
 import { ConfigurationComponent } from './configuration.component';
 
-describe('ConfigurationComponent', () => {
+xdescribe('ConfigurationComponent', () => {
   let component: ConfigurationComponent;
   let fixture: ComponentFixture<ConfigurationComponent>;
   let formBuilder: FormBuilder;

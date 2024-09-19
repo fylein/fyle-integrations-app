@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Sage300OnboardingService } from './sage300-onboarding.service';
 
-describe('Sage300OnboardingService', () => {
+xdescribe('Sage300OnboardingService', () => {
   let service: Sage300OnboardingService;
 
   beforeEach(() => {

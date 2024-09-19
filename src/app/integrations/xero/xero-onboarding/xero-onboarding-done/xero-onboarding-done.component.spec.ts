@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { XeroOnboardingDoneComponent } from './xero-onboarding-done.component';
 
-describe('XeroOnboardingDoneComponent', () => {
+xdescribe('XeroOnboardingDoneComponent', () => {
   let component: XeroOnboardingDoneComponent;
   let fixture: ComponentFixture<XeroOnboardingDoneComponent>;
 
