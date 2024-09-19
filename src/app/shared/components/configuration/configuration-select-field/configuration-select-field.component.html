@@ -26,7 +26,7 @@
                     [filter]="true"
                     (onFilter)="searchOptions($event)"
                     (onHide)="clearSearch()" 
-                    [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
+                    [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
                     [resetFilterOnHide]="true"
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
