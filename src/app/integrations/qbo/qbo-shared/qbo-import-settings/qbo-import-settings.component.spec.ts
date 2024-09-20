@@ -111,6 +111,15 @@ describe('QboImportSettingsComponent', () => {
       expect(component['setupFormWatchers']).toHaveBeenCalled();
       expect(component['initializeCustomFieldForm']).toHaveBeenCalledWith(false);
     });
+
+    it('should set isTaxGroupSyncAllowed to true for non-US country', () => {
+      const nonUSCredential = { ...mockQBOCredential, country: 'CA' };
+      qboConnectorServiceSpy.getQBOCredentials.and.returnValue(of(nonUSCredential));
+
+      component.ngOnInit();
+
+      expect(component.isTaxGroupSyncAllowed).toBeTrue();
+    });
   });
 
   describe('save', () => {
