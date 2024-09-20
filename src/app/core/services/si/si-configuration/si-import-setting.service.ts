@@ -22,4 +22,9 @@ export class SiImportSettingService {
   postImportSettings(importSettingsPayload: ImportSettingPost): Observable<ImportSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
+
+  getImportCodeFieldConfig() {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(`/v2/workspaces/${workspaceId}/import_settings/import_code_fields_config/`, {});
+  }
 }
