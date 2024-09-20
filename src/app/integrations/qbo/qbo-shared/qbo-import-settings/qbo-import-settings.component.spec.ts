@@ -420,4 +420,56 @@ describe('QboImportSettingsComponent', () => {
       expect(component.updateImportCodeFields).toHaveBeenCalledWith(true, DefaultImportFields.ACCOUNT);
     });
   });
+
+  describe('setupFormWatchers', () => {
+    beforeEach(() => {
+      component.importSettingForm = new FormBuilder().group({
+        expenseFields: new FormArray([])
+      });
+      spyOn(component as any, 'createTaxCodeWatcher');
+      spyOn(component as any, 'createCOAWatcher');
+      spyOn(component as any, 'importCategroyCodeWatcher');
+      spyOn(component as any, 'initializeCustomFieldForm');
+    });
+  
+    it('should call all watcher setup functions', () => {
+      component['setupFormWatchers']();
+  
+      expect((component as any).createTaxCodeWatcher).toHaveBeenCalled();
+      expect((component as any).createCOAWatcher).toHaveBeenCalled();
+      expect((component as any).importCategroyCodeWatcher).toHaveBeenCalled();
+    });
+  
+    it('should set up watchers for each expense field', () => {
+      const mockControl = new FormBuilder().group({
+        source_field: [''],
+        destination_field: [''],
+        import_to_fyle: [false],
+        is_custom: [false],
+        source_placeholder: ['']
+      });
+      (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
+  
+      component['setupFormWatchers']();
+  
+      mockControl.patchValue({ source_field: 'custom_field' });
+      expect(component.customFieldType).toBe('');
+      expect(component.customFieldControl).toBe(mockControl);
+    });
+  
+    it('should not initialize custom field form for non-custom fields', () => {
+      const mockControl = new FormBuilder().group({
+        source_field: [''],
+        destination_field: [''],
+        import_to_fyle: [false],
+        is_custom: [false],
+        source_placeholder: ['']
+      });
+      (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
+  
+      component['setupFormWatchers']();
+  
+      mockControl.patchValue({ source_field: 'regular_field' });
+    });
+  });
 });
