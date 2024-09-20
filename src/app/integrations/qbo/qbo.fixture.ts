@@ -735,7 +735,7 @@ export const mockFyleExpenseFields: FyleField[] = [
   }
 ];
 
-// import settings
+// Import settings
 export const mockImportSettings: QBOImportSettingGet = {
   workspace_general_settings: {
     import_categories: true,

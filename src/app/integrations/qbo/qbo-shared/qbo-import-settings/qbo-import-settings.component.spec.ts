@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,10 +12,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { 
-  mockImportSettings, 
-  mockFyleExpenseFields, 
-  mockQboFields, 
+import {
+  mockImportSettings,
+  mockFyleExpenseFields,
+  mockQboFields,
   mockGeneralSettings,
   mockTaxCodeDestinationAttribute,
   mockImportCodeFieldConfig,
@@ -273,7 +275,7 @@ describe('QboImportSettingsComponent', () => {
         ]
       };
     });
-  
+
     it('should return correct options for a given destination field', () => {
       const accountOptions = component.getImportCodeSelectorOptions('ACCOUNT');
       expect(accountOptions).toEqual([
@@ -351,16 +353,16 @@ describe('QboImportSettingsComponent', () => {
       });
       component['createTaxCodeWatcher']();
     });
-  
+
     it('should set defaultTaxCode as required when taxCode is enabled', () => {
       component.importSettingForm.controls.taxCode.setValue(true);
       expect(component.importSettingForm.controls.defaultTaxCode.hasValidator(Validators.required)).toBeTrue();
     });
-  
+
     it('should clear validators and reset defaultTaxCode when taxCode is disabled', () => {
       component.importSettingForm.controls.taxCode.setValue(true);
       component.importSettingForm.controls.defaultTaxCode.setValue('SOME_TAX_CODE');
-      
+
       component.importSettingForm.controls.taxCode.setValue(false);
       expect(component.importSettingForm.controls.defaultTaxCode.hasValidator(Validators.required)).toBeFalse();
       expect(component.importSettingForm.controls.defaultTaxCode.value).toBeNull();
@@ -379,21 +381,21 @@ describe('QboImportSettingsComponent', () => {
       spyOn(ImportSettingsModel, 'getImportCodeField').and.returnValue(false);
       component['createCOAWatcher']();
     });
-  
+
     it('should update form when importCategories is disabled', () => {
       component.importSettingForm.controls.importCategories.setValue(false);
-  
+
       expect(component.importSettingForm.controls.chartOfAccountTypes.value).toEqual(['Expense']);
       expect(component.importSettingForm.controls.importCategoryCode.validator).toBeNull();
       expect(ImportSettingsModel.getImportCodeField).toHaveBeenCalled();
     });
-  
+
     it('should mark importCategoryCode as required when importCategories is enabled', () => {
       const markControllerAsRequiredSpy = helperServiceSpy.markControllerAsRequired as jasmine.Spy;
       markControllerAsRequiredSpy.calls.reset();
-  
+
       component.importSettingForm.controls.importCategories.setValue(true);
-  
+
       expect(markControllerAsRequiredSpy).toHaveBeenCalledWith(component.importSettingForm, 'importCategoryCode');
     });
   });
@@ -407,25 +409,25 @@ describe('QboImportSettingsComponent', () => {
       spyOn(component, 'updateImportCodeFields');
       component['importCategroyCodeWatcher']();
     });
-  
+
     it('should call updateImportCodeFields with true when importCategoryCode is true', () => {
       component.importSettingForm.controls.importCategoryCode.setValue(true);
-  
+
       expect(component.updateImportCodeFields).toHaveBeenCalledWith(true, DefaultImportFields.ACCOUNT);
     });
-  
+
     it('should call updateImportCodeFields with false when importCategoryCode is false', () => {
       component.importSettingForm.controls.importCategoryCode.setValue(false);
-  
+
       expect(component.updateImportCodeFields).toHaveBeenCalledWith(false, DefaultImportFields.ACCOUNT);
     });
-  
+
     it('should still call updateImportCodeFields when importCategories is false', () => {
       component.importSettingForm.controls.importCategories.setValue(false);
       (component.updateImportCodeFields as jasmine.Spy).calls.reset();
-  
+
       component.importSettingForm.controls.importCategoryCode.setValue(true);
-  
+
       expect(component.updateImportCodeFields).toHaveBeenCalledWith(true, DefaultImportFields.ACCOUNT);
     });
   });
@@ -440,15 +442,15 @@ describe('QboImportSettingsComponent', () => {
       spyOn(component as any, 'importCategroyCodeWatcher');
       spyOn(component as any, 'initializeCustomFieldForm');
     });
-  
+
     it('should call all watcher setup functions', () => {
       component['setupFormWatchers']();
-  
+
       expect((component as any).createTaxCodeWatcher).toHaveBeenCalled();
       expect((component as any).createCOAWatcher).toHaveBeenCalled();
       expect((component as any).importCategroyCodeWatcher).toHaveBeenCalled();
     });
-  
+
     it('should set up watchers for each expense field', () => {
       const mockControl = new FormBuilder().group({
         source_field: [''],
@@ -458,14 +460,14 @@ describe('QboImportSettingsComponent', () => {
         source_placeholder: ['']
       });
       (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
-  
+
       component['setupFormWatchers']();
-  
+
       mockControl.patchValue({ source_field: 'custom_field' });
       expect(component.customFieldType).toBe('');
       expect(component.customFieldControl).toBe(mockControl);
     });
-  
+
     it('should not initialize custom field form for non-custom fields', () => {
       const mockControl = new FormBuilder().group({
         source_field: [''],
@@ -475,9 +477,9 @@ describe('QboImportSettingsComponent', () => {
         source_placeholder: ['']
       });
       (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
-  
+
       component['setupFormWatchers']();
-  
+
       mockControl.patchValue({ source_field: 'regular_field' });
     });
   });
