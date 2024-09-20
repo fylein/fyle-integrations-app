@@ -67,6 +67,17 @@ describe('QboAdvancedSettingsComponent', () => {
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     workspaceService = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+
+    component.skipExportForm = new FormBuilder().group({
+      condition1: [mockExpenseFilter.condition],
+      operator1: [mockExpenseFilter.operator],
+      value1: [mockExpenseFilter.values[0]],
+      condition2: [''],
+      operator2: [''],
+      value2: [''],
+      join_by: ['']
+    });
+    component.expenseFilters = mockSkipExportSettings;
   });
 
   it('should create', () => {
@@ -427,5 +438,77 @@ describe('QboAdvancedSettingsComponent', () => {
 
       expect(component.memoPreviewText).toBe('john.doe@acme.com');
     });
+  });
+
+  describe('saveSkipExport', () => {
+    beforeEach(() => {
+      component.advancedSettingForm = new FormBuilder().group({
+        skipExport: [false],
+        // Add other form controls as needed
+      });
+      component.skipExportForm = new FormBuilder().group({
+        condition1: [''],
+        operator1: [''],
+        value1: [''],
+        condition2: [''],
+        operator2: [''],
+        value2: [''],
+        join_by: ['']
+      });
+      component.expenseFilters = mockSkipExportSettings;
+    });
+
+    it('should save new expense filter when skipExport is true', fakeAsync(() => {
+      component.advancedSettingForm.patchValue({ skipExport: true });
+      component.skipExportForm.patchValue({
+        condition1: { field_name: mockExpenseFilter.condition },
+        operator1: mockExpenseFilter.operator,
+        value1: mockExpenseFilter.values[0]
+      });
+      skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilter1));
+
+      component['saveSkipExport']();
+      tick();
+
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
+        condition: mockExpenseFilter.condition,
+        operator: mockExpenseFilter.operator,
+        values: [mockExpenseFilter.values[0]]
+      }));
+    }));
+
+    it('should save two expense filters when two conditions are provided', fakeAsync(() => {
+      component.advancedSettingForm.patchValue({ skipExport: true });
+      component.skipExportForm.patchValue({
+        condition1: { field_name: mockExpenseFilter.condition },
+        operator1: mockExpenseFilter.operator,
+        value1: mockExpenseFilter.values[0],
+        condition2: { field_name: mockExpenseFilter2.condition },
+        operator2: mockExpenseFilter2.operator,
+        value2: mockExpenseFilter2.values[0],
+        join_by: 'AND'
+      });
+
+      skipExportService.postExpenseFilter.and.returnValues(
+        of(mockExpenseFilter1),
+        of(mockExpenseFilter2)
+      );
+
+      component['saveSkipExport']();
+      tick();
+
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledTimes(2);
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
+        condition: mockExpenseFilter.condition,
+        operator: mockExpenseFilter.operator,
+        values: [mockExpenseFilter.values[0]],
+        join_by: 'AND'
+      }));
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
+        condition: mockExpenseFilter2.condition,
+        operator: mockExpenseFilter2.operator,
+        values: [mockExpenseFilter2.values[0]]
+      }));
+    }));
   });
 });
