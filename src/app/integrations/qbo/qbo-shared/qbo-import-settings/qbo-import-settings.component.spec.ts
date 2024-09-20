@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { QboImportSettingsComponent } from './qbo-import-settings.component';
@@ -22,6 +22,7 @@ import {
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 
 describe('QboImportSettingsComponent', () => {
   let component: QboImportSettingsComponent;
@@ -330,6 +331,93 @@ describe('QboImportSettingsComponent', () => {
       expect(component.customFieldForm.get('display_name')?.value).toBeNull();
       expect(component.customFieldForm.get('source_placeholder')?.value).toBeNull();
       expect(component.showCustomFieldDialog).toBeFalse();
+    });
+  });
+
+  describe('createTaxCodeWatcher', () => {
+    beforeEach(() => {
+      component.importSettingForm = new FormBuilder().group({
+        taxCode: [false],
+        defaultTaxCode: ['']
+      });
+      component['createTaxCodeWatcher']();
+    });
+  
+    it('should set defaultTaxCode as required when taxCode is enabled', () => {
+      component.importSettingForm.controls.taxCode.setValue(true);
+      expect(component.importSettingForm.controls.defaultTaxCode.hasValidator(Validators.required)).toBeTrue();
+    });
+  
+    it('should clear validators and reset defaultTaxCode when taxCode is disabled', () => {
+      component.importSettingForm.controls.taxCode.setValue(true);
+      component.importSettingForm.controls.defaultTaxCode.setValue('SOME_TAX_CODE');
+      
+      component.importSettingForm.controls.taxCode.setValue(false);
+      expect(component.importSettingForm.controls.defaultTaxCode.hasValidator(Validators.required)).toBeFalse();
+      expect(component.importSettingForm.controls.defaultTaxCode.value).toBeNull();
+    });
+  });
+
+  describe('createCOAWatcher', () => {
+    beforeEach(() => {
+      component.importSettingForm = new FormBuilder().group({
+        importCategories: [true],
+        chartOfAccountTypes: [['Expense', 'Other Expense']],
+        importCategoryCode: ['']
+      });
+      component.importSettings = mockImportSettings;
+      component.qboImportCodeFieldCodeConfig = mockImportCodeFieldConfig;
+      spyOn(ImportSettingsModel, 'getImportCodeField').and.returnValue(false);
+      component['createCOAWatcher']();
+    });
+  
+    it('should update form when importCategories is disabled', () => {
+      component.importSettingForm.controls.importCategories.setValue(false);
+  
+      expect(component.importSettingForm.controls.chartOfAccountTypes.value).toEqual(['Expense']);
+      expect(component.importSettingForm.controls.importCategoryCode.validator).toBeNull();
+      expect(ImportSettingsModel.getImportCodeField).toHaveBeenCalled();
+    });
+  
+    it('should mark importCategoryCode as required when importCategories is enabled', () => {
+      const markControllerAsRequiredSpy = helperServiceSpy.markControllerAsRequired as jasmine.Spy;
+      markControllerAsRequiredSpy.calls.reset();
+  
+      component.importSettingForm.controls.importCategories.setValue(true);
+  
+      expect(markControllerAsRequiredSpy).toHaveBeenCalledWith(component.importSettingForm, 'importCategoryCode');
+    });
+  });
+
+  describe('importCategroyCodeWatcher', () => {
+    beforeEach(() => {
+      component.importSettingForm = new FormBuilder().group({
+        importCategories: [true],
+        importCategoryCode: [false]
+      });
+      spyOn(component, 'updateImportCodeFields');
+      component['importCategroyCodeWatcher']();
+    });
+  
+    it('should call updateImportCodeFields with true when importCategoryCode is true', () => {
+      component.importSettingForm.controls.importCategoryCode.setValue(true);
+  
+      expect(component.updateImportCodeFields).toHaveBeenCalledWith(true, DefaultImportFields.ACCOUNT);
+    });
+  
+    it('should call updateImportCodeFields with false when importCategoryCode is false', () => {
+      component.importSettingForm.controls.importCategoryCode.setValue(false);
+  
+      expect(component.updateImportCodeFields).toHaveBeenCalledWith(false, DefaultImportFields.ACCOUNT);
+    });
+  
+    it('should still call updateImportCodeFields when importCategories is false', () => {
+      component.importSettingForm.controls.importCategories.setValue(false);
+      (component.updateImportCodeFields as jasmine.Spy).calls.reset();
+  
+      component.importSettingForm.controls.importCategoryCode.setValue(true);
+  
+      expect(component.updateImportCodeFields).toHaveBeenCalledWith(true, DefaultImportFields.ACCOUNT);
     });
   });
 });
