@@ -803,7 +803,7 @@ export const mockImportSettings: QBOImportSettingGet = {
   workspace_id: 525
 };
 
-// qbo adavanced settings
+// Qbo adavanced settings
 
 export const mockQboAdvancedSettings = {
   "workspace_general_settings": {
@@ -839,7 +839,7 @@ export const mockQboAdvancedSettings = {
       ]
   },
   "workspace_id": 525
-}
+};
 
 export const mockExpenseFilter: ExpenseFilterPost = {
   condition: "category",
@@ -878,7 +878,7 @@ export const mockExpenseFilter2: ExpenseFilter = {
   custom_field_type: null
 };
 
-// settings general for advanced settings
+// Settings general for advanced settings
 export const mockSettingsGeneral = {
   "id": 708,
   "reimbursable_expenses_object": null,
@@ -931,9 +931,9 @@ export const mockSettingsGeneral = {
   "created_at": "2024-09-04T16:23:13.895369Z",
   "updated_at": "2024-09-20T10:52:47.925962Z",
   "workspace": 525
-}
+};
 
-// admins for advanced settings
+// Admins for advanced settings
 export const mockAdmins = [
   {
       "name": "Theresa Brown",
@@ -943,9 +943,9 @@ export const mockAdmins = [
       "name": "Fyle For Orion",
       "email": "owner@fylefororion.fyle.in"
   }
-]
+];
 
-// custom_fields for advanced settings
+// Custom_fields for advanced settings
 export const mockCustomFields = [
   {
       "field_name": "employee_email",
@@ -992,9 +992,9 @@ export const mockCustomFields = [
       "type": "SELECT",
       "is_custom": true
   }
-]
+];
 
-// skip export settings GET
+// Skip export settings GET
 export const mockSkipExportSettings: ExpenseFilterResponse = {
   count: 1,
   next: null,

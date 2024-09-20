@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -118,7 +120,7 @@ describe('QboAdvancedSettingsComponent', () => {
     });
     it('should initialize component and setup forms', fakeAsync(() => {
       Object.defineProperty(router, 'url', { get: () => '/integrations/qbo/onboarding/advanced_settings' });
-    
+
       component.ngOnInit();
       tick();
 
@@ -177,7 +179,7 @@ describe('QboAdvancedSettingsComponent', () => {
       });
       component.expenseFilters = { count: 0, next: null, previous: null, results: [] };
     });
-  
+
     it('should save advanced settings and skip export fields successfully', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.postExpenseFilter.and.returnValue(of({
@@ -188,33 +190,33 @@ describe('QboAdvancedSettingsComponent', () => {
         workspace: 525
       }));
       component.isOnboarding = true;
-  
+
       // Set skipExport to true to trigger the skip export save
       component.advancedSettingForm.get('skipExport')?.setValue(true);
-  
+
       spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
-  
+
       component.save();
       tick();
-  
+
       expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
       expect(component['saveSkipExportFields']).toHaveBeenCalled();
       // We're not directly expecting skipExportService.postExpenseFilter to be called here
-      // because it's called inside saveSkipExportFields, which we've spied on
+      // Because it's called inside saveSkipExportFields, which we've spied on
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       expect(workspaceService.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.COMPLETE);
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/done']);
     }));
-  
+
     it('should not save skip export fields when skipExport is false', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       component.advancedSettingForm.get('skipExport')?.setValue(false);
-  
+
       spyOn<any>(component, 'saveSkipExportFields');
-  
+
       component.save();
       tick();
-  
+
       expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
       expect(component['saveSkipExportFields']).not.toHaveBeenCalled();
       expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
@@ -385,11 +387,11 @@ describe('QboAdvancedSettingsComponent', () => {
         memoStructure: [mockMemo]
       });
       component.defaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
-      
+
       spyOn(AdvancedSettingsModel, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
-      
+
       component.onMultiSelectChange();
-      
+
       expect(AdvancedSettingsModel.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
       expect(component.advancedSettingForm.get('memoStructure')?.value).toEqual(mockFormattedMemo);
     });
@@ -406,7 +408,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should initialize memoStructure and memoPreviewText', () => {
       const initialMemoStructure = ['employee_email', 'merchant'];
       component.advancedSettingForm.get('memoStructure')?.setValue(initialMemoStructure);
-      
+
       component['createMemoStructureWatcher']();
 
       expect(component.memoStructure).toEqual(initialMemoStructure);
@@ -443,7 +445,7 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('saveSkipExport', () => {
     beforeEach(() => {
       component.advancedSettingForm = new FormBuilder().group({
-        skipExport: [false],
+        skipExport: [false]
         // Add other form controls as needed
       });
       component.skipExportForm = new FormBuilder().group({
@@ -533,22 +535,22 @@ describe('QboAdvancedSettingsComponent', () => {
         value2: [''],
         join_by: ['']
       });
-  
+
       component.advancedSettingForm.patchValue({ skipExport: true });
       component.skipExportForm.patchValue({
         condition1: null,
         operator1: '',
         value1: ''
       });
-  
+
       spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
-      
+
       // Reset the existing spy instead of creating a new one
       skipExportService.postExpenseFilter.calls.reset();
-  
+
       component['saveSkipExport']();
       tick();
-  
+
       expect(component.skipExportForm.valid).toBeFalse();
       expect(component['saveSkipExportFields']).toHaveBeenCalled();
       expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
@@ -559,12 +561,12 @@ describe('QboAdvancedSettingsComponent', () => {
         skipExport: [false]
       });
       component.expenseFilters = mockSkipExportSettings;
-  
+
       spyOn(component, 'deleteExpenseFilter');
-  
+
       component['saveSkipExport']();
       tick();
-  
+
       expect(component.deleteExpenseFilter).toHaveBeenCalledTimes(1);
       expect(component.deleteExpenseFilter).toHaveBeenCalledWith(74);
     }));
