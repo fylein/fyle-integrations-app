@@ -20,7 +20,7 @@ import {
   mockVendors,
   mockWorkspaceGeneralSettings,
   mockPaginatedDestinationAttributes,
-  mockSaveResponse
+  mockExportSettingSaveResponse
 } from '../../qbo.fixture';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -559,11 +559,11 @@ xdescribe('QboExportSettingsComponent', () => {
         });
 
         // Mock the postExportSettings to return a successful response
-        const mockSaveResponse: QBOExportSettingGet = {
+        const mockExportSettingSaveResponse: QBOExportSettingGet = {
           ...component.exportSettings
           // Add any other required properties
         };
-        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockSaveResponse));
+        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettingSaveResponse));
 
         // Call the save method
         component.save();
