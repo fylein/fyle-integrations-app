@@ -11,7 +11,7 @@ describe('QbdDirectSharedComponent', () => {
       imports: [QbdDirectSharedComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QbdDirectSharedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
