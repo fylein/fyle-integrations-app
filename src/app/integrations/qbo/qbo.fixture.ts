@@ -4,7 +4,7 @@ import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/mode
 import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField } from "src/app/core/models/db/mapping.model";
 import { QBOImportSettingGet } from "src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model";
-import { ExpenseFilterPost, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
+import { ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -846,6 +846,33 @@ export const mockExpenseFilter: ExpenseFilterPost = {
   operator: Operator.IExact,
   values: ["anish"],
   rank: 1,
+  join_by: null,
+  is_custom: false,
+  custom_field_type: null
+};
+
+export const mockExpenseFilter1: ExpenseFilter = {
+  id: 1,
+  condition: 'category',
+  operator: Operator.IContains,
+  values: ['test'],
+  created_at: new Date(),
+  updated_at: new Date(),
+  workspace: 1,
+  rank: 1,
+  join_by: null,
+  is_custom: false,
+  custom_field_type: null
+};
+export const mockExpenseFilter2: ExpenseFilter = {
+  id: 2,
+  condition: 'amount',
+  operator: Operator.LessThanOrEqual,
+  values: ['100'],
+  created_at: new Date(),
+  updated_at: new Date(),
+  workspace: 1,
+  rank: 2,
   join_by: null,
   is_custom: false,
   custom_field_type: null

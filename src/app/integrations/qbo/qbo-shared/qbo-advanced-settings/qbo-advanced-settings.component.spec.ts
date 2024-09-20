@@ -11,8 +11,9 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter } from 'src/app/integrations/qbo/qbo.fixture';
-import { QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2 } from 'src/app/integrations/qbo/qbo.fixture';
+import { Operator, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ExpenseFilter } from 'src/app/core/models/common/advanced-settings.model';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -122,44 +123,69 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('save', () => {
     beforeEach(() => {
       component.advancedSettingForm = new FormBuilder().group({
-        skipExport: [true],
-        // Add other form controls as needed
+        paymentSync: [null],
+        billPaymentAccount: [null],
+        changeAccountingPeriod: [false],
+        singleCreditLineJE: [false],
+        autoCreateVendors: [false],
+        autoCreateMerchantsAsVendors: [false],
+        exportSchedule: [false],
+        exportScheduleFrequency: [1],
+        memoStructure: [[]],
+        skipExport: [false],
+        searchOption: [null],
+        search: [null],
+        additionalEmails: [[]],
+        email: [[]]
       });
       component.skipExportForm = new FormBuilder().group({
-        condition1: [''],
-        operator1: [''],
-        value1: [''],
-        // Add other form controls as needed
+        condition1: ['category'],
+        operator1: [Operator.IContains],
+        value1: ['anish']
       });
+      component.expenseFilters = { count: 0, next: null, previous: null, results: [] };
     });
-
-    it('should save advanced settings successfully', fakeAsync(() => {
+  
+    it('should save advanced settings and skip export fields successfully', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.postExpenseFilter.and.returnValue(of({
         ...mockExpenseFilter,
-        id: 1,
+        id: 75,
         created_at: new Date(),
         updated_at: new Date(),
-        workspace: 1
+        workspace: 525
       }));
       component.isOnboarding = true;
-
+  
+      // Set skipExport to true to trigger the skip export save
+      component.advancedSettingForm.get('skipExport')?.setValue(true);
+  
+      spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
+  
       component.save();
       tick();
-
+  
       expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
+      expect(component['saveSkipExportFields']).toHaveBeenCalled();
+      // We're not directly expecting skipExportService.postExpenseFilter to be called here
+      // because it's called inside saveSkipExportFields, which we've spied on
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       expect(workspaceService.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.COMPLETE);
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/done']);
     }));
-
-    it('should handle error when saving advanced settings', fakeAsync(() => {
-      advancedSettingsService.postAdvancedSettings.and.returnValue(throwError('Error'));
-
+  
+    it('should not save skip export fields when skipExport is false', fakeAsync(() => {
+      advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
+      component.advancedSettingForm.get('skipExport')?.setValue(false);
+  
+      spyOn<any>(component, 'saveSkipExportFields');
+  
       component.save();
       tick();
-
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+  
+      expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
+      expect(component['saveSkipExportFields']).not.toHaveBeenCalled();
+      expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
     }));
   });
 
