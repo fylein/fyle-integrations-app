@@ -1,3 +1,5 @@
+import { minimalUser } from "src/app/core/interceptor/jwt.fixture";
+import { MinimalUser } from "src/app/core/models/db/user.model";
 import { IntacctOnboardingState } from "src/app/core/models/enum/enum.model";
 import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 
@@ -25,4 +27,18 @@ export const workspaceResponse: IntacctWorkspace[] = [{
       is_expired: true,
       company_name: 'Halo MasterChief'
     }
+};
+
+export const mockUser: MinimalUser = {
+  ...minimalUser,
+  org_id: 'mock org id'
+};
+
+export const testOnboardingState: {[k in IntacctOnboardingState]: string} =  {
+  [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/landing',
+  [IntacctOnboardingState.LOCATION_ENTITY]: '/integrations/intacct/onboarding/connector',
+  [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
+  [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
+  [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
+  [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard',
 };
