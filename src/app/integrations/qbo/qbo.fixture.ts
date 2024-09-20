@@ -593,3 +593,223 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
     },
     "workspace_id": 512
 };
+
+// sage_intacct_fields
+
+export const mockSageIntacctFields = [
+  {
+      "attribute_type": "BRAND_NEW_OPERATING_SYSTEM",
+      "display_name": "brand new operating system"
+  },
+  {
+      "attribute_type": "CLASS",
+      "display_name": "class"
+  },
+  {
+      "attribute_type": "CUSTOMER",
+      "display_name": "customer"
+  },
+  {
+      "attribute_type": "DEPARTMENT",
+      "display_name": "department"
+  },
+  {
+      "attribute_type": "ITEM",
+      "display_name": "item"
+  },
+  {
+      "attribute_type": "LOCATION",
+      "display_name": "location"
+  },
+  {
+      "attribute_type": "NEW_PROJECT",
+      "display_name": "new project"
+  },
+  {
+      "attribute_type": "NEW_TEAM",
+      "display_name": "new team"
+  },
+  {
+      "attribute_type": "OPERATING_SYSTEM",
+      "display_name": "operating system"
+  },
+  {
+      "attribute_type": "PLACE",
+      "display_name": "place"
+  },
+  {
+      "attribute_type": "TEAM",
+      "display_name": "team"
+  },
+  {
+      "attribute_type": "USER_DIMENSION",
+      "display_name": "user dimension"
+  },
+  {
+      "attribute_type": "WHAT_IS_NILESH_PANT",
+      "display_name": "what is nilesh pant"
+  },
+  {
+      "attribute_type": "PROJECT",
+      "display_name": "Project"
+  }
+]
+
+
+// destination_attributes/?attribute_types=TAX_DETAIL
+export const mockTaxDetails = [
+  {
+      "id": 253459,
+      "attribute_type": "TAX_DETAIL",
+      "display_name": "Tax Detail",
+      "value": "Nilesh",
+      "destination_id": "Nilesh",
+      "auto_created": false,
+      "active": true,
+      "detail": {
+          "tax_rate": 10.0,
+          "tax_solution_id": null
+      },
+      "code": null,
+      "created_at": "2024-09-19T09:44:47.878961Z",
+      "updated_at": "2024-09-19T09:44:47.878983Z",
+      "workspace": 373
+  }
+]
+
+
+// fyle_fields
+export const mockFyleFields = [
+  {
+      "attribute_type": "COST_CENTER",
+      "display_name": "Cost Center",
+      "is_dependent": false
+  },
+  {
+      "attribute_type": "PROJECT",
+      "display_name": "Project",
+      "is_dependent": false
+  },
+  {
+      "attribute_type": "CATEGORY_CUSTOM",
+      "display_name": "Category Custom",
+      "is_dependent": false
+  },
+  {
+      "attribute_type": "CUSTOM_#1",
+      "display_name": "Custom #1",
+      "is_dependent": false
+  },
+  {
+      "attribute_type": "PROJECT_CUSTOM",
+      "display_name": "Project Custom",
+      "is_dependent": false
+  },
+  {
+      "attribute_type": "COST_CATEGORY",
+      "display_name": "Cost Category",
+      "is_dependent": true
+  },
+  {
+      "attribute_type": "COST_CODE",
+      "display_name": "Cost Code",
+      "is_dependent": true
+  }
+]
+
+// import_settings
+export const mockImportSettings = {
+  "configurations": {
+      "import_categories": false,
+      "import_tax_codes": false,
+      "import_vendors_as_merchants": false,
+      "import_code_fields": [
+          "PROJECT"
+      ]
+  },
+  "general_mappings": {
+      "default_tax_code": {
+          "name": null,
+          "id": null
+      }
+  },
+  "mapping_settings": [
+      {
+          "source_field": "CUSTOM_#1",
+          "destination_field": "PROJECT",
+          "import_to_fyle": true,
+          "is_custom": true,
+          "source_placeholder": null
+      },
+      {
+          "source_field": "COST_CODE",
+          "destination_field": "DEPARTMENT",
+          "import_to_fyle": false,
+          "is_custom": true,
+          "source_placeholder": null
+      },
+      {
+          "source_field": "COST_CENTER",
+          "destination_field": "LOCATION",
+          "import_to_fyle": true,
+          "is_custom": false,
+          "source_placeholder": null
+      }
+  ],
+  "dependent_field_settings": null,
+  "workspace_id": 373
+}
+
+// configuration
+export const mockConfiguration = {
+  "id": 384,
+  "workspace": "Workspace object (373)",
+  "employee_field_mapping": "VENDOR",
+  "reimbursable_expenses_object": null,
+  "corporate_credit_card_expenses_object": "BILL",
+  "import_projects": false,
+  "import_categories": false,
+  "sync_fyle_to_sage_intacct_payments": false,
+  "sync_sage_intacct_to_fyle_payments": false,
+  "auto_map_employees": null,
+  "import_tax_codes": false,
+  "memo_structure": [
+      "employee_email",
+      "category",
+      "spent_on",
+      "report_number",
+      "purpose",
+      "expense_link"
+  ],
+  "auto_create_destination_entity": false,
+  "is_journal_credit_billable": false,
+  "is_simplify_report_closure_enabled": true,
+  "change_accounting_period": false,
+  "import_vendors_as_merchants": false,
+  "use_merchant_in_journal_line": false,
+  "auto_create_merchants_as_vendors": false,
+  "import_code_fields": [
+      "PROJECT"
+  ],
+  "created_at": "2024-09-19T09:46:34.891329Z",
+  "updated_at": "2024-09-19T10:13:16.442373Z"
+}
+
+// location_entity
+export const mockLocationEntity = {
+  "id": 333,
+  "location_entity_name": "Top Level",
+  "country_name": null,
+  "destination_id": "top_level",
+  "created_at": "2024-09-19T09:44:34.264603Z",
+  "updated_at": "2024-09-19T09:44:34.264622Z",
+  "workspace": 373
+}
+
+// import_code_fields_config
+export const mockImportCodeFieldsConfig = {
+  "PROJECT":true,
+  "DEPARTMENT":true,
+  "ACCOUNT":true,
+  "EXPENSE_TYPE":true
+}
