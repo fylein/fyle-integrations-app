@@ -74,16 +74,16 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   removeEmail(): void {
-    const selectedEmails = this.form.value.email;
+    const selectedEmails = this.form.get('email')?.value;
     selectedEmails.splice(0, 1);
 
     this.form.controls.email.patchValue(selectedEmails);
-    this.selectedEmail = this.form.value.email.length ? this.form.value.email[0].email : null;
+    this.selectedEmail = this.form.get('email')?.value.length ? this.form.get('email')?.value[0].email : null;
   }
 
   addEmail(): void {
     this.trackingService.onClickEvent(trackingAppMap[this.appName], ClickEvent.ADD_EMAIL_MANUALLY);
-    const selectedEmails = this.form.value.email;
+    const selectedEmails = this.form.get('email')?.value;
     selectedEmails.push(this.addEmailForm.value);
     this.emails.push(this.addEmailForm.value);
     this.assignSelectedEmail(selectedEmails);
@@ -107,7 +107,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private createEmailAdditionWatcher(): void {
-    this.assignSelectedEmail(this.form.value.email);
+    this.assignSelectedEmail(this.form.get('email')?.value);
     this.form.controls.email.valueChanges.subscribe((emails: QBDEmailOptions[]) => {
       this.assignSelectedEmail(emails);
     });
@@ -122,8 +122,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.assignSelectedEmail(this.form.value.email);
-    this.emails = this.getEmailOptions(this.form.value.email, this.options);
+    this.assignSelectedEmail(this.form.get('email')?.value);
+    this.emails = this.getEmailOptions(this.form.get('email')?.value, this.options);
     this.createEmailAdditionWatcher();
   }
 
