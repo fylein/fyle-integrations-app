@@ -40,5 +40,5 @@ export const testOnboardingState: {[k in IntacctOnboardingState]: string} =  {
   [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
   [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
   [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
-  [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard',
+  [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
 };
