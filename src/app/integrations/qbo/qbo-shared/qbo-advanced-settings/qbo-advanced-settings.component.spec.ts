@@ -12,8 +12,8 @@ import { SkipExportService } from 'src/app/core/services/common/skip-export.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2 } from 'src/app/integrations/qbo/qbo.fixture';
-import { Operator, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ExpenseFilter } from 'src/app/core/models/common/advanced-settings.model';
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, Operator, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AdvancedSettingsModel, ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -118,6 +118,27 @@ describe('QboAdvancedSettingsComponent', () => {
       expect(component['setupFormWatchers']).toHaveBeenCalled();
       expect(component.isOnboarding).toBeTrue();
     }));
+
+    it('should concatenate additional email options', fakeAsync(() => {
+      const mockAdditionalEmails = [
+        { name: 'Additional User', email: 'additional@example.com' }
+      ];
+      const mockAdvancedSettingsWithAdditionalEmails = {
+        ...mockQboAdvancedSettings,
+        workspace_schedules: {
+          ...mockQboAdvancedSettings.workspace_schedules,
+          additional_email_options: mockAdditionalEmails
+        }
+      };
+
+      advancedSettingsService.getAdvancedSettings.and.returnValue(of(mockAdvancedSettingsWithAdditionalEmails));
+      Object.defineProperty(router, 'url', { get: () => '/integrations/qbo/onboarding/advanced_settings' });
+
+      component.ngOnInit();
+      tick();
+
+      expect(component.adminEmails).toEqual([...mockAdmins, ...mockAdditionalEmails]);
+    }));
   });
 
   describe('save', () => {
@@ -187,6 +208,23 @@ describe('QboAdvancedSettingsComponent', () => {
       expect(component['saveSkipExportFields']).not.toHaveBeenCalled();
       expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
     }));
+
+    it('should handle error when saving advanced settings', fakeAsync(() => {
+      advancedSettingsService.postAdvancedSettings.and.returnValue(throwError('Error'));
+      component.isOnboarding = true;
+
+      component.save();
+      tick();
+
+      expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
+      expect(component.isSaveInProgress).toBeFalse();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.ERROR,
+        'Error saving advanced settings, please try again later'
+      );
+      expect(workspaceService.setOnboardingState).not.toHaveBeenCalled();
+      expect(router.navigate).not.toHaveBeenCalled();
+    }));
   });
 
   describe('refreshDimensions', () => {
@@ -217,5 +255,177 @@ describe('QboAdvancedSettingsComponent', () => {
     });
   });
 
-  // Add more tests for other methods and edge cases
+  describe('isAutoCreateVendorsFieldVisible', () => {
+    it('should return true when conditions are met', () => {
+      component.workspaceGeneralSettings = {
+        employee_field_mapping: EmployeeFieldMapping.VENDOR,
+        auto_map_employees: AutoMapEmployeeOptions.NAME
+      } as any;
+      expect(component.isAutoCreateVendorsFieldVisible()).toBeTrue();
+    });
+
+    it('should return false when employee_field_mapping is not VENDOR', () => {
+      component.workspaceGeneralSettings = {
+        employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
+        auto_map_employees: AutoMapEmployeeOptions.NAME
+      } as any;
+      expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
+    });
+
+    it('should return false when auto_map_employees is null', () => {
+      component.workspaceGeneralSettings = {
+        employee_field_mapping: EmployeeFieldMapping.VENDOR,
+        auto_map_employees: null
+      } as any;
+      expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
+    });
+
+    it('should return false when auto_map_employees is EMPLOYEE_CODE', () => {
+      component.workspaceGeneralSettings = {
+        employee_field_mapping: EmployeeFieldMapping.VENDOR,
+        auto_map_employees: AutoMapEmployeeOptions.EMPLOYEE_CODE
+      } as any;
+      expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
+    });
+  });
+
+  describe('isPaymentSyncFieldVisible', () => {
+    it('should return true when reimbursable_expenses_object is BILL', () => {
+      component.workspaceGeneralSettings = {
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL
+      } as any;
+      expect(component.isPaymentSyncFieldVisible()).toBeTrue();
+    });
+
+    it('should return false when reimbursable_expenses_object is not BILL', () => {
+      component.workspaceGeneralSettings = {
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK
+      } as any;
+      expect(component.isPaymentSyncFieldVisible()).toBeFalse();
+    });
+  });
+
+  describe('isSingleCreditLineJEFieldVisible', () => {
+    it('should return true when reimbursable_expenses_object is JOURNAL_ENTRY', () => {
+      component.workspaceGeneralSettings = {
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.JOURNAL_ENTRY,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      } as any;
+      expect(component.isSingleCreditLineJEFieldVisible()).toBeTrue();
+    });
+
+    it('should return true when corporate_credit_card_expenses_object is JOURNAL_ENTRY', () => {
+      component.workspaceGeneralSettings = {
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+      } as any;
+      expect(component.isSingleCreditLineJEFieldVisible()).toBeTrue();
+    });
+
+    it('should return false when neither condition is met', () => {
+      component.workspaceGeneralSettings = {
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      } as any;
+      expect(component.isSingleCreditLineJEFieldVisible()).toBeFalse();
+    });
+  });
+
+  describe('isAutoCreateMerchantsAsVendorsFieldVisible', () => {
+    it('should return true when conditions are met', () => {
+      component.workspaceGeneralSettings = {
+        import_vendors_as_merchants: false,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      } as any;
+      expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeTrue();
+    });
+
+    it('should return false when import_vendors_as_merchants is true', () => {
+      component.workspaceGeneralSettings = {
+        import_vendors_as_merchants: true,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      } as any;
+      expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeFalse();
+    });
+
+    it('should return true when name_in_journal_entry is MERCHANT', () => {
+      component.workspaceGeneralSettings = {
+        import_vendors_as_merchants: false,
+        name_in_journal_entry: NameInJournalEntry.MERCHANT
+      } as any;
+      expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeTrue();
+    });
+
+    it('should return false when conditions are not met', () => {
+      component.workspaceGeneralSettings = {
+        import_vendors_as_merchants: false,
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
+        name_in_journal_entry: NameInJournalEntry.EMPLOYEE
+      } as any;
+      expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeFalse();
+    });
+  });
+
+  describe('onMultiSelectChange', () => {
+    it('should update memoStructure with formatted memo', () => {
+      const mockMemo = ['employee_email', 'merchant', 'purpose'];
+      const mockFormattedMemo = ['employee_email', 'merchant', 'purpose', 'category'];
+      component.advancedSettingForm = new FormBuilder().group({
+        memoStructure: [mockMemo]
+      });
+      component.defaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
+      
+      spyOn(AdvancedSettingsModel, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
+      
+      component.onMultiSelectChange();
+      
+      expect(AdvancedSettingsModel.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
+      expect(component.advancedSettingForm.get('memoStructure')?.value).toEqual(mockFormattedMemo);
+    });
+  });
+
+  describe('createMemoStructureWatcher', () => {
+    beforeEach(() => {
+      component.advancedSettingForm = new FormBuilder().group({
+        memoStructure: [[]]
+      });
+      component.defaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
+    });
+
+    it('should initialize memoStructure and memoPreviewText', () => {
+      const initialMemoStructure = ['employee_email', 'merchant'];
+      component.advancedSettingForm.get('memoStructure')?.setValue(initialMemoStructure);
+      
+      component['createMemoStructureWatcher']();
+
+      expect(component.memoStructure).toEqual(initialMemoStructure);
+      expect(component.memoPreviewText).toBe('john.doe@acme.com - Pizza Hut');
+    });
+
+    it('should update memoPreviewText when memoStructure changes', () => {
+      component['createMemoStructureWatcher']();
+
+      const newMemoStructure = ['employee_email', 'category', 'purpose'];
+      component.advancedSettingForm.get('memoStructure')?.setValue(newMemoStructure);
+
+      expect(component.memoPreviewText).toBe('john.doe@acme.com - Client Meeting - Meals and Entertainment');
+    });
+
+    it('should handle empty memoStructure', () => {
+      component['createMemoStructureWatcher']();
+
+      component.advancedSettingForm.get('memoStructure')?.setValue([]);
+
+      expect(component.memoPreviewText).toBe('');
+    });
+
+    it('should handle invalid memoStructure values', () => {
+      component['createMemoStructureWatcher']();
+
+      const invalidMemoStructure = ['invalid_field', 'employee_email'];
+      component.advancedSettingForm.get('memoStructure')?.setValue(invalidMemoStructure);
+
+      expect(component.memoPreviewText).toBe('john.doe@acme.com');
+    });
+  });
 });
