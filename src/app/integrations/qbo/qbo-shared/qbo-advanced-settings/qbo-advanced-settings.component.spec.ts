@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { QboAdvancedSettingsComponent } from './qbo-advanced-settings.component';
@@ -462,7 +462,7 @@ describe('QboAdvancedSettingsComponent', () => {
       component.advancedSettingForm.patchValue({ skipExport: true });
       component.skipExportForm.patchValue({
         condition1: { field_name: mockExpenseFilter.condition },
-        operator1: mockExpenseFilter.operator,
+        operator1: 'in',
         value1: mockExpenseFilter.values[0]
       });
       skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilter1));
@@ -472,8 +472,12 @@ describe('QboAdvancedSettingsComponent', () => {
 
       expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
         condition: mockExpenseFilter.condition,
-        operator: mockExpenseFilter.operator,
-        values: [mockExpenseFilter.values[0]]
+        operator: 'in',
+        values: mockExpenseFilter.values[0],
+        rank: 1,
+        join_by: null,
+        is_custom: undefined,
+        custom_field_type: null
       }));
     }));
 
@@ -481,7 +485,7 @@ describe('QboAdvancedSettingsComponent', () => {
       component.advancedSettingForm.patchValue({ skipExport: true });
       component.skipExportForm.patchValue({
         condition1: { field_name: mockExpenseFilter.condition },
-        operator1: mockExpenseFilter.operator,
+        operator1: 'in',
         value1: mockExpenseFilter.values[0],
         condition2: { field_name: mockExpenseFilter2.condition },
         operator2: mockExpenseFilter2.operator,
@@ -500,15 +504,69 @@ describe('QboAdvancedSettingsComponent', () => {
       expect(skipExportService.postExpenseFilter).toHaveBeenCalledTimes(2);
       expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
         condition: mockExpenseFilter.condition,
-        operator: mockExpenseFilter.operator,
-        values: [mockExpenseFilter.values[0]],
-        join_by: 'AND'
+        operator: 'in',
+        values: mockExpenseFilter.values[0],
+        rank: 1,
+        join_by: 'AND',
+        is_custom: undefined,
+        custom_field_type: null
       }));
       expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
         condition: mockExpenseFilter2.condition,
         operator: mockExpenseFilter2.operator,
-        values: [mockExpenseFilter2.values[0]]
+        values: mockExpenseFilter2.values[0],
+        rank: 2,
+        join_by: null,
+        is_custom: undefined,
+        custom_field_type: null
       }));
+    }));
+
+    it('should not save expense filter when skipExportForm is invalid', fakeAsync(() => {
+      // Set up the form with validators
+      component.skipExportForm = new FormBuilder().group({
+        condition1: ['', Validators.required],
+        operator1: ['', Validators.required],
+        value1: ['', Validators.required],
+        condition2: [''],
+        operator2: [''],
+        value2: [''],
+        join_by: ['']
+      });
+  
+      component.advancedSettingForm.patchValue({ skipExport: true });
+      component.skipExportForm.patchValue({
+        condition1: null,
+        operator1: '',
+        value1: ''
+      });
+  
+      spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
+      
+      // Reset the existing spy instead of creating a new one
+      skipExportService.postExpenseFilter.calls.reset();
+  
+      component['saveSkipExport']();
+      tick();
+  
+      expect(component.skipExportForm.valid).toBeFalse();
+      expect(component['saveSkipExportFields']).toHaveBeenCalled();
+      expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
+    }));
+
+    it('should delete existing expense filters when skipExport is set to false', fakeAsync(() => {
+      component.advancedSettingForm = new FormBuilder().group({
+        skipExport: [false]
+      });
+      component.expenseFilters = mockSkipExportSettings;
+  
+      spyOn(component, 'deleteExpenseFilter');
+  
+      component['saveSkipExport']();
+      tick();
+  
+      expect(component.deleteExpenseFilter).toHaveBeenCalledTimes(1);
+      expect(component.deleteExpenseFilter).toHaveBeenCalledWith(74);
     }));
   });
 });
