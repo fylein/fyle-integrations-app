@@ -226,7 +226,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   private dependentFieldWatchers(): void {
-    if (this.importSettingsForm.value.isDependentImportEnabled) {
+    if (this.importSettingsForm.get('isDependentImportEnabled')?.value) {
       this.helper.disableFormField(this.importSettingsForm, 'costCodes');
       this.helper.disableFormField(this.importSettingsForm, 'costTypes');
     }
@@ -255,9 +255,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   saveDependentCustomField(): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type,
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value,
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: true,
       is_custom: true
     };
@@ -278,9 +278,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   saveFyleExpenseField() {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: false
     };
 
