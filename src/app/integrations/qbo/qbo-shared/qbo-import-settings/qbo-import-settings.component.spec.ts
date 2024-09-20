@@ -205,5 +205,131 @@ describe('QboImportSettingsComponent', () => {
     });
   });
 
-  // Add more test cases for other methods and edge cases
+  describe('closeModel', () => {
+    beforeEach(() => {
+      component.customFieldForm = new FormBuilder().group({
+        attribute_type: ['EMPLOYEE'],
+        source_placeholder: ['Anish']
+      });
+      component.showCustomFieldDialog = true;
+    });
+
+    it('should reset the form and close the dialog', () => {
+      component.closeModel();
+
+      expect(component.customFieldForm.get('attribute_type')?.value).toBeNull();
+      expect(component.customFieldForm.get('source_placeholder')?.value).toBeNull();
+      expect(component.showCustomFieldDialog).toBeFalse();
+    });
+  });
+
+  describe('showPreviewDialog', () => {
+    it('should set isPreviewDialogVisible to true when called with true', () => {
+      component.isPreviewDialogVisible = false;
+      component.showPreviewDialog(true);
+      expect(component.isPreviewDialogVisible).toBeTrue();
+    });
+
+    it('should set isPreviewDialogVisible to false when called with false', () => {
+      component.isPreviewDialogVisible = true;
+      component.showPreviewDialog(false);
+      expect(component.isPreviewDialogVisible).toBeFalse();
+    });
+  });
+
+  describe('closeDialog', () => {
+    it('should set isPreviewDialogVisible to false', () => {
+      // Arrange
+      component.isPreviewDialogVisible = true;
+
+      // Act
+      component.closeDialog();
+
+      // Assert
+      expect(component.isPreviewDialogVisible).toBeFalse();
+    });
+  });
+
+  describe('getImportCodeSelectorOptions', () => {
+    beforeEach(() => {
+      component.importCodeSelectorOptions = {
+        ACCOUNT: [
+          { label: 'Import Codes + Names', subLabel: '4567 Meals & Entertainment', value: true },
+          { label: 'Import Names only', subLabel: 'Meals & Entertainment', value: false }
+        ],
+        CUSTOMER: [
+          { label: 'Customer 1', subLabel: 'subLabel 3', value: true },
+          { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
+        ]
+      };
+    });
+  
+    it('should return correct options for a given destination field', () => {
+      const accountOptions = component.getImportCodeSelectorOptions('ACCOUNT');
+      expect(accountOptions).toEqual([
+        { label: 'Import Codes + Names', value: true, subLabel: '4567 Meals & Entertainment' },
+        { label: 'Import Names only', value: false, subLabel: 'Meals & Entertainment' }
+      ]);
+    });
+  });
+
+  describe('updateImportCodeFieldConfig', () => {
+    beforeEach(() => {
+      component.importSettingForm = new FormBuilder().group({
+        importCategories: [true],
+        importCodeFields: [[]]
+      });
+      component.qboImportCodeFieldCodeConfig = {
+        [DefaultImportFields.ACCOUNT]: true
+      };
+    });
+
+    it('should set ACCOUNT import code field to false when importCategories is true', () => {
+      component.updateImportCodeFieldConfig();
+      expect(component.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]).toBeFalse();
+    });
+
+    it('should not change ACCOUNT import code field when importCategories is false', () => {
+      component.importSettingForm.patchValue({ importCategories: false });
+      component.updateImportCodeFieldConfig();
+      expect(component.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]).toBeTrue();
+    });
+
+    it('should not change ACCOUNT import code field when it is initially false', () => {
+      component.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
+      component.updateImportCodeFieldConfig();
+      expect(component.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]).toBeFalse();
+    });
+  });
+
+  describe('initializeCustomFieldForm', () => {
+    let formBuilder: FormBuilder;
+    beforeEach(() => {
+      formBuilder = TestBed.inject(FormBuilder);
+      component.customFieldForm = formBuilder.group({
+        attribute_type: ['TEST_TYPE'],
+        display_name: ['Test Display Name'],
+        source_placeholder: ['Test Placeholder']
+      });
+      component.showCustomFieldDialog = false;
+    });
+
+    it('should reset the form and set showCustomFieldDialog to true when called with true', () => {
+      component['initializeCustomFieldForm'](true);
+
+      expect(component.customFieldForm.get('attribute_type')?.value).toBeNull();
+      expect(component.customFieldForm.get('display_name')?.value).toBeNull();
+      expect(component.customFieldForm.get('source_placeholder')?.value).toBeNull();
+      expect(component.showCustomFieldDialog).toBeTrue();
+    });
+
+    it('should reset the form and set showCustomFieldDialog to false when called with false', () => {
+      component['initializeCustomFieldForm'](false);
+
+      expect(component.customFieldForm.get('attribute_type')?.value).toBeNull();
+      expect(component.customFieldForm.get('display_name')?.value).toBeNull();
+      expect(component.customFieldForm.get('source_placeholder')?.value).toBeNull();
+      expect(component.showCustomFieldDialog).toBeFalse();
+    });
+  });
 });
