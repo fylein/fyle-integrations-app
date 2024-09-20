@@ -1,21 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QBDExpenseGroupedBy } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
-import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { filter, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -31,8 +29,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   isOnboarding: any;
 
   exportSettings: QbdDirectExportSettingGet | null;
-
-  is_simplify_report_closure_enabled: any;
 
   exportSettingsForm: FormGroup;
 
@@ -52,7 +48,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.reimbursableExportTypes();
 
-  cccEntityNameOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.cccEntityNameOptions();
+  splitExpenseGroupingOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.splitExpenseGroupingOptions();
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -72,9 +68,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private exportSettingService: QbdExportSettingService,
+    private exportSettingService: QbdDirectExportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    // Private workspaceService: QbdWorkspaceService,
+    private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     public helperService: HelperService,
@@ -82,11 +78,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   ) { }
 
   save() {
-    throw new Error('Method not implemented.');
+    this.isSaveInProgress = true;
+      const exportSettingPayload = QbdDirectExportSettingModel.constructPayload(this.exportSettingsForm);
+      this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QbdDirectExportSettingGet) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);
+          this.router.navigate([`/integrations/qbd_direct/onboarding/import_settings`]);
+        }
+      }, () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
   }
 
   navigateToPreviousStep() {
-    throw new Error('Method not implemented.');
+    this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
   }
 
   refreshDimensions() {}
@@ -141,24 +150,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
-    const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT'];
-
-    const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
-
-    destinationAttributes.forEach((destinationAttribute) => {
-      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
-    });
 
     forkJoin([
       this.exportSettingService.getQbdExportSettings()
-      // ...groupedAttributes
     ]).subscribe(([exportSettingResponse]) => {
       this.exportSettings = exportSettingResponse;
-      this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
 
-      // Console.log(bankAccount, cccAccount);
-      this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions(this.is_simplify_report_closure_enabled);
-      this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions(this.is_simplify_report_closure_enabled);
+      this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
+      this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
       this.setupCCCExpenseGroupingDateOptions();
 
