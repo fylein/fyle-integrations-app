@@ -1,6 +1,6 @@
 import { minimalUser } from "src/app/core/interceptor/jwt.fixture";
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { IntacctOnboardingState } from "src/app/core/models/enum/enum.model";
+import { IntacctOnboardingState, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
 import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
@@ -41,4 +41,19 @@ export const testOnboardingState: {[k in IntacctOnboardingState]: string} =  {
   [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
   [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
   [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
+};
+
+export const mockTasksInProgress = {
+  results: [
+    { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 1 },
+    { status: TaskLogState.IN_PROGRESS, type: TaskLogType.CREATING_BILLS, expense_group: 2 }
+  ]
+};
+
+
+export const mockCompletedTasks = {
+  results: [
+    { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 1 },
+    { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 2 }
+  ]
 };
