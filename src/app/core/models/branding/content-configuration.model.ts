@@ -66,30 +66,21 @@ export type ContentConfiguration = {
                     customSegmentHeader: string;
                 },
                 advancedSettings: {
-                    memoStructureSubLabel: string;
-                    preferenceLabel: string;
-                    preferenceSubLabel: string;
-                    frequencySubLabel: string;
-                    automationSubLabel: string;
-                    customizationSubLabel: string;
-                    defaultPaymentAccount: string;
-                    memoStructureLabel: string;
                     stepName: string;
                     contentText: string;
-                    scheduleAutoExport: string;
-                    email: string;
-                    paymentSyncLabel: string;
-                    postEntriesCurrentPeriod: string;
-                    autoCreateMerchantsAsVendorsLabel: string;
-                    billPaymentAccountLabel: string;
-                    billPaymentAccountSubLabel: string;
-                    autoCreateVendorsLabel: string;
-                    dfvSubLabel: string;
-                    dfvLabel: string;
-                    changeAccountingPeriodSubLabel: string;
-                    scheduleSubLabel: string;
+                    automationLabel: string;
+                    automationSubLabel: string;
+                    customizeSectionLabel: string;
+                    customizeSectionSubLabel: string;
+                    scheduleAutoExportLabel: string;
+                    scheduleAutoExportSubLabel: string;
+                    autoExportfrequencyLabel: string;
+                    autoExportfrequencySubLabel: string;
+                    topLevelMemoStructureLabel: string;
+                    topLevelMemoStructureSubLabel: string;
+                    memoStructureLabel: string;
+                    memoStructureSubLabel: string;
                     previewDescriptionFieldLabel: string;
-                    autoCreateMerchantsLabel: string;
                 }
             },
         },
