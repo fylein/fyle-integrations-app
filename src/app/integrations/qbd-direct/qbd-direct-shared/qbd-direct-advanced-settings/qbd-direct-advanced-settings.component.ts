@@ -56,7 +56,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly AppName = AppName;
 
-  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet
+  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
