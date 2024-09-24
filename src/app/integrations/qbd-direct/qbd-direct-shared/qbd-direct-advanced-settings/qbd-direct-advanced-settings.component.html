@@ -13,102 +13,67 @@
     <div>
         <form [formGroup]="advancedSettingsForm">
             <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
+                <div class="tw-mb-16-px">
+                    <app-configuration-step-sub-header
+                        [label]="brandingContent.automationLabel"
+                        [subLabel]="brandingContent.automationSubLabel">
+                    </app-configuration-step-sub-header>
+                </div>
+                <div class="tw-rounded-lg tw-border-separator tw-border tw-my-16-px">
                     <app-configuration-toggle-field 
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.scheduleAutoExport" 
-                        [subLabel]="brandingContent.frequencySubLabel"
+                        [label]="brandingContent.scheduleAutoExportLabel" 
+                        [subLabel]="brandingContent.scheduleAutoExportSubLabel"
+                        [iconPath]="'calendar'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
-                </div>
-                <div *ngIf="advancedSettingsForm.value.exportSchedule">
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                        [form]="advancedSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'Frequency'"
-                        [label]="'How frequently do you want the IIF file to be generated?'"
-                        [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
-                        [options]="frequencyOption"
-                        [iconPath]="'arrow-rotate'"
-                        [placeholder]="'Select frequency'"
-                        [formControllerName]="'frequency'"></app-configuration-select-field>
-    
-                        <div *ngIf="advancedSettingsForm.value.frequency">
-                            <div class="tw-pl-22-px">
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.DAILY" >
-                                    <app-configuration-select-field
-                                    [form]="advancedSettingsForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'Time'"
-                                    [label]="'Select the time of the day for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
-                                    [options]="weeklyOptions"
-                                    [formControllerName]="'timeOfDay'"></app-configuration-select-field>
-                                </div>
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.WEEKLY" >
-                                    <app-configuration-select-field
-                                    [form]="advancedSettingsForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'day'"
-                                    [label]="'Select the time of the week for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
-                                    [options]="weeklyOptions"
-                                    [placeholder]="'Select Weekly frequency'"
-                                    [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
-                                </div>
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.MONTHLY" >
-                                    <app-configuration-select-field
-                                    [form]="advancedSettingsForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'date'"
-                                    [label]="'Select the time of the month for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
-                                    [options]="frequencyIntervals"
-                                    [placeholder]="'Select Monthly frequency'"
-                                    [formControllerName]="'dayOfMonth'"></app-configuration-select-field> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-email-multi-select-field
+                
+                    <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                        <app-configuration-schedule-export
                             [form]="advancedSettingsForm"
                             [appName]="appName.QBD_DIRECT"
-                            [label]="brandingContent.email"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'email for export'"
-                            [subLabel]="'You can select the email address from the given list, or add new one to receive the IIF file via email.'"
-                            [options]="adminEmails"
-                            [iconPath]="'list'"
-                            [placeholder]="'Select email address'"
-                            [formControllerName]="'email'">
-                        </app-email-multi-select-field>
+                            [isFieldMandatory]="false"
+                            [mandatoryErrorListName]="'automatic export method'"
+                            [label]="brandingContent.autoExportfrequencyLabel"
+                            [subLabel]="brandingContent.autoExportfrequencySubLabel"
+                            [options]="hours"
+                            [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                            [formControllerName]="'exportScheduleFrequency'"
+                            [adminEmails]="adminEmails">
+                        </app-configuration-schedule-export>
                     </div>
+                </div>
+
+                <div class="tw-mb-16-px">
+                    <app-configuration-step-sub-header
+                        [label]="brandingContent.customizeSectionLabel"
+                        [subLabel]="brandingContent.customizeSectionSubLabel">
+                    </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-select-field
-                    [form]="advancedSettingsForm"
-                    [label]="'Select the top level memo field data for QuickBooks Desktop'"
-                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
-                    [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'top level memo'"
-                    [simpleOptions]="defaultTopMemoOptions"
-                    [iconPath]="'list'"
-                    [placeholder]="'Select top memo type'"
-                    [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
-                </div>
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        [form]="advancedSettingsForm"
+                        [label]="brandingContent.topLevelMemoStructureLabel"
+                        [subLabel]="brandingContent.topLevelMemoStructureSubLabel"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'top level memo'"
+                        [simpleOptions]="defaultTopMemoOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select top memo type'"
+                        [formControllerName]="'topMemoStructure'">
+                    </app-configuration-select-field>
+
                     <app-configuration-multi-select
-                    [form]="advancedSettingsForm"
-                    [isFieldMandatory]="true"
-                    [customErrorMessage]="'Please select atleast one memo type from the list'"
-                    [label]="brandingContent.memoStructureLabel"
-                    [subLabel]="brandingContent.memoStructureSubLabel"
-                    [options]="defaultMemoFields"
-                    [iconPath]="'list'"
-                    [placeholder]="'Select memo types'"
-                    [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
+                        [form]="advancedSettingsForm"
+                        [isFieldMandatory]="true"
+                        [customErrorMessage]="'Please select atleast one memo type from the list'"
+                        [label]="brandingContent.memoStructureLabel"
+                        [subLabel]="brandingContent.memoStructureSubLabel"
+                        [options]="defaultMemoFields"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select memo types'"
+                        [formControllerName]="'expenseMemoStructure'">
+                    </app-configuration-multi-select>
                     <div class="tw-p-24-px">
                         <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{brandingContent.previewDescriptionFieldLabel}}</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
