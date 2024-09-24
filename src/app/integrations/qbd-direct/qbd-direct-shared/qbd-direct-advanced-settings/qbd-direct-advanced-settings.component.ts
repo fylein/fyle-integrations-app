@@ -8,7 +8,7 @@ import { AppName, ConfigurationCta, QBDScheduleFrequency } from 'src/app/core/mo
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 
 @Component({
   selector: 'app-qbd-direct-advanced-settings',
@@ -33,17 +33,18 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   QBDScheduleFrequency = QBDScheduleFrequency;
 
-  frequencyOption: SelectFormOption[] = QbdDirectAdvancedSettingsModel.frequencyOption();
+  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
+    return {
+      label: (day + 1).toString(),
+      value: day + 1
+    };
+  });
 
   defaultMemoFields: string[] = QbdDirectAdvancedSettingsModel.defaultMemoFields();
 
   defaultTopMemoOptions: string[] = QbdDirectAdvancedSettingsModel.defaultTopMemoOptions();
 
   adminEmails: EmailOption[];
-
-  weeklyOptions: string[] = QbdDirectAdvancedSettingsModel.weeklyOptions();
-
-  frequencyIntervals: SelectFormOption[] = QbdDirectAdvancedSettingsModel.frequencyIntervals();
 
   memoPreviewText: string;
 
@@ -55,10 +56,10 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly AppName = AppName;
 
-  qbdDirectAdvancedSettings: import("/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model").QBDAdvancedSettingsGet;
+  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet
 
   constructor(
-    private advancedSettingsService: QbdAdvancedSettingService,
+    private advancedSettingsService: QbdDirectAdvancedSettingsService,
     public helper: HelperService,
     private router: Router,
     private orgService: OrgService
@@ -72,18 +73,6 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
       QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields);
-    });
-  }
-
-  private frequencyWatcher() {
-    this.advancedSettingsForm.controls.frequency.valueChanges.subscribe((frequency) => {
-      if (frequency=== this.frequencyOption[1].value) {
-        this.advancedSettingsForm.controls.dayOfWeek.setValidators(Validators.required);
-        this.advancedSettingsForm.controls.dayOfMonth.clearValidators();
-      } else if (frequency === this.frequencyOption[2].value) {
-        this.advancedSettingsForm.controls.dayOfWeek.clearValidators();
-        this.advancedSettingsForm.controls.dayOfMonth.setValidators(Validators.required);
-      }
     });
   }
 
@@ -107,7 +96,6 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   private advancedSettingsFormWatcher(): void {
     this.createMemoStructureWatcher();
-    this.frequencyWatcher();
     this.scheduledWatcher();
   }
 
