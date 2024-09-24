@@ -91,7 +91,7 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop Direct'
+  QBD_DIRECT = 'QuickBooks Desktop '
 }
 
 export enum AppNameInService {
@@ -327,6 +327,14 @@ export enum QBDOnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum QbdDirectOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
+}
+
 export enum ConfigurationCta {
   SAVE = 'Save',
   SAVE_AND_CONTINUE = 'Save and Continue',
@@ -548,7 +556,8 @@ export enum AppUrl {
   INTEGRATION = 'integration',
   QBO = 'qbo',
   NETSUITE = 'netsuite',
-  XERO = 'xero'
+  XERO = 'xero',
+  QBD_DIRECT = 'qbd_direct'
 }
 
 export enum Sage300ExportType {
