@@ -1,4 +1,4 @@
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { IntacctDashboardComponent } from './intacct-dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,9 +10,9 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { of } from 'rxjs';
-import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { AppName, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { mockCompletedTasks, mockTasksInProgress } from '../../intacct.fixture';
+import { mockAccountingExportSummary, mockCompletedTasks, mockTasksInProgress } from '../../intacct.fixture';
 
 describe('IntacctDashboardComponent', () => {
 
@@ -26,8 +26,8 @@ describe('IntacctDashboardComponent', () => {
   let exportLogServiceSpy: jasmine.SpyObj<ExportLogService>;
 
   beforeEach(async () => {
-    const dashboardServiceSpyObj = jasmine.createSpyObj('DashboardService', ['getExportErrors', 'triggerAccountingExport', 'getAllTasks', 'getExportableAccountingExportIds']);
-    const accountingExportServiceSpyObj = jasmine.createSpyObj('AccountingExportService', ['getAccountingExportSummary', 'importExpensesFromFyle']);
+    const dashboardServiceSpyObj = jasmine.createSpyObj('DashboardService', ['triggerAccountingExport', 'getAllTasks', 'getExportErrors', 'getExportableAccountingExportIds']);
+    const accountingExportServiceSpyObj = jasmine.createSpyObj('AccountingExportService', ['getAccountingExportSummary']);
     const userServiceSpyObj = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', ['getConfiguration']);
     const intacctExportSettingServiceSpyObj = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
@@ -64,44 +64,43 @@ describe('IntacctDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  describe('IntacctDashboardComponent', () => {
 
-  it('should handle export correctly', fakeAsync(() => {
+    it('should handle export correctly', fakeAsync(() => {
+      // Mock the necessary observables
+      dashboardServiceSpy.triggerAccountingExport.and.returnValue(of({}));
+      dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasks));
+      dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
 
-    // Simulate export in progress
-    dashboardServiceSpy.triggerAccountingExport.and.returnValue(of({}));
-    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockTasksInProgress));
-    component.exportableAccountingExportIds = [1, 2];
+      accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
+  
+      component.exportableAccountingExportIds = [1, 2];
 
-    component.export();
-    tick(3000);
-    fixture.detectChanges();
+      component.export();
+      tick(3000);
 
-    expect(component.isExportInProgress).toBeTrue();
-    expect(component.processedCount).toBe(1);
-    expect(component.exportProgressPercentage).toBe(50);
-
-    // Simulate export completion
-    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasks));
-    dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
-    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of({
-      total_accounting_export_count: 2,
-      successful_accounting_export_count: 2,
-      failed_accounting_export_count: 0
-    } as AccountingExportSummary));
-
-    tick(3000);
-
-    // expect(component.isExportInProgress).toBeFalse();
-    // expect(component.exportProgressPercentage).toBe(0);
-    // expect(component.processedCount).toBe(0);
-    // expect(component.failedExpenseGroupCount).toBe(0);
-
-    // // TODO Assert DOM text
-    // // await fixture.whenStable();
-    // // const compiled = fixture.nativeElement as HTMLElement;
-    // // console.log({compiled})
-    // // expect(compiled.).toContain('You are all caught up');
-
-    discardPeriodicTasks();
-  }));
+      expect(component.isExportInProgress).toBeFalse();
+      expect(component.exportProgressPercentage).toBe(0);
+      expect(component.processedCount).toBe(0);
+      expect(component.failedExpenseGroupCount).toBe(0);
+  
+      expect(dashboardServiceSpy.triggerAccountingExport).toHaveBeenCalledTimes(1);
+      expect(dashboardServiceSpy.getAllTasks).toHaveBeenCalledWith([], [1, 2], component.accountingExportType, AppName.INTACCT);
+      expect(dashboardServiceSpy.getExportErrors).toHaveBeenCalledWith('v1');
+      expect(accountingExportServiceSpy.getAccountingExportSummary).toHaveBeenCalledWith('v1');
+  
+      // expect(component.isExportInProgress).toBeFalse();
+      // expect(component.exportProgressPercentage).toBe(0);
+      // expect(component.processedCount).toBe(0);
+      // expect(component.failedExpenseGroupCount).toBe(0);
+    
+      // // TODO Assert DOM text
+      // // await fixture.whenStable();
+      // // const compiled = fixture.nativeElement as HTMLElement;
+      // // console.log({compiled})
+      // // expect(compiled.).toContain('You are all caught up');
+      discardPeriodicTasks();
+    }));
+  });
 });
