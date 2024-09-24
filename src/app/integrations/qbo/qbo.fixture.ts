@@ -670,3 +670,55 @@ export const mockGeneralEvent: ExportSettingOptionSearch = {
   destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
   destinationAttributes: []
 };
+
+// ... (existing imports and fixtures)
+
+export const mockBrandingConfig: any = {
+  featureFlags: {
+    mapEmployees: false,
+    cloneSettings: false,
+    exportSettings: {
+      reimbursableExpenses: false,
+      nameInJournalEntry: false,
+      useMerchantInJournalLine: false,
+      splitExpenseGrouping: false
+    },
+    importSettings: {
+      tax: false,
+      importVendorsAsMerchants: false,
+      importNetsuiteEmployees: false,
+      importItems: false,
+      importProjects: false,
+      allowCustomSegment: false,
+      dependentField: false,
+      allowImportCode: false
+    },
+    advancedSettings: {
+      autoCreateVendors: false,
+      paymentsSync: false,
+      singleCreditLineJE: false,
+      emailNotification: false,
+      skipExport: false,
+      defaultFields: false,
+      autoCreateContacts: false,
+      useEmployeeAttributes: false,
+      autoCreateMerchants: false
+    },
+    exportLog: {
+      expenseType: false
+    },
+    mappings: {
+      employeeMapping: false
+    },
+    dashboard: {
+      disconnectButton: false
+    }
+  },
+  illustrationsAllowed: false,
+  isGradientAllowed: false,
+  isIconsInsideButtonAllowed: false,
+  exposeC1Apps: false,
+  isBackgroundColorAllowed: false,
+  isAsterikAllowed: false,
+  allowIntacctHelperDoc: false
+};

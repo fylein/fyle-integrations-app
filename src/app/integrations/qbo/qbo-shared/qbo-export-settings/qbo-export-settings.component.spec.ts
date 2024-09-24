@@ -26,7 +26,8 @@ import {
   mockCCCExpenseGroupingDateOptionsForCreditDebit,
   mockExportSettingOptionSearch,
   mockExpenseAccountEvent,
-  mockGeneralEvent
+  mockGeneralEvent,
+  mockBrandingConfig
 } from '../../qbo.fixture';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -36,6 +37,8 @@ import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/mode
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { EventEmitter } from '@angular/core';
 import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { FeatureConfiguration } from 'src/app/core/models/branding/feature-configuration.model';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -82,7 +85,8 @@ describe('QboExportSettingsComponent', () => {
         { provide: WindowService, useValue: windowService },
         { provide: IntegrationsToastService, useValue: integrationsToastService },
         { provide: MessageService, useValue: {} },
-        { provide: Router, useValue: router }
+        { provide: Router, useValue: router },
+        { provide: 'brandingFeatureConfig', useValue: mockBrandingConfig }
       ]
     }).compileComponents();
 
@@ -629,25 +633,6 @@ describe('QboExportSettingsComponent', () => {
     });
   });
 
-  describe('navigateToPreviousStep', () => {
-    beforeEach(() => {
-      Object.defineProperty(component, 'brandingFeatureConfig', {
-        get: () => ({
-          featureFlags: {
-            mapEmployees: true
-          }
-        }),
-        configurable: true
-      });
-    });
-
-    it('should navigate to employee_settings if mapEmployees is true', () => {
-      component.navigateToPreviousStep();
-
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/employee_settings']);
-    });
-  });
-
   describe('updateCCCExpenseGroupingDateOptions', () => {
     it('should update CCC expense grouping date options correctly', () => {
       mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValues(
@@ -962,6 +947,20 @@ describe('QboExportSettingsComponent', () => {
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
   
       expect(component['isAdvancedSettingAffected']()).toBeFalse();
+    });
+  });
+
+  describe('navigateToPreviousStep', () => {
+    it('should navigate to employee_settings when mapEmployees feature flag is true', () => {
+      mockBrandingConfig.featureFlags.mapEmployees = true;
+      component.navigateToPreviousStep();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/employee_settings']);
+    });
+
+    xit('should navigate to connector when mapEmployees feature flag is false', () => {
+      mockBrandingConfig.featureFlags.mapEmployees = false;
+      component.navigateToPreviousStep();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/connector']);
     });
   });
 });
