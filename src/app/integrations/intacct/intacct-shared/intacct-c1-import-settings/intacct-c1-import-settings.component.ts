@@ -435,7 +435,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
-      expenseFields: this.formBuilder.array(this.constructFormArray())
+      expenseFields: this.formBuilder.array(this.constructFormArray()),
+      importCodeField: [importSettings.configurations.import_code_fields],
+      importCodeFields: this.formBuilder.array([])
     });
 
     this.importSettingWatcher();
