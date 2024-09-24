@@ -5,9 +5,11 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { AppName, ConfigurationCta, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -68,12 +70,27 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
     public helper: HelperService,
     private router: Router,
-    private orgService: OrgService
-    // Private toastService: IntegrationsToastService,
-    // Private workspaceService: WorkspaceService
+    private orgService: OrgService,
+    private toastService: IntegrationsToastService,
+    private workspaceService: WorkspaceService
   ) { }
 
-  save() {}
+  save() {
+    this.saveInProgress = true;
+    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm);
+    this.advancedSettingsService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QbdDirectAdvancedSettingsGet) => {
+      this.saveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
+        this.router.navigate([`/integrations/qbd_direct/onboarding/done`]);
+      }
+    }, () => {
+      this.saveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      });
+  }
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
