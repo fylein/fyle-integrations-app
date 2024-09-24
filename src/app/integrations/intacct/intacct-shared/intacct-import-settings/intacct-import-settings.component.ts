@@ -506,6 +506,9 @@ export class IntacctImportSettingsComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    } else {
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
+      this.addImportCodeField({checked: true}, (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
     }
 
     if (selectedValue === 'custom_field') {
