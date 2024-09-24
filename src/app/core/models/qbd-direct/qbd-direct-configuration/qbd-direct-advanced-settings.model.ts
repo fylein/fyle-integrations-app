@@ -49,7 +49,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
             emails_selected: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('email')?.value : null,
-            interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
+            interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null
         };
 
         return advancedSettingPayload;
