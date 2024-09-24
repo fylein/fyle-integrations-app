@@ -197,7 +197,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldType?.length > 0 && this.customFieldForm.value) {
+    if (this.customFieldType?.length > 0 && this.customFieldForm.getRawValue()) {
       this.saveDependentCustomField();
     } else {
       this.saveFyleExpenseField();

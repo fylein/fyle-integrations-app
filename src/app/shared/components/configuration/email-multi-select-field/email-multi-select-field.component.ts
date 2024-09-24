@@ -84,13 +84,13 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   addEmail(): void {
     this.trackingService.onClickEvent(trackingAppMap[this.appName], ClickEvent.ADD_EMAIL_MANUALLY);
     const selectedEmails = this.form.get('email')?.value;
-    selectedEmails.push(this.addEmailForm.value);
-    this.emails.push(this.addEmailForm.value);
+    selectedEmails.push(this.addEmailForm.getRawValue());
+    this.emails.push(this.addEmailForm.getRawValue());
     this.assignSelectedEmail(selectedEmails);
     this.form.controls.email.patchValue(selectedEmails);
     if (this.form.controls.additionalEmails) {
       const additionalEmails = this.form.controls.additionalEmails.value;
-      additionalEmails.push(this.addEmailForm.value);
+      additionalEmails.push(this.addEmailForm.getRawValue());
       this.form.controls.additionalEmails.patchValue(additionalEmails);
     }
     this.addEmailForm.reset();
