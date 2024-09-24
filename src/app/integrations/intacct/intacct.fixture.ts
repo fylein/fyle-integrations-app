@@ -57,16 +57,3 @@ export const mockCompletedTasks = {
     { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 2 }
   ]
 };
-
-export const mockAccountingExportSummary = {
-  id: 1,
-  total_accounting_export_count: 2,
-  successful_accounting_export_count: 2,
-  failed_accounting_export_count: 0,
-  last_exported_at: new Date().toISOString(),
-  next_export_at: new Date().toISOString(),
-  export_mode: 'AUTO',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-  workspace: 1
-};
