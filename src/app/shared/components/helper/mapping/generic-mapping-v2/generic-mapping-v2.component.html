@@ -4,7 +4,7 @@
 
 <div>
         <div>
-            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
+            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
         </div>
 
         <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-mt-16-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
