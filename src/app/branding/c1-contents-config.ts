@@ -26,7 +26,7 @@ export const c1Contents = {
                     reimbursableExpenseTypeLabel: 'How should the expenses be exported?',
                     reimbursableExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     reimbursableExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    reimbursableExpenseStateSubLabel: 'You can export expenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).',
+                    reimbursableExpenseStateSubLabel: 'You can export exxpenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).',
                     reimbursableExpenseDateLabel: 'Set the expense ',
                     reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
