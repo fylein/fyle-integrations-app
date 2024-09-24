@@ -1,7 +1,9 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
+import { ExportSettingOptionSearch } from "src/app/core/models/common/export-settings.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -161,6 +163,63 @@ export const mockExportSettings = {
     },
     "workspace_id": 512
 };
+
+export const mockReimbursableExpenseGroupingDateOptions: SelectFormOption[] = [
+  {
+    label: 'Current Date',
+    value: ExportDateType.CURRENT_DATE
+  },
+  {
+    label: 'Verification date',
+    value: ExportDateType.VERIFIED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Approval date',
+    value: ExportDateType.APPROVED_AT
+  },
+  {
+    label: 'Last Spend date',
+    value: ExportDateType.LAST_SPENT_AT
+  }
+];
+
+export const mockCCCExpenseGroupingDateOptions: SelectFormOption[] = [
+  {
+    label: 'Export Date',
+    value: ExportDateType.CURRENT_DATE
+  },
+  {
+    label: 'Verification date',
+    value: ExportDateType.VERIFIED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Approval date',
+    value: ExportDateType.APPROVED_AT
+  },
+  {
+    label: 'Last Spend date',
+    value: ExportDateType.LAST_SPENT_AT
+  }
+];
+
+export const mockCCCExpenseGroupingDateOptionsForCreditDebit: SelectFormOption[] = [
+  {
+    label: 'Card Transaction Post Date',
+    value: ExportDateType.POSTED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  }
+];
 
 export const mockPaginatedDestinationAttributes = {
     "count": 5,
@@ -592,4 +651,22 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
         }
     },
     "workspace_id": 512
+};
+
+export const mockExportSettingOptionSearch: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
+  destinationAttributes: []
+};
+
+export const mockExpenseAccountEvent: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
+  destinationAttributes: []
+};
+
+export const mockGeneralEvent: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
+  destinationAttributes: []
 };
