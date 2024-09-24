@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, ConfigurationCta, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
@@ -60,6 +60,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.qbd_direct.configuration.advancedSettings;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
 
   constructor(
@@ -85,14 +87,15 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
         this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
-        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'frequency');
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
     }
     this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected: any) => {
       if (isScheduledSelected) {
           this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
-          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'frequency');
+          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
       } else {
-          this.helper.clearValidatorAndResetValue(this.advancedSettingsForm, 'frequency');
+          this.advancedSettingsForm.controls.exportScheduleFrequency.clearValidators();
+          this.advancedSettingsForm.controls.exportScheduleFrequency.setValue(1);
           this.advancedSettingsForm.controls.email.clearValidators();
           this.advancedSettingsForm.controls.email.setValue([]);
       }
