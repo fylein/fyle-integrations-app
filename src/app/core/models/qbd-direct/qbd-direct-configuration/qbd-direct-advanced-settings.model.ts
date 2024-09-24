@@ -38,5 +38,21 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             searchOption: new FormControl('')
         });
     }
+
+    static constructPayload (advancedSettingForm: FormGroup): QbdDirectAdvancedSettingsPost {
+
+        const topMemo: string[] = [];
+        topMemo.push(advancedSettingForm.value.topMemoStructure);
+
+        const advancedSettingPayload: QbdDirectAdvancedSettingsPost = {
+            expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
+            top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
+            schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
+            emails_selected: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('email')?.value : null,
+            interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null
+        };
+
+        return advancedSettingPayload;
+    }
 }
 

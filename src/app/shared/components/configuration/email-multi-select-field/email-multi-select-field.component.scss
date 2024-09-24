@@ -14,7 +14,7 @@
 }
 
 :host ::ng-deep .error-box .p-multiselect, :host ::ng-deep .error-box {
-    @apply tw-border-alert-toast tw-border #{!important};
+    @apply tw-border-alert-toast #{!important};
 }
 
 :host ::ng-deep .normal-box .p-multiselect, :host ::ng-deep .normal-box {
