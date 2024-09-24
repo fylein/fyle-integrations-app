@@ -228,13 +228,13 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(this.exportSettingForm.value.creditCardExportGroup, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(this.exportSettingForm.get('creditCardExportGroup')?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
     }
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE)) {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    if (this.exportSettingForm.get('creditCardExportType')?.value && (this.exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE)) {
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     }
 
     this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
@@ -246,7 +246,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
     if (brandingConfig.brandId === 'fyle') {
       this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.reimbursableExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
-      if (this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.creditCardExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
       }
     }
@@ -259,11 +259,11 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle' && this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (brandingConfig.brandId==='fyle' && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         const cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(creditCardExportGroup, cccExpenseGroupingDateOptions);
       }
