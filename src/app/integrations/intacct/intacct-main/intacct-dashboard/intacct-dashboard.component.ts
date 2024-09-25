@@ -200,7 +200,9 @@ export class IntacctDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter(
+        (task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS
+      );
       this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
