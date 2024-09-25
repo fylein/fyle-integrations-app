@@ -108,7 +108,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   }
 
   isAutoCreateMerchantsAsVendorsFieldVisible(): boolean {
-    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && !this.qbdDirectExportSettings.reimbursable_expense_export_type);
+    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY) && (!this.qbdDirectExportSettings.reimbursable_expense_export_type);
   }
 
   private createMemoStructureWatcher(): void {
