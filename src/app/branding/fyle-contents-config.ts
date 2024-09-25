@@ -93,7 +93,9 @@ export const fyleContents = {
                 otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
                 autoCreateEmployeeLabel: 'Auto-create employee as ',
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
-                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. '
+                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
+                skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
+                skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. '
             }
         }
     },
