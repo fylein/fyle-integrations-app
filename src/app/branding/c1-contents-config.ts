@@ -90,7 +90,7 @@ export const c1Contents = {
                 memoStructureSubLabel: 'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
                 previewDescriptionFieldLabel: 'Preview of the description field',
                 otherPreferencesLabel: 'Other preferences',
-                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
                 autoCreateEmployeeLabel: 'Auto-create employee as ',
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. '
