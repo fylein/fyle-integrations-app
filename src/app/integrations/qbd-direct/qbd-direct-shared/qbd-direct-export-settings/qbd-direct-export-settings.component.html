@@ -40,6 +40,34 @@
                         </div>
                     </div>
 
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingsForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'option'"
+                            [label]="brandingContent.reimbursable.employeeMappingLabel"
+                            [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
+                            [options]="employeeMappingOptions"
+                            [iconPath]="'user-two'"
+                            [placeholder]="'Select representation'"
+                            [formControllerName]="'employeeMapping'"
+                            [isDisabled]="getEmployeeIsDisabled()">
+                        </app-configuration-select-field>
+
+                        <app-configuration-select-field
+                            [form]="exportSettingsForm"
+                            [isFieldMandatory]="false"
+                            [showClearIcon]="true"
+                            [mandatoryErrorListName]="'employee mapping'"
+                            [label]="brandingContent.reimbursable.autoMapEmployeesLabel + exportSettingsForm.get('employeeMapping')?.value.toLowerCase() + ' in QuickBooks Desktop?'"
+                            [subLabel]="brandingContent.reimbursable.autoMapEmployeesSubLabel"
+                            [options]="autoMapEmployeeOptions"
+                            [iconPath]="'question-square-outline'"
+                            [placeholder]="'Select mapping method'"
+                            [formControllerName]="'autoMapEmployees'">
+                        </app-configuration-select-field>
+                    </div>
+
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
@@ -108,6 +136,21 @@
                     </div>
                 </div>
 
+                <div *ngIf="!exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'option'"
+                        [label]="brandingContent.reimbursable.employeeMappingLabel"
+                        [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
+                        [options]="employeeMappingOptions"
+                        [iconPath]="'user-two'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'employeeMapping'"
+                        [isDisabled]="getEmployeeIsDisabled()">
+                    </app-configuration-select-field>
+                </div>
+
                 <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
@@ -152,7 +195,7 @@
                     </app-configuration-select-field>
                 </div>
 
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingsForm.value.cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE">
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"

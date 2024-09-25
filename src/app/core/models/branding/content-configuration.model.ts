@@ -27,6 +27,10 @@ export type ContentConfiguration = {
                         reimbursableExpenseDateSubLabel:string;
                         reimbursableExpenseGroupLabel: string;
                         reimbursableExpenseGroupSubLabel: string;
+                        employeeMappingLabel: string;
+                        employeeMappingSubLabel: string;
+                        autoMapEmployeesLabel: string;
+                        autoMapEmployeesSubLabel: string;
                     },
                     corporateCard: {
                         creditCardExpenseLabel: string;

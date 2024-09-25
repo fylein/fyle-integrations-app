@@ -30,7 +30,11 @@ export const fyleContents = {
                     reimbursableExpenseDateLabel: 'Set the expense ',
                     reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
-                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'
+                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                    employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
+                    employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
+                    autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
+                    autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.'
                 },
                 corporateCard: {
                     creditCardExpenseLabel: 'Export corporate card expenses',
