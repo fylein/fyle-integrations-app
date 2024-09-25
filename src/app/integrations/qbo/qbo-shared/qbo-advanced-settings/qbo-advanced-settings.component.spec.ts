@@ -481,27 +481,27 @@ describe('QboAdvancedSettingsComponent', () => {
       component.skipExportForm.get('condition1')?.setValidators(Validators.required);
       component.skipExportForm.get('operator1')?.setValidators(Validators.required);
       component.skipExportForm.get('value1')?.setValidators(Validators.required);
-    
+
       component.advancedSettingForm.patchValue({ skipExport: true });
       component.skipExportForm.patchValue({
         condition1: null,
         operator1: '',
         value1: ''
       });
-    
+
       // Update form controls
       component.skipExportForm.get('condition1')?.updateValueAndValidity();
       component.skipExportForm.get('operator1')?.updateValueAndValidity();
       component.skipExportForm.get('value1')?.updateValueAndValidity();
-    
+
       spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
-    
+
       // Reset the existing spy instead of creating a new one
       skipExportService.postExpenseFilter.calls.reset();
-    
+
       component['saveSkipExport']();
       tick();
-    
+
       expect(component.skipExportForm.valid).toBeFalse();
       expect(component['saveSkipExportFields']).toHaveBeenCalled();
       expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
