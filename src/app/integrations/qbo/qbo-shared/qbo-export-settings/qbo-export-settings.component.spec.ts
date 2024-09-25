@@ -20,8 +20,7 @@ import {
   mockVendors,
   mockWorkspaceGeneralSettings,
   mockPaginatedDestinationAttributes,
-  mockSaveResponse,
-  mockReimbursableExpenseGroupingDateOptions,
+  mockExportSettingSaveResponse,
   mockCCCExpenseGroupingDateOptions,
   mockCCCExpenseGroupingDateOptionsForCreditDebit,
   mockExportSettingOptionSearch,
@@ -557,7 +556,7 @@ describe('QboExportSettingsComponent', () => {
         // Spy on the constructWarningMessage method
         spyOn<any>(component, 'constructWarningMessage').and.returnValue('Warning message');
         // Mock the postExportSettings to return an Observable with the correct type
-        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockSaveResponse as QBOExportSettingGet));
+        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettingSaveResponse as QBOExportSettingGet));
 
         // Call the save method
         component.save();
