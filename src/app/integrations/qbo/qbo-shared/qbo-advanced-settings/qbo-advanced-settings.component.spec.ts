@@ -13,9 +13,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2 } from 'src/app/integrations/qbo/qbo.fixture';
+import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2, mockGroupedDestinationAttributes, mockAdditionalEmails, mockMemo, mockFormattedMemo, mockDefaultMemoOptions, mockInitialMemoStructure, mocknewMemoStructure, invalidMemoStructure, mockExpenseFilterResponse } from 'src/app/integrations/qbo/qbo.fixture';
 import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, Operator, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingsModel, ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -70,6 +71,23 @@ describe('QboAdvancedSettingsComponent', () => {
     workspaceService = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
+    component.advancedSettingForm = new FormBuilder().group({
+      paymentSync: [null],
+      billPaymentAccount: [null],
+      changeAccountingPeriod: [false],
+      singleCreditLineJE: [false],
+      autoCreateVendors: [false],
+      autoCreateMerchantsAsVendors: [false],
+      exportSchedule: [false],
+      exportScheduleFrequency: [1],
+      memoStructure: [[]],
+      skipExport: [false],
+      searchOption: [null],
+      search: [null],
+      additionalEmails: [[]],
+      email: [[]]
+    });
+
     component.skipExportForm = new FormBuilder().group({
       condition1: [mockExpenseFilter.condition],
       operator1: [mockExpenseFilter.operator],
@@ -79,7 +97,9 @@ describe('QboAdvancedSettingsComponent', () => {
       value2: [''],
       join_by: ['']
     });
+
     component.expenseFilters = mockSkipExportSettings;
+    component.defaultMemoOptions = mockDefaultMemoOptions;
   });
 
   it('should create', () => {
@@ -91,28 +111,7 @@ describe('QboAdvancedSettingsComponent', () => {
       advancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.getExpenseFilter.and.returnValue(of(mockSkipExportSettings));
       skipExportService.getExpenseFields.and.returnValue(of(mockCustomFields));
-      mappingService.getGroupedDestinationAttributes.and.returnValue(of({
-        BANK_ACCOUNT: mockBankAccounts.results,
-        ACCOUNT: [],
-        EXPENSE_TYPE: [],
-        EXPENSE_PAYMENT_TYPE: [],
-        VENDOR_PAYMENT_ACCOUNT: [],
-        VENDOR: [],
-        CHARGE_CARD_NUMBER: [],
-        TAX_DETAIL: [],
-        LOCATION: [],
-        DEPARTMENT: [],
-        PROJECT: [],
-        CLASS: [],
-        ITEM: [],
-        PAYMENT_ACCOUNT: [],
-        EMPLOYEE: [],
-        JOB: [],
-        CREDIT_CARD_ACCOUNT: [],
-        ACCOUNTS_PAYABLE: [],
-        TAX_CODE: [],
-        COMPANY: []
-      }));
+      mappingService.getGroupedDestinationAttributes.and.returnValue(of(mockGroupedDestinationAttributes as unknown as GroupedDestinationAttribute));
       configurationService.getAdditionalEmails.and.returnValue(of(mockAdmins));
       workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockSettingsGeneral));
       spyOn(component as any, 'getSettingsAndSetupForm').and.callThrough();
@@ -133,9 +132,6 @@ describe('QboAdvancedSettingsComponent', () => {
     }));
 
     it('should concatenate additional email options', fakeAsync(() => {
-      const mockAdditionalEmails = [
-        { name: 'Additional User', email: 'additional@example.com' }
-      ];
       const mockAdvancedSettingsWithAdditionalEmails = {
         ...mockQboAdvancedSettings,
         workspace_schedules: {
@@ -156,39 +152,12 @@ describe('QboAdvancedSettingsComponent', () => {
 
   describe('save', () => {
     beforeEach(() => {
-      component.advancedSettingForm = new FormBuilder().group({
-        paymentSync: [null],
-        billPaymentAccount: [null],
-        changeAccountingPeriod: [false],
-        singleCreditLineJE: [false],
-        autoCreateVendors: [false],
-        autoCreateMerchantsAsVendors: [false],
-        exportSchedule: [false],
-        exportScheduleFrequency: [1],
-        memoStructure: [[]],
-        skipExport: [false],
-        searchOption: [null],
-        search: [null],
-        additionalEmails: [[]],
-        email: [[]]
-      });
-      component.skipExportForm = new FormBuilder().group({
-        condition1: ['category'],
-        operator1: [Operator.IContains],
-        value1: ['anish']
-      });
       component.expenseFilters = { count: 0, next: null, previous: null, results: [] };
     });
 
     it('should save advanced settings and skip export fields successfully', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
-      skipExportService.postExpenseFilter.and.returnValue(of({
-        ...mockExpenseFilter,
-        id: 75,
-        created_at: new Date(),
-        updated_at: new Date(),
-        workspace: 525
-      }));
+      skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilterResponse));
       component.isOnboarding = true;
 
       // Set skipExport to true to trigger the skip export save
@@ -381,12 +350,9 @@ describe('QboAdvancedSettingsComponent', () => {
 
   describe('onMultiSelectChange', () => {
     it('should update memoStructure with formatted memo', () => {
-      const mockMemo = ['employee_email', 'merchant', 'purpose'];
-      const mockFormattedMemo = ['employee_email', 'merchant', 'purpose', 'category'];
-      component.advancedSettingForm = new FormBuilder().group({
-        memoStructure: [mockMemo]
+      component.advancedSettingForm.patchValue({
+        memoStructure: mockMemo
       });
-      component.defaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
 
       spyOn(AdvancedSettingsModel, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
 
@@ -399,27 +365,24 @@ describe('QboAdvancedSettingsComponent', () => {
 
   describe('createMemoStructureWatcher', () => {
     beforeEach(() => {
-      component.advancedSettingForm = new FormBuilder().group({
+      component.advancedSettingForm.patchValue({
         memoStructure: [[]]
       });
-      component.defaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
     });
 
     it('should initialize memoStructure and memoPreviewText', () => {
-      const initialMemoStructure = ['employee_email', 'merchant'];
-      component.advancedSettingForm.get('memoStructure')?.setValue(initialMemoStructure);
+      component.advancedSettingForm.get('memoStructure')?.setValue(mockInitialMemoStructure);
 
       component['createMemoStructureWatcher']();
 
-      expect(component.memoStructure).toEqual(initialMemoStructure);
+      expect(component.memoStructure).toEqual(mockInitialMemoStructure);
       expect(component.memoPreviewText).toBe('john.doe@acme.com - Pizza Hut');
     });
 
     it('should update memoPreviewText when memoStructure changes', () => {
       component['createMemoStructureWatcher']();
 
-      const newMemoStructure = ['employee_email', 'category', 'purpose'];
-      component.advancedSettingForm.get('memoStructure')?.setValue(newMemoStructure);
+      component.advancedSettingForm.get('memoStructure')?.setValue(mocknewMemoStructure);
 
       expect(component.memoPreviewText).toBe('john.doe@acme.com - Client Meeting - Meals and Entertainment');
     });
@@ -435,7 +398,6 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should handle invalid memoStructure values', () => {
       component['createMemoStructureWatcher']();
 
-      const invalidMemoStructure = ['invalid_field', 'employee_email'];
       component.advancedSettingForm.get('memoStructure')?.setValue(invalidMemoStructure);
 
       expect(component.memoPreviewText).toBe('john.doe@acme.com');
@@ -444,18 +406,8 @@ describe('QboAdvancedSettingsComponent', () => {
 
   describe('saveSkipExport', () => {
     beforeEach(() => {
-      component.advancedSettingForm = new FormBuilder().group({
-        skipExport: [false]
-        // Add other form controls as needed
-      });
-      component.skipExportForm = new FormBuilder().group({
-        condition1: [''],
-        operator1: [''],
-        value1: [''],
-        condition2: [''],
-        operator2: [''],
-        value2: [''],
-        join_by: ['']
+      component.advancedSettingForm.patchValue({
+        skipExport: false
       });
       component.expenseFilters = mockSkipExportSettings;
     });
@@ -525,40 +477,39 @@ describe('QboAdvancedSettingsComponent', () => {
     }));
 
     it('should not save expense filter when skipExportForm is invalid', fakeAsync(() => {
-      // Set up the form with validators
-      component.skipExportForm = new FormBuilder().group({
-        condition1: ['', Validators.required],
-        operator1: ['', Validators.required],
-        value1: ['', Validators.required],
-        condition2: [''],
-        operator2: [''],
-        value2: [''],
-        join_by: ['']
-      });
-
+      // Add validators to the existing skipExportForm
+      component.skipExportForm.get('condition1')?.setValidators(Validators.required);
+      component.skipExportForm.get('operator1')?.setValidators(Validators.required);
+      component.skipExportForm.get('value1')?.setValidators(Validators.required);
+    
       component.advancedSettingForm.patchValue({ skipExport: true });
       component.skipExportForm.patchValue({
         condition1: null,
         operator1: '',
         value1: ''
       });
-
+    
+      // Update form controls
+      component.skipExportForm.get('condition1')?.updateValueAndValidity();
+      component.skipExportForm.get('operator1')?.updateValueAndValidity();
+      component.skipExportForm.get('value1')?.updateValueAndValidity();
+    
       spyOn<any>(component, 'saveSkipExportFields').and.callThrough();
-
+    
       // Reset the existing spy instead of creating a new one
       skipExportService.postExpenseFilter.calls.reset();
-
+    
       component['saveSkipExport']();
       tick();
-
+    
       expect(component.skipExportForm.valid).toBeFalse();
       expect(component['saveSkipExportFields']).toHaveBeenCalled();
       expect(skipExportService.postExpenseFilter).not.toHaveBeenCalled();
     }));
 
     it('should delete existing expense filters when skipExport is set to false', fakeAsync(() => {
-      component.advancedSettingForm = new FormBuilder().group({
-        skipExport: [false]
+      component.advancedSettingForm.patchValue({
+        skipExport: false
       });
       component.expenseFilters = mockSkipExportSettings;
 

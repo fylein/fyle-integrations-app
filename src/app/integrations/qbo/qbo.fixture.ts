@@ -1,7 +1,7 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
 import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
-import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 import { ExportSettingOptionSearch } from "src/app/core/models/common/export-settings.model";
 import { FyleField } from "src/app/core/models/db/mapping.model";
@@ -1155,3 +1155,45 @@ export const mockSkipExportSettings: ExpenseFilterResponse = {
     }
   ]
 };
+
+export const mockGroupedDestinationAttributes: any = {
+  BANK_ACCOUNT: mockBankAccounts.results,
+  ACCOUNT: [],
+  EXPENSE_TYPE: [],
+  EXPENSE_PAYMENT_TYPE: [],
+  VENDOR_PAYMENT_ACCOUNT: [],
+  VENDOR: mockVendors.results,
+  CHARGE_CARD_NUMBER: [],
+  TAX_DETAIL: [],
+  LOCATION: [],
+  DEPARTMENT: [],
+  PROJECT: [],
+  CLASS: [],
+  ITEM: [],
+  PAYMENT_ACCOUNT: [],
+  EMPLOYEE: [],
+  JOB: [],
+  CREDIT_CARD_ACCOUNT: mockCreditCardAccounts.results,
+  ACCOUNTS_PAYABLE: mockAccountsPayable.results,
+  TAX_CODE: mockTaxCodeDestinationAttribute,
+  COMPANY: []
+};
+
+export const mockAdditionalEmails = [
+  { name: 'Additional User', email: 'additional@example.com' }
+];
+
+export const mockExpenseFilterResponse = {
+  ...mockExpenseFilter,
+  id: 75,
+  created_at: new Date('2023-05-01T12:00:00Z'),
+  updated_at: new Date('2023-05-01T12:00:00Z'),
+  workspace: 525
+};
+
+export const mockMemo = ['employee_email', 'merchant', 'purpose'];
+export const mockFormattedMemo = ['employee_email', 'merchant', 'purpose', 'category'];
+export const mockInitialMemoStructure = ['employee_email', 'merchant'];
+export const mocknewMemoStructure = ['employee_email', 'category', 'purpose'];
+export const mockDefaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
+export const invalidMemoStructure = ['invalid_field', 'employee_email'];
