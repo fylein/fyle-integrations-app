@@ -267,7 +267,7 @@ describe('QboExportSettingsComponent', () => {
           destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
           destinationAttributes: []
         };
-      
+
         component.expenseAccounts = [];
         component.bankAccounts = [];
         component.cccAccounts = [];
@@ -278,28 +278,28 @@ describe('QboExportSettingsComponent', () => {
           of(mockBankAccounts),
           of(mockCreditCardAccounts)
         );
-      
+
         spyOn<any>(component, 'handleOptionSearch').and.callThrough();
         spyOn<any>(component, 'handleExpenseAccountSearch').and.callThrough();
         spyOn<any>(component, 'updateOptions').and.callThrough();
         spyOn<any>(component, 'setUpdatedOptions').and.callThrough();
         spyOn<any>(component, 'mergeOptions').and.callThrough();
-      
+
         // Subscribe to the optionSearchUpdate Subject
         component['optionSearchUpdate'].subscribe((event) => {
           component['handleOptionSearch'](event);
         });
-      
-        component.searchOptionsDropdown(mockSearchEvent); 
+
+        component.searchOptionsDropdown(mockSearchEvent);
         tick(1000);
-        
+
         expect(component['handleOptionSearch']).toHaveBeenCalledWith(mockSearchEvent);
         expect(component['handleExpenseAccountSearch']).toHaveBeenCalled();
         expect(component['getPaginatedAttributes']).toHaveBeenCalledTimes(2);
         expect(component['updateOptions']).toHaveBeenCalled();
         expect(component['setUpdatedOptions']).toHaveBeenCalled();
         expect(component['mergeOptions']).toHaveBeenCalled();
-      
+
         expect(component.expenseAccounts).toBeDefined();
         expect(component.expenseAccounts.length).toBeGreaterThan(0);
         expect(component.isOptionSearchInProgress).toBeFalse();
@@ -308,10 +308,10 @@ describe('QboExportSettingsComponent', () => {
       it('should merge results from bank and credit card accounts', fakeAsync(() => {
         spyOn(component as any, 'getPaginatedAttributes').and.returnValues(of(mockBankAccounts), of(mockCreditCardAccounts));
         spyOn(component as any, 'mergeOptions').and.callThrough();
-      
+
         component['handleExpenseAccountSearch'](mockExportSettingOptionSearch, []);
         tick();
-      
+
         expect(component['mergeOptions']).toHaveBeenCalledWith(
           jasmine.arrayContaining(mockBankAccounts.results.map(account => jasmine.objectContaining({
             id: account.destination_id,
@@ -330,37 +330,37 @@ describe('QboExportSettingsComponent', () => {
         spyOn(component as any, 'getPaginatedAttributes').and.returnValue(of({ results: [] }));
         component['handleGeneralOptionSearch'](mockExportSettingOptionSearch, []);
         tick();
-  
+
         expect(component['getPaginatedAttributes']).toHaveBeenCalledTimes(1);
         expect(component['getPaginatedAttributes']).toHaveBeenCalledWith(QboExportSettingDestinationOptionKey.BANK_ACCOUNT, 'anish');
       }));
-  
+
       it('should update options and set them correctly', fakeAsync(() => {
         spyOn(component as any, 'getPaginatedAttributes').and.returnValue(of(mockBankAccounts));
         spyOn(component as any, 'updateOptions').and.callThrough();
         spyOn(component as any, 'setUpdatedOptions').and.callThrough();
 
-  
+
         component['handleGeneralOptionSearch'](mockExportSettingOptionSearch, []);
         tick();
-  
+
         expect(component['updateOptions']).toHaveBeenCalled();
         expect(component['setUpdatedOptions']).toHaveBeenCalledWith(
           QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-          jasmine.arrayContaining(mockBankAccounts.results.map(account => jasmine.objectContaining({ 
-            id: account.destination_id, 
-            name: account.value 
+          jasmine.arrayContaining(mockBankAccounts.results.map(account => jasmine.objectContaining({
+            id: account.destination_id,
+            name: account.value
           })))
         );
       }));
-  
+
       it('should return correct existing options for different destination option keys', () => {
         component.accountsPayables = mockAccountsPayable.results.map(account => ({ id: account.destination_id, name: account.value }));
         component.bankAccounts = mockBankAccounts.results.map(account => ({ id: account.destination_id, name: account.value }));
         component.cccAccounts = mockCreditCardAccounts.results.map(account => ({ id: account.destination_id, name: account.value }));
         component.vendors = mockVendors.results.map(vendor => ({ id: vendor.destination_id, name: vendor.value }));
         component.expenseAccounts = [...component.bankAccounts, ...component.cccAccounts];
-  
+
         expect(component['getExistingOptions'](QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE)).toEqual(component.accountsPayables);
         expect(component['getExistingOptions'](QboExportSettingDestinationOptionKey.BANK_ACCOUNT)).toEqual(component.bankAccounts);
         expect(component['getExistingOptions'](QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT)).toEqual(component.cccAccounts);
@@ -368,41 +368,41 @@ describe('QboExportSettingsComponent', () => {
         expect(component['getExistingOptions'](QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT)).toEqual(component.expenseAccounts);
         expect(component['getExistingOptions']('INVALID_KEY' as QboExportSettingDestinationOptionKey)).toEqual([]);
       });
-  
-      it('should handle option search correctly for different destination option keys', fakeAsync(() => {  
+
+      it('should handle option search correctly for different destination option keys', fakeAsync(() => {
         component.expenseAccounts = mockBankAccounts.results.map(account => ({ id: account.destination_id, name: account.value }));
         component.bankAccounts = mockBankAccounts.results.map(account => ({ id: account.destination_id, name: account.value }));
-  
+
         spyOn(component as any, 'getExistingOptions').and.callThrough();
         spyOn(component as any, 'handleExpenseAccountSearch');
         spyOn(component as any, 'handleGeneralOptionSearch');
-  
+
         component['handleOptionSearch'](mockExpenseAccountEvent);
         tick();
-  
+
         expect(component['getExistingOptions']).toHaveBeenCalledWith(QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT);
         expect(component['handleExpenseAccountSearch']).toHaveBeenCalledWith(mockExpenseAccountEvent, component.expenseAccounts);
         expect(component['handleGeneralOptionSearch']).not.toHaveBeenCalled();
-  
+
         component['handleOptionSearch'](mockGeneralEvent);
         tick();
-  
+
         expect(component['getExistingOptions']).toHaveBeenCalledWith(QboExportSettingDestinationOptionKey.BANK_ACCOUNT);
         expect(component['handleGeneralOptionSearch']).toHaveBeenCalledWith(mockGeneralEvent, component.bankAccounts);
         expect(component['handleExpenseAccountSearch']).toHaveBeenCalledTimes(1); // Ensure it wasn't called again
       }));
-  
+
       it('should update options correctly for all destination option keys', fakeAsync(() => {
         const mockOptions = mockBankAccounts.results.map(account => ({ id: account.destination_id, name: account.value }));
-      
+
         component.accountsPayables = [];
         component.bankAccounts = [];
         component.cccAccounts = [];
         component.vendors = [];
         component.expenseAccounts = [];
-      
+
         spyOn<any>(component, 'getPaginatedAttributes').and.returnValue(of(mockBankAccounts));
-      
+
         // Test for ACCOUNTS_PAYABLE
         component['handleOptionSearch']({
           searchTerm: 'anish',
@@ -411,7 +411,7 @@ describe('QboExportSettingsComponent', () => {
         });
         tick();
         expect(component.accountsPayables).toEqual(mockOptions);
-      
+
         // Test for BANK_ACCOUNT
         component['handleOptionSearch']({
           searchTerm: 'anish',
@@ -420,7 +420,7 @@ describe('QboExportSettingsComponent', () => {
         });
         tick();
         expect(component.bankAccounts).toEqual(mockOptions);
-      
+
         // Test for CREDIT_CARD_ACCOUNT
         component['handleOptionSearch']({
           searchTerm: 'anish',
@@ -429,7 +429,7 @@ describe('QboExportSettingsComponent', () => {
         });
         tick();
         expect(component.cccAccounts).toEqual(mockOptions);
-      
+
         // Test for VENDOR
         component['handleOptionSearch']({
           searchTerm: 'anish',
@@ -438,7 +438,7 @@ describe('QboExportSettingsComponent', () => {
         });
         tick();
         expect(component.vendors).toEqual(mockOptions);
-      
+
         // Test for EXPENSE_ACCOUNT
         spyOn<any>(component, 'handleExpenseAccountSearch').and.callFake(() => {
           component.expenseAccounts = mockOptions;
@@ -544,48 +544,48 @@ describe('QboExportSettingsComponent', () => {
       it('should navigate to advanced settings when isAdvancedSettingAffected returns true', fakeAsync(() => {
         // Mock the initial export settings
         component.exportSettings = mockExportSettingsResponse;
-      
+
         // Set up the form with values that will trigger isAdvancedSettingAffected to return true
         component.exportSettingForm.patchValue({
           reimbursableExportType: QBOReimbursableExpensesObject.JOURNAL_ENTRY,
           creditCardExportType: QBOCorporateCreditCardExpensesObject.EXPENSE
         });
-      
+
         // Spy on the isAdvancedSettingAffected method to return true
         spyOn<any>(component, 'isAdvancedSettingAffected').and.returnValue(true);
-      
+
         // Spy on the constructWarningMessage method
         spyOn<any>(component, 'constructWarningMessage').and.returnValue('Warning message');
         // Mock the postExportSettings to return an Observable with the correct type
         exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockSaveResponse as QBOExportSettingGet));
-      
+
         // Call the save method
         component.save();
         tick();
         // Expect that isConfirmationDialogVisible is set to true
         expect(component.isConfirmationDialogVisible).toBeTrue();
-      
+
         // Expect that warningDialogText is set
         expect(component.warningDialogText).toBe('Warning message');
-      
+
         // Now simulate accepting the warning dialog
         component.constructPayloadAndSave({ hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS });
-      
+
         // Use tick to simulate the passage of time and allow any async operations to complete
         tick();
-      
+
         // Flush any pending microtasks
         flushMicrotasks();
-      
+
         // Expect that the postExportSettings was called
         expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
-      
+
         // Expect that isSaveInProgress is set to false after save
         expect(component.isSaveInProgress).toBeFalse();
-      
+
         // Expect that the router.navigate was called with the correct path
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/main/configuration/advanced_settings']);
-      
+
         // Clean up
         discardPeriodicTasks();
       }));
@@ -650,7 +650,7 @@ describe('QboExportSettingsComponent', () => {
       component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
       expect(component.exportSettingForm.get('creditCardExportType')?.value).toBe(QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
       expect(component.cccExpenseGroupingDateOptions).toEqual(mockCCCExpenseGroupingDateOptionsForCreditDebit);
-      
+
       // Test for CREDIT CARD PURCHASE
       component.exportSettingForm.patchValue({
         creditCardExpense: true,
@@ -659,7 +659,7 @@ describe('QboExportSettingsComponent', () => {
       fixture.detectChanges();
       component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE);
       expect(component.cccExpenseGroupingDateOptions).toEqual(mockCCCExpenseGroupingDateOptionsForCreditDebit);
-      
+
       // Test for Journal Entry
       component.exportSettingForm.patchValue({
         creditCardExpense: true,
@@ -668,7 +668,7 @@ describe('QboExportSettingsComponent', () => {
       fixture.detectChanges();
       component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
       expect(component.cccExpenseGroupingDateOptions).toEqual(mockCCCExpenseGroupingDateOptions);
-      
+
       const creditCardExportGroup = component.exportSettingForm.get('creditCardExportGroup');
       expect(creditCardExportGroup?.value).toBe(ExpenseGroupingFieldOption.EXPENSE_ID);
       expect(creditCardExportGroup?.disabled).toBeTrue();
@@ -902,19 +902,19 @@ describe('QboExportSettingsComponent', () => {
           corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.EXPENSE
         }
       } as QBOExportSettingGet;
-  
+
       component.exportSettingForm.patchValue({
         reimbursableExportType: QBOReimbursableExpensesObject.JOURNAL_ENTRY,
         creditCardExportType: QBOCorporateCreditCardExpensesObject.EXPENSE
       });
-  
+
       spyOn<any>(component, 'isExportSettingsUpdated').and.returnValue(true);
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(true);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
-  
+
       expect(component['isAdvancedSettingAffected']()).toBeTrue();
     });
-  
+
     it('should return true when export settings are updated and payments sync is affected', () => {
       component.exportSettings = {
         workspace_general_settings: {
@@ -922,30 +922,30 @@ describe('QboExportSettingsComponent', () => {
           corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.EXPENSE
         }
       } as QBOExportSettingGet;
-  
+
       component.exportSettingForm.patchValue({
         reimbursableExportType: QBOReimbursableExpensesObject.BILL,
         creditCardExportType: QBOCorporateCreditCardExpensesObject.EXPENSE
       });
-  
+
       spyOn<any>(component, 'isExportSettingsUpdated').and.returnValue(true);
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(false);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(true);
-  
+
       expect(component['isAdvancedSettingAffected']()).toBeTrue();
     });
-  
+
     it('should return false when export settings are not updated', () => {
       spyOn<any>(component, 'isExportSettingsUpdated').and.returnValue(false);
-  
+
       expect(component['isAdvancedSettingAffected']()).toBeFalse();
     });
-  
+
     it('should return false when export settings are updated but neither single itemized journal entry nor payments sync is affected', () => {
       spyOn<any>(component, 'isExportSettingsUpdated').and.returnValue(true);
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(false);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
-  
+
       expect(component['isAdvancedSettingAffected']()).toBeFalse();
     });
   });
