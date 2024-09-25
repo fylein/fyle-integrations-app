@@ -28,11 +28,14 @@ export class MappingCardHeaderComponent implements OnInit {
     destinationField = new SnakeCaseToSpaceCasePipe().transform(destinationField).toLowerCase();
     const lastChar = destinationField.slice(-1).toLowerCase();
     const lastTwoChars = destinationField.slice(-2).toLowerCase();
+    const pattern = new RegExp('[^a-zA-Z\d\s:]');
 
     if (lastChar === 'y') {
         return destinationField.slice(0, -1) + 'ies';
     } else if (['s', 'x', 'z'].includes(lastChar) || ['sh', 'ch'].includes(lastTwoChars)) {
         return destinationField + 'es';
+    } else if (pattern.test(lastChar)) {
+      return destinationField;
     }
     return destinationField + 's';
   }

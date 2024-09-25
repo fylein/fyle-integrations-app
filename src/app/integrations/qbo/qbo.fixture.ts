@@ -1,7 +1,9 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, Operator } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
+import { ExportSettingOptionSearch } from "src/app/core/models/common/export-settings.model";
 import { FyleField } from "src/app/core/models/db/mapping.model";
 import { QBOImportSettingGet } from "src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model";
 import { ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
@@ -177,6 +179,63 @@ export const mockExportSettings = {
     },
     "workspace_id": 512
 };
+
+export const mockReimbursableExpenseGroupingDateOptions: SelectFormOption[] = [
+  {
+    label: 'Current Date',
+    value: ExportDateType.CURRENT_DATE
+  },
+  {
+    label: 'Verification date',
+    value: ExportDateType.VERIFIED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Approval date',
+    value: ExportDateType.APPROVED_AT
+  },
+  {
+    label: 'Last Spend date',
+    value: ExportDateType.LAST_SPENT_AT
+  }
+];
+
+export const mockCCCExpenseGroupingDateOptions: SelectFormOption[] = [
+  {
+    label: 'Export Date',
+    value: ExportDateType.CURRENT_DATE
+  },
+  {
+    label: 'Verification date',
+    value: ExportDateType.VERIFIED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Approval date',
+    value: ExportDateType.APPROVED_AT
+  },
+  {
+    label: 'Last Spend date',
+    value: ExportDateType.LAST_SPENT_AT
+  }
+];
+
+export const mockCCCExpenseGroupingDateOptionsForCreditDebit: SelectFormOption[] = [
+  {
+    label: 'Card Transaction Post Date',
+    value: ExportDateType.POSTED_AT
+  },
+  {
+    label: 'Spend date',
+    value: ExportDateType.SPENT_AT
+  }
+];
 
 export const mockPaginatedDestinationAttributes = {
     "count": 5,
@@ -610,6 +669,76 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
     "workspace_id": 512
 };
 
+export const mockExportSettingOptionSearch: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
+  destinationAttributes: []
+};
+
+export const mockExpenseAccountEvent: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
+  destinationAttributes: []
+};
+
+export const mockGeneralEvent: ExportSettingOptionSearch = {
+  searchTerm: 'anish',
+  destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
+  destinationAttributes: []
+};
+
+// ... (existing imports and fixtures)
+
+export const mockBrandingConfig: any = {
+  featureFlags: {
+    mapEmployees: false,
+    cloneSettings: false,
+    exportSettings: {
+      reimbursableExpenses: false,
+      nameInJournalEntry: false,
+      useMerchantInJournalLine: false,
+      splitExpenseGrouping: false
+    },
+    importSettings: {
+      tax: false,
+      importVendorsAsMerchants: false,
+      importNetsuiteEmployees: false,
+      importItems: false,
+      importProjects: false,
+      allowCustomSegment: false,
+      dependentField: false,
+      allowImportCode: false
+    },
+    advancedSettings: {
+      autoCreateVendors: false,
+      paymentsSync: false,
+      singleCreditLineJE: false,
+      emailNotification: false,
+      skipExport: false,
+      defaultFields: false,
+      autoCreateContacts: false,
+      useEmployeeAttributes: false,
+      autoCreateMerchants: false
+    },
+    exportLog: {
+      expenseType: false
+    },
+    mappings: {
+      employeeMapping: false
+    },
+    dashboard: {
+      disconnectButton: false
+    }
+  },
+  illustrationsAllowed: false,
+  isGradientAllowed: false,
+  isIconsInsideButtonAllowed: false,
+  exposeC1Apps: false,
+  isBackgroundColorAllowed: false,
+  isAsterikAllowed: false,
+  allowIntacctHelperDoc: false
+};
+
 // ... existing code ...
 
 export const mockTaxCodeDestinationAttribute = [
@@ -801,6 +930,17 @@ export const mockImportSettings: QBOImportSettingGet = {
     }
   ],
   workspace_id: 525
+};
+
+export const mockImportCodeSelectorOptions = {
+  ACCOUNT: [
+    { label: 'Import Codes + Names', subLabel: '4567 Meals & Entertainment', value: true },
+    { label: 'Import Names only', subLabel: 'Meals & Entertainment', value: false }
+  ],
+  CUSTOMER: [
+    { label: 'Customer 1', subLabel: 'subLabel 3', value: true },
+    { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
+  ]
 };
 
 // Qbo adavanced settings

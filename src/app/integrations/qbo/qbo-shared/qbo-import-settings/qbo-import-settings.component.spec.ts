@@ -16,11 +16,11 @@ import {
   mockImportSettings,
   mockFyleExpenseFields,
   mockQboFields,
-  mockGeneralSettings,
   mockTaxCodeDestinationAttribute,
   mockImportCodeFieldConfig,
   mockWorkspaceGeneralSettings,
-  mockQBOCredential
+  mockQBOCredential,
+  mockImportCodeSelectorOptions
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
@@ -77,6 +77,22 @@ describe('QboImportSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QboImportSettingsComponent);
     component = fixture.componentInstance;
+
+    component.importSettingForm = new FormBuilder().group({
+      importCategories: [false],
+      importCodeFields: [[]],
+      taxCode: [false],
+      defaultTaxCode: [''],
+      chartOfAccountTypes: [['Expense', 'Other Expense']],
+      importCategoryCode: [''],
+      expenseFields: new FormArray([])
+    });
+
+    component.customFieldForm = new FormBuilder().group({
+      attribute_type: [''],
+      display_name: [''],
+      source_placeholder: ['']
+    });
   });
 
   it('should create', () => {
@@ -126,10 +142,6 @@ describe('QboImportSettingsComponent', () => {
 
   describe('save', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        importCategories: [false],
-        importCodeFields: [[]]
-      });
       component.qboImportCodeFieldCodeConfig = {
         [DefaultImportFields.ACCOUNT]: false
       };
@@ -156,9 +168,9 @@ describe('QboImportSettingsComponent', () => {
 
   describe('saveFyleExpenseField', () => {
     beforeEach(() => {
-      component.customFieldForm = new FormBuilder().group({
-        attribute_type: ['TEST_FIELD'],
-        source_placeholder: ['Test Placeholder']
+      component.customFieldForm.patchValue({
+        attribute_type: 'TEST_FIELD',
+        source_placeholder: 'Test Placeholder'
       });
       component.fyleFields = [];
       component.importSettingForm = new FormBuilder().group({
@@ -198,9 +210,6 @@ describe('QboImportSettingsComponent', () => {
 
   describe('updateImportCodeFields', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        importCodeFields: [[]]
-      });
       component.qboImportCodeFieldCodeConfig = {};
     });
 
@@ -219,9 +228,9 @@ describe('QboImportSettingsComponent', () => {
 
   describe('closeModel', () => {
     beforeEach(() => {
-      component.customFieldForm = new FormBuilder().group({
-        attribute_type: ['EMPLOYEE'],
-        source_placeholder: ['Anish']
+      component.customFieldForm.patchValue({
+        attribute_type: 'EMPLOYEE',
+        source_placeholder: 'Anish'
       });
       component.showCustomFieldDialog = true;
     });
@@ -264,16 +273,7 @@ describe('QboImportSettingsComponent', () => {
 
   describe('getImportCodeSelectorOptions', () => {
     beforeEach(() => {
-      component.importCodeSelectorOptions = {
-        ACCOUNT: [
-          { label: 'Import Codes + Names', subLabel: '4567 Meals & Entertainment', value: true },
-          { label: 'Import Names only', subLabel: 'Meals & Entertainment', value: false }
-        ],
-        CUSTOMER: [
-          { label: 'Customer 1', subLabel: 'subLabel 3', value: true },
-          { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
-        ]
-      };
+      component.importCodeSelectorOptions = mockImportCodeSelectorOptions;
     });
 
     it('should return correct options for a given destination field', () => {
@@ -287,9 +287,9 @@ describe('QboImportSettingsComponent', () => {
 
   describe('updateImportCodeFieldConfig', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        importCategories: [true],
-        importCodeFields: [[]]
+      component.importSettingForm.patchValue({
+        importCategories: true,
+        importCodeFields: []
       });
       component.qboImportCodeFieldCodeConfig = {
         [DefaultImportFields.ACCOUNT]: true
@@ -318,10 +318,10 @@ describe('QboImportSettingsComponent', () => {
     let formBuilder: FormBuilder;
     beforeEach(() => {
       formBuilder = TestBed.inject(FormBuilder);
-      component.customFieldForm = formBuilder.group({
-        attribute_type: ['TEST_TYPE'],
-        display_name: ['Test Display Name'],
-        source_placeholder: ['Test Placeholder']
+      component.customFieldForm.patchValue({
+        attribute_type: 'TEST_TYPE',
+        display_name: 'Test Display Name',
+        source_placeholder: 'Test Placeholder'
       });
       component.showCustomFieldDialog = false;
     });
@@ -347,9 +347,9 @@ describe('QboImportSettingsComponent', () => {
 
   describe('createTaxCodeWatcher', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        taxCode: [false],
-        defaultTaxCode: ['']
+      component.importSettingForm.patchValue({
+        taxCode: false,
+        defaultTaxCode: ''
       });
       component['createTaxCodeWatcher']();
     });
@@ -371,10 +371,10 @@ describe('QboImportSettingsComponent', () => {
 
   describe('createCOAWatcher', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        importCategories: [true],
-        chartOfAccountTypes: [['Expense', 'Other Expense']],
-        importCategoryCode: ['']
+      component.importSettingForm.patchValue({
+        importCategories: true,
+        chartOfAccountTypes: ['Expense', 'Other Expense'],
+        importCategoryCode: ''
       });
       component.importSettings = mockImportSettings;
       component.qboImportCodeFieldCodeConfig = mockImportCodeFieldConfig;
@@ -402,9 +402,9 @@ describe('QboImportSettingsComponent', () => {
 
   describe('importCategroyCodeWatcher', () => {
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        importCategories: [true],
-        importCategoryCode: [false]
+      component.importSettingForm.patchValue({
+        importCategories: true,
+        importCategoryCode: false
       });
       spyOn(component, 'updateImportCodeFields');
       component['importCategroyCodeWatcher']();
@@ -433,14 +433,23 @@ describe('QboImportSettingsComponent', () => {
   });
 
   describe('setupFormWatchers', () => {
+    let mockControl: FormGroup;
+
     beforeEach(() => {
-      component.importSettingForm = new FormBuilder().group({
-        expenseFields: new FormArray([])
-      });
       spyOn(component as any, 'createTaxCodeWatcher');
       spyOn(component as any, 'createCOAWatcher');
       spyOn(component as any, 'importCategroyCodeWatcher');
       spyOn(component as any, 'initializeCustomFieldForm');
+
+      mockControl = new FormBuilder().group({
+        source_field: [''],
+        destination_field: [''],
+        import_to_fyle: [false],
+        is_custom: [false],
+        source_placeholder: ['']
+      });
+
+      (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
     });
 
     it('should call all watcher setup functions', () => {
@@ -452,15 +461,6 @@ describe('QboImportSettingsComponent', () => {
     });
 
     it('should set up watchers for each expense field', () => {
-      const mockControl = new FormBuilder().group({
-        source_field: [''],
-        destination_field: [''],
-        import_to_fyle: [false],
-        is_custom: [false],
-        source_placeholder: ['']
-      });
-      (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
-
       component['setupFormWatchers']();
 
       mockControl.patchValue({ source_field: 'custom_field' });
@@ -469,18 +469,10 @@ describe('QboImportSettingsComponent', () => {
     });
 
     it('should not initialize custom field form for non-custom fields', () => {
-      const mockControl = new FormBuilder().group({
-        source_field: [''],
-        destination_field: [''],
-        import_to_fyle: [false],
-        is_custom: [false],
-        source_placeholder: ['']
-      });
-      (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);
-
       component['setupFormWatchers']();
 
       mockControl.patchValue({ source_field: 'regular_field' });
+      expect((component as any).initializeCustomFieldForm).not.toHaveBeenCalled();
     });
   });
 });
