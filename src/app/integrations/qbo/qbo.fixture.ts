@@ -4,6 +4,8 @@ import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/mode
 import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 import { ExportSettingOptionSearch } from "src/app/core/models/common/export-settings.model";
+import { FyleField } from "src/app/core/models/db/mapping.model";
+import { QBOImportSettingGet } from "src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -13,6 +15,19 @@ export const mockUser: MinimalUser = {
     full_name: 'Test User',
     user_id: 'user123',
     org_name: 'Test Org'
+};
+
+export const mockQBOCredential = {
+  id: 862,
+  refresh_token: "AB11735552393WiGj4YdlGtLE0nHF9iPiF0NjW2wVXRS85jG5D",
+  realm_id: "4620816365031245740",
+  is_expired: false,
+  company_name: "Sandbox Company_US_2",
+  country: "US",
+  currency: "USD",
+  created_at: new Date("2024-09-04T16:09:22.418414Z"),
+  updated_at: new Date("2024-09-20T10:00:34.262224Z"),
+  workspace: 525
 };
 
 export const testOnboardingState = [
@@ -43,7 +58,6 @@ export const mockWorkspace = {
 };
 
 export const mockWorkspaces = [mockWorkspace];
-
 
 export const mockEmployeeSettingResponse: QBOEmployeeSettingGet = {
     workspace_general_settings: {
@@ -597,7 +611,7 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
     workspace_id: 512
   };
 
-  export const mockSaveResponse = {
+  export const mockExportSettingSaveResponse = {
     "workspace_general_settings": {
         "reimbursable_expenses_object": "BILL",
         "corporate_credit_card_expenses_object": "BILL",
@@ -752,3 +766,207 @@ export const mockDateOptionsforWatchers = [
   { label: 'Approval date', value: 'approved_at' },
   { label: 'Last Spend date', value: 'last_spent_at' }
 ];
+
+// ... existing code ...
+
+export const mockTaxCodeDestinationAttribute = [
+  {
+    id: 260093,
+    attribute_type: "TAX_CODE",
+    display_name: "Tax Code",
+    value: "Out of scope @0%",
+    destination_id: "4",
+    auto_created: false,
+    active: true,
+    detail: {
+      tax_rate: 0,
+      tax_refs: [
+        {
+          name: "NO TAX PURCHASE",
+          value: "5",
+          taxRate: 0
+        }
+      ]
+    },
+    code: null,
+    created_at: "2024-09-04T16:09:44.613162Z",
+    updated_at: "2024-09-04T16:09:44.613178Z",
+    workspace: 525
+  }
+];
+
+export const mockImportCodeFieldConfig = {"ACCOUNT": false};
+
+export const mockGeneralSettings = {
+  id: 708,
+  reimbursable_expenses_object: null,
+  corporate_credit_card_expenses_object: "CREDIT CARD PURCHASE",
+  employee_field_mapping: "EMPLOYEE",
+  map_merchant_to_vendor: true,
+  import_categories: true,
+  import_items: true,
+  import_projects: false,
+  import_tax_codes: false,
+  change_accounting_period: false,
+  charts_of_accounts: [
+    "Expense",
+    "Other Expense",
+    "Fixed Asset",
+    "Cost of Goods Sold",
+    "Current Liability",
+    "Equity",
+    "Other Current Liability",
+    "Long Term Liability",
+    "Other Current Asset",
+    "Current Asset",
+    "Income",
+    "Other Income"
+  ],
+  memo_structure: [
+    "employee_email",
+    "purpose",
+    "category",
+    "spent_on",
+    "report_number",
+    "expense_link"
+  ],
+  auto_map_employees: "EMAIL",
+  auto_create_destination_entity: false,
+  auto_create_merchants_as_vendors: false,
+  sync_fyle_to_qbo_payments: false,
+  sync_qbo_to_fyle_payments: false,
+  is_simplify_report_closure_enabled: true,
+  category_sync_version: "v2",
+  je_single_credit_line: false,
+  map_fyle_cards_qbo_account: true,
+  skip_cards_mapping: false,
+  import_vendors_as_merchants: true,
+  is_multi_currency_allowed: false,
+  is_tax_override_enabled: true,
+  name_in_journal_entry: "EMPLOYEE",
+  import_code_fields: [],
+  created_at: "2024-09-04T16:23:13.895369Z",
+  updated_at: "2024-09-04T16:37:49.361243Z",
+  workspace: 525
+};
+
+export const mockQboFields = [
+  {
+    attribute_type: "CLASS",
+    display_name: "class"
+  },
+  {
+    attribute_type: "CUSTOMER",
+    display_name: "customer"
+  },
+  {
+    attribute_type: "DEPARTMENT",
+    display_name: "Department"
+  }
+];
+
+export const mockFyleExpenseFields: FyleField[] = [
+  {
+    attribute_type: "COST_CENTER",
+    display_name: "Cost Center",
+    is_dependent: false
+  },
+  {
+    attribute_type: "PROJECT",
+    display_name: "Project",
+    is_dependent: false
+  },
+  {
+    attribute_type: "CATEGORY_CUSTOM",
+    display_name: "Category Custom",
+    is_dependent: false
+  },
+  {
+    attribute_type: "CUSTOM_#1",
+    display_name: "Custom #1",
+    is_dependent: false
+  },
+  {
+    attribute_type: "PROJECT_CUSTOM",
+    display_name: "Project Custom",
+    is_dependent: false
+  }
+];
+
+// Import settings
+export const mockImportSettings: QBOImportSettingGet = {
+  workspace_general_settings: {
+    import_categories: true,
+    import_items: true,
+    import_vendors_as_merchants: true,
+    charts_of_accounts: [
+      "Expense",
+      "Other Expense",
+      "Fixed Asset",
+      "Cost of Goods Sold",
+      "Current Liability",
+      "Equity",
+      "Other Current Liability",
+      "Long Term Liability",
+      "Other Current Asset",
+      "Current Asset",
+      "Income",
+      "Other Income"
+    ],
+    import_tax_codes: false,
+    import_code_fields: []
+  },
+  general_mappings: {
+    default_tax_code: {
+      name: null,
+      id: null
+    }
+  },
+  mapping_settings: [
+    {
+      id: 1,
+      created_at: new Date("2024-01-01T00:00:00Z"),
+      updated_at: new Date("2024-01-01T00:00:00Z"),
+      workspace: 525,
+      source_field: "PROJECT",
+      destination_field: "CLASS",
+      import_to_fyle: true,
+      is_custom: false,
+      source_placeholder: null
+    },
+    {
+      id: 2,
+      created_at: new Date("2024-01-01T00:00:00Z"),
+      updated_at: new Date("2024-01-01T00:00:00Z"),
+      workspace: 525,
+      source_field: "COST_CENTER",
+      destination_field: "CUSTOMER",
+      import_to_fyle: true,
+      is_custom: false,
+      source_placeholder: null
+    },
+    {
+      id: 3,
+      created_at: new Date("2024-01-01T00:00:00Z"),
+      updated_at: new Date("2024-01-01T00:00:00Z"),
+      workspace: 525,
+      source_field: "PROJECT_CUSTOM",
+      destination_field: "DEPARTMENT",
+      import_to_fyle: true,
+      is_custom: true,
+      source_placeholder: null
+    }
+  ],
+  workspace_id: 525
+};
+
+export const mockImportCodeSelectorOptions = {
+  ACCOUNT: [
+    { label: 'Import Codes + Names', subLabel: '4567 Meals & Entertainment', value: true },
+    { label: 'Import Names only', subLabel: 'Meals & Entertainment', value: false }
+  ],
+  CUSTOMER: [
+    { label: 'Customer 1', subLabel: 'subLabel 3', value: true },
+    { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
+  ]
+};
