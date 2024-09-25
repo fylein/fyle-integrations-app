@@ -55,6 +55,7 @@
                     <app-configuration-toggle-field *ngIf="isAutoCreateEmployeeVisible()"
                         [form]="advancedSettingsForm"
                         [label]="brandingContent.autoCreateEmployeeLabel + employeeMapping.toLowerCase()" 
+                        [iconPath]="'user-plus'"
                         [subLabel]="'When matching ' + employeeMapping.toLowerCase() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in QuickBooks Desktop.'"
                         [formControllerName]="'autoCreateEmployeeVendor'">
                     </app-configuration-toggle-field>
@@ -68,7 +69,7 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div class="tw-mb-16-px">
+                <div class="tw-my-16-px">
                     <app-configuration-step-sub-header
                         [label]="brandingContent.customizeSectionLabel"
                         [subLabel]="brandingContent.customizeSectionSubLabel">
