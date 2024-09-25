@@ -20,7 +20,8 @@ import {
   mockVendors,
   mockWorkspaceGeneralSettings,
   mockPaginatedDestinationAttributes,
-  mockExportSettingSaveResponse,
+  mockSaveResponse,
+  mockReimbursableExpenseGroupingDateOptions,
   mockCCCExpenseGroupingDateOptions,
   mockCCCExpenseGroupingDateOptionsForCreditDebit,
   mockExportSettingOptionSearch,
@@ -465,53 +466,53 @@ describe('QboExportSettingsComponent', () => {
       it('should navigate to advanced settings when isAdvancedSettingAffected returns true', fakeAsync(() => {
         // Mock the initial export settings
         component.exportSettings = mockExportSettingsResponse;
-      
+
         // Set up the form with values that will trigger isAdvancedSettingAffected to return true
         component.exportSettingForm.patchValue({
           reimbursableExportType: QBOReimbursableExpensesObject.JOURNAL_ENTRY,
           creditCardExportType: QBOCorporateCreditCardExpensesObject.EXPENSE
         });
-      
+
         // Spy on the isAdvancedSettingAffected method and its dependencies
         spyOn<any>(component, 'isAdvancedSettingAffected').and.callThrough();
         spyOn<any>(component, 'isExportSettingsUpdated').and.returnValue(true);
         spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(true);
         spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
-      
+
         // Spy on the constructWarningMessage method
         spyOn<any>(component, 'constructWarningMessage').and.returnValue('Warning message');
-        
+
         // Mock the postExportSettings to return an Observable with the correct type
-        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettingsResponse as QBOExportSettingGet));
-      
+        exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockSaveResponse as QBOExportSettingGet));
+
         // Call the save method
         component.save();
         tick();
-      
+
         // Expect that isConfirmationDialogVisible is set to true
         expect(component.isConfirmationDialogVisible).toBeTrue();
-      
+
         // Expect that warningDialogText is set
         expect(component.warningDialogText).toBe('Warning message');
-      
+
         // Now simulate accepting the warning dialog
         component.constructPayloadAndSave({ hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS });
-      
+
         // Use tick to simulate the passage of time and allow any async operations to complete
         tick();
-      
+
         // Flush any pending microtasks
         flushMicrotasks();
-      
+
         // Expect that the postExportSettings was called
         expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
-      
+
         // Expect that isSaveInProgress is set to false after save
         expect(component.isSaveInProgress).toBeFalse();
-      
+
         // Expect that the router.navigate was called with the correct path
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/main/configuration/advanced_settings']);
-      
+
         // Clean up
         discardPeriodicTasks();
       }));
