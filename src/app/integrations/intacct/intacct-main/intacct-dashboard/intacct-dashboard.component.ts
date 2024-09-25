@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
+import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingErrorType, AppName, AppUrl, CCCImportState, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctErrorType, IntacctReimbursableExpensesObject, RefinerSurveyType, ReimbursableImportState, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
-import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
+import { AccountingErrorType, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctErrorType, IntacctReimbursableExpensesObject, MappingSourceField, ReimbursableImportState, SageIntacctField, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
 import { IntacctTaskLog, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
-import { RefinerService } from 'src/app/core/services/integration/refiner.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { environment } from 'src/environments/environment';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
@@ -90,6 +85,8 @@ export class IntacctDashboardComponent implements OnInit {
   accountingExportType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
   destinationFieldMap : DestinationFieldMap;
+
+  acceptedCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT, IntacctCategoryDestination.EXPENSE_TYPE];
 
   readonly dummyExpenseGroupList: ExpenseGroupList[] = [{
     index: 0,
