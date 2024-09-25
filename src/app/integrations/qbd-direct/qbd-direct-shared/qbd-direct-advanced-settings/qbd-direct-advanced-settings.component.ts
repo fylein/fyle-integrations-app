@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { AppName, ConfigurationCta, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
+import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
+import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -54,6 +56,14 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   memoStructure: string[] = [];
 
+  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
+
+  employeeMapping: EmployeeFieldMapping;
+
+  autoMapEmployee: AutoMapEmployeeOptions;
+
+  AutoMapEmployeeOptions = AutoMapEmployeeOptions;
+
   private sessionStartTime = new Date();
 
   readonly brandingConfig = brandingConfig;
@@ -64,10 +74,11 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
+  qbdDirectExportSettings: QbdDirectExportSettingGet;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
+    private exportSettingsService: QbdDirectExportSettingsService,
     public helper: HelperService,
     private router: Router,
     private orgService: OrgService,
@@ -90,6 +101,14 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
       });
+  }
+
+  isAutoCreateEmployeeVisible(): any {
+    return this.autoMapEmployee === AutoMapEmployeeOptions.EMPLOYEE_CODE;
+  }
+
+  isAutoCreateMerchantsAsVendorsFieldVisible(): boolean {
+    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && !this.qbdDirectExportSettings.reimbursable_expense_export_type);
   }
 
   private createMemoStructureWatcher(): void {
@@ -128,10 +147,17 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.advancedSettingsService.getQbdAdvancedSettings(),
+      this.exportSettingsService.getQbdExportSettings(),
       this.orgService.getAdditionalEmails()
-    ]).subscribe(([qbdDirectAdvancedSettings, adminEmail]) => {
+    ]).subscribe(([qbdDirectAdvancedSettings, qbdDirectExportSettings, adminEmail]) => {
 
       this.qbdDirectAdvancedSettings = qbdDirectAdvancedSettings;
+
+      this.qbdDirectExportSettings = qbdDirectExportSettings;
+
+      this.employeeMapping = qbdDirectExportSettings.employee_field_mapping;
+
+      this.autoMapEmployee = qbdDirectExportSettings.auto_map_employees;
 
       this.adminEmails = adminEmail;
 

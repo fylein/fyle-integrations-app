@@ -44,6 +44,30 @@
                     </div>
                 </div>
 
+                <div class="tw-mb-16-px" *ngIf="isAutoCreateEmployeeVisible() || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                    <app-configuration-step-sub-header
+                        [label]="brandingContent.otherPreferencesLabel"
+                        [subLabel]="brandingContent.otherPreferencesSubLabel">
+                    </app-configuration-step-sub-header>
+                </div>
+
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="isAutoCreateEmployeeVisible() || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                    <app-configuration-toggle-field *ngIf="isAutoCreateEmployeeVisible()"
+                        [form]="advancedSettingsForm"
+                        [label]="brandingContent.autoCreateEmployeeLabel + employeeMapping.toLowerCase()" 
+                        [subLabel]="'When matching ' + employeeMapping.toLowerCase() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in QuickBooks Desktop.'"
+                        [formControllerName]="'autoCreateEmployeeVendor'">
+                    </app-configuration-toggle-field>
+
+                    <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
+                        [form]="advancedSettingsForm"
+                        [iconPath]="'user-plus'"
+                        [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
+                        [subLabel]="brandingContent.autoCreateMerchantsAsVendorsSubLabel"
+                        [formControllerName]="'autoCreateMerchantsAsVendors'">
+                    </app-configuration-toggle-field>
+                </div>
+
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
                         [label]="brandingContent.customizeSectionLabel"

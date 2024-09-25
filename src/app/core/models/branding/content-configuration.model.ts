@@ -85,6 +85,11 @@ export type ContentConfiguration = {
                     memoStructureLabel: string;
                     memoStructureSubLabel: string;
                     previewDescriptionFieldLabel: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
+                    autoCreateMerchantsAsVendorsSubLabel: string;
+                    autoCreateEmployeeLabel: string;
+                    otherPreferencesLabel: string;
+                    otherPreferencesSubLabel: string;
                 }
             },
         },
