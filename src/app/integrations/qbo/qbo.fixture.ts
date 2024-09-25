@@ -930,3 +930,14 @@ export const mockImportSettings: QBOImportSettingGet = {
   ],
   workspace_id: 525
 };
+
+export const mockImportCodeSelectorOptions = {
+  ACCOUNT: [
+    { label: 'Import Codes + Names', subLabel: '4567 Meals & Entertainment', value: true },
+    { label: 'Import Names only', subLabel: 'Meals & Entertainment', value: false }
+  ],
+  CUSTOMER: [
+    { label: 'Customer 1', subLabel: 'subLabel 3', value: true },
+    { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
+  ]
+};
