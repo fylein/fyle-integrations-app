@@ -9,9 +9,11 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { of } from 'rxjs';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { mockCompletedTasks, mockExportSettingGet, mockTasksInProgress } from '../../intacct.fixture';
+import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import { mockAccountingExportSummary, mockCompletedTasksWithFailures, mockConfiguration, mockErrors, mockExportableAccountingExportIds, mockExportSettingGet, mockExportSettings, mockTasksInProgress } from '../../intacct.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { Error } from 'src/app/core/models/db/error.model';
+import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
 
 describe('IntacctDashboardComponent', () => {
 
@@ -54,11 +56,14 @@ describe('IntacctDashboardComponent', () => {
 
     userServiceSpy.getUserProfile.and.returnValue({ full_name: 'John Doe' } as MinimalUser);
     dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
-    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of({} as AccountingExportSummary));
-    dashboardServiceSpy.getExportableAccountingExportIds.and.returnValue(of({ exportable_expense_group_ids: [1, 2] }));
-    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockTasksInProgress));
-    workspaceServiceSpy.getConfiguration.and.returnValue(of({}));
+    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary as unknown as  AccountingExportSummary));
+    dashboardServiceSpy.getExportableAccountingExportIds.and.returnValue(of(mockExportableAccountingExportIds));
+    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasksWithFailures));
+    workspaceServiceSpy.getConfiguration.and.returnValue(of(mockConfiguration));
     intacctExportSettingServiceSpy.getExportSettings.and.returnValue(of(mockExportSettingGet));
+    dashboardServiceSpy.triggerAccountingExport.and.returnValue(of({}));
+    accountingExportServiceSpy.importExpensesFromFyle.and.returnValue(of({}));
+
 
     fixture = TestBed.createComponent(IntacctDashboardComponent);
     component = fixture.componentInstance;
@@ -68,8 +73,49 @@ describe('IntacctDashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+
+  it('should initialize correctly', fakeAsync(() => {
+    component.getExportErrors$ = of(mockErrors as Error[]);
+    spyOn(AccountingExportSummaryModel, 'parseAPIResponseToAccountingSummary');
+
+    tick();
+    fixture.detectChanges();
+
+    expect(component.isLoading).toBeFalse();
+    expect(component.errors).toEqual({
+      [AccountingErrorType.EMPLOYEE_MAPPING]: [mockErrors[0]],
+      [AccountingErrorType.CATEGORY_MAPPING]: [mockErrors[1]],
+      [AccountingErrorType.ACCOUNTING_ERROR]: [mockErrors[2]]
+    });
+
+    expect(component.reimbursableImportState).toEqual(ReimbursableImportState.PROCESSING);
+    expect(component.cccImportState).toEqual(CCCImportState.PAID);
+
+    expect(AccountingExportSummaryModel.parseAPIResponseToAccountingSummary).toHaveBeenCalledOnceWith(mockAccountingExportSummary);
+    expect(component.destinationFieldMap).toEqual({
+        "EMPLOYEE": "EMPLOYEE",
+        "CATEGORY": IntacctCategoryDestination.EXPENSE_TYPE
+    });
+    expect(component.exportableAccountingExportIds).toEqual([1, 2, 3]);
+    expect(component.failedExpenseGroupCount).toBe(1);
+    expect(component.isImportInProgress).toBeFalse();
+  }));
+
+  it('should initialize correctly when an export is in progress', fakeAsync(() => {
+    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockTasksInProgress));
+    spyOn<any>(component, 'pollExportStatus');
+
+    tick();
+    fixture.detectChanges();
+
+    expect(component.isImportInProgress).toBeFalse();
+    expect(component.isExportInProgress).toBeTrue();
+
+    // eslint-disable-next-line dot-notation
+    expect(component['pollExportStatus']).toHaveBeenCalledOnceWith([1, 2, 3]);
+  }));
+
   it('should handle export correctly', fakeAsync(() => {
-    dashboardServiceSpy.triggerAccountingExport.and.returnValue(of({}));
     dashboardServiceSpy.getAllTasks.and.returnValue(of(mockTasksInProgress));
     component.exportableAccountingExportIds = [1, 2];
 
@@ -81,20 +127,18 @@ describe('IntacctDashboardComponent', () => {
     expect(component.exportProgressPercentage).toBe(50);
 
     // Simulate export completion
-    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasks));
+    dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasksWithFailures));
     dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
-    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of({
-      total_accounting_export_count: 2,
-      successful_accounting_export_count: 2,
-      failed_accounting_export_count: 0
-    } as AccountingExportSummary));
 
     tick(3000);
 
     expect(component.isExportInProgress).toBeFalse();
+    expect(component.failedExpenseGroupCount).toBe(1);
+
+    // The failed expense group should be marked as exportable again
+    expect(component.exportableAccountingExportIds).toEqual([2]);
     expect(component.exportProgressPercentage).toBe(0);
     expect(component.processedCount).toBe(0);
-    expect(component.failedExpenseGroupCount).toBe(0);
 
     fixture.detectChanges();
     flush();

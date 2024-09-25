@@ -1,7 +1,8 @@
 import { minimalUser } from "src/app/core/interceptor/jwt.fixture";
 import { AccountingExportSummary } from "src/app/core/models/db/accounting-export-summary.model";
+import { Error } from "src/app/core/models/db/error.model";
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { CCCExpenseState, ExpenseState, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, SplitExpenseGrouping, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
+import { AccountingErrorType, CCCExpenseState, ExpenseState, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, SplitExpenseGrouping, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
 import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 import { ExportSettingGet } from "src/app/core/models/intacct/intacct-configuration/export-settings.model";
 
@@ -53,10 +54,10 @@ export const mockTasksInProgress = {
 };
 
 
-export const mockCompletedTasks = {
+export const mockCompletedTasksWithFailures = {
   results: [
     { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 1 },
-    { status: TaskLogState.COMPLETE, type: TaskLogType.CREATING_BILLS, expense_group: 2 }
+    { status: TaskLogState.FAILED, type: TaskLogType.CREATING_BILLS, expense_group: 2 }
   ]
 };
 
@@ -115,7 +116,7 @@ export const mockExportSettingGet: ExportSettingGet = {
       }
   },
   "workspace_id": 309
-}
+};
 
 
 export const mockExportDetails: AccountingExportSummary = {
@@ -274,3 +275,34 @@ export const mockConfiguration = {
   "created_at": "2023-09-29T11:59:03.359631Z",
   "updated_at": "2024-09-19T08:58:21.110832Z"
 };
+
+export const mockAccountingExportSummary = {
+  "id": 46,
+  "last_exported_at": "2024-08-28T17:11:21.098195Z",
+  "next_export_at": "2024-02-24T17:11:14.033111Z",
+  "export_mode": "MANUAL",
+  "total_expense_groups_count": 29,
+  "successful_expense_groups_count": 0,
+  "failed_expense_groups_count": 29,
+  "created_at": "2023-07-17T20:56:55.442251Z",
+  "updated_at": "2024-09-11T10:08:20.636603Z",
+  "workspace": 240
+};
+
+
+export const mockErrors = [
+  { id: 1, type: AccountingErrorType.EMPLOYEE_MAPPING, error_title: 'Employee mapping error' },
+  { id: 2, type: AccountingErrorType.CATEGORY_MAPPING, error_title: 'Category mapping error' },
+  { id: 3, type: AccountingErrorType.ACCOUNTING_ERROR, error_title: 'Accounting error' }
+] as Error[];
+
+export const mockExportSettings = {
+  configurations: {
+    reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
+    corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.BILL
+  },
+  expense_group_settings: {
+    expense_state: ExpenseState.PAYMENT_PROCESSING,
+    ccc_expense_state: ExpenseState.PAID
+  }
+} as unknown as ExportSettingGet;
