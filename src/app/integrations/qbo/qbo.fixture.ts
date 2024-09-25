@@ -738,6 +738,36 @@ export const mockBrandingConfig: any = {
   allowIntacctHelperDoc: false
 };
 
+export const mockExportSettingFormValueforNavigate = {
+  workspaceGeneralSettings: {
+    reimbursableExpensesObject: 'BILL',
+    corporateCreditCardExpensesObject: 'CREDIT_CARD_PURCHASE',
+    isSimplifyReportClosureEnabled: true,
+    nameInJournalEntry: 'EMPLOYEE'
+  },
+  expenseGroupSettings: {
+    expenseState: 'PAYMENT_PROCESSING',
+    reimbursableExpenseGroupFields: ['EXPENSE_ID'],
+    corporateCreditCardExpenseGroupFields: ['EXPENSE_ID'],
+    splitExpenseGrouping: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+  },
+  generalMappings: {
+    bankAccount: { id: '1', name: 'Bank Account' },
+    accountsPayable: { id: '2', name: 'Accounts Payable' },
+    defaultCCCAccount: { id: '3', name: 'Credit Card Account' },
+    defaultVendor: { id: '4', name: 'Default Vendor' }
+  }
+};
+
+// Set up the mock data
+export const mockDateOptionsforWatchers = [
+  { label: 'Current Date', value: 'current_date' },
+  { label: 'Verification date', value: 'verified_at' },
+  { label: 'Spend date', value: 'spent_at' },
+  { label: 'Approval date', value: 'approved_at' },
+  { label: 'Last Spend date', value: 'last_spent_at' }
+];
+
 // ... existing code ...
 
 export const mockTaxCodeDestinationAttribute = [
