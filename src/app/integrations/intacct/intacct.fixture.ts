@@ -325,3 +325,29 @@ export const mockMappingSettingsWithCustomFieldResponse = {
     { source_field: 'SAMPLE_CUSTOM_FIELD', destination_field: 'PROJECT' }
   ]
 };
+
+export const mockConfigurationResponse = {
+  employee_field_mapping: 'EMPLOYEE',
+  reimbursable_expenses_object: null,
+  corporate_credit_card_expenses_object: 'JOURNAL_ENTRY',
+  auto_map_employees: 'EMPLOYEE_CODE'
+};
+
+export const mockDestinationAttributesResponse = {
+  results: [
+    {
+      id: 216107,
+      attribute_type: 'EMPLOYEE',
+      display_name: 'employee',
+      value: 'Brian Foster',
+      destination_id: 'Brian Foster'
+    },
+    {
+      id: 216116,
+      attribute_type: 'EMPLOYEE',
+      display_name: 'employee',
+      value: 'Chris Curtis',
+      destination_id: 'Chris Curtis'
+    }
+  ]
+};
