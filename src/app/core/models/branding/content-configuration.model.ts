@@ -90,6 +90,8 @@ export type ContentConfiguration = {
                     autoCreateEmployeeLabel: string;
                     otherPreferencesLabel: string;
                     otherPreferencesSubLabel: string;
+                    skipExportLabel: string;
+                    skipExportSubLabel: string;
                 }
             },
         },
