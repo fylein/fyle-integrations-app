@@ -274,11 +274,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldForDependentField && this.customFieldForm.value) {
+    if (this.customFieldForDependentField && this.customFieldForm.getRawValue()) {
       this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type,
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
+        attribute_type: this.customFieldForm.get('attribute_type')?.value,
+        display_name: this.customFieldForm.get('attribute_type')?.value,
+        source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
         is_dependent: true,
         is_custom: true
       };
@@ -300,9 +300,9 @@ export class IntacctImportSettingsComponent implements OnInit {
     } else {
       this.addImportCodeField({checked: true}, this.customFieldControl.get('destination_field')?.value);
       this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
+        attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+        display_name: this.customFieldForm.get('attribute_type')?.value,
+        source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
         is_dependent: false
       };
 
@@ -331,17 +331,17 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private costCodesCostTypesWatcher(): void {
-    if (this.importSettingsForm.value.costCodes) {
-      this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
+    if (this.importSettingsForm.get('costCodes')?.value) {
+      this.costCodeFieldOption = [this.importSettingsForm.get('costCodes')?.value];
       this.importSettingsForm.controls.costCodes.disable();
     }
 
-    if (this.importSettingsForm.value.costTypes) {
-      this.costTypeFieldOption = [this.importSettingsForm.value.costTypes];
+    if (this.importSettingsForm.get('costTypes')?.value) {
+      this.costTypeFieldOption = [this.importSettingsForm.get('costTypes')?.value];
       this.importSettingsForm.controls.costTypes.disable();
     }
 
-    if (this.importSettingsForm.value.isDependentImportEnabled) {
+    if (this.importSettingsForm.get('isDependentImportEnabled')?.value) {
       this.importSettingsForm.controls.costCodes.disable();
       this.importSettingsForm.controls.costTypes.disable();
     }

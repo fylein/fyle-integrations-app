@@ -66,12 +66,12 @@ export class ConfigurationComponent implements OnInit {
   addEmail(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.ADD_BAMBOO_HR_EMAIL_MANUALLY);
     const selectedEmails = this.cofigurationForm.get('emails')?.value || [];
-    selectedEmails.push(this.addEmailForm.value);
+    selectedEmails.push(this.addEmailForm.getRawValue());
 
-    const additionalEmails = this.cofigurationForm.value.additionalEmails || [];
-    additionalEmails.push(this.addEmailForm.value);
+    const additionalEmails = this.cofigurationForm.get('additionalEmails')?.value || [];
+    additionalEmails.push(this.addEmailForm.getRawValue());
 
-    this.emails.push(this.addEmailForm.value);
+    this.emails.push(this.addEmailForm.getRawValue());
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
     this.cofigurationForm.controls.additionalEmails.patchValue(additionalEmails);
