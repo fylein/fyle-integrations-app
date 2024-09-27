@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import { QboDashboardComponent } from './qbo-dashboard.component';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -105,7 +107,7 @@ describe('QboDashboardComponent', () => {
   it('should set reimbursableImportState to null when reimbursable_expenses_object is falsy', fakeAsync(() => {
     const modifiedSettings = { ...mockExportSettingsForDashboard };
     modifiedSettings.workspace_general_settings.reimbursable_expenses_object = null as unknown as string;
-    
+
     dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
     accountingExportService.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
     dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
@@ -114,20 +116,20 @@ describe('QboDashboardComponent', () => {
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
-  
+
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
-  
+
     component.ngOnInit();
     tick();
-  
+
     expect(component.reimbursableImportState).toBeNull();
   }));
-  
+
   it('should set cccImportState to null when corporate_credit_card_expenses_object is falsy', fakeAsync(() => {
     const modifiedSettings = { ...mockExportSettingsForDashboard };
     modifiedSettings.workspace_general_settings.corporate_credit_card_expenses_object = null as unknown as string;
-    
+
     dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
     accountingExportService.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
     dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
@@ -136,13 +138,13 @@ describe('QboDashboardComponent', () => {
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
-  
+
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
-  
+
     component.ngOnInit();
     tick();
-  
+
     expect(component.cccImportState).toBeNull();
   }));
 
@@ -216,19 +218,19 @@ describe('QboDashboardComponent', () => {
     dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
-    
+
     // Modify the mock settings to have empty strings for reimbursable and corporate credit card expenses objects
     const modifiedSettings = { ...mockExportSettingsForDashboard };
     modifiedSettings.workspace_general_settings.reimbursable_expenses_object = '';
     modifiedSettings.workspace_general_settings.corporate_credit_card_expenses_object = '';
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
-    
+
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
-  
+
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = throwError(() => new Error('API error'));
-  
+
     component.ngOnInit();
     tick();
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
@@ -250,24 +252,24 @@ describe('QboDashboardComponent', () => {
     qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingsForDashboard as QBOExportSettingGet));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
-  
+
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
-  
+
     spyOn<any>(component, 'pollExportStatus').and.callThrough();
-  
+
     component.ngOnInit();
     tick();
-  
+
     expect(component.isExportInProgress).toBeTrue();
     expect(component['pollExportStatus']).toHaveBeenCalledWith(mockExportableExpenseGroup.exportable_expense_group_ids);
-  
+
     // Simulate completion of tasks
     dashboardService.getAllTasks.and.returnValue(of(mockQBOCompletedTaskResponse));
-  
+
     tick(6000);
     discardPeriodicTasks();
-  
-    expect(component.isExportInProgress).toBeFalse();;
+
+    expect(component.isExportInProgress).toBeFalse();
   }));
 });

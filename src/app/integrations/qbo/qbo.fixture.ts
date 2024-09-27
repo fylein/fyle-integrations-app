@@ -1240,9 +1240,9 @@ export const mockExportableExpenseGroup = {
         8092,
         8093,
         8094,
-        8095,
+        8095
     ]
-}
+};
 
 export const mockExportSettingsforDashboard = {
     "expense_group_settings": {
@@ -1291,7 +1291,7 @@ export const mockExportSettingsforDashboard = {
         }
     },
     "workspace_id": 297
-}
+};
 
 export const mockExportErrors: Error[] = [
   {
