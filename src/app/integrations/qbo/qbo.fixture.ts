@@ -1,5 +1,5 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
@@ -971,3 +971,258 @@ export const mockImportCodeSelectorOptions = {
     { label: 'Customer 2', subLabel: 'subLabel 4', value: false }
   ]
 };
+
+// Qbo adavanced settings
+
+export const mockQboAdvancedSettings = {
+  "workspace_general_settings": {
+      "sync_fyle_to_qbo_payments": false,
+      "sync_qbo_to_fyle_payments": false,
+      "auto_create_destination_entity": false,
+      "auto_create_merchants_as_vendors": false,
+      "je_single_credit_line": false,
+      "change_accounting_period": true,
+      "memo_structure": [
+          "employee_email",
+          "merchant",
+          "purpose",
+          "category",
+          "spent_on",
+          "report_number",
+          "expense_link"
+      ]
+  },
+  "general_mappings": {
+      "bill_payment_account": {
+          "id": null,
+          "name": null
+      }
+  },
+  "workspace_schedules": {
+      "enabled": true,
+      "interval_hours": 1,
+      "additional_email_options": [],
+      "emails_selected": [
+          "admin1@fylefororion.fyle.in",
+          "owner@fylefororion.fyle.in"
+      ]
+  },
+  "workspace_id": 525
+};
+
+export const mockExpenseFilter: ExpenseFilterPost = {
+  condition: "category",
+  operator: Operator.IExact,
+  values: ["anish"],
+  rank: 1,
+  join_by: null,
+  is_custom: false,
+  custom_field_type: null
+};
+
+export const mockExpenseFilter1: ExpenseFilter = {
+  id: 1,
+  condition: 'category',
+  operator: Operator.IContains,
+  values: ['test'],
+  created_at: new Date(),
+  updated_at: new Date(),
+  workspace: 1,
+  rank: 1,
+  join_by: null,
+  is_custom: false,
+  custom_field_type: null
+};
+export const mockExpenseFilter2: ExpenseFilter = {
+  id: 2,
+  condition: 'amount',
+  operator: Operator.LessThanOrEqual,
+  values: ['100'],
+  created_at: new Date(),
+  updated_at: new Date(),
+  workspace: 1,
+  rank: 2,
+  join_by: null,
+  is_custom: false,
+  custom_field_type: null
+};
+
+// Settings general for advanced settings
+export const mockSettingsGeneral = {
+  "id": 708,
+  "reimbursable_expenses_object": null,
+  "corporate_credit_card_expenses_object": "CREDIT CARD PURCHASE",
+  "employee_field_mapping": "EMPLOYEE",
+  "map_merchant_to_vendor": true,
+  "import_categories": true,
+  "import_items": true,
+  "import_projects": false,
+  "import_tax_codes": false,
+  "change_accounting_period": true,
+  "charts_of_accounts": [
+      "Expense",
+      "Other Expense",
+      "Fixed Asset",
+      "Cost of Goods Sold",
+      "Current Liability",
+      "Equity",
+      "Other Current Liability",
+      "Long Term Liability",
+      "Other Current Asset",
+      "Current Asset",
+      "Income",
+      "Other Income"
+  ],
+  "memo_structure": [
+      "employee_email",
+      "merchant",
+      "purpose",
+      "category",
+      "spent_on",
+      "report_number",
+      "expense_link"
+  ],
+  "auto_map_employees": "EMAIL",
+  "auto_create_destination_entity": false,
+  "auto_create_merchants_as_vendors": false,
+  "sync_fyle_to_qbo_payments": false,
+  "sync_qbo_to_fyle_payments": false,
+  "is_simplify_report_closure_enabled": true,
+  "category_sync_version": "v2",
+  "je_single_credit_line": false,
+  "map_fyle_cards_qbo_account": true,
+  "skip_cards_mapping": false,
+  "import_vendors_as_merchants": true,
+  "is_multi_currency_allowed": false,
+  "is_tax_override_enabled": true,
+  "name_in_journal_entry": "EMPLOYEE",
+  "import_code_fields": [],
+  "created_at": "2024-09-04T16:23:13.895369Z",
+  "updated_at": "2024-09-20T10:52:47.925962Z",
+  "workspace": 525
+};
+
+// Admins for advanced settings
+export const mockAdmins = [
+  {
+      "name": "Theresa Brown",
+      "email": "admin1@fylefororion.fyle.in"
+  },
+  {
+      "name": "Fyle For Orion",
+      "email": "owner@fylefororion.fyle.in"
+  }
+];
+
+// Custom_fields for advanced settings
+export const mockCustomFields = [
+  {
+      "field_name": "employee_email",
+      "type": "SELECT",
+      "is_custom": false
+  },
+  {
+      "field_name": "claim_number",
+      "type": "TEXT",
+      "is_custom": false
+  },
+  {
+      "field_name": "report_title",
+      "type": "TEXT",
+      "is_custom": false
+  },
+  {
+      "field_name": "spent_at",
+      "type": "DATE",
+      "is_custom": false
+  },
+  {
+      "field_name": "category",
+      "type": "SELECT",
+      "is_custom": false
+  },
+  {
+      "field_name": "Custom #1",
+      "type": "SELECT",
+      "is_custom": true
+  },
+  {
+      "field_name": "Project Custom",
+      "type": "SELECT",
+      "is_custom": true
+  },
+  {
+      "field_name": "Custom Expense Field",
+      "type": "TEXT",
+      "is_custom": true
+  },
+  {
+      "field_name": "Category Custom",
+      "type": "SELECT",
+      "is_custom": true
+  }
+];
+
+// Skip export settings GET
+export const mockSkipExportSettings: ExpenseFilterResponse = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 74,
+      condition: "category",
+      operator: Operator.IContains,
+      values: ["anish"],
+      rank: 1,
+      join_by: null,
+      is_custom: false,
+      custom_field_type: null,
+      created_at: new Date("2024-09-20T10:52:47.918770Z"),
+      updated_at: new Date("2024-09-20T10:52:47.918838Z"),
+      workspace: 525
+    }
+  ]
+};
+
+export const mockGroupedDestinationAttributes: any = {
+  BANK_ACCOUNT: mockBankAccounts.results,
+  ACCOUNT: [],
+  EXPENSE_TYPE: [],
+  EXPENSE_PAYMENT_TYPE: [],
+  VENDOR_PAYMENT_ACCOUNT: [],
+  VENDOR: mockVendors.results,
+  CHARGE_CARD_NUMBER: [],
+  TAX_DETAIL: [],
+  LOCATION: [],
+  DEPARTMENT: [],
+  PROJECT: [],
+  CLASS: [],
+  ITEM: [],
+  PAYMENT_ACCOUNT: [],
+  EMPLOYEE: [],
+  JOB: [],
+  CREDIT_CARD_ACCOUNT: mockCreditCardAccounts.results,
+  ACCOUNTS_PAYABLE: mockAccountsPayable.results,
+  TAX_CODE: mockTaxCodeDestinationAttribute,
+  COMPANY: []
+};
+
+export const mockAdditionalEmails = [
+  { name: 'Additional User', email: 'additional@example.com' }
+];
+
+export const mockExpenseFilterResponse = {
+  ...mockExpenseFilter,
+  id: 75,
+  created_at: new Date('2023-05-01T12:00:00Z'),
+  updated_at: new Date('2023-05-01T12:00:00Z'),
+  workspace: 525
+};
+
+export const mockMemo = ['employee_email', 'merchant', 'purpose'];
+export const mockFormattedMemo = ['employee_email', 'merchant', 'purpose', 'category'];
+export const mockInitialMemoStructure = ['employee_email', 'merchant'];
+export const mocknewMemoStructure = ['employee_email', 'category', 'purpose'];
+export const mockDefaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
+export const invalidMemoStructure = ['invalid_field', 'employee_email'];
