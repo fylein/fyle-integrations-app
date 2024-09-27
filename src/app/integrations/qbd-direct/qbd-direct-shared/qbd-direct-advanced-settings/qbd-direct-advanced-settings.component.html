@@ -44,7 +44,32 @@
                     </div>
                 </div>
 
-                <div class="tw-mb-16-px">
+                <div class="tw-mb-16-px" *ngIf="autoMapEmployee || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                    <app-configuration-step-sub-header
+                        [label]="brandingContent.otherPreferencesLabel"
+                        [subLabel]="brandingContent.otherPreferencesSubLabel">
+                    </app-configuration-step-sub-header>
+                </div>
+
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="autoMapEmployee || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                    <app-configuration-toggle-field *ngIf="autoMapEmployee"
+                        [form]="advancedSettingsForm"
+                        [label]="brandingContent.autoCreateEmployeeLabel + employeeMapping.toLowerCase()" 
+                        [iconPath]="'user-plus'"
+                        [subLabel]="'When matching ' + employeeMapping.toLowerCase() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in QuickBooks Desktop.'"
+                        [formControllerName]="'autoCreateEmployeeVendor'">
+                    </app-configuration-toggle-field>
+
+                    <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
+                        [form]="advancedSettingsForm"
+                        [iconPath]="'user-plus'"
+                        [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
+                        [subLabel]="brandingContent.autoCreateMerchantsAsVendorsSubLabel"
+                        [formControllerName]="'autoCreateMerchantsAsVendors'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-my-16-px">
                     <app-configuration-step-sub-header
                         [label]="brandingContent.customizeSectionLabel"
                         [subLabel]="brandingContent.customizeSectionSubLabel">
@@ -81,6 +106,27 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-my-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingsForm"
+                        [label]="brandingContent.skipExportLabel" 
+                        [subLabel]="brandingContent.skipExportSubLabel"
+                        [formControllerName]="'skipExport'"
+                        [iconPath]="'list'"
+                        [redirectLink]="skipExportRedirectLink">
+                    </app-configuration-toggle-field>
+                    <div *ngIf="advancedSettingsForm.value.skipExport">
+                        <app-configuration-skip-export
+                        [enableSkipExport]="advancedSettingsForm.value.skipExport"
+                        [skipExportForm]="skipExportForm"
+                        [expenseFilter]="expenseFilters"
+                        [conditionFieldOptions]="conditionFieldOptions"
+                        (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                        </app-configuration-skip-export>
+                    </div>
+                </div>
+
             </div>
             <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
         </form>
