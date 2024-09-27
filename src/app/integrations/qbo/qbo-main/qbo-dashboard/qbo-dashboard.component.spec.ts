@@ -7,9 +7,9 @@ import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { of, throwError } from 'rxjs';
 import { AppName, TaskLogState, QBOTaskLogType, ReimbursableImportState, CCCImportState } from 'src/app/core/models/enum/enum.model';
-import { mockWorkspaceGeneralSettingsForDashboard, mockExportableExpenseGroup, mockExportSettingsForDashboard, mockImportSettingsForDashboard, mockExportErrors, mockQBOTaskResponse, mockAccountingExportSummary, mockExportSettings } from 'src/app/integrations/qbo/qbo.fixture';
+import { mockWorkspaceGeneralSettingsForDashboard, mockExportableExpenseGroup, mockExportSettingsForDashboard, mockImportSettingsForDashboard, mockExportErrors, mockQBOTaskResponse, mockAccountingExportSummary, mockExportSettings, mockQBOEnqueuedTaskResponse, mockQBOCompletedTaskResponse } from 'src/app/integrations/qbo/qbo.fixture';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
@@ -102,6 +102,50 @@ describe('QboDashboardComponent', () => {
     expect(component.isImportInProgress).toBeFalse();
   }));
 
+  it('should set reimbursableImportState to null when reimbursable_expenses_object is falsy', fakeAsync(() => {
+    const modifiedSettings = { ...mockExportSettingsForDashboard };
+    modifiedSettings.workspace_general_settings.reimbursable_expenses_object = null as unknown as string;
+    
+    dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
+    accountingExportService.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
+    dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
+    workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
+    dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
+    qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
+    importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
+    accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
+  
+    component.getExportErrors$ = of(mockExportErrors);
+    component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
+  
+    component.ngOnInit();
+    tick();
+  
+    expect(component.reimbursableImportState).toBeNull();
+  }));
+  
+  it('should set cccImportState to null when corporate_credit_card_expenses_object is falsy', fakeAsync(() => {
+    const modifiedSettings = { ...mockExportSettingsForDashboard };
+    modifiedSettings.workspace_general_settings.corporate_credit_card_expenses_object = null as unknown as string;
+    
+    dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
+    accountingExportService.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
+    dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
+    workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
+    dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
+    qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
+    importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
+    accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
+  
+    component.getExportErrors$ = of(mockExportErrors);
+    component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
+  
+    component.ngOnInit();
+    tick();
+  
+    expect(component.cccImportState).toBeNull();
+  }));
+
   it('should handle error in getAccountingExportSummary', fakeAsync(() => {
     dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
     dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
@@ -172,19 +216,25 @@ describe('QboDashboardComponent', () => {
     dashboardService.getAllTasks.and.returnValue(of(mockQBOTaskResponse));
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
-    qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingsForDashboard as QBOExportSettingGet));
+    
+    // Modify the mock settings to have empty strings for reimbursable and corporate credit card expenses objects
+    const modifiedSettings = { ...mockExportSettingsForDashboard };
+    modifiedSettings.workspace_general_settings.reimbursable_expenses_object = '';
+    modifiedSettings.workspace_general_settings.corporate_credit_card_expenses_object = '';
+    qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
+    
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
-
+  
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = throwError(() => new Error('API error'));
-
+  
     component.ngOnInit();
     tick();
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
     expect(component.failedExpenseGroupCount).toBe(12);
-    expect(component.reimbursableImportState).toBe(ReimbursableImportState.PAID);
-    expect(component.cccImportState).toBe(CCCImportState.PAID);
+    expect(component.reimbursableImportState).toBeNull();
+    expect(component.cccImportState).toBeNull();
     expect(component.accountingExportSummary).toBeUndefined();
     expect(component.isLoading).toBeFalse();
     expect(component.isImportInProgress).toBeFalse();
@@ -194,25 +244,7 @@ describe('QboDashboardComponent', () => {
   it('should handle queued tasks and start polling export status', fakeAsync(() => {
     dashboardService.getExportErrors.and.returnValue(of(mockExportErrors));
     accountingExportService.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary));
-    dashboardService.getAllTasks.and.returnValue(of({
-      count: 2,
-      next: null,
-      previous: null,
-      results: [
-        {
-          id: 1,
-          status: TaskLogState.ENQUEUED,
-          type: QBOTaskLogType.CREATING_BILL,
-          expense_group: 1
-        },
-        {
-          id: 2,
-          status: TaskLogState.ENQUEUED,
-          type: QBOTaskLogType.CREATING_EXPENSE,
-          expense_group: 2
-        }
-      ]
-    }));
+    dashboardService.getAllTasks.and.returnValue(of(mockQBOEnqueuedTaskResponse));
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
     qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingsForDashboard as QBOExportSettingGet));
@@ -231,31 +263,11 @@ describe('QboDashboardComponent', () => {
     expect(component['pollExportStatus']).toHaveBeenCalledWith(mockExportableExpenseGroup.exportable_expense_group_ids);
   
     // Simulate completion of tasks
-    dashboardService.getAllTasks.and.returnValue(of({
-      count: 2,
-      next: null,
-      previous: null,
-      results: [
-        {
-          id: 1,
-          status: TaskLogState.COMPLETE,
-          type: QBOTaskLogType.CREATING_BILL,
-          expense_group: 1
-        },
-        {
-          id: 2,
-          status: TaskLogState.COMPLETE,
-          type: QBOTaskLogType.CREATING_EXPENSE,
-          expense_group: 2
-        }
-      ]
-    }));
+    dashboardService.getAllTasks.and.returnValue(of(mockQBOCompletedTaskResponse));
   
     tick(6000);
     discardPeriodicTasks();
   
-    expect(component.isExportInProgress).toBeFalse();
-    // expect(component.exportProgressPercentage).toBe(100);
-    // expect(component.processedCount).toBe(2);
+    expect(component.isExportInProgress).toBeFalse();;
   }));
 });

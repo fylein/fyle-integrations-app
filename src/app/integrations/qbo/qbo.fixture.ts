@@ -1725,3 +1725,43 @@ export const mockImportSettingsForDashboard = {
     import_code_fields: ['ACCOUNT']
   }
 };
+
+export const mockQBOEnqueuedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
+
+export const mockQBOCompletedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
