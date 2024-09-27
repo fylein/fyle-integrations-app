@@ -60,7 +60,6 @@ export const mockWorkspace = {
 
 export const mockWorkspaces = [mockWorkspace];
 
-
 export const mockEmployeeSettingResponse: QBOEmployeeSettingGet = {
     workspace_general_settings: {
       employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,

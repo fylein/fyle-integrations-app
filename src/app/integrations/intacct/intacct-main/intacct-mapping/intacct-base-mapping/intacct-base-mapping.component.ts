@@ -38,7 +38,7 @@ export class IntacctBaseMappingComponent implements OnInit {
 
   cccExpenseObject: IntacctCorporateCreditCardExpensesObject | null;
 
-  acceptedCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT, IntacctCategoryDestination.EXPENSE_TYPE];
+  acceptedCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
 
   brandingConfig = brandingConfig;
 
