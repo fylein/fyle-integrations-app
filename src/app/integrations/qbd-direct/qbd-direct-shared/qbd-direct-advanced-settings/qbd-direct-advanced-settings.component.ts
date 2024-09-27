@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -62,7 +62,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   employeeMapping: EmployeeFieldMapping;
 
-  autoMapEmployee: AutoMapEmployeeOptions;
+  autoMapEmployee: boolean;
 
   AutoMapEmployeeOptions = AutoMapEmployeeOptions;
 
@@ -152,12 +152,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     this.skipExportService.deleteExpenseFilter(id).subscribe();
   }
 
-  isAutoCreateEmployeeVisible(): any {
-    return this.autoMapEmployee === AutoMapEmployeeOptions.EMPLOYEE_CODE;
-  }
-
   isAutoCreateMerchantsAsVendorsFieldVisible(): boolean {
-    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY) && (!this.qbdDirectExportSettings.reimbursable_expense_export_type);
+    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY || this.qbdDirectExportSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT) && (!this.qbdDirectExportSettings.reimbursable_expense_export_type);
   }
 
   skipExportWatcher(): void {

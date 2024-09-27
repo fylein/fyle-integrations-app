@@ -44,15 +44,15 @@
                     </div>
                 </div>
 
-                <div class="tw-mb-16-px" *ngIf="isAutoCreateEmployeeVisible() || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                <div class="tw-mb-16-px" *ngIf="autoMapEmployee || isAutoCreateMerchantsAsVendorsFieldVisible()">
                     <app-configuration-step-sub-header
                         [label]="brandingContent.otherPreferencesLabel"
                         [subLabel]="brandingContent.otherPreferencesSubLabel">
                     </app-configuration-step-sub-header>
                 </div>
 
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="isAutoCreateEmployeeVisible() || isAutoCreateMerchantsAsVendorsFieldVisible()">
-                    <app-configuration-toggle-field *ngIf="isAutoCreateEmployeeVisible()"
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="autoMapEmployee || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                    <app-configuration-toggle-field *ngIf="autoMapEmployee"
                         [form]="advancedSettingsForm"
                         [label]="brandingContent.autoCreateEmployeeLabel + employeeMapping.toLowerCase()" 
                         [iconPath]="'user-plus'"
