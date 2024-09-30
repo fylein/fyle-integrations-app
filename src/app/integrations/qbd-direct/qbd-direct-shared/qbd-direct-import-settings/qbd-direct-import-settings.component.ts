@@ -33,7 +33,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
-  appName: AppName = AppName.QBO;
+  appName: AppName = AppName.QBD_DIRECT;
 
   importSettingForm: FormGroup;
 
