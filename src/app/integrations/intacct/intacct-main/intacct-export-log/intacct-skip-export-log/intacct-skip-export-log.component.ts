@@ -89,10 +89,10 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
-    this.limit = limit;
     this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getSkippedExpenses(limit, this.offset);
+    this.limit = limit;
   }
 
   pageChanges(offset: number): void {
