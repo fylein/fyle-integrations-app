@@ -54,7 +54,7 @@ export class ExportLogService {
 
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset
