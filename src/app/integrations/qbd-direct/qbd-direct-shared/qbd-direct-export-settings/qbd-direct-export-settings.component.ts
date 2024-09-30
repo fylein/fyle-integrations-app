@@ -50,9 +50,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.reimbursableExportTypes();
 
-  splitExpenseGroupingOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.splitExpenseGroupingOptions();
-
-  autoMapEmployeeOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.autoMapEmployeeOptions();
+  nameInJEOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.nameInJEOptions();
 
   employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
 
@@ -83,7 +81,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private mappingService: MappingService
   ) { }
 
-  getEmployeeIsDisabled(): boolean {
+  isEmployeeMappingDisabled(): boolean {
     if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY)) {
       return false;
     }
@@ -146,9 +144,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((reimbursableExportTypeValue) => {
       if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL) {
         this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
-      } else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
-        this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.EMPLOYEE);
       }
+      // Else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
+      //   This.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.EMPLOYEE);
+      // }
     });
   }
 
@@ -159,6 +158,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.employeeMappingWatcher();
 
     this.reimbursableExpenseGroupWatcher();
+
     this.cccExpenseGroupWatcher();
   }
 

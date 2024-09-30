@@ -43,8 +43,8 @@ export type ContentConfiguration = {
                         creditCardExpenseDateSubLabel: string;
                         creditCardExpenseGroupLabel: string;
                         creditCardExpenseGroupSubLabel: string;
-                        creditCardExpenseSplitLabel: string;
-                        creditCardExpenseSplitSubLabel: string;
+                        creditCardExpenseNameinJELabel: string;
+                        creditCardExpenseNameinJESubLabel: string;
                     }
                 },
                 importSetting: {

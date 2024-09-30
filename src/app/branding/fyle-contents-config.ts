@@ -47,8 +47,8 @@ export const fyleContents = {
                     creditCardExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
-                    creditCardExpenseSplitLabel: 'How should the split expenses be grouped?',
-                    creditCardExpenseSplitSubLabel: 'Choose how expenses should be grouped for split expenses'
+                    creditCardExpenseNameinJELabel: 'Name in Journal Entry',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
             importSetting: {

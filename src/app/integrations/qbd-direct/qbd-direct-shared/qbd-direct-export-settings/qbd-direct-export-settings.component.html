@@ -51,21 +51,16 @@
                             [iconPath]="'user-two'"
                             [placeholder]="'Select representation'"
                             [formControllerName]="'employeeMapping'"
-                            [isDisabled]="getEmployeeIsDisabled()">
+                            [isDisabled]="isEmployeeMappingDisabled()">
                         </app-configuration-select-field>
 
-                        <app-configuration-select-field
+                        <app-configuration-toggle-field
                             [form]="exportSettingsForm"
-                            [isFieldMandatory]="false"
-                            [showClearIcon]="true"
-                            [mandatoryErrorListName]="'employee mapping'"
                             [label]="brandingContent.reimbursable.autoMapEmployeesLabel + exportSettingsForm.get('employeeMapping')?.value.toLowerCase() + ' in QuickBooks Desktop?'"
                             [subLabel]="brandingContent.reimbursable.autoMapEmployeesSubLabel"
-                            [options]="autoMapEmployeeOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select mapping method'"
-                            [formControllerName]="'autoMapEmployees'">
-                        </app-configuration-select-field>
+                            [formControllerName]="'autoMapEmployees'"
+                            [iconPath]="'question-square-outline'">
+                        </app-configuration-toggle-field>
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
@@ -133,22 +128,37 @@
                             [appName]="appName"
                             [showExportPreview]="false">
                         </app-configuration-select-field>
-                    </div>
-                </div>
 
-                <div *ngIf="!exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                    <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'option'"
-                        [label]="brandingContent.reimbursable.employeeMappingLabel"
-                        [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
-                        [options]="employeeMappingOptions"
-                        [iconPath]="'user-two'"
-                        [placeholder]="'Select representation'"
-                        [formControllerName]="'employeeMapping'"
-                        [isDisabled]="getEmployeeIsDisabled()">
-                    </app-configuration-select-field>
+                        <div *ngIf="!exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('creditCardExportType')?.value && exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'option'"
+                                [label]="brandingContent.reimbursable.employeeMappingLabel"
+                                [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
+                                [options]="employeeMappingOptions"
+                                [iconPath]="'user-two'"
+                                [placeholder]="'Select representation'"
+                                [formControllerName]="'employeeMapping'"
+                                [isDisabled]="isEmployeeMappingDisabled()">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [showClearIcon]="true"
+                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [label]="brandingContent.corporateCard.creditCardExpenseNameinJELabel"
+                                [subLabel]="brandingContent.corporateCard.creditCardExpenseNameinJESubLabel"
+                                [options]="nameInJEOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select a name'"
+                                [formControllerName]="'nameInJE'">
+                            </app-configuration-select-field>
+                        </div>
+                    </div>
                 </div>
 
                 <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
@@ -195,19 +205,6 @@
                     </app-configuration-select-field>
                 </div>
 
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE">
-                    <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [showClearIcon]="true"
-                        [mandatoryErrorListName]="'split expense grouping'"
-                        [label]="brandingContent.corporateCard.creditCardExpenseSplitLabel"
-                        [subLabel]="brandingContent.corporateCard.creditCardExpenseSplitSubLabel"
-                        [options]="splitExpenseGroupingOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select split expense grouping'"
-                        [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
-                </div>
             </div>
             <app-configuration-step-footer
                 [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
