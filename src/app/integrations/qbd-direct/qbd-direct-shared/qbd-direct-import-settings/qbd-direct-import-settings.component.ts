@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { forkJoin } from 'rxjs';
 import { brandingKbArticles, brandingFeatureConfig, brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
@@ -15,11 +17,12 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-qbd-direct-import-settings',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, SharedModule, MultiSelectModule],
   templateUrl: './qbd-direct-import-settings.component.html',
   styleUrl: './qbd-direct-import-settings.component.scss'
 })
@@ -83,7 +86,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.importSetting;
+  readonly brandingContent = brandingContent.qbd_direct.configuration.importSetting;
 
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
@@ -99,6 +102,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
     ]
   };
+
+  workspaceGeneralSettings: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -238,6 +243,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.QbdDirectFields = QbdDirectFields;
       this.importSettings = importSettingsResponse;
       this.isImportMerchantsAllowed = !workspaceGeneralSettings.auto_create_merchants_as_vendors;
+      this.workspaceGeneralSettings = workspaceGeneralSettings;
 
       this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);

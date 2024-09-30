@@ -48,26 +48,16 @@ export type ContentConfiguration = {
                     }
                 },
                 importSetting: {
-                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
                     importCategoriesLabel: string;
                     importCategoriesSubLabel: string;
-                    importCustomersLabel: string;
-                    importCustomersSubLabel: string;
-                    importProjectsLabel: string;
+                    chartOfAccountTypes: string;
+                    chartOfAccountTypesSubLabel: string;
                     importItemsLabel: string;
-                    taxCodeLabel: string;
-                    taxCodeSubLabel: string;
-                    defaultTaxCodeLabel: string;
-                    importSuppliersAsMerchantsLabel: string;
-                    importSuppliersAsMerchantsSubLabel: string;
-                    notes: string,
-                    importNetsuiteEmployeesLabel: string;
-                    importNetsuiteEmployeesSubLabel: string;
-                    toggleToastMessage: string,
-                    customSegmentHeader: string;
+                    importItemsSubLabel: string;
+                    importVendorsAsMerchantsLabel: string;
                 },
                 advancedSettings: {
                     stepName: string;
