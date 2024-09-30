@@ -168,17 +168,7 @@ describe('QboDashboardComponent', () => {
 
   it('should trigger export and poll export status', fakeAsync(() => {
     dashboardService.triggerAccountingExport.and.returnValue(of({}));
-    dashboardService.getAllTasks.and.returnValue(of({
-      count: 1,
-      next: null,
-      previous: null,
-      results: [{
-        id: 1,
-        status: TaskLogState.COMPLETE,
-        type: QBOTaskLogType.CREATING_BILL,
-        expense_group: 1
-      }]
-    }));
+    dashboardService.getAllTasks.and.returnValue(of(mockQBOCompletedTaskResponse));
 
     component.getExportErrors$ = of([]);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
