@@ -7,7 +7,6 @@ export type QdbDirectImportSettingWorkspaceGeneralSetting = {
     import_items: boolean,
     import_vendors_as_merchants: boolean,
     charts_of_accounts: string[],
-    import_tax_codes: boolean,
     import_code_fields: string[]
   }
 
@@ -31,9 +30,9 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
       ];
     }
 
-    static mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, qboFields: IntegrationField[], qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
+    static mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
       const importCode = importSettings?.workspace_general_settings?.import_code_fields ? importSettings?.workspace_general_settings?.import_code_fields : [];
-      const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields, qboImportCodeFieldCodeConfig) : [];
+      const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
       return new FormGroup({
         importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
         expenseFields: new FormArray(expenseFieldsArray),
@@ -42,7 +41,7 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
         importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
         searchOption: new FormControl(''),
         importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-        importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
+        importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig))
       });
     }
 
@@ -56,7 +55,6 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
           import_categories: importSettingsForm.get('importCategories')?.value,
           import_items: importSettingsForm.get('importItems')?.value,
           charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
-          import_tax_codes: importSettingsForm.get('taxCode')?.value,
           import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
           import_code_fields: importSettingsForm.get('importCodeFields')?.value
         },

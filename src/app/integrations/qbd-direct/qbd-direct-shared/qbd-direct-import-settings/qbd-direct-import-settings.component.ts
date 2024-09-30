@@ -37,7 +37,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  qboFields: IntegrationField[];
+  QbdDirectFields: IntegrationField[];
 
   fyleFields: FyleField[];
 
@@ -67,9 +67,9 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   chartOfAccountTypesList: string[] = QbdDirectImportSettingModel.getChartOfAccountTypesList();
 
-  QBOReimbursableExpensesObject = QBDReimbursableExpensesObject;
+  QbdDirectReimbursableExpensesObject = QBDReimbursableExpensesObject;
 
-  QBOCorporateCreditCardExpensesObject = QBDCorporateCreditCardExpensesObject;
+  QbdDirectCorporateCreditCardExpensesObject = QBDCorporateCreditCardExpensesObject;
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -77,7 +77,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   isImportMerchantsAllowed: boolean;
 
-  qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
+  QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
   DefaultImportFields = DefaultImportFields;
 
@@ -134,8 +134,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   }
 
   updateImportCodeFieldConfig() {
-    if (this.importSettingForm.controls.importCategories.value && this.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
-      this.qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
+    if (this.importSettingForm.controls.importCategories.value && this.QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+      this.QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
     }
   }
 
@@ -172,7 +172,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   updateImportCodeFields(isImportCodeEnabled: boolean, value: string): void {
     let fields = this.importSettingForm.get('importCodeFields')?.value;
-    if (!isImportCodeEnabled && this.qboImportCodeFieldCodeConfig[value]) {
+    if (!isImportCodeEnabled && this.QbdDirectImportCodeFieldCodeConfig[value]) {
       fields = fields.filter((field: string) => field !== value);
     } else if (isImportCodeEnabled && !fields.includes(value)) {
       fields.push(value);
@@ -185,7 +185,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig));
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -234,13 +234,13 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.importSettingService.getQbdDirectFields(),
       this.importSettingService.getImportCodeFieldConfig()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboFields, importCodeFieldConfig]) => {
-      this.qboFields = qboFields;
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, QbdDirectFields, importCodeFieldConfig]) => {
+      this.QbdDirectFields = QbdDirectFields;
       this.importSettings = importSettingsResponse;
       this.isImportMerchantsAllowed = !workspaceGeneralSettings.auto_create_merchants_as_vendors;
 
-      this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
+      this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
+      this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.updateImportCodeFieldConfig();
