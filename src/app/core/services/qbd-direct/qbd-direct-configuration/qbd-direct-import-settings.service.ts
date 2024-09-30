@@ -34,8 +34,8 @@ export class QbdDirectImportSettingsService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
   }
 
-  getQBOFields(): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/qbdDirect/fields/`, {});
+  getQbdDirectFields(): Observable<IntegrationField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/qbd_direct/fields/`, {});
   }
 
   getImportCodeFieldConfig() {

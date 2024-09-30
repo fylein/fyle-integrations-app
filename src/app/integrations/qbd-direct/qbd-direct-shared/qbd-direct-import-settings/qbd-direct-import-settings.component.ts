@@ -232,7 +232,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleFields('v1'),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.importSettingService.getQBOFields(),
+      this.importSettingService.getQbdDirectFields(),
       this.importSettingService.getImportCodeFieldConfig()
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboFields, importCodeFieldConfig]) => {
       this.qboFields = qboFields;
