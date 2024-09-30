@@ -5,7 +5,8 @@ import { MinimalUser } from "src/app/core/models/db/user.model";
 import { AccountingErrorType, CCCExpenseState, ExpenseState, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, SplitExpenseGrouping, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
 import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 import { ExportSettingGet } from "src/app/core/models/intacct/intacct-configuration/export-settings.model";
-
+import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -350,4 +351,121 @@ export const mockDestinationAttributesResponse = {
       destination_id: 'Chris Curtis'
     }
   ]
+};
+
+export const mockExpenseGroupResponse: ExpenseGroupResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 7715,
+      expenses: [
+        {
+          updated_at: new Date('2024-08-12T12:17:27.837958Z'),
+          claim_number: 'C/2024/08/R/8',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/8',
+          payment_number: 'P/2024/08/T/P/2024/08/R/7',
+          category: 'ABN Withholding',
+          amount: -460.0,
+          expense_id: 'txPpUSwko5es'
+        }
+      ],
+      description: {
+        spent_at: new Date("2024-08-12T00:00:00"),
+        expense_id: "txPpUSwko5es",
+        fund_source: "CCC",
+        employee_email: "ashwin.t@fyle.in"
+      } as unknown as ExpenseGroupDescription,
+      fund_source: 'CCC',
+      export_type: 'CHARGE_CARD_TRANSACTION',
+      exported_at: new Date('2024-08-27T16:51:07.206898Z'),
+      employee_name: 'Ashwin',
+      export_url: 'https://example.com/export/7715'
+    },
+    {
+      id: 7714,
+      expenses: [
+        {
+          updated_at: new Date('2024-08-12T12:17:27.698968Z'),
+          claim_number: 'C/2024/08/R/9',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/9',
+          payment_number: 'P/2024/08/T/P/2024/08/R/8',
+          category: 'ABN Withholding',
+          amount: -550.0,
+          expense_id: 'txoerMCRLkJ4'
+        }
+      ],
+      description: {
+        spent_at: new Date("2024-08-12T00:00:00"),
+        expense_id: "txPpUSwko5es",
+        fund_source: "CCC",
+        employee_email: "ashwin.t@fyle.in"
+      } as unknown as ExpenseGroupDescription,
+      fund_source: 'CCC',
+      export_type: 'CHARGE_CARD_TRANSACTION',
+      exported_at: new Date('2024-08-27T16:50:57.620969Z'),
+      employee_name: 'Ashwin',
+      export_url: 'https://example.com/export/7714'
+    }
+  ] as ExpenseGroup[]
+};
+
+export const mockSkipExportLogResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      expenses: [
+        {
+          updated_at: '2024-08-12T12:17:27.837958Z',
+          claim_number: 'C/2024/08/R/8',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/8',
+          category: 'ABN Withholding',
+          amount: -460.0,
+          expense_id: 'txPpUSwko5es'
+        }
+      ],
+      fund_source: 'CCC',
+      created_at: '2024-08-12T12:17:27.916749Z',
+      updated_at: '2024-08-27T16:51:07.218092Z',
+      workspace: 240
+    },
+    {
+      id: 2,
+      expenses: [
+        {
+          updated_at: '2024-08-12T12:17:27.698968Z',
+          claim_number: 'C/2024/08/R/9',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/9',
+          category: 'ABN Withholding',
+          amount: -550.0,
+          expense_id: 'txoerMCRLkJ4'
+        }
+      ],
+      fund_source: 'CCC',
+      created_at: '2024-08-12T12:17:27.903912Z',
+      updated_at: '2024-08-27T16:50:57.633246Z',
+      workspace: 240
+    }
+  ]
+};
+
+export const mockPaginator: Paginator = {
+  limit: 50,
+  offset: 0
 };
