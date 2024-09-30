@@ -7,6 +7,7 @@ import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.mode
 import { ExportSettingGet } from "src/app/core/models/intacct/intacct-configuration/export-settings.model";
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
+import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -463,7 +464,7 @@ export const mockSkipExportLogResponse = {
       workspace: 240
     }
   ]
-};
+} as unknown as SkipExportLogResponse;
 
 export const mockPaginator: Paginator = {
   limit: 50,
