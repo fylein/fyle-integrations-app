@@ -1,6 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { CCCExpenseState, ExpenseState, QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 
 export type QbdDirectExportSettingsPost = {
@@ -12,7 +12,10 @@ export type QbdDirectExportSettingsPost = {
     credit_card_expense_state: CCCExpenseState | null,
     credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
     credit_card_expense_date: QBDExportDateType | null,
-    split_expense_grouping?: SplitExpenseGrouping
+    split_expense_grouping?: SplitExpenseGrouping,
+    employee_field_mapping: EmployeeFieldMapping,
+    auto_map_employees: boolean,
+    name_in_journal_entry: NameInJournalEntry;
 }
 
 export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
@@ -23,6 +26,19 @@ export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
 }
 
 export class QbdDirectExportSettingModel extends ExportSettingModel {
+
+    static nameInJEOptions(): QBDExportSettingFormOption[] {
+        return [
+            {
+              label: 'Employee',
+              value: FyleField.EMPLOYEE
+            },
+            {
+              label: 'Merchant',
+              value: NameInJEField.MERCHANT
+            }
+        ];
+    }
 
     static expenseGroupingFieldOptions(): QBDExportSettingFormOption[] {
         return [
@@ -67,25 +83,16 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         return [
             {
                 label: 'Bill',
-                value: QBDReimbursableExpensesObject.BILL
+                value: QbdDirectReimbursableExpensesObject.BILL
             },
             {
                 label: 'Journal Entry',
-                value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
+                value: QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY
             }
-        ];
-    }
-
-    static splitExpenseGroupingOptions(): QBDExportSettingFormOption[] {
-        return [
-            {
-              label: 'Single Line Item',
-              value: SplitExpenseGrouping.SINGLE_LINE_ITEM
-            },
-            {
-              label: 'Multiple Line Item',
-              value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
-            }
+            // {
+            //     Label: 'Check',
+            //     Value: QbdDirectReimbursableExpensesObject.CHECK
+            // }
         ];
     }
 
@@ -160,7 +167,9 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
             reimbursableExpenseState: new FormControl(exportSettings?.reimbursable_expense_state ? exportSettings?.reimbursable_expense_state : null),
             creditCardExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
-            splitExpenseGrouping: new FormControl(exportSettings?.split_expense_grouping ? exportSettings?.split_expense_grouping : SplitExpenseGrouping.MULTIPLE_LINE_ITEM),
+            employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : null),
+            autoMapEmployees: new FormControl(exportSettings?.auto_map_employees ? exportSettings?.auto_map_employees : null),
+            nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
             searchOption: new FormControl([])
         });
     }
@@ -175,7 +184,9 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             credit_card_expense_state: exportSettingsForm.get('creditCardExpenseState')?.value ? exportSettingsForm.get('creditCardExpenseState')?.value : null,
             credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
             credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
-            split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+            employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
+            auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : false,
+            name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null
         };
 
         return exportSettingPayload;

@@ -6,7 +6,9 @@ export type QbdDirectAdvancedSettingsPost = {
     top_memo_structure: string[] | null,
     schedule_is_enabled: boolean,
     emails_selected: EmailOption[],
-    interval_hours: number
+    interval_hours: number,
+    auto_create_employee: boolean,
+    auto_create_merchants_vendors: boolean
 }
 
 export interface QbdDirectAdvancedSettingsGet extends QbdDirectAdvancedSettingsPost {
@@ -26,7 +28,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         return ["employee_email", "employee_name", "purpose", "merchant"];
     }
 
-    static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet): FormGroup {
+    static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet, isSkipExportEnabled: boolean): FormGroup {
 
         return new FormGroup({
             expenseMemoStructure: new FormControl(advancedSettings?.expense_memo_structure && advancedSettings?.expense_memo_structure.length > 0 ? advancedSettings?.expense_memo_structure : this.defaultMemoFields(), Validators.required),
@@ -34,7 +36,9 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
             email: new FormControl(advancedSettings?.emails_selected.length > 0 ? advancedSettings?.emails_selected : []),
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),
-            search: new FormControl(''),
+            autoCreateEmployeeVendor: new FormControl(advancedSettings?.auto_create_employee ? advancedSettings?.auto_create_employee : false),
+            autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchants_vendors ? advancedSettings?.auto_create_merchants_vendors : false),
+            skipExport: new FormControl(isSkipExportEnabled),
             searchOption: new FormControl('')
         });
     }
@@ -49,7 +53,9 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
             emails_selected: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('email')?.value : null,
-            interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null
+            interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
+            auto_create_employee: advancedSettingForm.get('autoCreateEmployeeVendor')?.value ? advancedSettingForm.get('autoCreateEmployeeVendor')?.value : false,
+            auto_create_merchants_vendors: advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value ? advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value : false
         };
 
         return advancedSettingPayload;

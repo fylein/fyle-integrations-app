@@ -30,7 +30,11 @@ export const c1Contents = {
                     reimbursableExpenseDateLabel: 'Set the expense ',
                     reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
-                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'
+                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                    employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
+                    employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
+                    autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
+                    autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.'
                 },
                 corporateCard: {
                     creditCardExpenseLabel: 'Export corporate card expenses',
@@ -43,37 +47,27 @@ export const c1Contents = {
                     creditCardExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
-                    creditCardExpenseSplitLabel: 'How should the split expenses be grouped?',
-                    creditCardExpenseSplitSubLabel: 'Choose how expenses should be grouped for split expenses'
+                    creditCardExpenseNameinJELabel: 'Name in Journal Entry',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
             importSetting: {
                 stepName: 'Import settings',
                 headerText: '',
-                contentText: 'Choose the required import fields from NetSuite to Expense Management.',
-                importCategoriesLabel: ' as categories',
-                importCategoriesSubLabel: ' will be available as categories in Expense Management.',
-                importCustomersLabel: 'Import customers from NetSuite',
-                importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
-                taxCodeLabel: 'Import tax from NetSuite',
-                taxCodeSubLabel: 'The imported tax codes from NetSuite will be set as tax group in ',
-                defaultTaxCodeLabel: 'Select Default tax Code',
-                importSuppliersAsMerchantsLabel: 'Import vendors from NetSuite as merchants',
-                importSuppliersAsMerchantsSubLabel: 'The vendors in NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
-                notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
-                toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
-                importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
-                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in Expense Management.',
-                customSegmentHeader: 'Add custom segment/list/record',
-                importProjectsLabel: 'Import projects from NetSuite',
-                importItemsLabel: 'Import items from NetSuite'
+                contentText: 'Choose the required import fields from QuickBooks Desktop to Expense Management.',
+                importCategoriesLabel: 'Import the chart of accounts as categories',
+                importCategoriesSubLabel: 'Imported accounts will be available as categories in Expense Management.',
+                importItemsLabel: 'Import products/services from QuickBooks Desktop',
+                importItemsSubLabel: 'Products/services from QuickBooks Desktop will be imported as categories in Expense Management.',
+                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Desktop',
+                chartOfAccountTypes: 'Select accounts from QuickBooks Desktop to import as categories.',
+                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the dropdown.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
                 contentText: 'Customize the integration based on your accounting requirements.',
                 customizeSectionLabel: 'Customization',
-                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from Fyle to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from Fyle to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
                 automationLabel: 'Automation',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleAutoExportLabel: 'Schedule automatic export',
@@ -84,7 +78,14 @@ export const c1Contents = {
                 topLevelMemoStructureSubLabel: 'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
                 memoStructureLabel: 'Set the line-item level memo field data for QuickBooks Desktop.',
                 memoStructureSubLabel: 'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
-                previewDescriptionFieldLabel: 'Preview of the description field'
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                otherPreferencesLabel: 'Other preferences',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
+                autoCreateEmployeeLabel: 'Auto-create employee as ',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
+                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
+                skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
+                skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. '
             }
         }
     },

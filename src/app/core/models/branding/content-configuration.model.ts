@@ -27,6 +27,10 @@ export type ContentConfiguration = {
                         reimbursableExpenseDateSubLabel:string;
                         reimbursableExpenseGroupLabel: string;
                         reimbursableExpenseGroupSubLabel: string;
+                        employeeMappingLabel: string;
+                        employeeMappingSubLabel: string;
+                        autoMapEmployeesLabel: string;
+                        autoMapEmployeesSubLabel: string;
                     },
                     corporateCard: {
                         creditCardExpenseLabel: string;
@@ -39,31 +43,21 @@ export type ContentConfiguration = {
                         creditCardExpenseDateSubLabel: string;
                         creditCardExpenseGroupLabel: string;
                         creditCardExpenseGroupSubLabel: string;
-                        creditCardExpenseSplitLabel: string;
-                        creditCardExpenseSplitSubLabel: string;
+                        creditCardExpenseNameinJELabel: string;
+                        creditCardExpenseNameinJESubLabel: string;
                     }
                 },
                 importSetting: {
-                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
                     importCategoriesLabel: string;
                     importCategoriesSubLabel: string;
-                    importCustomersLabel: string;
-                    importCustomersSubLabel: string;
-                    importProjectsLabel: string;
+                    chartOfAccountTypes: string;
+                    chartOfAccountTypesSubLabel: string;
                     importItemsLabel: string;
-                    taxCodeLabel: string;
-                    taxCodeSubLabel: string;
-                    defaultTaxCodeLabel: string;
-                    importSuppliersAsMerchantsLabel: string;
-                    importSuppliersAsMerchantsSubLabel: string;
-                    notes: string,
-                    importNetsuiteEmployeesLabel: string;
-                    importNetsuiteEmployeesSubLabel: string;
-                    toggleToastMessage: string,
-                    customSegmentHeader: string;
+                    importItemsSubLabel: string;
+                    importVendorsAsMerchantsLabel: string;
                 },
                 advancedSettings: {
                     stepName: string;
@@ -81,6 +75,13 @@ export type ContentConfiguration = {
                     memoStructureLabel: string;
                     memoStructureSubLabel: string;
                     previewDescriptionFieldLabel: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
+                    autoCreateMerchantsAsVendorsSubLabel: string;
+                    autoCreateEmployeeLabel: string;
+                    otherPreferencesLabel: string;
+                    otherPreferencesSubLabel: string;
+                    skipExportLabel: string;
+                    skipExportSubLabel: string;
                 }
             },
         },

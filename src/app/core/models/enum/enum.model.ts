@@ -349,6 +349,12 @@ export enum QBDReimbursableExpensesObject {
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
 }
 
+export enum QbdDirectReimbursableExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  CHECK = 'CHECK'
+}
+
 export enum QBDCorporateCreditCardExpensesObject {
   CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',

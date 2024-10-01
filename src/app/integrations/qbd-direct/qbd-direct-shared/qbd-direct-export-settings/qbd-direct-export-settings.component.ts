@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -48,7 +50,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.reimbursableExportTypes();
 
-  splitExpenseGroupingOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.splitExpenseGroupingOptions();
+  nameInJEOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.nameInJEOptions();
+
+  employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -76,6 +80,13 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     public helperService: HelperService,
     private mappingService: MappingService
   ) { }
+
+  isEmployeeMappingDisabled(): boolean {
+    if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY)) {
+      return false;
+    }
+    return true;
+  }
 
   save() {
     this.isSaveInProgress = true;
@@ -129,11 +140,25 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  employeeMappingWatcher() {
+    this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((reimbursableExportTypeValue) => {
+      if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL) {
+        this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
+      }
+      // Else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
+      //   This.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.EMPLOYEE);
+      // }
+    });
+  }
+
   private exportsettingsWatcher(): void {
 
     this.cccExportTypeWatcher();
 
+    this.employeeMappingWatcher();
+
     this.reimbursableExpenseGroupWatcher();
+
     this.cccExpenseGroupWatcher();
   }
 
