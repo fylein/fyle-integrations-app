@@ -36,12 +36,12 @@
              </div>
              <div *ngIf="brandingConfig.brandId === 'co'" class="tw-w-400-px tw-py-8-px tw-px-16-px tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator">
               <p class="tw-text-14-px tw-text-text-primary">
-                  Make sure you’re entering your integration credentials. These should be different than your Sage Intacct credentials.
+                  {{brandingContent.intacct.configuration.connector.connectorInfoLabel}}
               </p>
             </div>
             <div *ngIf="brandingConfig.brandId !== 'co'" class="tw-w-400-px">
               <app-configuration-info-label
-                [infoText]="'Make sure you’re entering your integration credentials. These should be different than your Sage Intacct credentials.'">
+                [infoText]="brandingContent.intacct.configuration.connector.connectorInfoLabel">
               </app-configuration-info-label>
             </div>
            </div>

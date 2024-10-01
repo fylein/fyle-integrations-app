@@ -183,7 +183,8 @@ export const fyleContents = {
             connector: {
                 stepName: 'Connect to Sage Intacct',
                 locationSubLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.',
-                subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct account, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'
+                subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct account, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.',
+                connectorInfoLabel: 'Please use the integration credentials you received via email. These are different from the ones you use to login to your Sage Intacct account.'
             },
             exportSetting: {
                 stepName: 'Export Settings',
