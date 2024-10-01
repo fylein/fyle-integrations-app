@@ -1,21 +1,27 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 
 export type QbdDirectExportSettingsPost = {
     reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
     reimbursable_expense_state: ExpenseState | null,
-    reimbursable_expense_date: QBDExportDateType | null,
-    reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
+    reimbursable_expense_date: QbdDirectReimbursableExportDateType | null,
+    reimbursable_expense_grouped_by: QbdDirectExpenseGroupBy | null,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject | null,
     credit_card_expense_state: CCCExpenseState | null,
-    credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
-    credit_card_expense_date: QBDExportDateType | null,
-    split_expense_grouping?: SplitExpenseGrouping,
+    credit_card_expense_grouped_by: QbdDirectExpenseGroupBy | null,
+    credit_card_expense_date: QbdDirectCCCExportDateType  | null,
     employee_field_mapping: EmployeeFieldMapping,
     auto_map_employees: boolean,
     name_in_journal_entry: NameInJournalEntry;
+    je_single_credit_line: boolean;
+    default_credit_card_account_name: string;
+    default_credit_card_account_id: string;
+    default_reimbursable_accounts_payable_account_name: string;
+    default_reimbursable_accounts_payable_account_id: string;
+    default_ccc_accounts_payable_account_name: string;
+    default_ccc_accounts_payable_account_id: string;
 }
 
 export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
@@ -44,11 +50,11 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         return [
             {
                 label: 'Report',
-                value: QBDExpenseGroupedBy.REPORT
+                value: QbdDirectExpenseGroupBy.REPORT
             },
             {
                 label: 'Expense',
-                value: QBDExpenseGroupedBy.EXPENSE
+                value: QbdDirectExpenseGroupBy.EXPENSE
             }
         ];
     }
@@ -56,13 +62,30 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static reimbursableExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
         return [
             {
-                label: 'Spend Date',
-                value: QBDExportDateType.SPENT_AT
+                label: 'Current Date',
+                value: QbdDirectReimbursableExportDateType.CURRENT_DATE
             },
             {
                 label: 'Date of export',
-                value: QBDExportDateType.LAST_SPENT_AT
+                value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
             }
+        ];
+    }
+
+    static creditCardExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
+        return [
+            {
+                label: 'Current Date',
+                value: QbdDirectCCCExportDateType.CURRENT_DATE
+            },
+            {
+                label: 'Date of export',
+                value: QbdDirectCCCExportDateType.SPENT_AT
+            },
+            {
+                label: 'Card Transaction Post date',
+                value: QbdDirectCCCExportDateType.POSTED_AT
+            },
         ];
     }
 
@@ -124,23 +147,11 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
 
     static setCreditCardExpenseGroupingDateOptions(cccExportType: QBDCorporateCreditCardExpensesObject, cccExportGroup: QBDExpenseGroupedBy):QBDExportSettingFormOption[] {
         if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
-          return [
-            {
-                label: 'Card Transaction Post date',
-                value: QBDExportDateType.POSTED_AT
-            },
-            {
-                label: 'Spend Date',
-                value: QBDExportDateType.SPENT_AT
-            }
-          ];
+          return this.creditCardExpenseGroupingDateOptions().slice(1);
         } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
-          return this.reimbursableExpenseGroupingDateOptions().concat([{
-                label: 'Card Transaction Post date',
-                value: QBDExportDateType.POSTED_AT
-          }]);
+          return this.creditCardExpenseGroupingDateOptions();
         }
-        return [this.reimbursableExpenseGroupingDateOptions()[1]];
+        return [this.creditCardExpenseGroupingDateOptions()[1]];
     }
 
     static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
@@ -186,7 +197,14 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
             employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
             auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : false,
-            name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null
+            name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
+            je_single_credit_line: false,
+            default_credit_card_account_name: "",
+            default_credit_card_account_id: "",
+            default_reimbursable_accounts_payable_account_name: "",
+            default_reimbursable_accounts_payable_account_id: "",
+            default_ccc_accounts_payable_account_name: "",
+            default_ccc_accounts_payable_account_id: ""
         };
 
         return exportSettingPayload;
