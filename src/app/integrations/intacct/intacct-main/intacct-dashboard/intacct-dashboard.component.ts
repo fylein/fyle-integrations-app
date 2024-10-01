@@ -129,11 +129,21 @@ export class IntacctDashboardComponent implements OnInit {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.INTACCT))),
       takeWhile((response: IntacctTaskResponse) =>
-      response.results.filter(task =>
-        (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
-      ).length > 0, true)
+        response.results.filter(task =>
+          (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
+        ).length > 0, true
+      )
     ).subscribe((res: IntacctTaskResponse) => {
-      this.processedCount = res.results.filter((task: { status: string; type: TaskLogType; expense_group: number; }) => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter(
+        (task: { status: string; type: TaskLogType; expense_group: number; }) =>
+          (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') &&
+          (
+            task.type !== TaskLogType.FETCHING_EXPENSES &&
+            task.type !== TaskLogType.CREATING_AP_PAYMENT &&
+            task.type !== TaskLogType.CREATING_REIMBURSEMENT
+          ) &&
+          exportableAccountingExportIds.includes(task.expense_group)
+        ).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
@@ -187,7 +197,9 @@ export class IntacctDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter(
+        (task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS
+      );
       this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
