@@ -23,7 +23,7 @@ export interface QbdDirectAdvancedSettingsGet extends QbdDirectAdvancedSettingsP
 export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
 
     static defaultMemoFields(): string[] {
-        return ['employee_name' ,'employee_email', 'merchant', 'purpose', 'expense_id', 'spent_on', 'expense_link'];
+        return ['employee_name', 'employee_email', 'merchant', 'purpose', 'expense_id', 'spent_on', 'expense_link'];
     }
 
     static defaultTopMemoOptions(): string[] {

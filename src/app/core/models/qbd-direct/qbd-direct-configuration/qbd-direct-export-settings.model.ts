@@ -85,7 +85,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             {
                 label: 'Card Transaction Post date',
                 value: QbdDirectCCCExportDateType.POSTED_AT
-            },
+            }
         ];
     }
 
