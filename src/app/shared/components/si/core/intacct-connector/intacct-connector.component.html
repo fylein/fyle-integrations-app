@@ -34,8 +34,8 @@
                   Incorrect {{brandingContent.intacct.common.password}}. Enter correct {{brandingContent.intacct.common.password}}.
                 </div>
              </div>
-             <div *ngIf="brandingConfig.brandId === 'co'" class="tw-w-400-px tw-py-8-px tw-px-16-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-6-px">
-              <p class="tw-text-14-px tw-text-text-primary">
+             <div class="tw-w-400-px tw-py-8-px tw-px-16-px tw-rounded-6-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-border tw-border-separator' : brandingConfig.brandId === 'co', 'tw-bg-info-section' : brandingConfig.brandId !== 'co'}">
+              <p class="tw-text-14-px" [ngClass]="{'tw-text-text-primary' : brandingConfig.brandId === 'co', 'tw-text-faded-text-color' : brandingConfig.brandId !== 'co'}">
                   Make sure you’re entering your integration credentials. These should be different than your Sage Intacct credentials.
               </p>
             </div>
