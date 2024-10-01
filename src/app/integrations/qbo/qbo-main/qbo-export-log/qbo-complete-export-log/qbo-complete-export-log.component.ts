@@ -86,8 +86,8 @@ export class QboCompleteExportLogComponent implements OnInit {
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.currentPage = 1;
-    this.limit = limit;
     this.getAccountingExports(limit, this.offset);
+    this.limit = limit;
   }
 
   pageChanges(offset: number): void {
