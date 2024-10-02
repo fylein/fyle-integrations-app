@@ -10,6 +10,7 @@ import { ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from "src/app
 import { AccountingExportSummary } from "src/app/core/models/db/accounting-export-summary.model";
 import { Error } from "src/app/core/models/db/error.model";
 import { AccountingExport } from "src/app/core/models/db/accounting-export.model";
+import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -1762,6 +1763,393 @@ export const mockQBOCompletedTaskResponse = {
       status: TaskLogState.COMPLETE,
       type: QBOTaskLogType.CREATING_EXPENSE,
       expense_group: 2
+    }
+  ]
+};
+
+export const mockExpenseGroupResponse: ExpenseGroupResponse = {
+  count: 3,
+  next: "http://quickbooks-api.staging-integrations:8000/api/workspaces/454/fyle/expense_groups/?limit=50&offset=50&tasklog__status=COMPLETE",
+  previous: null,
+  results: [
+    {
+      id: 13501,
+      expenses: [
+        {
+          id: 1,
+          employee_email: "user6@fyleforgotham.in",
+          employee_name: "Victor Martinez",
+          category: "Office Party",
+          sub_category: "Food",
+          project: "Project X",
+          expense_id: "txtxDAMBtJbP",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/04/T/442",
+          claim_number: "C/2021/04/R/47",
+          amount: 444.0,
+          currency: "USD",
+          foreign_amount: 444.0,
+          foreign_currency: "USD",
+          tax_amount: 0,
+          tax_group_id: "NON",
+          settlement_id: "stlA1B2C3",
+          reimbursable: false,
+          billable: false,
+          state: "PAYMENT_PROCESSING",
+          vendor: "Uber#23",
+          cost_center: "Marketing",
+          purpose: "Team lunch",
+          report_id: "rpcO7sDf1lGc",
+          spent_at: new Date("2021-04-12T00:00:00Z"),
+          approved_at: new Date("2021-04-13T10:00:00Z"),
+          posted_at: new Date("2021-04-14T09:00:00Z"),
+          expense_created_at: new Date("2021-04-12T12:00:00Z"),
+          expense_updated_at: new Date("2021-04-13T11:00:00Z"),
+          created_at: new Date("2024-02-23T05:30:21.320794Z"),
+          updated_at: new Date("2024-02-23T05:30:21.320794Z"),
+          fund_source: "CCC",
+          verified_at: new Date("2021-04-13T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Sales"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file123", "file456"],
+          payment_number: "P/2021/04/R/16",
+          corporate_card_id: "card789",
+          is_skipped: false,
+          report_title: "April Team Lunch"
+        }
+      ],
+      fund_source: "CCC",
+      description: {
+        expense_id: "txtxDAMBtJbP",
+        employee_email: "user6@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T02:51:12.790-08:00",
+        Purchase: {
+          Id: "8154",
+          Line: [
+            {
+              Id: "1",
+              Amount: 444.0,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user6@fyleforgotham.in - Office Party - 2021-04-12 - C/2021/04/R/47 -  - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txtxDAMBtJbP?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "3519 Office Party",
+                  value: "115"
+                },
+                TaxCodeRef: {
+                  value: "NON"
+                },
+                BillableStatus: "NotBillable"
+              }
+            }
+          ],
+          Credit: false,
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-04-12",
+          MetaData: {
+            CreateTime: "2024-02-29T02:51:13-08:00",
+            LastUpdatedTime: "2024-02-29T02:51:13-08:00"
+          },
+          TotalAmt: 444.0,
+          DocNumber: "E/2021/04/T/442",
+          EntityRef: {
+            name: "Uber#23",
+            type: "Vendor",
+            value: "187"
+          },
+          SyncToken: "0",
+          AccountRef: {
+            name: "QBO CCC Support Account",
+            value: "130"
+          },
+          PurchaseEx: {
+            any: [
+              {
+                nil: false,
+                name: "{http://schema.intuit.com/finance/v3}NameValue",
+                scope: "javax.xml.bind.JAXBElement$GlobalScope",
+                value: {
+                  Name: "TxnType",
+                  Value: "54"
+                },
+                globalScope: true,
+                declaredType: "com.intuit.schema.finance.v3.NameValue",
+                typeSubstituted: false
+              }
+            ]
+          },
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PaymentType: "CreditCard",
+          PrivateNote: "Credit card expense by user6@fyleforgotham.in spent on merchant Uber#23 on 2021-04-12"
+        }
+      },
+      employee_name: "Victor Martinez",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/expense?txnId=8154",
+      created_at: new Date("2024-02-23T05:30:22.549675Z"),
+      exported_at: new Date("2024-02-29T10:51:13.043901Z"),
+      updated_at: new Date("2024-02-29T10:51:13.044005Z"),
+      workspace: 454,
+      export_type: ""
+    },
+    {
+      id: 13500,
+      expenses: [
+        {
+          id: 2,
+          employee_email: "user6@fyleforgotham.in",
+          employee_name: "Victor Martinez",
+          category: "Unspecified",
+          sub_category: "Meals",
+          project: "Project Y",
+          expense_id: "txT4JbfgtooE",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/04/T/405",
+          claim_number: "C/2021/04/R/46",
+          amount: -233.0,
+          currency: "USD",
+          foreign_amount: -233.0,
+          foreign_currency: "USD",
+          tax_amount: 0,
+          tax_group_id: "NON",
+          settlement_id: "stlD4E5F6",
+          reimbursable: false,
+          billable: false,
+          state: "PAYMENT_PROCESSING",
+          vendor: "STEAK-N-SHAKE#0664",
+          cost_center: "Operations",
+          purpose: "Team dinner",
+          report_id: "rpIbJEjxy8K2",
+          spent_at: new Date("2021-03-09T00:00:00Z"),
+          approved_at: new Date("2021-03-10T10:00:00Z"),
+          posted_at: new Date("2021-03-11T09:00:00Z"),
+          expense_created_at: new Date("2021-03-09T12:00:00Z"),
+          expense_updated_at: new Date("2021-03-10T11:00:00Z"),
+          created_at: new Date("2024-02-23T05:30:21.564674Z"),
+          updated_at: new Date("2024-02-23T05:30:21.564674Z"),
+          fund_source: "CCC",
+          verified_at: new Date("2021-03-10T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Engineering"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file789", "file012"],
+          payment_number: "P/2021/04/R/15",
+          corporate_card_id: "card012",
+          is_skipped: false,
+          report_title: "March Team Dinner"
+        }
+      ],
+      fund_source: "CCC",
+      description: {
+        expense_id: "txT4JbfgtooE",
+        employee_email: "user6@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T02:51:07.625-08:00",
+        Purchase: {
+          Id: "8153",
+          Line: [
+            {
+              Id: "1",
+              Amount: 233.0,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user6@fyleforgotham.in - Unspecified - 2021-03-09 - C/2021/04/R/46 - DUNKIN #3513 (Card Transaction) - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txT4JbfgtooE?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "2526 Unspecified",
+                  value: "122"
+                },
+                TaxCodeRef: {
+                  value: "NON"
+                },
+                BillableStatus: "NotBillable"
+              }
+            }
+          ],
+          Credit: true,
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-03-09",
+          MetaData: {
+            CreateTime: "2024-02-29T02:51:08-08:00",
+            LastUpdatedTime: "2024-02-29T02:51:08-08:00"
+          },
+          TotalAmt: 233.0,
+          DocNumber: "E/2021/04/T/405",
+          EntityRef: {
+            name: "STEAK-N-SHAKE#0664",
+            type: "Vendor",
+            value: "101"
+          },
+          SyncToken: "0",
+          AccountRef: {
+            name: "QBO CCC Support Account",
+            value: "130"
+          },
+          PurchaseEx: {
+            any: [
+              {
+                nil: false,
+                name: "{http://schema.intuit.com/finance/v3}NameValue",
+                scope: "javax.xml.bind.JAXBElement$GlobalScope",
+                value: {
+                  Name: "TxnType",
+                  Value: "11"
+                },
+                globalScope: true,
+                declaredType: "com.intuit.schema.finance.v3.NameValue",
+                typeSubstituted: false
+              }
+            ]
+          },
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PaymentType: "CreditCard",
+          PrivateNote: "Credit card expense by user6@fyleforgotham.in spent on merchant STEAK-N-SHAKE#0664 on 2021-03-09"
+        }
+      },
+      employee_name: "Victor Martinez",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/creditcardcredit?txnId=8153",
+      created_at: new Date("2024-02-23T05:30:22.546524Z"),
+      exported_at: new Date("2024-02-29T10:51:07.929285Z"),
+      updated_at: new Date("2024-02-29T10:51:07.929393Z"),
+      workspace: 454,
+      export_type: ""
+    },
+    {
+      id: 13502,
+      expenses: [
+        {
+          id: 3,
+          employee_email: "user7@fyleforgotham.in",
+          employee_name: "Alice Johnson",
+          category: "Office Supplies",
+          sub_category: "Stationery",
+          project: "Project Z",
+          expense_id: "txAB5678efgh",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/05/T/501",
+          claim_number: "C/2021/05/R/48",
+          amount: 150.75,
+          currency: "USD",
+          foreign_amount: 150.75,
+          foreign_currency: "USD",
+          tax_amount: 10.5,
+          tax_group_id: "TAX",
+          settlement_id: "stlG7H8I9",
+          reimbursable: true,
+          billable: true,
+          state: "PAYMENT_PROCESSING",
+          vendor: "Office Supplies Inc.",
+          cost_center: "Administration",
+          purpose: "Office supplies purchase",
+          report_id: "rpXY1234abcd",
+          spent_at: new Date("2021-05-15T00:00:00Z"),
+          approved_at: new Date("2021-05-16T10:00:00Z"),
+          posted_at: new Date("2021-05-17T09:00:00Z"),
+          expense_created_at: new Date("2021-05-15T12:00:00Z"),
+          expense_updated_at: new Date("2021-05-16T11:00:00Z"),
+          created_at: new Date("2024-02-24T10:15:30.123456Z"),
+          updated_at: new Date("2024-02-24T10:15:30.123456Z"),
+          fund_source: "PERSONAL",
+          verified_at: new Date("2021-05-16T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Admin"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file345", "file678"],
+          payment_number: "P/2021/05/R/17",
+          corporate_card_id: "anish",
+          is_skipped: false,
+          report_title: "May Office Supplies"
+        }
+      ],
+      fund_source: "PERSONAL",
+      description: {
+        expense_id: "txAB5678efgh",
+        employee_email: "user7@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T05:30:45.123-08:00",
+        Bill: {
+          Id: "8155",
+          Line: [
+            {
+              Id: "1",
+              Amount: 150.75,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user7@fyleforgotham.in - Office Supplies - 2021-05-15 - C/2021/05/R/48 - Office Supplies Inc. - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txAB5678efgh?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "6010 Office Supplies",
+                  value: "116"
+                },
+                TaxCodeRef: {
+                  value: "TAX"
+                },
+                BillableStatus: "Billable"
+              }
+            }
+          ],
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-05-15",
+          MetaData: {
+            CreateTime: "2024-02-29T05:30:46-08:00",
+            LastUpdatedTime: "2024-02-29T05:30:46-08:00"
+          },
+          TotalAmt: 150.75,
+          DocNumber: "E/2021/05/T/501",
+          VendorRef: {
+            name: "Alice Johnson",
+            value: "102"
+          },
+          SyncToken: "0",
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PrivateNote: "Reimbursable expense by user7@fyleforgotham.in spent on vendor Office Supplies Inc. on 2021-05-15"
+        }
+      },
+      employee_name: "Alice Johnson",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/bill?txnId=8155",
+      created_at: new Date("2024-02-24T10:15:30.123456Z"),
+      exported_at: new Date("2024-02-29T13:30:45.678901Z"),
+      updated_at: new Date("2024-02-29T13:30:45.678901Z"),
+      workspace: 454,
+      export_type: ""
     }
   ]
 };
