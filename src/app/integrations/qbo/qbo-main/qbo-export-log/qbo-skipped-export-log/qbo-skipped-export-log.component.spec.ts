@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
@@ -99,7 +101,7 @@ describe('QboSkippedExportLogComponent', () => {
   it('should handle date range selection and hide/show calendar', fakeAsync(() => {
     const startDate = new Date('2023-06-15');
     const endDate = new Date('2023-06-16');
-    
+
     component.skipExportLogForm.controls.start.setValue([startDate, endDate]);
     tick();
 
@@ -123,16 +125,16 @@ describe('QboSkippedExportLogComponent', () => {
     const startDate = new Date('2023-06-15');
     const endDate = new Date('2023-06-16');
     exportLogService.getSkippedExpenses.and.returnValue(of(mockSkippedExpenseGroupWithDateRange));
-    
+
     component.skipExportLogForm.controls.start.setValue([startDate, endDate]);
-    
+
     tick();
     tick(10);
-  
+
     expect(component.filteredExpenses.length).toBe(mockSkippedExpenseGroupWithDateRange.results.length);
     expect(component.totalCount).toBe(mockSkippedExpenseGroupWithDateRange.count);
     expect(component.hideCalendar).toBeFalse();
-  
+
     flush();
   }));
 });
