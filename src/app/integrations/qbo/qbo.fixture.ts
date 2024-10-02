@@ -12,6 +12,7 @@ import { Error } from "src/app/core/models/db/error.model";
 import { AccountingExport } from "src/app/core/models/db/accounting-export.model";
 import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
 import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
+import { Paginator } from "src/app/core/models/misc/paginator.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -2197,4 +2198,35 @@ export const mockSkippedExpenseGroup: SkipExportLogResponse = {
       org_id: "or79Cob97KSh"
     }
   ]
+};
+
+export const mockSkippedExpenseGroupWithDateRange: SkipExportLogResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      updated_at: new Date("2023-06-15T10:30:00.000Z"),
+      claim_number: "C/2023/06/R/1",
+      employee_email: "john.doe@example.com",
+      employee_name: "John Doe",
+      fund_source: "PERSONAL",
+      expense_id: "txABC123",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2023-06-16T14:45:00.000Z"),
+      claim_number: "C/2023/06/R/2",
+      employee_email: "jane.smith@example.com",
+      employee_name: "Jane Smith",
+      fund_source: "CCC",
+      expense_id: "txDEF456",
+      org_id: "or79Cob97KSh"
+    }
+  ]
+};
+
+export const mockPaginator: Paginator = {
+  limit: 50,
+  offset: 0
 };
