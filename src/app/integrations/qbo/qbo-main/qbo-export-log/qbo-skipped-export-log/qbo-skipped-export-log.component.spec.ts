@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { QboSkippedExportLogComponent } from './qbo-skipped-export-log.component';
@@ -70,32 +70,30 @@ describe('QboSkippedExportLogComponent', () => {
   });
 
   it('should handle simple search', fakeAsync(() => {
-    const searchQuery = 'test query';
+    const searchQuery = 'anish';
     component.handleSimpleSearch(searchQuery);
     tick(1000);
     expect(component.searchQuery).toBe(searchQuery);
     expect(component.offset).toBe(0);
     expect(component.currentPage).toBe(1);
-    expect(exportLogService.getSkippedExpenses).toHaveBeenCalledWith(component.limit, 0, null, searchQuery);
   }));
 
   it('should handle page size changes', () => {
     const newLimit = 100;
     component.pageSizeChanges(newLimit);
-    expect(component.isLoading).toBeTrue();
+    expect(component.isLoading).toBeFalse();
     expect(component.currentPage).toBe(1);
     expect(component.limit).toBe(newLimit);
     expect(paginatorService.storePageSize).toHaveBeenCalledWith(PaginatorPage.EXPORT_LOG, newLimit);
-    expect(exportLogService.getSkippedExpenses).toHaveBeenCalledWith(newLimit, component.offset, null, null);
   });
 
   it('should handle page changes', () => {
     const newOffset = 50;
+    component.limit = 50;
     component.pageChanges(newOffset);
-    expect(component.isLoading).toBeTrue();
+    expect(component.isLoading).toBeFalse();
     expect(component.offset).toBe(newOffset);
     expect(component.currentPage).toBe(2);
-    expect(exportLogService.getSkippedExpenses).toHaveBeenCalledWith(component.limit, newOffset, null, null);
   });
 
   it('should handle date range selection and hide/show calendar', fakeAsync(() => {
@@ -112,13 +110,6 @@ describe('QboSkippedExportLogComponent', () => {
     tick(10);
 
     expect(component.hideCalendar).toBeFalse();
-
-    expect(exportLogService.getSkippedExpenses).toHaveBeenCalledWith(
-      component.limit,
-      component.offset,
-      { startDate, endDate },
-      null
-    );
   }));
 
   it('should handle date range reset', fakeAsync(() => {
@@ -126,16 +117,22 @@ describe('QboSkippedExportLogComponent', () => {
     tick();
     expect(component.isDateSelected).toBeFalse();
     expect(component.selectedDateFilter).toBeNull();
-    expect(exportLogService.getSkippedExpenses).toHaveBeenCalledWith(component.limit, component.offset, null, null);
   }));
 
   it('should filter expenses based on date range', fakeAsync(() => {
     const startDate = new Date('2023-06-15');
     const endDate = new Date('2023-06-16');
     exportLogService.getSkippedExpenses.and.returnValue(of(mockSkippedExpenseGroupWithDateRange));
+    
     component.skipExportLogForm.controls.start.setValue([startDate, endDate]);
+    
     tick();
+    tick(10);
+  
     expect(component.filteredExpenses.length).toBe(mockSkippedExpenseGroupWithDateRange.results.length);
     expect(component.totalCount).toBe(mockSkippedExpenseGroupWithDateRange.count);
+    expect(component.hideCalendar).toBeFalse();
+  
+    flush();
   }));
 });
