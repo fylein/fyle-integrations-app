@@ -1,5 +1,5 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator, AccountingErrorType, TaskLogState, QBOTaskLogType } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
@@ -7,6 +7,9 @@ import { ExportSettingOptionSearch } from "src/app/core/models/common/export-set
 import { FyleField } from "src/app/core/models/db/mapping.model";
 import { QBOImportSettingGet } from "src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model";
 import { ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
+import { AccountingExportSummary } from "src/app/core/models/db/accounting-export-summary.model";
+import { Error } from "src/app/core/models/db/error.model";
+import { AccountingExport } from "src/app/core/models/db/accounting-export.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -973,7 +976,6 @@ export const mockImportCodeSelectorOptions = {
 };
 
 // Qbo adavanced settings
-
 export const mockQboAdvancedSettings = {
   "workspace_general_settings": {
       "sync_fyle_to_qbo_payments": false,
@@ -1226,3 +1228,540 @@ export const mockInitialMemoStructure = ['employee_email', 'merchant'];
 export const mocknewMemoStructure = ['employee_email', 'category', 'purpose'];
 export const mockDefaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
 export const invalidMemoStructure = ['invalid_field', 'employee_email'];
+
+// QBO Dashboard
+export const mockExportableExpenseGroup = {
+    "exportable_expense_group_ids": [
+        8087,
+        8088,
+        8089,
+        8090,
+        8091,
+        8092,
+        8093,
+        8094,
+        8095
+    ]
+};
+
+export const mockExportSettingsforDashboard = {
+    "expense_group_settings": {
+        "reimbursable_expense_group_fields": [
+            "employee_email",
+            "cost_center",
+            "fund_source",
+            "expense_id"
+        ],
+        "reimbursable_export_date_type": "current_date",
+        "expense_state": "PAYMENT_PROCESSING",
+        "corporate_credit_card_expense_group_fields": [
+            "report_id",
+            "cost_center",
+            "fund_source",
+            "employee_email",
+            "claim_number"
+        ],
+        "ccc_export_date_type": "current_date",
+        "ccc_expense_state": null
+    },
+    "configuration": {
+        "reimbursable_expenses_object": "EXPENSE REPORT",
+        "corporate_credit_card_expenses_object": null,
+        "is_simplify_report_closure_enabled": true,
+        "name_in_journal_entry": "MERCHANT",
+        "employee_field_mapping": "EMPLOYEE",
+        "auto_map_employees": "EMAIL"
+    },
+    "general_mappings": {
+        "reimbursable_account": {
+            "id": "2",
+            "name": "Savings"
+        },
+        "default_ccc_account": {
+            "id": null,
+            "name": null
+        },
+        "accounts_payable": {
+            "id": null,
+            "name": null
+        },
+        "default_ccc_vendor": {
+            "id": null,
+            "name": null
+        }
+    },
+    "workspace_id": 297
+};
+
+export const mockExportErrors: Error[] = [
+  {
+      id: 3301,
+      expense_attribute: {
+          id: 1468902,
+          attribute_type: "CATEGORY",
+          display_name: "Category",
+          value: "ABN Withholding",
+          source_id: "248995",
+          auto_mapped: false,
+          auto_created: false,
+          active: true,
+          detail: null,
+          created_at: "2024-09-17T11:20:35.804644Z",
+          updated_at: "2024-09-17T11:20:35.804648Z",
+          workspace: 530
+      },
+      expense_group: {} as AccountingExport,
+      type: AccountingErrorType.CATEGORY_MAPPING,
+      article_link: "",
+      is_resolved: false,
+      error_title: "ABN Withholding",
+      error_detail: "Category mapping is missing",
+      created_at: new Date("2024-09-25T12:06:26.035205Z"),
+      updated_at: new Date("2024-09-25T12:08:26.638480Z"),
+      workspace: 530
+  },
+  {
+      id: 3302,
+      expense_attribute: {
+          id: 1469125,
+          attribute_type: "CATEGORY",
+          display_name: "Category",
+          value: "Airfare",
+          source_id: "132580",
+          auto_mapped: false,
+          auto_created: false,
+          active: true,
+          detail: null,
+          created_at: "2024-09-17T11:20:35.804644Z",
+          updated_at: "2024-09-17T11:20:35.804648Z",
+          workspace: 530
+      },
+      expense_group: {} as AccountingExport,
+      type: AccountingErrorType.CATEGORY_MAPPING,
+      article_link: "",
+      is_resolved: false,
+      error_title: "Airfare",
+      error_detail: "Category mapping is missing",
+      created_at: new Date("2024-09-25T12:06:40.991166Z"),
+      updated_at: new Date("2024-09-25T12:06:40.991180Z"),
+      workspace: 530
+  }
+];
+
+export const mockQBOTaskResponse = {
+  "count": 12,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 38657,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16064
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.350569Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:05.761286Z",
+          "workspace": 530,
+          "expense_group": 16064,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38660,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16067
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.390170Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:26.043770Z",
+          "workspace": 530,
+          "expense_group": 16067,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38663,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Airfare",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16070
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.437580Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:41.001572Z",
+          "workspace": 530,
+          "expense_group": 16070,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38665,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16072
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.464238Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:56.041377Z",
+          "workspace": 530,
+          "expense_group": 16072,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38656,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16063
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.328216Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:00.856240Z",
+          "workspace": 530,
+          "expense_group": 16063,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38668,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16075
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.501408Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:16.186790Z",
+          "workspace": 530,
+          "expense_group": 16075,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38669,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16076
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.513828Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:21.310032Z",
+          "workspace": 530,
+          "expense_group": 16076,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38680,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16087
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.657958Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:08:26.642144Z",
+          "workspace": 530,
+          "expense_group": 16087,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38658,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16065
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.365838Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:10.795891Z",
+          "workspace": 530,
+          "expense_group": 16065,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38679,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16086
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.644626Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:08:21.624810Z",
+          "workspace": 530,
+          "expense_group": 16086,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38671,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16078
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.539216Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:36.337016Z",
+          "workspace": 530,
+          "expense_group": 16078,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38674,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16081
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.579228Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:51.459935Z",
+          "workspace": 530,
+          "expense_group": 16081,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      }
+  ]
+};
+
+export const mockQBOTasks = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    { id: 1, status: TaskLogState.COMPLETE, type: QBOTaskLogType.CREATING_BILL, expense_group: 1 },
+    { id: 2, status: TaskLogState.FAILED, type: QBOTaskLogType.CREATING_BILL, expense_group: 2 }
+  ]
+};
+
+export const mockAccountingExportSummary = {
+  id: 1,
+  last_exported_at: '2023-01-01T00:00:00Z',
+  next_export_at: '2023-01-02T00:00:00Z',
+  export_mode: 'AUTO',
+  total_accounting_export_count: 10,
+  successful_accounting_export_count: 8,
+  failed_accounting_export_count: 2,
+  created_at: '2023-01-01T00:00:00Z',
+  updated_at: '2023-01-01T00:00:00Z',
+  workspace: 1
+};
+
+export const mockExportDetails = {
+  "id": 435,
+  "last_exported_at": "2024-09-25T12:05:42.308142Z",
+  "next_export_at": null,
+  "export_mode": "MANUAL",
+  "total_expense_groups_count": 25,
+  "successful_expense_groups_count": 13,
+  "failed_expense_groups_count": 12,
+  "created_at": "2024-09-17T11:20:30.969195Z",
+  "updated_at": "2024-09-25T12:08:26.662418Z",
+  "workspace": 530
+};
+
+export const mockWorkspaceGeneralSettingsForDashboard = {
+  import_items: true,
+  employee_field_mapping: 'EMPLOYEE'
+};
+
+export const mockExportSettingsForDashboard = {
+  workspace_general_settings: {
+    reimbursable_expenses_object: 'BILL',
+    corporate_credit_card_expenses_object: 'CREDIT_CARD_PURCHASE'
+  },
+  expense_group_settings: {
+    expense_state: 'PAID',
+    ccc_expense_state: 'PAID'
+  }
+};
+
+export const mockImportSettingsForDashboard = {
+  workspace_general_settings: {
+    import_code_fields: ['ACCOUNT']
+  }
+};
+
+export const mockQBOEnqueuedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
+
+export const mockQBOCompletedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
