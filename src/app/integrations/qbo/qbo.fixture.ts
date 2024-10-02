@@ -11,6 +11,7 @@ import { AccountingExportSummary } from "src/app/core/models/db/accounting-expor
 import { Error } from "src/app/core/models/db/error.model";
 import { AccountingExport } from "src/app/core/models/db/accounting-export.model";
 import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
+import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -2150,6 +2151,50 @@ export const mockExpenseGroupResponse: ExpenseGroupResponse = {
       updated_at: new Date("2024-02-29T13:30:45.678901Z"),
       workspace: 454,
       export_type: ""
+    }
+  ]
+};
+
+export const mockSkippedExpenseGroup: SkipExportLogResponse = {
+  count: 4,
+  next: "http://quickbooks-api.staging-integrations:8000/api/workspaces/454/fyle/expenses/?is_skipped=true&limit=50&offset=50&org_id=or79Cob97KSh",
+  previous: null,
+  results: [
+    {
+      updated_at: new Date("2024-02-23T05:30:21.570820Z"),
+      claim_number: "C/2022/04/R/9",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txuPPcLBZhYW",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.564674Z"),
+      claim_number: "C/2021/04/R/46",
+      employee_email: "user6@fyleforgotham.in",
+      employee_name: "Victor Martinez",
+      fund_source: "CCC",
+      expense_id: "txT4JbfgtooE",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.248800Z"),
+      claim_number: "C/2022/04/R/30",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txYQYWA1c6bU",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.240046Z"),
+      claim_number: "C/2022/08/R/22",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txyBQM9yIC9J",
+      org_id: "or79Cob97KSh"
     }
   ]
 };
