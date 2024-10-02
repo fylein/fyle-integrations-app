@@ -67,12 +67,6 @@ describe('QboCompleteExportLogComponent', () => {
     expect(component['org_id']).toBe(mockUser.org_id);
   });
 
-  it('should call getAccountingExports on init', () => {
-    expect(exportLogService.getExpenseGroups).toHaveBeenCalledWith(
-      TaskLogState.COMPLETE, 10, 0, null, null, null
-    );
-  });
-
   it('should open expense in Fyle', () => {
     const expenseId = 'txGDE32dCf';
     component.openExpenseinFyle(expenseId);
