@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
@@ -136,7 +138,7 @@ describe('QboCompleteExportLogComponent', () => {
   it('should parse expense group API response correctly', () => {
     exportLogService.getExpenseGroups.and.returnValue(of(mockExpenseGroupResponse));
     component['getAccountingExports'](10, 0);
-    
+
     expect(component.totalCount).toBe(mockExpenseGroupResponse.count);
     expect(component.filteredAccountingExports.length).toBe(mockExpenseGroupResponse.results.length);
     expect(component.accountingExports.length).toBe(mockExpenseGroupResponse.results.length);
