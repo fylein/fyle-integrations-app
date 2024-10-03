@@ -35,7 +35,7 @@
     "@angular/router": "^17.3.10",
     "@auth0/angular-jwt": "^5.1.0",
     "@rxweb/reactive-form-validators": "^2.1.6",
-    "@sentry/angular": "^8.18.0",
+    "@sentry/angular": "^8.33.1",
     "@sentry/cli": "^2.32.2",
     "@types/node": "^16.11.7",
     "eslint": "^8.57.0",
