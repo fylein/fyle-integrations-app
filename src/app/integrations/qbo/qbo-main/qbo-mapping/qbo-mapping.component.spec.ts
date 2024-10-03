@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -22,7 +24,7 @@ describe('QboMappingComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     await TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         QboMappingComponent,
         SnakeCaseToSpaceCasePipe,
         SentenceCasePipe
@@ -53,12 +55,12 @@ describe('QboMappingComponent', () => {
         { source_field: FyleField.VENDOR }
       ]
     };
-  
+
     mappingServiceSpy.getMappingSettings.and.returnValue(of(extendedMockMappingSettings as MappingSettingResponse));
-  
+
     component.ngOnInit();
     tick();
-  
+
     expect(component.mappingPages.length).toBe(3);
     expect(component.mappingPages[0].label).toBe('Employee');
     expect(component.mappingPages[1].label).toBe('Category');
@@ -135,16 +137,5 @@ describe('QboMappingComponent', () => {
     expect(component.mappingPages[2].label).toBe('Vendor');
 
     brandingConfig.brandId = originalBrandId;
-  }));
-
-  xit('should handle error in getMappingSettings', fakeAsync(() => {
-    mappingServiceSpy.getMappingSettings.and.returnValue(throwError(() => new Error('API error')));
-  
-    component.ngOnInit();
-    tick();
-  
-    expect(component.isLoading).toBeFalse();
-    expect(component.mappingPages.length).toBe(0);
-    expect(routerSpy.navigateByUrl).not.toHaveBeenCalled();
   }));
 });

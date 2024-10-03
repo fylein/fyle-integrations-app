@@ -2440,4 +2440,4 @@ export const mockemployeeAttributes = {
   ]
 };
 
-export const mockMappingStats = {"all_attributes_count":105,"unmapped_attributes_count":92};
+export const mockMappingStats = {"all_attributes_count": 105, "unmapped_attributes_count": 92};
