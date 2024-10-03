@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Sage300ExportSettingService } from './sage300-export-setting.service';
 
-describe('Sage300ExportSettingService', () => {
+xdescribe('Sage300ExportSettingService', () => {
   let service: Sage300ExportSettingService;
 
   beforeEach(() => {

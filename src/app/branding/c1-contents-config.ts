@@ -183,7 +183,8 @@ export const c1Contents = {
             connector: {
                 stepName: 'Connect to Sage Intacct',
                 subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and Sage Intacct account. ',
-                locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.'
+                locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.',
+                connectorInfoLabel: 'Make sure you’re entering your integration credentials. These should be different than your Sage Intacct credentials.'
             },
             exportSetting: {
                 stepName: 'Export settings',

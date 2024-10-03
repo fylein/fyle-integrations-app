@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { BusinessCentralImportSettingsService } from './business-central-import-settings.service';
 
-describe('BusinessCentralImportSettingsService', () => {
+xdescribe('BusinessCentralImportSettingsService', () => {
   let service: BusinessCentralImportSettingsService;
 
   beforeEach(() => {

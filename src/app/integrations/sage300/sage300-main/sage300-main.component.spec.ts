@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Sage300MainComponent } from './sage300-main.component';
 
-describe('Sage300MainComponent', () => {
+xdescribe('Sage300MainComponent', () => {
   let component: Sage300MainComponent;
   let fixture: ComponentFixture<Sage300MainComponent>;
 

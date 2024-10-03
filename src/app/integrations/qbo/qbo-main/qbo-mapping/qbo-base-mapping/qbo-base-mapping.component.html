@@ -8,5 +8,6 @@
     [appName]="AppName.QBO"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
     [displayName]="displayName"
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()">
 </app-generic-mapping-v2>

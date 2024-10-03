@@ -66,7 +66,7 @@ export class IntacctComponent implements OnInit {
   private getOrCreateWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.INTACCT);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
-      if (workspaces.length) {
+      if (workspaces.length && workspaces.length > 0) {
         this.setupWorkspace(workspaces[0]);
       } else {
         this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {

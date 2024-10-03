@@ -93,9 +93,9 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
-    this.limit = limit;
     this.currentPage = 1;
     this.getAccountingExports(limit, this.offset);
+    this.limit = limit;
   }
 
   pageChanges(offset: number): void {

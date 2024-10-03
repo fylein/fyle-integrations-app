@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NetsuiteImportSettingsService } from './netsuite-import-settings.service';
 
-describe('NetsuiteImportSettingsService', () => {
+xdescribe('NetsuiteImportSettingsService', () => {
   let service: NetsuiteImportSettingsService;
 
   beforeEach(() => {

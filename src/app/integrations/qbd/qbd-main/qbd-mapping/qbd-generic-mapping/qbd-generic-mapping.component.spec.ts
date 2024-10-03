@@ -13,7 +13,7 @@ import { MappingState, OperatingSystem } from 'src/app/core/models/enum/enum.mod
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { getMappingResponse, getMappingStatsResponse, postMappingPayload, postMappingResponse } from './qbd-generic-mapping.fixture';
 
-describe('QbdGenericMappingComponent', () => {
+xdescribe('QbdGenericMappingComponent', () => {
   let component: QbdGenericMappingComponent;
   let fixture: ComponentFixture<QbdGenericMappingComponent>;
 

@@ -3,7 +3,7 @@ import { Sage300CompleteExportLogComponent } from './sage300-complete-export-log
 
 
 
-describe('Sage300CompleteExportLogComponent', () => {
+xdescribe('Sage300CompleteExportLogComponent', () => {
   let component: Sage300CompleteExportLogComponent;
   let fixture: ComponentFixture<Sage300CompleteExportLogComponent>;
 

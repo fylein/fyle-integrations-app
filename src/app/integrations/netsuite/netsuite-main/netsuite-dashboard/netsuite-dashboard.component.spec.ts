@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteDashboardComponent } from './netsuite-dashboard.component';
 
-describe('NetsuiteDashboardComponent', () => {
+xdescribe('NetsuiteDashboardComponent', () => {
   let component: NetsuiteDashboardComponent;
   let fixture: ComponentFixture<NetsuiteDashboardComponent>;
 

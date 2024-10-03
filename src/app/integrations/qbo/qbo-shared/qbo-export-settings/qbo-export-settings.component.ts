@@ -113,6 +113,8 @@ export class QboExportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.exportSetting;
 
+  isMultilineOption: boolean;
+
   constructor(
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
@@ -287,92 +289,92 @@ export class QboExportSettingsComponent implements OnInit {
     this.optionSearchUpdate.pipe(
       debounceTime(1000)
     ).subscribe((event: ExportSettingOptionSearch) => {
-      let existingOptions: DefaultDestinationAttribute[] = [];
-
-      switch (event.destinationOptionKey) {
-        case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
-          existingOptions = this.accountsPayables;
-          break;
-        case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
-          existingOptions = this.bankAccounts;
-          break;
-        case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
-          existingOptions = this.cccAccounts;
-          break;
-        case QboExportSettingDestinationOptionKey.VENDOR:
-          existingOptions = this.vendors;
-          break;
-        case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
-          existingOptions = this.expenseAccounts;
-      }
-
-      let newOptions: DefaultDestinationAttribute[];
-
-      // Handle EXPENSE_ACCOUNT events with 2 paginated_destination_attributes calls instead of 1
-      if (event.destinationOptionKey === QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT) {
-        forkJoin([
-          QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-          QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT
-        ].map(attributeType =>
-          this.mappingService.getPaginatedDestinationAttributes(attributeType, event.searchTerm)
-            .pipe(filter(response => !!response))
-        )).subscribe(([bankAccounts, cccAccounts]) => {
-          const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
-
-          // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
-          newOptions = expenseAccounts.map(QBOExportSettingModel.formatGeneralMappingPayload);
-
-          // Insert new options to existing options
-          newOptions.forEach((option) => {
-            if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
-              existingOptions.push(option);
-            }
-          });
-
-          this.expenseAccounts = existingOptions.concat();
-          this.expenseAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-
-          this.isOptionSearchInProgress = false;
-        });
-
-        return;
-      }
-
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
-
-        // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
-        newOptions = response.results.map(QBOExportSettingModel.formatGeneralMappingPayload);
-
-        // Insert new options to existing options
-        newOptions.forEach((option) => {
-          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
-            existingOptions.push(option);
-          }
-        });
-
-
-        switch (event.destinationOptionKey) {
-          case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
-            this.accountsPayables = existingOptions.concat();
-            this.accountsPayables.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
-            this.bankAccounts = existingOptions.concat();
-            this.bankAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
-            this.cccAccounts = existingOptions.concat();
-            this.cccAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case QboExportSettingDestinationOptionKey.VENDOR:
-            this.vendors = existingOptions.concat();
-            this.vendors.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-        }
-
-        this.isOptionSearchInProgress = false;
-      });
+      this.handleOptionSearch(event);
     });
+  }
+
+  private handleOptionSearch(event: ExportSettingOptionSearch): void {
+    const existingOptions = this.getExistingOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey);
+
+    if (event.destinationOptionKey === QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT) {
+      this.handleExpenseAccountSearch(event, existingOptions);
+    } else {
+      this.handleGeneralOptionSearch(event, existingOptions);
+    }
+  }
+
+  private getExistingOptions(destinationOptionKey: QboExportSettingDestinationOptionKey): DefaultDestinationAttribute[] {
+    switch (destinationOptionKey) {
+      case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+        return this.accountsPayables;
+      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
+        return this.bankAccounts;
+      case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+        return this.cccAccounts;
+      case QboExportSettingDestinationOptionKey.VENDOR:
+        return this.vendors;
+      case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
+        return this.expenseAccounts;
+      default:
+        return [];
+    }
+  }
+
+  private handleExpenseAccountSearch(event: ExportSettingOptionSearch, existingOptions: DefaultDestinationAttribute[]): void {
+    forkJoin([
+      this.getPaginatedAttributes(QboExportSettingDestinationOptionKey.BANK_ACCOUNT, event.searchTerm),
+      this.getPaginatedAttributes(QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, event.searchTerm)
+    ]).subscribe(([bankAccounts, cccAccounts]) => {
+      const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
+      this.updateOptions(QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT, expenseAccounts, existingOptions);
+    });
+  }
+
+  private handleGeneralOptionSearch(event: ExportSettingOptionSearch, existingOptions: DefaultDestinationAttribute[]): void {
+    this.getPaginatedAttributes(event.destinationOptionKey as QboExportSettingDestinationOptionKey, event.searchTerm).subscribe((response) => {
+      this.updateOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey, response.results, existingOptions);
+    });
+  }
+
+  private getPaginatedAttributes(destinationOptionKey: QboExportSettingDestinationOptionKey, searchTerm: string): Observable<any> {
+    return this.mappingService.getPaginatedDestinationAttributes(destinationOptionKey, searchTerm)
+      .pipe(filter(response => !!response));
+  }
+
+  private updateOptions(destinationOptionKey: QboExportSettingDestinationOptionKey, newResults: any[], existingOptions: DefaultDestinationAttribute[]): void {
+    const newOptions = newResults.map(QBOExportSettingModel.formatGeneralMappingPayload);
+    const updatedOptions = this.mergeOptions(existingOptions, newOptions);
+    this.setUpdatedOptions(destinationOptionKey, updatedOptions);
+    this.isOptionSearchInProgress = false;
+  }
+
+  private mergeOptions(existingOptions: DefaultDestinationAttribute[], newOptions: DefaultDestinationAttribute[]): DefaultDestinationAttribute[] {
+    newOptions.forEach((option) => {
+      if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+        existingOptions.push(option);
+      }
+    });
+    return existingOptions.concat().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  }
+
+  private setUpdatedOptions(destinationOptionKey: QboExportSettingDestinationOptionKey, updatedOptions: DefaultDestinationAttribute[]): void {
+    switch (destinationOptionKey) {
+      case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+        this.accountsPayables = updatedOptions;
+        break;
+      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
+        this.bankAccounts = updatedOptions;
+        break;
+      case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+        this.cccAccounts = updatedOptions;
+        break;
+      case QboExportSettingDestinationOptionKey.VENDOR:
+        this.vendors = updatedOptions;
+        break;
+      case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
+        this.expenseAccounts = updatedOptions;
+        break;
+    }
   }
 
   searchOptionsDropdown(event: ExportSettingOptionSearch): void {
@@ -447,6 +449,8 @@ export class QboExportSettingsComponent implements OnInit {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
+
+      this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
       this.setupCustomWatchers();
 

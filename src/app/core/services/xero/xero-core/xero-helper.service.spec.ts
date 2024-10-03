@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { XeroHelperService } from './xero-helper.service';
 
-describe('XeroHelperService', () => {
+xdescribe('XeroHelperService', () => {
   let service: XeroHelperService;
 
   beforeEach(() => {

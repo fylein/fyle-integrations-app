@@ -1,49 +1,135 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { of, throwError } from 'rxjs';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { of } from 'rxjs';
 import { IntacctComponent } from './intacct.component';
-import { errorResponse, workspaceResponse } from './intacct.fixture';
+import { HelperService } from 'src/app/core/services/common/helper.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { mockUser, testOnboardingState, workspaceResponse } from './intacct.fixture';
+import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 
-describe('SiComponent', () => {
+describe('IntacctComponent', () => {
   let component: IntacctComponent;
   let fixture: ComponentFixture<IntacctComponent>;
-  let workspace: SiWorkspaceService;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
+  let workspaceServiceSpy: jasmine.SpyObj<SiWorkspaceService>;
+  let helperServiceSpy: jasmine.SpyObj<HelperService>;
+  let storageServiceSpy: jasmine.SpyObj<StorageService>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let windowServiceMock: Partial<WindowService>;
+  let appcuesServiceSpy: jasmine.SpyObj<AppcuesService>;
 
   beforeEach(async () => {
-  const localStorageDump = {
-    email: 'anishkumar.s@fyle.in',
-    org_id: 'abcdefgh'
-  };
-  localStorage.setItem('user', JSON.stringify(localStorageDump));
-  const service1 = {
-    getWorkspace: () => of(workspaceResponse),
-    postWorkspace: () => of(workspaceResponse)
-  };
-  await TestBed.configureTestingModule({
-    imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
-    declarations: [ IntacctComponent ],
-    providers: [
-      { provide: SiWorkspaceService, useValue: service1 }
-    ]
-  })
-  .compileComponents();
+    const userSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
+    const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getWorkspace', 'postWorkspace', 'syncFyleDimensions', 'syncIntacctDimensions']);
+    const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
+    const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
+    const routerSpyObj = jasmine.createSpyObj('Router', ['navigateByUrl', 'events']);
+    const appcuesSpy = jasmine.createSpyObj('AppcuesService', ['initialiseAppcues']);
 
-  fixture = TestBed.createComponent(IntacctComponent);
-  component = fixture.componentInstance;
-  workspace = TestBed.inject(SiWorkspaceService);
-  fixture.detectChanges();
-});
+    windowServiceMock = {
+      get nativeWindow() {
+        return {
+          location: {
+            pathname: '/integrations/intacct'
+          }
+        } as Window;
+      }
+    };
 
-it('should create', () => {
-  expect(component).toBeTruthy();
-});
+    await TestBed.configureTestingModule({
+      declarations: [ IntacctComponent ],
+      imports: [RouterModule],
+      providers: [
+        { provide: HelperService, useValue: helperSpy },
+        { provide: AppcuesService, useValue: appcuesSpy },
+        { provide: Router, useValue: routerSpyObj },
+        { provide: StorageService, useValue: storageSpy },
+        { provide: UserService, useValue: userSpy },
+        { provide: SiWorkspaceService, useValue: workspaceSpy },
+        { provide: WindowService, useValue: windowServiceMock }
+      ]
+    }).compileComponents();
 
-it('ngOnIng function check', async () => {
-  expect((component as any).getOrCreateWorkspace()).toBeUndefined();
-  spyOn(workspace, 'getWorkspace').and.returnValue(of([]));
-  expect((component as any).getOrCreateWorkspace()).toBeUndefined();
-});
+    userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    workspaceServiceSpy = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
+    helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
+    storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
+    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    (routerSpy.events as any) = of(new NavigationEnd(0, '', ''));
+    appcuesServiceSpy = TestBed.inject(AppcuesService) as jasmine.SpyObj<AppcuesService>;
+
+    userServiceSpy.getUserProfile.and.returnValue(mockUser);
+    workspaceServiceSpy.getWorkspace.and.returnValue(of(workspaceResponse));
+    workspaceServiceSpy.syncFyleDimensions.and.returnValue(of());
+    workspaceServiceSpy.syncIntacctDimensions.and.returnValue(of());
+
+    fixture = TestBed.createComponent(IntacctComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should setup workspace and navigate when workspace exists', () => {
+    fixture.detectChanges();
+
+    expect(helperServiceSpy.setBaseApiURL).toHaveBeenCalledWith(AppUrl.INTACCT);
+    expect(workspaceServiceSpy.getWorkspace).toHaveBeenCalledWith('mock org id');
+    expect(storageServiceSpy.set).toHaveBeenCalledWith('workspaceId', 1);
+    expect(storageServiceSpy.set).toHaveBeenCalledWith('onboarding-state', IntacctOnboardingState.CONNECTION);
+    expect(workspaceServiceSpy.syncFyleDimensions).toHaveBeenCalled();
+    expect(workspaceServiceSpy.syncIntacctDimensions).toHaveBeenCalled();
+    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
+  });
+
+  it('should create a new workspace if none exists', () => {
+    workspaceServiceSpy.getWorkspace.and.returnValue(of([]));
+    workspaceServiceSpy.postWorkspace.and.returnValue(of(workspaceResponse[0]));
+
+    fixture.detectChanges();
+
+    expect(workspaceServiceSpy.postWorkspace).toHaveBeenCalled();
+    expect(storageServiceSpy.set).toHaveBeenCalledWith('workspaceId', 1);
+    expect(storageServiceSpy.set).toHaveBeenCalledWith('onboarding-state', IntacctOnboardingState.CONNECTION);
+    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
+  });
+
+  it('should navigate to correct route based on onboarding state', () => {
+    Object.entries(testOnboardingState).forEach(([state, route ]) => {
+      routerSpy.navigateByUrl.calls.reset();
+      const testWorkspace: IntacctWorkspace = { ...workspaceResponse[0], onboarding_state: state as IntacctOnboardingState };
+      workspaceServiceSpy.getWorkspace.and.returnValue(of([testWorkspace]));
+
+      fixture.detectChanges();
+
+      expect(routerSpy.navigateByUrl).toHaveBeenCalledWith(route);
+
+      fixture = TestBed.createComponent(IntacctComponent);
+      component = fixture.componentInstance;
+    });
+  });
+
+  it('should not navigate if pathname is not /integrations/intacct', () => {
+    component.windowReference.location.pathname = '/some/other/path';
+    fixture.detectChanges();
+
+    expect(routerSpy.navigateByUrl).not.toHaveBeenCalled();
+  });
+
+  it('should initialise Appcues', () => {
+    (window as any).Appcues = {
+      page: jasmine.createSpy('Appcues.page')
+    };
+
+    fixture.detectChanges();
+
+    expect(appcuesServiceSpy.initialiseAppcues).toHaveBeenCalled();
+    expect((window as any).Appcues.page).toHaveBeenCalled();
+  });
 });

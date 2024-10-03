@@ -311,7 +311,7 @@
                         [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
                     </app-clone-setting-field>
                 </div>
-                <!-- <div class="clone-setting--dependent-field" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                <div class="clone-setting--dependent-field" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
                     <app-clone-setting-field
                         [form]="importSettingForm"
                         [options]="importCodeSelectorOptions[DefaultImportFields.ACCOUNT]"
@@ -323,7 +323,7 @@
                         [dropdownDisplayKey]="'label'"
                         [formControllerName]="'importCategoryCode'">
                     </app-clone-setting-field>
-                </div> -->
+                </div>
             </div>
     
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">

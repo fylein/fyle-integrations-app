@@ -154,6 +154,8 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   brandingContent = brandingContent;
 
+  isMultiLineOption: boolean;
+
   constructor(
     private router: Router,
     private exportSettingService: SiExportSettingService,
@@ -528,6 +530,9 @@ export class IntacctExportSettingsComponent implements OnInit {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+        if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+          this.setCCExpenseDateOptions(this.exportSettingsForm?.value.cccExportType);
+        }
       }
     });
   }
@@ -646,6 +651,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
+      this.isMultiLineOption = brandingConfig.brandId !== 'co' ? true : false;
       this.getSettingsAndSetupForm();
 
     });

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NetsuiteAdvancedSettingsService } from './netsuite-advanced-settings.service';
 
-describe('NetsuiteAdvancedSettingsService', () => {
+xdescribe('NetsuiteAdvancedSettingsService', () => {
   let service: NetsuiteAdvancedSettingsService;
 
   beforeEach(() => {

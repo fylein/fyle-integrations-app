@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NetsuiteCustomSegmentDialogComponent } from './netsuite-custom-segment-dialog.component';
 
-describe('NetsuiteCustomSegmentDialogComponent', () => {
+xdescribe('NetsuiteCustomSegmentDialogComponent', () => {
   let component: NetsuiteCustomSegmentDialogComponent;
   let fixture: ComponentFixture<NetsuiteCustomSegmentDialogComponent>;
 

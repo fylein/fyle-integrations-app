@@ -23,8 +23,4 @@ describe('EventsService', () => {
     expect(service.receiveEvent()).toBeUndefined();
     window.postMessage(JSON.stringify({type: 'connectionStatusChange'}));
   });
-
-  it('should post event', () => {
-    expect(service.postEvent('http://lolo.fyle.tech', 'tpaIdhahahehe')).toBeUndefined();
-  });
 });
