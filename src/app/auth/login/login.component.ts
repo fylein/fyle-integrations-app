@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
   private redirect(redirectUri: string | undefined, code:string): void {
     if (redirectUri) {
-      this.router.navigate([redirectUri + `?code=${code}`] );
+      this.router.navigate([redirectUri], { queryParams: { code: code } });
       // eslint-disable-next-line no-console
       console.log('redirectUri', redirectUri + `?code=${code}`);
     } else {
