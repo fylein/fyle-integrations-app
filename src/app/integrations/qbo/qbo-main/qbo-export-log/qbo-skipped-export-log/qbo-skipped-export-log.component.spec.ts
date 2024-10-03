@@ -9,7 +9,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
-import { mockSkippedExpenseGroup, mockSkippedExpenseGroupWithDateRange, mockPaginator } from 'src/app/integrations/qbo/qbo.fixture';
+import { mockSkippedExpenseGroup, mockSkippedExpenseGroupWithDateRange, mockPaginator, mockUserProfile } from 'src/app/integrations/qbo/qbo.fixture';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 describe('QboSkippedExportLogComponent', () => {
@@ -45,15 +45,7 @@ describe('QboSkippedExportLogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QboSkippedExportLogComponent);
     component = fixture.componentInstance;
-    userService.getUserProfile.and.returnValue({
-      org_id: 'or79Cob97KSh',
-      email: 'test@example.com',
-      access_token: 'dummy_access_token',
-      refresh_token: 'dummy_refresh_token',
-      full_name: 'Test User',
-      user_id: 'user123',
-      org_name: 'Test Org'
-    });
+    userService.getUserProfile.and.returnValue(mockUserProfile);
     paginatorService.getPageSize.and.returnValue(mockPaginator);
     exportLogService.getSkippedExpenses.and.returnValue(of(mockSkippedExpenseGroup));
     fixture.detectChanges();

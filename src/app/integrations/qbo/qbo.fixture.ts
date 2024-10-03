@@ -2230,3 +2230,13 @@ export const mockPaginator: Paginator = {
   limit: 50,
   offset: 0
 };
+
+export const mockUserProfile = {
+  org_id: 'or79Cob97KSh',
+  email: 'test@example.com',
+  access_token: 'dummy_access_token',
+  refresh_token: 'dummy_refresh_token',
+  full_name: 'Test User',
+  user_id: 'user123',
+  org_name: 'Test Org'
+};
