@@ -1,1 +1,48 @@
-<p>qbd-direct-dashboard works!</p>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%]"></div>
+
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading">
+    <app-dashboard-export-section
+        (export)="export()"
+        [appName]="appName"
+        [isImportInProgress]="isImportInProgress"
+        [isExportInProgress]="isExportInProgress"
+        [exportableAccountingExportIds]="exportableAccountingExportIds"
+        [failedExpenseGroupCount]="failedExpenseGroupCount"
+        [exportProgressPercentage]="exportProgressPercentage"
+        [accountingExportSummary]="accountingExportSummary"
+        [processedCount]="processedCount"
+        [reimbursableImportState]="reimbursableImportState"
+        [cccImportState]="cccImportState">
+    </app-dashboard-export-section>
+
+    <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
+        [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
+        [headerText]="brandingConfig.brandId === 'fyle' ? 'Looks like you have': 'No records to show yet'"
+        [subHeaderText]="brandingConfig.brandId === 'fyle' ? '0 expenses to export right now': 'Looks like you have no records to export right now.'">
+    </app-zero-state>
+
+    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
+        [appName]="appName"
+        [exportLogVersion]="'v1'"
+        [accountingExportType]="accountingExportType"
+        [accountingExportSummary]="accountingExportSummary">
+    </app-dashboard-export-summary-section>
+
+    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
+        [appName]="appName"
+        [apiModuleUrl]="AppUrl.QBD_DIRECT"
+        [errors]="errors"
+        [groupedErrorStat]="groupedErrorStat"
+        [destinationFieldMap]="destinationFieldMap"
+        [isCategoryMappingGeneric]="true"
+        [isImportItemsEnabled]="isImportItemsEnabled"
+        [destinationOptionsVersion]="'v1'"
+        [importCodeFields]="importCodeFields"
+        [errorsVersion]="'v1'">
+    </app-dashboard-error-section>
+</div>
