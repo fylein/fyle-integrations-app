@@ -83,8 +83,6 @@ export class IntacctComponent implements OnInit {
   private handleAuthParameters(): void {
     this.route.queryParams.subscribe(params => {
       const authCode = params.code;
-      // eslint-disable-next-line
-      console.log(params);
       if ( authCode) {
         this.siAuthService.loginWithAuthCode(authCode).subscribe(
           () => this.getOrCreateWorkspace()

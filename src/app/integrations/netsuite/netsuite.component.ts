@@ -82,7 +82,7 @@ export class NetsuiteComponent implements OnInit {
   private handleAuthParameters(): void {
     this.route.queryParams.subscribe(params => {
       const loginRequired = params.login_required === 'true';
-      const authCode = params.authCode;
+      const authCode = params.code;
 
       if (loginRequired && authCode) {
         this.nsAuthService.loginWithAuthCode(authCode).subscribe(

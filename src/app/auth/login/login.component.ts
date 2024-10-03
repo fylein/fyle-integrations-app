@@ -49,9 +49,7 @@ export class LoginComponent implements OnInit {
 
   private redirect(redirectUri: string | undefined, code:string): void {
     if (redirectUri) {
-      this.router.navigate([redirectUri], { queryParams: { code: code } });
-      // eslint-disable-next-line no-console
-      console.log('redirectUri', redirectUri + `?code=${code}`);
+      brandingConfig.brandId === 'co' ? this.router.navigate([redirectUri], { queryParams: { code: code } }) : this.router.navigate([redirectUri]);
     } else {
       this.router.navigate(['/integrations']);
     }
@@ -119,10 +117,6 @@ export class LoginComponent implements OnInit {
   private login(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
-        // eslint-disable-next-line no-console
-        console.log('code', params.code);
-        // eslint-disable-next-line no-console
-        console.log('redirect_uri', params.redirect_uri);
         this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
     });
