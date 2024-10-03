@@ -82,10 +82,9 @@ export class IntacctComponent implements OnInit {
 
   private handleAuthParameters(): void {
     this.route.queryParams.subscribe(params => {
-      const loginRequired = params.login_required === 'true';
       const authCode = params.authCode;
 
-      if (loginRequired && authCode) {
+      if ( authCode) {
         this.siAuthService.loginWithAuthCode(authCode).subscribe(
           () => this.getOrCreateWorkspace()
         );

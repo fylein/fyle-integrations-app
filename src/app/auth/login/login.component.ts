@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  private redirect(redirectUri: string | undefined): void {
+  private redirect(redirectUri: string | undefined, code:string): void {
     if (redirectUri) {
-      this.router.navigate([redirectUri]);
+      this.router.navigate([redirectUri + `?code=${code}`] );
     } else {
       this.router.navigate(['/integrations']);
     }
@@ -106,9 +106,9 @@ export class LoginComponent implements OnInit {
             this.helperService.setBaseApiURL(AppUrl.XERO);
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          this.redirect(redirectUri);
+          this.redirect(redirectUri, code);
         } else {
-          this.redirect(redirectUri);
+          this.redirect(redirectUri, code);
         }
       });
     });
