@@ -38,24 +38,24 @@ export class QbdDirectMappingComponent implements OnInit {
   ) { }
 
   private setupPage(): void {
-    // This.mappingService.getMappingSettings().subscribe((response) => {
-    //   If (response.results && Array.isArray(response.results)) {
-    //     Response.results.forEach((item) => {
-    //       If (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
-    //         Const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
-    //         This.mappingPages.push({
-    //           Label: brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
-    //           RouterLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
-    //         });
-    //       }
-    //     });
-    //   }
-    //   If (!brandingFeatureConfig.featureFlags.mapEmployees) {
-    //     This.mappingPages.splice(0, 1);
-    //   }
+    this.mappingService.getMappingSettings().subscribe((response) => {
+      if (response.results && Array.isArray(response.results)) {
+        response.results.forEach((item) => {
+          if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
+            const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
+            this.mappingPages.push({
+              Label: brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
+              RouterLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+            });
+          }
+        });
+      }
+      if (!brandingFeatureConfig.featureFlags.mapEmployees) {
+        this.mappingPages.splice(0, 1);
+      }
       this.router.navigateByUrl(this.mappingPages[0].routerLink);
       this.isLoading = false;
-    // });
+    });
   }
 
   ngOnInit(): void {

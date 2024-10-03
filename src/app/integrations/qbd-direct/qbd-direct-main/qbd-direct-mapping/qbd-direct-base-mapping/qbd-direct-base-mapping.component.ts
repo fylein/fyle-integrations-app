@@ -32,8 +32,6 @@ export class QbdDirectBaseMappingComponent implements OnInit {
 
   destinationField: string;
 
-  showAutoMapEmployee: boolean;
-
   reimbursableExpenseObject: QBDReimbursableExpensesObject | null;
 
   cccExpenseObject: QBDCorporateCreditCardExpensesObject | null;
@@ -55,17 +53,6 @@ export class QbdDirectBaseMappingComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
-  triggerAutoMapEmployees(): void {
-    this.isLoading = true;
-    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
-    }, () => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
-    });
-  }
-
   private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return workspaceGeneralSetting.employee_field_mapping;
@@ -85,7 +72,6 @@ export class QbdDirectBaseMappingComponent implements OnInit {
       this.reimbursableExpenseObject = responses[0].reimbursable_expenses_object;
       this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
-      this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
