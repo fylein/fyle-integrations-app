@@ -125,4 +125,57 @@ describe('IntacctExportSettingsComponent', () => {
       expect(component.isLoading).toBeFalse();
     });
   });
+
+  describe('Form Save', () => {
+    it('should save export settings successfully during onboarding', fakeAsync(() => {
+      workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.EXPORT_SETTINGS);
+      exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      spyOnProperty(router, 'url').and.returnValue('/integrations/intacct/onboarding/export_settings');
+
+      fixture.detectChanges();
+      component.save();
+      tick();
+
+      expect(exportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalled();
+      expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.IMPORT_SETTINGS);
+      expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/import_settings']);
+    }));
+
+    it('should save export settings successfully post onboarding', () => {
+      workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
+      exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+
+      fixture.detectChanges();
+      component.save();
+
+      expect(exportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      expect(trackingService.intacctUpdateEvent).toHaveBeenCalled();
+      expect(router.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should handle save failure', () => {
+      exportSettingService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
+
+      fixture.detectChanges();
+      component.save();
+
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      expect(component.saveInProgress).toBeFalse();
+    });
+  });
+
+  it('should handle refresh dimensions', () => {
+    component.refreshDimensions(true);
+    expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
+    expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
+    expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+  });
+
+  it('should navigate to previous step', () => {
+    component.navigateToPreviousStep();
+    expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/connector']);
+  });
 });
