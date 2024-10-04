@@ -9,7 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { AccountingDisplayName, AccountingField, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { mockCreditCardAccounts, mockGeneralSettings, mockImportSettings } from '../../../qbo.fixture';
+import { mockCreditCardAccounts, mockGeneralSettings, mockImportSettings, mockMappingSetting } from '../../../qbo.fixture';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
@@ -130,6 +130,41 @@ describe('QboBaseMappingComponent', () => {
     const workspaceGeneralSetting = {} as QBOWorkspaceGeneralSetting;
     const mappingSettings: MappingSetting[] = [];
 
+    const result = (component as any).getDestinationField(workspaceGeneralSetting, mappingSettings);
+    expect(result).toBe('');
+  });
+
+  it('should return employee_field_mapping when sourceField is EMPLOYEE', () => {
+    component.sourceField = FyleField.EMPLOYEE;
+    const workspaceGeneralSetting = { employee_field_mapping: 'VENDOR' } as QBOWorkspaceGeneralSetting;
+    const mappingSettings: MappingSetting[] = [];
+  
+    const result = (component as any).getDestinationField(workspaceGeneralSetting, mappingSettings);
+    expect(result).toBe('VENDOR');
+  });
+  
+  it('should return ACCOUNT when sourceField is CATEGORY', () => {
+    component.sourceField = FyleField.CATEGORY;
+    const workspaceGeneralSetting = {} as QBOWorkspaceGeneralSetting;
+    const mappingSettings: MappingSetting[] = [];
+  
+    const result = (component as any).getDestinationField(workspaceGeneralSetting, mappingSettings);
+    expect(result).toBe(AccountingField.ACCOUNT);
+  });
+  
+  it('should return destination_field from mappingSettings for VENDOR sourceField', () => {
+    component.sourceField = FyleField.VENDOR;
+    const workspaceGeneralSetting = {} as QBOWorkspaceGeneralSetting;
+  
+    const result = (component as any).getDestinationField(workspaceGeneralSetting, mockMappingSetting);
+    expect(result).toBe(AccountingField.ACCOUNT);
+  });
+  
+  it('should return empty string if no matching mapping setting is found', () => {
+    component.sourceField = FyleField.VENDOR;
+    const workspaceGeneralSetting = {} as QBOWorkspaceGeneralSetting;
+    const mappingSettings: MappingSetting[] = [];
+  
     const result = (component as any).getDestinationField(workspaceGeneralSetting, mappingSettings);
     expect(result).toBe('');
   });
