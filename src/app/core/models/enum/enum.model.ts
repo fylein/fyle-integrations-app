@@ -519,6 +519,7 @@ export enum TaskLogState {
   FAILED = 'FAILED',
   FATAL = 'FATAL',
   COMPLETE = 'COMPLETE',
+  EXPORT_PROCESSED = 'EXPORT_PROCESSED'
 }
 
 export enum ExportMode {
