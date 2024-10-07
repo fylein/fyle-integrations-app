@@ -13,9 +13,10 @@ import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleF
 import { ExportSettingOptionSearch, ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { TitleCasePipe } from '@angular/common';
 
 describe('IntacctExportSettingsComponent', () => {
   let component: IntacctExportSettingsComponent;
@@ -170,16 +171,39 @@ describe('IntacctExportSettingsComponent', () => {
     });
   });
 
-  it('should handle refresh dimensions', () => {
-    component.refreshDimensions(true);
-    expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
-    expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
-    expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
-  });
+  describe('Utility Functions', () => {
+    it('should handle refresh dimensions', () => {
+      component.refreshDimensions(true);
+      expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
+      expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+    });
 
-  it('should navigate to previous step', () => {
-    component.navigateToPreviousStep();
-    expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/connector']);
+    it('should navigate to previous step', () => {
+      component.navigateToPreviousStep();
+      expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/connector']);
+    });
+
+    it('should return the correct employee field mapping', () => {
+      fixture.detectChanges();
+
+      expect(
+        component.getEmployeeFieldMapping(FyleField.VENDOR, IntacctReimbursableExpensesObject.BILL)
+      ).toBe('Vendor');
+
+      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.JOURNAL_ENTRY))
+        .toBe(new TitleCasePipe().transform(component.exportSettingsForm.get('employeeFieldMapping')?.value));
+
+      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.BILL))
+        .toBe('Vendor');
+    });
+
+    it('should get the correct export type', () => {
+      expect(component.getExportType(IntacctReimbursableExpensesObject.JOURNAL_ENTRY)).toBe('Journal_entry');
+      expect(component.getExportType(IntacctReimbursableExpensesObject.BILL)).toBe('Bill');
+      expect(component.getExportType(IntacctReimbursableExpensesObject.EXPENSE_REPORT)).toBe('Expense_report');
+      expect(component.getExportType(null)).toBe('export');
+    });
   });
 
   describe('Watchers', () => {
@@ -279,6 +303,14 @@ describe('IntacctExportSettingsComponent', () => {
 
         expect(component.exportSettingsForm.get('employeeFieldMapping')?.value).toBe(EmployeeFieldMapping.EMPLOYEE);
         expect(component.exportSettingsForm.get('cccExpensePaymentType')?.hasValidator(Validators.required)).toBeTrue();
+      }));
+
+      it('should handle cccExportType being changed to Journal Entry', fakeAsync(() => {
+        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+        tick();
+
+        expect(component.exportSettingsForm.get('employeeFieldMapping')?.enabled).toBeTrue();
+        expect(component.exportSettingsForm.get('creditCard')?.hasValidator(Validators.required)).toBeTrue();
       }));
     });
 
@@ -384,7 +416,6 @@ describe('IntacctExportSettingsComponent', () => {
 
   });
 
-
   describe('C1 Specific Behavior', () => {
     it('should handle setup with c1 branding', () => {
       brandingConfig.brandId = 'co';
@@ -400,6 +431,63 @@ describe('IntacctExportSettingsComponent', () => {
 
     afterAll(() => {
       brandingConfig.brandId = 'fyle';
+    });
+  });
+
+  describe('Edge Cases', () => {
+    it('should set the correct CCC expense grouping date options when CCC expense object is unset', () => {
+      component.exportSettings = {
+        configurations: {
+          corporate_credit_card_expenses_object: null
+        }
+      } as ExportSettingGet;
+      spyOn<any>(component, 'setCCExpenseDateOptions');
+
+      component['setupCCCExpenseGroupingDateOptions']();
+      expect(component['setCCExpenseDateOptions']).toHaveBeenCalledOnceWith(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+    });
+
+    it('should default CCC expense grouping date options to reimbursable grouping date options for non-charge card transactions', () => {
+      fixture.detectChanges();
+
+      component['setCCExpenseDateOptions'](IntacctCorporateCreditCardExpensesObject.BILL);
+      expect(component.cccExpenseGroupingDateOptions).toEqual(component.reimbursableExpenseGroupingDateOptions);
+    });
+
+    it('should set the correct CCC expense grouping date options when grouping by report', () => {
+      fixture.detectChanges();
+
+      component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+      component['updateCCCGroupingDateOptions'](ExpenseGroupingFieldOption.CLAIM_NUMBER);
+
+      expect(component.cccExpenseGroupingDateOptions).toEqual([
+        {
+          label: brandingContent.common.currentDate,
+          value: ExportDateType.CURRENT_DATE
+        },
+        {
+          label: 'Last Spend Date',
+          value: ExportDateType.LAST_SPENT_AT
+        },
+        {
+          label: 'Approved Date',
+          value: ExportDateType.APPROVAL_DATE
+        },
+        {
+          label: 'Card Transaction Post date',
+          value: ExportDateType.POSTED_AT
+        }
+      ]);
+    });
+
+    it('should enable the employeeFieldMapping field when at least one export type is Journal Entry', () => {
+      fixture.detectChanges();
+      component.exportSettings.configurations.reimbursable_expenses_object = IntacctReimbursableExpensesObject.JOURNAL_ENTRY;
+      component.exportSettings.configurations.corporate_credit_card_expenses_object = IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION;
+
+      component['exportFieldsWatcher']();
+
+      expect(component.exportSettingsForm.get('employeeFieldMapping')?.enabled).toBeTrue();
     });
   });
 });
