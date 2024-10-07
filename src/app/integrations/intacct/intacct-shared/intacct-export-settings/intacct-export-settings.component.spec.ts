@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideRouter, Router, RouterModule } from '@angular/router';
@@ -388,7 +389,12 @@ describe('IntacctExportSettingsComponent', () => {
         tick(1000);
 
         expect(mappingService.getPaginatedDestinationAttributes).toHaveBeenCalledWith('EXPENSE_PAYMENT_TYPE', 'test');
-        expect(component.destinationOptions.EXPENSE_PAYMENT_TYPE.every(option => (option.detail ? option.detail.is_reimbursable : true))).toBeTrue();
+
+        const isReimbursable = (option: IntacctDestinationAttribute) => (
+          option.detail ? option.detail.is_reimbursable : true
+        );
+
+        expect(component.destinationOptions.EXPENSE_PAYMENT_TYPE.every(isReimbursable)).toBeTrue();
         expect(component.isOptionSearchInProgress).toBeFalse();
       }));
 
