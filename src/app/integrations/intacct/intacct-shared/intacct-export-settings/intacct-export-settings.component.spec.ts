@@ -35,8 +35,8 @@ describe('IntacctExportSettingsComponent', () => {
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
 
     await TestBed.configureTestingModule({
-      declarations: [IntacctExportSettingsComponent],
-      imports: [SharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
+      declarations: [ IntacctExportSettingsComponent ],
+      imports: [ SharedModule, ReactiveFormsModule, RouterModule.forRoot([]) ],
       providers: [
         FormBuilder,
         { provide: SiExportSettingService, useValue: exportSettingServiceSpy },
@@ -108,6 +108,7 @@ describe('IntacctExportSettingsComponent', () => {
     });
 
     it('should add missing destination options', () => {
+
       expect(component.destinationOptions.ACCOUNT).toContain({
         destination_id: mockExportSettings.general_mappings.default_gl_account.id,
         value: mockExportSettings.general_mappings.default_gl_account.name
