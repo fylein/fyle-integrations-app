@@ -21,7 +21,7 @@ export const mockUser: MinimalUser = {
     refresh_token: 'mock_refresh_token',
     full_name: 'Test User',
     user_id: 'user123',
-    org_name: 'Test Org' 
+    org_name: 'Test Org'
 };
 
 export const mockQBOCredential = {
