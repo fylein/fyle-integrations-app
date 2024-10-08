@@ -56,7 +56,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
 
-  accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.FETCHING_EXPENSE, QbdDirectTaskLogType.CREATING_BILL, QbdDirectTaskLogType.CREATING_EXPENSE];
+  accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.CREATING_BILL, QbdDirectTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QbdDirectTaskLogType.CREATING_JOURNAL_ENTRY];
 
   accountingExportTasklogState: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
 
