@@ -13,9 +13,6 @@ import { AccountingExport } from "src/app/core/models/db/accounting-export.model
 import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
 import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
 import { Paginator } from "src/app/core/models/misc/paginator.model";
-import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
-import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
-import { Paginator } from "src/app/core/models/misc/paginator.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -2444,3 +2441,5 @@ export const mockemployeeAttributes = {
 };
 
 export const mockMappingStats = {"all_attributes_count": 105, "unmapped_attributes_count": 92};
+
+export const mockPageSize = { limit: 10, offset: 0 };
