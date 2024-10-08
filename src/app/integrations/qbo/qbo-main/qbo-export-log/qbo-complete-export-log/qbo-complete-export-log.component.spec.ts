@@ -10,7 +10,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { mockExpenseGroupResponse, mockUser } from 'src/app/integrations/qbo/qbo.fixture';
+import { mockExpenseGroupResponse, mockPageSize, mockUser } from 'src/app/integrations/qbo/qbo.fixture';
 
 describe('QboCompleteExportLogComponent', () => {
   let component: QboCompleteExportLogComponent;
@@ -46,7 +46,7 @@ describe('QboCompleteExportLogComponent', () => {
 
   beforeEach(() => {
     userService.getUserProfile.and.returnValue(mockUser);
-    paginatorService.getPageSize.and.returnValue({ limit: 10, offset: 0 });
+    paginatorService.getPageSize.and.returnValue(mockPageSize);
     exportLogService.getExpenseGroups.and.returnValue(of());
 
     fixture = TestBed.createComponent(QboCompleteExportLogComponent);

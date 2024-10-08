@@ -42,7 +42,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
-  selectedDateFilter: SelectedDateFilter | null;
+  selectedDateFilter?: SelectedDateFilter | null;
 
   exportLogForm: FormGroup;
 

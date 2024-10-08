@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteWorkspace } from 'src/app/core/models/netsuite/db/netsuite-workspace.model';
@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
-
+import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 
 @Component({
   selector: 'app-netsuite',
@@ -29,10 +29,12 @@ export class NetsuiteComponent implements OnInit {
   constructor(
     private netsuiteHelperService: NetsuiteHelperService,
     private router: Router,
+    private route: ActivatedRoute,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private nsAuthService: NetsuiteAuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -77,7 +79,21 @@ export class NetsuiteComponent implements OnInit {
     );
   }
 
+  private handleAuthParameters(): void {
+    this.route.queryParams.subscribe(params => {
+      const authCode = params.code;
+
+      if (authCode) {
+        this.nsAuthService.loginWithAuthCode(authCode).subscribe(
+          () => this.setupWorkspace()
+        );
+      } else {
+        this.setupWorkspace();
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.setupWorkspace();
+    this.handleAuthParameters();
   }
 }

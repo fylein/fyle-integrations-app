@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
@@ -9,6 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 
 @Component({
   selector: 'app-intacct',
@@ -29,10 +30,12 @@ export class IntacctComponent implements OnInit {
     private appcuesService: AppcuesService,
     private helperService: HelperService,
     private router: Router,
+    private route: ActivatedRoute,
     private storageService: StorageService,
     private userService: UserService,
     private windowService: WindowService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: SiWorkspaceService,
+    private siAuthService: SiAuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -77,13 +80,26 @@ export class IntacctComponent implements OnInit {
     );
   }
 
+  private handleAuthParameters(): void {
+    this.route.queryParams.subscribe(params => {
+      const authCode = params.code;
+      if (authCode) {
+        this.siAuthService.loginWithAuthCode(authCode).subscribe(
+          () => this.getOrCreateWorkspace()
+        );
+      } else {
+        this.getOrCreateWorkspace();
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         (window as any).Appcues && (window as any).Appcues.page();
       }
     });
-    this.getOrCreateWorkspace();
+    this.handleAuthParameters();
   }
 
 }
