@@ -8,6 +8,11 @@ import { ExportSettingGet } from "src/app/core/models/intacct/intacct-configurat
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
+import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
+import { DependentFieldSetting, ImportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
+import { GroupedDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
+import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -735,3 +740,82 @@ export const mockPaginatedDestinationAttributes = {
     ]
   }
 };
+
+export const intacctImportCodeConfig = {
+  PROJECT: true,
+  DEPARTMENT: true,
+  ACCOUNT: true,
+  EXPENSE_TYPE: true
+};
+
+export const fyleFields = [
+  {
+    attribute_type: 'COST_CENTER',
+    display_name: 'Cost Center',
+    is_dependent: false
+  },
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project',
+    is_dependent: false
+  }
+] as ExpenseField[];
+
+export const sageIntacctFields = [
+  {
+    attribute_type: 'CUSTOMER',
+    display_name: 'customer'
+  },
+  {
+    attribute_type: 'ITEM',
+    display_name: 'item'
+  },
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project'
+  }
+] as ExpenseField[];
+
+export const importSettings = {
+  configurations: {
+    import_categories: false,
+    import_tax_codes: false,
+    import_vendors_as_merchants: false,
+    import_code_fields: []
+  },
+  general_mappings: {
+    default_tax_code: {
+      name: null,
+      id: null
+    }
+  },
+  mapping_settings: [],
+  dependent_field_settings: null as unknown as DependentFieldSetting,
+  workspace_id: 366
+} as ImportSettingGet;
+
+export const configuration = {
+  reimbursable_expenses_object: null,
+  corporate_credit_card_expenses_object: 'CHARGE_CARD_TRANSACTION',
+  import_code_fields: []
+} as unknown as IntacctConfiguration;
+
+export const locationEntityMapping: LocationEntityMapping = {
+  id: 327,
+  location_entity_name: 'Top Level',
+  country_name: null,
+  destination_id: 'top_level',
+  created_at: new Date('2024-08-26T11:54:23.640893Z'),
+  updated_at: new Date('2024-08-26T11:54:23.640913Z'),
+  workspace: 366
+};
+
+export const groupedDestinationAttributes = {
+  ACCOUNT: [],
+  EXPENSE_TYPE: [],
+  EXPENSE_PAYMENT_TYPE: [],
+  VENDOR: [],
+  EMPLOYEE: [],
+  CHARGE_CARD_NUMBER: [],
+  TAX_DETAIL: []
+} as unknown as GroupedDestinationAttribute;
