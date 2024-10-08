@@ -2241,4 +2241,4 @@ export const mockUserProfile = {
   org_name: 'Test Org'
 };
 
-export const mockPageSize = { limit: 10, offset: 0 };
+export const mockPageSize = { limit: 10, offset: 0 }; 
