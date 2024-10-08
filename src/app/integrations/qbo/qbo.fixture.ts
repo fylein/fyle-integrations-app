@@ -2240,3 +2240,5 @@ export const mockUserProfile = {
   user_id: 'user123',
   org_name: 'Test Org'
 };
+
+export const mockPageSize = { limit: 10, offset: 0 };
