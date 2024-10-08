@@ -40,7 +40,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
-  selectedDateFilter: SelectedDateFilter | null;
+  selectedDateFilter?: SelectedDateFilter | null;
 
   presentDate = new Date().toLocaleDateString();
 
@@ -60,7 +60,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  searchQuery: string | null;
+  searchQuery?: string | null;
 
   private searchQuerySubject = new Subject<string>();
 
