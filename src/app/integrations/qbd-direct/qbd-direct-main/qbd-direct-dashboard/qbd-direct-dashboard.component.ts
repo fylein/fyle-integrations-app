@@ -58,7 +58,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.CREATING_BILL, QbdDirectTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QbdDirectTaskLogType.CREATING_JOURNAL_ENTRY];
 
-  accountingExportTasklogState: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
+  exportLogProcessingStates: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
 
   isImportItemsEnabled: boolean;
 
@@ -98,14 +98,14 @@ export class QbdDirectDashboardComponent implements OnInit {
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
       takeWhile((response: QbdDirectTaskResponse) =>
         response.results.filter(task =>
-          (this.accountingExportTasklogState.includes(task.status))
+          (this.exportLogProcessingStates.includes(task.status))
         ).length > 0, true
       )
     ).subscribe((res: QbdDirectTaskResponse) => {
       this.processedCount = res.results.filter((task: { status: TaskLogState; }) => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter((task: { status: TaskLogState; }) => (this.accountingExportTasklogState.includes(task.status))).length === 0) {
+      if (res.results.filter((task: { status: TaskLogState; }) => (this.exportLogProcessingStates.includes(task.status))).length === 0) {
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$
@@ -132,7 +132,7 @@ export class QbdDirectDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks(this.accountingExportTasklogState.concat(TaskLogState.FAILED), undefined, this.accountingExportType),
+      this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.FAILED), undefined, this.accountingExportType),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.QbdDirectExportSettingsService.getQbdExportSettings(),
@@ -152,7 +152,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
       this.importCodeFields = responses[6].workspace_general_settings.import_code_fields;
 
-      const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.accountingExportTasklogState.includes(task.status));
+      const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
