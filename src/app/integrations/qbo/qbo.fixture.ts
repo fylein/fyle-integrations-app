@@ -2153,3 +2153,5 @@ export const mockExpenseGroupResponse: ExpenseGroupResponse = {
     }
   ]
 };
+
+export const mockPageSize = { limit: 10, offset: 0 };
