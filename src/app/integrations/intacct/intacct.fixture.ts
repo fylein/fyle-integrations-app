@@ -849,3 +849,17 @@ export const settingsWithDependentFields = {...importSettings, dependent_field_s
   cost_type_field_name: 'COST_TYPE',
   cost_type_placeholder: 'Enter Cost Type'
 }} as ImportSettingGet;
+
+export const costCodeFieldValue = {
+  attribute_type: 'COST_CODE',
+  display_name: 'COST_CODE',
+  source_placeholder: 'Enter Cost Code',
+  is_dependent: true
+};
+
+export const costTypeFieldValue = {
+  attribute_type: 'COST_TYPE',
+  display_name: 'COST_TYPE',
+  source_placeholder: 'Enter Cost Type',
+  is_dependent: true
+};

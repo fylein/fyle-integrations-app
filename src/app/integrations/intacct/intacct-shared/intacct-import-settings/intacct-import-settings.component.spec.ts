@@ -14,7 +14,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
-import { configuration, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
+import { configuration, costCodeFieldValue, costTypeFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -198,18 +198,8 @@ describe('IntacctImportSettingsComponent', () => {
         fixture.detectChanges();
 
         expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeTrue();
-        expect(component.importSettingsForm.get('costCodes')?.value).toEqual({
-          attribute_type: 'COST_CODE',
-          display_name: 'COST_CODE',
-          source_placeholder: 'Enter Cost Code',
-          is_dependent: true
-        });
-        expect(component.importSettingsForm.get('costTypes')?.value).toEqual({
-          attribute_type: 'COST_TYPE',
-          display_name: 'COST_TYPE',
-          source_placeholder: 'Enter Cost Type',
-          is_dependent: true
-        });
+        expect(component.importSettingsForm.get('costCodes')?.value).toEqual(costCodeFieldValue);
+        expect(component.importSettingsForm.get('costTypes')?.value).toEqual(costTypeFieldValue);
       });
     });
   });
