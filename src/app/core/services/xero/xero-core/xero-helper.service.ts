@@ -30,4 +30,8 @@ export class XeroHelperService {
   refreshFyleDimensions() {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/refresh_dimensions/`, {});
   }
+
+  disconnect() {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/xero/revoke_connections/`, {});
+  }
 }
