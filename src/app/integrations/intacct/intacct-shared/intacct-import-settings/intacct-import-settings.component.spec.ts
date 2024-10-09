@@ -13,7 +13,6 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-
 import { configuration, costCodeFieldValue, costTypeFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
