@@ -59,7 +59,8 @@ export class WorkspaceService {
       [AppUrl.BUSINESS_CENTRAL]: BusinessCentralOnboardingState.CONNECTION,
       [AppUrl.QBO]: QBOOnboardingState.CONNECTION,
       [AppUrl.NETSUITE]: NetsuiteOnboardingState.CONNECTION,
-      [AppUrl.XERO]: XeroOnboardingState.CONNECTION
+      [AppUrl.XERO]: XeroOnboardingState.CONNECTION,
+      [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION
     };
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];

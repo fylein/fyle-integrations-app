@@ -44,4 +44,5 @@ export type AppUrlMap = {
     [AppUrl.QBO]: string
     [AppUrl.NETSUITE]: string
     [AppUrl.XERO]: string
+    [AppUrl.QBD_DIRECT]:string
 }

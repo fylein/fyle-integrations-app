@@ -1,1 +1,118 @@
-<p>qbd-direct-import-settings works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div>
+        <app-configuration-step-header [headerText]="brandingContent.stepName"
+            [contentText]="brandingContent.contentText"
+            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+            (refreshDimension)="refreshDimensions()">
+        </app-configuration-step-header>
+    </div>
+    <div>
+        <form [formGroup]="importSettingForm">
+            <div class="tw-p-24-px">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importCategoriesLabel"
+                        [subLabel]="brandingContent.importCategoriesSubLabel"
+                        [formControllerName]="'importCategories'"
+                        [isSectionHeader]="false"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+
+                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
+                        <div class="tw-flex tw-justify-between tw-items-center">
+                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                                {{brandingContent.chartOfAccountTypes}}
+                                <p class="tw-text-text-muted" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
+                                    {{brandingContent.chartOfAccountTypesSubLabel}}
+                                </p>
+                            </h5>
+                            <div class="p-field-checkbox tw-pl-34-px">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select Chart of Accouts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                                    <ng-template let-value pTemplate="selectedItems">
+                                        <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
+                                            <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
+                                        </div>
+                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select Chart of Accounts')}}</div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                        <app-configuration-select-field
+                            [appName]="appName"
+                            [form]="importSettingForm"
+                            [isDisableTextRequired]="false"
+                            [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
+                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
+                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
+                            [isMultiLineOption]="true"
+                            [isFieldMandatory]="true"
+                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
+                            [isDisabled]="!QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
+                            [formControllerName]="'importCategoryCode'">
+                        </app-configuration-select-field>
+                    </div>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QbdDirectCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                    <app-configuration-toggle-field
+                      [form]="importSettingForm"
+                      [label]="brandingContent.importItemsLabel"
+                      [subLabel]="brandingContent.importItemsSubLabel"
+                      [formControllerName]="'importItems'"
+                      [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importVendorsAsMerchantsLabel"
+                        [subLabel]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importVendorsAsMerchants'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div>
+                    <app-configuration-import-field
+                        [form]="importSettingForm"
+                        [appName]="appName"
+                        [accountingFieldOptions]="QbdDirectFields"
+                        [fyleFieldOptions]="fyleFields"
+                        [isDestinationFixedImport]="true">
+                    </app-configuration-import-field>
+                </div>
+            </div>
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+                [isButtonDisabled]="!importSettingForm.valid"
+                [showBackButton]="isOnboarding ? true : false"
+                (save)="save()"
+                (navigateToPreviousStep)="navigateToPreviousStep()">
+            </app-configuration-step-footer>
+        </form>
+    </div>
+</div>
+<div>
+    <app-configuration-custom-field-creation-dialog
+        [customFieldForm]="customFieldForm"
+        [showCustomFieldCreationDialog]="showCustomFieldDialog"
+        (saveCustomFieldFn)="saveFyleExpenseField()"
+        (closeModelFn)="closeModel()">
+    </app-configuration-custom-field-creation-dialog>
+</div>
+<div *ngIf="isPreviewDialogVisible">
+    <app-preview-dialog
+        [isPreviewDialogVisible]="true"
+        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+        [header]="'Preview'">
+    </app-preview-dialog>
+</div>

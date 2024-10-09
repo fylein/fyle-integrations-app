@@ -91,7 +91,7 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop Direct'
+  QBD_DIRECT = 'QuickBooks Desktop '
 }
 
 export enum AppNameInService {
@@ -327,6 +327,14 @@ export enum QBDOnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum QbdDirectOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
+}
+
 export enum ConfigurationCta {
   SAVE = 'Save',
   SAVE_AND_CONTINUE = 'Save and Continue',
@@ -339,6 +347,12 @@ export enum ConfigurationCta {
 export enum QBDReimbursableExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+}
+
+export enum QbdDirectReimbursableExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  CHECK = 'CHECK'
 }
 
 export enum QBDCorporateCreditCardExpensesObject {
@@ -505,6 +519,7 @@ export enum TaskLogState {
   FAILED = 'FAILED',
   FATAL = 'FATAL',
   COMPLETE = 'COMPLETE',
+  EXPORT_PROCESSED = 'EXPORT_PROCESSED'
 }
 
 export enum ExportMode {
@@ -548,7 +563,8 @@ export enum AppUrl {
   INTEGRATION = 'integration',
   QBO = 'qbo',
   NETSUITE = 'netsuite',
-  XERO = 'xero'
+  XERO = 'xero',
+  QBD_DIRECT = 'qbd_direct'
 }
 
 export enum Sage300ExportType {
@@ -718,6 +734,12 @@ export enum QBOTaskLogType {
   CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
   CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
   FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
+export enum QbdDirectTaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
+  CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE'
 }
 
 export enum NetsuiteTaskLogType {

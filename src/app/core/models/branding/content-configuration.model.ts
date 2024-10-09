@@ -16,72 +16,72 @@ export type ContentConfiguration = {
                     stepName: string;
                     headerText: string;
                     contentText: string;
+                    reimbursable: {
+                        reimbursableExpenseLabel: string;
+                        reimbursableExpenseSubLabel: string;
+                        reimbursableExpenseTypeLabel: string;
+                        reimbursableExpenseTypeSubLabel: string;
+                        reimbursableExpenseStateLabel: string;
+                        reimbursableExpenseStateSubLabel: string;
+                        reimbursableExpenseDateLabel: string;
+                        reimbursableExpenseDateSubLabel:string;
+                        reimbursableExpenseGroupLabel: string;
+                        reimbursableExpenseGroupSubLabel: string;
+                        employeeMappingLabel: string;
+                        employeeMappingSubLabel: string;
+                        autoMapEmployeesLabel: string;
+                        autoMapEmployeesSubLabel: string;
+                    },
                     corporateCard: {
                         creditCardExpenseLabel: string;
-                        cccExpenseBankAccountSubLabel: string;
-                        creditCardExportTypeSubLabel: string;
-                        expenseState: string;
                         creditCardExpenseSubLabel: string;
-                        cccExpenseStateSubLabel: string;
-                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseTypeLabel: string;
+                        creditCardExpenseTypeSubLabel: string;
                         creditCardExpenseStateLabel: string;
-                        defaultCCCVendorLabel: string;
-                        defaultCCCAccountLabel: string;
-                        defaultCCCAccountPlaceholder: string;
-                        journalOptionLabel: string;
-                        journalOptionSubLabel: string;
-                        defaultDebitCardAccountLabel: string;
-                        defaultDebitCardAccountPlaceholder: string;
-                        accountsPayableLabel: string
+                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseDateLabel: string;
+                        creditCardExpenseDateSubLabel: string;
+                        creditCardExpenseGroupLabel: string;
+                        creditCardExpenseGroupSubLabel: string;
+                        creditCardExpenseNameinJELabel: string;
+                        creditCardExpenseNameinJESubLabel: string;
                     }
                 },
                 importSetting: {
-                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
                     importCategoriesLabel: string;
                     importCategoriesSubLabel: string;
-                    importCustomersLabel: string;
-                    importCustomersSubLabel: string;
-                    importProjectsLabel: string;
+                    chartOfAccountTypes: string;
+                    chartOfAccountTypesSubLabel: string;
                     importItemsLabel: string;
-                    taxCodeLabel: string;
-                    taxCodeSubLabel: string;
-                    defaultTaxCodeLabel: string;
-                    importSuppliersAsMerchantsLabel: string;
-                    importSuppliersAsMerchantsSubLabel: string;
-                    notes: string,
-                    importNetsuiteEmployeesLabel: string;
-                    importNetsuiteEmployeesSubLabel: string;
-                    toggleToastMessage: string,
-                    customSegmentHeader: string;
+                    importItemsSubLabel: string;
+                    importVendorsAsMerchantsLabel: string;
                 },
                 advancedSettings: {
-                    memoStructureSubLabel: string;
-                    preferenceLabel: string;
-                    preferenceSubLabel: string;
-                    frequencySubLabel: string;
-                    automationSubLabel: string;
-                    customizationSubLabel: string;
-                    defaultPaymentAccount: string;
-                    memoStructureLabel: string;
                     stepName: string;
                     contentText: string;
-                    scheduleAutoExport: string;
-                    email: string;
-                    paymentSyncLabel: string;
-                    postEntriesCurrentPeriod: string;
-                    autoCreateMerchantsAsVendorsLabel: string;
-                    billPaymentAccountLabel: string;
-                    billPaymentAccountSubLabel: string;
-                    autoCreateVendorsLabel: string;
-                    dfvSubLabel: string;
-                    dfvLabel: string;
-                    changeAccountingPeriodSubLabel: string;
-                    scheduleSubLabel: string;
+                    automationLabel: string;
+                    automationSubLabel: string;
+                    customizeSectionLabel: string;
+                    customizeSectionSubLabel: string;
+                    scheduleAutoExportLabel: string;
+                    scheduleAutoExportSubLabel: string;
+                    autoExportfrequencyLabel: string;
+                    autoExportfrequencySubLabel: string;
+                    topLevelMemoStructureLabel: string;
+                    topLevelMemoStructureSubLabel: string;
+                    memoStructureLabel: string;
+                    memoStructureSubLabel: string;
                     previewDescriptionFieldLabel: string;
-                    autoCreateMerchantsLabel: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
+                    autoCreateMerchantsAsVendorsSubLabel: string;
+                    autoCreateEmployeeLabel: string;
+                    otherPreferencesLabel: string;
+                    otherPreferencesSubLabel: string;
+                    skipExportLabel: string;
+                    skipExportSubLabel: string;
                 }
             },
         },
