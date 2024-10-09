@@ -28,7 +28,8 @@ describe('QboBaseMappingComponent', () => {
       params: of({ source_field: 'EMPLOYEE' }),
       snapshot: {
         params: { source_field: 'EMPLOYEE' }
-      }};
+      }
+    };
 
     mockMappingService = jasmine.createSpyObj('MappingService', ['triggerAutoMapEmployees', 'getMappingSettings', 'getPaginatedDestinationAttributes']);
     mockToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
