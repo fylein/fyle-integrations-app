@@ -2241,4 +2241,205 @@ export const mockUserProfile = {
   org_name: 'Test Org'
 };
 
+// Fixtures for Mapping Pages
+export const mockGeneralSettingsForMapping = {
+  "id": 684,
+  "reimbursable_expenses_object": "JOURNAL ENTRY",
+  "corporate_credit_card_expenses_object": "BILL",
+  "employee_field_mapping": "VENDOR",
+  "map_merchant_to_vendor": true,
+  "import_categories": true,
+  "import_items": false,
+  "import_projects": false,
+  "import_tax_codes": false,
+  "change_accounting_period": false,
+  "charts_of_accounts": [
+      "Expense"
+  ],
+  "memo_structure": [
+      "employee_email",
+      "purpose",
+      "category",
+      "spent_on",
+      "report_number",
+      "expense_link"
+  ],
+  "auto_map_employees": "NAME",
+  "auto_create_destination_entity": false,
+  "auto_create_merchants_as_vendors": false,
+  "sync_fyle_to_qbo_payments": false,
+  "sync_qbo_to_fyle_payments": true,
+  "is_simplify_report_closure_enabled": true,
+  "category_sync_version": "v2",
+  "je_single_credit_line": false,
+  "map_fyle_cards_qbo_account": false,
+  "skip_cards_mapping": false,
+  "import_vendors_as_merchants": false,
+  "is_multi_currency_allowed": false,
+  "is_tax_override_enabled": true,
+  "name_in_journal_entry": "EMPLOYEE",
+  "import_code_fields": [],
+  "created_at": "2024-08-22T08:50:29.978051Z",
+  "updated_at": "2024-09-24T18:28:10.411535Z",
+  "workspace": 512
+};
+
+export const mockMappingSettings = {
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 3006,
+          "source_field": "CATEGORY",
+          "destination_field": "ACCOUNT",
+          "import_to_fyle": false,
+          "is_custom": false,
+          "source_placeholder": null,
+          "created_at": "2024-08-22T08:50:50.425404Z",
+          "updated_at": "2024-08-28T07:50:45.557168Z",
+          "expense_field": null,
+          "workspace": 512
+      }
+  ]
+};
+
+export const paginatedDestAttribsForMapping = {
+  "count": 3,
+  "next": "http://quickbooks-api.staging-integrations:8000/api/workspaces/512/mappings/paginated_destination_attributes/?active=true&attribute_type=VENDOR&limit=100&offset=100",
+  "previous": null,
+  "results": [
+      {
+          "id": 253195,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "1",
+          "destination_id": "215",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926440Z",
+          "updated_at": "2024-08-22T06:44:16.926468Z",
+          "workspace": 512
+      },
+      {
+          "id": 253198,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "Abhishek 2",
+          "destination_id": "146",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926600Z",
+          "updated_at": "2024-08-22T06:44:16.926609Z",
+          "workspace": 512
+      },
+      {
+          "id": 253199,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "Abhishek ji",
+          "destination_id": "167",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926648Z",
+          "updated_at": "2024-08-22T06:44:16.926654Z",
+          "workspace": 512
+      }
+  ]
+};
+
+export const mockemployeeAttributes = {
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 1456114,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "aadams@efficientoffice.com",
+          "source_id": "ouNnLODE2MhX",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usAwZNxzZENS",
+              "location": null,
+              "full_name": "Ashley Adams",
+              "department": "Human Resources",
+              "department_id": "deptMLvcJapilU",
+              "employee_code": "5",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482374Z",
+          "updated_at": "2024-08-22T06:42:43.482383Z",
+          "workspace": 512
+      },
+      {
+          "id": 1456123,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "aaron@efficientoffice.com",
+          "source_id": "ouh8MSWBpWJI",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usA8hk3BOIX7",
+              "location": null,
+              "full_name": "Aaron Eckerly",
+              "department": "Customer Success",
+              "department_id": "dept6rVZn3smSh",
+              "employee_code": "35",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482800Z",
+          "updated_at": "2024-08-22T06:42:43.482808Z",
+          "workspace": 512
+      },
+      {
+          "id": 1456122,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "abhisheksingh@prod.com",
+          "source_id": "ouTBfIlGoZCL",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usGdQoFQWiEs",
+              "location": null,
+              "full_name": "Abhishek Singh",
+              "department": "Human Resources",
+              "department_id": "deptMLvcJapilU",
+              "employee_code": "112",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482753Z",
+          "updated_at": "2024-08-22T06:42:43.482762Z",
+          "workspace": 512
+      }
+  ]
+};
+
+export const mockMappingStats = {"all_attributes_count": 105, "unmapped_attributes_count": 92};
+
 export const mockPageSize = { limit: 10, offset: 0 };
