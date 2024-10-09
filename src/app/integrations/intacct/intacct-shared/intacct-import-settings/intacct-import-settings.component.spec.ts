@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AbstractControl, FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideRouter, Router, RouterModule } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
@@ -287,5 +287,105 @@ describe('IntacctImportSettingsComponent', () => {
         mockStartTime
       );
     }));
+  });
+
+  describe('Watchers', () => {
+    describe('Import Settings Watcher', () => {
+      beforeEach(() => {
+        component.ngOnInit();
+        fixture.detectChanges();
+      });
+
+      it('should trigger custom field dialog when a source field is set to custom_field', () => {
+        const expenseFieldArray = component.importSettingsForm.get('expenseFields') as FormArray;
+        spyOn(component as any, 'addCustomField').and.callThrough();
+
+        const firstControl = expenseFieldArray.at(0);
+        firstControl.patchValue({
+          source_field: 'custom_field',
+          destination_field: 'TEST_FIELD',
+          import_to_fyle: true
+        });
+
+        expect(component['addCustomField']).toHaveBeenCalled();
+        expect(component.showDialog).toBeTrue();
+        expect(component.customFieldControl).toEqual(firstControl);
+      });
+
+      it('should update validators when importTaxCodes value changes', () => {
+        const taxCodesControl = component.importSettingsForm.get('sageIntacctTaxCodes');
+
+        component.importSettingsForm.patchValue({
+          importTaxCodes: true
+        });
+        expect(taxCodesControl?.hasValidator(Validators.required)).toBeTrue();
+
+        component.importSettingsForm.patchValue({
+          importTaxCodes: false
+        });
+        expect(taxCodesControl?.hasValidator(Validators.required)).toBeFalse();
+      });
+    });
+
+    describe('Cost Codes and Cost Types Watcher', () => {
+      beforeEach(() => {
+        fixture.detectChanges();
+      });
+
+      it('should handle isDependentImportEnabled changes', () => {
+        const costCodesControl = component.importSettingsForm.get('costCodes');
+        const costTypesControl = component.importSettingsForm.get('costTypes');
+
+        component.importSettingsForm.patchValue({
+          isDependentImportEnabled: true
+        });
+
+        expect(costCodesControl?.enabled).toBeTrue();
+        expect(costTypesControl?.enabled).toBeTrue();
+        expect(costCodesControl?.hasValidator(Validators.required)).toBeTrue();
+        expect(costTypesControl?.hasValidator(Validators.required)).toBeTrue();
+
+        component.importSettingsForm.patchValue({
+          isDependentImportEnabled: false
+        });
+
+        expect(costCodesControl?.enabled).toBeFalse();
+        expect(costTypesControl?.enabled).toBeFalse();
+        expect(costCodesControl?.hasValidator(Validators.required)).toBeFalse();
+        expect(costTypesControl?.hasValidator(Validators.required)).toBeFalse();
+      });
+
+      it('should handle custom field selection for cost codes', () => {
+        spyOn(component as any, 'addCustomField').and.callThrough();
+
+        component.importSettingsForm.patchValue({
+          costCodes: {
+            attribute_type: 'custom_field',
+            source_field: 'custom_field'
+          }
+        });
+
+        expect(component['addCustomField']).toHaveBeenCalled();
+        expect(component.customFieldForDependentField).toBeTrue();
+        expect(component.customFieldControl).toBe(component.importSettingsForm.get('costCodes')!);
+        expect(component.importSettingsForm.get('costCodes')?.value.source_field).toBeNull();
+      });
+
+      it('should handle custom field selection for cost types', () => {
+        spyOn(component as any, 'addCustomField').and.callThrough();
+
+        component.importSettingsForm.patchValue({
+          costTypes: {
+            attribute_type: 'custom_field',
+            source_field: 'custom_field'
+          }
+        });
+
+        expect(component['addCustomField']).toHaveBeenCalled();
+        expect(component.customFieldForDependentField).toBeTrue();
+        expect(component.customFieldControl).toBe(component.importSettingsForm.get('costTypes')!);
+        expect(component.importSettingsForm.get('costTypes')?.value.source_field).toBeNull();
+      });
+    });
   });
 });
