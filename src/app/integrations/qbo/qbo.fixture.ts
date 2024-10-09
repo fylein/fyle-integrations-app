@@ -2456,3 +2456,5 @@ export const mockMappingSetting: MappingSetting[] = [
     source_placeholder: null
   }
 ];
+
+export const mockPageSize = { limit: 10, offset: 0 };
