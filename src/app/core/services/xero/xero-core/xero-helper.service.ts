@@ -32,6 +32,6 @@ export class XeroHelperService {
   }
 
   disconnect() {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/xero/revoke_connections/`, {});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/connection/xero/revoke`, {});
   }
 }
