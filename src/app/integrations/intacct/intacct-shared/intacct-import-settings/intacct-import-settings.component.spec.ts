@@ -14,7 +14,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
-import { configuration, fyleFields, groupedDestinationAttributes, importSettings, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields } from '../../intacct.fixture';
+import { configuration, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -62,7 +62,6 @@ describe('IntacctImportSettingsComponent', () => {
         { provide: StorageService, useValue: storageServiceSpy },
         { provide: SiWorkspaceService, useValue: siWorkspaceServiceSpy },
         provideRouter([])
-        // HelperService
       ]
     })
       .compileComponents();
@@ -120,20 +119,7 @@ describe('IntacctImportSettingsComponent', () => {
     });
 
     it('should correctly transform and set sageIntacctFields', () => {
-      expect(component.sageIntacctFields).toEqual([
-        {
-          attribute_type: 'PROJECT',
-          display_name: 'Project'
-        },
-        {
-          attribute_type: 'CUSTOMER',
-          display_name: 'Customer'
-        },
-        {
-          attribute_type: 'ITEM',
-          display_name: 'Item'
-        }
-      ] as ExpenseField[]);
+      expect(component.sageIntacctFields).toEqual(sageIntacctFieldsSortedByPriority);
     });
 
     it('should set Fyle fields with custom field option', () => {
@@ -196,11 +182,6 @@ describe('IntacctImportSettingsComponent', () => {
 
     describe('Dependent Fields Setup', () => {
       it('should handle dependent fields when project mapping exists', fakeAsync(() => {
-        const importSettingsWithProject = {...importSettings, mapping_settings: [{
-          source_field: 'PROJECT',
-          destination_field: 'PROJECT',
-          import_to_fyle: true
-        }]} as ImportSettingGet;
         siImportSettingService.getImportSettings.and.returnValue(of(importSettingsWithProject));
 
         fixture.detectChanges();
@@ -211,13 +192,6 @@ describe('IntacctImportSettingsComponent', () => {
       }));
 
       it('should handle dependent field settings', () => {
-        const settingsWithDependentFields = {...importSettings, dependent_field_settings: {
-          is_import_enabled: true,
-          cost_code_field_name: 'COST_CODE',
-          cost_code_placeholder: 'Enter Cost Code',
-          cost_type_field_name: 'COST_TYPE',
-          cost_type_placeholder: 'Enter Cost Type'
-        }} as ImportSettingGet;
         siImportSettingService.getImportSettings.and.returnValue(of(settingsWithDependentFields));
 
         component.ngOnInit();

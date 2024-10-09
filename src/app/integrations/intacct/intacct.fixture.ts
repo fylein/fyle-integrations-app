@@ -819,3 +819,33 @@ export const groupedDestinationAttributes = {
   CHARGE_CARD_NUMBER: [],
   TAX_DETAIL: []
 } as unknown as GroupedDestinationAttribute;
+
+
+export const sageIntacctFieldsSortedByPriority = [
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project'
+  },
+  {
+    attribute_type: 'CUSTOMER',
+    display_name: 'Customer'
+  },
+  {
+    attribute_type: 'ITEM',
+    display_name: 'Item'
+  }
+] as ExpenseField[];
+
+export const importSettingsWithProject = {...importSettings, mapping_settings: [{
+  source_field: 'PROJECT',
+  destination_field: 'PROJECT',
+  import_to_fyle: true
+}]} as ImportSettingGet;
+
+export const settingsWithDependentFields = {...importSettings, dependent_field_settings: {
+  is_import_enabled: true,
+  cost_code_field_name: 'COST_CODE',
+  cost_code_placeholder: 'Enter Cost Code',
+  cost_type_field_name: 'COST_TYPE',
+  cost_type_placeholder: 'Enter Cost Type'
+}} as ImportSettingGet;
