@@ -10,7 +10,7 @@ import { SiExportSettingService } from 'src/app/core/services/si/si-configuratio
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { of } from 'rxjs';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
-import { mockAccountingExportSummary, mockCompletedTasksWithFailures, mockConfiguration, mockErrors, mockExportableAccountingExportIds, mockExportSettingGet, mockExportSettings, mockTasksInProgress } from '../../intacct.fixture';
+import { mockAccountingExportSummary, mockCompletedTasksWithFailures, mockConfiguration, mockErrors, mockExportableAccountingExportIds, mockExportSettingGet, mockTasksInProgress } from '../../intacct.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Error } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';

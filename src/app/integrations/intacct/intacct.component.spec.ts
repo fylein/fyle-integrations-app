@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Router, NavigationEnd, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { IntacctComponent } from './intacct.component';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -8,9 +8,11 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { mockUser, testOnboardingState, workspaceResponse } from './intacct.fixture';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('IntacctComponent', () => {
   let component: IntacctComponent;
@@ -19,16 +21,15 @@ describe('IntacctComponent', () => {
   let workspaceServiceSpy: jasmine.SpyObj<SiWorkspaceService>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
   let storageServiceSpy: jasmine.SpyObj<StorageService>;
-  let routerSpy: jasmine.SpyObj<Router>;
   let windowServiceMock: Partial<WindowService>;
   let appcuesServiceSpy: jasmine.SpyObj<AppcuesService>;
+  let router: Router;
 
   beforeEach(async () => {
     const userSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getWorkspace', 'postWorkspace', 'syncFyleDimensions', 'syncIntacctDimensions']);
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
-    const routerSpyObj = jasmine.createSpyObj('Router', ['navigateByUrl', 'events']);
     const appcuesSpy = jasmine.createSpyObj('AppcuesService', ['initialiseAppcues']);
 
     windowServiceMock = {
@@ -42,16 +43,16 @@ describe('IntacctComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [ IntacctComponent ],
-      imports: [RouterModule],
+      declarations: [IntacctComponent],
+      imports: [SharedModule, HttpClientTestingModule],
       providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: AppcuesService, useValue: appcuesSpy },
-        { provide: Router, useValue: routerSpyObj },
         { provide: StorageService, useValue: storageSpy },
         { provide: UserService, useValue: userSpy },
         { provide: SiWorkspaceService, useValue: workspaceSpy },
-        { provide: WindowService, useValue: windowServiceMock }
+        { provide: WindowService, useValue: windowServiceMock },
+        provideRouter([])
       ]
     }).compileComponents();
 
@@ -59,10 +60,11 @@ describe('IntacctComponent', () => {
     workspaceServiceSpy = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    (routerSpy.events as any) = of(new NavigationEnd(0, '', ''));
+    router = TestBed.inject(Router);
     appcuesServiceSpy = TestBed.inject(AppcuesService) as jasmine.SpyObj<AppcuesService>;
 
+    spyOn(router, 'navigateByUrl');
+    spyOnProperty(router, 'events').and.returnValue(of(new NavigationEnd(0, '', '')));
     userServiceSpy.getUserProfile.and.returnValue(mockUser);
     workspaceServiceSpy.getWorkspace.and.returnValue(of(workspaceResponse));
     workspaceServiceSpy.syncFyleDimensions.and.returnValue(of());
@@ -85,7 +87,7 @@ describe('IntacctComponent', () => {
     expect(storageServiceSpy.set).toHaveBeenCalledWith('onboarding-state', IntacctOnboardingState.CONNECTION);
     expect(workspaceServiceSpy.syncFyleDimensions).toHaveBeenCalled();
     expect(workspaceServiceSpy.syncIntacctDimensions).toHaveBeenCalled();
-    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
   });
 
   it('should create a new workspace if none exists', () => {
@@ -97,18 +99,17 @@ describe('IntacctComponent', () => {
     expect(workspaceServiceSpy.postWorkspace).toHaveBeenCalled();
     expect(storageServiceSpy.set).toHaveBeenCalledWith('workspaceId', 1);
     expect(storageServiceSpy.set).toHaveBeenCalledWith('onboarding-state', IntacctOnboardingState.CONNECTION);
-    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/integrations/intacct/onboarding/landing');
   });
 
   it('should navigate to correct route based on onboarding state', () => {
-    Object.entries(testOnboardingState).forEach(([state, route ]) => {
-      routerSpy.navigateByUrl.calls.reset();
+    Object.entries(testOnboardingState).forEach(([state, route]) => {
       const testWorkspace: IntacctWorkspace = { ...workspaceResponse[0], onboarding_state: state as IntacctOnboardingState };
       workspaceServiceSpy.getWorkspace.and.returnValue(of([testWorkspace]));
 
       fixture.detectChanges();
 
-      expect(routerSpy.navigateByUrl).toHaveBeenCalledWith(route);
+      expect(router.navigateByUrl).toHaveBeenCalledWith(route);
 
       fixture = TestBed.createComponent(IntacctComponent);
       component = fixture.componentInstance;
@@ -119,7 +120,7 @@ describe('IntacctComponent', () => {
     component.windowReference.location.pathname = '/some/other/path';
     fixture.detectChanges();
 
-    expect(routerSpy.navigateByUrl).not.toHaveBeenCalled();
+    expect(router.navigateByUrl).not.toHaveBeenCalled();
   });
 
   it('should initialise Appcues', () => {

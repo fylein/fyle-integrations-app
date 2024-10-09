@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
@@ -9,6 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
 @Component({
   selector: 'app-xero',
@@ -27,12 +28,14 @@ export class XeroComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private storageService: StorageService,
     private xeroHelperService: XeroHelperService,
     private userService: UserService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private xeroAuthService: XeroAuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -86,8 +89,22 @@ export class XeroComponent implements OnInit {
     });
   }
 
+  private handleAuthParameters(): void {
+    this.route.queryParams.subscribe(params => {
+      const authCode = params.code;
+
+      if (authCode) {
+        this.xeroAuthService.login(authCode).subscribe(
+          () => this.setupWorkspace()
+        );
+      } else {
+        this.setupWorkspace();
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.setupWorkspace();
+    this.handleAuthParameters();
   }
 
 
