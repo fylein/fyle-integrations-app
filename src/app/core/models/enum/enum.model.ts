@@ -360,6 +360,13 @@ export enum QBDCorporateCreditCardExpensesObject {
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
 }
 
+export enum FyleReferenceType {
+  REPORT_ID = 'report_id',
+  EXPENSE_REPORT = 'claim_number',
+  PAYMENT = 'settlement_id',
+  EXPENSE = 'expense_id'
+}
+
 export enum QBDExpenseGroupedBy {
   EXPENSE = 'EXPENSE',
   REPORT = 'REPORT'
@@ -384,6 +391,23 @@ export enum QBDScheduleFrequency {
 export enum QBDFyleField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER'
+}
+
+export enum QbdDirectReimbursableExportDateType {
+  LAST_SPENT_AT = 'last_spent_at',
+  CURRENT_DATE = 'current_date',
+}
+
+export enum QbdDirectCCCExportDateType {
+  SPENT_AT = 'spent_at',
+  CURRENT_DATE = 'current_date',
+  POSTED_AT = 'posted_at'
+}
+
+
+export enum QbdDirectExpenseGroupBy {
+  REPORT = 'report_id',
+  EXPENSE = 'expense_id'
 }
 
 export enum XeroFyleField {
@@ -439,13 +463,6 @@ export enum IntacctErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',
   INTACCT_ERROR = 'INTACCT_ERROR'
-}
-
-export enum FyleReferenceType {
-  REPORT_ID = 'report_id',
-  EXPENSE_REPORT = 'claim_number',
-  PAYMENT = 'settlement_id',
-  EXPENSE = 'expense_id'
 }
 
 export enum MappingState {
