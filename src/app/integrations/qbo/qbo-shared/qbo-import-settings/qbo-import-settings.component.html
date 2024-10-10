@@ -22,7 +22,7 @@
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
 
-                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
+                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.get('importCategories')?.value" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
                                 {{brandingContent.chartOfAccountTypes}}
@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
                         <app-configuration-select-field
                             [appName]="appName"
                             [form]="importSettingForm"
@@ -81,7 +81,7 @@
                       [hasDependentFields]="true">
                     </app-configuration-toggle-field>
 
-                    <app-configuration-select-field *ngIf="importSettingForm.value.taxCode"
+                    <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'tax code'"

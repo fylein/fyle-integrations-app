@@ -137,7 +137,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
   }
 
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
+    this.memoStructure = this.advancedSettingsForm.get('expenseMemoStructure')?.value;
     this.formatMemoPreview();
     this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;

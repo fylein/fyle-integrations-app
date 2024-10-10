@@ -20,7 +20,7 @@
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExpense">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExpense')?.value">
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
@@ -32,20 +32,20 @@
                             [iconPath]="'list'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
 
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
+                                        <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.get('reimbursableExportType')?.value, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.value.reimbursableExpense"> 
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.get('reimbursableExpense')?.value"> 
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which account should the Mileage expenses be posted to?</h4>
@@ -118,7 +118,7 @@
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.creditCardExpense">
+                    <div *ngIf="exportSettingsForm.get('creditCardExpense')?.value">
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
@@ -130,7 +130,7 @@
                             [iconPath]="'list'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
 
-                            <div *ngIf="exportSettingsForm.value.cccExportType">
+                            <div *ngIf="exportSettingsForm.get('cccExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
@@ -138,7 +138,7 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name" [required]="exportSettingsForm.value.creditCardExpense"> 
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name" [required]="exportSettingsForm.get('creditCardExpense')?.value"> 
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a Credit Card Account name'"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -171,14 +171,14 @@
                             </div>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                            <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
+                            <div *ngIf="exportSettingsForm.get('cccExportType')?.value === creditCardExportTypes[0].value">
                                 <app-configuration-label
                                 [label]="'How would you like to group your expenses?'"
                                 [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                                 [labelValue]="expenseGroupingFieldOptions[1]"
                                 [iconPath]="'tabs'"></app-configuration-label>
                             </div>
-                            <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value">
+                            <div *ngIf="exportSettingsForm.get('cccExportType')?.value !== creditCardExportTypes[0].value">
                                 <app-configuration-radio-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"

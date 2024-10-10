@@ -170,7 +170,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       sourceField = IntacctCategoryDestination.ACCOUNT;
     }
 
-    if (event.checked && this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField]) {
+    // Find the index of the FormGroup
+    const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
+
+    if (event.checked && this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField] && index === -1) {
       // Create a new FormGroup
       const value = this.formBuilder.group({
         source_field: [sourceField],
@@ -180,8 +183,6 @@ export class IntacctImportSettingsComponent implements OnInit {
       // Push the new FormGroup into the FormArray
       importCodeFieldsArray.push(value);
     } else {
-      // Find the index of the FormGroup to be removed
-      const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
 
       // If found, remove the FormGroup from the FormArray
       if (index !== -1) {
@@ -262,11 +263,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldForDependentField && this.customFieldForm.value) {
+    if (this.customFieldForDependentField && this.customFieldForm.getRawValue()) {
       this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type,
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
+        attribute_type: this.customFieldForm.get('attribute_type')?.value,
+        display_name: this.customFieldForm.get('attribute_type')?.value,
+        source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
         is_dependent: true,
         is_custom: true
       };
@@ -288,9 +289,9 @@ export class IntacctImportSettingsComponent implements OnInit {
     } else {
       this.addImportCodeField({checked: true}, this.customFieldControl.get('destination_field')?.value);
       this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
+        attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+        display_name: this.customFieldForm.get('attribute_type')?.value,
+        source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
         is_dependent: false
       };
 
@@ -319,17 +320,17 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private costCodesCostTypesWatcher(): void {
-    if (this.importSettingsForm.value.costCodes) {
-      this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
+    if (this.importSettingsForm.get('costCodes')?.value) {
+      this.costCodeFieldOption = [this.importSettingsForm.get('costCodes')?.value];
       this.importSettingsForm.controls.costCodes.disable();
     }
 
-    if (this.importSettingsForm.value.costTypes) {
-      this.costTypeFieldOption = [this.importSettingsForm.value.costTypes];
+    if (this.importSettingsForm.get('costTypes')?.value) {
+      this.costTypeFieldOption = [this.importSettingsForm.get('costTypes')?.value];
       this.importSettingsForm.controls.costTypes.disable();
     }
 
-    if (this.importSettingsForm.value.isDependentImportEnabled) {
+    if (this.importSettingsForm.get('isDependentImportEnabled')?.value) {
       this.importSettingsForm.controls.costCodes.disable();
       this.importSettingsForm.controls.costTypes.disable();
     }

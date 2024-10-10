@@ -99,7 +99,7 @@
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
-                    <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION" class="sub-text">
+                    <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
                     </div>
                 </div>
@@ -108,10 +108,10 @@
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">Day</p>
                         <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                             <ng-template let-value pTemplate="selectedItem" >
-                                <div *ngIf="form.value[formControllerName]" class="tw-flex">
+                                <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
                                     <p>{{ value | titlecase | snakeCaseToSpaceCase }}</p>
                                 </div>
-                                <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                                <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
                                     {{ placeholder }}
                                 </div>
                             </ng-template>
@@ -138,11 +138,11 @@
             <div *ngIf="simpleOptions && !options" class="p-field-checkbox tw-pl-34-px">
                 <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
                     <ng-template let-value pTemplate="selectedItem" >
-                        <div *ngIf="form.value[formControllerName]" class="tw-flex">
+                        <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
                             <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | titlecase | snakeCaseToSpaceCase }}</p>
                             <p *ngIf="formControllerName === 'defaultEmployee'">{{ value }}</p>
                         </div>
-                        <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                        <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
                             {{ placeholder }}
                         </div>
                     </ng-template>
