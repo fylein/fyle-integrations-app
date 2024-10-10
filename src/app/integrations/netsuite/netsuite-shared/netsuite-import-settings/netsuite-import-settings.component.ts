@@ -150,9 +150,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   saveFyleExpenseField(): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: false
     };
 

@@ -39,9 +39,9 @@
 
                     <div class="tw-pt-16-px tw-pb-8-px tw-w-218-px">
                         <div class="tw-whitespace-nowrap tw-text-12-px tw-flex tw-items-center tw-justify-between tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
-                            <p>{{exportLogForm.value.start[0] ? (exportLogForm.value.start[0] | date): 'Start date'}}</p>
+                            <p>{{exportLogForm.get('start')?.value[0] ? (exportLogForm.get('start')?.value[0] | date): 'Start date'}}</p>
                             <app-svg-icon [svgSource]="'arrow-tail-right-small'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pr-10-px'" [isTextColorAllowed]="true"></app-svg-icon>
-                            <p>{{exportLogForm.value.start[1] ? (exportLogForm.value.start[1] | date) : 'End date'}}</p>
+                            <p>{{exportLogForm.get('start')?.value[1] ? (exportLogForm.get('start')?.value[1] | date) : 'End date'}}</p>
                             <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text'" [isTextColorAllowed]="true"></app-svg-icon>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                 </ng-template>
             </p-calendar>
             <div (click)="showCalendar($event)" class="tw-py-7-px tw-border tw-cursor-pointer tw-border-select-default-border tw-border-l-0 tw-rounded-tr-4-px tw-rounded-br-4-px" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
-                <app-svg-icon *ngIf="!(exportLogForm.value.start[0] && exportLogForm.value.start[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
-                <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.value.start[0] && exportLogForm.value.start[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
+                <app-svg-icon *ngIf="!(exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
+                <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
             </div>
         </div>
     </div>

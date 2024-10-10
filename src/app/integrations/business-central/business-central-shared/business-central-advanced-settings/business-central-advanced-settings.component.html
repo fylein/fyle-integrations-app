@@ -30,7 +30,7 @@
                             [formControllerName]="'scheduleEnabled'"
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
-                        <div *ngIf="advancedSettingForm.value.scheduleEnabled">
+                        <div *ngIf="advancedSettingForm.get('scheduleEnabled')?.value">
                             <app-configuration-schedule-export
                                 [form]="advancedSettingForm"
                                 [appName]="appName"
@@ -80,9 +80,9 @@
                         [iconPath]="'list'"
                         [redirectLink]="skipExportRedirectLink">
                     </app-configuration-toggle-field>
-                    <div *ngIf="advancedSettingForm.value.skipExport">
+                    <div *ngIf="advancedSettingForm.get('skipExport')?.value">
                         <app-configuration-skip-export
-                        [enableSkipExport]="advancedSettingForm.value.skipExport"
+                        [enableSkipExport]="advancedSettingForm.get('skipExport')?.value"
                         [skipExportForm]="skipExportForm"
                         [expenseFilter]="expenseFilters"
                         [conditionFieldOptions]="conditionFieldOptions"

@@ -45,9 +45,9 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
   ) { }
 
   private saveConnection() {
-    const userID = this.connectSage300Form.value.userID;
-    const companyID = this.connectSage300Form.value.companyID;
-    const userPassword = this.connectSage300Form.value.userPassword;
+    const userID = this.connectSage300Form.get('userID')?.value;
+    const companyID = this.connectSage300Form.get('companyID')?.value;
+    const userPassword = this.connectSage300Form.get('userPassword')?.value;
 
     this.isLoading = true;
     this.connectorService.connectSage300({

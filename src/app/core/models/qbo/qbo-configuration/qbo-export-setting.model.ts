@@ -193,9 +193,9 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getMandatoryField(form: FormGroup, controllerName: string): boolean {
     switch (controllerName) {
       case 'bankAccount':
-        return form.value.employeeMapping === EmployeeFieldMapping.EMPLOYEE && form.controls.reimbursableExportType.value && form.controls.reimbursableExportType.value !== QBOReimbursableExpensesObject.EXPENSE;
+        return form.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && form.controls.reimbursableExportType.value && form.controls.reimbursableExportType.value !== QBOReimbursableExpensesObject.EXPENSE;
       case 'accountsPayable':
-        return (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && form.value.employeeMapping === EmployeeFieldMapping.VENDOR)) || (form.controls.creditCardExportType.value === QBOCorporateCreditCardExpensesObject.BILL);
+        return (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && form.controls.employeeMapping.value === EmployeeFieldMapping.VENDOR)) || (form.controls.creditCardExportType.value === QBOCorporateCreditCardExpensesObject.BILL);
       case 'defaultCCCAccount':
         return form.controls.creditCardExportType.value && form.controls.creditCardExportType.value !== QBOCorporateCreditCardExpensesObject.BILL && form.controls.creditCardExportType.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE;
       case 'defaultCreditCardVendor':

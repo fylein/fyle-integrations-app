@@ -50,9 +50,9 @@ export class IntacctConnectorComponent implements OnInit {
   }
 
     save() {
-      const userID = this.connectSageIntacctForm.value.userID;
-      const companyID = this.connectSageIntacctForm.value.companyID;
-      const userPassword = this.connectSageIntacctForm.value.userPassword;
+      const userID = this.connectSageIntacctForm.get('userID')?.value;
+      const companyID = this.connectSageIntacctForm.get('companyID')?.value;
+      const userPassword = this.connectSageIntacctForm.get('userPassword')?.value;
 
       this.isLoading = true;
       this.saveInProgress = true;

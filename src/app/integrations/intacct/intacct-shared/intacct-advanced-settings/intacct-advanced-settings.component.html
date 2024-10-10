@@ -29,7 +29,7 @@
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
 
-                        <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                        <div *ngIf="advancedSettingsForm.get('exportSchedule')?.value">
                             <app-configuration-schedule-export
                                 [form]="advancedSettingsForm"
                                 [appName]="appName"
@@ -128,10 +128,10 @@
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
                 [redirectLink]="intacctLink"
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
-                <div *ngIf="advancedSettingsForm.value.skipSelectiveExpenses">
+                <div *ngIf="advancedSettingsForm.get('skipSelectiveExpenses')?.value">
                     <app-skip-export
                     #skipExportChild
-                    [enableSkipExport]="advancedSettingsForm.value.skipSelectiveExpenses" 
+                    [enableSkipExport]="advancedSettingsForm.get('skipSelectiveExpenses')?.value" 
                     [skipExportForm]="skipExportForm" 
                     (skipExportFormChange)="updateForm($event)">
                   </app-skip-export>                  
@@ -238,6 +238,6 @@
               </div>
         </div>
     </div>
-    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
     </form>
 </div>

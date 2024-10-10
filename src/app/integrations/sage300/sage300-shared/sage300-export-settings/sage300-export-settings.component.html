@@ -24,7 +24,7 @@
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingForm.value?.reimbursableExpense">
+                <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -165,7 +165,7 @@
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingForm.value?.creditCardExpense">
+                <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
