@@ -170,7 +170,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       sourceField = IntacctCategoryDestination.ACCOUNT;
     }
 
-    if (event.checked && this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField]) {
+    // Find the index of the FormGroup
+    const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
+
+    if (event.checked && this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField] && index === -1) {
       // Create a new FormGroup
       const value = this.formBuilder.group({
         source_field: [sourceField],
@@ -180,8 +183,6 @@ export class IntacctImportSettingsComponent implements OnInit {
       // Push the new FormGroup into the FormArray
       importCodeFieldsArray.push(value);
     } else {
-      // Find the index of the FormGroup to be removed
-      const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
 
       // If found, remove the FormGroup from the FormArray
       if (index !== -1) {

@@ -2,10 +2,17 @@ import { minimalUser } from "src/app/core/interceptor/jwt.fixture";
 import { AccountingExportSummary } from "src/app/core/models/db/accounting-export-summary.model";
 import { Error } from "src/app/core/models/db/error.model";
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AccountingErrorType, CCCExpenseState, ExpenseState, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, SplitExpenseGrouping, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
+import { AccountingErrorType, CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, SplitExpenseGrouping, TaskLogState, TaskLogType } from "src/app/core/models/enum/enum.model";
 import { IntacctWorkspace } from "src/app/core/models/intacct/db/workspaces.model";
 import { ExportSettingGet } from "src/app/core/models/intacct/intacct-configuration/export-settings.model";
-
+import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
+import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
+import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
+import { DependentFieldSetting, ImportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
+import { GroupedDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
+import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -297,18 +304,6 @@ export const mockErrors = [
   { id: 3, type: AccountingErrorType.ACCOUNTING_ERROR, error_title: 'Accounting error' }
 ] as Error[];
 
-export const mockExportSettings = {
-  configurations: {
-    reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
-    corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.BILL
-  },
-  expense_group_settings: {
-    expense_state: ExpenseState.PAYMENT_PROCESSING,
-    ccc_expense_state: ExpenseState.PAID
-  }
-} as unknown as ExportSettingGet;
-
-
 export const mockMappingSettingsResponse = {
   results: [
     { source_field: FyleField.EMPLOYEE, destination_field: 'EMPLOYEE' },
@@ -350,4 +345,521 @@ export const mockDestinationAttributesResponse = {
       destination_id: 'Chris Curtis'
     }
   ]
+};
+
+export const mockExpenseGroupResponse: ExpenseGroupResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 7715,
+      expenses: [
+        {
+          updated_at: new Date('2024-08-12T12:17:27.837958Z'),
+          claim_number: 'C/2024/08/R/8',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/8',
+          payment_number: 'P/2024/08/T/P/2024/08/R/7',
+          category: 'ABN Withholding',
+          amount: -460.0,
+          expense_id: 'txPpUSwko5es'
+        }
+      ],
+      description: {
+        spent_at: new Date("2024-08-12T00:00:00"),
+        expense_id: "txPpUSwko5es",
+        fund_source: "CCC",
+        employee_email: "ashwin.t@fyle.in"
+      } as unknown as ExpenseGroupDescription,
+      fund_source: 'CCC',
+      export_type: 'CHARGE_CARD_TRANSACTION',
+      exported_at: new Date('2024-08-27T16:51:07.206898Z'),
+      employee_name: 'Ashwin',
+      export_url: 'https://example.com/export/7715'
+    },
+    {
+      id: 7714,
+      expenses: [
+        {
+          updated_at: new Date('2024-08-12T12:17:27.698968Z'),
+          claim_number: 'C/2024/08/R/9',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/9',
+          payment_number: 'P/2024/08/T/P/2024/08/R/8',
+          category: 'ABN Withholding',
+          amount: -550.0,
+          expense_id: 'txoerMCRLkJ4'
+        }
+      ],
+      description: {
+        spent_at: new Date("2024-08-12T00:00:00"),
+        expense_id: "txPpUSwko5es",
+        fund_source: "CCC",
+        employee_email: "ashwin.t@fyle.in"
+      } as unknown as ExpenseGroupDescription,
+      fund_source: 'CCC',
+      export_type: 'CHARGE_CARD_TRANSACTION',
+      exported_at: new Date('2024-08-27T16:50:57.620969Z'),
+      employee_name: 'Ashwin',
+      export_url: 'https://example.com/export/7714'
+    }
+  ] as ExpenseGroup[]
+};
+
+export const mockSkipExportLogResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      expenses: [
+        {
+          updated_at: '2024-08-12T12:17:27.837958Z',
+          claim_number: 'C/2024/08/R/8',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/8',
+          category: 'ABN Withholding',
+          amount: -460.0,
+          expense_id: 'txPpUSwko5es'
+        }
+      ],
+      fund_source: 'CCC',
+      created_at: '2024-08-12T12:17:27.916749Z',
+      updated_at: '2024-08-27T16:51:07.218092Z',
+      workspace: 240
+    },
+    {
+      id: 2,
+      expenses: [
+        {
+          updated_at: '2024-08-12T12:17:27.698968Z',
+          claim_number: 'C/2024/08/R/9',
+          employee_email: 'ashwin.t@fyle.in',
+          employee_name: 'Ashwin',
+          fund_source: 'CCC',
+          expense_number: 'E/2024/08/T/9',
+          category: 'ABN Withholding',
+          amount: -550.0,
+          expense_id: 'txoerMCRLkJ4'
+        }
+      ],
+      fund_source: 'CCC',
+      created_at: '2024-08-12T12:17:27.903912Z',
+      updated_at: '2024-08-27T16:50:57.633246Z',
+      workspace: 240
+    }
+  ]
+} as unknown as SkipExportLogResponse;
+
+export const mockPaginator: Paginator = {
+  limit: 50,
+  offset: 0
+};
+
+
+export const mockExportSettings = {
+  configurations: {
+    reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
+    corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION,
+    employee_field_mapping: FyleField.EMPLOYEE,
+    auto_map_employees: 'EMAIL',
+    use_merchant_in_journal_line: true
+  },
+  expense_group_settings: {
+    reimbursable_expense_group_fields: [ExpenseGroupingFieldOption.EXPENSE_ID],
+    reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
+    expense_state: ExpenseState.PAYMENT_PROCESSING,
+    corporate_credit_card_expense_group_fields: [ExpenseGroupingFieldOption.EXPENSE_ID],
+    ccc_export_date_type: ExportDateType.SPENT_AT,
+    ccc_expense_state: CCCExpenseState.PAID,
+    split_expense_grouping: null
+  },
+  general_mappings: {
+    default_gl_account: { id: '1', name: 'Account 1' },
+    default_charge_card: { id: '2', name: 'Card 1' },
+    default_reimbursable_expense_payment_type: { id: '3', name: 'Type 1' },
+    default_ccc_expense_payment_type: { id: '4', name: 'Type 2' },
+    default_ccc_vendor: { id: '5', name: 'Vendor 1' },
+    default_credit_card: { id: '6', name: 'Credit Card 1' }
+  },
+  workspace_id: 1
+} as unknown as ExportSettingGet;
+
+
+export const mockPaginatedDestinationAttributes = {
+  ACCOUNT: {
+    "count": 4,
+    "next": "http://intacct-api.staging-integrations:8000/api/workspaces/366/sage_intacct/paginated_destination_attributes/?attribute_type=ACCOUNT&limit=100&offset=100",
+    "previous": null,
+    "results": [
+      {
+        "id": 250084,
+        "attribute_type": "ACCOUNT",
+        "display_name": "account",
+        "value": "Accounts Payable",
+        "destination_id": "2000",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "account_type": "balancesheet"
+        },
+        "code": "2000",
+        "created_at": "2024-08-26T11:54:56.743019Z",
+        "updated_at": "2024-09-23T08:32:57.719332Z",
+        "workspace": 366
+      },
+      {
+        "id": 250077,
+        "attribute_type": "ACCOUNT",
+        "display_name": "account",
+        "value": "Accounts Receivable - trade",
+        "destination_id": "1100",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "account_type": "balancesheet"
+        },
+        "code": "1100",
+        "created_at": "2024-08-26T11:54:56.737413Z",
+        "updated_at": "2024-09-23T08:32:57.719266Z",
+        "workspace": 366
+      },
+      {
+        "id": 250078,
+        "attribute_type": "ACCOUNT",
+        "display_name": "account",
+        "value": "Accounts Receivable - unbilled",
+        "destination_id": "1110",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "account_type": "balancesheet"
+        },
+        "code": "1110",
+        "created_at": "2024-08-26T11:54:56.742752Z",
+        "updated_at": "2024-09-23T08:32:57.719286Z",
+        "workspace": 366
+      },
+      {
+        "id": 249997,
+        "attribute_type": "ACCOUNT",
+        "display_name": "account",
+        "value": "Accrued Bonus",
+        "destination_id": "2022",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "account_type": "balancesheet"
+        },
+        "code": "2022",
+        "created_at": "2024-08-26T11:54:56.719668Z",
+        "updated_at": "2024-09-23T08:32:57.718161Z",
+        "workspace": 366
+      }
+    ]
+  },
+  EXPENSE_PAYMENT_TYPE: {
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "id": 249873,
+        "attribute_type": "EXPENSE_PAYMENT_TYPE",
+        "display_name": "expense payment type",
+        "value": "Elon Baba CCC",
+        "destination_id": "2",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "is_reimbursable": false
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:41.504318Z",
+        "updated_at": "2024-08-26T11:54:41.504329Z",
+        "workspace": 366
+      },
+      {
+        "id": 249872,
+        "attribute_type": "EXPENSE_PAYMENT_TYPE",
+        "display_name": "expense payment type",
+        "value": "Elon musk",
+        "destination_id": "1",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "is_reimbursable": true
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:41.504228Z",
+        "updated_at": "2024-08-26T11:54:41.504262Z",
+        "workspace": 366
+      }
+    ]
+  },
+  VENDOR: {
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "id": 249883,
+        "attribute_type": "VENDOR",
+        "display_name": "vendor",
+        "value": "A-1 Electric Company",
+        "destination_id": "V100",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "email": null
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:51.315724Z",
+        "updated_at": "2024-08-26T11:54:51.315731Z",
+        "workspace": 366
+      },
+      {
+        "id": 249886,
+        "attribute_type": "VENDOR",
+        "display_name": "vendor",
+        "value": "AAA Insurance and Bonding",
+        "destination_id": "V104",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "email": "andree@abuckley.COM"
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:51.315883Z",
+        "updated_at": "2024-08-26T11:54:51.315893Z",
+        "workspace": 366
+      },
+      {
+        "id": 249943,
+        "attribute_type": "VENDOR",
+        "display_name": "vendor",
+        "value": "ABC Electric",
+        "destination_id": "V164",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "email": null
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:51.338322Z",
+        "updated_at": "2024-08-26T11:54:51.338330Z",
+        "workspace": 366
+      },
+      {
+        "id": 249885,
+        "attribute_type": "VENDOR",
+        "display_name": "vendor",
+        "value": "Ace Drywall",
+        "destination_id": "V103",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+          "email": null
+        },
+        "code": null,
+        "created_at": "2024-08-26T11:54:51.315818Z",
+        "updated_at": "2024-08-26T11:54:51.315827Z",
+        "workspace": 366
+      }
+    ]
+  },
+  CHARGE_CARD_NUMBER: {
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "id": 249875,
+        "attribute_type": "CHARGE_CARD_NUMBER",
+        "display_name": "Charge Card Account",
+        "value": "1234",
+        "destination_id": "1234",
+        "auto_created": false,
+        "active": true,
+        "detail": null,
+        "code": null,
+        "created_at": "2024-08-26T11:54:46.642086Z",
+        "updated_at": "2024-08-26T11:54:46.642093Z",
+        "workspace": 366
+      },
+      {
+        "id": 249876,
+        "attribute_type": "CHARGE_CARD_NUMBER",
+        "display_name": "Charge Card Account",
+        "value": "Mastercard - 6789",
+        "destination_id": "Mastercard - 6789",
+        "auto_created": false,
+        "active": true,
+        "detail": null,
+        "code": null,
+        "created_at": "2024-08-26T11:54:46.642117Z",
+        "updated_at": "2024-08-26T11:54:46.642125Z",
+        "workspace": 366
+      },
+      {
+        "id": 249874,
+        "attribute_type": "CHARGE_CARD_NUMBER",
+        "display_name": "Charge Card Account",
+        "value": "Nilesh Credit Card",
+        "destination_id": "Nilesh Credit Card",
+        "auto_created": false,
+        "active": true,
+        "detail": null,
+        "code": null,
+        "created_at": "2024-08-26T11:54:46.642035Z",
+        "updated_at": "2024-08-26T11:54:46.642058Z",
+        "workspace": 366
+      },
+      {
+        "id": 249877,
+        "attribute_type": "CHARGE_CARD_NUMBER",
+        "display_name": "Charge Card Account",
+        "value": "Visa - 1234",
+        "destination_id": "Visa - 1234",
+        "auto_created": false,
+        "active": true,
+        "detail": null,
+        "code": null,
+        "created_at": "2024-08-26T11:54:46.642147Z",
+        "updated_at": "2024-08-26T11:54:46.642154Z",
+        "workspace": 366
+      }
+    ]
+  }
+};
+
+export const intacctImportCodeConfig = {
+  PROJECT: true,
+  DEPARTMENT: true,
+  ACCOUNT: true,
+  EXPENSE_TYPE: true
+};
+
+export const fyleFields = [
+  {
+    attribute_type: 'COST_CENTER',
+    display_name: 'Cost Center',
+    is_dependent: false
+  },
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project',
+    is_dependent: false
+  }
+] as ExpenseField[];
+
+export const sageIntacctFields = [
+  {
+    attribute_type: 'CUSTOMER',
+    display_name: 'customer'
+  },
+  {
+    attribute_type: 'ITEM',
+    display_name: 'item'
+  },
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project'
+  }
+] as ExpenseField[];
+
+export const importSettings = {
+  configurations: {
+    import_categories: false,
+    import_tax_codes: false,
+    import_vendors_as_merchants: false,
+    import_code_fields: []
+  },
+  general_mappings: {
+    default_tax_code: {
+      name: null,
+      id: null
+    }
+  },
+  mapping_settings: [],
+  dependent_field_settings: null as unknown as DependentFieldSetting,
+  workspace_id: 366
+} as ImportSettingGet;
+
+export const configuration = {
+  reimbursable_expenses_object: null,
+  corporate_credit_card_expenses_object: 'CHARGE_CARD_TRANSACTION',
+  import_code_fields: []
+} as unknown as IntacctConfiguration;
+
+export const locationEntityMapping: LocationEntityMapping = {
+  id: 327,
+  location_entity_name: 'Top Level',
+  country_name: null,
+  destination_id: 'top_level',
+  created_at: new Date('2024-08-26T11:54:23.640893Z'),
+  updated_at: new Date('2024-08-26T11:54:23.640913Z'),
+  workspace: 366
+};
+
+export const groupedDestinationAttributes = {
+  ACCOUNT: [],
+  EXPENSE_TYPE: [],
+  EXPENSE_PAYMENT_TYPE: [],
+  VENDOR: [],
+  EMPLOYEE: [],
+  CHARGE_CARD_NUMBER: [],
+  TAX_DETAIL: []
+} as unknown as GroupedDestinationAttribute;
+
+
+export const sageIntacctFieldsSortedByPriority = [
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project'
+  },
+  {
+    attribute_type: 'CUSTOMER',
+    display_name: 'Customer'
+  },
+  {
+    attribute_type: 'ITEM',
+    display_name: 'Item'
+  }
+] as ExpenseField[];
+
+export const importSettingsWithProject = {...importSettings, mapping_settings: [{
+  source_field: 'PROJECT',
+  destination_field: 'PROJECT',
+  import_to_fyle: true
+}]} as ImportSettingGet;
+
+export const settingsWithDependentFields = {...importSettings, dependent_field_settings: {
+  is_import_enabled: true,
+  cost_code_field_name: 'COST_CODE',
+  cost_code_placeholder: 'Enter Cost Code',
+  cost_type_field_name: 'COST_TYPE',
+  cost_type_placeholder: 'Enter Cost Type'
+}} as ImportSettingGet;
+
+export const costCodeFieldValue = {
+  attribute_type: 'COST_CODE',
+  display_name: 'COST_CODE',
+  source_placeholder: 'Enter Cost Code',
+  is_dependent: true
+};
+
+export const costTypeFieldValue = {
+  attribute_type: 'COST_TYPE',
+  display_name: 'COST_TYPE',
+  source_placeholder: 'Enter Cost Type',
+  is_dependent: true
 };

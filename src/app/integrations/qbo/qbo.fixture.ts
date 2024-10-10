@@ -1,5 +1,5 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator, AccountingErrorType, TaskLogState, QBOTaskLogType } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
@@ -7,6 +7,12 @@ import { ExportSettingOptionSearch } from "src/app/core/models/common/export-set
 import { FyleField } from "src/app/core/models/db/mapping.model";
 import { QBOImportSettingGet } from "src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model";
 import { ExpenseFilter, ExpenseFilterPost, ExpenseFilterResponse } from "src/app/core/models/common/advanced-settings.model";
+import { AccountingExportSummary } from "src/app/core/models/db/accounting-export-summary.model";
+import { Error } from "src/app/core/models/db/error.model";
+import { AccountingExport } from "src/app/core/models/db/accounting-export.model";
+import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
+import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
+import { Paginator } from "src/app/core/models/misc/paginator.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -973,7 +979,6 @@ export const mockImportCodeSelectorOptions = {
 };
 
 // Qbo adavanced settings
-
 export const mockQboAdvancedSettings = {
   "workspace_general_settings": {
       "sync_fyle_to_qbo_payments": false,
@@ -1226,3 +1231,1215 @@ export const mockInitialMemoStructure = ['employee_email', 'merchant'];
 export const mocknewMemoStructure = ['employee_email', 'category', 'purpose'];
 export const mockDefaultMemoOptions = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on'];
 export const invalidMemoStructure = ['invalid_field', 'employee_email'];
+
+// QBO Dashboard
+export const mockExportableExpenseGroup = {
+    "exportable_expense_group_ids": [
+        8087,
+        8088,
+        8089,
+        8090,
+        8091,
+        8092,
+        8093,
+        8094,
+        8095
+    ]
+};
+
+export const mockExportSettingsforDashboard = {
+    "expense_group_settings": {
+        "reimbursable_expense_group_fields": [
+            "employee_email",
+            "cost_center",
+            "fund_source",
+            "expense_id"
+        ],
+        "reimbursable_export_date_type": "current_date",
+        "expense_state": "PAYMENT_PROCESSING",
+        "corporate_credit_card_expense_group_fields": [
+            "report_id",
+            "cost_center",
+            "fund_source",
+            "employee_email",
+            "claim_number"
+        ],
+        "ccc_export_date_type": "current_date",
+        "ccc_expense_state": null
+    },
+    "configuration": {
+        "reimbursable_expenses_object": "EXPENSE REPORT",
+        "corporate_credit_card_expenses_object": null,
+        "is_simplify_report_closure_enabled": true,
+        "name_in_journal_entry": "MERCHANT",
+        "employee_field_mapping": "EMPLOYEE",
+        "auto_map_employees": "EMAIL"
+    },
+    "general_mappings": {
+        "reimbursable_account": {
+            "id": "2",
+            "name": "Savings"
+        },
+        "default_ccc_account": {
+            "id": null,
+            "name": null
+        },
+        "accounts_payable": {
+            "id": null,
+            "name": null
+        },
+        "default_ccc_vendor": {
+            "id": null,
+            "name": null
+        }
+    },
+    "workspace_id": 297
+};
+
+export const mockExportErrors: Error[] = [
+  {
+      id: 3301,
+      expense_attribute: {
+          id: 1468902,
+          attribute_type: "CATEGORY",
+          display_name: "Category",
+          value: "ABN Withholding",
+          source_id: "248995",
+          auto_mapped: false,
+          auto_created: false,
+          active: true,
+          detail: null,
+          created_at: "2024-09-17T11:20:35.804644Z",
+          updated_at: "2024-09-17T11:20:35.804648Z",
+          workspace: 530
+      },
+      expense_group: {} as AccountingExport,
+      type: AccountingErrorType.CATEGORY_MAPPING,
+      article_link: "",
+      is_resolved: false,
+      error_title: "ABN Withholding",
+      error_detail: "Category mapping is missing",
+      created_at: new Date("2024-09-25T12:06:26.035205Z"),
+      updated_at: new Date("2024-09-25T12:08:26.638480Z"),
+      workspace: 530
+  },
+  {
+      id: 3302,
+      expense_attribute: {
+          id: 1469125,
+          attribute_type: "CATEGORY",
+          display_name: "Category",
+          value: "Airfare",
+          source_id: "132580",
+          auto_mapped: false,
+          auto_created: false,
+          active: true,
+          detail: null,
+          created_at: "2024-09-17T11:20:35.804644Z",
+          updated_at: "2024-09-17T11:20:35.804648Z",
+          workspace: 530
+      },
+      expense_group: {} as AccountingExport,
+      type: AccountingErrorType.CATEGORY_MAPPING,
+      article_link: "",
+      is_resolved: false,
+      error_title: "Airfare",
+      error_detail: "Category mapping is missing",
+      created_at: new Date("2024-09-25T12:06:40.991166Z"),
+      updated_at: new Date("2024-09-25T12:06:40.991180Z"),
+      workspace: 530
+  }
+];
+
+export const mockQBOTaskResponse = {
+  "count": 12,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 38657,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16064
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.350569Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:05.761286Z",
+          "workspace": 530,
+          "expense_group": 16064,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38660,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16067
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.390170Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:26.043770Z",
+          "workspace": 530,
+          "expense_group": 16067,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38663,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Airfare",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16070
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.437580Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:41.001572Z",
+          "workspace": 530,
+          "expense_group": 16070,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38665,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16072
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.464238Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:56.041377Z",
+          "workspace": 530,
+          "expense_group": 16072,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38656,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16063
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.328216Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:00.856240Z",
+          "workspace": 530,
+          "expense_group": 16063,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38668,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16075
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.501408Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:16.186790Z",
+          "workspace": 530,
+          "expense_group": 16075,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38669,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16076
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.513828Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:21.310032Z",
+          "workspace": 530,
+          "expense_group": 16076,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38680,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16087
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.657958Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:08:26.642144Z",
+          "workspace": 530,
+          "expense_group": 16087,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38658,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "Food",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16065
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.365838Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:06:10.795891Z",
+          "workspace": 530,
+          "expense_group": 16065,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38679,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16086
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.644626Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:08:21.624810Z",
+          "workspace": 530,
+          "expense_group": 16086,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38671,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16078
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.539216Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:36.337016Z",
+          "workspace": 530,
+          "expense_group": 16078,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      },
+      {
+          "id": 38674,
+          "type": "CREATING_CREDIT_CARD_PURCHASE",
+          "task_id": null,
+          "status": "FAILED",
+          "detail": [
+              {
+                  "row": 0,
+                  "type": "Category Mapping",
+                  "value": "ABN Withholding",
+                  "message": "Category Mapping not found",
+                  "expense_group_id": 16081
+              }
+          ],
+          "created_at": "2024-09-25T12:05:42.579228Z",
+          "quickbooks_errors": null,
+          "updated_at": "2024-09-25T12:07:51.459935Z",
+          "workspace": 530,
+          "expense_group": 16081,
+          "bill": null,
+          "cheque": null,
+          "journal_entry": null,
+          "credit_card_purchase": null,
+          "qbo_expense": null,
+          "bill_payment": null
+      }
+  ]
+};
+
+export const mockQBOTasks = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    { id: 1, status: TaskLogState.COMPLETE, type: QBOTaskLogType.CREATING_BILL, expense_group: 1 },
+    { id: 2, status: TaskLogState.FAILED, type: QBOTaskLogType.CREATING_BILL, expense_group: 2 }
+  ]
+};
+
+export const mockAccountingExportSummary = {
+  id: 1,
+  last_exported_at: '2023-01-01T00:00:00Z',
+  next_export_at: '2023-01-02T00:00:00Z',
+  export_mode: 'AUTO',
+  total_accounting_export_count: 10,
+  successful_accounting_export_count: 8,
+  failed_accounting_export_count: 2,
+  created_at: '2023-01-01T00:00:00Z',
+  updated_at: '2023-01-01T00:00:00Z',
+  workspace: 1
+};
+
+export const mockExportDetails = {
+  "id": 435,
+  "last_exported_at": "2024-09-25T12:05:42.308142Z",
+  "next_export_at": null,
+  "export_mode": "MANUAL",
+  "total_expense_groups_count": 25,
+  "successful_expense_groups_count": 13,
+  "failed_expense_groups_count": 12,
+  "created_at": "2024-09-17T11:20:30.969195Z",
+  "updated_at": "2024-09-25T12:08:26.662418Z",
+  "workspace": 530
+};
+
+export const mockWorkspaceGeneralSettingsForDashboard = {
+  import_items: true,
+  employee_field_mapping: 'EMPLOYEE'
+};
+
+export const mockExportSettingsForDashboard = {
+  workspace_general_settings: {
+    reimbursable_expenses_object: 'BILL',
+    corporate_credit_card_expenses_object: 'CREDIT_CARD_PURCHASE'
+  },
+  expense_group_settings: {
+    expense_state: 'PAID',
+    ccc_expense_state: 'PAID'
+  }
+};
+
+export const mockImportSettingsForDashboard = {
+  workspace_general_settings: {
+    import_code_fields: ['ACCOUNT']
+  }
+};
+
+export const mockQBOEnqueuedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.ENQUEUED,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
+
+export const mockQBOCompletedTaskResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 1,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_BILL,
+      expense_group: 1
+    },
+    {
+      id: 2,
+      status: TaskLogState.COMPLETE,
+      type: QBOTaskLogType.CREATING_EXPENSE,
+      expense_group: 2
+    }
+  ]
+};
+
+export const mockExpenseGroupResponse: ExpenseGroupResponse = {
+  count: 3,
+  next: "http://quickbooks-api.staging-integrations:8000/api/workspaces/454/fyle/expense_groups/?limit=50&offset=50&tasklog__status=COMPLETE",
+  previous: null,
+  results: [
+    {
+      id: 13501,
+      expenses: [
+        {
+          id: 1,
+          employee_email: "user6@fyleforgotham.in",
+          employee_name: "Victor Martinez",
+          category: "Office Party",
+          sub_category: "Food",
+          project: "Project X",
+          expense_id: "txtxDAMBtJbP",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/04/T/442",
+          claim_number: "C/2021/04/R/47",
+          amount: 444.0,
+          currency: "USD",
+          foreign_amount: 444.0,
+          foreign_currency: "USD",
+          tax_amount: 0,
+          tax_group_id: "NON",
+          settlement_id: "stlA1B2C3",
+          reimbursable: false,
+          billable: false,
+          state: "PAYMENT_PROCESSING",
+          vendor: "Uber#23",
+          cost_center: "Marketing",
+          purpose: "Team lunch",
+          report_id: "rpcO7sDf1lGc",
+          spent_at: new Date("2021-04-12T00:00:00Z"),
+          approved_at: new Date("2021-04-13T10:00:00Z"),
+          posted_at: new Date("2021-04-14T09:00:00Z"),
+          expense_created_at: new Date("2021-04-12T12:00:00Z"),
+          expense_updated_at: new Date("2021-04-13T11:00:00Z"),
+          created_at: new Date("2024-02-23T05:30:21.320794Z"),
+          updated_at: new Date("2024-02-23T05:30:21.320794Z"),
+          fund_source: "CCC",
+          verified_at: new Date("2021-04-13T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Sales"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file123", "file456"],
+          payment_number: "P/2021/04/R/16",
+          corporate_card_id: "card789",
+          is_skipped: false,
+          report_title: "April Team Lunch"
+        }
+      ],
+      fund_source: "CCC",
+      description: {
+        expense_id: "txtxDAMBtJbP",
+        employee_email: "user6@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T02:51:12.790-08:00",
+        Purchase: {
+          Id: "8154",
+          Line: [
+            {
+              Id: "1",
+              Amount: 444.0,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user6@fyleforgotham.in - Office Party - 2021-04-12 - C/2021/04/R/47 -  - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txtxDAMBtJbP?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "3519 Office Party",
+                  value: "115"
+                },
+                TaxCodeRef: {
+                  value: "NON"
+                },
+                BillableStatus: "NotBillable"
+              }
+            }
+          ],
+          Credit: false,
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-04-12",
+          MetaData: {
+            CreateTime: "2024-02-29T02:51:13-08:00",
+            LastUpdatedTime: "2024-02-29T02:51:13-08:00"
+          },
+          TotalAmt: 444.0,
+          DocNumber: "E/2021/04/T/442",
+          EntityRef: {
+            name: "Uber#23",
+            type: "Vendor",
+            value: "187"
+          },
+          SyncToken: "0",
+          AccountRef: {
+            name: "QBO CCC Support Account",
+            value: "130"
+          },
+          PurchaseEx: {
+            any: [
+              {
+                nil: false,
+                name: "{http://schema.intuit.com/finance/v3}NameValue",
+                scope: "javax.xml.bind.JAXBElement$GlobalScope",
+                value: {
+                  Name: "TxnType",
+                  Value: "54"
+                },
+                globalScope: true,
+                declaredType: "com.intuit.schema.finance.v3.NameValue",
+                typeSubstituted: false
+              }
+            ]
+          },
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PaymentType: "CreditCard",
+          PrivateNote: "Credit card expense by user6@fyleforgotham.in spent on merchant Uber#23 on 2021-04-12"
+        }
+      },
+      employee_name: "Victor Martinez",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/expense?txnId=8154",
+      created_at: new Date("2024-02-23T05:30:22.549675Z"),
+      exported_at: new Date("2024-02-29T10:51:13.043901Z"),
+      updated_at: new Date("2024-02-29T10:51:13.044005Z"),
+      workspace: 454,
+      export_type: ""
+    },
+    {
+      id: 13500,
+      expenses: [
+        {
+          id: 2,
+          employee_email: "user6@fyleforgotham.in",
+          employee_name: "Victor Martinez",
+          category: "Unspecified",
+          sub_category: "Meals",
+          project: "Project Y",
+          expense_id: "txT4JbfgtooE",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/04/T/405",
+          claim_number: "C/2021/04/R/46",
+          amount: -233.0,
+          currency: "USD",
+          foreign_amount: -233.0,
+          foreign_currency: "USD",
+          tax_amount: 0,
+          tax_group_id: "NON",
+          settlement_id: "stlD4E5F6",
+          reimbursable: false,
+          billable: false,
+          state: "PAYMENT_PROCESSING",
+          vendor: "STEAK-N-SHAKE#0664",
+          cost_center: "Operations",
+          purpose: "Team dinner",
+          report_id: "rpIbJEjxy8K2",
+          spent_at: new Date("2021-03-09T00:00:00Z"),
+          approved_at: new Date("2021-03-10T10:00:00Z"),
+          posted_at: new Date("2021-03-11T09:00:00Z"),
+          expense_created_at: new Date("2021-03-09T12:00:00Z"),
+          expense_updated_at: new Date("2021-03-10T11:00:00Z"),
+          created_at: new Date("2024-02-23T05:30:21.564674Z"),
+          updated_at: new Date("2024-02-23T05:30:21.564674Z"),
+          fund_source: "CCC",
+          verified_at: new Date("2021-03-10T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Engineering"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file789", "file012"],
+          payment_number: "P/2021/04/R/15",
+          corporate_card_id: "card012",
+          is_skipped: false,
+          report_title: "March Team Dinner"
+        }
+      ],
+      fund_source: "CCC",
+      description: {
+        expense_id: "txT4JbfgtooE",
+        employee_email: "user6@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T02:51:07.625-08:00",
+        Purchase: {
+          Id: "8153",
+          Line: [
+            {
+              Id: "1",
+              Amount: 233.0,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user6@fyleforgotham.in - Unspecified - 2021-03-09 - C/2021/04/R/46 - DUNKIN #3513 (Card Transaction) - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txT4JbfgtooE?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "2526 Unspecified",
+                  value: "122"
+                },
+                TaxCodeRef: {
+                  value: "NON"
+                },
+                BillableStatus: "NotBillable"
+              }
+            }
+          ],
+          Credit: true,
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-03-09",
+          MetaData: {
+            CreateTime: "2024-02-29T02:51:08-08:00",
+            LastUpdatedTime: "2024-02-29T02:51:08-08:00"
+          },
+          TotalAmt: 233.0,
+          DocNumber: "E/2021/04/T/405",
+          EntityRef: {
+            name: "STEAK-N-SHAKE#0664",
+            type: "Vendor",
+            value: "101"
+          },
+          SyncToken: "0",
+          AccountRef: {
+            name: "QBO CCC Support Account",
+            value: "130"
+          },
+          PurchaseEx: {
+            any: [
+              {
+                nil: false,
+                name: "{http://schema.intuit.com/finance/v3}NameValue",
+                scope: "javax.xml.bind.JAXBElement$GlobalScope",
+                value: {
+                  Name: "TxnType",
+                  Value: "11"
+                },
+                globalScope: true,
+                declaredType: "com.intuit.schema.finance.v3.NameValue",
+                typeSubstituted: false
+              }
+            ]
+          },
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PaymentType: "CreditCard",
+          PrivateNote: "Credit card expense by user6@fyleforgotham.in spent on merchant STEAK-N-SHAKE#0664 on 2021-03-09"
+        }
+      },
+      employee_name: "Victor Martinez",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/creditcardcredit?txnId=8153",
+      created_at: new Date("2024-02-23T05:30:22.546524Z"),
+      exported_at: new Date("2024-02-29T10:51:07.929285Z"),
+      updated_at: new Date("2024-02-29T10:51:07.929393Z"),
+      workspace: 454,
+      export_type: ""
+    },
+    {
+      id: 13502,
+      expenses: [
+        {
+          id: 3,
+          employee_email: "user7@fyleforgotham.in",
+          employee_name: "Alice Johnson",
+          category: "Office Supplies",
+          sub_category: "Stationery",
+          project: "Project Z",
+          expense_id: "txAB5678efgh",
+          org_id: "or79Cob97KSh",
+          expense_number: "E/2021/05/T/501",
+          claim_number: "C/2021/05/R/48",
+          amount: 150.75,
+          currency: "USD",
+          foreign_amount: 150.75,
+          foreign_currency: "USD",
+          tax_amount: 10.5,
+          tax_group_id: "TAX",
+          settlement_id: "stlG7H8I9",
+          reimbursable: true,
+          billable: true,
+          state: "PAYMENT_PROCESSING",
+          vendor: "Office Supplies Inc.",
+          cost_center: "Administration",
+          purpose: "Office supplies purchase",
+          report_id: "rpXY1234abcd",
+          spent_at: new Date("2021-05-15T00:00:00Z"),
+          approved_at: new Date("2021-05-16T10:00:00Z"),
+          posted_at: new Date("2021-05-17T09:00:00Z"),
+          expense_created_at: new Date("2021-05-15T12:00:00Z"),
+          expense_updated_at: new Date("2021-05-16T11:00:00Z"),
+          created_at: new Date("2024-02-24T10:15:30.123456Z"),
+          updated_at: new Date("2024-02-24T10:15:30.123456Z"),
+          fund_source: "PERSONAL",
+          verified_at: new Date("2021-05-16T09:00:00Z"),
+          custom_properties: [
+            {
+              name: "Department",
+              value: "Admin"
+            }
+          ],
+          paid_on_sage_intacct: false,
+          file_ids: ["file345", "file678"],
+          payment_number: "P/2021/05/R/17",
+          corporate_card_id: "anish",
+          is_skipped: false,
+          report_title: "May Office Supplies"
+        }
+      ],
+      fund_source: "PERSONAL",
+      description: {
+        expense_id: "txAB5678efgh",
+        employee_email: "user7@fyleforgotham.in",
+        claim_number: "",
+        report_id: "",
+        settlement_id: ""
+      },
+      response_logs: {
+        time: "2024-02-29T05:30:45.123-08:00",
+        Bill: {
+          Id: "8155",
+          Line: [
+            {
+              Id: "1",
+              Amount: 150.75,
+              DetailType: "AccountBasedExpenseLineDetail",
+              Description: "user7@fyleforgotham.in - Office Supplies - 2021-05-15 - C/2021/05/R/48 - Office Supplies Inc. - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txAB5678efgh?org_id=or79Cob97KSh",
+              AccountBasedExpenseLineDetail: {
+                AccountRef: {
+                  name: "6010 Office Supplies",
+                  value: "116"
+                },
+                TaxCodeRef: {
+                  value: "TAX"
+                },
+                BillableStatus: "Billable"
+              }
+            }
+          ],
+          domain: "QBO",
+          sparse: false,
+          TxnDate: "2021-05-15",
+          MetaData: {
+            CreateTime: "2024-02-29T05:30:46-08:00",
+            LastUpdatedTime: "2024-02-29T05:30:46-08:00"
+          },
+          TotalAmt: 150.75,
+          DocNumber: "E/2021/05/T/501",
+          VendorRef: {
+            name: "Alice Johnson",
+            value: "102"
+          },
+          SyncToken: "0",
+          CurrencyRef: {
+            name: "United States Dollar",
+            value: "USD"
+          },
+          CustomField: [],
+          PrivateNote: "Reimbursable expense by user7@fyleforgotham.in spent on vendor Office Supplies Inc. on 2021-05-15"
+        }
+      },
+      employee_name: "Alice Johnson",
+      export_url: "https://c50.sandbox.qbo.intuit.com/app/bill?txnId=8155",
+      created_at: new Date("2024-02-24T10:15:30.123456Z"),
+      exported_at: new Date("2024-02-29T13:30:45.678901Z"),
+      updated_at: new Date("2024-02-29T13:30:45.678901Z"),
+      workspace: 454,
+      export_type: ""
+    }
+  ]
+};
+
+export const mockSkippedExpenseGroup: SkipExportLogResponse = {
+  count: 4,
+  next: "http://quickbooks-api.staging-integrations:8000/api/workspaces/454/fyle/expenses/?is_skipped=true&limit=50&offset=50&org_id=or79Cob97KSh",
+  previous: null,
+  results: [
+    {
+      updated_at: new Date("2024-02-23T05:30:21.570820Z"),
+      claim_number: "C/2022/04/R/9",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txuPPcLBZhYW",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.564674Z"),
+      claim_number: "C/2021/04/R/46",
+      employee_email: "user6@fyleforgotham.in",
+      employee_name: "Victor Martinez",
+      fund_source: "CCC",
+      expense_id: "txT4JbfgtooE",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.248800Z"),
+      claim_number: "C/2022/04/R/30",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txYQYWA1c6bU",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2024-02-23T05:30:21.240046Z"),
+      claim_number: "C/2022/08/R/22",
+      employee_email: "ashwin.t@fyle.in",
+      employee_name: "Ashwin",
+      fund_source: "CCC",
+      expense_id: "txyBQM9yIC9J",
+      org_id: "or79Cob97KSh"
+    }
+  ]
+};
+
+export const mockSkippedExpenseGroupWithDateRange: SkipExportLogResponse = {
+  count: 2,
+  next: null,
+  previous: null,
+  results: [
+    {
+      updated_at: new Date("2023-06-15T10:30:00.000Z"),
+      claim_number: "C/2023/06/R/1",
+      employee_email: "john.doe@example.com",
+      employee_name: "John Doe",
+      fund_source: "PERSONAL",
+      expense_id: "txABC123",
+      org_id: "or79Cob97KSh"
+    },
+    {
+      updated_at: new Date("2023-06-16T14:45:00.000Z"),
+      claim_number: "C/2023/06/R/2",
+      employee_email: "jane.smith@example.com",
+      employee_name: "Jane Smith",
+      fund_source: "CCC",
+      expense_id: "txDEF456",
+      org_id: "or79Cob97KSh"
+    }
+  ]
+};
+
+export const mockPaginator: Paginator = {
+  limit: 50,
+  offset: 0
+};
+
+export const mockUserProfile = {
+  org_id: 'or79Cob97KSh',
+  email: 'test@example.com',
+  access_token: 'dummy_access_token',
+  refresh_token: 'dummy_refresh_token',
+  full_name: 'Test User',
+  user_id: 'user123',
+  org_name: 'Test Org'
+};
+
+// Fixtures for Mapping Pages
+export const mockGeneralSettingsForMapping = {
+  "id": 684,
+  "reimbursable_expenses_object": "JOURNAL ENTRY",
+  "corporate_credit_card_expenses_object": "BILL",
+  "employee_field_mapping": "VENDOR",
+  "map_merchant_to_vendor": true,
+  "import_categories": true,
+  "import_items": false,
+  "import_projects": false,
+  "import_tax_codes": false,
+  "change_accounting_period": false,
+  "charts_of_accounts": [
+      "Expense"
+  ],
+  "memo_structure": [
+      "employee_email",
+      "purpose",
+      "category",
+      "spent_on",
+      "report_number",
+      "expense_link"
+  ],
+  "auto_map_employees": "NAME",
+  "auto_create_destination_entity": false,
+  "auto_create_merchants_as_vendors": false,
+  "sync_fyle_to_qbo_payments": false,
+  "sync_qbo_to_fyle_payments": true,
+  "is_simplify_report_closure_enabled": true,
+  "category_sync_version": "v2",
+  "je_single_credit_line": false,
+  "map_fyle_cards_qbo_account": false,
+  "skip_cards_mapping": false,
+  "import_vendors_as_merchants": false,
+  "is_multi_currency_allowed": false,
+  "is_tax_override_enabled": true,
+  "name_in_journal_entry": "EMPLOYEE",
+  "import_code_fields": [],
+  "created_at": "2024-08-22T08:50:29.978051Z",
+  "updated_at": "2024-09-24T18:28:10.411535Z",
+  "workspace": 512
+};
+
+export const mockMappingSettings = {
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 3006,
+          "source_field": "CATEGORY",
+          "destination_field": "ACCOUNT",
+          "import_to_fyle": false,
+          "is_custom": false,
+          "source_placeholder": null,
+          "created_at": "2024-08-22T08:50:50.425404Z",
+          "updated_at": "2024-08-28T07:50:45.557168Z",
+          "expense_field": null,
+          "workspace": 512
+      }
+  ]
+};
+
+export const paginatedDestAttribsForMapping = {
+  "count": 3,
+  "next": "http://quickbooks-api.staging-integrations:8000/api/workspaces/512/mappings/paginated_destination_attributes/?active=true&attribute_type=VENDOR&limit=100&offset=100",
+  "previous": null,
+  "results": [
+      {
+          "id": 253195,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "1",
+          "destination_id": "215",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926440Z",
+          "updated_at": "2024-08-22T06:44:16.926468Z",
+          "workspace": 512
+      },
+      {
+          "id": 253198,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "Abhishek 2",
+          "destination_id": "146",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926600Z",
+          "updated_at": "2024-08-22T06:44:16.926609Z",
+          "workspace": 512
+      },
+      {
+          "id": 253199,
+          "attribute_type": "VENDOR",
+          "display_name": "vendor",
+          "value": "Abhishek ji",
+          "destination_id": "167",
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "email": null,
+              "currency": "USD"
+          },
+          "code": null,
+          "created_at": "2024-08-22T06:44:16.926648Z",
+          "updated_at": "2024-08-22T06:44:16.926654Z",
+          "workspace": 512
+      }
+  ]
+};
+
+export const mockemployeeAttributes = {
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": 1456114,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "aadams@efficientoffice.com",
+          "source_id": "ouNnLODE2MhX",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usAwZNxzZENS",
+              "location": null,
+              "full_name": "Ashley Adams",
+              "department": "Human Resources",
+              "department_id": "deptMLvcJapilU",
+              "employee_code": "5",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482374Z",
+          "updated_at": "2024-08-22T06:42:43.482383Z",
+          "workspace": 512
+      },
+      {
+          "id": 1456123,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "aaron@efficientoffice.com",
+          "source_id": "ouh8MSWBpWJI",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usA8hk3BOIX7",
+              "location": null,
+              "full_name": "Aaron Eckerly",
+              "department": "Customer Success",
+              "department_id": "dept6rVZn3smSh",
+              "employee_code": "35",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482800Z",
+          "updated_at": "2024-08-22T06:42:43.482808Z",
+          "workspace": 512
+      },
+      {
+          "id": 1456122,
+          "employeemapping": [],
+          "attribute_type": "EMPLOYEE",
+          "display_name": "Employee",
+          "value": "abhisheksingh@prod.com",
+          "source_id": "ouTBfIlGoZCL",
+          "auto_mapped": false,
+          "auto_created": false,
+          "active": true,
+          "detail": {
+              "user_id": "usGdQoFQWiEs",
+              "location": null,
+              "full_name": "Abhishek Singh",
+              "department": "Human Resources",
+              "department_id": "deptMLvcJapilU",
+              "employee_code": "112",
+              "department_code": null
+          },
+          "created_at": "2024-08-22T06:42:43.482753Z",
+          "updated_at": "2024-08-22T06:42:43.482762Z",
+          "workspace": 512
+      }
+  ]
+};
+
+export const mockMappingStats = {"all_attributes_count": 105, "unmapped_attributes_count": 92};
+
+export const mockPageSize = { limit: 10, offset: 0 };
