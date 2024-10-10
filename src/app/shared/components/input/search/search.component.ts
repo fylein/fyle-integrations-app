@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
   }
 
   onBlur(): void {
-    if (!this.form.value[this.formControllerName]) {
+    if (!this.form.get(this.formControllerName)?.value) {
       this.isSearchFocused = false;
     }
     this.searchFocused.emit(false);

@@ -136,7 +136,7 @@ export class TravelperkAdvancedSettingModel {
             default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.source_id : null,
             description_structure: advancedSettingsForm.get('descriptionStructure')?.value ? advancedSettingsForm.get('descriptionStructure')?.value : null,
             invoice_lineitem_structure: advancedSettingsForm.get('invoiceLineitemStructure')?.value ? advancedSettingsForm.get('invoiceLineitemStructure')?.value : null,
-            category_mappings: this.constructCategoryMapping(advancedSettingsForm.value.categoryMappings)
+            category_mappings: this.constructCategoryMapping(advancedSettingsForm.get('categoryMappings')?.value)
         };
     }
 }

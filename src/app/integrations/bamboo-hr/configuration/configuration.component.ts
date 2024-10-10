@@ -56,22 +56,22 @@ export class ConfigurationComponent implements OnInit {
   }
 
   removeEmail(): void {
-    const selectedEmails = this.cofigurationForm.value.emails;
+    const selectedEmails = this.cofigurationForm.get('emails')?.value;
     selectedEmails.splice(0, 1);
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
-    this.selectedEmail = this.cofigurationForm.value.emails.length ? this.cofigurationForm.value.emails[0].email : null;
+    this.selectedEmail = this.cofigurationForm.get('emails')?.value.length ? this.cofigurationForm.get('emails')?.value[0].email : null;
   }
 
   addEmail(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.ADD_BAMBOO_HR_EMAIL_MANUALLY);
-    const selectedEmails = this.cofigurationForm.value.emails || [];
-    selectedEmails.push(this.addEmailForm.value);
+    const selectedEmails = this.cofigurationForm.get('emails')?.value || [];
+    selectedEmails.push(this.addEmailForm.getRawValue());
 
-    const additionalEmails = this.cofigurationForm.value.additionalEmails || [];
-    additionalEmails.push(this.addEmailForm.value);
+    const additionalEmails = this.cofigurationForm.get('additionalEmails')?.value || [];
+    additionalEmails.push(this.addEmailForm.getRawValue());
 
-    this.emails.push(this.addEmailForm.value);
+    this.emails.push(this.addEmailForm.getRawValue());
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
     this.cofigurationForm.controls.additionalEmails.patchValue(additionalEmails);
@@ -95,7 +95,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   private createEmailAdditionWatcher(): void {
-    this.assignSelectedEmail(this.cofigurationForm.value.emails);
+    this.assignSelectedEmail(this.cofigurationForm.get('emails')?.value);
     this.cofigurationForm.controls.emails.valueChanges.subscribe((emails: EmailOption[]) => {
       this.assignSelectedEmail(emails);
     });
@@ -116,7 +116,7 @@ export class ConfigurationComponent implements OnInit {
       search: []
     });
 
-    this.emails = this.getEmailOptions(this.cofigurationForm.value.additionalEmails, this.additionalEmails);
+    this.emails = this.getEmailOptions(this.cofigurationForm.get('additionalEmails')?.value, this.additionalEmails);
 
     this.createEmailAdditionWatcher();
   }

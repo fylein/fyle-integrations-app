@@ -157,11 +157,11 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   namePreference(): string {
-    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QuickBooks Desktop.`;
+    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.get('cccExportType')?.value, this.creditCardExportTypes) } are posted in QuickBooks Desktop.`;
   }
 
   accountName(): string {
-    const name = this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
+    const name = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
     this.customMessage = 'Please enter ' + name + ' name';
     return name;
   }

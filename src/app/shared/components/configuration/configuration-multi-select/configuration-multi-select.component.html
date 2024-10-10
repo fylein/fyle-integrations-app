@@ -14,10 +14,10 @@
         [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
         (onChange)="onMultiSelectChange()">
             <ng-template let-value pTemplate="selectedItems" >
-                <div *ngIf="form.value[formControllerName]?.length>0" class="tw-flex">
+                <div *ngIf="form.get(formControllerName)?.value?.length>0" class="tw-flex">
                     <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
                 </div>
-                <div *ngIf="form.value[formControllerName]?.length === 0" class="tw-text-placeholder">
+                <div *ngIf="form.get(formControllerName)?.value?.length === 0" class="tw-text-placeholder">
                     {{ placeholder }}
                 </div>
             </ng-template>
@@ -31,7 +31,7 @@
             </ng-template>
         </p-multiSelect>
         <div>
-            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.value[formControllerName]?.length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.get(formControllerName)?.value?.length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div>
     </div>
 </div>
