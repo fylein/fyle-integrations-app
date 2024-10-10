@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AbstractControl, FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideRouter, Router, RouterModule } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
@@ -13,8 +13,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { configuration, costCodeFieldValue, costTypeFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
-import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
+import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, MappingSourceField, Page, ProgressPhase, SageIntacctField, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -82,6 +82,8 @@ describe('IntacctImportSettingsComponent', () => {
     siMappingsService.getFyleFields.and.returnValue(of(fyleFields));
     siMappingsService.getGroupedDestinationAttributes.and.returnValue(of(groupedDestinationAttributes));
     siMappingsService.getConfiguration.and.returnValue(of(configuration));
+    siMappingsService.refreshSageIntacctDimensions.and.returnValue(of(''));
+    siMappingsService.refreshFyleDimensions.and.returnValue(of(''));
     intacctConnectorService.getLocationEntityMapping.and.returnValue(of(locationEntityMapping));
     orgService.getCachedOrg.and.returnValue({ created_at: new Date() } as Org);
     siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);
@@ -201,6 +203,7 @@ describe('IntacctImportSettingsComponent', () => {
       });
     });
   });
+
   describe('Save', () => {
     it('should successfully save import settings during onboarding', fakeAsync(() => {
       siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);
@@ -384,6 +387,210 @@ describe('IntacctImportSettingsComponent', () => {
         expect(component.customFieldControl).toBe(component.importSettingsForm.get('costTypes')!);
         expect(component.importSettingsForm.get('costTypes')?.value.source_field).toBeNull();
       });
+    });
+  });
+
+  describe('Utility Functions', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    it('importCodeFieldGetter should return a valid FormArray', () => {
+      expect(component.importCodeFieldGetter instanceof FormArray).toBeTrue();
+    });
+
+    it('addImportCodeField should add and remove fields correctly', () => {
+      const sourceField = IntacctCategoryDestination.ACCOUNT;
+
+      component.addImportCodeField({ checked: true }, sourceField);
+      expect(component.importCodeFieldGetter.length).toBe(1);
+
+      component.addImportCodeField({ checked: false }, sourceField);
+      expect(component.importCodeFieldGetter.length).toBe(0);
+    });
+
+    it('getFormGroup should return FormGroup', () => {
+      const formGroup = component['formBuilder'].group({
+        test: ['value']
+      });
+      expect(component.getFormGroup(formGroup) instanceof FormGroup).toBeTrue();
+    });
+
+    it('getDestinationField should correctly transform field names', () => {
+      expect(component.getDestinationField('category')).toBe('categories');
+      expect(component.getDestinationField('tax')).toBe('taxes');
+      expect(component.getDestinationField('match')).toBe('matches');
+      expect(component.getDestinationField('import')).toBe('imports');
+    });
+
+    it('refreshDimensions should call refresh services and show toast', fakeAsync(() => {
+      tick();
+
+      component.refreshDimensions(true);
+      expect(siMappingsService.refreshSageIntacctDimensions).toHaveBeenCalled();
+      expect(siMappingsService.refreshFyleDimensions).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Syncing data dimensions from Sage Intacct'
+      );
+    }));
+
+    it('removeFilter should reset form controls', () => {
+      const formGroup = component['formBuilder'].group({
+        source_field: ['test'],
+        import_to_fyle: [true],
+        destination_field: ['ACCOUNT']
+      });
+      spyOn(component, 'addImportCodeField');
+
+      component.removeFilter(formGroup);
+
+      expect(formGroup.get('source_field')?.value).toBe('');
+      expect(formGroup.get('import_to_fyle')?.value).toBeFalse();
+      expect(component.addImportCodeField).toHaveBeenCalledWith(
+        { checked: false },
+        'ACCOUNT'
+      );
+    });
+
+    it('hasDuplicateOption should check control validity', () => {
+      const formGroup = component['formBuilder'].group({
+        testControl: ['value']
+      });
+      expect(component.hasDuplicateOption(formGroup, 0, 'testControl')).toBeTrue();
+    });
+
+    it('showOrHideAddButton should return correct visibility', () => {
+      component.sageIntacctFields = [];
+      expect(component.showOrHideAddButton()).toBeTrue();
+
+      for (let i = 0; i < component.importSettingsForm.controls.expenseFields.value.length; i++) {
+        component.sageIntacctFields.push({} as ExpenseField);
+      }
+      expect(component.showOrHideAddButton()).toBeFalse();
+    });
+
+    it('showPreviewDialog should set dialog visibility', () => {
+      component.showPreviewDialog(true);
+      expect(component.isDialogVisible).toBeTrue();
+
+      component.showPreviewDialog(false);
+      expect(component.isDialogVisible).toBeFalse();
+    });
+
+    it('addExpenseField should add new expense field', () => {
+      const initialLength = component.expenseFieldsGetter.length;
+      component.addExpenseField();
+      expect(component.expenseFieldsGetter.length).toBe(initialLength + 1);
+    });
+
+    it('closeModel should reset form and close dialog', () => {
+      component.customFieldForm = component['formBuilder'].group({
+        testField: ['value']
+      });
+      component.showDialog = true;
+
+      component.closeModel();
+
+      expect(component.customFieldForm.get('testField')?.value).toBeNull();
+      expect(component.showDialog).toBeFalse();
+    });
+
+    describe('saveCustomField', () => {
+
+      it('should handle dependent field creation', () => {
+        component.customFieldForDependentField = true;
+        component.customFieldForm = component['formBuilder'].group({
+          attribute_type: ['Test Field'],
+          source_placeholder: ['Test Placeholder']
+        });
+        component['isCostCodeFieldSelected'] = true;
+        component.customFieldControl = component.importSettingsForm.get('costCodes') as AbstractControl;
+
+        component.saveCustomField();
+
+        expect(component.costCodeFieldOption.length).toBeGreaterThan(1);
+        expect(component.showDialog).toBeFalse();
+      });
+
+      it('should handle non-dependent field creation', () => {
+        component.customFieldForDependentField = false;
+        component.customFieldForm = component['formBuilder'].group({
+          attribute_type: ['Test Field'],
+          source_placeholder: ['Test Placeholder']
+        });
+        spyOn(component.customFieldForm, 'reset').and.callThrough();
+        component.customFieldControl = component['createFormGroup'](customFieldValue);
+
+        component.saveCustomField();
+
+        expect(component.customField).toEqual(customField);
+        expect(component.fyleFields[component.fyleFields.length - 2]).toEqual(customField);
+        expect(component.fyleFields[component.fyleFields.length - 1]).toEqual(component.customFieldOption[0]);
+        expect(component.customFieldForm.reset).toHaveBeenCalled();
+      });
+    });
+
+    it('updateDependentField should handle dependent field updates', () => {
+      component.importSettingsForm.patchValue({
+        isDependentImportEnabled: true
+      });
+
+      component.updateDependentField('DEPARTMENT', true);
+      expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeFalse();
+
+      component.updateDependentField('PROJECT', true);
+      expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeFalse();
+    });
+
+    it('onDropdownChange should handle dependent fields', () => {
+      const expenseFieldsArray = component.importSettingsForm.get('expenseFields') as FormArray;
+      expenseFieldsArray.push(component['formBuilder'].group({
+        import_to_fyle: [true],
+        destination_field: ['TEST_FIELD']
+      }));
+
+      component.fyleFields = [{
+        attribute_type: 'DEPENDENT_FIELD',
+        is_dependent: true
+      } as ExpenseField];
+
+      component.onDropdownChange({ value: 'DEPENDENT_FIELD' }, 0);
+
+      expect(expenseFieldsArray.at(0).get('import_to_fyle')?.value).toBeFalse();
+      expect(expenseFieldsArray.at(0).get('import_to_fyle')?.disabled).toBeTrue();
+    });
+
+    it('acceptDependentFieldWarning should handle warning being rejected', () => {
+      const expenseFieldsArray = component.importSettingsForm.get('expenseFields') as FormArray;
+      const newExpenseField = component['formBuilder'].group({
+        source_field: [MappingSourceField.PROJECT],
+        destination_field: ['TEST_FIELD'],
+        import_to_fyle: [false],
+        is_custom: [false]
+      });
+      expenseFieldsArray.push(newExpenseField);
+
+      component.acceptDependentFieldWarning(false);
+
+      expect(newExpenseField.get('import_to_fyle')?.value).toBeTrue();
+      expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeTrue();
+      expect(component.importSettingsForm.get('costCodes')?.disabled).toBeTrue();
+      expect(component.importSettingsForm.get('costTypes')?.disabled).toBeTrue();
+    });
+
+    it('showWarningForDependentFields should show warning dialog', () => {
+      const formGroup = component['formBuilder'].group({
+        source_field: [MappingSourceField.PROJECT],
+        destination_field: ['TEST_FIELD']
+      });
+
+      component.costCodeFieldOption = [{ attribute_type: 'existing_field' } as ExpenseField];
+      component.costTypeFieldOption = [{ attribute_type: 'existing_field' } as ExpenseField];
+
+      component.showWarningForDependentFields({ checked: false }, formGroup);
+
+      expect(component.showDependentFieldWarning).toBeTrue();
     });
   });
 });
