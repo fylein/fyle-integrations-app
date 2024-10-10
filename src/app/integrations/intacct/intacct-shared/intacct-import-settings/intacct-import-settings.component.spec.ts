@@ -14,7 +14,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
-import { configuration, costCodeFieldValue, costTypeFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
+import { configuration, costCodeFieldValue, costTypeFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProjectMapping, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -182,7 +182,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     describe('Dependent Fields Setup', () => {
       it('should handle dependent fields when project mapping exists', fakeAsync(() => {
-        siImportSettingService.getImportSettings.and.returnValue(of(importSettingsWithProject));
+        siImportSettingService.getImportSettings.and.returnValue(of(importSettingsWithProjectMapping));
 
         fixture.detectChanges();
         tick();

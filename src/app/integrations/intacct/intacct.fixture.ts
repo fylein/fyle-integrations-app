@@ -836,7 +836,28 @@ export const sageIntacctFieldsSortedByPriority = [
   }
 ] as ExpenseField[];
 
-export const importSettingsWithProject = {...importSettings, mapping_settings: [{
+export const sageIntacctFieldsSortedByPriorityForC1 = [
+  {
+    attribute_type: 'PROJECT',
+    display_name: 'Project'
+  },
+  {
+    attribute_type: 'CUSTOMER',
+    display_name: 'Customer'
+  },
+  {
+    attribute_type: 'ITEM',
+    display_name: 'Item'
+  },
+  {
+    attribute_type: 'GENERAL_LEDGER_ACCOUNT',
+    display_name: 'General Ledger Account',
+    source_placeholder: '',
+    is_dependent: false
+  }
+] as ExpenseField[];
+
+export const importSettingsWithProjectMapping = {...importSettings, mapping_settings: [{
   source_field: 'PROJECT',
   destination_field: 'PROJECT',
   import_to_fyle: true
@@ -863,3 +884,34 @@ export const costTypeFieldValue = {
   source_placeholder: 'Enter Cost Type',
   is_dependent: true
 };
+
+export const expenseFieldsExpectedForC1 = [
+  {
+      source_field: "CATEGORY",
+      destination_field: "GENERAL_LEDGER_ACCOUNT",
+      import_to_fyle: false,
+      is_custom: false,
+      source_placeholder: null
+  },
+  {
+      source_field: "PROJECT",
+      destination_field: "PROJECT",
+      import_to_fyle: true,
+      is_custom: false,
+      source_placeholder: null
+  },
+  {
+      source_field: "",
+      destination_field: "CUSTOMER",
+      import_to_fyle: false,
+      is_custom: false,
+      source_placeholder: null
+  },
+  {
+      source_field: "",
+      destination_field: "ITEM",
+      import_to_fyle: false,
+      is_custom: false,
+      source_placeholder: null
+  }
+];
