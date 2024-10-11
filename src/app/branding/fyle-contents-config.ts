@@ -85,7 +85,9 @@ export const fyleContents = {
                 preferenceLabel: 'Other Preferences',
                 preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from Fyle. (when there is no employee record found, or when the accounting period is closed).',
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
-                autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
+                autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
+                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.'
             }
         }
     },
