@@ -133,7 +133,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   save() {
     this.saveInProgress = true;
     this.saveSkipExport();
-    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm);
+    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm, this.adminEmails);
     this.advancedSettingsService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QbdDirectAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');

@@ -190,7 +190,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig));
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }

@@ -2,7 +2,7 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 
-export type QdbDirectImportSettingWorkspaceGeneralSetting = {
+export type QdbDirectImportSetting = {
     import_categories: boolean,
     import_items: boolean,
     import_vendors_as_merchants: boolean,
@@ -11,16 +11,12 @@ export type QdbDirectImportSettingWorkspaceGeneralSetting = {
   }
 
   export type QbdDirectImportSettingPost = {
-    workspace_general_settings: QdbDirectImportSettingWorkspaceGeneralSetting,
-    mapping_settings: ImportSettingMappingRow[] | []
+    import_settings: QdbDirectImportSetting,
+    mapping_settings: ImportSettingMappingRow[] | [],
+    workspace_id: number;
   }
 
-export interface QbdDirectImportSettingGet extends QbdDirectImportSettingPost {
-    id: number,
-    created_at: Date,
-    updated_at: Date,
-    workspace: number;
-}
+export interface QbdDirectImportSettingGet extends QbdDirectImportSettingPost {}
 
 export class QbdDirectImportSettingModel extends ImportSettingsModel {
     static getChartOfAccountTypesList(): string[] {
@@ -31,17 +27,18 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
     }
 
     static mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
-      const importCode = importSettings?.workspace_general_settings?.import_code_fields ? importSettings?.workspace_general_settings?.import_code_fields : [];
+      const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
       const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
       return new FormGroup({
-        importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
+        importCategories: new FormControl(importSettings?.import_settings.import_categories ?? false),
         expenseFields: new FormArray(expenseFieldsArray),
-        chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['Expense']),
-        importItems: new FormControl(importSettings?.workspace_general_settings.import_items ?? false),
-        importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
+        chartOfAccountTypes: new FormControl(importSettings?.import_settings.charts_of_accounts ? importSettings.import_settings.charts_of_accounts : ['Expense']),
+        importItems: new FormControl(importSettings?.import_settings.import_items ?? false),
+        importVendorsAsMerchants: new FormControl(importSettings?.import_settings.import_vendors_as_merchants ?? false),
         searchOption: new FormControl(''),
-        importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-        importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig))
+        importCodeFields: new FormControl( importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : null),
+        importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig)),
+        workSpaceId: new FormControl(importSettings?.workspace_id)
       });
     }
 
@@ -51,14 +48,15 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
       const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
       return {
-        workspace_general_settings: {
+        import_settings: {
           import_categories: importSettingsForm.get('importCategories')?.value,
           import_items: importSettingsForm.get('importItems')?.value,
           charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
           import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
           import_code_fields: importSettingsForm.get('importCodeFields')?.value
         },
-        mapping_settings: mappingSettings
+        mapping_settings: mappingSettings,
+        workspace_id: importSettingsForm.get('workSpaceId')?.value
       };
     }
   }

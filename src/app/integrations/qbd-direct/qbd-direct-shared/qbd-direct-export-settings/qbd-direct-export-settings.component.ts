@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -164,10 +164,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   private setupCCCExpenseGroupingDateOptions(): void {
     if (this.exportSettings?.credit_card_expense_export_type) {
-      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QBDExpenseGroupedBy.EXPENSE;
+      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
       this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type, creditCardExpenseExportGroup);
     } else {
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBDExpenseGroupedBy.EXPENSE);
+      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QbdDirectExpenseGroupBy.EXPENSE);
     }
   }
 

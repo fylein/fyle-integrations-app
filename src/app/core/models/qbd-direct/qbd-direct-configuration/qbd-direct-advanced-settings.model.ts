@@ -17,7 +17,7 @@ export interface QbdDirectAdvancedSettingsGet extends QbdDirectAdvancedSettingsP
     id: number,
     created_at: Date,
     updated_at: Date,
-    workspace: number
+    workspace_id: number
 }
 
 export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
@@ -46,20 +46,26 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         });
     }
 
-    static constructPayload (advancedSettingForm: FormGroup): QbdDirectAdvancedSettingsPost {
+    static constructPayload (advancedSettingForm: FormGroup, adminEmails: EmailOption[]): QbdDirectAdvancedSettingsPost {
 
         const topMemo: string[] = [];
         topMemo.push(advancedSettingForm.value.topMemoStructure);
+
+        const allSelectedEmails: EmailOption[] = advancedSettingForm.get('email')?.value;
+
+        const selectedEmailsEmails = allSelectedEmails?.filter((email: EmailOption) => adminEmails.includes(email));
+
+        const additionalEmails = allSelectedEmails?.filter((email: EmailOption) => !adminEmails.includes(email));
 
         const advancedSettingPayload: QbdDirectAdvancedSettingsPost = {
             line_level_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
             top_level_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
-            emails_selected: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('email')?.value : null,
+            emails_selected: advancedSettingForm.get('exportSchedule')?.value ? selectedEmailsEmails : [],
             interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
             auto_create_reimbursable_enitity: advancedSettingForm.get('autoCreateReimbursableEnitity')?.value ? advancedSettingForm.get('autoCreateReimbursableEnitity')?.value : false,
             auto_create_merchant_as_vendor: advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value ? advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value : false,
-            emails_added: [],
+            emails_added: advancedSettingForm.get('exportSchedule')?.value ? additionalEmails : [],
             export_to_next_accounting_period: advancedSettingForm.get('exportToNextAccountingPeriod')?.value ? advancedSettingForm.get('exportToNextAccountingPeriod')?.value : false
         };
 
