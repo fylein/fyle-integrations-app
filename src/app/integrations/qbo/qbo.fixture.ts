@@ -1,5 +1,5 @@
 import { MinimalUser } from "src/app/core/models/db/user.model";
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator, AccountingErrorType, TaskLogState, QBOTaskLogType } from "src/app/core/models/enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, SplitExpenseGrouping, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, Operator, AccountingErrorType, TaskLogState, QBOTaskLogType, AccountingField } from "src/app/core/models/enum/enum.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model";
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
@@ -13,6 +13,7 @@ import { AccountingExport } from "src/app/core/models/db/accounting-export.model
 import { ExpenseGroupResponse } from "src/app/core/models/db/expense-group.model";
 import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
 import { Paginator } from "src/app/core/models/misc/paginator.model";
+import { MappingSetting } from "src/app/core/models/db/mapping-setting.model";
 
 export const mockUser: MinimalUser = {
     org_id: '123',
@@ -2441,5 +2442,19 @@ export const mockemployeeAttributes = {
 };
 
 export const mockMappingStats = {"all_attributes_count": 105, "unmapped_attributes_count": 92};
+
+export const mockMappingSetting: MappingSetting[] = [
+  {
+    source_field: 'VENDOR',
+    destination_field: AccountingField.ACCOUNT,
+    id: 0,
+    created_at: new Date(),
+    updated_at: new Date(),
+    workspace: 0,
+    import_to_fyle: false,
+    is_custom: false,
+    source_placeholder: null
+  }
+];
 
 export const mockPageSize = { limit: 10, offset: 0 };
