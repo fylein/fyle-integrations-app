@@ -31,8 +31,14 @@ export type ContentConfiguration = {
                         employeeMappingSubLabel: string;
                         autoMapEmployeesLabel: string;
                         autoMapEmployeesSubLabel: string;
+                        defaultReimbursableAccountPayableLabel: string;
+                        defaultReimbursableAccountPayableSubLabel: string;
                     },
                     corporateCard: {
+                        defaultCCCAccountLabel: string;
+                        defaultCCCAccountSubLabel: string;
+                        defaultCCCAccountPayableLabel: string;
+                        defaultCCCAccountPayableSubLabel: string;
                         creditCardExpenseLabel: string;
                         creditCardExpenseSubLabel: string;
                         creditCardExpenseTypeLabel: string;

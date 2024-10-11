@@ -693,13 +693,19 @@ export enum BCExportSettingDestinationOptionKey {
   VENDOR = 'VENDOR'
 }
 
+export enum QbdDirectExportSettingDestinationOptionKey {
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE'
+}
+
 export type DestinationOptionKey =
   IntacctExportSettingDestinationOptionKey |
   NetsuiteExportSettingDestinationOptionKey |
   QboExportSettingDestinationOptionKey |
   XeroExportSettingDestinationOptionKey |
   Sage300ExportSettingDestinationOptionKey |
-  BCExportSettingDestinationOptionKey;
+  BCExportSettingDestinationOptionKey |
+  QbdDirectExportSettingDestinationOptionKey;
 
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
