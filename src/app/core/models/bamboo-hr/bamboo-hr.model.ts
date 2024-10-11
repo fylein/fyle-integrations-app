@@ -43,8 +43,8 @@ export class BambooHrModel {
   static constructBambooConnectionPayload(bambooConnectionForm: FormGroup): BambooHrConnection {
     return {
       input: {
-        api_token: bambooConnectionForm.value.apiToken,
-        subdomain: bambooConnectionForm.value.subDomain
+        api_token: bambooConnectionForm.get('apiToken')?.value,
+        subdomain: bambooConnectionForm.get('subDomain')?.value
       }
     };
   }
@@ -52,8 +52,8 @@ export class BambooHrModel {
   static constructBambooConfigurationPayload(bambooHrConfigurationForm: FormGroup, orgId: number): BambooHRConfigurationPost {
     return {
       org: orgId,
-      additional_email_options: bambooHrConfigurationForm.value.additionalEmails ? bambooHrConfigurationForm.value.additionalEmails : [],
-      emails_selected: bambooHrConfigurationForm.value.email
+      additional_email_options: bambooHrConfigurationForm.get('additionalEmails')?.value ? bambooHrConfigurationForm.get('additionalEmails')?.value : [],
+      emails_selected: bambooHrConfigurationForm.get('email')?.value
     };
   }
 }

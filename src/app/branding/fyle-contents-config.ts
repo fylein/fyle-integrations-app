@@ -290,7 +290,7 @@ export const fyleContents = {
         advancedSettings: {
             stepName: 'Advanced Settings',
             contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
-            autoCreateVendorsLabel: 'Auto-Create Vendors',
+            autoCreateVendorsLabel: 'Auto-create employee as vendor',
             paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
             customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
             autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
