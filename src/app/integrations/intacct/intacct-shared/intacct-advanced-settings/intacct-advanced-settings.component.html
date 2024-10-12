@@ -83,7 +83,7 @@
                 [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
-            <div *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants">
+            <div *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
             <app-configuration-toggle-field
                 [form]="advancedSettingsForm"
                 [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
