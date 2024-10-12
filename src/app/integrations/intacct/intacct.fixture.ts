@@ -863,3 +863,18 @@ export const costTypeFieldValue = {
   source_placeholder: 'Enter Cost Type',
   is_dependent: true
 };
+
+export const customFieldValue = {
+  source_field: '',
+  destination_field: 'PROJECT',
+  import_to_fyle: false,
+  is_custom: false,
+  source_placeholder: null
+};
+
+export const customField = {
+  attribute_type: 'TEST_FIELD',
+  source_placeholder: 'Test Placeholder',
+  display_name: 'Test Field',
+  is_dependent: false
+};
