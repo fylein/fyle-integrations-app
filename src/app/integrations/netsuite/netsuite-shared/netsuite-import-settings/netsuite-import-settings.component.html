@@ -64,7 +64,7 @@
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
 
-                    <app-configuration-select-field *ngIf="importSettingForm.value.taxCode"
+                    <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'tax code'"

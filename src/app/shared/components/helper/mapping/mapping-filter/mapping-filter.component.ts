@@ -82,7 +82,7 @@ export class MappingFilterComponent implements OnInit {
 
   private trackAlphabeticalFilter(allSelected: boolean = false): void {
     const properties: MappingAlphabeticalFilterAdditionalProperty = {
-      alphabetList: allSelected ? [] : this.form.value.filterOption,
+      alphabetList: allSelected ? [] : this.form.get('filterOption')?.value,
       allSelected: allSelected,
       page: this.page
     };

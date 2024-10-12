@@ -81,7 +81,7 @@ xdescribe('ConfigurationComponent', () => {
 
     expect(component.showDialog).toBeFalse();
 
-    const selectedEmails = component.cofigurationForm.value.emails;
+    const selectedEmails = component.cofigurationForm.get('emails')?.value;
 
     const newEmail = selectedEmails.filter((email: any) => email.email === 'ashwin.t+new@fyle.in');
     expect(newEmail.length).toBe(1);

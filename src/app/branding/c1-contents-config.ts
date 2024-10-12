@@ -288,7 +288,7 @@ export const c1Contents = {
         advancedSettings: {
             stepName: 'Advanced settings',
             contentText: 'Customize the integration based on your accounting requirements. ',
-            autoCreateVendorsLabel: 'Auto-create vendors',
+            autoCreateVendorsLabel: 'Auto-create employee as vendor',
             paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
             customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
             autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',

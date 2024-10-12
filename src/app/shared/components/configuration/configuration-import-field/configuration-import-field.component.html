@@ -115,7 +115,7 @@
                         <span class="checkmark"></span>
                     </label>
                 </div>
-                <div *ngIf="form.value.isDependentImportEnabled && dependentImportFields">
+                <div *ngIf="form.get('isDependentImportEnabled')?.value && dependentImportFields">
                     <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
                         <div class="tw-flex">
                             <div>

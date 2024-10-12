@@ -8,7 +8,7 @@
         </div>
         <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
             <p-dropdown appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
-                [placeholder]="brandingContent.filterPlaceholder" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.value.filterOption}">
+                [placeholder]="brandingContent.filterPlaceholder" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.get('filterOption')?.value}">
                 <ng-template let-item pTemplate="item">
                     <div [ngClass]="getSelectedFilter(item.value)">{{ item.label }}</div>
                 </ng-template>

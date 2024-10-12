@@ -7,7 +7,7 @@
                     <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                 </div>
             </div>
-            <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
+            <div *ngIf="existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1">
                 <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
                     <span class="error-box tw-flex tw-p-4-px">
                         <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
@@ -43,11 +43,11 @@
                   <div class="label-section tw-pt-8">
                     <div class="label-content tw-w-420-px">
                       <h5 class="name-text text-secondary tw-text-label-text-size">
-                        {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
+                        {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : 'Label'}}
                       </h5>
                       <div class="form-field tw-pt-4-px">
                         <input class="form-input tw-w-352-px" type="text" disabled
-                        [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
+                        [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter Text'">
                       </div>
                     </div>
                   </div>              
@@ -58,7 +58,7 @@
                             Cancel
                         </button>
                     </div>
-                    <button type="button" class="p-button-raised" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1" (click)="saveCustomField()">
+                    <button type="button" class="p-button-raised" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
                         {{brandingContent.customFieldCreateandSave}}
                     </button>
                 </div>

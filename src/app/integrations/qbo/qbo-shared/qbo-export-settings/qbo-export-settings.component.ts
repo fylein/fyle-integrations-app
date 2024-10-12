@@ -201,8 +201,8 @@ export class QboExportSettingsComponent implements OnInit {
     let content: string = '';
     const existingReimbursableExportType = this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? this.exportSettings.workspace_general_settings.reimbursable_expenses_object : 'None';
     const existingCorporateCardExportType = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object : 'None';
-    const updatedReimbursableExportType = this.exportSettingForm.value.reimbursableExportType ? this.exportSettingForm.value.reimbursableExportType : 'None';
-    const updatedCorporateCardExportType = this.exportSettingForm.value.creditCardExportType ? this.exportSettingForm.value.creditCardExportType : 'None';
+    const updatedReimbursableExportType = this.exportSettingForm.get('reimbursableExportType')?.value ? this.exportSettingForm.get('reimbursableExportType')?.value : 'None';
+    const updatedCorporateCardExportType = this.exportSettingForm.get('creditCardExportType')?.value ? this.exportSettingForm.get('creditCardExportType')?.value : 'None';
 
     if (this.isSingleItemizedJournalEntryAffected()) {
       if (updatedReimbursableExportType !== existingReimbursableExportType) {
@@ -224,11 +224,11 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private isSingleItemizedJournalEntryAffected(): boolean {
-    return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.reimbursableExportType === QBOReimbursableExpensesObject.JOURNAL_ENTRY) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+    return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
   }
 
   private isPaymentsSyncAffected(): boolean {
-    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== QBOReimbursableExpensesObject.BILL && this.exportSettingForm.value.reimbursableExportType  === QBOReimbursableExpensesObject.BILL;
+    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== QBOReimbursableExpensesObject.BILL && this.exportSettingForm.get('reimbursableExportType')?.value  === QBOReimbursableExpensesObject.BILL;
   }
 
   private isAdvancedSettingAffected(): boolean {
@@ -251,8 +251,8 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.value.creditCardExportType)) {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    if (this.exportSettingForm.get('creditCardExportType')?.value && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.get('creditCardExportType')?.value)) {
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     }
 
     this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
@@ -272,12 +272,12 @@ export class QboExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     });
 
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle'  && this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.value.creditCardExportType !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
+      if (brandingConfig.brandId==='fyle'  && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
         this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
       }
