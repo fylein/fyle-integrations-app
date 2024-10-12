@@ -13,7 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProject, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
+import { configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProjectMapping, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, MappingSourceField, Page, ProgressPhase, SageIntacctField, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -182,7 +182,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     describe('Dependent Fields Setup', () => {
       it('should handle dependent fields when project mapping exists', fakeAsync(() => {
-        siImportSettingService.getImportSettings.and.returnValue(of(importSettingsWithProject));
+        siImportSettingService.getImportSettings.and.returnValue(of(importSettingsWithProjectMapping));
 
         fixture.detectChanges();
         tick();
