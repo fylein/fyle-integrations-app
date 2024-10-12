@@ -96,7 +96,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   }
 
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingsForm.value.descriptionStructure;
+    this.memoStructure = this.advancedSettingsForm.get('descriptionStructure')?.value;
     this.formatMemoPreview();
     this.advancedSettingsForm.controls.descriptionStructure.valueChanges.subscribe((memoChanges: string[]) => {
       this.memoStructure = memoChanges;

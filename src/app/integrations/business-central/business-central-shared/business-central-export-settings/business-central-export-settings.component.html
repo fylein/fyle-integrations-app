@@ -24,7 +24,7 @@
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingForm.value?.reimbursableExpense">
+                <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -41,8 +41,8 @@
                             [isDisabled]="false">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.PURCHASE_INVOICE">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -56,7 +56,7 @@
                                 [isDisabled]="true">
                             </app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY">
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType">
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -129,7 +129,7 @@
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -155,7 +155,7 @@
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingForm.value?.creditCardExpense">
+                <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -172,7 +172,7 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType && exportSettingForm.value.reimbursableExportType !== BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value && exportSettingForm.get('reimbursableExportType')?.value !== BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -189,7 +189,7 @@
                             [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -206,7 +206,7 @@
                             [formControllerName]="'defaultVendorName'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -220,7 +220,7 @@
                             [appName]="appName">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="!exportSettingForm.value?.reimbursableExpense && exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="!exportSettingForm.get('reimbursableExpense')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -233,7 +233,7 @@
                             [formControllerName]="'reimbursableEmployeeMapping'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -246,7 +246,7 @@
                             [formControllerName]="'journalEntryNamePreference'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -259,7 +259,7 @@
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"

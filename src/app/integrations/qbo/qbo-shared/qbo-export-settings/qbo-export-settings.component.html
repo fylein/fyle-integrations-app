@@ -23,7 +23,7 @@
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value?.reimbursableExpense">
+                    <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
                         <div
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
@@ -46,7 +46,7 @@
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'bank account'"
-                                    [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                    [label]="'To which Bank Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                                     [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
@@ -66,7 +66,7 @@
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'expense account'"
-                                    [label]="'To which Expense Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                    [label]="'To which Expense Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                                     [subLabel]="'The expenses exported will be added to the selected Expense Payment Account.'"
                                     [destinationAttributes]="expenseAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT"
@@ -81,7 +81,7 @@
                                 </app-configuration-select-field>
                             </div>
 
-                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR))">
+                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))">
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [destinationAttributes]="accountsPayables"
@@ -92,8 +92,8 @@
                                     [optionLabel]="'name'"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'accounts payable'"
-                                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
                                     [iconPath]="'list'"
                                     [placeholder]="'Select accounts payable'"
                                     [isMultiLineOption]="isMultilineOption"
@@ -101,7 +101,7 @@
                                 </app-configuration-select-field>
                             </div>
                         </div>
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -116,7 +116,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -131,16 +131,16 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase))"
+                                [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase))"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
@@ -159,7 +159,7 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div *ngIf="exportSettingForm.value?.creditCardExpense">
+                <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -249,7 +249,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))">
+                        <div *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))">
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="accountsPayables"
@@ -261,8 +261,8 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'accounts payable'"
-                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + brandingContent.corporateCard.accountsPayableSubLabel"
+                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + brandingContent.corporateCard.accountsPayableSubLabel"
                               [placeholder]="'Select accounts payable'"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'accountsPayable'">
@@ -270,7 +270,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -284,7 +284,7 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -299,21 +299,21 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 
                         <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
-                        exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
+                        exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"

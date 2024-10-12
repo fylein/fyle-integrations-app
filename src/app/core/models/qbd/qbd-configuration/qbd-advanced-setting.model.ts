@@ -54,7 +54,7 @@ function getFrequencyTime(advancedSettingForm: FormGroup) {
 export class QBDAdvancedSettingModel {
     static constructPayload(advancedSettingForm: FormGroup): QBDAdvancedSettingsPost {
         const topMemo: string[] = [];
-        topMemo.push(advancedSettingForm.value.topMemoStructure);
+        topMemo.push(advancedSettingForm.get('topMemoStructure')?.value);
         const time = getFrequencyTime(advancedSettingForm);
         const advancedSettingPayload: QBDAdvancedSettingsPost = {
             expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,

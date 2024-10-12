@@ -29,7 +29,7 @@
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
 
-                        <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                        <div *ngIf="advancedSettingsForm.get('exportSchedule')?.value">
                             <app-configuration-schedule-export
                                 [form]="advancedSettingsForm"
                                 [appName]="appName"
@@ -83,7 +83,7 @@
                 [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
-            <div *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants">
+            <div *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
             <app-configuration-toggle-field
                 [form]="advancedSettingsForm"
                 [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
@@ -128,10 +128,10 @@
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
                 [redirectLink]="intacctLink"
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
-                <div *ngIf="advancedSettingsForm.value.skipSelectiveExpenses">
+                <div *ngIf="advancedSettingsForm.get('skipSelectiveExpenses')?.value">
                     <app-skip-export
                     #skipExportChild
-                    [enableSkipExport]="advancedSettingsForm.value.skipSelectiveExpenses" 
+                    [enableSkipExport]="advancedSettingsForm.get('skipSelectiveExpenses')?.value" 
                     [skipExportForm]="skipExportForm" 
                     (skipExportFormChange)="updateForm($event)">
                   </app-skip-export>                  
@@ -238,6 +238,6 @@
               </div>
         </div>
     </div>
-    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
     </form>
 </div>

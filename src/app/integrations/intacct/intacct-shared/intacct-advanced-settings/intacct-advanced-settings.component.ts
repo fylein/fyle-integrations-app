@@ -192,7 +192,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   }
 
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingsForm.value.setDescriptionField;
+    this.memoStructure = this.advancedSettingsForm.get('setDescriptionField')?.value;
     this.formatMemoPreview();
     this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
@@ -320,7 +320,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const advancedSettingsPayload = AdvancedSetting.constructPayload(this.advancedSettingsForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingsPayload).subscribe((response: AdvancedSettingsPost) => {
-      if (this.advancedSettingsForm.value.skipSelectiveExpenses) {
+      if (this.advancedSettingsForm.get('skipSelectiveExpenses')?.value) {
         this.skipExportChild.saveSkipExportFields();
       } else {
         this.advancedSettingsService.deleteExpenseFilter(1).subscribe();

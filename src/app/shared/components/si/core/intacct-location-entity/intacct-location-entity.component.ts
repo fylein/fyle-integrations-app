@@ -74,7 +74,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     this.isLoading = true;
     this.saveInProgress = true;
 
-    const locationEntityId = this.locationEntityForm.value.locationEntity;
+    const locationEntityId = this.locationEntityForm.get('locationEntity')?.value;
     const locationEntityMappingPayload: LocationEntityPost = this.getLocationEntityMappingPayload(locationEntityId);
 
     this.connectorService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(

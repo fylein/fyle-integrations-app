@@ -380,7 +380,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         );
       }
 
-      if (this.exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+      if (this.exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
         options.push(
           {
             label: 'Card Transaction Post date',
@@ -393,7 +393,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     private setupCCCGroupingWatcher(): void {
       if (brandingConfig.brandId === 'co') {
-        this.updateCCCGroupingDateOptions(this.exportSettingsForm.value.cccExportGroup);
+        this.updateCCCGroupingDateOptions(this.exportSettingsForm.get('cccExportGroup')?.value);
         this.exportSettingsForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
           this.updateCCCGroupingDateOptions(cccExportGroup);
         });
