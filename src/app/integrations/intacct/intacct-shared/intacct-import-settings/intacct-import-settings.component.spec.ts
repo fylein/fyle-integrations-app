@@ -204,6 +204,7 @@ describe('IntacctImportSettingsComponent', () => {
     });
   });
 
+
   describe('Save', () => {
     it('should successfully save import settings during onboarding', fakeAsync(() => {
       siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);

@@ -155,7 +155,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   }
 
   isAutoCreateVendorsFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+    return this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE && (this.workspaceGeneralSettings.reimbursable_expenses_object === QBOReimbursableExpensesObject.BILL || this.workspaceGeneralSettings.reimbursable_expenses_object === QBOReimbursableExpensesObject.EXPENSE);
   }
 
   isPaymentSyncFieldVisible(): boolean {
