@@ -1,5 +1,6 @@
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideRouter, Router, RouterModule } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings.component';
@@ -21,8 +22,7 @@ import {
   sageIntacctFieldsSortedByPriorityForC1,
   importSettingsWithProjectMapping,
   expenseFieldsExpectedForC1,
-  costCodeFieldValue,
-  costTypeFieldValue
+  blankMapping
 } from '../../intacct.fixture';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { ImportSettingGet, ImportSettingPost, ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
@@ -222,6 +222,108 @@ describe('IntacctC1ImportSettingsComponent', () => {
       expect(importSettingService.postImportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
       expect(component.saveInProgress).toBeFalse();
+    });
+  });
+
+  describe('Watchers', () => {
+    let isDependentImportEnabledValueChangeSpy: jasmine.Spy;
+    let blankExpenseField: FormGroup;
+    let costCodesValueChangeSubscription: jasmine.Spy;
+    let costTypesValueChangeSubscription: jasmine.Spy;
+
+    beforeEach(() => {
+      component.ngOnInit();
+
+      isDependentImportEnabledValueChangeSpy = spyOn(component.importSettingsForm.controls.isDependentImportEnabled.valueChanges, 'subscribe').and.callThrough();
+      blankExpenseField = component['createFormGroup'](blankMapping);
+      costCodesValueChangeSubscription = spyOn(component.importSettingsForm.controls.costCodes.valueChanges, 'subscribe');
+      costTypesValueChangeSubscription = spyOn(component.importSettingsForm.controls.costTypes.valueChanges, 'subscribe');
+
+      spyOn(blankExpenseField.valueChanges, 'subscribe').and.callThrough();
+    });
+
+    describe('dependentFieldWatchers', () => {
+      beforeEach(() => {
+        component['dependentFieldWatchers']();
+      });
+
+      it('should setup watchers for dependent fields', () => {
+        expect(component.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe).toHaveBeenCalled();
+        expect(component.importSettingsForm.controls.costCodes.valueChanges.subscribe).toHaveBeenCalled();
+        expect(component.importSettingsForm.controls.costTypes.valueChanges.subscribe).toHaveBeenCalled();
+      });
+
+      it('should handle isDependentImportEnabled being set', () => {
+        component.importSettingsForm.get('isDependentImportEnabled')?.setValue(true);
+
+        expect(helperService.enableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
+        expect(helperService.enableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
+        expect(helperService.markControllerAsRequired).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
+        expect(helperService.markControllerAsRequired).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
+        expect(component.dependentImportFields[0].isDisabled).toBeFalse();
+        expect(component.dependentImportFields[1].isDisabled).toBeFalse();
+      });
+
+      it('should handle isDependentImportEnabled being unset', () => {
+        component.importSettingsForm.get('isDependentImportEnabled')?.setValue(false);
+
+        expect(helperService.disableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
+        expect(helperService.disableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
+        expect(helperService.clearValidatorAndResetValue).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
+        expect(helperService.clearValidatorAndResetValue).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
+        expect(component.dependentImportFields[0].isDisabled).toBeTrue();
+        expect(component.dependentImportFields[1].isDisabled).toBeTrue();
+      });
+    });
+
+    describe('dependentCostFieldsWatchers', () => {
+      beforeEach(() => {
+        component['dependentCostFieldsWatchers']('costCodes');
+        component['dependentCostFieldsWatchers']('costTypes');
+      });
+
+      it('should setup watchers for cost fields', () => {
+        expect(component.importSettingsForm.controls.costCodes.valueChanges.subscribe).toHaveBeenCalled();
+        expect(component.importSettingsForm.controls.costTypes.valueChanges.subscribe).toHaveBeenCalled();
+      });
+
+      it('should handle custom field selection for costCodes', () => {
+        component.importSettingsForm.controls.costCodes.setValue({ attribute_type: 'custom_field' });
+
+        expect(component.customFieldType).toBe('costCodes');
+        expect(component.customFieldControl).toBe(component.importSettingsForm.controls.costCodes);
+      });
+
+      it('should handle custom field selection for costTypes', () => {
+        component.importSettingsForm.controls.costTypes.setValue({ attribute_type: 'custom_field' });
+
+        expect(component.customFieldType).toBe('costTypes');
+        expect(component.customFieldControl).toBe(component.importSettingsForm.controls.costTypes);
+      });
+
+      it('should handle non-custom field selection', () => {
+        component.importSettingsForm.controls.costCodes.setValue({ attribute_type: 'some_field' });
+        expect(component.dependentImportFields[0].isDisabled).toBeTrue();
+      });
+    });
+
+    describe('importSettingWatcher', () => {
+      beforeEach(() => {
+        (component.importSettingsForm.get('expenseFields') as FormArray).controls = [blankExpenseField];
+        component['importSettingWatcher']();
+      });
+
+      it('should setup watchers for expense fields', () => {
+        expect(blankExpenseField.valueChanges.subscribe).toHaveBeenCalled();
+      });
+
+      it('should handle custom field selection in expense fields', () => {
+        spyOn(blankExpenseField, 'patchValue').and.callThrough();
+        blankExpenseField.patchValue({ source_field: 'custom_field' });
+
+        expect(component.customFieldControl).toBe(blankExpenseField);
+        expect(blankExpenseField.patchValue).toHaveBeenCalledWith(blankMapping);
+      });
     });
   });
 });
