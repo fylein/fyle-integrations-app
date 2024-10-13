@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { provideRouter, Router, RouterModule } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings.component';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -20,12 +20,15 @@ import {
   settingsWithDependentFields,
   sageIntacctFieldsSortedByPriorityForC1,
   importSettingsWithProjectMapping,
-  expenseFieldsExpectedForC1
+  expenseFieldsExpectedForC1,
+  costCodeFieldValue,
+  costTypeFieldValue
 } from '../../intacct.fixture';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
-import { ImportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { ImportSettingGet, ImportSettingPost, ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 describe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
@@ -48,12 +51,12 @@ describe('IntacctC1ImportSettingsComponent', () => {
       'refreshSageIntacctDimensions',
       'refreshFyleDimensions'
     ]);
-    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingService', ['getImportSettings']);
+    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingService', ['getImportSettings', 'postImportSettings']);
     const connectorServiceSpy = jasmine.createSpyObj('IntacctConnectorService', ['getLocationEntityMapping']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent']);
-    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState']);
+    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'intacctUpdateEvent', 'integrationsOnboardingCompletion']);
+    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
     const helperServiceSpy = jasmine.createSpyObj('HelperService', [
       'disableFormField',
       'enableFormField',
@@ -164,6 +167,61 @@ describe('IntacctC1ImportSettingsComponent', () => {
       expect(component.importSettingsForm.get('isDependentImportEnabled')!.value).toBeTrue();
       expect(component.importSettingsForm.get('costCodes')).toBeDefined();
       expect(component.importSettingsForm.get('costTypes')).toBeDefined();
+    });
+  });
+
+  describe('Save', () => {
+    beforeEach(() => {
+      importSettingService.postImportSettings.and.returnValue(of(importSettings));
+    });
+
+    it('should handle post onboarding state', () => {
+      component.ngOnInit();
+
+      workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
+      component.isOnboarding = false;
+
+      component.save();
+
+      expect(importSettingService.postImportSettings).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      expect(trackingService.trackTimeSpent).toHaveBeenCalledWith(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, jasmine.any(Date));
+      expect(trackingService.intacctUpdateEvent).toHaveBeenCalledWith(
+        IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
+        {
+          phase: ProgressPhase.POST_ONBOARDING,
+          oldState: importSettings,
+          newState: importSettings
+        }
+      );
+      expect(component.saveInProgress).toBeFalse();
+      expect(router.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should handle onboarding state', () => {
+      component.ngOnInit();
+
+      workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);
+      component.isOnboarding = true;
+
+      component.save();
+
+      expect(importSettingService.postImportSettings).toHaveBeenCalled();
+      expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalledWith(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, jasmine.any(Object));
+      expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.ADVANCED_CONFIGURATION);
+      expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/advanced_settings']);
+    });
+
+    it('should handle save error', () => {
+      component.ngOnInit();
+
+      importSettingService.postImportSettings.and.returnValue(throwError(() => new Error('Error')));
+
+      component.save();
+
+      expect(importSettingService.postImportSettings).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      expect(component.saveInProgress).toBeFalse();
     });
   });
 });
