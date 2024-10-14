@@ -75,7 +75,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBO.SKIP_EXPORT;
+  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.SKIP_EXPORT;
 
   qbdDirectExportSettings: QbdDirectExportSettingGet;
 

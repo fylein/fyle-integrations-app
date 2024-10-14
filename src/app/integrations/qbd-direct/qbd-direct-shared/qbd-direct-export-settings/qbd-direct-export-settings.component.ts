@@ -59,7 +59,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   appName: AppName = AppName.QBD_DIRECT;
 
-  redirectLink: string = brandingKbArticles.topLevelArticles.QBD;
+  redirectLink: string = brandingKbArticles.topLevelArticles.QBD_DIRECT;
 
   readonly brandingConfig = brandingConfig;
 

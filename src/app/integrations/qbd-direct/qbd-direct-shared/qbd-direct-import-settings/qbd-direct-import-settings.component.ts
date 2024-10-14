@@ -30,7 +30,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBO.IMPORT_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.IMPORT_SETTING;
 
   isOnboarding: boolean;
 
