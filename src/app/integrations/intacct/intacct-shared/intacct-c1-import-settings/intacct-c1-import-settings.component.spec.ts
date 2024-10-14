@@ -337,7 +337,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     });
 
     it('expenseFieldsGetter should return FormArray', () => {
-      expect(component.expenseFieldsGetter instanceof FormArray).toBeTrue();
+      expect(component.expenseFieldsGetter).toBeInstanceOf(FormArray);
     });
 
     it('navigateToPreviousStep should navigate to export settings', () => {
