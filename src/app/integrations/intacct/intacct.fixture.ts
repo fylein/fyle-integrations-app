@@ -938,3 +938,8 @@ export const blankMapping: MappingSetting = {
   is_custom: false,
   source_placeholder: null
 };
+
+export const customFieldFormValue = {
+  attribute_type: 'TEST',
+  source_placeholder: 'TEST_PLACEHOLDER'
+};
