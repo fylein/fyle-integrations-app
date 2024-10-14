@@ -78,11 +78,13 @@ export class AdvancedSettingsModel {
 
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
+      employee_name: 'John Doe',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
+      expence_id: 'txDdlUFWkahX',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     let memoPreviewText = '';

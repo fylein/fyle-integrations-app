@@ -3,7 +3,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { WorkspaceService } from '../../common/workspace.service';
 import { ApiService } from '../../common/api.service';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { QbdDirectImportSettingGet, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model copy';
+import { QbdDirectImportSettingGet, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 
