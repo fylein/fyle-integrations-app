@@ -9,7 +9,7 @@ import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-group.model";
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
-import { DependentFieldSetting, ImportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { DependentFieldSetting, ImportSettingGet, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { GroupedDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
 import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
@@ -930,3 +930,11 @@ export const expenseFieldsExpectedForC1 = [
       source_placeholder: null
   }
 ];
+
+export const blankMapping: MappingSetting = {
+  source_field: '',
+  destination_field: '',
+  import_to_fyle: true,
+  is_custom: false,
+  source_placeholder: null
+};
