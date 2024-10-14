@@ -201,7 +201,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( [], exportSettings.default_credit_card_account_id) : null),
             defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_reimbursable_accounts_payable_account_id) : null),
             defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_ccc_accounts_payable_account_id) : null),
-            jeSingleCreditLine: new FormControl(exportSettings?.je_single_credit_line ? exportSettings.je_single_credit_line : false),
             searchOption: new FormControl([])
         });
     }
@@ -219,7 +218,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
             auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : false,
             name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
-            je_single_credit_line: exportSettingsForm.get('jeSingleCreditLine')?.value ? exportSettingsForm.get('jeSingleCreditLine')?.value : false,
+            je_single_credit_line: true,
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.destination_id : null,
             default_reimbursable_accounts_payable_account_name: exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value.value : null,
