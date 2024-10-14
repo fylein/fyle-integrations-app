@@ -268,7 +268,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   save(): void {
-    if (this.isAdvancedSettingAffected()) {
+    if (this.isAdvancedSettingAffected() && this.exportSettings.configuration) {
       this.warningDialogText = this.constructWarningMessage();
       this.isConfirmationDialogVisible = true;
       return;
