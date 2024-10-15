@@ -62,7 +62,6 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   employeeMapping: EmployeeFieldMapping;
 
-  autoMapEmployee: boolean;
 
   AutoMapEmployeeOptions = AutoMapEmployeeOptions;
 
@@ -76,7 +75,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBO.SKIP_EXPORT;
+  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.SKIP_EXPORT;
 
   qbdDirectExportSettings: QbdDirectExportSettingGet;
 
@@ -85,6 +84,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   conditionFieldOptions: ConditionField[];
 
   skipExportForm: FormGroup;
+
+  isReimbursableExportTypePresent: boolean;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
@@ -133,7 +134,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   save() {
     this.saveInProgress = true;
     this.saveSkipExport();
-    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm);
+    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm, this.adminEmails);
     this.advancedSettingsService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QbdDirectAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
@@ -221,7 +222,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
       this.employeeMapping = qbdDirectExportSettings.employee_field_mapping;
 
-      this.autoMapEmployee = qbdDirectExportSettings.auto_map_employees;
+      this.isReimbursableExportTypePresent = qbdDirectExportSettings.reimbursable_expense_export_type !== null ? true : false;
 
       this.adminEmails = adminEmail;
 

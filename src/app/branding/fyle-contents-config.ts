@@ -34,7 +34,9 @@ export const fyleContents = {
                     employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
                     employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
                     autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
-                    autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.'
+                    autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.',
+                    defaultReimbursableAccountPayableLabel: 'To which accounts payable account should the ',
+                    defaultReimbursableAccountPayableSubLabel: 'The integration will post the offset credit entry in '
                 },
                 corporateCard: {
                     creditCardExpenseLabel: 'Export corporate card expenses',
@@ -48,7 +50,11 @@ export const fyleContents = {
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                     creditCardExpenseNameinJELabel: 'Name in Journal Entry',
-                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
+                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
+                    defaultCCCAccountPayableLabel: 'To which accounts payable account should the ',
+                    defaultCCCAccountPayableSubLabel: 'The integration will post the offset credit entry in '
                 }
             },
             importSetting: {
@@ -81,11 +87,14 @@ export const fyleContents = {
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
-                autoCreateEmployeeLabel: 'Auto-create employee as ',
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
                 skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
-                skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. '
+                skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
+                autoCreateReimbursableEnitityLabel: '',
+                autoCreateReimbursableEnititySubLabel: '',
+                accountingPeriodLabel: 'Post entries in the current accounting period',
+                accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Desktop, you can export those to the current month by enabling this option.'
             }
         }
     },

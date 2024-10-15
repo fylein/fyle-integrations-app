@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -9,13 +9,16 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { forkJoin } from 'rxjs';
+import { filter, forkJoin, Observable, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -56,7 +59,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   appName: AppName = AppName.QBD_DIRECT;
 
-  redirectLink: string = brandingKbArticles.topLevelArticles.QBD;
+  redirectLink: string = brandingKbArticles.topLevelArticles.QBD_DIRECT;
 
   readonly brandingConfig = brandingConfig;
 
@@ -70,10 +73,19 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   ConfigurationCtaText = ConfigurationCta;
 
+  cccAccounts: QbdDirectDestinationAttribute[];
+
+  accountsPayables: QbdDirectDestinationAttribute[];
+
+  QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
+
+  isOptionSearchInProgress: boolean;
+
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
-    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -86,6 +98,20 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       return false;
     }
     return true;
+  }
+
+  cccAccpuntOptions(cccExportType: string): DestinationAttribute[] {
+    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+      return this.destinationOptionsWatcher(['CreditCard'], this.cccAccounts);
+    }
+    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.cccAccounts);
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
   }
 
   save() {
@@ -151,6 +177,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
+    return destinationOptions.filter((account: QbdDirectDestinationAttribute) => account.detail.account_type in detailAccountType);
+  }
+
   private exportsettingsWatcher(): void {
 
     this.cccExportTypeWatcher();
@@ -164,10 +194,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   private setupCCCExpenseGroupingDateOptions(): void {
     if (this.exportSettings?.credit_card_expense_export_type) {
-      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QBDExpenseGroupedBy.EXPENSE;
+      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
       this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type, creditCardExpenseExportGroup);
     } else {
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBDExpenseGroupedBy.EXPENSE);
+      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QbdDirectExpenseGroupBy.EXPENSE);
     }
   }
 
@@ -175,14 +205,25 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
+    const destinationAttributes = ['ACCOUNT'];
+
+    const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
+
+    destinationAttributes.forEach((destinationAttribute) => {
+      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
+    });
 
     forkJoin([
-      this.exportSettingService.getQbdExportSettings()
-    ]).subscribe(([exportSettingResponse]) => {
+      this.exportSettingService.getQbdExportSettings(),
+      ...groupedAttributes
+    ]).subscribe(([exportSettingResponse, accounts]) => {
       this.exportSettings = exportSettingResponse;
 
       this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
       this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
+
+      this.cccAccounts = accounts.results as QbdDirectDestinationAttribute[];
+      this.accountsPayables = accounts.results as QbdDirectDestinationAttribute[];
 
       this.setupCCCExpenseGroupingDateOptions();
 

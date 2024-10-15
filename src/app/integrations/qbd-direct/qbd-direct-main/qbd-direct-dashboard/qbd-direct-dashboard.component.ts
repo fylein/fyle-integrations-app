@@ -150,7 +150,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      this.importCodeFields = responses[6].workspace_general_settings.import_code_fields;
+      this.importCodeFields = responses[6].import_settings.import_code_fields;
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;

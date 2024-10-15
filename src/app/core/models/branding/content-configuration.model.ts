@@ -31,8 +31,14 @@ export type ContentConfiguration = {
                         employeeMappingSubLabel: string;
                         autoMapEmployeesLabel: string;
                         autoMapEmployeesSubLabel: string;
+                        defaultReimbursableAccountPayableLabel: string;
+                        defaultReimbursableAccountPayableSubLabel: string;
                     },
                     corporateCard: {
+                        defaultCCCAccountLabel: string;
+                        defaultCCCAccountSubLabel: string;
+                        defaultCCCAccountPayableLabel: string;
+                        defaultCCCAccountPayableSubLabel: string;
                         creditCardExpenseLabel: string;
                         creditCardExpenseSubLabel: string;
                         creditCardExpenseTypeLabel: string;
@@ -77,11 +83,14 @@ export type ContentConfiguration = {
                     previewDescriptionFieldLabel: string;
                     autoCreateMerchantsAsVendorsLabel: string;
                     autoCreateMerchantsAsVendorsSubLabel: string;
-                    autoCreateEmployeeLabel: string;
                     otherPreferencesLabel: string;
                     otherPreferencesSubLabel: string;
                     skipExportLabel: string;
                     skipExportSubLabel: string;
+                    autoCreateReimbursableEnitityLabel: string;
+                    autoCreateReimbursableEnititySubLabel: string;
+                    accountingPeriodLabel: string;
+                    accountingPeriodSubLabel: string;
                 }
             },
         },
