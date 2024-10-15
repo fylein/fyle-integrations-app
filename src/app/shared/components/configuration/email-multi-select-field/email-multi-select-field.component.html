@@ -1,6 +1,6 @@
 <div [formGroup]="form" [ngClass]="!isCloneSettingView ? 'tw-p-24-px': ''" class="tw-flex tw-flex-row tw-justify-between">
     <div *ngIf="!isCloneSettingView" class="tw-w-3/5 tw-flex tw-items-start">
-        <div [ngClass]="[iconPath ? 'tw-pr-20-px tw-mt-4-px' : 'tw-pr-40-px']">
+        <div [ngClass]="[iconPath ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
             <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
         </div>
         <div>
@@ -10,7 +10,7 @@
     </div>
     <div class="tw-pl-34-px">
         <p-multiSelect [options]="emails" styleClass="tw-z-1 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder" optionLabel="email" class="tw-text-sub-text-color"
-	    display="chip" [filter]="true" [filterBy]="'email,name'" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+	    display="chip" [filter]="true" [filterBy]="'email,name'" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId" >
             <ng-template let-value pTemplate="selectedItems">
                 <div *ngIf="selectedEmail"
                     class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">

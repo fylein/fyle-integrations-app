@@ -66,7 +66,8 @@ export const c1KbArticles: KbArticle[string] = {
         TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
-        XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`
+        XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`
     },
     onboardingArticles: {
         INTACCT: {
@@ -122,6 +123,14 @@ export const c1KbArticles: KbArticle[string] = {
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_0f42f8bf02`,
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_19858cad25`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`
+        },
+        QBD_DIRECT: {
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_78e1747002`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
+            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
+            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
         }
     }
 };
@@ -136,6 +145,7 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/KeiegWDj308',
-        NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk'
+        NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk',
+        QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk'
     }
 };
