@@ -31,9 +31,11 @@ export class DashboardService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
   }
 
-  getExportErrors(version?: 'v1'): Observable<any> {
+  getExportErrors(version?: string | 'v1'): Observable<any> {
     if (version === 'v1') {
       return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+    } else if (version ===  AppName.QBD_DIRECT) {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/errors/`, {is_resolved: false});
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});

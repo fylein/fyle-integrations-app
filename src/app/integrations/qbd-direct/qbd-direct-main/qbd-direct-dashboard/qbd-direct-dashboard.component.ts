@@ -52,11 +52,11 @@ export class QbdDirectDashboardComponent implements OnInit {
     [AccountingErrorType.CATEGORY_MAPPING]: null
   };
 
-  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
+  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors(AppName.QBD_DIRECT);
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT);
 
-  accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.CREATING_BILL, QbdDirectTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QbdDirectTaskLogType.CREATING_JOURNAL_ENTRY];
+  accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.BILL, QbdDirectTaskLogType.CREDIT_CARD_PURCHASE, QbdDirectTaskLogType.JOURNAL_ENTRY];
 
   exportLogProcessingStates: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
 

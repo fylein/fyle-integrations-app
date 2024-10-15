@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName } from '../../models/enum/enum.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
@@ -24,9 +24,11 @@ export class AccountingExportService {
     helper.setBaseApiURL();
   }
 
-  getAccountingExportSummary(version?: 'v1'): Observable<AccountingExportSummary> {
+  getAccountingExportSummary(version?: string | 'v1'): Observable<AccountingExportSummary> {
     if (version === 'v1') {
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
+    } else if (version === AppName.QBD_DIRECT) {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/summary/`, {});
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary/`, {});
