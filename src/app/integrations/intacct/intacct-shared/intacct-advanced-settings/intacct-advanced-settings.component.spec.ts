@@ -12,6 +12,7 @@ import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-ex
 import { adminEmails, advancedSettings, configurationForAddvancedSettings, expenseFilter, groupedAttributes } from '../../intacct.fixture';
 import { ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PaymentSyncDirection } from 'src/app/core/models/enum/enum.model';
 
 describe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
@@ -116,4 +117,33 @@ describe('IntacctAdvancedSettingsComponent', () => {
     const expectedPreview = 'john.doe@acme.com - Pizza Hut - Client Meeting';
     expect(component.memoPreviewText).toBe(expectedPreview);
   });
+
+  describe('Watchers', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    it('should update memo preview when setDescriptionField changes', fakeAsync(() => {
+      const newMemoStructure = ['category', 'purpose', 'spent_on'];
+      component.advancedSettingsForm.get('setDescriptionField')?.setValue(newMemoStructure);
+      tick();
+
+      expect(component.memoStructure).toEqual(newMemoStructure);
+      expect(component.memoPreviewText).toBe('Client Meeting - Meals and Entertainment - ' + new Date(Date.now()).toLocaleDateString());
+    }));
+
+    it('should update defaultPaymentAccount validators when autoSyncPayments changes', fakeAsync(() => {
+      component.advancedSettingsForm.get('autoSyncPayments')?.setValue(PaymentSyncDirection.FYLE_TO_INTACCT);
+      tick();
+
+      expect(component.advancedSettingsForm.get('defaultPaymentAccount')?.hasValidator(Validators.required)).toBeTrue();
+
+      component.advancedSettingsForm.get('autoSyncPayments')?.setValue(null);
+      tick();
+
+      expect(component.advancedSettingsForm.get('defaultPaymentAccount')?.hasValidator(Validators.required)).toBeFalse();
+    }));
+  });
+
+
 });
