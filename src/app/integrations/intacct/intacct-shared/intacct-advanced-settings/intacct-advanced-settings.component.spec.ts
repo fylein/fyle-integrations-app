@@ -1,5 +1,6 @@
+/* eslint-disable dot-notation */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings.component';
@@ -9,11 +10,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
-import { adminEmails, advancedSettings, configurationForAddvancedSettings, expenseFilter, groupedAttributes } from '../../intacct.fixture';
-import { ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
+import { adminEmails, advancedSettings, configurationForAddvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes } from '../../intacct.fixture';
+import { Configuration, ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 describe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
@@ -227,4 +229,103 @@ describe('IntacctAdvancedSettingsComponent', () => {
     }));
   });
 
+
+  describe('Utility Functions', () => {
+    describe('navigateToPreviousStep', () => {
+      it('should navigate to the import settings page', () => {
+        component.navigateToPreviousStep();
+        expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/import_settings']);
+      });
+    });
+
+    describe('isOverflowing', () => {
+      it('should return the mapping value if element is overflowing', () => {
+        const element = { offsetWidth: 100, scrollWidth: 150 };
+        const mapping = { value: 'test value' } as DestinationAttribute;
+        expect(component.isOverflowing(element, mapping)).toBe('test value');
+      });
+
+      it('should return an empty string if element is not overflowing', () => {
+        const element = { offsetWidth: 150, scrollWidth: 100 };
+        const mapping = { value: 'test value' } as DestinationAttribute;
+        expect(component.isOverflowing(element, mapping)).toBe('');
+      });
+    });
+
+    describe('refreshDimensions', () => {
+      it('should call refreshSageIntacctDimensions and refreshFyleDimensions', () => {
+        mappingService.refreshSageIntacctDimensions.and.returnValue(of({}));
+        mappingService.refreshFyleDimensions.and.returnValue(of({}));
+
+        component.refreshDimensions(true);
+
+        expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
+        expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
+        expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+      });
+    });
+
+    describe('removeFilter', () => {
+      it('should reset the form control', () => {
+        const formGroup = new FormGroup({});
+        const resetSpy = spyOn(formGroup, 'reset');
+
+        component.removeFilter(formGroup);
+
+        expect(resetSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe('getPaymentSyncConfiguration', () => {
+      it('should return FYLE_TO_INTACCT when sync_fyle_to_sage_intacct_payments is true', () => {
+        expect(component['getPaymentSyncConfiguration'](configurationWithFyleToIntacct)).toBe(PaymentSyncDirection.FYLE_TO_INTACCT);
+      });
+
+      it('should return INTACCT_TO_FYLE when sync_sage_intacct_to_fyle_payments is true', () => {
+        expect(component['getPaymentSyncConfiguration'](configurationWithIntacctToFyle)).toBe(PaymentSyncDirection.INTACCT_TO_FYLE);
+      });
+
+      it('should return an empty string when both sync options are false', () => {
+        expect(component['getPaymentSyncConfiguration'](configurationWithOutSync)).toBe('');
+      });
+    });
+
+    describe('compareObjects', () => {
+      it('should return true for identical objects', () => {
+        const obj1 = { id: 1, name: 'Test' };
+        const obj2 = { id: 1, name: 'Test' };
+        expect(component.compareObjects(obj1, obj2)).toBe(true);
+      });
+
+      it('should return false for different objects', () => {
+        const obj1 = { id: 1, name: 'Test' };
+        const obj2 = { id: 2, name: 'Different' };
+        expect(component.compareObjects(obj1, obj2)).toBe(false);
+      });
+    });
+
+    describe('isCCT', () => {
+      beforeEach(() => {
+        fixture.detectChanges();
+      });
+
+      it('should return true when autoSyncPayments is FYLE_TO_INTACCT', () => {
+        component.advancedSettingsForm.patchValue({ autoSyncPayments: PaymentSyncDirection.FYLE_TO_INTACCT });
+        expect(component.isCCT()).toBe(true);
+      });
+
+      it('should return false when autoSyncPayments is not FYLE_TO_INTACCT', () => {
+        component.advancedSettingsForm.patchValue({ autoSyncPayments: PaymentSyncDirection.INTACCT_TO_FYLE });
+        expect(component.isCCT()).toBe(false);
+      });
+    });
+
+    describe('updateForm', () => {
+      it('should update skipExportForm with the provided form', () => {
+        const newForm = new FormGroup({});
+        component.updateForm(newForm);
+        expect(component.skipExportForm).toBe(newForm);
+      });
+    });
+  });
 });

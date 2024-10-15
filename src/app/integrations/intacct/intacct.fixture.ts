@@ -14,7 +14,7 @@ import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-e
 import { GroupedDestinationAttribute, IntacctDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
 import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
 import { QBDEmailOptions } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
-import { AdvancedSettingsGet } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
+import { AdvancedSettingsGet, Configuration } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -1000,3 +1000,18 @@ export const configurationForAddvancedSettings =  {
   use_merchant_in_journal_line: true,
   employee_field_mapping: FyleField.EMPLOYEE
 } as IntacctConfiguration;
+
+export const configurationWithFyleToIntacct = {
+  sync_fyle_to_sage_intacct_payments: true,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
+
+export const configurationWithIntacctToFyle = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: true
+} as unknown as Configuration;
+
+export const configurationWithOutSync = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
