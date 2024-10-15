@@ -23,6 +23,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   @Output() deleteSkipExportForm = new EventEmitter<number>();
 
+  @Output() invalidSkipExportForm = new EventEmitter<boolean>();
+
   isLoading: boolean = true;
 
   showExpenseFilters: boolean;
@@ -209,11 +211,12 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       if (condition1.valid && condition2.valid) {
         if (condition1.value?.field_name === condition2.value?.field_name) {
-          this.skipExportForm.controls.operator2.setValue(null);
+          this.invalidSkipExportForm.emit(true);
           return true;
         }
       }
     }
+    this.invalidSkipExportForm.emit(false);
     return false;
   }
 
