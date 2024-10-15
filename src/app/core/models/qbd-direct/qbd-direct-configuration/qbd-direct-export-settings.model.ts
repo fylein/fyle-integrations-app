@@ -3,6 +3,7 @@ import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { brandingContent } from "src/app/branding/branding-config";
 
 export type QbdDirectExportSettingsPost = {
     reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
@@ -16,7 +17,6 @@ export type QbdDirectExportSettingsPost = {
     employee_field_mapping: EmployeeFieldMapping,
     auto_map_employees: boolean,
     name_in_journal_entry: NameInJournalEntry;
-    je_single_credit_line: boolean;
     default_credit_card_account_name: string;
     default_credit_card_account_id: string;
     default_reimbursable_accounts_payable_account_name: string;
@@ -63,11 +63,11 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static reimbursableExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
         return [
             {
-                label: 'Current Date',
+                label: brandingContent.common.currentDate,
                 value: QbdDirectReimbursableExportDateType.CURRENT_DATE
             },
             {
-                label: 'Date of export',
+                label: 'Last Spend date',
                 value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
             }
         ];
@@ -76,11 +76,11 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static creditCardExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
         return [
             {
-                label: 'Current Date',
+                label: brandingContent.common.currentDate,
                 value: QbdDirectCCCExportDateType.CURRENT_DATE
             },
             {
-                label: 'Date of export',
+                label: 'Spend Date',
                 value: QbdDirectCCCExportDateType.SPENT_AT
             },
             {
@@ -201,7 +201,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( [], exportSettings.default_credit_card_account_id) : null),
             defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_reimbursable_accounts_payable_account_id) : null),
             defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_ccc_accounts_payable_account_id) : null),
-            jeSingleCreditLine: new FormControl(exportSettings?.je_single_credit_line ? exportSettings.je_single_credit_line : false),
             searchOption: new FormControl([])
         });
     }
@@ -219,7 +218,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
             auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : false,
             name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
-            je_single_credit_line: exportSettingsForm.get('jeSingleCreditLine')?.value ? exportSettingsForm.get('jeSingleCreditLine')?.value : false,
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.destination_id : null,
             default_reimbursable_accounts_payable_account_name: exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value.value : null,

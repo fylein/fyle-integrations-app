@@ -179,7 +179,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
-    const destinationAttributes = ['CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE'];
+    const destinationAttributes = ['ACCOUNT'];
 
     const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
 
@@ -190,14 +190,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     forkJoin([
       this.exportSettingService.getQbdExportSettings(),
       ...groupedAttributes
-    ]).subscribe(([exportSettingResponse, cccAccounts, accountsPayables]) => {
+    ]).subscribe(([exportSettingResponse, accounts]) => {
       this.exportSettings = exportSettingResponse;
 
       this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
       this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
-      this.cccAccounts = cccAccounts.results;
-      this.accountsPayables = accountsPayables.results;
+      this.cccAccounts = accounts.results;
+      this.accountsPayables = accounts.results;
 
       this.setupCCCExpenseGroupingDateOptions();
 
