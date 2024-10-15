@@ -11,7 +11,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QbdDirectImportSettingGet, QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model copy';
+import { QbdDirectImportSettingGet, QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -30,7 +30,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBO.IMPORT_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.IMPORT_SETTING;
 
   isOnboarding: boolean;
 
