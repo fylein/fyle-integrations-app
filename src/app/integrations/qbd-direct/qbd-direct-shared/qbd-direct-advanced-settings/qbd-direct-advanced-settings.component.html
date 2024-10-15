@@ -51,14 +51,7 @@
                     </app-configuration-step-sub-header>
                 </div>
 
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                    <app-configuration-toggle-field
-                        [form]="advancedSettingsForm"
-                        [label]="brandingContent.accountingPeriodLabel" 
-                        [iconPath]="'user-plus'"
-                        [subLabel]="brandingContent.accountingPeriodSubLabel"
-                        [formControllerName]="'exportToNextAccountingPeriod'">
-                    </app-configuration-toggle-field>
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="isReimbursableExportTypePresent || isAutoCreateMerchantsAsVendorsFieldVisible()">
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"

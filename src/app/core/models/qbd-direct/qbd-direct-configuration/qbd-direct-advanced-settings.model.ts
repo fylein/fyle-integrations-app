@@ -9,7 +9,6 @@ export type QbdDirectAdvancedSettingsPost = {
     emails_added: EmailOption[],
     interval_hours: number,
     auto_create_merchant_as_vendor: boolean
-    export_to_next_accounting_period: boolean,
     auto_create_reimbursable_enitity: boolean,
 }
 
@@ -40,7 +39,6 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),
             autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_enitity ? advancedSettings?.auto_create_reimbursable_enitity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
-            exportToNextAccountingPeriod: new FormControl(advancedSettings?.export_to_next_accounting_period ? advancedSettings?.export_to_next_accounting_period : false),
             skipExport: new FormControl(isSkipExportEnabled),
             searchOption: new FormControl('')
         });
@@ -65,8 +63,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
             auto_create_reimbursable_enitity: advancedSettingForm.get('autoCreateReimbursableEnitity')?.value ? advancedSettingForm.get('autoCreateReimbursableEnitity')?.value : false,
             auto_create_merchant_as_vendor: advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value ? advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value : false,
-            emails_added: advancedSettingForm.get('exportSchedule')?.value ? additionalEmails : [],
-            export_to_next_accounting_period: advancedSettingForm.get('exportToNextAccountingPeriod')?.value ? advancedSettingForm.get('exportToNextAccountingPeriod')?.value : false
+            emails_added: advancedSettingForm.get('exportSchedule')?.value ? additionalEmails : []
         };
 
         return advancedSettingPayload;
