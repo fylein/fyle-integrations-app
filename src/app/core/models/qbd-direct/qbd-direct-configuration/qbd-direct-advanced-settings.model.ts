@@ -29,13 +29,13 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         return ["employee_name", "expense_id"];
     }
 
-    static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet, isSkipExportEnabled: boolean): FormGroup {
+    static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet | null, isSkipExportEnabled: boolean): FormGroup {
 
         return new FormGroup({
             expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? advancedSettings?.line_level_memo_structure : this.defaultMemoFields(), Validators.required),
             topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure[0] : this.defaultTopMemoOptions()[0], Validators.required),
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
-            email: new FormControl(advancedSettings?.emails_selected.length > 0 ? advancedSettings?.emails_selected : []),
+            email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : []),
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),
             autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_enitity ? advancedSettings?.auto_create_reimbursable_enitity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),

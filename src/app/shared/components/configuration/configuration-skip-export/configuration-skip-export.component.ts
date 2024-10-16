@@ -89,7 +89,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
   ) { }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    response.results.forEach((element) => {
+    response.results?.forEach((element) => {
       const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
@@ -209,7 +209,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       if (condition1.valid && condition2.valid) {
         if (condition1.value?.field_name === condition2.value?.field_name) {
-          this.skipExportForm.controls.operator2.setValue(null);
+          // This.skipExportForm.controls.operator2.setValue(null);
           return true;
         }
       }

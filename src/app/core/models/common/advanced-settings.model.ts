@@ -191,7 +191,7 @@ export class SkipExportModel {
   }
 
   static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
-    response.results.forEach((element) => {
+    response.results?.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
@@ -234,7 +234,7 @@ export class SkipExportModel {
     let isDisabledChip2: boolean = false;
     let isDisabledChip1: boolean = false;
 
-    response.results.forEach((result: ExpenseFilterPost, index: number) => {
+    response.results?.forEach((result: ExpenseFilterPost, index: number) => {
         if (index === 0) {
             selectedOperator1 = this.getSelectedOperator(result.operator, result.values[0]);
             if (!(selectedOperator1 === 'is_empty' || selectedOperator1 === 'is_not_empty')) {
