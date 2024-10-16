@@ -194,6 +194,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
   }
 
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+  }
+
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
     const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
