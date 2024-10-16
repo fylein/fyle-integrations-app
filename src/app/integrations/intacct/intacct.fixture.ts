@@ -13,8 +13,8 @@ import { DependentFieldSetting, ImportSettingGet, MappingSetting } from 'src/app
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
 import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
-import { QBDEmailOptions } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
 import { AdvancedSettingsGet, Configuration } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
+import { EmailOption } from "src/app/core/models/common/advanced-settings.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -949,7 +949,7 @@ export const customFieldFormValue = {
 export const adminEmails =  [
   { name: 'John Doe', email: 'john.doe@example.com' },
   { name: 'Jane Smith', email: 'jane.smith@example.com' }
-] as QBDEmailOptions[];
+] as EmailOption[];
 
 export const advancedSettings =  {
   workspace_schedules: {
