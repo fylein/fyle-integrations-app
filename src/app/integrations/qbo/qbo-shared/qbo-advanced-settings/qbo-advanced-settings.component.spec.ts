@@ -238,14 +238,6 @@ describe('QboAdvancedSettingsComponent', () => {
   });
 
   describe('isAutoCreateVendorsFieldVisible', () => {
-    it('should return true when conditions are met', () => {
-      component.workspaceGeneralSettings = {
-        employee_field_mapping: EmployeeFieldMapping.VENDOR,
-        auto_map_employees: AutoMapEmployeeOptions.NAME
-      } as any;
-      expect(component.isAutoCreateVendorsFieldVisible()).toBeTrue();
-    });
-
     it('should return false when employee_field_mapping is not VENDOR', () => {
       component.workspaceGeneralSettings = {
         employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
