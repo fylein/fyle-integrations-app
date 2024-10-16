@@ -178,7 +178,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
-    return destinationOptions.filter((account: QbdDirectDestinationAttribute) => account.detail.account_type in detailAccountType);
+    return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
 
   private exportsettingsWatcher(): void {
