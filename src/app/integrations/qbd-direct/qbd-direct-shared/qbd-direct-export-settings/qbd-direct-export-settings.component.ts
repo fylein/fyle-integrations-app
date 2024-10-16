@@ -9,7 +9,7 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { filter, forkJoin, Observable, Subject } from 'rxjs';
+import { catchError, filter, forkJoin, Observable, of, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -168,7 +168,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   employeeMappingWatcher() {
     this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((reimbursableExportTypeValue) => {
-      if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL) {
+      if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL || reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY) {
         this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
       }
       // Else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
@@ -214,7 +214,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
 
     forkJoin([
-      this.exportSettingService.getQbdExportSettings(),
+      this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
     ]).subscribe(([exportSettingResponse, accounts]) => {
       this.exportSettings = exportSettingResponse;
@@ -234,6 +234,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       const [exportSettingValidatorRule, exportModuleRule] = QbdDirectExportSettingModel.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingsForm);
+
+      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingsForm);
 
       this.exportsettingsWatcher();
 

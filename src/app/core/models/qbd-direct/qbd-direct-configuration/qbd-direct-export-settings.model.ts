@@ -155,6 +155,19 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         return [this.creditCardExpenseGroupingDateOptions()[1]];
     }
 
+    static getMandatoryField(form: FormGroup, controllerName: string): boolean {
+        switch (controllerName) {
+          case 'defaultCCCAccountsPayableAccountName':
+            return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          case 'defaultReimbursableAccountsPayableAccountName':
+            return form.controls.reimbursableExportType.value === QBDReimbursableExpensesObject.JOURNAL_ENTRY;
+          case 'nameInJE':
+            return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          default:
+            return false;
+        }
+      }
+
     static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
 
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
