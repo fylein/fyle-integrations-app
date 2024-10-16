@@ -10,7 +10,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
-import { adminEmails, advancedSettings, configurationForAddvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes } from '../../intacct.fixture';
+import { adminEmails, advancedSettings, configurationForAdvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes } from '../../intacct.fixture';
 import { Configuration, ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -66,7 +66,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     advancedSettingsService.getAdvancedSettings.and.returnValue(of(advancedSettings));
     advancedSettingsService.getExpenseFilter.and.returnValue(of(expenseFilter as ExpenseFilterResponse));
     mappingService.getGroupedDestinationAttributes.and.returnValue(of(groupedAttributes));
-    mappingService.getConfiguration.and.returnValue(of(configurationForAddvancedSettings));
+    mappingService.getConfiguration.and.returnValue(of(configurationForAdvancedSettings));
 
     fixture = TestBed.createComponent(IntacctAdvancedSettingsComponent);
     component = fixture.componentInstance;
@@ -90,11 +90,11 @@ describe('IntacctAdvancedSettingsComponent', () => {
       expect(component.sageIntacctProjects).toEqual(groupedAttributes.PROJECT);
       expect(component.sageIntacctClasses).toEqual(groupedAttributes.CLASS);
       expect(component.sageIntacctPaymentAccount).toEqual(groupedAttributes.PAYMENT_ACCOUNT);
-      expect(component.reimbursableExpense).toEqual(configurationForAddvancedSettings.reimbursable_expenses_object);
-      expect(component.corporateCreditCardExpense).toEqual(configurationForAddvancedSettings.corporate_credit_card_expenses_object);
-      expect(component.importVendorsAsMerchants).toEqual(configurationForAddvancedSettings.import_vendors_as_merchants);
-      expect(component.useMerchantInJournalLine).toEqual(configurationForAddvancedSettings.use_merchant_in_journal_line);
-      expect(component.employeeFieldMapping).toEqual(configurationForAddvancedSettings.employee_field_mapping);
+      expect(component.reimbursableExpense).toEqual(configurationForAdvancedSettings.reimbursable_expenses_object);
+      expect(component.corporateCreditCardExpense).toEqual(configurationForAdvancedSettings.corporate_credit_card_expenses_object);
+      expect(component.importVendorsAsMerchants).toEqual(configurationForAdvancedSettings.import_vendors_as_merchants);
+      expect(component.useMerchantInJournalLine).toEqual(configurationForAdvancedSettings.use_merchant_in_journal_line);
+      expect(component.employeeFieldMapping).toEqual(configurationForAdvancedSettings.employee_field_mapping);
     }));
 
     it('should initialize forms correctly', () => {

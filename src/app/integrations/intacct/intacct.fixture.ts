@@ -993,7 +993,7 @@ export const groupedAttributes =  {
   PAYMENT_ACCOUNT: [{ destination_id: 'ACC1', value: 'Account 1' }] as IntacctDestinationAttribute[]
 } as GroupedDestinationAttribute;
 
-export const configurationForAddvancedSettings =  {
+export const configurationForAdvancedSettings =  {
   reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
   corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION,
   import_vendors_as_merchants: false,
