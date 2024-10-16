@@ -73,9 +73,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   ConfigurationCtaText = ConfigurationCta;
 
-  cccAccounts: QbdDirectDestinationAttribute[];
+  destinationAccounts: QbdDirectDestinationAttribute[];
 
-  accountsPayables: QbdDirectDestinationAttribute[];
 
   QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
 
@@ -102,9 +101,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccAccpuntOptions(cccExportType: string): DestinationAttribute[] {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-      return this.destinationOptionsWatcher(['CreditCard'], this.cccAccounts);
+      return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
     }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.cccAccounts);
+    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
   }
 
   searchOptionsDropdown(event: ExportSettingOptionSearch): void {
@@ -222,12 +221,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
       this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
-      this.cccAccounts = accounts.results as QbdDirectDestinationAttribute[];
-      this.accountsPayables = accounts.results as QbdDirectDestinationAttribute[];
+      this.destinationAccounts = accounts.results as QbdDirectDestinationAttribute[];
+
 
       this.setupCCCExpenseGroupingDateOptions();
 
-      this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+      this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
 

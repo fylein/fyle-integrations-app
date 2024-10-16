@@ -4,6 +4,7 @@ import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJ
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { brandingContent } from "src/app/branding/branding-config";
+import { QbdDirectDestinationAttribute } from "../db/qbd-direct-destination-attribuite.model";
 
 export type QbdDirectExportSettingsPost = {
     reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
@@ -195,7 +196,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         return [exportSettingValidatorRule, exportModuleRule];
     }
 
-    static mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null): FormGroup {
+    static mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null, destinationAccounts: QbdDirectDestinationAttribute[]): FormGroup {
         const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
         return new FormGroup({
             reimbursableExportType: new FormControl(exportSettings?.reimbursable_expense_export_type),
@@ -211,9 +212,9 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : null),
             autoMapEmployees: new FormControl(exportSettings?.auto_map_employees ? exportSettings?.auto_map_employees : null),
             nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
-            defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( [], exportSettings.default_credit_card_account_id) : null),
-            defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_reimbursable_accounts_payable_account_id) : null),
-            defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( [], exportSettings.default_ccc_accounts_payable_account_id) : null),
+            defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_credit_card_account_id) : null),
+            defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_reimbursable_accounts_payable_account_id) : null),
+            defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_ccc_accounts_payable_account_id) : null),
             searchOption: new FormControl([])
         });
     }

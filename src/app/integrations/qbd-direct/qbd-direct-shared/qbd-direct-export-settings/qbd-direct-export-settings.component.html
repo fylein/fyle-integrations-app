@@ -57,7 +57,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , accountsPayables)"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
@@ -187,7 +187,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultCCCAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , accountsPayables)"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
