@@ -125,6 +125,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   closeModel() {
+    this.customFieldControl.patchValue({
+      source_field: null
+    });
     this.customFieldForm.reset();
     this.showCustomFieldDialog = false;
   }

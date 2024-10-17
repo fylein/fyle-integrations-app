@@ -155,7 +155,8 @@
                     [skipExportForm]="skipExportForm"
                     [expenseFilter]="expenseFilters"
                     [conditionFieldOptions]="conditionFieldOptions"
-                    (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                    (invalidSkipExportForm)="invalidSkipExportForm($event)">
                     </app-configuration-skip-export>
                 </div>
             </div>
@@ -252,7 +253,7 @@
         </div>
         <app-configuration-step-footer
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [isButtonDisabled]="!advancedSettingForm.valid"
+            [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
             [showBackButton]="isOnboarding ? true : false"
             (save)="save()"
             (navigateToPreviousStep)="navigateToPreviousStep()">

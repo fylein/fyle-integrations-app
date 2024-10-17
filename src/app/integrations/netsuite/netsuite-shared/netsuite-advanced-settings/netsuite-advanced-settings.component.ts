@@ -91,6 +91,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
@@ -105,6 +107,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isOptional(): string {
     return brandingConfig.brandId === 'co' ? ' \(optional\)' : '';
+  }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
   }
 
   getCreateVendorLabel(): string {
