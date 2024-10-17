@@ -5,12 +5,12 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, AppName, ToastSeverity, AccountingField, AccountingDisplayName, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
-import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
+import { FyleField, AppName, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -50,10 +50,11 @@ export class QbdDirectBaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private expoerSettingService: QbdDirectExportSettingsService
   ) { }
 
-  private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
+  private getDestinationField(workspaceGeneralSetting: QbdDirectExportSettingGet, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return workspaceGeneralSetting.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
@@ -66,20 +67,15 @@ export class QbdDirectBaseMappingComponent implements OnInit {
   private setupPage(): void {
     this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin([
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.expoerSettingService.getQbdExportSettings(),
       this.mappingService.getMappingSettings()
     ]).subscribe((responses) => {
-      this.reimbursableExpenseObject = responses[0].reimbursable_expenses_object;
-      this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
+      this.reimbursableExpenseObject = responses[0].reimbursable_expense_export_type;
+      this.cccExpenseObject = responses[0].credit_card_expense_export_type;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      if (this.destinationField === AccountingField.ACCOUNT) {
-        this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
-      } else {
-        this.displayName = undefined;
-      }
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {
         this.destinationOptions = responses.results;
