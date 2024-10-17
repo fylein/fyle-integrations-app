@@ -82,6 +82,8 @@ export class ExportLogService {
 
     if (appName === AppName.NETSUITE) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
+    } else if (appName === AppName.QBD_DIRECT) {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, params);
     }
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
 
