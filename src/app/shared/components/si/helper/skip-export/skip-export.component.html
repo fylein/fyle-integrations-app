@@ -23,11 +23,11 @@
                 <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
                   <!-- For options -->
                   <ng-template let-option pTemplate="item">
-                    {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                    {{ (option.field_name === 'report_title' ? 'report_name' : option.field_name) | snakeCaseToSpaceCase | titlecase }}
                   </ng-template>
                   <!-- For selected option -->
                   <ng-template let-selectedOption pTemplate="selectedItem">
-                    {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                    {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | titlecase }}
                   </ng-template>
                 </p-dropdown>                               
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
