@@ -5,6 +5,7 @@ import { QBDMapping, QBDMappingModel, QBDMappingPost } from 'src/app/core/models
 import { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
 import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-qbd-mapping-table',
@@ -35,7 +36,9 @@ export class QbdMappingTableComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor() { }
+  constructor(
+    public route: ActivatedRoute
+  ) { }
 
   onTextBoxChange(event: any): void {
     const targetValue: string = event.target.value;
