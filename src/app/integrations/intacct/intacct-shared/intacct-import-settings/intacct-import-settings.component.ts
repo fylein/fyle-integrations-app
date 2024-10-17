@@ -340,15 +340,11 @@ export class IntacctImportSettingsComponent implements OnInit {
 
     this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
       if (isDependentImportEnabled) {
-        this.importSettingsForm.controls.costCodes.patchValue(null);
-        this.importSettingsForm.controls.costTypes.patchValue(null);
         this.importSettingsForm.controls.costCodes.enable();
         this.importSettingsForm.controls.costTypes.enable();
         this.importSettingsForm.controls.costCodes.setValidators(Validators.required);
         this.importSettingsForm.controls.costTypes.setValidators(Validators.required);
       } else {
-        this.importSettingsForm.controls.costCodes.patchValue(null);
-        this.importSettingsForm.controls.costTypes.patchValue(null);
         this.importSettingsForm.controls.costCodes.disable();
         this.importSettingsForm.controls.costTypes.disable();
         this.importSettingsForm.controls.costCodes.clearValidators();

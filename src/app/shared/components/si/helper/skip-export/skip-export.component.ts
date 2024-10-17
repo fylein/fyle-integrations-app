@@ -128,7 +128,7 @@ export class SkipExportComponent implements OnInit {
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
-      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
+      const type = this.conditionFieldOptions.filter((fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
@@ -386,6 +386,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   setDefaultOperatorOptions(conditionField: string) {
+    conditionField = conditionField.toLowerCase();
     const operatorList = [];
     if (
       conditionField === 'claim_number' ||
