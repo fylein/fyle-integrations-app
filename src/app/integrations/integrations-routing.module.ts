@@ -47,6 +47,10 @@ const routes: Routes = [
       {
         path: 'xero',
         loadChildren: () => import('./xero/xero.module').then(m => m.XeroModule)
+      },
+      {
+        path: 'qbd_direct',
+        loadChildren: () => import('./qbd-direct/qbd-direct.module').then(m => m.QbdDirectModule)
       }
     ]
   }

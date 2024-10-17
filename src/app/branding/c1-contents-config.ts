@@ -4,6 +4,91 @@ import config from './config.json';
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
 export const c1Contents = {
+    qbd_direct: {
+        landing: {
+            contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
+            guideHeaderText: 'How to setup your integration'
+        },
+        configuration: {
+            connector: {
+                configurationHeaderText: 'Connect to NetSuite subsidary',
+                configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
+                stepName: 'Connect to NetSuite',
+                subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
+            },
+            exportSetting: {
+                stepName: 'Export settings',
+                headerText: ' Export Corporate Card Expenses',
+                contentText: 'Configure how and when expenses from Expense Management can be exported to NetSuite.',
+                corporateCard: {
+                    creditCardExpenseLabel: 'How should the expenses be exported?',
+                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
+                    creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
+                    expenseState: 'Select export state',
+                    creditCardExpenseSubLabel: 'Choose the type of NetSuite transaction to export your expenses.',
+                    cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
+                    creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from Expense Management?',
+                    creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
+                    defaultCCCAccountLabel: 'Set default credit card account as',
+                    defaultCCCAccountPlaceholder: 'Select default credit card account',
+                    defaultDebitCardAccountLabel: 'Set employee payables account as',
+                    defaultDebitCardAccountPlaceholder: 'Select default debit card account',
+                    defaultCCCVendorLabel: 'Set default corporate card vendor as',
+                    accountsPayableLabel: 'Set vendor payables account as',
+                    journalOptionLabel: 'Name in journal entry',
+                    journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
+                }
+            },
+            importSetting: {
+                stepName: 'Import settings',
+                headerText: '',
+                contentText: 'Choose the required import fields from NetSuite to Expense Management.',
+                importCategoriesLabel: ' as categories',
+                importCategoriesSubLabel: ' will be available as categories in Expense Management.',
+                importCustomersLabel: 'Import customers from NetSuite',
+                importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
+                taxCodeLabel: 'Import tax from NetSuite',
+                taxCodeSubLabel: 'The imported tax codes from NetSuite will be set as tax group in ',
+                defaultTaxCodeLabel: 'Select Default tax Code',
+                importSuppliersAsMerchantsLabel: 'Import vendors from NetSuite as merchants',
+                importSuppliersAsMerchantsSubLabel: 'The vendors in NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
+                notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
+                toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
+                importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
+                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in Expense Management.',
+                customSegmentHeader: 'Add custom segment/list/record',
+                importProjectsLabel: 'Import projects from NetSuite',
+                importItemsLabel: 'Import items from NetSuite'
+            },
+            advancedSettings: {
+                stepName: 'Advanced settings',
+                contentText: 'Customize the integration based on your accounting requirements.',
+                scheduleAutoExport: 'Schedule automatic export',
+                email: 'Send error notification to',
+                paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                autoCreateVendorsLabel: 'Auto create ',
+                autoCreateMerchantsAsVendorsLabel: 'Auto create ' + brandingConfig.brandName + ' merchants as vendors on NetSuite',
+                billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
+                postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
+                dfvLabel: 'Default field values',
+                changeAccountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                defaultPaymentAccount: 'Select payment bank account',
+                memoStructureLabel: 'Set the line-item description field in NetSuite',
+                memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
+                customizationSubLabel: 'Customize the data that you\'d like to export from Expense Management to NetSuite by choosing which data points need to be exported.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from Expense Management to NetSuite.',
+                frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
+                preferenceLabel: 'Other preferences',
+                preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
+            }
+        }
+    },
     netsuite: {
         landing: {
             contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
