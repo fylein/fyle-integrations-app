@@ -85,7 +85,9 @@ export const c1Contents = {
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
                 previewDescriptionFieldLabel: 'Preview of the description field',
-                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
+                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.'
             }
         }
     },
