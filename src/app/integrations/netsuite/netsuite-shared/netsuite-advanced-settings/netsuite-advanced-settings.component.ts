@@ -256,7 +256,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getConfiguration(),
-      this.netsuiteConnectorService.getSubsidiaryMapping(),
+      this.netsuiteConnectorService.getSubsidiaryMapping()
     ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings, subsidiaryMapping]) => {
       this.advancedSetting = netsuiteAdvancedSetting;
       this.expenseFilters = expenseFiltersGet;
