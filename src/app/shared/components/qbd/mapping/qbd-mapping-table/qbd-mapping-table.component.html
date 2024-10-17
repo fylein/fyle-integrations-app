@@ -13,7 +13,7 @@
                 <td>
                     <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)" *ngIf="destinationFieldType === fieldType.TEXT">
                         <i *ngIf="focussedMappingId === mapping.id" class="pi pi-check tooltip" (click)="postTextFieldValue(mapping)" [pTooltip]="getToolTipText()" [escape]="false"  tooltipPosition="top"></i>
-                        <input type="text" pInputText placeholder="Enter Credit card account" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">        
+                        <input type="text" pInputText placeholder="Enter account" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">        
                     </span>  
                 </td>
                 <td>
