@@ -59,6 +59,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,
     private helper: HelperService,
@@ -69,6 +71,10 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router
   ) { }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
+  }
 
   getSkipExportValue() {
     if (this.advancedSettingForm.controls.skipExport) {

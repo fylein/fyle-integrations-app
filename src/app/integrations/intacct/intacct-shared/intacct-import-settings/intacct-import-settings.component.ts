@@ -258,6 +258,9 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   closeModel() {
+    this.customFieldControl.patchValue({
+      source_field: null
+    });
     this.customFieldForm.reset();
     this.showDialog = false;
   }
@@ -343,7 +346,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.importSettingsForm.controls.costTypes.setValidators(Validators.required);
       } else {
         this.importSettingsForm.controls.costCodes.disable();
-      this.importSettingsForm.controls.costTypes.disable();
+        this.importSettingsForm.controls.costTypes.disable();
         this.importSettingsForm.controls.costCodes.clearValidators();
         this.importSettingsForm.controls.costTypes.clearValidators();
       }
