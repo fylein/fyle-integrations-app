@@ -11,8 +11,10 @@ import { SkipExportLogResponse } from "src/app/core/models/intacct/db/expense-gr
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { DependentFieldSetting, ImportSettingGet, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
-import { GroupedDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
+import { GroupedDestinationAttribute, IntacctDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
 import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
+import { AdvancedSettingsGet, Configuration } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
+import { EmailOption } from "src/app/core/models/common/advanced-settings.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -943,3 +945,73 @@ export const customFieldFormValue = {
   attribute_type: 'TEST',
   source_placeholder: 'TEST_PLACEHOLDER'
 };
+
+export const adminEmails =  [
+  { name: 'John Doe', email: 'john.doe@example.com' },
+  { name: 'Jane Smith', email: 'jane.smith@example.com' }
+] as EmailOption[];
+
+export const advancedSettings =  {
+  workspace_schedules: {
+    enabled: true,
+    interval_hours: 12,
+    emails_selected: ['john.doe@example.com'],
+    additional_email_options: [
+      { name: 'Additional User', email: 'additional.user@example.com' }
+    ]
+  },
+  configurations: {
+    sync_fyle_to_sage_intacct_payments: true,
+    sync_sage_intacct_to_fyle_payments: false,
+    auto_create_destination_entity: true,
+    change_accounting_period: true,
+    memo_structure: ['employee_email', 'merchant', 'purpose'],
+    auto_create_merchants_as_vendors: false
+  },
+  general_mappings: {
+    default_location: { id: 'LOC1' },
+    default_department: { id: 'DEP1' },
+    default_project: { id: 'PRJ1' },
+    default_class: { id: 'CLS1' },
+    default_item: { id: 'ITEM1' },
+    payment_account: { id: 'ACC1' },
+    use_intacct_employee_locations: true,
+    use_intacct_employee_departments: true
+  }
+} as unknown as AdvancedSettingsGet;
+
+export const expenseFilter =  {
+  count: 0
+};
+
+export const groupedAttributes =  {
+  LOCATION: [{ destination_id: 'LOC1', value: 'Location 1' }] as IntacctDestinationAttribute[],
+  DEPARTMENT: [{ destination_id: 'DEP1', value: 'Department 1' }] as IntacctDestinationAttribute[],
+  PROJECT: [{ destination_id: 'PRJ1', value: 'Project 1' }] as IntacctDestinationAttribute[],
+  CLASS: [{ destination_id: 'CLS1', value: 'Class 1' }] as IntacctDestinationAttribute[],
+  ITEM: [{ destination_id: 'ITEM1', value: 'Item 1' }] as IntacctDestinationAttribute[],
+  PAYMENT_ACCOUNT: [{ destination_id: 'ACC1', value: 'Account 1' }] as IntacctDestinationAttribute[]
+} as GroupedDestinationAttribute;
+
+export const configurationForAdvancedSettings =  {
+  reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
+  corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION,
+  import_vendors_as_merchants: false,
+  use_merchant_in_journal_line: true,
+  employee_field_mapping: FyleField.EMPLOYEE
+} as IntacctConfiguration;
+
+export const configurationWithFyleToIntacct = {
+  sync_fyle_to_sage_intacct_payments: true,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
+
+export const configurationWithIntacctToFyle = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: true
+} as unknown as Configuration;
+
+export const configurationWithOutSync = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
