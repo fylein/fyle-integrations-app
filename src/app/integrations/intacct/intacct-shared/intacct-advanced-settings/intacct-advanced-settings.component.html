@@ -133,7 +133,8 @@
                     #skipExportChild
                     [enableSkipExport]="advancedSettingsForm.get('skipSelectiveExpenses')?.value" 
                     [skipExportForm]="skipExportForm" 
-                    (skipExportFormChange)="updateForm($event)">
+                    (skipExportFormChange)="updateForm($event)"
+                    (invalidSkipExportForm)="invalidSkipExportForm($event)">
                   </app-skip-export>                  
                 </div>
             </div>
@@ -238,6 +239,6 @@
               </div>
         </div>
     </div>
-    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="isSkipExportFormInvalid || !advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
     </form>
 </div>

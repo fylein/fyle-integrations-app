@@ -91,6 +91,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
@@ -105,6 +107,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isOptional(): string {
     return brandingConfig.brandId === 'co' ? ' \(optional\)' : '';
+  }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
   }
 
   getCreateVendorLabel(): string {
@@ -192,6 +198,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isPaymentSyncFieldVisible(): boolean | null {
     return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
+  }
+
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
   }
 
   onMultiSelectChange() {

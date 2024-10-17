@@ -82,6 +82,8 @@ export type ContentConfiguration = {
                     scheduleSubLabel: string;
                     previewDescriptionFieldLabel: string;
                     autoCreateMerchantsLabel: string;
+                    singleCreditLineJELabel: string;
+                    singleCreditLineJESubLabel: string;
                 }
             },
         },
