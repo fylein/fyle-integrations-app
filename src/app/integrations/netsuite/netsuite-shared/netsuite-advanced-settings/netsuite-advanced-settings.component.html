@@ -103,7 +103,7 @@
                     [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field class="tw-pt-0" *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
+                <app-configuration-toggle-field class="tw-pt-0" *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE && brandingFeatureConfig.featureFlags.importSettings.tax && !isTaxGroupSyncAllowed"
                     [form]="advancedSettingForm"
                     [iconPath]="'list'"
                     [label]="brandingContent.singleCreditLineJELabel"
