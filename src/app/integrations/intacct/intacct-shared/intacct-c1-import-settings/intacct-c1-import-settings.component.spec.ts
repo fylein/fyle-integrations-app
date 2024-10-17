@@ -22,13 +22,17 @@ import {
   sageIntacctFieldsSortedByPriorityForC1,
   importSettingsWithProjectMapping,
   expenseFieldsExpectedForC1,
-  blankMapping
+  blankMapping,
+  customFieldFormValue
 } from '../../intacct.fixture';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { ImportSettingGet, ImportSettingPost, ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
+import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 describe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
@@ -65,8 +69,8 @@ describe('IntacctC1ImportSettingsComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [ IntacctC1ImportSettingsComponent ],
-      imports: [ SharedModule, RouterModule.forRoot([]), HttpClientTestingModule, ReactiveFormsModule ],
+      declarations: [IntacctC1ImportSettingsComponent],
+      imports: [SharedModule, RouterModule.forRoot([]), HttpClientTestingModule, ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: SiMappingsService, useValue: mappingServiceSpy },
@@ -324,6 +328,166 @@ describe('IntacctC1ImportSettingsComponent', () => {
         expect(component.customFieldControl).toBe(blankExpenseField);
         expect(blankExpenseField.patchValue).toHaveBeenCalledWith(blankMapping);
       });
+    });
+  });
+
+  describe('Utility Functions', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    it('expenseFieldsGetter should return FormArray', () => {
+      expect(component.expenseFieldsGetter).toBeInstanceOf(FormArray);
+    });
+
+    it('navigateToPreviousStep should navigate to export settings', () => {
+      component.navigateToPreviousStep();
+      expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/export_settings']);
+    });
+
+    it('refreshDimensions should call refresh methods and display toast', () => {
+      mappingService.refreshSageIntacctDimensions.and.returnValue(of({}));
+      mappingService.refreshFyleDimensions.and.returnValue(of({}));
+
+      component.refreshDimensions();
+
+      expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
+      expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+    });
+
+    it('removeFilter should reset source_field and import_to_fyle', () => {
+      const mockFormGroup = jasmine.createSpyObj('FormGroup', ['controls']);
+      mockFormGroup.controls = {
+        source_field: jasmine.createSpyObj('AbstractControl', ['patchValue']),
+        import_to_fyle: jasmine.createSpyObj('AbstractControl', ['patchValue'])
+      };
+      component.removeFilter(mockFormGroup);
+      expect(mockFormGroup.controls.source_field.patchValue).toHaveBeenCalledWith('');
+      expect(mockFormGroup.controls.import_to_fyle.patchValue).toHaveBeenCalledWith(false);
+    });
+
+    it('hasDuplicateOption should return true for valid control', () => {
+      const mockFormGroup = jasmine.createSpyObj('FormGroup', ['controls']);
+      mockFormGroup.controls = {
+        testControl: { valid: true }
+      };
+      expect(component.hasDuplicateOption(mockFormGroup, 0, 'testControl')).toBeTrue();
+    });
+
+    it('showOrHideAddButton should return correct boolean', () => {
+      component.sageIntacctFields = [{ attribute_type: 'TEST' } as ExpenseField];
+      (component.importSettingsForm.get('expenseFields') as FormArray).clear();
+
+      expect(component.showOrHideAddButton()).toBeTrue();
+
+      (component.importSettingsForm.get('expenseFields') as FormArray).push(component['createFormGroup']({} as any));
+
+      expect(component.showOrHideAddButton()).toBeFalse();
+    });
+
+    it('showPreviewDialog should set isDialogVisible', () => {
+      component.showPreviewDialog(true);
+      expect(component.isDialogVisible).toBeTrue();
+    });
+
+    it('showWarningForDependentFields should set showDependentFieldWarning', () => {
+      component.showWarningForDependentFields();
+      expect(component.showDependentFieldWarning).toBeTrue();
+    });
+
+    it('acceptDependentFieldWarning should handle warning acceptance', () => {
+      const mockExpenseField = component['createFormGroup']({ source_field: MappingSourceField.PROJECT } as any);
+      (component.importSettingsForm.get('expenseFields') as FormArray).push(mockExpenseField);
+      component.acceptDependentFieldWarning({ hasAccepted: false } as ConfigurationWarningOut);
+      expect(component.showDependentFieldWarning).toBeFalse();
+      expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeTrue();
+      expect(component.importSettingsForm.get('costCodes')?.disabled).toBeTrue();
+      expect(component.importSettingsForm.get('costTypes')?.disabled).toBeTrue();
+    });
+
+    it('addExpenseField should add a new expense field', () => {
+      const initialLength = (component.importSettingsForm.get('expenseFields') as FormArray).length;
+      component.addExpenseField();
+      expect((component.importSettingsForm.get('expenseFields') as FormArray).length).toBe(initialLength + 1);
+    });
+
+    it('closeModel should reset customFieldForm and close dialog', () => {
+      component.customFieldForm.patchValue({ attribute_type: 'TEST' });
+      component.showDialog = true;
+      component.closeModel();
+      expect(component.customFieldForm.value).toEqual({ attribute_type: null, display_name: null, source_placeholder: null });
+      expect(component.showDialog).toBeFalse();
+    });
+
+    it('saveCustomField should call saveDependentCustomField when customFieldType is set', () => {
+      spyOn(component, 'saveDependentCustomField');
+      component.customFieldType = 'TEST';
+      component.saveCustomField();
+      expect(component.saveDependentCustomField).toHaveBeenCalled();
+    });
+
+    it('saveCustomField should call saveFyleExpenseField when customFieldType is not set', () => {
+      spyOn(component, 'saveFyleExpenseField');
+      component.customFieldType = '';
+      component.saveCustomField();
+      expect(component.saveFyleExpenseField).toHaveBeenCalled();
+    });
+
+    describe('saveDependentCustomField', () => {
+      beforeEach(() => {
+        component.customFieldForm.patchValue(customFieldFormValue);
+        component.customFieldControl = component.importSettingsForm.get('costCodes') as any;
+      });
+
+      it('should update form for costCodes', () => {
+        component.customFieldType = 'costCodes';
+        component.saveDependentCustomField();
+        expect(component.costCodeFieldOption[component.costCodeFieldOption.length - 1])
+          .toEqual(jasmine.objectContaining(customFieldFormValue));
+        expect(component.importSettingsForm.get('costCodes')?.value)
+          .toEqual(jasmine.objectContaining(customFieldFormValue));
+      });
+
+      it('should update form for non-costCodes', () => {
+        component.customFieldType = 'costTypes';
+        component.saveDependentCustomField();
+
+        expect(component.costCategoryOption[component.costCodeFieldOption.length - 1])
+          .toEqual(jasmine.objectContaining(customFieldFormValue));
+        expect(component.importSettingsForm.get('costTypes')?.value)
+          .toEqual(jasmine.objectContaining(customFieldFormValue));
+      });
+    });
+
+    it('saveFyleExpenseField should update fyleFields and expenseFields', () => {
+      component.customFieldForm.patchValue(customFieldFormValue);
+
+      const mockExpenseField = component['createFormGroup']({
+        destination_field: "CUSTOMER",
+        import_to_fyle: false,
+        is_custom: false,
+        source_field: "",
+        source_placeholder: null
+      });
+      component.customFieldControl = mockExpenseField;
+
+      component.saveFyleExpenseField();
+
+      const customerExpenseField = (component.importSettingsForm.get('expenseFields') as FormArray)
+        .controls.filter(field => (
+          field.get('destination_field')?.value ===
+          component.customFieldControl.get('destination_field')?.value
+        ))[0];
+
+      expect(customerExpenseField.value).toEqual(jasmine.objectContaining({
+        destination_field: "CUSTOMER",
+        source_field: "TEST",
+        source_placeholder: "TEST_PLACEHOLDER"
+      }));
+      expect(component.fyleFields[component.fyleFields.length - 2])
+        .toEqual(jasmine.objectContaining(customFieldFormValue));
+      expect(component.fyleFields[component.fyleFields.length - 1]).toEqual(component.customFieldOption[0]);
     });
   });
 });
