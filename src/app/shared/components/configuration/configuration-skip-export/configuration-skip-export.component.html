@@ -24,7 +24,7 @@
                   For options
                   <ng-template let-option pTemplate="item">
                     <span *ngIf="option.field_name !== 'claim_number'">
-                      {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                      {{ (option.field_name === 'report_title' ? 'report_name' : option.field_name) | snakeCaseToSpaceCase | titlecase }}
                     </span>
                     <span *ngIf="option.field_name === 'claim_number'">
                       Report Number
@@ -33,7 +33,7 @@
                   For selected option
                   <ng-template let-selectedOption pTemplate="selectedItem">
                     <span *ngIf="selectedOption.field_name !== 'claim_number'">
-                      {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                      {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | titlecase }}
                     </span>
                     <span *ngIf="selectedOption.field_name === 'claim_number'">
                       Report Number

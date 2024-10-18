@@ -28,6 +28,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 })
 
 export class IntacctAdvancedSettingsComponent implements OnInit {
+  isSkipExportFormInvalid: boolean;
 
   @ViewChild('skipExportChild') skipExportChild: SkipExportComponent;
 
@@ -128,6 +129,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService
   ) { }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
+  }
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);

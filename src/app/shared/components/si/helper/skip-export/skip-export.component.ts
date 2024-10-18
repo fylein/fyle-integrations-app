@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-skip-export',
@@ -17,6 +18,8 @@ export class SkipExportComponent implements OnInit {
   @Input() skipExportForm: FormGroup;
 
   @Output() skipExportFormChange = new EventEmitter<FormGroup>();
+
+  @Output() invalidSkipExportForm = new EventEmitter<boolean>();
 
   isLoading: boolean = true;
 
@@ -125,7 +128,7 @@ export class SkipExportComponent implements OnInit {
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
-      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
+      const type = this.conditionFieldOptions.filter((fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
@@ -226,7 +229,7 @@ export class SkipExportComponent implements OnInit {
     this.showAddButton = !show;
     if (this.showAdditionalCondition) {
       this.skipExportForm.controls.join_by.setValidators(Validators.required);
-      this.skipExportForm.controls.condition2.setValidators(Validators.required);
+      this.skipExportForm.controls.condition2.setValidators([Validators.required, RxwebValidators.unique()]);
       this.skipExportForm.controls.operator2.setValidators(Validators.required);
       if (this.valueOption2.length===0) {
         this.skipExportForm.controls.value2.setValidators(Validators.required);
@@ -254,11 +257,12 @@ export class SkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       if (condition1.valid && condition2.valid) {
         if (condition1.value?.field_name === condition2.value?.field_name) {
-            this.skipExportForm.controls.operator2.setValue(null);
+            this.invalidSkipExportForm.emit(true);
             return true;
           }
       }
     }
+    this.invalidSkipExportForm.emit(false);
     return false;
   }
 
@@ -382,6 +386,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   setDefaultOperatorOptions(conditionField: string) {
+    conditionField = conditionField.toLowerCase();
     const operatorList = [];
     if (
       conditionField === 'claim_number' ||
@@ -567,7 +572,7 @@ export class SkipExportComponent implements OnInit {
       if (response.count === 2) {
         this.showAdditionalCondition = true;
         this.showAddButton = false;
-        this.skipExportForm.controls.condition2.setValidators(Validators.required);
+        this.skipExportForm.controls.condition2.setValidators([Validators.required, RxwebValidators.unique()]);
         this.skipExportForm.controls.operator2.setValidators(Validators.required);
         this.skipExportForm.controls.join_by.setValidators(Validators.required);
         if (!this.valueOption2.length && !(selectedOperator2 === 'is_empty' || selectedOperator2 === 'is_not_empty')) {

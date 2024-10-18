@@ -226,5 +226,4 @@ describe('IntacctAdvancedSettingsComponent', () => {
       expect(component.saveInProgress).toBeFalse();
     }));
   });
-
 });
