@@ -68,6 +68,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
@@ -78,6 +80,10 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router
   ) { }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
+  }
 
   private formatMemoPreview(): void {
     const time = Date.now();

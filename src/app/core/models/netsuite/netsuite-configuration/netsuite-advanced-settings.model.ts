@@ -14,7 +14,8 @@ export type NetsuiteAdvancedSettingConfiguration = {
   auto_create_destination_entity: boolean,
   auto_create_merchants: boolean,
   change_accounting_period: boolean,
-  memo_structure: string[]
+  memo_structure: string[],
+  je_single_credit_line: boolean
 }
 
 export type NetsuiteAdvancedSettingGeneralMapping = {
@@ -138,6 +139,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
       changeAccountingPeriod: new FormControl(advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
+      singleCreditLineJE: new FormControl(advancedSettings?.configuration.je_single_credit_line),
       exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
       exportScheduleFrequency: new FormControl(advancedSettings?.workspace_schedules?.enabled ? advancedSettings?.workspace_schedules.interval_hours : 1),
       memoStructure: new FormControl(advancedSettings?.configuration.memo_structure),
@@ -160,7 +162,8 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
         memo_structure: advancedSettingsForm.get('memoStructure')?.value,
-        auto_create_merchants: advancedSettingsForm.get('autoCreateMerchants')?.value
+        auto_create_merchants: advancedSettingsForm.get('autoCreateMerchants')?.value,
+        je_single_credit_line: advancedSettingsForm.get('singleCreditLineJE')?.value || false
       },
       general_mappings: {
         vendor_payment_account: advancedSettingsForm.get('paymentAccount')?.value ? advancedSettingsForm.get('paymentAccount')?.value : emptyDestinationAttribute,

@@ -18,6 +18,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
+import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 
 @Component({
@@ -91,11 +92,16 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
+  isSkipExportFormInvalid: boolean;
+
+  isTaxGroupSyncAllowed: boolean;
+
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
     public helper: HelperService,
     private netsuiteHelperService: NetsuiteHelperService,
+    private netsuiteConnectorService: NetsuiteConnectorService,
     private mappingService: MappingService,
     private router: Router,
     private skipExportService: SkipExportService,
@@ -105,6 +111,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isOptional(): string {
     return brandingConfig.brandId === 'co' ? ' \(optional\)' : '';
+  }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
   }
 
   getCreateVendorLabel(): string {
@@ -194,6 +204,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
   }
 
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+  }
+
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
     const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
@@ -241,8 +255,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.skipExportService.getExpenseFields('v1'),
       this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
       this.configurationService.getAdditionalEmails(),
-      this.workspaceService.getConfiguration()
-    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings]) => {
+      this.workspaceService.getConfiguration(),
+      this.netsuiteConnectorService.getSubsidiaryMapping()
+    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings, subsidiaryMapping]) => {
       this.advancedSetting = netsuiteAdvancedSetting;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
@@ -250,6 +265,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.adminEmails = adminEmails;
       if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
         this.adminEmails = this.adminEmails.concat(this.advancedSetting.workspace_schedules?.additional_email_options);
+      }
+
+      if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
+        this.isTaxGroupSyncAllowed = true;
       }
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
