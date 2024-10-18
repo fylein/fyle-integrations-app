@@ -12,6 +12,7 @@ import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-ex
 import { adminEmails, advancedSettings, configurationForAddvancedSettings, expenseFilter, groupedAttributes } from '../../intacct.fixture';
 import { ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PaymentSyncDirection } from 'src/app/core/models/enum/enum.model';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
 
