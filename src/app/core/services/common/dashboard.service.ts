@@ -31,8 +31,9 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
 
-  triggerAccountingExport(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
+  triggerAccountingExport(version?: 'v1'): Observable<{}> {
+    const url = version === 'v1' ? `/workspaces/${this.workspaceId}/qbd/export/` : `/workspaces/${this.workspaceId}/exports/trigger/`;
+    return this.apiService.post(url, {});
   }
 
   getExportErrors(version?: string | 'v1'): Observable<any> {

@@ -26,16 +26,16 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
     }
 
     static defaultTopMemoOptions(): string[] {
-        return ["employee_name", "expense_id"];
+        return ["employee_name", "expense_key"];
     }
 
     static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet | null, isSkipExportEnabled: boolean): FormGroup {
 
         return new FormGroup({
             expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? advancedSettings?.line_level_memo_structure : this.defaultMemoFields(), Validators.required),
-            topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure[0] : this.defaultTopMemoOptions()[0], Validators.required),
+            topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : this.defaultTopMemoOptions(), Validators.required),
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
-            email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : []),
+            email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),
             autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_enitity ? advancedSettings?.auto_create_reimbursable_enitity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
@@ -46,8 +46,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
 
     static constructPayload (advancedSettingForm: FormGroup, adminEmails: EmailOption[]): QbdDirectAdvancedSettingsPost {
 
-        const topMemo: string[] = [];
-        topMemo.push(advancedSettingForm.value.topMemoStructure);
+        const topMemo: string[] = advancedSettingForm.controls.topMemoStructure.value;
 
         const allSelectedEmails: EmailOption[] = advancedSettingForm.get('email')?.value;
 

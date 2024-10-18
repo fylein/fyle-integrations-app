@@ -26,7 +26,7 @@ export class SkipExportService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admin`, {});
   }
 
-  getExpenseFilter(): Observable<ExpenseFilterResponse> {
+  getExpenseFilter(): Observable<any> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, {});
   }
 

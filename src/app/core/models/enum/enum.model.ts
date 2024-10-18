@@ -396,12 +396,14 @@ export enum QBDFyleField {
 export enum QbdDirectReimbursableExportDateType {
   LAST_SPENT_AT = 'last_spent_at',
   CURRENT_DATE = 'current_date',
+  SPENT_AT = "SPENT_AT",
 }
 
 export enum QbdDirectCCCExportDateType {
   SPENT_AT = 'spent_at',
   CURRENT_DATE = 'current_date',
-  POSTED_AT = 'posted_at'
+  POSTED_AT = 'posted_at',
+  LAST_SPEND_AT = "LAST_SPEND_AT"
 }
 
 

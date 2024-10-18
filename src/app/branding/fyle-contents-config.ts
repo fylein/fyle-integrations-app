@@ -82,7 +82,7 @@ export const fyleContents = {
                 autoExportfrequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to QuickBooks Desktop.',
                 topLevelMemoStructureLabel: 'Select the top level memo field data for QuickBooks Desktop',
                 topLevelMemoStructureSubLabel: 'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
-                memoStructureLabel: 'Set the line-ttem level memo field data for QuickBooks Desktop.',
+                memoStructureLabel: 'Set the line-item level memo field data for QuickBooks Desktop.',
                 memoStructureSubLabel: 'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
                 otherPreferencesLabel: 'Other preferences',

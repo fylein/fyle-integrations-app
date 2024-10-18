@@ -88,7 +88,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   export() {
     this.isExportInProgress = true;
-    this.dashboardService.triggerAccountingExport().subscribe(() => {
+    this.dashboardService.triggerAccountingExport('v1').subscribe(() => {
       this.pollExportStatus(this.exportableAccountingExportIds);
     });
   }
