@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -58,7 +58,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   memoStructure: string[] = [];
 
-  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet;
+  qbdDirectAdvancedSettings: QbdDirectAdvancedSettingsGet | null;
 
   employeeMapping: EmployeeFieldMapping;
 
@@ -209,10 +209,10 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
-      this.advancedSettingsService.getQbdAdvancedSettings(),
+      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null))),
       this.exportSettingsService.getQbdExportSettings(),
       this.skipExportService.getExpenseFilter(),
-      this.skipExportService.getExpenseFields('v1'),
+      this.skipExportService.getExpenseFields(),
       this.orgService.getAdditionalEmails()
     ]).subscribe(([qbdDirectAdvancedSettings, qbdDirectExportSettings, expenseFiltersGet, expenseFilterCondition, adminEmail]) => {
 

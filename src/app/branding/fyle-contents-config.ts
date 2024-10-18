@@ -91,8 +91,8 @@ export const fyleContents = {
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
                 skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
                 skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
-                autoCreateReimbursableEnitityLabel: '',
-                autoCreateReimbursableEnititySubLabel: '',
+                autoCreateReimbursableEnitityLabel: 'Auto create reimbursable enitity',
+                autoCreateReimbursableEnititySubLabel: 'Do you want to create a reimbursable enitity if not present',
                 accountingPeriodLabel: 'Post entries in the current accounting period',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Desktop, you can export those to the current month by enabling this option.'
             }
