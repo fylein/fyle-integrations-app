@@ -16,6 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
+import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -87,9 +88,14 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   isReimbursableExportTypePresent: boolean;
 
+  showAutoCreateMerchantsAsVendorsField: boolean;
+
+  isImportVendorAsMerchantPresent: boolean;
+
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
     private exportSettingsService: QbdDirectExportSettingsService,
+    private importSettingsService: QbdDirectImportSettingsService,
     private skipExportService: SkipExportService,
     public helper: HelperService,
     private router: Router,
@@ -154,7 +160,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   }
 
   isAutoCreateMerchantsAsVendorsFieldVisible(): boolean {
-    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY || this.qbdDirectExportSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT) && (!this.qbdDirectExportSettings.reimbursable_expense_export_type);
+    return (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || (this.qbdDirectExportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.qbdDirectExportSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT)) && this.isImportVendorAsMerchantPresent;
   }
 
   skipExportWatcher(): void {
@@ -184,18 +190,18 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
-        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
+        // This.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
         this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
     }
     this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected: any) => {
       if (isScheduledSelected) {
-          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
+          // This.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
           this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
       } else {
           this.advancedSettingsForm.controls.exportScheduleFrequency.clearValidators();
           this.advancedSettingsForm.controls.exportScheduleFrequency.setValue(1);
-          this.advancedSettingsForm.controls.email.clearValidators();
-          this.advancedSettingsForm.controls.email.setValue([]);
+          // This.advancedSettingsForm.controls.email.clearValidators();
+          // This.advancedSettingsForm.controls.email.setValue([]);
       }
     });
   }
@@ -213,14 +219,17 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       this.exportSettingsService.getQbdExportSettings(),
       this.skipExportService.getExpenseFilter(),
       this.skipExportService.getExpenseFields(),
-      this.orgService.getAdditionalEmails()
-    ]).subscribe(([qbdDirectAdvancedSettings, qbdDirectExportSettings, expenseFiltersGet, expenseFilterCondition, adminEmail]) => {
+      this.orgService.getAdditionalEmails(),
+      this.importSettingsService.getImportSettings()
+    ]).subscribe(([qbdDirectAdvancedSettings, qbdDirectExportSettings, expenseFiltersGet, expenseFilterCondition, adminEmail, qbdDirectImportSettingSettings]) => {
 
       this.qbdDirectAdvancedSettings = qbdDirectAdvancedSettings;
 
       this.qbdDirectExportSettings = qbdDirectExportSettings;
 
       this.employeeMapping = qbdDirectExportSettings.employee_field_mapping;
+
+      this.isImportVendorAsMerchantPresent = !qbdDirectImportSettingSettings.import_settings.import_vendor_as_merchant;
 
       this.isReimbursableExportTypePresent = qbdDirectExportSettings.reimbursable_expense_export_type !== null ? true : false;
 
@@ -230,7 +239,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
       this.conditionFieldOptions = expenseFilterCondition;
 
-      const isSkipExportEnabled = expenseFiltersGet.count > 0;
+      const isSkipExportEnabled = expenseFiltersGet.length > 0;
 
       this.advancedSettingsForm = QbdDirectAdvancedSettingsModel.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled);
 
