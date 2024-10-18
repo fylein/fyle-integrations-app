@@ -16,7 +16,6 @@ export type QbdDirectExportSettingsPost = {
     credit_card_expense_grouped_by: QbdDirectExpenseGroupBy | null,
     credit_card_expense_date: QbdDirectCCCExportDateType  | null,
     employee_field_mapping: EmployeeFieldMapping,
-    auto_map_employees: boolean,
     name_in_journal_entry: NameInJournalEntry;
     default_credit_card_account_name: string;
     default_credit_card_account_id: string;
@@ -66,10 +65,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             {
                 label: brandingContent.common.currentDate,
                 value: QbdDirectReimbursableExportDateType.CURRENT_DATE
-            },
-            {
-                label: 'Last Spend date',
-                value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
             }
         ];
     }
@@ -79,10 +74,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             {
                 label: brandingContent.common.currentDate,
                 value: QbdDirectCCCExportDateType.CURRENT_DATE
-            },
-            {
-                label: 'Spend Date',
-                value: QbdDirectCCCExportDateType.SPENT_AT
             },
             {
                 label: 'Card Transaction Post date',
@@ -147,13 +138,30 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
         ];
     }
 
-    static setCreditCardExpenseGroupingDateOptions(cccExportType: QBDCorporateCreditCardExpensesObject, cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
-        if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
-          return this.creditCardExpenseGroupingDateOptions().slice(1);
-        } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QbdDirectExpenseGroupBy.EXPENSE) {
-          return this.creditCardExpenseGroupingDateOptions();
+    static setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
+        if (cccExportGroup === QbdDirectExpenseGroupBy.REPORT) {
+          return this.creditCardExpenseGroupingDateOptions().concat([{
+            label: 'Last spend Date',
+            value: QbdDirectCCCExportDateType.LAST_SPEND_AT
+        }]);
         }
-        return [this.creditCardExpenseGroupingDateOptions()[1]];
+        return this.creditCardExpenseGroupingDateOptions().concat([{
+            label: 'Spend Date',
+            value: QbdDirectCCCExportDateType.SPENT_AT
+        }]);
+    }
+
+    static setReimbursableExpenseGroupingDateOptions(reimbursableExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
+        if (reimbursableExportGroup === QbdDirectExpenseGroupBy.REPORT) {
+          return this.reimbursableExpenseGroupingDateOptions().concat([{
+            label: 'Last spend Date',
+            value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
+        }]);
+        }
+        return this.reimbursableExpenseGroupingDateOptions().concat([{
+            label: 'Spend Date',
+            value: QbdDirectReimbursableExportDateType.SPENT_AT
+        }]);
     }
 
     static getMandatoryField(form: FormGroup, controllerName: string): boolean {
@@ -209,8 +217,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
             reimbursableExpenseState: new FormControl(exportSettings?.reimbursable_expense_state ? exportSettings?.reimbursable_expense_state : null),
             creditCardExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
-            employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : null),
-            autoMapEmployees: new FormControl(exportSettings?.auto_map_employees ? exportSettings?.auto_map_employees : null),
+            employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : EmployeeFieldMapping.VENDOR),
             nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
             defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_credit_card_account_id) : null),
             defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_reimbursable_accounts_payable_account_id) : null),
@@ -230,7 +237,6 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
             credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
             employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
-            auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : false,
             name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.destination_id : null,

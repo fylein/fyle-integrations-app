@@ -73,14 +73,6 @@
                                 [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
                             </app-configuration-select-field>
                         </div>
-
-                        <app-configuration-toggle-field
-                            [form]="exportSettingsForm"
-                            [label]="brandingContent.reimbursable.autoMapEmployeesLabel + exportSettingsForm.get('employeeMapping')?.value.toLowerCase() + ' in QuickBooks Desktop?'"
-                            [subLabel]="brandingContent.reimbursable.autoMapEmployeesSubLabel"
-                            [formControllerName]="'autoMapEmployees'"
-                            [iconPath]="'question-square-outline'">
-                        </app-configuration-toggle-field>
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
