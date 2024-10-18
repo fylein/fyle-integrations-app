@@ -13,8 +13,8 @@ import { DependentFieldSetting, ImportSettingGet, MappingSetting } from 'src/app
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute } from "src/app/core/models/intacct/db/destination-attribute.model";
 import { IntacctConfiguration } from "src/app/core/models/db/configuration.model";
-import { QBDEmailOptions } from "src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model";
-import { AdvancedSettingsGet } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
+import { AdvancedSettingsGet, Configuration } from "src/app/core/models/intacct/intacct-configuration/advanced-settings.model";
+import { EmailOption } from "src/app/core/models/common/advanced-settings.model";
 
 export const workspaceResponse: IntacctWorkspace[] = [{
     "id": 1,
@@ -949,7 +949,7 @@ export const customFieldFormValue = {
 export const adminEmails =  [
   { name: 'John Doe', email: 'john.doe@example.com' },
   { name: 'Jane Smith', email: 'jane.smith@example.com' }
-] as QBDEmailOptions[];
+] as EmailOption[];
 
 export const advancedSettings =  {
   workspace_schedules: {
@@ -993,10 +993,25 @@ export const groupedAttributes =  {
   PAYMENT_ACCOUNT: [{ destination_id: 'ACC1', value: 'Account 1' }] as IntacctDestinationAttribute[]
 } as GroupedDestinationAttribute;
 
-export const configurationForAddvancedSettings =  {
+export const configurationForAdvancedSettings =  {
   reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
   corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION,
   import_vendors_as_merchants: false,
   use_merchant_in_journal_line: true,
   employee_field_mapping: FyleField.EMPLOYEE
 } as IntacctConfiguration;
+
+export const configurationWithFyleToIntacct = {
+  sync_fyle_to_sage_intacct_payments: true,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
+
+export const configurationWithIntacctToFyle = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: true
+} as unknown as Configuration;
+
+export const configurationWithOutSync = {
+  sync_fyle_to_sage_intacct_payments: false,
+  sync_sage_intacct_to_fyle_payments: false
+} as unknown as Configuration;
