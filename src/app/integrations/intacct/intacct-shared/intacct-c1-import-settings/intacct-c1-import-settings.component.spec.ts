@@ -412,10 +412,14 @@ describe('IntacctC1ImportSettingsComponent', () => {
       expect((component.importSettingsForm.get('expenseFields') as FormArray).length).toBe(initialLength + 1);
     });
 
-    it('closeModel should reset customFieldForm and close dialog', () => {
+    it('closeModel should close the dialog and reset the form and the source field', () => {
       component.customFieldForm.patchValue({ attribute_type: 'TEST' });
+      component.customFieldControl = component['createFormGroup'](blankMapping);
       component.showDialog = true;
+
       component.closeModel();
+
+      expect(component.customFieldControl.get('source_field')?.value).toBeNull();
       expect(component.customFieldForm.value).toEqual({ attribute_type: null, display_name: null, source_placeholder: null });
       expect(component.showDialog).toBeFalse();
     });
