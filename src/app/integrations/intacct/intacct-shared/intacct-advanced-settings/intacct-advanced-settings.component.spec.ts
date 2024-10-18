@@ -229,7 +229,6 @@ describe('IntacctAdvancedSettingsComponent', () => {
     }));
   });
 
-
   describe('Utility Functions', () => {
     describe('navigateToPreviousStep', () => {
       it('should navigate to the import settings page', () => {

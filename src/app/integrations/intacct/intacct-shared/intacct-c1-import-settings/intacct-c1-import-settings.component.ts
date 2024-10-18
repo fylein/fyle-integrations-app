@@ -192,6 +192,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   closeModel() {
+    this.customFieldControl.patchValue({
+      source_field: null
+    });
     this.customFieldForm.reset();
     this.showDialog = false;
   }

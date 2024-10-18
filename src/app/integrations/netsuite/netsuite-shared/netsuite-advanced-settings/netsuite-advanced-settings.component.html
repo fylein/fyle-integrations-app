@@ -87,22 +87,28 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <div class="autoCreateVendor" *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" [ngClass]="{'tw-mb-24-px' : !isAutoCreateMerchantsFieldVisible()}">
-                    <app-configuration-toggle-field
-                        [form]="advancedSettingForm"
-                        [iconPath]="'user-plus'"
-                        [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
-                        [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a ' + getCreateVendorLabel().toLowerCase() + ' if a match does not exist in NetSuite already.'"
-                        [formControllerName]="'autoCreateVendors'">
-                    </app-configuration-toggle-field>
-                </div>
+                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                    [form]="advancedSettingForm"
+                    [iconPath]="'user-plus'"
+                    [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
+                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a ' + getCreateVendorLabel().toLowerCase() + ' if a match does not exist in NetSuite already.'"
+                    [formControllerName]="'autoCreateVendors'">
+                </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
+                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants" 
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateVendorsLabel + getCreateMerchantLabel()"
                     [subLabel]="'While exporting credit card expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in NetSuite already.'"
                     [formControllerName]="'autoCreateMerchants'">
+                </app-configuration-toggle-field>
+
+                <app-configuration-toggle-field class="tw-pt-0" *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE && brandingFeatureConfig.featureFlags.importSettings.tax && !isTaxGroupSyncAllowed"
+                    [form]="advancedSettingForm"
+                    [iconPath]="'list'"
+                    [label]="brandingContent.singleCreditLineJELabel"
+                    [subLabel]="brandingContent.singleCreditLineJESubLabel"
+                    [formControllerName]="'singleCreditLineJE'">
                 </app-configuration-toggle-field>
 
             </div>
@@ -149,7 +155,8 @@
                     [skipExportForm]="skipExportForm"
                     [expenseFilter]="expenseFilters"
                     [conditionFieldOptions]="conditionFieldOptions"
-                    (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                    (invalidSkipExportForm)="invalidSkipExportForm($event)">
                     </app-configuration-skip-export>
                 </div>
             </div>
@@ -246,7 +253,7 @@
         </div>
         <app-configuration-step-footer
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [isButtonDisabled]="!advancedSettingForm.valid"
+            [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
             [showBackButton]="isOnboarding ? true : false"
             (save)="save()"
             (navigateToPreviousStep)="navigateToPreviousStep()">

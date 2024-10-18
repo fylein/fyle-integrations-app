@@ -77,6 +77,8 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.advancedSettings;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: QboAdvancedSettingsService,
     private configurationService: ConfigurationService,
@@ -92,6 +94,10 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
+  }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
   }
 
   private saveSkipExportFields(): void {
