@@ -75,7 +75,11 @@ export class AccountingExportService {
   }
 
   @Cacheable()
-  importExpensesFromFyle(version?: 'v1'): Observable<{}> {
+  importExpensesFromFyle(version?: 'v1' | 'v2'): Observable<{}> {
+    // Dedicated to qbd direct
+    if (version === 'v2') {
+      return this.apiService.post(`/workspaces/${this.workspaceId}/export_logs/sync/`, {});
+    }
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
   }
 }
