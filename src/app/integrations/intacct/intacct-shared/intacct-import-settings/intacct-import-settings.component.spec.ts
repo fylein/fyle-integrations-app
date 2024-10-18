@@ -13,7 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProjectMapping, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
+import { blankMapping, configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProjectMapping, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
 import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, MappingSourceField, Page, ProgressPhase, SageIntacctField, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -485,14 +485,16 @@ describe('IntacctImportSettingsComponent', () => {
       expect(component.expenseFieldsGetter.length).toBe(initialLength + 1);
     });
 
-    it('closeModel should reset form and close dialog', () => {
+    it('closeModel should close the dialog and reset the form and the source field', () => {
       component.customFieldForm = component['formBuilder'].group({
         testField: ['value']
       });
+      component.customFieldControl = component['createFormGroup'](blankMapping);
       component.showDialog = true;
 
       component.closeModel();
 
+      expect(component.customFieldControl.get('source_field')?.value).toBeNull();
       expect(component.customFieldForm.get('testField')?.value).toBeNull();
       expect(component.showDialog).toBeFalse();
     });
