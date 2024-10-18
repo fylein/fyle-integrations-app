@@ -23,7 +23,11 @@ export class DashboardService {
     helper.setBaseApiURL();
   }
 
-  getExportableAccountingExportIds(version?: 'v1'): Observable<any> {
+  getExportableAccountingExportIds(version?: 'v1' | 'v2'): Observable<any> {
+    // Dedicated to qbd direct
+    if (version === 'v2') {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/ready_to_export/`, {});
+    }
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
 
@@ -70,6 +74,8 @@ export class DashboardService {
 
     if (appName === AppName.INTACCT || appName === AppName.NETSUITE) {
       url = `/workspaces/${this.workspaceId}/tasks/v2/all/`;
+    } else if (appName === AppName.QBD_DIRECT) {
+      url = `/workspaces/${this.workspaceId}/export_logs/`;
     } else {
       url = `/workspaces/${this.workspaceId}/tasks/all/`;
     }
