@@ -19,6 +19,13 @@ jobs:
     - name: Test
       run: npm run unit_test:ci
       env:
+        GH_UNIT_TEST_ENV: true
+        BRAND_NAME: "Fyle"
+        WEBPAGE_TITLE: "Fyle Integrations Settings"
+        BRAND_ID: "fyle"
+        SUPPORT_EMAIL: "staging-1-in"
+        HELP_ARTICLE_DOMAIN: "support@fylehq.com"
+        ENV_ID: "https://help.manageexpenses.capitalone-fylehq.com"
         FYLE_CLIENT_ID: "lolo" 
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
         CLUSTER_DOMAIN_API_URL: "http://lolo.fyle.tech"
