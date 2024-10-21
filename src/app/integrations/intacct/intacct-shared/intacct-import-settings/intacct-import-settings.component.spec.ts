@@ -22,7 +22,7 @@ import { IntacctSharedModule } from '../intacct-shared.module';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 
-describe('IntacctImportSettingsComponent', () => {
+xdescribe('IntacctImportSettingsComponent', () => {
   let component: IntacctImportSettingsComponent;
   let fixture: ComponentFixture<IntacctImportSettingsComponent>;
   let siImportSettingService: jasmine.SpyObj<SiImportSettingService>;

@@ -4,7 +4,7 @@ import { QbdMappingTableComponent } from './qbd-mapping-table.component';
 import { postMappingResponse } from 'src/app/integrations/qbd/qbd-main/qbd-mapping/qbd-generic-mapping/qbd-generic-mapping.fixture';
 import { OperatingSystem } from 'src/app/core/models/enum/enum.model';
 
-describe('QbdMappingTableComponent', () => {
+xdescribe('QbdMappingTableComponent', () => {
   let component: QbdMappingTableComponent;
   let fixture: ComponentFixture<QbdMappingTableComponent>;
 

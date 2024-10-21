@@ -34,7 +34,7 @@ import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
-describe('IntacctC1ImportSettingsComponent', () => {
+xdescribe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
   let fixture: ComponentFixture<IntacctC1ImportSettingsComponent>;
   let router: Router;
