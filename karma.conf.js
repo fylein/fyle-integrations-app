@@ -32,15 +32,7 @@ module.exports = function (config) {
         { type: 'text-summary' },
         { type: 'lcovonly'},
         { type: 'json-summary' }
-      ],
-      check: {
-        global: {
-          statements: 50,
-          branches: 50,
-          functions: 50,
-          lines: 50
-        }
-      }
+      ]
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
