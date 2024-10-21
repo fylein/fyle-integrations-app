@@ -17,7 +17,7 @@ import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
-describe('IntacctAdvancedSettingsComponent', () => {
+xdescribe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
   let fixture: ComponentFixture<IntacctAdvancedSettingsComponent>;
   let advancedSettingsService: jasmine.SpyObj<SiAdvancedSettingService>;

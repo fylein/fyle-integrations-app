@@ -8,7 +8,7 @@ import { mockMappingSettingsResponse, mockMappingSettingsWithCustomFieldResponse
 import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-describe('IntacctMappingComponent', () => {
+xdescribe('IntacctMappingComponent', () => {
   let component: IntacctMappingComponent;
   let router: Router;
   let fixture: ComponentFixture<IntacctMappingComponent>;

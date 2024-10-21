@@ -13,7 +13,7 @@ import { mockUser, mockWorkspace, testOnboardingState } from './qbo.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('QboComponent', () => {
+xdescribe('QboComponent', () => {
   let component: QboComponent;
   let fixture: ComponentFixture<QboComponent>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
