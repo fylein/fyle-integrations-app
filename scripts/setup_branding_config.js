@@ -18,9 +18,6 @@ if (process.env.GH_UNIT_TEST_ENV) {
   config = fs.readFileSync(`./src/app/branding/config-template.json`, 'utf8');
 }
 
-console.log('process.env.GH_UNIT_TEST_ENV: ', process.env.GH_UNIT_TEST_ENV)
-console.log('config: ', config)
-
 fs.writeFile(targetPath, config, 'utf8', (err) => {
   if (err) {
     return console.error(err);
