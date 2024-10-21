@@ -11,7 +11,7 @@ xdescribe('BambooHrService', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   let orgService: OrgService;
-  const API_BASE_URL = environment.api_url;
+  const API_BASE_URL = environment.cluster_domain_api_url;
   const service1 = {
     getOrgId: () => 1
   };

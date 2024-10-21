@@ -11,7 +11,7 @@ xdescribe('AuthService', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   let userService: UserService;
-  const API_BASE_URL = environment.api_url;
+  const API_BASE_URL = environment.cluster_domain_api_url;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/auth/login' };
 
   const service1 = {
