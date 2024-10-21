@@ -34,7 +34,7 @@
             <td class="tw-text-text-secondary" *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
             <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
             <td class="tw-text-text-secondary" *ngIf="!isDashboardFailed">
-                <span [ngClass]="{'truncate-export-type': rowData.exportedAs.length > 10 && !isExportLogTable}"
+                <span [ngClass]="{'truncate-export-type': rowData.exportedAs?.length > 10 && !isExportLogTable}"
                     [pTooltip]="rowData.exportedAs.length > 10 && !isExportLogTable ? rowData.exportedAs : null"
                     tooltipPosition="top">
                     {{brandingConfig.brandId === 'co' ? (rowData.exportedAs | snakeCaseToSpaceCase | sentenceCase) : (rowData.exportedAs | snakeCaseToSpaceCase | titlecase)}}

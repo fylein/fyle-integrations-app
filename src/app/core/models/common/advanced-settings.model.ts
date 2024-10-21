@@ -190,8 +190,8 @@ export class SkipExportModel {
     };
   }
 
-  static setConditionFields(response: ExpenseFilter[], conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
-    response.forEach((element) => {
+  static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+    response.results?.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
@@ -226,16 +226,15 @@ export class SkipExportModel {
 
   }
 
-  static setupSkipExportForm(response: ExpenseFilterResponse | ExpenseFilter[], conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
-    const expenseFilter: ExpenseFilter[] = (response as ExpenseFilterResponse)?.results ? (response as ExpenseFilterResponse)?.results : response as ExpenseFilter[];
-    this.setConditionFields(expenseFilter, conditionArray, conditionFieldOptions);
+  static setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+    this.setConditionFields(response, conditionArray, conditionFieldOptions);
     let [selectedOperator1, valueFC1, customFieldTypeFC1] = ['', '', ''];
     let [selectedOperator2, valueFC2] = ['', ''];
     let joinByFC = '';
     let isDisabledChip2: boolean = false;
     let isDisabledChip1: boolean = false;
 
-    expenseFilter?.forEach((result: ExpenseFilterPost, index: number) => {
+    response.results?.forEach((result: ExpenseFilterPost, index: number) => {
         if (index === 0) {
             selectedOperator1 = this.getSelectedOperator(result.operator, result.values[0]);
             if (!(selectedOperator1 === 'is_empty' || selectedOperator1 === 'is_not_empty')) {
@@ -244,9 +243,9 @@ export class SkipExportModel {
                 isDisabledChip1 = true;
             }
             customFieldTypeFC1 = result?.custom_field_type ? result.custom_field_type : '';
-        } else if (index === 1 && expenseFilter[0].join_by !== null) {
+        } else if (index === 1 && response.results[0].join_by !== null) {
             selectedOperator2 = this.getSelectedOperator(result.operator, result.values[0]);
-            joinByFC = expenseFilter[0].join_by;
+            joinByFC = response.results[0].join_by;
             if (!(selectedOperator2 === 'is_empty' || selectedOperator2 === 'is_not_empty')) {
                 valueFC2 = this.getFieldValue(result.values, conditionArray[1], result.rank);
             } else {
@@ -264,7 +263,7 @@ export class SkipExportModel {
       condition2: new FormControl(joinByFC ? conditionArray[1] : ''),
       operator2: new FormControl(joinByFC && selectedOperator2 ? selectedOperator2 : ''),
       value2: new FormControl(valueFC2),
-      customFieldType2: new FormControl(joinByFC ? expenseFilter[1].custom_field_type : ''),
+      customFieldType2: new FormControl(joinByFC ? response.results[1].custom_field_type : ''),
       isDisabledChip1: new FormControl(isDisabledChip1),
       isDisabledChip2: new FormControl(isDisabledChip2)
     });

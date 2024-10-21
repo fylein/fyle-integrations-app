@@ -60,7 +60,11 @@ export class ExportLogService {
       offset
     };
 
-    params.tasklog__status = state;
+    if (appName === AppName.QBD_DIRECT) {
+      params.status__in = state;
+    } else {
+      params.tasklog__status = state;
+    }
 
     if (query) {
       params.expenses__expense_number = query;

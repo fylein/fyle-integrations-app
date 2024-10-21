@@ -149,12 +149,12 @@ export class QbdDirectDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      this.importCodeFields = responses[5].import_settings.import_code_fields;
+      this.importCodeFields = responses[5].import_settings?.import_code_fields;
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-      this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids?.length ? responses[3].exportable_expense_group_ids : [];
+      this.exportableAccountingExportIds = responses[3].exportable_export_log_ids?.length ? responses[3].exportable_export_log_ids : [];
 
       this.reimbursableImportState = responses[4]?.reimbursable_expense_export_type && responses[4].reimbursable_expense_state ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
       this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
@@ -166,7 +166,7 @@ export class QbdDirectDashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle('v2').subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids?.length ? exportableAccountingExportIds.exportable_expense_group_ids : [];
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_export_log_ids?.length ? exportableAccountingExportIds.exportable_export_log_ids : [];
             this.isImportInProgress = false;
           });
         });
