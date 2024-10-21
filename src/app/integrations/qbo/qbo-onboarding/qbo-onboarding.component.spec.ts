@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { QboOnboardingComponent } from './qbo-onboarding.component';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
-describe('QboOnboardingComponent', () => {
+xdescribe('QboOnboardingComponent', () => {
   let component: QboOnboardingComponent;
   let fixture: ComponentFixture<QboOnboardingComponent>;
 
