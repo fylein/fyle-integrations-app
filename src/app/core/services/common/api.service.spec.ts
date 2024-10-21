@@ -15,7 +15,7 @@ xdescribe('ApiService', () => {
     statusText: 'Bad request'
   };
 
-  const API_BASE_URL = environment.api_url;
+  const API_BASE_URL = environment.cluster_domain_api_url;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

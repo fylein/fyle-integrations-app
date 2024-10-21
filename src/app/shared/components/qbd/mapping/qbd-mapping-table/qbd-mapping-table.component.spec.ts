@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { QbdMappingTableComponent } from './qbd-mapping-table.component';
 import { postMappingResponse } from 'src/app/integrations/qbd/qbd-main/qbd-mapping/qbd-generic-mapping/qbd-generic-mapping.fixture';
 import { OperatingSystem } from 'src/app/core/models/enum/enum.model';
+import { RouterModule } from '@angular/router';
 
 describe('QbdMappingTableComponent', () => {
   let component: QbdMappingTableComponent;
@@ -10,6 +11,7 @@ describe('QbdMappingTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterModule.forRoot([])],
       declarations: [ QbdMappingTableComponent ]
     })
     .compileComponents();

@@ -7,7 +7,7 @@
     "build": "npm run setup:env && npm run setup:branding && ng build && npm run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "unit_test:ci": "npm run setup:env && ng test --watch=false --browsers=ChromeHeadlessCustom",
+    "unit_test:ci": "npm run setup:env && npm run setup:branding && ng test --watch=false --browsers=ChromeHeadlessCustom",
     "setup:env": "node scripts/setup_env.js",
     "setup:branding": "node scripts/setup_branding_config.js",
     "lint": "ng lint",

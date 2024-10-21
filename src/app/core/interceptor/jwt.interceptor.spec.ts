@@ -17,7 +17,7 @@ xdescribe('JwtInterceptor', () => {
   let interceptor: JwtInterceptor;
   let authService: AuthService;
   let jwtHelperService: JwtHelperService;
-  const API_BASE_URL = environment.api_url;
+  const API_BASE_URL = environment.cluster_domain_api_url;
 
   beforeEach(() => {
     const service1 = {
