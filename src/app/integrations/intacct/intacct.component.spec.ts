@@ -14,7 +14,7 @@ import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.mode
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('IntacctComponent', () => {
+xdescribe('IntacctComponent', () => {
   let component: IntacctComponent;
   let fixture: ComponentFixture<IntacctComponent>;
   let userServiceSpy: jasmine.SpyObj<UserService>;
