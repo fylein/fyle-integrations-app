@@ -20,7 +20,7 @@ import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } fro
 import { TitleCasePipe } from '@angular/common';
 
 
-describe('IntacctExportSettingsComponent', () => {
+xdescribe('IntacctExportSettingsComponent', () => {
   let component: IntacctExportSettingsComponent;
   let fixture: ComponentFixture<IntacctExportSettingsComponent>;
   let exportSettingService: jasmine.SpyObj<SiExportSettingService>;

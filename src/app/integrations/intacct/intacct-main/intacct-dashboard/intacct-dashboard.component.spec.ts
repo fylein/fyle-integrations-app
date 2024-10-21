@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Error } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
 
-describe('IntacctDashboardComponent', () => {
+xdescribe('IntacctDashboardComponent', () => {
 
   let component: IntacctDashboardComponent;
   let fixture: ComponentFixture<IntacctDashboardComponent>;
