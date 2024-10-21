@@ -21,7 +21,7 @@ jobs:
       env:
         FYLE_CLIENT_ID: "lolo" 
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
-        API_URL: "http://lolo.fyle.tech"
+        CLUSTER_DOMAIN_API_URL: "http://lolo.fyle.tech"
         FYLE_APP_URL: "http://lolo.fyle.tech"
         SI_API_URL: "http://lolo.fyle.tech"
         SAGE300_API_URL: "http://lolo.fyle.tech"

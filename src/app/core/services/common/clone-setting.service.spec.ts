@@ -8,7 +8,7 @@ xdescribe('CloneSettingService', () => {
   let service: CloneSettingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
-  const API_BASE_URL = environment.api_url;
+  const API_BASE_URL = environment.cluster_domain_api_url;
   const workspace_id = 1;
 
   beforeEach(() => {
