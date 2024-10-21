@@ -8,6 +8,7 @@ import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configura
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('QbdMainComponent', () => {
   let component: QbdMainComponent;
@@ -26,7 +27,7 @@ describe('QbdMainComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      imports: [ HttpClientTestingModule, RouterTestingModule, SharedModule ],
       declarations: [ QbdMainComponent ],
       providers: [
         { provide: QbdExportSettingService, useValue: service1 },
