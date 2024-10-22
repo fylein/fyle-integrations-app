@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { ConditionField, ExpenseFilter, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
 import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -89,7 +89,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
   ) { }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    response?.results.forEach((element) => {
+    response.results?.forEach((element) => {
       const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
@@ -114,9 +114,9 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   private setSkippedConditions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    if (response?.count > 0) {
+    if (response.count > 0) {
       this.skippedCondition1 = conditionArray[0].field_name;
-      if (response?.count > 1 && response.results[0].join_by) {
+      if (response.count > 1 && response.results[0].join_by) {
         this.skippedCondition2 = conditionArray[1].field_name;
       } else {
         this.skippedCondition2 = '';

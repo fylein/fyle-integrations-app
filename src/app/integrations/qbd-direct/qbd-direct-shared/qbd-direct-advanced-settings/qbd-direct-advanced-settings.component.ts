@@ -190,18 +190,14 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
-        // This.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
-        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
+      this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
     }
     this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected: any) => {
       if (isScheduledSelected) {
-          // This.helper.markControllerAsRequired(this.advancedSettingsForm, 'email');
-          this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
+        this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
       } else {
-          this.advancedSettingsForm.controls.exportScheduleFrequency.clearValidators();
-          this.advancedSettingsForm.controls.exportScheduleFrequency.setValue(1);
-          // This.advancedSettingsForm.controls.email.clearValidators();
-          // This.advancedSettingsForm.controls.email.setValue([]);
+        this.advancedSettingsForm.controls.exportScheduleFrequency.clearValidators();
+        this.advancedSettingsForm.controls.exportScheduleFrequency.setValue(1);
       }
     });
   }
