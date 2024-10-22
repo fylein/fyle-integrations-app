@@ -17,7 +17,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   @Input() skipExportForm: FormGroup;
 
-  @Input() expenseFilter: ExpenseFilterResponse | ExpenseFilter[];
+  @Input() expenseFilter: ExpenseFilterResponse;
 
   @Input() conditionFieldOptions: ConditionField[];
 
@@ -84,41 +84,39 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
-  originalExpenseFilters: ExpenseFilter[];
-
   constructor(
     private helper: HelperService
   ) { }
 
-  private setConditionFields(response: ExpenseFilter[], conditionArray: ConditionField[]) {
-    response?.forEach((element) => {
+  private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    response?.results.forEach((element) => {
       const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
   }
 
-  private setOperatorFieldOptions(response: ExpenseFilter[], conditionArray: ConditionField[]) {
+  private setOperatorFieldOptions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     if (conditionArray.length) {
-      if (response[0].is_custom) {
-        this.setCustomOperatorOptions(response[0].rank, response[0].custom_field_type);
+      if (response.results[0].is_custom) {
+        this.setCustomOperatorOptions(response.results[0].rank, response.results[0].custom_field_type);
       } else {
-        this.operatorFieldOptions1 = this.setDefaultOperatorOptions(response[0].condition);
+        this.operatorFieldOptions1 = this.setDefaultOperatorOptions(response.results[0].condition);
       }
-      if (response[1]) {
-        if (response[1].is_custom) {
-          this.setCustomOperatorOptions(response[1].rank, response[1].custom_field_type);
+      if (response.results[1]) {
+        if (response.results[1].is_custom) {
+          this.setCustomOperatorOptions(response.results[1].rank, response.results[1].custom_field_type);
         } else {
-          this.operatorFieldOptions2 = this.setDefaultOperatorOptions(response[1].condition);
+          this.operatorFieldOptions2 = this.setDefaultOperatorOptions(response.results[1].condition);
         }
       }
     }
   }
 
-  private setSkippedConditions(response: ExpenseFilter[], conditionArray: ConditionField[]) {
-    if (response?.length > 0) {
+  private setSkippedConditions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    if (response?.count > 0) {
       this.skippedCondition1 = conditionArray[0].field_name;
-      if (response?.length > 1 && response[0].join_by) {
+      if (response?.count > 1 && response.results[0].join_by) {
         this.skippedCondition2 = conditionArray[1].field_name;
       } else {
         this.skippedCondition2 = '';
@@ -200,7 +198,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAdditionalCondition = false;
     this.showAddButton = true;
     this.resetAdditionalFilter();
-    const isDelete = this.originalExpenseFilters?.length > 1 ? this.deleteSkipExportForm.emit(this.originalExpenseFilters[1].id) : '';
+    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(this.expenseFilter.results[1].id) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
     this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }
@@ -309,9 +307,9 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
-  setupSkipExportForm(response: ExpenseFilter[], conditionArray: ConditionField[]) {
-    this.showAddButton = response?.length !== 2 ? true : false;
-    this.showAdditionalCondition = response?.length === 2 ? true : false;
+  setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    this.showAddButton = response.count !== 2 ? true : false;
+    this.showAdditionalCondition = response.count === 2 ? true : false;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);
@@ -320,7 +318,6 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.originalExpenseFilters = (this.expenseFilter as ExpenseFilterResponse)?.results ? (this.expenseFilter as ExpenseFilterResponse).results : this.expenseFilter as ExpenseFilter[];
-    this.setupSkipExportForm(this.originalExpenseFilters, []);
+    this.setupSkipExportForm(this.expenseFilter, []);
   }
 }

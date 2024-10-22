@@ -239,7 +239,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
       this.conditionFieldOptions = expenseFilterCondition;
 
-      const isSkipExportEnabled = expenseFiltersGet.length > 0;
+      const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
       this.advancedSettingsForm = QbdDirectAdvancedSettingsModel.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled);
 
