@@ -1,0 +1,270 @@
+<div>
+    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+        <app-loader></app-loader>
+    </div>
+    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6"
+        [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+        <div>
+            <app-configuration-step-header [headerText]="brandingContent.stepName"
+                [contentText]="brandingContent.contentText" [redirectLink]="redirectLink"
+                [showSyncButton]="isOnboarding" [appName]="appName" (refreshDimension)="refreshDimensions()">
+            </app-configuration-step-header>
+        </div>
+        <form [formGroup]="exportSettingsForm">
+            <div class="tw-p-24-px"
+                [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
+                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+                        <app-configuration-toggle-field [form]="exportSettingsForm"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseSubLabel"
+                            [formControllerName]="'reimbursableExpense'" 
+                            [isSectionHeader]="true">
+                        </app-configuration-toggle-field>
+                    </div>
+
+                    <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
+                        <div
+                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                            <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'export module'"
+                                [label]="brandingContent.reimbursable.reimbursableExpenseTypeLabel"
+                                [subLabel]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
+                                [options]="reimbursableExportTypes" 
+                                [iconPath]="'list'"
+                                [placeholder]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
+                                [formControllerName]="'reimbursableExportType'" 
+                                [appName]="appName"
+                                [showExportPreview]="false">
+                            </app-configuration-select-field>
+                        </div>
+                    </div>
+
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingsForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'option'"
+                            [label]="brandingContent.reimbursable.employeeMappingLabel"
+                            [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
+                            [options]="employeeMappingOptions"
+                            [iconPath]="'user-two'"
+                            [placeholder]="'Select representation'"
+                            [formControllerName]="'employeeMapping'"
+                            [isDisabled]="isEmployeeMappingDisabled()">
+                        </app-configuration-select-field>
+
+                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
+                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                                [isOptionSearchInProgress]="isOptionSearchInProgress"
+                                [isAdvanceSearchEnabled]="true"
+                                (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                                [optionLabel]="'value'"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'accounts payable'"
+                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select accounts payable'"
+                                [isMultiLineOption]="true"
+                                [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
+                            </app-configuration-select-field>
+                        </div>
+                    </div>
+
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType"
+                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'expense state'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseStateLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseStateSubLabel"
+                            [options]="expenseStateOptions" 
+                            [iconPath]="'list'" 
+                            [placeholder]="'Select export state'"
+                            [formControllerName]="'reimbursableExpenseState'">
+                        </app-configuration-select-field>
+                    </div>
+
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType"
+                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'how expenses to be grouped'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseGroupLabel"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseGroupSubLabel"
+                            [options]="reimbursableExpenseGroupingFieldOptions" 
+                            [iconPath]="'question-square-outline'"
+                            [placeholder]="'Select expense grouping'" 
+                            [formControllerName]="'reimbursableExportGroup'">
+                        </app-configuration-select-field>
+                    </div>
+
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType"
+                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export date'"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseDateLabel + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ' date as'"
+                            [subLabel]="brandingContent.reimbursable.reimbursableExpenseDateSubLabel"
+                            [options]="reimbursableExpenseGroupingDateOptions" [iconPath]="'calendar'"
+                            [placeholder]="'Select the date of the ' + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase)"
+                            [formControllerName]="'reimbursableExportDate'">
+                        </app-configuration-select-field>
+                    </div>
+                </div>
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+                    <app-configuration-toggle-field
+                        [form]="exportSettingsForm"
+                        [label]="brandingContent.headerText"
+                        [subLabel]="brandingContent.contentText"
+                        [formControllerName]="'creditCardExpense'"
+                        [isSectionHeader]="true"
+                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
+                    </app-configuration-toggle-field>
+                </div>
+
+
+                <div *ngIf="exportSettingsForm.value?.creditCardExpense">
+                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingsForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export module'"
+                            [label]="brandingContent.corporateCard.creditCardExpenseTypeLabel"
+                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
+                            [options]="creditCardExportTypes"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select expense export type'"
+                            [formControllerName]="'creditCardExportType'"
+                            [appName]="appName"
+                            [showExportPreview]="false">
+                        </app-configuration-select-field>
+
+                        <div *ngIf="!exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('creditCardExportType')?.value && exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'option'"
+                                [label]="brandingContent.reimbursable.employeeMappingLabel"
+                                [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
+                                [options]="employeeMappingOptions"
+                                [iconPath]="'user-two'"
+                                [placeholder]="'Select representation'"
+                                [formControllerName]="'employeeMapping'"
+                                [isDisabled]="isEmployeeMappingDisabled()">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'defaultCreditCardAccountName')">
+                            <app-configuration-select-field
+                              [form]="exportSettingsForm"
+                              [destinationAttributes]="cccAccpuntOptions(exportSettingsForm.get('creditCardExportType')?.value)"
+                              [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                              [isOptionSearchInProgress]="isOptionSearchInProgress"
+                              [isAdvanceSearchEnabled]="true"
+                              (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                              [optionLabel]="'value'"
+                              [iconPath]="'list'"
+                              [isFieldMandatory]="true"
+                              [mandatoryErrorListName]="'credit card account'"
+                              [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
+                              [subLabel]="brandingContent.corporateCard.defaultCCCAccountSubLabel"
+                              [placeholder]="'Select default credit card account'"
+                              [isMultiLineOption]="true"
+                              [formControllerName]="'defaultCreditCardAccountName'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultCCCAccountsPayableAccountName')">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
+                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                                [isOptionSearchInProgress]="isOptionSearchInProgress"
+                                [isAdvanceSearchEnabled]="true"
+                                (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                                [optionLabel]="'value'"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'accounts payable'"
+                                [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select accounts payable'"
+                                [isMultiLineOption]="true"
+                                [formControllerName]="'defaultCCCAccountsPayableAccountName'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [showClearIcon]="true"
+                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [label]="brandingContent.corporateCard.creditCardExpenseNameinJELabel"
+                                [subLabel]="brandingContent.corporateCard.creditCardExpenseNameinJESubLabel"
+                                [options]="nameInJEOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select a name'"
+                                [formControllerName]="'nameInJE'">
+                            </app-configuration-select-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'expense state'"
+                        [label]="brandingContent.corporateCard.creditCardExpenseStateLabel"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseStateSubLabel"
+                        [options]="cccExpenseStateOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select export state'"
+                        [formControllerName]="'creditCardExpenseState'">
+                    </app-configuration-select-field>
+                </div>
+
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'how expenses to be grouped'"
+                        [label]="brandingContent.corporateCard.creditCardExpenseGroupLabel"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseGroupSubLabel"
+                        [options]="creditCardExpenseGroupingFieldOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'Select expense grouping'"
+                        [isDisableTextRequired]="false"
+                        [isDisabled]="exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
+                        [formControllerName]="'creditCardExportGroup'">
+                    </app-configuration-select-field>
+                </div>
+
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export date'"
+                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase) : (exportSettingsForm.value.creditCardExportType | lowercase))  + ' date as'"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseDateSubLabel"
+                        [options]="cccExpenseGroupingDateOptions"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
+                        [formControllerName]="'creditCardExportDate'">
+                    </app-configuration-select-field>
+                </div>
+
+            </div>
+            <app-configuration-step-footer
+                [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+                [isButtonDisabled]="!exportSettingsForm.valid"
+                [showBackButton]="isOnboarding ? true : false"
+                (save)="save()"
+                (navigateToPreviousStep)="navigateToPreviousStep()">
+            </app-configuration-step-footer>
+        </form>
+    </div>
+</div>

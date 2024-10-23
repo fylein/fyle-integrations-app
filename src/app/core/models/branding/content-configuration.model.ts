@@ -1,5 +1,99 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
+        qbd_direct: {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            configuration: {
+                connector: {
+                    stepName: string;
+                    subLabel: string;
+                    configurationHeaderText: string;
+                    configurationSubHeaderText: string;
+                },
+                exportSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    reimbursable: {
+                        reimbursableExpenseLabel: string;
+                        reimbursableExpenseSubLabel: string;
+                        reimbursableExpenseTypeLabel: string;
+                        reimbursableExpenseTypeSubLabel: string;
+                        reimbursableExpenseStateLabel: string;
+                        reimbursableExpenseStateSubLabel: string;
+                        reimbursableExpenseDateLabel: string;
+                        reimbursableExpenseDateSubLabel:string;
+                        reimbursableExpenseGroupLabel: string;
+                        reimbursableExpenseGroupSubLabel: string;
+                        employeeMappingLabel: string;
+                        employeeMappingSubLabel: string;
+                        autoMapEmployeesLabel: string;
+                        autoMapEmployeesSubLabel: string;
+                        defaultReimbursableAccountPayableLabel: string;
+                        defaultReimbursableAccountPayableSubLabel: string;
+                    },
+                    corporateCard: {
+                        defaultCCCAccountLabel: string;
+                        defaultCCCAccountSubLabel: string;
+                        defaultCCCAccountPayableLabel: string;
+                        defaultCCCAccountPayableSubLabel: string;
+                        creditCardExpenseLabel: string;
+                        creditCardExpenseSubLabel: string;
+                        creditCardExpenseTypeLabel: string;
+                        creditCardExpenseTypeSubLabel: string;
+                        creditCardExpenseStateLabel: string;
+                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseDateLabel: string;
+                        creditCardExpenseDateSubLabel: string;
+                        creditCardExpenseGroupLabel: string;
+                        creditCardExpenseGroupSubLabel: string;
+                        creditCardExpenseNameinJELabel: string;
+                        creditCardExpenseNameinJESubLabel: string;
+                    }
+                },
+                importSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    importCategoriesLabel: string;
+                    importCategoriesSubLabel: string;
+                    chartOfAccountTypes: string;
+                    chartOfAccountTypesSubLabel: string;
+                    importItemsLabel: string;
+                    importItemsSubLabel: string;
+                    importVendorsAsMerchantsLabel: string;
+                },
+                advancedSettings: {
+                    stepName: string;
+                    contentText: string;
+                    automationLabel: string;
+                    automationSubLabel: string;
+                    customizeSectionLabel: string;
+                    customizeSectionSubLabel: string;
+                    scheduleAutoExportLabel: string;
+                    scheduleAutoExportSubLabel: string;
+                    autoExportfrequencyLabel: string;
+                    autoExportfrequencySubLabel: string;
+                    topLevelMemoStructureLabel: string;
+                    topLevelMemoStructureSubLabel: string;
+                    memoStructureLabel: string;
+                    memoStructureSubLabel: string;
+                    previewDescriptionFieldLabel: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
+                    autoCreateMerchantsAsVendorsSubLabel: string;
+                    otherPreferencesLabel: string;
+                    otherPreferencesSubLabel: string;
+                    skipExportLabel: string;
+                    skipExportSubLabel: string;
+                    autoCreateReimbursableEnitityLabel: string;
+                    autoCreateReimbursableEnititySubLabel: string;
+                    accountingPeriodLabel: string;
+                    accountingPeriodSubLabel: string;
+                }
+            },
+        },
         netsuite: {
             landing: {
                 contentText: string;

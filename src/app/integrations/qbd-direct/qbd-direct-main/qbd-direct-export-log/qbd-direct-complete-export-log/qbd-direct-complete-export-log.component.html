@@ -1,0 +1,42 @@
+<div *ngIf="!accountingExports" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div>
+        <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
+            [exportLogForm]="exportLogForm"
+            [dateOptions]="dateOptions"
+            [hideCalendar]="hideCalendar"
+            (handleSimpleSearch)="handleSimpleSearch($event)">
+        </app-export-log-filter>
+
+        <app-export-log-table
+            *ngIf="!isLoading" 
+            [filteredExpenseGroups]="filteredAccountingExports"
+            [appName]="appName"
+            [isExportLogTable]="true"
+            [isDashboardFailed]="false">
+        </app-export-log-table>
+
+        <div *ngIf="totalCount > 0 && !isLoading" class="tw-p-24-px tw-border-t-1-px">
+            <app-paginator
+                [dropDownValue]="limit"
+                [page]="currentPage"
+                [totalCount]="totalCount"
+                (pageSizeChangeEvent)="pageSizeChanges($event)"
+                (pageOffsetChangeEvent)="pageChanges($event)">
+            </app-paginator>
+        </div>
+
+        <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
+            [mainText]="brandingConfig.brandId === 'fyle' ? 'Sorry, no results found!': 'No results found.'"
+            [subText]="brandingConfig.brandId === 'fyle' ? 'We could not find what you were looking for. Kindly check the keywords again.' : 'Review your keywords and try again. '">
+        </app-zero-state-with-illustration>
+    </div>
+
+    <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
+        [mainText]="brandingConfig.brandId === 'fyle' ? 'No records to show yet!': 'No records to show yet'"
+        [subText]="brandingConfig.brandId === 'fyle' ? 'All your successful exports and their details will be stored here.': 'All your expenses that are successfully exported will be visible here.'">
+    </app-zero-state-with-illustration>
+</div>

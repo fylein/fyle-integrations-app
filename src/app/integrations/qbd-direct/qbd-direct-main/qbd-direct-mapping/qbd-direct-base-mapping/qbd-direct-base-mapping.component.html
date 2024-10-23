@@ -1,0 +1,12 @@
+<app-generic-mapping-v2 *ngIf="!isLoading"
+    [isLoading]="isLoading"
+    [destinationOptions]="destinationOptions"
+    [employeeFieldMapping]="employeeFieldMapping"
+    [sourceField]="sourceField"
+    [destinationField]="destinationField"
+    [showAutoMapEmployee]="false"
+    [appName]="AppName.QBD_DIRECT"
+    [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
+    [displayName]="displayName"
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false">
+</app-generic-mapping-v2>

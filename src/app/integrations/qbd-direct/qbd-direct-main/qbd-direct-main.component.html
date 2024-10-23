@@ -1,0 +1,6 @@
+<div [ngClass]="{'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed}">
+    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false" [isSyncVisible]="true" (refreshDimensionClick)="refreshDimensions()"></app-main-menu>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

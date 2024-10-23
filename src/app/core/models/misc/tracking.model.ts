@@ -52,7 +52,8 @@ export type TrackingAppMap = {
   [AppName.QBO]: TrackingApp.QBO,
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
   [AppName.NETSUITE]: TrackingApp.NETSUITE,
-  [AppName.XERO]: TrackingApp.XERO
+  [AppName.XERO]: TrackingApp.XERO,
+  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT
 }
 
 export const trackingAppMap: TrackingAppMap = {
@@ -64,5 +65,6 @@ export const trackingAppMap: TrackingAppMap = {
   [AppName.QBO]: TrackingApp.QBO,
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
   [AppName.NETSUITE]: TrackingApp.NETSUITE,
-  [AppName.XERO]: TrackingApp.XERO
+  [AppName.XERO]: TrackingApp.XERO,
+  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT
 };

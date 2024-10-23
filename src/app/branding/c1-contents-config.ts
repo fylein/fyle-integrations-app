@@ -4,6 +4,100 @@ import config from './config.json';
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
 export const c1Contents = {
+    qbd_direct: {
+        landing: {
+            contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
+            guideHeaderText: 'How to setup your integration'
+        },
+        configuration: {
+            connector: {
+                configurationHeaderText: 'Connect to NetSuite subsidary',
+                configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
+                stepName: 'Connect to NetSuite',
+                subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
+            },
+            exportSetting: {
+                stepName: 'Export settings',
+                headerText: ' Export Corporate Card Expenses',
+                contentText: 'Configure how and when expenses from Expense Management can be exported to QuickBooks Desktop.',
+                reimbursable: {
+                    reimbursableExpenseLabel: 'Export Reimbursable Expenses',
+                    reimbursableExpenseSubLabel: 'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Quickbooks Desktop.',
+                    reimbursableExpenseTypeLabel: 'How should the expenses be exported?',
+                    reimbursableExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
+                    reimbursableExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    reimbursableExpenseStateSubLabel: 'You can export exxpenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).',
+                    reimbursableExpenseDateLabel: 'Set the expense ',
+                    reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
+                    reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
+                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                    employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
+                    employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
+                    autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
+                    autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.',
+                    defaultReimbursableAccountPayableLabel: 'To which accounts payable account should the ',
+                    defaultReimbursableAccountPayableSubLabel: 'The integration will post the offset credit entry in '
+                },
+                corporateCard: {
+                    creditCardExpenseLabel: 'Export corporate card expenses',
+                    creditCardExpenseSubLabel: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card </b> expenses will not be exported to Quickbooks Desktop.',
+                    creditCardExpenseTypeLabel: 'How should the expenses be exported?',
+                    creditCardExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
+                    creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
+                    creditCardExpenseDateLabel: 'Set the expense ',
+                    creditCardExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
+                    creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
+                    creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                    creditCardExpenseNameinJELabel: 'Name in Journal Entry',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
+                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
+                    defaultCCCAccountPayableLabel: 'To which accounts payable account should the ',
+                    defaultCCCAccountPayableSubLabel: 'The integration will post the offset credit entry in '
+                }
+            },
+            importSetting: {
+                stepName: 'Import settings',
+                headerText: '',
+                contentText: 'Choose the required import fields from QuickBooks Desktop to Expense Management.',
+                importCategoriesLabel: 'Import the chart of accounts as categories',
+                importCategoriesSubLabel: 'Imported accounts will be available as categories in Expense Management.',
+                importItemsLabel: 'Import products/services from QuickBooks Desktop',
+                importItemsSubLabel: 'Products/services from QuickBooks Desktop will be imported as categories in Expense Management.',
+                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Desktop',
+                chartOfAccountTypes: 'Select accounts from QuickBooks Desktop to import as categories.',
+                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the dropdown.'
+            },
+            advancedSettings: {
+                stepName: 'Advanced settings',
+                contentText: 'Customize the integration based on your accounting requirements.',
+                customizeSectionLabel: 'Customization',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from Fyle to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
+                automationLabel: 'Automation',
+                automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                scheduleAutoExportLabel: 'Schedule automatic export',
+                scheduleAutoExportSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.',
+                autoExportfrequencyLabel: 'Set up export frequency',
+                autoExportfrequencySubLabel: '',
+                topLevelMemoStructureLabel: 'Select the top level memo field data for QuickBooks Desktop',
+                topLevelMemoStructureSubLabel: 'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
+                memoStructureLabel: 'Set the line-item level memo field data for QuickBooks Desktop.',
+                memoStructureSubLabel: 'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                otherPreferencesLabel: 'Other preferences',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
+                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
+                skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
+                skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
+                autoCreateReimbursableEnitityLabel: 'Auto create reimbursable enitity',
+                autoCreateReimbursableEnititySubLabel: 'Do you want to create a reimbursable enitity if not present',
+                accountingPeriodLabel: 'Post entries in the current accounting period',
+                accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Desktop, you can export those to the current month by enabling this option.'
+            }
+        }
+    },
     netsuite: {
         landing: {
             contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
