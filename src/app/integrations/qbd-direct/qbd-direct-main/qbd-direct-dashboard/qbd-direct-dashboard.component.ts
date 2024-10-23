@@ -6,7 +6,7 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AccountingGroupedErrors, AccountingGroupedErrorStat, Error } from 'src/app/core/models/db/error.model';
+import { AccountingGroupedErrors, AccountingGroupedErrorStat, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AppName, AccountingErrorType, QbdDirectTaskLogType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectTaskResponse, QbdDirectTaskLog } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -52,7 +52,7 @@ export class QbdDirectDashboardComponent implements OnInit {
     [AccountingErrorType.CATEGORY_MAPPING]: null
   };
 
-  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors(AppName.QBD_DIRECT);
+  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors(AppName.QBD_DIRECT);
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT);
 
@@ -88,14 +88,14 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   export() {
     this.isExportInProgress = true;
-    this.dashboardService.triggerAccountingExport().subscribe(() => {
+    this.dashboardService.triggerAccountingExport('v1').subscribe(() => {
       this.pollExportStatus(this.exportableAccountingExportIds);
     });
   }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.QBD_DIRECT))),
       takeWhile((response: QbdDirectTaskResponse) =>
         response.results.filter(task =>
           (this.exportLogProcessingStates.includes(task.status))
@@ -110,7 +110,7 @@ export class QbdDirectDashboardComponent implements OnInit {
           this.getExportErrors$,
           this.getAccountingExportSummary$
         ]).subscribe(responses => {
-          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
@@ -132,16 +132,15 @@ export class QbdDirectDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.FAILED), undefined, this.accountingExportType),
-      this.workspaceService.getWorkspaceGeneralSettings(),
-      this.dashboardService.getExportableAccountingExportIds('v1'),
+      this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.ERROR), undefined, this.accountingExportType, AppName.QBD_DIRECT),
+      this.dashboardService.getExportableAccountingExportIds('v2'),
       this.QbdDirectExportSettingsService.getQbdExportSettings(),
       this.importSettingService.getImportSettings()
     ]).subscribe((responses) => {
-      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.isImportItemsEnabled = responses[3].import_items;
       if (responses[1]) {
-        this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+        this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);
       }
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
@@ -150,24 +149,24 @@ export class QbdDirectDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      this.importCodeFields = responses[6].import_settings.import_code_fields;
+      this.importCodeFields = responses[5].import_settings?.import_code_fields;
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-      this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
+      this.exportableAccountingExportIds = responses[3].exportable_export_log_ids?.length ? responses[3].exportable_export_log_ids : [];
 
-      this.reimbursableImportState = responses[5]?.reimbursable_expense_export_type && responses[5].reimbursable_expense_state ? this.reimbursableExpenseImportStateMap[responses[5].reimbursable_expense_state] : null;
-      this.cccImportState = responses[5].credit_card_expense_export_type && responses[5].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[5].credit_card_expense_state] : null;
+      this.reimbursableImportState = responses[4]?.reimbursable_expense_export_type && responses[4].reimbursable_expense_state ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
+      this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
-        this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+        this.accountingExportService.importExpensesFromFyle('v2').subscribe(() => {
+          this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_export_log_ids?.length ? exportableAccountingExportIds.exportable_export_log_ids : [];
             this.isImportInProgress = false;
           });
         });

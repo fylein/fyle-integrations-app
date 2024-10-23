@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { brandingKbArticles, brandingFeatureConfig, brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
@@ -16,6 +16,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -58,7 +59,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   isPreviewDialogVisible: boolean;
 
-  importSettings: QbdDirectImportSettingGet;
+  importSettings: QbdDirectImportSettingGet | null;
 
   customFieldType: string;
 
@@ -78,7 +79,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   taxCodes: DefaultDestinationAttribute[];
 
-  isImportMerchantsAllowed: boolean;
+  isImportMerchantsAllowed: boolean = true;
 
   QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
@@ -112,6 +113,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
+    private advancedSettingsService: QbdDirectAdvancedSettingsService,
     public helper: HelperService
   ) { }
 
@@ -178,7 +180,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   updateImportCodeFields(isImportCodeEnabled: boolean, value: string): void {
     let fields = this.importSettingForm.get('importCodeFields')?.value;
     if (!isImportCodeEnabled && this.QbdDirectImportCodeFieldCodeConfig[value]) {
-      fields = fields.filter((field: string) => field !== value);
+      fields = fields?.filter((field: string) => field !== value);
     } else if (isImportCodeEnabled && !fields.includes(value)) {
       fields.push(value);
     }
@@ -190,7 +192,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -250,17 +252,16 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.importSettingService.getImportSettings(),
-      this.mappingService.getFyleFields('v1'),
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.mappingService.getFyleFields(),
       this.importSettingService.getQbdDirectFields(),
-      this.importSettingService.getImportCodeFieldConfig()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, QbdDirectFields, importCodeFieldConfig]) => {
+      this.importSettingService.getImportCodeFieldConfig(),
+      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null)))
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse]) => {
       this.QbdDirectFields = QbdDirectFields;
       this.importSettings = importSettingsResponse;
-      this.isImportMerchantsAllowed = !workspaceGeneralSettings.auto_create_merchants_as_vendors;
-      this.workspaceGeneralSettings = workspaceGeneralSettings;
 
       this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
+      this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
       this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
