@@ -91,7 +91,7 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop Direct'
+  QBD_DIRECT = 'QuickBooks Desktop '
 }
 
 export enum AppNameInService {
@@ -327,6 +327,21 @@ export enum QBDOnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum QbdDirectOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE',
+  YET_TO_START = 'YET_TO_START',
+  CONFIRM_PRE_REQUISITES = 'CONFIRM_PRE_REQUISITES',
+  PENDING_QWC_UPLOAD = 'PENDING_QWC_UPLOAD',
+  INCORRECT_COMPANY_PATH = 'INCORRECT_COMPANY_PATH',
+  IN_CORRECT_PASSWORD = 'IN_CORRECT_PASSWORD',
+  DESTINATION_SYNC_IN_PROGRESS = 'DESTINATION_SYNC_IN_PROGRESS',
+  DESTINATION_SYNC_COMPLETE = 'DESTINATION_SYNC_COMPLETE',
+}
+
 export enum ConfigurationCta {
   SAVE = 'Save',
   SAVE_AND_CONTINUE = 'Save and Continue',
@@ -341,9 +356,22 @@ export enum QBDReimbursableExpensesObject {
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
 }
 
+export enum QbdDirectReimbursableExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  CHECK = 'CHECK'
+}
+
 export enum QBDCorporateCreditCardExpensesObject {
   CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+}
+
+export enum FyleReferenceType {
+  REPORT_ID = 'report_id',
+  EXPENSE_REPORT = 'claim_number',
+  PAYMENT = 'settlement_id',
+  EXPENSE = 'expense_id'
 }
 
 export enum QBDExpenseGroupedBy {
@@ -370,6 +398,25 @@ export enum QBDScheduleFrequency {
 export enum QBDFyleField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER'
+}
+
+export enum QbdDirectReimbursableExportDateType {
+  LAST_SPENT_AT = 'last_spent_at',
+  CURRENT_DATE = 'current_date',
+  SPENT_AT = 'spent_at'
+}
+
+export enum QbdDirectCCCExportDateType {
+  SPENT_AT = 'spent_at',
+  CURRENT_DATE = 'current_date',
+  POSTED_AT = 'posted_at',
+  LAST_SPEND_AT = "last_spend_at"
+}
+
+
+export enum QbdDirectExpenseGroupBy {
+  REPORT = 'report_id',
+  EXPENSE = 'expense_id'
 }
 
 export enum XeroFyleField {
@@ -425,13 +472,6 @@ export enum IntacctErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',
   INTACCT_ERROR = 'INTACCT_ERROR'
-}
-
-export enum FyleReferenceType {
-  REPORT_ID = 'report_id',
-  EXPENSE_REPORT = 'claim_number',
-  PAYMENT = 'settlement_id',
-  EXPENSE = 'expense_id'
 }
 
 export enum MappingState {
@@ -505,6 +545,8 @@ export enum TaskLogState {
   FAILED = 'FAILED',
   FATAL = 'FATAL',
   COMPLETE = 'COMPLETE',
+  EXPORT_PROCESSED = 'EXPORT_PROCESSED',
+  ERROR = "ERROR"
 }
 
 export enum ExportMode {
@@ -548,7 +590,8 @@ export enum AppUrl {
   INTEGRATION = 'integration',
   QBO = 'qbo',
   NETSUITE = 'netsuite',
-  XERO = 'xero'
+  XERO = 'xero',
+  QBD_DIRECT = 'qbd_direct'
 }
 
 export enum Sage300ExportType {
@@ -660,13 +703,19 @@ export enum BCExportSettingDestinationOptionKey {
   VENDOR = 'VENDOR'
 }
 
+export enum QbdDirectExportSettingDestinationOptionKey {
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE'
+}
+
 export type DestinationOptionKey =
   IntacctExportSettingDestinationOptionKey |
   NetsuiteExportSettingDestinationOptionKey |
   QboExportSettingDestinationOptionKey |
   XeroExportSettingDestinationOptionKey |
   Sage300ExportSettingDestinationOptionKey |
-  BCExportSettingDestinationOptionKey;
+  BCExportSettingDestinationOptionKey |
+  QbdDirectExportSettingDestinationOptionKey;
 
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
@@ -718,6 +767,12 @@ export enum QBOTaskLogType {
   CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
   CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
   FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
+export enum QbdDirectTaskLogType {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE'
 }
 
 export enum NetsuiteTaskLogType {

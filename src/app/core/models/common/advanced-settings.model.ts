@@ -78,11 +78,14 @@ export class AdvancedSettingsModel {
 
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
+      employee_name: 'John Doe',
+      card_number: '1234 5678 9012 3456',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
+      expence_key: 'txDdlUFWkahX',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     let memoPreviewText = '';
@@ -188,7 +191,7 @@ export class SkipExportModel {
   }
 
   static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
-    response.results.forEach((element) => {
+    response.results?.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
@@ -231,7 +234,7 @@ export class SkipExportModel {
     let isDisabledChip2: boolean = false;
     let isDisabledChip1: boolean = false;
 
-    response.results.forEach((result: ExpenseFilterPost, index: number) => {
+    response.results?.forEach((result: ExpenseFilterPost, index: number) => {
         if (index === 0) {
             selectedOperator1 = this.getSelectedOperator(result.operator, result.values[0]);
             if (!(selectedOperator1 === 'is_empty' || selectedOperator1 === 'is_not_empty')) {
