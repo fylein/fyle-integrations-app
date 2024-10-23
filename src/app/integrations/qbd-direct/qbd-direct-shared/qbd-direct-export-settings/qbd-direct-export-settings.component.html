@@ -54,33 +54,25 @@
                             [isDisabled]="isEmployeeMappingDisabled()">
                         </app-configuration-select-field>
 
-                        <app-configuration-toggle-field
-                            [form]="exportSettingsForm"
-                            [label]="brandingContent.reimbursable.autoMapEmployeesLabel + exportSettingsForm.get('employeeMapping')?.value.toLowerCase() + ' in QuickBooks Desktop?'"
-                            [subLabel]="brandingContent.reimbursable.autoMapEmployeesSubLabel"
-                            [formControllerName]="'autoMapEmployees'"
-                            [iconPath]="'question-square-outline'">
-                        </app-configuration-toggle-field>
-                    </div>
-
-                    <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
-                        <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , accountsPayables)"
-                            [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                            [optionLabel]="'name'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'accounts payable'"
-                            [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                            [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
-                            [iconPath]="'list'"
-                            [placeholder]="'Select accounts payable'"
-                            [isMultiLineOption]="true"
-                            [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
-                        </app-configuration-select-field>
+                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
+                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                                [isOptionSearchInProgress]="isOptionSearchInProgress"
+                                [isAdvanceSearchEnabled]="true"
+                                (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                                [optionLabel]="'value'"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'accounts payable'"
+                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select accounts payable'"
+                                [isMultiLineOption]="true"
+                                [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
+                            </app-configuration-select-field>
+                        </div>
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
@@ -164,7 +156,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultCreditCardAccountName')">
+                        <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'defaultCreditCardAccountName')">
                             <app-configuration-select-field
                               [form]="exportSettingsForm"
                               [destinationAttributes]="cccAccpuntOptions(exportSettingsForm.get('creditCardExportType')?.value)"
@@ -172,7 +164,7 @@
                               [isOptionSearchInProgress]="isOptionSearchInProgress"
                               [isAdvanceSearchEnabled]="true"
                               (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                              [optionLabel]="'name'"
+                              [optionLabel]="'value'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'credit card account'"
@@ -187,12 +179,12 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultCCCAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , accountsPayables)"
+                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                                [optionLabel]="'name'"
+                                [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'accounts payable'"
                                 [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"

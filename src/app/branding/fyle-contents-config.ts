@@ -82,7 +82,7 @@ export const fyleContents = {
                 autoExportfrequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to QuickBooks Desktop.',
                 topLevelMemoStructureLabel: 'Select the top level memo field data for QuickBooks Desktop',
                 topLevelMemoStructureSubLabel: 'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
-                memoStructureLabel: 'Set the line-ttem level memo field data for QuickBooks Desktop.',
+                memoStructureLabel: 'Set the line-item level memo field data for QuickBooks Desktop.',
                 memoStructureSubLabel: 'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.',
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
                 otherPreferencesLabel: 'Other preferences',
@@ -91,8 +91,8 @@ export const fyleContents = {
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
                 skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
                 skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
-                autoCreateReimbursableEnitityLabel: '',
-                autoCreateReimbursableEnititySubLabel: '',
+                autoCreateReimbursableEnitityLabel: 'Auto create reimbursable enitity',
+                autoCreateReimbursableEnititySubLabel: 'Do you want to create a reimbursable enitity if not present',
                 accountingPeriodLabel: 'Post entries in the current accounting period',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Desktop, you can export those to the current month by enabling this option.'
             }

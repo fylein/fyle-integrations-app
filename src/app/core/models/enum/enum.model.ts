@@ -332,7 +332,14 @@ export enum QbdDirectOnboardingState {
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-  COMPLETE = 'COMPLETE'
+  COMPLETE = 'COMPLETE',
+  YET_TO_START = 'YET_TO_START',
+  CONFIRM_PRE_REQUISITES = 'CONFIRM_PRE_REQUISITES',
+  PENDING_QWC_UPLOAD = 'PENDING_QWC_UPLOAD',
+  INCORRECT_COMPANY_PATH = 'INCORRECT_COMPANY_PATH',
+  IN_CORRECT_PASSWORD = 'IN_CORRECT_PASSWORD',
+  DESTINATION_SYNC_IN_PROGRESS = 'DESTINATION_SYNC_IN_PROGRESS',
+  DESTINATION_SYNC_COMPLETE = 'DESTINATION_SYNC_COMPLETE',
 }
 
 export enum ConfigurationCta {
@@ -396,12 +403,14 @@ export enum QBDFyleField {
 export enum QbdDirectReimbursableExportDateType {
   LAST_SPENT_AT = 'last_spent_at',
   CURRENT_DATE = 'current_date',
+  SPENT_AT = 'spent_at'
 }
 
 export enum QbdDirectCCCExportDateType {
   SPENT_AT = 'spent_at',
   CURRENT_DATE = 'current_date',
-  POSTED_AT = 'posted_at'
+  POSTED_AT = 'posted_at',
+  LAST_SPEND_AT = "last_spend_at"
 }
 
 
@@ -536,7 +545,8 @@ export enum TaskLogState {
   FAILED = 'FAILED',
   FATAL = 'FATAL',
   COMPLETE = 'COMPLETE',
-  EXPORT_PROCESSED = 'EXPORT_PROCESSED'
+  EXPORT_PROCESSED = 'EXPORT_PROCESSED',
+  ERROR = "ERROR"
 }
 
 export enum ExportMode {
@@ -760,9 +770,9 @@ export enum QBOTaskLogType {
 }
 
 export enum QbdDirectTaskLogType {
-  CREATING_BILL = 'CREATING_BILL',
-  CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
-  CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE'
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE'
 }
 
 export enum NetsuiteTaskLogType {

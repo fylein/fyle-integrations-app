@@ -9,14 +9,14 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { filter, forkJoin, Observable, Subject } from 'rxjs';
+import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 
@@ -73,9 +73,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   ConfigurationCtaText = ConfigurationCta;
 
-  cccAccounts: QbdDirectDestinationAttribute[];
+  destinationAccounts: QbdDirectDestinationAttribute[];
 
-  accountsPayables: QbdDirectDestinationAttribute[];
 
   QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
 
@@ -102,10 +101,41 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccAccpuntOptions(cccExportType: string): DestinationAttribute[] {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-      return this.destinationOptionsWatcher(['CreditCard'], this.cccAccounts);
+      return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
     }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.cccAccounts);
+    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
   }
+
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+      let existingOptions: QbdDirectDestinationAttribute[] = [];
+
+      existingOptions = this.destinationAccounts;
+
+      let newOptions: QbdDirectDestinationAttribute[];
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+
+        // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
+        newOptions = response.results as QbdDirectDestinationAttribute[];
+
+        // Insert new options to existing options
+        newOptions.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+            existingOptions.push(option);
+          }
+        });
+
+        this.destinationAccounts = existingOptions.concat();
+        this.destinationAccounts.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
 
   searchOptionsDropdown(event: ExportSettingOptionSearch): void {
     if (event.searchTerm) {
@@ -152,17 +182,13 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
-      if (reimbursableExportGroupValue === QBDExpenseGroupedBy.REPORT) {
-        this.reimbursableExpenseGroupingDateOptions = [QbdDirectExportSettingModel.reimbursableExpenseGroupingDateOptions()[1]];
-      } else {
-        this.reimbursableExpenseGroupingDateOptions = QbdDirectExportSettingModel.reimbursableExpenseGroupingDateOptions();
-      }
+      this.reimbursableExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExportGroupValue);
     });
   }
 
   cccExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroupValue) => {
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(this.exportSettingsForm.controls.creditCardExportType.value, creditCardExportGroupValue);
+      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(creditCardExportGroupValue);
     });
   }
 
@@ -178,7 +204,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
-    return destinationOptions.filter((account: QbdDirectDestinationAttribute) => account.detail.account_type in detailAccountType);
+    return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
 
   private exportsettingsWatcher(): void {
@@ -193,12 +219,13 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   private setupCCCExpenseGroupingDateOptions(): void {
-    if (this.exportSettings?.credit_card_expense_export_type) {
-      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type, creditCardExpenseExportGroup);
-    } else {
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QbdDirectExpenseGroupBy.EXPENSE);
-    }
+    const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
+    this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(creditCardExpenseExportGroup);
+  }
+
+  private setupReimbursableExpenseGroupingDateOptions(): void {
+    const reimbursableExpenseExportGroup = this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
+    this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExpenseExportGroup);
   }
 
   private getSettingsAndSetupForm(): void {
@@ -214,7 +241,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
 
     forkJoin([
-      this.exportSettingService.getQbdExportSettings(),
+      this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
     ]).subscribe(([exportSettingResponse, accounts]) => {
       this.exportSettings = exportSettingResponse;
@@ -222,12 +249,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
       this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
-      this.cccAccounts = accounts.results as QbdDirectDestinationAttribute[];
-      this.accountsPayables = accounts.results as QbdDirectDestinationAttribute[];
+      this.destinationAccounts = accounts.results as QbdDirectDestinationAttribute[];
 
+      this.setupReimbursableExpenseGroupingDateOptions();
       this.setupCCCExpenseGroupingDateOptions();
 
-      this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+      this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
 
@@ -235,7 +262,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingsForm);
 
+      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingsForm);
+
       this.exportsettingsWatcher();
+
+      this.optionSearchWatcher();
 
       this.isLoading = false;
     });
