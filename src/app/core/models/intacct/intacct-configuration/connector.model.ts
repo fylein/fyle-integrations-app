@@ -21,9 +21,9 @@ export class IntacctConnectorModel {
 
   static constructPayload(form: FormGroup): SageIntacctCredential {
     return {
-      si_user_id: form.value.userID,
-      si_company_id: form.value.companyID,
-      si_user_password: form.value.userPassword
+      si_user_id: form.get('userID')?.value,
+      si_company_id: form.get('companyID')?.value,
+      si_user_password: form.get('userPassword')?.value
     };
   }
 }

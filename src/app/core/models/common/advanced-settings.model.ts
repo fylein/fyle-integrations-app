@@ -191,8 +191,8 @@ export class SkipExportModel {
   }
 
   static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
-    response.results?.forEach((element) => {
-      const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
+    response.results.forEach((element) => {
+      const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });

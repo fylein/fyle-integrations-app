@@ -43,7 +43,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories"></p-inputSwitch>
+                <p-inputSwitch formControlName="importCategories" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
@@ -74,7 +74,7 @@
                 <p-inputSwitch formControlName="importTaxCodes"></p-inputSwitch>
             </span>
         </div>
-        <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.value?.importTaxCodes && isImportTaxVisible">
+        <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible">
             <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
             </p-dropdown>
         </div>
@@ -132,7 +132,7 @@
                                     
                                     </ng-template>
                               </p-dropdown>
-                              <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
+                              <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field') || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{brandingConfig.brandName}} Fields should be unique
                                 </p>
                             </div>
@@ -145,7 +145,7 @@
                             </div>
                             <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields</label>
                         </div>
-                        <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
+                        <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Code" disabled>
                             </div>
@@ -164,7 +164,7 @@
                             </p-dropdown>
                             <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
-                        <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
+                        <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             </div>
@@ -195,6 +195,48 @@
                 </a>
             </div>
         </div>
+
+        <div class="tw-p-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && this.importSettingsForm.get('importCodeFields')?.value.length > 0 ">
+            <div>
+                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                    <div>
+                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
+                            Configure import method
+                        </h4>
+                        <p class="tw-text-14-px tw-text-text-muted">
+                            You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
+                        </p>
+                    </div>
+                    <div class="tw-pt-16-px">
+                        <app-configuration-info-label
+                            [infoText]="'This is a one-time setup and cannot be modified once the values are imported to Fyle.'">
+                        </app-configuration-info-label>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="importCodeFields">
+                <div *ngFor="let intacctImportCodeField of importCodeFieldGetter.controls; let i = index" [formGroupName]="i">
+                    <div *ngIf="intacctImportCodeConfig[intacctImportCodeField.value.source_field]">
+                        <app-configuration-select-field
+                            [appName]="appName"
+                            [form]="getFormGroup(intacctImportCodeField)"
+                            [isDisableTextRequired]="false"
+                            [options]="importCodeSelectorOptions[intacctImportCodeField.value.source_field]"
+                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase()"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' from ' + appName + '?'"
+                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' or both the names and codes.'"
+                            [isMultiLineOption]="true"
+                            [isFieldMandatory]="true"
+                            [isimportSettings]="true"
+                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() + ' should be imported'"
+                            [isDisabled]="!intacctImportCodeConfig[intacctImportCodeField.value.source_field]"
+                            [formControllerName]="'import_code'">
+                        </app-configuration-select-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>    
     </form>
 </div>
@@ -207,7 +249,7 @@
                 <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
-        <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
+        <div *ngIf="existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1">
             <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
                 <span class="error-box tw-flex tw-p-4-px">
                     <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
@@ -243,11 +285,11 @@
               <div class="label-section tw-pt-8">
                 <div class="label-content tw-w-420-px">
                   <h5 class="name-text sub-text-color tw-text-14-px">
-                    {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
+                    {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : 'Label'}}
                   </h5>
                   <div class="form-field tw-pt-4-px">
                     <input class="form-input tw-w-352-px" type="text"
-                    [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
+                    [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter Text'">
                   </div>
                 </div>
               </div>              
@@ -256,7 +298,7 @@
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     Cancel
                 </button>
-                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1" (click)="saveCustomField()">
+                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
                     Create and Save
                 </button>
             </div>

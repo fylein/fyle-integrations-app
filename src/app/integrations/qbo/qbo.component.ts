@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspace } from 'src/app/core/models/qbo/db/qbo-workspace.model';
@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
   selector: 'app-qbo',
@@ -29,6 +30,8 @@ export class QboComponent implements OnInit {
     private helperService: HelperService,
     private qboHelperService: QboHelperService,
     private router: Router,
+    private route: ActivatedRoute,
+    private qboAuthService: QboAuthService,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
@@ -77,8 +80,22 @@ export class QboComponent implements OnInit {
     );
   }
 
+  private handleAuthParameters(): void {
+    this.route.queryParams.subscribe(params => {
+      const authCode = params.code;
+
+      if (authCode) {
+        this.qboAuthService.loginWithAuthCode(authCode).subscribe(
+          () => this.setupWorkspace()
+        );
+      } else {
+        this.setupWorkspace();
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.setupWorkspace();
+    this.handleAuthParameters();
   }
 
 }

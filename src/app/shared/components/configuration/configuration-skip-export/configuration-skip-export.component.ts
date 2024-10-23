@@ -23,6 +23,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   @Output() deleteSkipExportForm = new EventEmitter<number>();
 
+  @Output() invalidSkipExportForm = new EventEmitter<boolean>();
+
   isLoading: boolean = true;
 
   showExpenseFilters: boolean;
@@ -89,8 +91,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
   ) { }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    response.results?.forEach((element) => {
-      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
+    response.results.forEach((element) => {
+      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
@@ -209,41 +211,43 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       if (condition1.valid && condition2.valid) {
         if (condition1.value?.field_name === condition2.value?.field_name) {
-          // This.skipExportForm.controls.operator2.setValue(null);
+          this.invalidSkipExportForm.emit(true);
           return true;
         }
       }
     }
+    this.invalidSkipExportForm.emit(false);
     return false;
   }
 
   // For conditionally adding and removing Value fields from layout
   showValueHeader(rank: number): boolean {
-    return rank === 1 ? (this.skipExportForm.value.operator1 !== 'is_empty') && (this.skipExportForm.value.operator1 !== 'is_not_empty')
-      : (this.skipExportForm.value.operator2 !== 'is_empty') && (this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return rank === 1 ? (this.skipExportForm.get('operator1')?.value !== 'is_empty') && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      : (this.skipExportForm.get('operator2')?.value !== 'is_empty') && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showInputField(rank: number) {
-    return rank === 1 ? this.skipExportForm.value.condition1?.field_name === 'report_title' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty')
-      : this.skipExportForm.value?.condition2?.field_name && this.skipExportForm.value?.condition2?.field_name === 'report_title'  && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.field_name === 'report_title' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      : this.skipExportForm.get('condition2')?.value?.field_name && this.skipExportForm.get('condition2')?.value?.field_name === 'report_title'  && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showDateField(rank: number) {
-    return rank === 1 ? this.skipExportForm.value?.condition1?.type==='DATE' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty')
-      : this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.type==='DATE' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      : this.skipExportForm.get('condition2')?.value?.type==='DATE' && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showChipField(rank: number):boolean {
     return rank === 1 ?
-      (this.skipExportForm.value.condition1?.field_name !== 'report_title') && (!this.skipExportForm.value.condition1 || this.skipExportForm.value.condition1.type==='SELECT' || this.skipExportForm.value?.condition1?.type==='TEXT' || this.skipExportForm.value?.condition1?.type==='NUMBER') && (this.skipExportForm.value.operator1 !== 'is_empty')  && (this.skipExportForm.value.operator1 !== 'is_not_empty')
-      :(this.skipExportForm.value?.condition2?.field_name !== 'report_title') && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.value.operator2 !== 'is_empty')  && (this.skipExportForm.value.operator2 !== 'is_not_empty');
+      (this.skipExportForm.get('condition1')?.value?.field_name !== 'report_title') && (!this.skipExportForm.get('condition1')?.value || this.skipExportForm.get('condition1')?.value.type==='SELECT' || this.skipExportForm.get('condition1')?.value?.type==='TEXT' || this.skipExportForm.get('condition1')?.value?.type==='NUMBER') && (this.skipExportForm.get('operator1')?.value !== 'is_empty')  && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      :(this.skipExportForm.get('condition2')?.value?.field_name !== 'report_title') && (!this.skipExportForm.get('condition2')?.value || this.skipExportForm.get('condition2')?.value?.type==='SELECT' || this.skipExportForm.get('condition2')?.value?.type==='TEXT' || this.skipExportForm.get('condition2')?.value?.type==='NUMBER') && (this.skipExportForm.get('operator2')?.value !== 'is_empty')  && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showBooleanField(rank: number) {
-    return rank === 1 ? this.skipExportForm.value?.condition1?.type==='BOOLEAN' : this.skipExportForm.value?.condition2?.type==='BOOLEAN';
+    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.type==='BOOLEAN' : this.skipExportForm.get('condition2')?.value?.type==='BOOLEAN';
   }
 
   setDefaultOperatorOptions(conditionField: string) {
+    conditionField = conditionField.toLowerCase();
     const operatorList = [];
     if (
       conditionField === 'claim_number' ||

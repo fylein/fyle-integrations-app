@@ -22,7 +22,7 @@
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
 
-                    <div class="tw-pl-24-px tw-pt-0" *ngIf="importSettingsForm.value.importCategories">
+                    <div class="tw-pl-24-px tw-pt-0" *ngIf="importSettingsForm.get('importCategories')?.value">
                         <app-configuration-multi-select
                             [form]="importSettingsForm"
                             [options]="chartOfAccountTypesList"
@@ -80,7 +80,7 @@
                       [hasDependentFields]="true">
                     </app-configuration-toggle-field>
 
-                    <app-configuration-select-field *ngIf="importSettingsForm.value.taxCode"
+                    <app-configuration-select-field *ngIf="importSettingsForm.get('taxCode')?.value"
                         [form]="importSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'tax code'"

@@ -192,12 +192,15 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   closeModel() {
+    this.customFieldControl.patchValue({
+      source_field: null
+    });
     this.customFieldForm.reset();
     this.showDialog = false;
   }
 
   saveCustomField() {
-    if (this.customFieldType?.length > 0 && this.customFieldForm.value) {
+    if (this.customFieldType?.length > 0 && this.customFieldForm.getRawValue()) {
       this.saveDependentCustomField();
     } else {
       this.saveFyleExpenseField();
@@ -226,7 +229,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   private dependentFieldWatchers(): void {
-    if (this.importSettingsForm.value.isDependentImportEnabled) {
+    if (this.importSettingsForm.get('isDependentImportEnabled')?.value) {
       this.helper.disableFormField(this.importSettingsForm, 'costCodes');
       this.helper.disableFormField(this.importSettingsForm, 'costTypes');
     }
@@ -255,9 +258,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   saveDependentCustomField(): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type,
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value,
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: true,
       is_custom: true
     };
@@ -278,9 +281,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   saveFyleExpenseField() {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: false
     };
 
@@ -435,7 +438,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
-      expenseFields: this.formBuilder.array(this.constructFormArray())
+      expenseFields: this.formBuilder.array(this.constructFormArray()),
+      importCodeField: [importSettings.configurations.import_code_fields],
+      importCodeFields: this.formBuilder.array([])
     });
 
     this.importSettingWatcher();

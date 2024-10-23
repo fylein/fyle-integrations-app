@@ -21,7 +21,7 @@
                 </div>
             </div>
     
-            <div *ngIf="exportSettingForm.value?.reimbursableExpense" class="clone-setting--field">
+            <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value" class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'list'"
                     [label]="'How should the expenses be exported?'"
@@ -107,7 +107,7 @@
                 </div>
             </div>
     
-            <div *ngIf="exportSettingForm.value?.creditCardExpense">
+            <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
                 <div class="clone-setting--field">
                     <app-clone-setting-field
                         [iconSource]="'list'"
@@ -194,7 +194,7 @@
                     [tooltipText]="'Imported account will be available as Categories in ' + brandingConfig.brandName">
                 </app-clone-setting-field>
     
-                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.importCategories">
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('importCategories')?.value">
                     <app-clone-setting-field
                         [label]="'Select the accounts from Xero to import as categories'"
                         [options]="chartOfAccountTypesList"
@@ -242,8 +242,8 @@
                     [tooltipText]="'The imported Tax codes from Xero will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'">
                 </app-clone-setting-field>
     
-                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.taxCode">
-                    <app-clone-setting-field *ngIf="importSettingForm.value.taxCode"
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('taxCode')?.value">
+                    <app-clone-setting-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [label]="'Select Default Tax Code'"
                         [options]="taxCodes"
                         [placeholder]="'Select tax code'"
@@ -279,7 +279,7 @@
                     [tooltipText]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero'">
                 </app-clone-setting-field>
     
-                <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.value?.exportSchedule">
+                <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <app-clone-setting-field class="tw-flex-auto"
                         [label]="'Set up export frequency'"
                         [isFieldMandatory]="true"
@@ -292,11 +292,11 @@
                         [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Xero'">
                     </app-clone-setting-field>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'Hours' : 'Hour'">
                     </div>
                 </div>
     
-                <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value?.exportSchedule">
+                <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
                         Send Error Notification to
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
@@ -351,7 +351,7 @@
                     [tooltipText]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to Paid and vice versa.'">
                 </app-clone-setting-field>
     
-                <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_xero'">
+                <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero'">
                     <app-clone-setting-field
                         [label]="'To which Payment account should the payment entries be posted?'"
                         [options]="billPaymentAccounts"
@@ -359,7 +359,7 @@
                         [form]="advancedSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'billPaymentAccount'"
-                        [dropdownDisplayKey]="'value'"
+                        [dropdownDisplayKey]="'name'"
                         [tooltipText]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + ', the payment entries will be posted to the selected Payment account in Xero.'">
                     </app-clone-setting-field>
                 </div>

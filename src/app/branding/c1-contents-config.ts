@@ -179,7 +179,9 @@ export const c1Contents = {
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
                 previewDescriptionFieldLabel: 'Preview of the description field',
-                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
+                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.'
             }
         }
     },
@@ -277,7 +279,8 @@ export const c1Contents = {
             connector: {
                 stepName: 'Connect to Sage Intacct',
                 subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and Sage Intacct account. ',
-                locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.'
+                locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.',
+                connectorInfoLabel: 'Make sure you’re entering your integration credentials. These should be different than your Sage Intacct credentials.'
             },
             exportSetting: {
                 stepName: 'Export settings',
@@ -381,7 +384,7 @@ export const c1Contents = {
         advancedSettings: {
             stepName: 'Advanced settings',
             contentText: 'Customize the integration based on your accounting requirements. ',
-            autoCreateVendorsLabel: 'Auto-create vendors',
+            autoCreateVendorsLabel: 'Auto-create employee as vendor',
             paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
             customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
             autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',

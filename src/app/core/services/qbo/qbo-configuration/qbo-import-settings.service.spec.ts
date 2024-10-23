@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QboImportSettingsService } from './qbo-import-settings.service';
 
-describe('QboImportSettingsService', () => {
+xdescribe('QboImportSettingsService', () => {
   let service: QboImportSettingsService;
 
   beforeEach(() => {

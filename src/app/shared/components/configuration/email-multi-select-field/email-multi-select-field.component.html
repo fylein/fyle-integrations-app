@@ -19,9 +19,9 @@
                     <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
                         [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
                 </div>
-                <div *ngIf="selectedEmail && form.value.email.length > 1" class="tw-pl-8-px">
+                <div *ngIf="selectedEmail && form.get('email')?.value.length > 1" class="tw-pl-8-px">
                     <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px">
-                        +{{ form.value.email.length - 1 }}
+                        +{{ form.get('email')?.value.length - 1 }}
                     </p>
                 </div>
                 <div *ngIf="!selectedEmail" class="tw-text-placeholder">

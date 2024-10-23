@@ -1,3 +1,4 @@
+import { TravelPerkOnboardingState } from "../../models/enum/enum.model";
 import { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from "../../models/travelperk/travelperk.model";
 import { orgMockData } from "../org/org.fixture";
 
@@ -11,7 +12,8 @@ export const travelperkMockData: Travelperk = {
     org: 1,
     travelperk_connection_id: 123,
     created_at: new Date(),
-    updated_at: new Date()
+    updated_at: new Date(),
+    onboarding_state: TravelPerkOnboardingState.CONNECTION
 };
 
 export const connectTravelperkMockData = {

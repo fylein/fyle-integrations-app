@@ -75,7 +75,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
       if (this.exportSettingAffected()) {
         // Show warning dialog
         const existingEmployeeFieldMapping = this.existingEmployeeFieldMapping?.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
-        const updatedEmployeeFieldMapping = this.employeeSettingForm.value.employeeMapping?.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
+        const updatedEmployeeFieldMapping = this.employeeSettingForm.get('employeeMapping')?.value?.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase());
 
         this.warningDialogText = `You are changing your employee representation from <b>${existingEmployeeFieldMapping}</b> to <b>${updatedEmployeeFieldMapping}</b>
          <br><br>This will impact the configuration in the <b>Export settings</b> on How the export of expenses
@@ -108,14 +108,14 @@ export class QboEmployeeSettingsComponent implements OnInit {
       } else if (this.exportSettingAffected()) {
         this.router.navigate(['/integrations/qbo/main/configuration/export_settings']);
       }
-    }, () => {
+    }, (error) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving employee settings, please try again later');
     });
   }
 
   private exportSettingAffected(): boolean | undefined {
-    return this.existingEmployeeFieldMapping && this.existingEmployeeFieldMapping !== this.employeeSettingForm.value.employeeMapping;
+    return this.existingEmployeeFieldMapping && this.existingEmployeeFieldMapping !== this.employeeSettingForm.get('employeeMapping')?.value;
   }
 
   private setLiveEntityExample(destinationAttributes: DestinationAttribute[]): void {

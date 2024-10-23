@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment';
 import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -27,6 +28,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 })
 
 export class IntacctAdvancedSettingsComponent implements OnInit {
+  isSkipExportFormInvalid: boolean;
 
   @ViewChild('skipExportChild') skipExportChild: SkipExportComponent;
 
@@ -128,8 +130,16 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
+  }
+
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
+  }
+
+  isOverflowing(element: any, mapping: DestinationAttribute): string {
+    return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
   refreshDimensions(isRefresh: boolean) {
@@ -187,7 +197,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   }
 
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingsForm.value.setDescriptionField;
+    this.memoStructure = this.advancedSettingsForm.get('setDescriptionField')?.value;
     this.formatMemoPreview();
     this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
@@ -315,7 +325,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const advancedSettingsPayload = AdvancedSetting.constructPayload(this.advancedSettingsForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingsPayload).subscribe((response: AdvancedSettingsPost) => {
-      if (this.advancedSettingsForm.value.skipSelectiveExpenses) {
+      if (this.advancedSettingsForm.get('skipSelectiveExpenses')?.value) {
         this.skipExportChild.saveSkipExportFields();
       } else {
         this.advancedSettingsService.deleteExpenseFilter(1).subscribe();

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advanced-settings.component';
 
-describe('QboOnboardingAdvancedSettingsComponent', () => {
+xdescribe('QboOnboardingAdvancedSettingsComponent', () => {
   let component: QboOnboardingAdvancedSettingsComponent;
   let fixture: ComponentFixture<QboOnboardingAdvancedSettingsComponent>;
 

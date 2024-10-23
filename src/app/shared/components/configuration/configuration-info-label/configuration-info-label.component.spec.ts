@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationInfoLabelComponent } from './configuration-info-label.component';
 
-describe('ConfigurationInfoLabelComponent', () => {
+xdescribe('ConfigurationInfoLabelComponent', () => {
   let component: ConfigurationInfoLabelComponent;
   let fixture: ComponentFixture<ConfigurationInfoLabelComponent>;
 

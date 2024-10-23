@@ -176,6 +176,8 @@ export type ContentConfiguration = {
                     scheduleSubLabel: string;
                     previewDescriptionFieldLabel: string;
                     autoCreateMerchantsLabel: string;
+                    singleCreditLineJELabel: string;
+                    singleCreditLineJESubLabel: string;
                 }
             },
         },
@@ -273,7 +275,8 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                     subLabel: string;
-                    locationSubLabel: string
+                    locationSubLabel: string;
+                    connectorInfoLabel: string;
                 },
                 exportSetting: {
                     stepName: string;

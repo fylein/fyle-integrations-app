@@ -75,7 +75,7 @@ export class TravelperkPaymentProfileSettingModel {
     }
 
     static createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
-        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.paymentProfileMappings);
+        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.get('paymentProfileMappings')?.value);
     }
 
 }

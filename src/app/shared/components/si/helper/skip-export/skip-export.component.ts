@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-skip-export',
@@ -17,6 +18,8 @@ export class SkipExportComponent implements OnInit {
   @Input() skipExportForm: FormGroup;
 
   @Output() skipExportFormChange = new EventEmitter<FormGroup>();
+
+  @Output() invalidSkipExportForm = new EventEmitter<boolean>();
 
   isLoading: boolean = true;
 
@@ -125,7 +128,7 @@ export class SkipExportComponent implements OnInit {
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
-      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
+      const type = this.conditionFieldOptions.filter((fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
       const selectedConditionOption : ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
@@ -226,7 +229,7 @@ export class SkipExportComponent implements OnInit {
     this.showAddButton = !show;
     if (this.showAdditionalCondition) {
       this.skipExportForm.controls.join_by.setValidators(Validators.required);
-      this.skipExportForm.controls.condition2.setValidators(Validators.required);
+      this.skipExportForm.controls.condition2.setValidators([Validators.required, RxwebValidators.unique()]);
       this.skipExportForm.controls.operator2.setValidators(Validators.required);
       if (this.valueOption2.length===0) {
         this.skipExportForm.controls.value2.setValidators(Validators.required);
@@ -254,49 +257,50 @@ export class SkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       if (condition1.valid && condition2.valid) {
         if (condition1.value?.field_name === condition2.value?.field_name) {
-            this.skipExportForm.controls.operator2.setValue(null);
+            this.invalidSkipExportForm.emit(true);
             return true;
           }
       }
     }
+    this.invalidSkipExportForm.emit(false);
     return false;
   }
 
   // For conditionally adding and removing Value fields from layout
   showValueHeader1(): boolean {
-    return (this.skipExportForm.value.operator1 !== 'is_empty') && (this.skipExportForm.value.operator1 !== 'is_not_empty');
+    return (this.skipExportForm.get('operator1')?.value !== 'is_empty') && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty');
   }
 
   showValueHeader2() {
-    return (this.skipExportForm.value.operator2 !== 'is_empty') && (this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return (this.skipExportForm.get('operator2')?.value !== 'is_empty') && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showInputField1() {
-    return this.skipExportForm.value.condition1?.field_name === 'report_title' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty');
+    return this.skipExportForm.get('condition1')?.value?.field_name === 'report_title' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty');
   }
 
   showChipField1() {
-    return (this.skipExportForm.value.condition1?.field_name !== 'report_title') && (!this.skipExportForm.value.condition1 || this.skipExportForm.value.condition1.type==='SELECT' || this.skipExportForm.value?.condition1?.type==='TEXT' || this.skipExportForm.value?.condition1?.type==='NUMBER') && (this.skipExportForm.value.operator1 !== 'is_empty')  && (this.skipExportForm.value.operator1 !== 'is_not_empty');
+    return (this.skipExportForm.get('condition1')?.value?.field_name !== 'report_title') && (!this.skipExportForm.get('condition1')?.value || this.skipExportForm.get('condition1')?.value.type==='SELECT' || this.skipExportForm.get('condition1')?.value?.type==='TEXT' || this.skipExportForm.get('condition1')?.value?.type==='NUMBER') && (this.skipExportForm.get('operator1')?.value !== 'is_empty')  && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty');
   }
 
   showDateField1() {
-    return this.skipExportForm.value?.condition1?.type==='DATE' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty');
+    return this.skipExportForm.get('condition1')?.value?.type==='DATE' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty');
   }
 
   showBooleanField1() {
-    return this.skipExportForm.value?.condition1?.type==='BOOLEAN';
+    return this.skipExportForm.get('condition1')?.value?.type==='BOOLEAN';
   }
 
   showInputField2() {
-    return this.skipExportForm.value?.condition2?.field_name && this.skipExportForm.value?.condition2?.field_name === 'report_title'  && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return this.skipExportForm.value?.condition2?.field_name && this.skipExportForm.value?.condition2?.field_name === 'report_title'  && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showChipField2(): boolean {
-    return this.skipExportForm.value?.condition2?.field_name !== 'report_title' && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.value.operator2 !== 'is_empty')  && (this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return this.skipExportForm.value?.condition2?.field_name !== 'report_title' && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.get('operator2')?.value !== 'is_empty')  && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showDateField2() {
-    return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+    return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showBooleanField2() {
@@ -309,7 +313,7 @@ export class SkipExportComponent implements OnInit {
     }
 
     const valueField = this.skipExportForm.getRawValue();
-    if (this.showAddButton && this.expenseFilters.length > 1) {
+    if (this.showAddButton && this.expenseFilters?.length > 1) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[1].rank)
       .subscribe((skipExport1: SkipExport) => {
@@ -382,6 +386,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   setDefaultOperatorOptions(conditionField: string) {
+    conditionField = conditionField.toLowerCase();
     const operatorList = [];
     if (
       conditionField === 'claim_number' ||
@@ -567,7 +572,7 @@ export class SkipExportComponent implements OnInit {
       if (response.count === 2) {
         this.showAdditionalCondition = true;
         this.showAddButton = false;
-        this.skipExportForm.controls.condition2.setValidators(Validators.required);
+        this.skipExportForm.controls.condition2.setValidators([Validators.required, RxwebValidators.unique()]);
         this.skipExportForm.controls.operator2.setValidators(Validators.required);
         this.skipExportForm.controls.join_by.setValidators(Validators.required);
         if (!this.valueOption2.length && !(selectedOperator2 === 'is_empty' || selectedOperator2 === 'is_not_empty')) {

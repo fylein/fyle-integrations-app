@@ -236,9 +236,9 @@ export class QboCloneSettingsComponent implements OnInit {
 
   saveFyleExpenseField(): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: false
     };
 
@@ -305,8 +305,8 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType) {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    if (this.exportSettingForm.get('creditCardExportType')?.value) {
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     }
 
     this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
@@ -489,7 +489,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
         this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
         this.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
-        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, cloneQboImportCodeFieldCodeConfig);
+        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, this.cloneQboImportCodeFieldCodeConfig);
         this.fyleFields = fyleFieldsResponse;
         this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
         this.setupImportSettingFormWatcher();

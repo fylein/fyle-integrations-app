@@ -125,6 +125,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   closeModel() {
+    this.customFieldControl.patchValue({
+      source_field: null
+    });
     this.customFieldForm.reset();
     this.showCustomFieldDialog = false;
   }
@@ -153,9 +156,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   saveDependentCustomField(formControllerName: string): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type,
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value,
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: true,
       is_custom: true
     };
@@ -181,9 +184,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   saveFyleExpenseField(): void {
     this.customField = {
-      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-      display_name: this.customFieldForm.value.attribute_type,
-      source_placeholder: this.customFieldForm.value.source_placeholder,
+      attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.get('attribute_type')?.value,
+      source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: false
     };
 
@@ -205,7 +208,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldType.length > 0 && this.customFieldForm.value) {
+    if (this.customFieldType.length > 0 && this.customFieldForm.getRawValue()) {
       this.saveDependentCustomField(this.customFieldType);
     } else {
       this.saveFyleExpenseField();
@@ -234,7 +237,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   private dependentFieldWatchers(): void {
-    if (this.importSettingForm.value.isDependentImportEnabled) {
+    if (this.importSettingForm.get('isDependentImportEnabled')?.value) {
       this.helper.disableFormField(this.importSettingForm, 'costCodes');
       this.helper.disableFormField(this.importSettingForm, 'costCategory');
     }

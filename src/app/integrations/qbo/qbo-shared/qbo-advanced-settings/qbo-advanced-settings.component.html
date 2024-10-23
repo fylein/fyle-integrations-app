@@ -30,7 +30,7 @@
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
 
-                    <div *ngIf="advancedSettingForm.value.exportSchedule">
+                    <div *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
                             [appName]="appName"
@@ -81,7 +81,7 @@
                     [showClearIcon]="true">
                 </app-configuration-select-field>
 
-                <app-configuration-select-field *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_qbo'"
+                <app-configuration-select-field *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo'"
                     [form]="advancedSettingForm"
                     [destinationAttributes]="billPaymentAccounts"
                     [optionLabel]="'name'"
@@ -146,20 +146,21 @@
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
                 </app-configuration-toggle-field>
-                <div *ngIf="advancedSettingForm.value.skipExport">
+                <div *ngIf="advancedSettingForm.get('skipExport')?.value">
                     <app-configuration-skip-export
-                    [enableSkipExport]="advancedSettingForm.value.skipExport"
+                    [enableSkipExport]="advancedSettingForm.get('skipExport')?.value"
                     [skipExportForm]="skipExportForm"
                     [expenseFilter]="expenseFilters"
                     [conditionFieldOptions]="conditionFieldOptions"
-                    (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                    (invalidSkipExportForm)="invalidSkipExportForm($event)">
                     </app-configuration-skip-export>
                 </div>
             </div>
         </div>
         <app-configuration-step-footer
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [isButtonDisabled]="!advancedSettingForm.valid"
+            [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
             [showBackButton]="isOnboarding ? true : false"
             (save)="save()"
             (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>

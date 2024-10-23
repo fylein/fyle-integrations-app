@@ -22,7 +22,7 @@
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.value?.reimbursableExpense">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.get('reimbursableExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
@@ -38,7 +38,7 @@
                             [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
+                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
@@ -52,9 +52,10 @@
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"
                                 [isAdvanceSearchEnabled]="true"
+                                [isMultiLineOption]="isMultiLineOption"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
+                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="false"
@@ -71,15 +72,15 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                        <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+                        <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="false"
                             [showClearIcon]="true"
                             [mandatoryErrorListName]="'employee mapping'"
-                            [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.value.employeeFieldMapping, exportSettingsForm.value.reimbursableExportType) + ' in Sage Intacct?'"
+                            [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) + ' in Sage Intacct?'"
                             [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Sage Intacct based on a unique parameter.'"
                             [options]="autoMapEmployeeOptions"
                             [iconPath]="'question-square-outline'"
@@ -87,7 +88,7 @@
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -99,7 +100,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -111,12 +112,12 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType ? exportSettingsForm.value.reimbursableExportType : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
+                        [label]="'Set the ' + getExportType(exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
@@ -134,7 +135,7 @@
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingsForm.value?.creditCardExpense">
+                <div *ngIf="exportSettingsForm.get('creditCardExpense')?.value">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
@@ -149,7 +150,7 @@
                         [showExportPreview]="true"
                         [appName]="appName"
                         [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT">
+                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -163,9 +164,10 @@
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"
                             [isAdvanceSearchEnabled]="true"
+                            [isMultiLineOption]="isMultiLineOption"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.BILL">
+                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.BILL">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -181,7 +183,7 @@
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -195,9 +197,10 @@
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"
                             [isAdvanceSearchEnabled]="true"
+                            [isMultiLineOption]="isMultiLineOption"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">
+                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">
                             <app-configuration-toggle-field 
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"
@@ -205,7 +208,7 @@
                             [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry Vendor field'"
                             [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
+                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -222,11 +225,11 @@
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="!exportSettingsForm.value.reimbursableExportType && exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="!exportSettingsForm.get('reimbursableExportType')?.value && exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
                         </div>
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType"
+                        <app-configuration-select-field *ngIf="exportSettingsForm.get('cccExportType')?.value"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
@@ -237,7 +240,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -250,12 +253,12 @@
                         [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.value.cccExportType) + ' date as'"
+                        [label]="'Set the ' + getExportType(exportSettingsForm.get('cccExportType')?.value) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
@@ -263,7 +266,7 @@
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     
                         <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
-                        exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
@@ -308,7 +311,7 @@
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.value.employeeFieldMapping, exportSettingsForm.value.reimbursableExportType)}}</div>
+                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value)}}</div>
                     <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">Auto-selected based on your export module</span>
                 </div>
             </div>

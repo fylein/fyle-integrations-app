@@ -206,6 +206,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(NetsuiteOnboardingState.IMPORT_SETTINGS);
           this.router.navigate([`/integrations/netsuite/onboarding/import_settings`]);
+        } else if (this.isAdvancedSettingAffected()) {
+          this.router.navigate(['/integrations/netsuite/main/configuration/advanced_settings']);
         }
       }, () => {
         this.isSaveInProgress = false;
@@ -218,7 +220,59 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     this.router.navigate([`/integrations/netsuite/onboarding/connector`]);
   }
 
+  private isAdvancedSettingAffected(): boolean {
+    return (this.exportSettings?.configuration?.reimbursable_expenses_object !== null && this.exportSettings?.configuration?.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.reimbursableExportType === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) || (this.exportSettings?.configuration?.corporate_credit_card_expenses_object !== null && this.exportSettings?.configuration?.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+  }
+
+  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string | undefined | null, exportType: string): string {
+    const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
+    which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
+    features that could help customize and automate your integration workflows.`;
+
+    let content = '';
+    // If both are not none and it is an update case else for the new addition case
+    if (updatedConfiguration && existingConfiguration) {
+      content = configurationUpdate.replace('$exportType', exportType).replace('$existingExportType', existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).replace('$updatedExportType', updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()));
+    }
+
+    return content;
+  }
+
+  private constructWarningMessage(): string {
+    let content: string = '';
+    const existingReimbursableExportType = this.exportSettings?.configuration?.reimbursable_expenses_object;
+    const existingCorporateCardExportType = this.exportSettings?.configuration?.corporate_credit_card_expenses_object;
+
+    const updatedReimbursableExportType = this.exportSettingForm.value.reimbursableExportType ? this.exportSettingForm.value.reimbursableExportType : null;
+    const updatedCorporateCardExportType = this.exportSettingForm.value.creditCardExportType ? this.exportSettingForm.value.creditCardExportType : null;
+
+    let updatedExportType;
+    let existingExportType;
+    let exportType;
+
+    if (existingReimbursableExportType !== updatedReimbursableExportType) {
+      updatedExportType = updatedReimbursableExportType;
+      existingExportType = existingReimbursableExportType;
+      exportType = 'reimbursable';
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
+      updatedExportType = updatedCorporateCardExportType;
+      existingExportType = existingCorporateCardExportType;
+      exportType = 'credit card';
+    }
+
+    if (this.isAdvancedSettingAffected() && exportType) {
+      content = this.replaceContentBasedOnConfiguration(updatedExportType, existingExportType, exportType);
+    }
+
+    return content;
+  }
+
   save(): void {
+    if (this.isAdvancedSettingAffected() && this.exportSettings.configuration) {
+      this.warningDialogText = this.constructWarningMessage();
+      this.isConfirmationDialogVisible = true;
+      return;
+    }
     this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
   }
 
@@ -228,13 +282,13 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(this.exportSettingForm.value.creditCardExportGroup, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(this.exportSettingForm.get('creditCardExportGroup')?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
     }
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE)) {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    if (this.exportSettingForm.get('creditCardExportType')?.value && (this.exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE)) {
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     }
 
     this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
@@ -246,7 +300,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
     if (brandingConfig.brandId === 'fyle') {
       this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.reimbursableExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
-      if (this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.creditCardExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
       }
     }
@@ -259,11 +313,11 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle' && this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (brandingConfig.brandId==='fyle' && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         const cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(creditCardExportGroup, cccExpenseGroupingDateOptions);
       }

@@ -324,7 +324,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
-    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px #{!important};
+    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{

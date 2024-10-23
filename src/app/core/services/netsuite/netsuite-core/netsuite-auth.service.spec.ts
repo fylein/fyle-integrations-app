@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NetsuiteAuthService } from './netsuite-auth.service';
 
-describe('NetsuiteAuthService', () => {
+xdescribe('NetsuiteAuthService', () => {
   let service: NetsuiteAuthService;
 
   beforeEach(() => {

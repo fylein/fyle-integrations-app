@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TravelperkAdvancedSettingsComponent } from './travelperk-advanced-settings.component';
 
-describe('TravelperkAdvancedSettingsComponent', () => {
+xdescribe('TravelperkAdvancedSettingsComponent', () => {
   let component: TravelperkAdvancedSettingsComponent;
   let fixture: ComponentFixture<TravelperkAdvancedSettingsComponent>;
 

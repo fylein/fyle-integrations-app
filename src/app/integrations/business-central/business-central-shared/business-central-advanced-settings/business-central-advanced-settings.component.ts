@@ -59,6 +59,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  isSkipExportFormInvalid: boolean;
+
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,
     private helper: HelperService,
@@ -69,6 +71,10 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router
   ) { }
+
+  invalidSkipExportForm($event: boolean) {
+    this.isSkipExportFormInvalid = $event;
+  }
 
   getSkipExportValue() {
     if (this.advancedSettingForm.controls.skipExport) {
@@ -105,7 +111,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   }
 
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingForm.value.memoStructure;
+    this.memoStructure = this.advancedSettingForm.get('memoStructure')?.value;
     const memo = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
@@ -137,12 +143,12 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     valueField = SkipExportModel.constructSkipExportValue(valueField);
     valueField.rank = 1;
     const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
-    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
+    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.get('value1')?.value);
     this.skipExportService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
       if (valueField.condition2 && valueField.operator2) {
         valueField.rank = 2;
         const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
-        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
+        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.get('value2')?.value);
         this.skipExportService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
       }
     });
@@ -150,12 +156,12 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   constructPayloadAndSave(){
     this.isSaveInProgress = true;
-    if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
+    if (!this.advancedSettingForm.get('skipExport')?.value && this.expenseFilters.results.length > 0){
       this.expenseFilters.results.forEach((value) => {
         this.deleteExpenseFilter(value.id);
       });
     }
-    if (this.advancedSettingForm.value.skipExport) {
+    if (this.advancedSettingForm.get('skipExport')?.value) {
       this.saveSkipExportFields();
     }
     const advancedSettingPayload = BusinessCentralAdvancedSettingsModel.createAdvancedSettingPayload(this.advancedSettingForm);

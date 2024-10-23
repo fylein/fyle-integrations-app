@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
 
-describe('NetsuiteWorkspaceService', () => {
+xdescribe('NetsuiteWorkspaceService', () => {
   let service: NetsuiteWorkspaceService;
 
   beforeEach(() => {

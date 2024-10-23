@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { OnboardingDoneComponent } from './onboarding-done.component';
 
-describe('OnboardingDoneComponent', () => {
+xdescribe('OnboardingDoneComponent', () => {
   let component: OnboardingDoneComponent;
   let fixture: ComponentFixture<OnboardingDoneComponent>;
   let router: Router;

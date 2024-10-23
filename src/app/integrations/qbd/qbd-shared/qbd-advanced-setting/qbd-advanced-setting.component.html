@@ -18,7 +18,7 @@
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
                 </div>
-                <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                <div *ngIf="advancedSettingsForm.get('exportSchedule')?.value">
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="advancedSettingsForm"
@@ -31,9 +31,9 @@
                         [placeholder]="'Select frequency'"
                         [formControllerName]="'frequency'"></app-configuration-select-field>
     
-                        <div *ngIf="advancedSettingsForm.value.frequency">
+                        <div *ngIf="advancedSettingsForm.get('frequency')?.value">
                             <div class="tw-pl-22-px">
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.DAILY" >
+                                <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.DAILY" >
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"
@@ -43,7 +43,7 @@
                                     [options]="weeklyOptions"
                                     [formControllerName]="'timeOfDay'"></app-configuration-select-field>
                                 </div>
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.WEEKLY" >
+                                <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.WEEKLY" >
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"
@@ -54,7 +54,7 @@
                                     [placeholder]="'Select Weekly frequency'"
                                     [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
                                 </div>
-                                <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.MONTHLY" >
+                                <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.MONTHLY" >
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"

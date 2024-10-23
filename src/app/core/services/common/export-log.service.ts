@@ -23,7 +23,7 @@ export class ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, query: string | null, appName?:string): Observable<SkipExportLogResponse> {
+  getSkippedExpenses(limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, query?: string | null, appName?:string): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: SkipExportParam = {
       limit,
@@ -54,7 +54,7 @@ export class ExportLogService {
 
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset

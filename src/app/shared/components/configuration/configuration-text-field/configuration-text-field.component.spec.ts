@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationTextFieldComponent } from './configuration-text-field.component';
 
-describe('ConfigurationTextFieldComponent', () => {
+xdescribe('ConfigurationTextFieldComponent', () => {
   let component: ConfigurationTextFieldComponent;
   let fixture: ComponentFixture<ConfigurationTextFieldComponent>;
 

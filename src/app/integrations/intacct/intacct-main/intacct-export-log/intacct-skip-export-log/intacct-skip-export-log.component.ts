@@ -40,7 +40,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
-  selectedDateFilter: SelectedDateFilter | null;
+  selectedDateFilter?: SelectedDateFilter | null;
 
   presentDate = new Date().toLocaleDateString();
 
@@ -60,7 +60,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  searchQuery: string | null;
+  searchQuery?: string | null;
 
   private searchQuerySubject = new Subject<string>();
 
@@ -89,10 +89,10 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
-    this.limit = limit;
     this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getSkippedExpenses(limit, this.offset);
+    this.limit = limit;
   }
 
   pageChanges(offset: number): void {

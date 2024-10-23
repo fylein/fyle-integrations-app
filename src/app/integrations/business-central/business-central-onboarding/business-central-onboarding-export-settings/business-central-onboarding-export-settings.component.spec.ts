@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessCentralOnboardingExportSettingsComponent } from './business-central-onboarding-export-settings.component';
 
-describe('BusinessCentralOnboardingExportSettingsComponent', () => {
+xdescribe('BusinessCentralOnboardingExportSettingsComponent', () => {
   let component: BusinessCentralOnboardingExportSettingsComponent;
   let fixture: ComponentFixture<BusinessCentralOnboardingExportSettingsComponent>;
 

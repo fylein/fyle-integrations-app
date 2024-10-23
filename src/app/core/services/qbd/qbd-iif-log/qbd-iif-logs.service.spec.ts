@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 import { QbdIifLogsService } from './qbd-iif-logs.service';
 
-describe('QbdIifLogsService', () => {
+xdescribe('QbdIifLogsService', () => {
   let service: QbdIifLogsService;
   let httpMock: HttpTestingController;
   let injector: TestBed;

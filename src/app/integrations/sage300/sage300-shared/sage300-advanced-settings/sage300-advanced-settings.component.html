@@ -29,7 +29,7 @@
                         [formControllerName]="'scheduleEnabled'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
-                    <div *ngIf="advancedSettingForm.value.scheduleEnabled">
+                    <div *ngIf="advancedSettingForm.get('scheduleEnabled')?.value">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
                             [appName]="AppName.SAGE300"
@@ -78,13 +78,14 @@
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
                 </app-configuration-toggle-field>
-                <div *ngIf="advancedSettingForm.value.skipExport">
+                <div *ngIf="advancedSettingForm.get('skipExport')?.value">
                     <app-configuration-skip-export
-                        [enableSkipExport]="advancedSettingForm.value.skipExport"
+                        [enableSkipExport]="advancedSettingForm.get('skipExport')?.value"
                         [skipExportForm]="skipExportForm"
                         [expenseFilter]="expenseFilters"
                         [conditionFieldOptions]="conditionFieldOptions"
-                        (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                        (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                        (invalidSkipExportForm)="invalidSkipExportForm($event)">
                     </app-configuration-skip-export>
                 </div>
             </div>
@@ -94,6 +95,6 @@
         (save)="save()" 
         [showBackButton] = "isOnboarding"
         (navigateToPreviousStep)="navigateBack()"
-        [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue()"></app-configuration-step-footer>
+        [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid"></app-configuration-step-footer>
     </form>
 </div>
