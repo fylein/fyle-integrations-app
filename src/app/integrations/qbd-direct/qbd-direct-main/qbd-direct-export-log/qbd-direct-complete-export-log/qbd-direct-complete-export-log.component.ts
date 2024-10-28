@@ -108,7 +108,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([],[TaskLogState.COMPLETE], null,limit, offset, this.selectedDateFilter, null, this.searchQuery, this.appName).subscribe((accountingExportResponse) => {
+    this.accountingExportService.getAccountingExports([], [TaskLogState.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery, this.appName).subscribe((accountingExportResponse) => {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>

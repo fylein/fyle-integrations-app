@@ -71,11 +71,11 @@ export class AccountingExportService {
       apiParams.exported_at__gte = exportedAt;
     }
 
-    if(appName === AppName.QBD_DIRECT) {
+    if (appName === AppName.QBD_DIRECT) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, apiParams);
-    } else {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
     }
+      return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
+
   }
 
   @Cacheable()
