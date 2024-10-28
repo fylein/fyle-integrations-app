@@ -29,10 +29,20 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         return ["employee_name", "expense_key"];
     }
 
+    static formatMemoStructure(memoStructure: string[], defaultMemoOptions: string[]): string[] {
+        const originMemo: string[] = [];
+        defaultMemoOptions.forEach((field, index) => {
+            const defaultIndex = memoStructure.indexOf(field);
+            originMemo[defaultIndex] = field;
+        });
+
+        return originMemo.filter((item: string) => item !== null);
+      }
+
     static mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet | null, isSkipExportEnabled: boolean): FormGroup {
 
         return new FormGroup({
-            expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? advancedSettings?.line_level_memo_structure : this.defaultMemoFields(), Validators.required),
+            expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? this.formatMemoStructure(this.defaultMemoFields(), advancedSettings?.line_level_memo_structure) : this.defaultMemoFields(), Validators.required),
             topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : this.defaultTopMemoOptions(), Validators.required),
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
             email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
@@ -54,8 +64,10 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
 
         const additionalEmails = allSelectedEmails?.filter((email: EmailOption) => !adminEmails.includes(email));
 
+        const memo = advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : [];
+
         const advancedSettingPayload: QbdDirectAdvancedSettingsPost = {
-            line_level_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
+            line_level_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? this.formatMemoStructure(this.defaultMemoFields(), memo) : [],
             top_level_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
             emails_selected: advancedSettingForm.get('exportSchedule')?.value ? selectedEmailsEmails : [],

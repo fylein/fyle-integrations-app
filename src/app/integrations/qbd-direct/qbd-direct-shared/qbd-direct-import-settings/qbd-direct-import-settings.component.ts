@@ -18,6 +18,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -114,6 +115,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
+    private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService
   ) { }
 
@@ -238,6 +240,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.updateImportCodeFieldConfig();
+      this.qbdDirectHelperService.importQBDAttributes(true).subscribe();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd_direct/onboarding/advanced_settings`]);

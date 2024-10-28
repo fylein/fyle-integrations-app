@@ -3,12 +3,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
-import { AccountingExportModel, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportModel, AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -65,7 +66,8 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private accountingExportService: AccountingExportService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -106,11 +108,11 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery, this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.accountingExportService.getAccountingExports([],[TaskLogState.COMPLETE], null,limit, offset, this.selectedDateFilter, null, this.searchQuery, this.appName).subscribe((accountingExportResponse) => {
         this.totalCount = accountingExportResponse.count;
 
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.QBO)
+      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
+        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];

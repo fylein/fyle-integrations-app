@@ -38,6 +38,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   isExportLogVisible: boolean;
 
+  AppName = AppName;
+
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;

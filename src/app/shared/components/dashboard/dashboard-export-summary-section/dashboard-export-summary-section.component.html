@@ -13,7 +13,7 @@
                                 <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
                                     {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
                                 </span>
-                            <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                            <a *ngIf="accountingExportSummary?.successful_accounting_export_count && appName !== AppName.QBD_DIRECT" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
                             <span class="tw-w-260-px tw-text-right">
@@ -30,7 +30,7 @@
                             <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
                                 {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
                             </span>
-                            <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                            <a *ngIf="accountingExportSummary?.failed_accounting_export_count && appName !== AppName.QBD_DIRECT" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
                             <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
