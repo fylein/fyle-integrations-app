@@ -8,6 +8,7 @@ do
     echo "Substituting Environment variables and other stuff in $f ...";
     sed -i $SED_EXTRA_ARGS "s?{{CLUSTER_DOMAIN_API_URL}}?${CLUSTER_DOMAIN_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBD_API_URL}}?${QBD_API_URL}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{QBD_DIRECT_API_URL}}?${QBD_DIRECT_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SI_API_URL}}?${SI_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SAGE300_API_URL}}?${SAGE300_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{BUSINESS_CENTRAL_API_URL}}?${BUSINESS_CENTRAL_API_URL}?g" $f;

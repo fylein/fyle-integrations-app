@@ -5,6 +5,7 @@ const environment = {
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
   qbd_api_url: `${process.env.QBD_API_URL ? process.env.QBD_API_URL : '{{QBD_API_URL}}'}`,
+  qbd_direct_api_url: `${process.env.QBD_DIRECT_API_URL ? process.env.QBD_DIRECT_API_URL : '{{QBD_DIRECT_API_URL}}'}`,
   si_api_url: `${process.env.SI_API_URL ? process.env.SI_API_URL : '{{SI_API_URL}}'}`,
   sage300_api_url: `${process.env.SAGE300_API_URL ? process.env.SAGE300_API_URL : '{{SAGE300_API_URL}}'}`,
   netsuite_api_url: `${process.env.NETSUITE_API_URL ? process.env.NETSUITE_API_URL : '{{NETSUITE_API_URL}}'}`,
