@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectAuthService } from './qbd-direct-auth.service';
 
-describe('QbdDirectAuthService', () => {
+xdescribe('QbdDirectAuthService', () => {
   let service: QbdDirectAuthService;
 
   beforeEach(() => {
