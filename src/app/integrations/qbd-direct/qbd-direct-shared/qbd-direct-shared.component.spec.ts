@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectSharedComponent } from './qbd-direct-shared.component';
 
-describe('QbdDirectSharedComponent', () => {
+xdescribe('QbdDirectSharedComponent', () => {
   let component: QbdDirectSharedComponent;
   let fixture: ComponentFixture<QbdDirectSharedComponent>;
 

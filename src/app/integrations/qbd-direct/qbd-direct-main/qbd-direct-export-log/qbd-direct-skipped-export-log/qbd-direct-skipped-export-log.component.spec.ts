@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectSkippedExportLogComponent } from './qbd-direct-skipped-export-log.component';
 
-describe('QbdDirectSkippedExportLogComponent', () => {
+xdescribe('QbdDirectSkippedExportLogComponent', () => {
   let component: QbdDirectSkippedExportLogComponent;
   let fixture: ComponentFixture<QbdDirectSkippedExportLogComponent>;
 

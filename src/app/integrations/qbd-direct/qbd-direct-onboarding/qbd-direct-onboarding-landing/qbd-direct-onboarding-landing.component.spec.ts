@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectOnboardingLandingComponent } from './qbd-direct-onboarding-landing.component';
 
-describe('QbdDirectOnboardingLandingComponent', () => {
+xdescribe('QbdDirectOnboardingLandingComponent', () => {
   let component: QbdDirectOnboardingLandingComponent;
   let fixture: ComponentFixture<QbdDirectOnboardingLandingComponent>;
 

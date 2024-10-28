@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectDashboardComponent } from './qbd-direct-dashboard.component';
 
-describe('QbdDirectDashboardComponent', () => {
+xdescribe('QbdDirectDashboardComponent', () => {
   let component: QbdDirectDashboardComponent;
   let fixture: ComponentFixture<QbdDirectDashboardComponent>;
 

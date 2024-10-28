@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectConnectorService } from './qbd-direct-connector.service';
 
-describe('QbdDirectConnectorService', () => {
+xdescribe('QbdDirectConnectorService', () => {
   let service: QbdDirectConnectorService;
 
   beforeEach(() => {

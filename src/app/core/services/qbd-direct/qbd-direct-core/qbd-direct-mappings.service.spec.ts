@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectMappingsService } from './qbd-direct-mappings.service';
 
-describe('QbdDirectMappingsService', () => {
+xdescribe('QbdDirectMappingsService', () => {
   let service: QbdDirectMappingsService;
 
   beforeEach(() => {

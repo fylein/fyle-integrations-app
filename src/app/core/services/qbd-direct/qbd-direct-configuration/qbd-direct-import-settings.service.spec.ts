@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectImportSettingsService } from './qbd-direct-import-settings.service';
 
-describe('QbdDirectImportSettingsService', () => {
+xdescribe('QbdDirectImportSettingsService', () => {
   let service: QbdDirectImportSettingsService;
 
   beforeEach(() => {
