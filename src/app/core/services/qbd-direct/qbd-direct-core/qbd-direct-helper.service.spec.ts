@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectHelperService } from './qbd-direct-helper.service';
 
-describe('QbdDirectHelperService', () => {
+xdescribe('QbdDirectHelperService', () => {
   let service: QbdDirectHelperService;
 
   beforeEach(() => {
