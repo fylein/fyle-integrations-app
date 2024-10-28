@@ -10,7 +10,6 @@ export type ExpenseGroupDescription = {
 };
 
 export type ExpenseGroup = {
-  type: Date;
   export_url: string;
   id: number;
   fund_source: string;
