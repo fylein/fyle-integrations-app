@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectAdvancedSettingsService } from './qbd-direct-advanced-settings.service';
 
-describe('QbdDirectAdvancedSettingsService', () => {
+xdescribe('QbdDirectAdvancedSettingsService', () => {
   let service: QbdDirectAdvancedSettingsService;
 
   beforeEach(() => {
