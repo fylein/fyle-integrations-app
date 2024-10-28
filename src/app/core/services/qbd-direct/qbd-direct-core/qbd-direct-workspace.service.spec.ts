@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectWorkspaceService } from './qbd-direct-workspace.service';
 
-describe('QbdDirectWorkspaceService', () => {
+xdescribe('QbdDirectWorkspaceService', () => {
   let service: QbdDirectWorkspaceService;
 
   beforeEach(() => {

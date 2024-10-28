@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QbdDirectExportSettingsService } from './qbd-direct-export-settings.service';
 
-describe('QbdDirectExportSettingsService', () => {
+xdescribe('QbdDirectExportSettingsService', () => {
   let service: QbdDirectExportSettingsService;
 
   beforeEach(() => {

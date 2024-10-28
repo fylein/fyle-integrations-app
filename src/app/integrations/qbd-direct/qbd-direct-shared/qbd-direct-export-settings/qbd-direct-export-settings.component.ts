@@ -6,7 +6,7 @@ import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
-import { QBDExportSettingFormOption } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
