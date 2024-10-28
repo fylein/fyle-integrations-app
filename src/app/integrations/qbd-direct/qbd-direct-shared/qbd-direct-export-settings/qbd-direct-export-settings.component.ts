@@ -6,7 +6,6 @@ import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
@@ -19,6 +18,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
