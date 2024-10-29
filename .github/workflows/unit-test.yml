@@ -32,6 +32,7 @@ jobs:
         FYLE_APP_URL: "http://lolo.fyle.tech"
         SI_API_URL: "http://lolo.fyle.tech"
         SAGE300_API_URL: "http://lolo.fyle.tech"
+        QBD_DIRECT_API_URL": "http://lolo.fyle.tech"
     - name: Unit Test Coverage
       uses: fylein/comment-test-coverage@master
       with:

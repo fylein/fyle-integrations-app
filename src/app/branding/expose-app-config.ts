@@ -11,7 +11,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true
+            BAMBOO: true,
+            QBD_DIRECT: true
         },
         'production-1-in': {
             INTACCT: true,
@@ -22,7 +23,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true
+            BAMBOO: true,
+            QBD_DIRECT: false
         },
         'production-1-us': {
             INTACCT: true,
@@ -33,7 +35,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true
+            BAMBOO: true,
+            QBD_DIRECT: false
         }
     },
     co: {
@@ -46,7 +49,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false
+            BAMBOO: false,
+            QBD_DIRECT: false
         },
         'c1-production-1-us': {
             INTACCT: true,
@@ -57,7 +61,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false
+            BAMBOO: false,
+            QBD_DIRECT: false
         }
     }
 };
