@@ -17,6 +17,7 @@ import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-cor
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { QbdDirectAuthService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
     private qbdAuthService: QbdAuthService,
+    private qbdDirectAuthService: QbdDirectAuthService,
     private route: ActivatedRoute,
     private router: Router,
     private sage300AuthService: Sage300AuthService,
@@ -75,6 +77,11 @@ export class LoginComponent implements OnInit {
         if (this.exposeApps?.QBD) {
           this.helperService.setBaseApiURL(AppUrl.QBD);
           this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        }
+
+        if (this.exposeApps?.QBD_DIRECT) {
+          this.helperService.setBaseApiURL(AppUrl.QBD_DIRECT);
+          this.qbdDirectAuthService.login(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
         if (this.exposeApps?.SAGE300) {
