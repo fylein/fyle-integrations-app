@@ -10,6 +10,7 @@ export type AllowedAppsConfiguration = {
             NETSUITE: boolean;
             QBD: boolean;
             BAMBOO: boolean;
+            QBD_DIRECT: boolean;
         }
     }
 };
