@@ -115,7 +115,6 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
-    private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService
   ) { }
 
@@ -240,7 +239,6 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.updateImportCodeFieldConfig();
-      this.qbdDirectHelperService.importQBDAttributes(true).subscribe();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd_direct/onboarding/advanced_settings`]);
