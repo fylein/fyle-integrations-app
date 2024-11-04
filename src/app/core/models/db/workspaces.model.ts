@@ -7,3 +7,7 @@ export type Workspace = {
   created_at: Date;
   updated_at: Date;
 }
+
+export type updateWorkspaceOnboardingStatePost = {
+  onboarding_state: string;
+}

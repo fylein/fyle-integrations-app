@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const fyleContents = {
     qbd_direct: {
         landing: {
-            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            contentText: 'Import data from QuickBooks Desktop to Fyle and export expenses from Fyle to QuickBooks Desktop',
             guideHeaderText: 'Guide to setup your integrations'
         },
         configuration: {
