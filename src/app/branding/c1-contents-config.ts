@@ -10,6 +10,11 @@ export const c1Contents = {
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
+            preRequisite: {
+                stepName: 'Prerequisites',
+                configurationHeaderText: 'Getting started',
+                configurationSubHeaderText: 'Begin your QuickBooks integration by completing the following steps.'
+            },
             connector: {
                 configurationHeaderText: 'Connect to NetSuite subsidary',
                 configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
