@@ -17,7 +17,7 @@ type QbdOnboardingStepperMap = {
     [QbdDirectOnboardingState.COMPLETE]: number;
 }
 
-export class QbdOnboardingModel {
+export class QbdDirectOnboardingModel {
   brandingContent = brandingContent.qbd_direct.configuration;
 
     private onboardingSteps: OnboardingStepper[] = [
@@ -25,7 +25,7 @@ export class QbdOnboardingModel {
             active: false,
             completed: false,
             step: this.brandingContent.preRequisite.stepName,
-            icon: 'link-vertical-medium',
+            icon: 'arrow-tail-up-medium',
             route: '/integrations/qbo/onboarding/pre_requisite',
             styleClasses: ['step-name-connector--text']
         },
