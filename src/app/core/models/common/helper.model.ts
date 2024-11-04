@@ -1,5 +1,10 @@
 import { FormGroup, Validators } from "@angular/forms";
 
+export type checkBoxEmit = {
+    id: number;
+    value: boolean;
+}
+
 export class HelperUtility {
     static markControllerAsRequired(form: FormGroup, controllerName: string): void {
         form.controls[controllerName].setValidators(Validators.required);

@@ -92,6 +92,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
+import { ChechboxButtonComponent } from './components/input/chechbox-button/chechbox-button.component';
 
 
 @NgModule({
@@ -192,6 +193,7 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     TabMenuModule,
     IconFieldModule,
     InputIconModule,
+    ChechboxButtonComponent,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -266,7 +268,8 @@ import { BadgeComponent } from './components/core/badge/badge.component';
     SkipExportComponent,
     OptionalFieldComponent,
     SentenceCasePipe,
-    BadgeComponent
+    BadgeComponent,
+    ChechboxButtonComponent
   ]
 })
 export class SharedModule { }
