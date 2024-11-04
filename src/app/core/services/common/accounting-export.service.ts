@@ -41,7 +41,7 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null): Observable<any> {
+  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null, appName?: string): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: type,
       status__in: status,
@@ -71,7 +71,11 @@ export class AccountingExportService {
       apiParams.exported_at__gte = exportedAt;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
+    if (appName === AppName.QBD_DIRECT) {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, apiParams);
+    }
+      return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
+
   }
 
   @Cacheable()

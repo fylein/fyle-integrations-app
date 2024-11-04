@@ -117,7 +117,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
     const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
     this.skipExportService.postExpenseFilter(payload1).subscribe(() => {
-      if (valueField.condition2 && valueField.operator2) {
+      if (valueField.condition2 && valueField.operator2 && valueField.value2) {
         valueField.rank = 2;
         const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
         const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);

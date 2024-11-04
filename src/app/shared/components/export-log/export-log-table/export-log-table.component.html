@@ -6,7 +6,7 @@
             <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{brandingContent.tableHeaders.expenseType}}</th>
             <th>Reference ID</th>
             <th *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.exportedAs}}</th>
-            <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300">Link to {{appName}}</th>
+            <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT">Link to {{appName}}</th>
             <th class="tw-min-w-120-px" *ngIf="isDashboardFailed">Link to {{ brandingConfig.brandName }}</th>
         </tr>
     </ng-template>
@@ -40,7 +40,7 @@
                     {{brandingConfig.brandId === 'co' ? (rowData.exportedAs | snakeCaseToSpaceCase | sentenceCase) : (rowData.exportedAs | snakeCaseToSpaceCase | titlecase)}}
                 </span>
             </td>
-            <td *ngIf="!isDashboardFailed && appName !== AppName.SAGE300">
+            <td *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT">
                 <div>
                   <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in New Tab'" tooltipPosition="top">
                     <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>

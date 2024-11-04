@@ -20,7 +20,7 @@ export interface QbdDirectImportSettingGet extends QbdDirectImportSettingPost {}
 export class QbdDirectImportSettingModel extends ImportSettingsModel {
     static getChartOfAccountTypesList(): string[] {
       const typeList = [
-        'Other Expense', 'Cost of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',
+        'Other Expense', 'Cost Of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',
         'Long Term Liability', 'Other Current Liability', 'Income', 'Other Income', 'Equity'
       ].sort((a, b) => a.localeCompare(b));
 
@@ -33,7 +33,7 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
       return new FormGroup({
         importCategories: new FormControl(importSettings?.import_settings?.import_account_as_category ?? false),
         expenseFields: new FormArray(expenseFieldsArray),
-        chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts : ['Expense']),
+        chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : ['Expense']),
         importVendorsAsMerchants: new FormControl(importSettings?.import_settings?.import_vendor_as_merchant ?? false),
         searchOption: new FormControl(''),
         importCodeFields: new FormControl( importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : null),
