@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { WorkspaceOnboardingState } from '../../models/db/workspaces.model';
+import { QbdDirectWorkspace } from '../../models/qbd-direct/db/qbd-direct-workspaces.model';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +75,7 @@ export class WorkspaceService {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
   }
 
-  updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<any> {
+  updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<QbdDirectWorkspace> {
     return this.apiService.patch(`/workspaces/${this.getWorkspaceId()}/onboarding_state/`, payload);
   }
 }
