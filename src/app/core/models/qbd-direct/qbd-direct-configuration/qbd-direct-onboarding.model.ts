@@ -27,7 +27,7 @@ export class QbdDirectOnboardingModel {
             step: this.brandingContent.preRequisite.stepName,
             icon: 'arrow-tail-up-medium',
             route: '/integrations/qbo/onboarding/pre_requisite',
-            styleClasses: ['step-name-connector--text']
+            styleClasses: ['step-name-pre-requisite--text']
         },
         {
           active: false,
@@ -35,7 +35,7 @@ export class QbdDirectOnboardingModel {
           step: this.brandingContent.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/qbo/onboarding/connector',
-          styleClasses: ['step-name-connector--text']
+          styleClasses: ['step-name-connector--text !tw-left-[-70px]']
         },
         {
           active: false,

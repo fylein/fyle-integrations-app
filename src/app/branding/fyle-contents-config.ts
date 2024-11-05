@@ -18,7 +18,7 @@ export const fyleContents = {
             connector: {
                 configurationHeaderText: 'Connect to NetSuite Tenant',
                 configurationSubHeaderText: 'Connect to the NetSuite Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and NetSuite Tenant cannot be changed once the configuration steps are complete.',
-                stepName: 'Connect to NetSuite',
+                stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Expenses will be posted to the NetSuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
             },
             exportSetting: {

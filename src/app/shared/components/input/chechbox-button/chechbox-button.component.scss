@@ -1,9 +1,9 @@
 .checkedText {
-    @apply tw-w-[95px] #{!important};
+    @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 .unCheckedText {
-    @apply tw-w-[148px] #{!important};
+    @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 :host ::ng-deep .p-button {
@@ -16,9 +16,13 @@
 
 input[type="checkbox"] {
     -webkit-appearance: none; /* Remove default styling */
-    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-14-px tw-rounded-md tw-cursor-pointer #{!important};
+    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-10-px tw-rounded-sm tw-cursor-pointer #{!important};
 }
   
+.unCheckedText:hover input[type="checkbox"], input[type="checkbox"]:hover {
+    @apply tw-border-checkbox-icon-selected-color #{!important};
+}
+
 input[type="checkbox"]:checked {
     @apply tw-bg-checkbox-icon-selected-color tw-border-checkbox-icon-selected-color #{!important};
 }
