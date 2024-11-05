@@ -16,8 +16,8 @@ export const c1Contents = {
                 configurationSubHeaderText: 'Begin your QuickBooks integration by completing the following steps.'
             },
             connector: {
-                configurationHeaderText: 'Connect to NetSuite subsidary',
-                configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
+                configurationHeaderText: 'Connect to QuickBooks Desktop',
+                configurationSubHeaderText: 'Connect to QuickBooks desktop by completing the following steps.',
                 stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
             },

@@ -1,1 +1,39 @@
-<p>qbd-direct-download-file works!</p>
+<div class="tw-p-24-px tw-border tw-border-border-info-lighter">
+    <div class="tw-flex tw-items-center tw-justify-between">
+        <div class="tw-flex tw-items-center tw-justify-start">
+            <div class="tw-w-20-px tw-h-20-px tw-rounded-sm tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-8-px">
+                1
+            </div>
+            <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary tw-pt-4-px">
+                <span>Download the integration file</span>
+            </div>
+        </div>
+        <div>
+            <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+        </div>
+    </div>
+    <div class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">
+        <div class="tw-w-350-px">
+            <h4 class="tw-text-16-px tw-font-500 tw-text-text-tertiary">Enter company file path</h4>
+            <span class="tw-text-12-px tw-font-400 tw-text-text-muted tw-text-wrap">Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.</span>
+            <div>
+                <div class="tw-pt-16-px">
+                    <input type="text" pInputText [(ngModel)]="downloadFilePath" placeholder="Example: C:\Users\[Username]\Documents\QuickBooks" class="tw-w-full tw-border tw-border-input-default-border tw-rounded-sm tw-px-8-px tw-py-12-px" required >
+                </div>
+                <div class="tw-pt-16-px">
+                    <button pButton pRipple label="Download" class="downloadBtn"></button>
+                </div>
+            </div>
+        </div>
+        <div class="tw-rounded-border-radius-2xl">
+            <p-card>
+                <div class="tw-flex tw-justify-center">
+                    <iframe width="427" height="259" src="https://www.youtube.com/embed/2oYdc8KcQnk" frameborder="0"></iframe>
+                </div>
+                <div class="tw-w-[427px] tw-p-16-px">
+                    <p class="tw-text-14-px tw-font-500 tw-text-text-tertiary">Where to find company file path?</p>
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>
