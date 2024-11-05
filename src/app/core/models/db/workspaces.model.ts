@@ -8,6 +8,6 @@ export type Workspace = {
   updated_at: Date;
 }
 
-export type updateWorkspaceOnboardingStatePost = {
+export type WorkspaceOnboardingState = {
   onboarding_state: string;
 }

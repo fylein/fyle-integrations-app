@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     qbd_direct: {
         landing: {
-            contentText: 'Import data from QuickBooks Desktop to Fyle and export expenses from Fyle to QuickBooks Desktop',
+            contentText: 'Import data from QuickBooks Desktop to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
@@ -78,7 +78,7 @@ export const c1Contents = {
                 stepName: 'Advanced settings',
                 contentText: 'Customize the integration based on your accounting requirements.',
                 customizeSectionLabel: 'Customization',
-                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from Fyle to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
                 automationLabel: 'Automation',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleAutoExportLabel: 'Schedule automatic export',
@@ -93,7 +93,7 @@ export const c1Contents = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
-                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
+                autoCreateMerchantsAsVendorsSubLabel: '' + brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
                 skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
                 skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
                 autoCreateReimbursableEnitityLabel: 'Auto create reimbursable enitity',

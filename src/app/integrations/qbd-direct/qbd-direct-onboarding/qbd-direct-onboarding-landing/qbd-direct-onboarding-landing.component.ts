@@ -24,7 +24,7 @@ export class QbdDirectOnboardingLandingComponent {
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBD_DIRECT;
 
-  isQbdDirectConnectionInProcess = false;
+  isQbdConnectionInProgress = false;
 
   readonly brandingContent = brandingContent.qbd_direct.landing;
 
@@ -34,10 +34,10 @@ export class QbdDirectOnboardingLandingComponent {
   ) { }
 
   connectQbdDirect() {
-    this.isQbdDirectConnectionInProcess = true;
+    this.isQbdConnectionInProgress = true;
     this.workspaceService.updateWorkspaceOnboardingState({"onboarding_state": QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
-      this.isQbdDirectConnectionInProcess = false;
+      this.isQbdConnectionInProgress = false;
       this.router.navigate([`/integrations/qbd_direct/onboarding/pre_requisite/`]);
     });
   }
