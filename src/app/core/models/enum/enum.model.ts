@@ -883,8 +883,3 @@ export enum ThemeOption {
   LIGHT = 'light',
   DARK = 'dark'
 }
-
-export enum QBDPreRequisite {
-  COMPLETE = 'COMPLETE',
-  INCOMPLETE = 'INCOMPLETE'
-}
