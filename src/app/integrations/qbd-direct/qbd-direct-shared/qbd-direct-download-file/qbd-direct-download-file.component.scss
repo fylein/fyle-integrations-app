@@ -13,3 +13,8 @@
 :host ::ng-deep .p-card-body {
     @apply tw-rounded-border-radius-2xl #{!important}
 }
+
+:host ::ng-deep .error-box {
+    @apply tw-border tw-border-alert-toast #{!important};
+}
+

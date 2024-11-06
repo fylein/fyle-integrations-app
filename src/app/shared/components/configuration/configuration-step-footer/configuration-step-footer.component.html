@@ -1,4 +1,4 @@
-<div class="tw-flex tw-py-16-px tw-px-24-px tw-border-t tw-border-t-border-tertiary" [ngClass]="!showBackButton ? 'tw-justify-end': 'tw-justify-between'">
+<div class="tw-flex tw-py-16-px tw-px-24-px" [ngClass]="[!showBackButton ? 'tw-justify-end': 'tw-justify-between', ctaText === 'NEXT' ? '' : 'tw-border-t tw-border-t-border-tertiary']">
     <div class="tw-flex" *ngIf="showBackButton">
         <div>
             <button type="button" class="p-button outline-sm" (click)="navigate()">
@@ -21,7 +21,7 @@
             <span *ngIf="brandingConfig.brandId === 'fyle'">
                 {{ ctaText }}
             </span>
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save'" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
+            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save' && ctaText === 'Next'" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
         </button>
         <button *ngIf="ctaText === 'Saving' || ctaText === 'Syncing'" pButton type="button" class="p-button-raised" disabled>
             {{ ctaText }}
