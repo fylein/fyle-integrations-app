@@ -16,11 +16,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 })
 export class QbdDirectDownloadFileComponent {
 
-  @Input({required: true}) isLoading: boolean = true;
+  @Input({required: true}) isLoading: boolean;
 
-  @Input({required: true}) showDownloadLink: boolean = true;
+  @Input({required: true}) showDownloadLink: boolean;
 
-  @Input({required: true}) isStepCompleted: boolean = false;
+  @Input({required: true}) isStepCompleted: boolean;
 
   @Input({required: true}) isCompanyPathInvalid: boolean;
 
