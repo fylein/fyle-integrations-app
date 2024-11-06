@@ -5,9 +5,9 @@ import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-c
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
-import { ConfigurationCta, QBDPreRequisite } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { PrerequisitesObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
+import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -39,14 +39,14 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   isContinueDisabled: boolean = true;
 
-  preRequisitesteps: PrerequisitesObject[] = [
+  preRequisitesteps: QBDPrerequisiteObject[] = [
     {
       id: 1,
       label: 'Install QuickBooks Web Connector',
       caption: 'Download and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.',
       externalLink: 'https://qbd.com',
       iconName: 'downloadqbd',
-      state: QBDPreRequisite.COMPLETE // INCOMPLETE
+      state: QBDPreRequisiteState.COMPLETE // INCOMPLETE
     },
     {
       id: 2,
@@ -54,7 +54,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       caption: 'Make sure the QuickBooks Company you want to connect to Fyle is open during the integration setup.',
       externalLink: 'https://qbd.com',
       iconName: 'expand',
-      state: QBDPreRequisite.INCOMPLETE // INCOMPLETE
+      state: QBDPreRequisiteState.INCOMPLETE // INCOMPLETE
     }
   ];
 
