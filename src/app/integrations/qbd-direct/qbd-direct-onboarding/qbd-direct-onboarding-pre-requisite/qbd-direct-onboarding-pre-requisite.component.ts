@@ -45,7 +45,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       label: 'Install QuickBooks Web Connector',
       caption: 'Download and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.',
       externalLink: 'https://qbd.com',
-      iconName: 'downloadqbd',
+      iconName: 'download-medium',
       state: QBDPreRequisiteState.COMPLETE // INCOMPLETE
     },
     {
