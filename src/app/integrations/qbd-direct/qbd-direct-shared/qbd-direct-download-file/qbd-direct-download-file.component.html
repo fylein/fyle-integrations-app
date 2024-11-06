@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
-                <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+                <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'24px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
             </div>
         </div>
         <div  *ngIf="!isLoading && !isStepCompleted" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">
