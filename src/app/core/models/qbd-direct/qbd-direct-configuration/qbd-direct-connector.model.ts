@@ -1,4 +1,4 @@
-import { QBDPreRequisite } from "../../enum/enum.model";
+import { QBDPreRequisiteState } from "../../enum/enum.model";
 
 export type QbdConnectorPost = {
     file_location: string;
@@ -16,11 +16,11 @@ export type QbdConnectorGet = {
     updated_at: Date
 }
 
-export type PrerequisitesObject = {
+export type QBDPrerequisiteObject = {
     id: number,
     label: string,
     caption: string,
     externalLink?: string,
     iconName: string,
-    state: QBDPreRequisite
+    state: QBDPreRequisiteState
   }

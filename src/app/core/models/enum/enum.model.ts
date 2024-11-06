@@ -349,7 +349,7 @@ export enum ConfigurationCta {
   SAVING = 'Saving',
   SYNCING = 'Syncing',
   UPDATE = 'Update connection',
-  NEXT = 'NEXT'
+  NEXT = 'Next'
 }
 
 export enum QBDReimbursableExpensesObject {
@@ -885,7 +885,7 @@ export enum ThemeOption {
   DARK = 'dark'
 }
 
-export enum QBDPreRequisite {
+export enum QBDPreRequisiteState {
   COMPLETE = 'COMPLETE',
   INCOMPLETE = 'INCOMPLETE'
 }
