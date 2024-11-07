@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -10,20 +11,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './qbd-direct-data-sync.component.html',
   styleUrl: './qbd-direct-data-sync.component.scss'
 })
-export class QbdDirectDataSyncComponent {
+export class QbdDirectDataSyncComponent implements OnInit {
 
-  @Input() qbdFields: any = {
-    'Chart of accounts': null,
-    'Vendors': null,
-    'Field 4': 12,
-    'Field 5': 30
-  };
+  @Input({required: true}) qbdFields: SyncDataType;
 
-  @Input() isCTAEnabled: boolean;
+  @Input({required: true}) isCTAEnabled: boolean;
+
+  fieldLength: number;
 
   ConfigurationCtaText = ConfigurationCta;
-
-  fieldLength = Object.keys(this.qbdFields).length;
 
   onContinueClick() {
     // Emit output
@@ -31,6 +27,10 @@ export class QbdDirectDataSyncComponent {
 
   getKeys(obj: any): string[] {
     return Object.keys(obj);
+  }
+
+  ngOnInit() {
+    this.fieldLength = Object.keys(this.qbdFields).length;
   }
 
 }
