@@ -10,7 +10,9 @@
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
-                <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'24px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+                <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
+                    <app-svg-icon svgSource="check-medium" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white '"></app-svg-icon>
+                </div>
             </div>
         </div>
         <div  *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">

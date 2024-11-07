@@ -14,15 +14,15 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 })
 export class QbdDirectSetupConnectionComponent {
 
-  @Input({required: true}) password: string;
+  password: string = '098765';
 
-  @Input({required: true}) isLoading: boolean;
+  isLoading: boolean;
 
-  @Input({required: true}) connectionStatus: QBDConnectionStatus;
+  connectionStatus: QBDConnectionStatus;
 
-  @Input({required: true}) isStepCompleted: boolean;
+  isStepCompleted: boolean;
 
-  @Input({required: true}) isCTAEnabled: boolean;
+  isCTAEnabled: boolean;
 
   qbdConnectionStatus = QBDConnectionStatus;
 
