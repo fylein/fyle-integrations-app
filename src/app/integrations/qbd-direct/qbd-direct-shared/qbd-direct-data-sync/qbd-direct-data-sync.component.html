@@ -1,1 +1,33 @@
-<p>qbd-direct-data-sync works!</p>
+<div class="tw-border tw-border-border-info-lighter">
+    <div class="tw-p-24-px">
+        <div class="tw-flex tw-items-center tw-justify-between">
+            <div class="tw-flex tw-items-center tw-justify-start">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-sm tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-8-px">
+                    3
+                </div>
+                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary tw-pt-4-px">
+                    <span>Data sync</span>
+                </div>
+            </div>
+        </div>
+        <div class="tw-py-24-px">
+            <div *ngFor="let field of getKeys(qbdFields); let i = index" class="tw-flex tw-items-center tw-justify-between tw-p-14-px" [ngClass]=" i < fieldLength-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
+                <div>
+                    <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field}}</span>
+                </div>
+                <div>
+                    <span *ngIf="qbdFields[field] !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{qbdFields[field]}}</span>
+                    <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
+                        <app-svg-icon *ngIf="qbdFields[field] === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <app-configuration-info-label [infoText]="'The values displayed here are synced from QuickBooks Desktop to Fyle. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values.'" [showIcon]="false"></app-configuration-info-label>
+        </div>
+    </div>
+    <div>
+        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [isButtonDisabled]="!isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
+    </div>
+</div>
