@@ -96,6 +96,6 @@
         </div>
     </div>
     <div *ngIf="!isStepCompleted">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [isButtonDisabled]="isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
+        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
     </div>
 </div>
