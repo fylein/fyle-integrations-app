@@ -60,7 +60,7 @@ const ICON_MAPPING = {
   'upload': 'grv-upload',
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
-  'eye-medium': 'grv-show-medium',
+  'eye-medium': 'grv-show-medium'
 };
 
 @Component({

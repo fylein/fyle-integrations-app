@@ -61,22 +61,22 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   constructor(
     private router: Router,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) { }
 
   qbdWebConnectorStatus(status: checkBoxEmit): void {
-    this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE
+    this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
     if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE) {
       this.isContinueDisabled = false;
     }
   }
 
   continueToNextStep(): void{
-    this.workspaceService.updateWorkspaceOnboardingState({"onboarding_state":QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+    this.workspaceService.updateWorkspaceOnboardingState({"onboarding_state": QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.saveInProgress = false;
       this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
-    })
+    });
   }
 
 }
