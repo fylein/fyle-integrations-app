@@ -42,8 +42,8 @@
                                 </div>
                                 <div class="tw-flex tw-items-center tw-justify-end">
                                     <div class="tw-pr-10-px">
-                                        <app-svg-icon *ngIf="!isPasswordShown" [svgSource]="'eye-slash'" [width]="'22px'" [height]="'22px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(true)"></app-svg-icon>
-                                        <app-svg-icon *ngIf="isPasswordShown" [svgSource]="'eye'" [width]="'22px'" [height]="'22px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(false)"></app-svg-icon>
+                                        <app-svg-icon *ngIf="!isPasswordShown" [svgSource]="'eye-slash-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(true)"></app-svg-icon>
+                                        <app-svg-icon *ngIf="isPasswordShown" [svgSource]="'eye-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(false)"></app-svg-icon>
                                     </div>
                                     <div>
                                         <app-svg-icon [svgSource]="'duplicate'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="onClipboardCopy()"></app-svg-icon>
