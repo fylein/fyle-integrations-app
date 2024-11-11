@@ -13,9 +13,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class QbdDirectDataSyncComponent implements OnInit {
 
-  @Input({required: true}) qbdFields: SyncDataType;
+  @Input({required: true}) qbdFields: SyncDataType[];
 
   @Input({required: true}) isCTAEnabled: boolean;
+
+  @Input({required: true}) showSection: boolean;
 
   @Output() continueClick = new EventEmitter();
 
@@ -27,12 +29,8 @@ export class QbdDirectDataSyncComponent implements OnInit {
     this.continueClick.emit();
   }
 
-  getKeys(obj: any): string[] {
-    return Object.keys(obj);
-  }
-
   ngOnInit() {
-    this.fieldLength = Object.keys(this.qbdFields).length;
+    this.fieldLength = this.qbdFields.length;
   }
 
 }

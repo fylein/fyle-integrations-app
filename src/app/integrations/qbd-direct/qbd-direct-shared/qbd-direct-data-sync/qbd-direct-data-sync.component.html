@@ -1,4 +1,4 @@
-<div class="tw-border tw-border-border-info-lighter">
+<div class="tw-border tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
@@ -10,24 +10,24 @@
                 </div>
             </div>
         </div>
-        <div class="tw-py-24-px">
-            <div *ngFor="let field of getKeys(qbdFields); let i = index" class="tw-flex tw-items-center tw-justify-between tw-p-14-px" [ngClass]=" i < fieldLength-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
+        <div class="tw-py-24-px" *ngIf="showSection">
+            <div *ngFor="let field of qbdFields; let i = index" class="tw-flex tw-items-center tw-justify-between tw-p-14-px" [ngClass]=" i < fieldLength-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
                 <div>
-                    <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field}}</span>
+                    <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | titlecase}}</span>
                 </div>
                 <div>
-                    <span *ngIf="qbdFields[field] !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{qbdFields[field]}}</span>
+                    <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
                     <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
-                        <app-svg-icon *ngIf="qbdFields[field] === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
+                        <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="showSection">
             <app-configuration-info-label [infoText]="'The values displayed here are synced from QuickBooks Desktop to Fyle. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values.'" [showIcon]="false"></app-configuration-info-label>
         </div>
     </div>
-    <div>
+    <div *ngIf="showSection">
         <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [isButtonDisabled]="!isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
     </div>
 </div>
