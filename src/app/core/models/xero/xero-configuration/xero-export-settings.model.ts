@@ -215,7 +215,7 @@ export class XeroExportSettingModel {
         reimbursable_expense_state: exportSettingsForm.get('expenseState')?.value,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : ExportDateType.CURRENT_DATE,
         ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value,
-        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : ExportDateType.SPENT_AT,
+        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : ExportDateType.SPENT_AT
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExpense')?.value ? XeroReimbursableExpensesObject.PURCHASE_BILL : null,
