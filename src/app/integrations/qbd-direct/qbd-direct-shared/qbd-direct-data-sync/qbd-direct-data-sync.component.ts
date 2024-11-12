@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,12 +17,14 @@ export class QbdDirectDataSyncComponent implements OnInit {
 
   @Input({required: true}) isCTAEnabled: boolean;
 
+  @Output() continueClick = new EventEmitter();
+
   fieldLength: number;
 
   ConfigurationCtaText = ConfigurationCta;
 
   onContinueClick() {
-    // Emit output
+    this.continueClick.emit();
   }
 
   getKeys(obj: any): string[] {
