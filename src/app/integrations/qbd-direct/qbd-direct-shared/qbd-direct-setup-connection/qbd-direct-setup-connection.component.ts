@@ -26,6 +26,8 @@ export class QbdDirectSetupConnectionComponent {
 
   @Input({required: true}) isCTAEnabled: boolean;
 
+  @Input({required: true}) showSection: boolean;
+
   @Output() doneClick: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
   @Output() nextClick = new EventEmitter();
