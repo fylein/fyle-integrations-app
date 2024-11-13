@@ -5,19 +5,19 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
-  selector: 'app-chechbox-button',
+  selector: 'app-checkbox-button',
   standalone: true,
   imports: [ButtonModule, CommonModule],
-  templateUrl: './chechbox-button.component.html',
-  styleUrl: './chechbox-button.component.scss'
+  templateUrl: './checkbox-button.component.html',
+  styleUrl: './checkbox-button.component.scss'
 })
-export class ChechboxButtonComponent {
+export class CheckboxButtonComponent {
 
-  @Input() unCheckedText: string;
+  @Input({required: true}) unCheckedText: string;
 
-  @Input() checkedText: string;
+  @Input({required: true}) checkedText: string;
 
-  @Input() id: number;
+  @Input({required: true}) id: number;
 
   @Output() checkBoxUpdated: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
