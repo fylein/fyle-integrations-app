@@ -1,1 +1,8 @@
-<p>qbd-direct-onboarding-landing works!</p>
+<div>
+    <div>
+        <app-landing-page-header [buttonText]="'Start'" [iconPath]="'assets/logos/qbo.png'" [appName]="'QuickBooks Desktop - Direct Integration'" [appDescription]="brandingContent.contentText" [isConnectionInProgress]="isQbdConnectionInProgress" [isLoading]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" (connectIntegration)="connectQbdDirect()" [logoStyleClasses]="'tw-p-16-px'"></app-landing-page-header>
+    </div>
+    <div>
+        <app-landing-page-body [headlineText]="brandingContent.guideHeaderText" [headerText]="'A quick guide to help you set up your QuickBooks Online integration.'" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coQBOLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId +'-qbd-direct-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
+    </div>
+</div>

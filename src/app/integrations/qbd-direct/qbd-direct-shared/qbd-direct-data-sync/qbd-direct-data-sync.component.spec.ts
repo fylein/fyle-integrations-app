@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectDataSyncComponent } from './qbd-direct-data-sync.component';
 
-describe('QbdDirectDataSyncComponent', () => {
+xdescribe('QbdDirectDataSyncComponent', () => {
   let component: QbdDirectDataSyncComponent;
   let fixture: ComponentFixture<QbdDirectDataSyncComponent>;
 

@@ -14,6 +14,16 @@
     @apply tw-border-t-2-px tw-border-solid tw-border-border-success tw-w-40 tw-h-2-px ;
   }
 
+  .step-name-pre-requisite {
+    &--text {
+      @apply tw-relative tw-left-[-18px] ;
+    }
+
+    &--icon {
+      @apply tw-w-24-px tw-h-24-px ;
+    }
+  }
+
   .step-name-connector {
     &--text {
       @apply tw-relative tw-left-[-50px] ;
