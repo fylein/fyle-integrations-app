@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div  *ngIf="!isLoading && !showDownloadLink" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">
+        <div  *ngIf="!isLoading && !showDownloadLink && !isStepCompleted" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">
             <div class="tw-w-350-px">
                 <h4 class="tw-text-16-px tw-font-500 tw-text-text-tertiary">Enter company file path</h4>
                 <span class="tw-text-12-px tw-font-400 tw-text-text-muted tw-text-wrap">Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.</span>

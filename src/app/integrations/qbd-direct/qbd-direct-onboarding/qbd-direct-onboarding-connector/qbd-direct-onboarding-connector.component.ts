@@ -3,7 +3,7 @@ import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared
 import { SharedModule } from 'src/app/shared/shared.module';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingState, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-
 import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
 import { interval, switchMap, from, takeWhile } from 'rxjs';
 import { QbdDirectTaskResponse } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-connector',
@@ -41,9 +42,11 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   showDownloadLink: boolean;
 
-  isdownloadfileLoading: boolean;
+  isDownloadfileLoading: boolean;
 
-  isconnectionLoading: boolean;
+  isConnectionLoading: boolean;
+
+  isDataSyncLoading: boolean = true;
 
   isDownloadStepCompleted: boolean;
 
@@ -67,11 +70,16 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   user:MinimalUser = this.storageService.get('user');
 
+  warningDialogText: string;
+
+  appName: string = AppName.QBD_DIRECT;
+
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
-    private qbdDirectConntorService: QbdDirectConnectorService
+    private qbdDirectConntorService: QbdDirectConnectorService,
+    private toastService: IntegrationsToastService
   ) { }
 
   triggerDownload(filePath: string) {
@@ -79,14 +87,14 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     const filePathRegex = /^(\/?|\.?\/?|[a-zA-Z]:\\)([a-zA-Z0-9_-]+[\\/])*[a-zA-Z0-9 _-]+\.qbw$/;
     this.isCompanyPathInvalid = filePathRegex.test(normalizedPath);
     if (this.isCompanyPathInvalid) {
-      this.isdownloadfileLoading = true;
+      this.isDownloadfileLoading = true;
       this.qbdDirectConntorService.postQbdDirectConntion({file_location: normalizedPath}).subscribe((connectionResponse: QbdConnectorGet) => {
         this.password = connectionResponse.password;
         this.xmlFileContent = connectionResponse.qwc;
-        this.triggerManualDownload();
+        // This.triggerManualDownload();
         this.showDownloadLink = true;
       });
-      this.isdownloadfileLoading = false;
+      this.isDownloadfileLoading = false;
     }
   }
 
@@ -102,10 +110,10 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   }
 
   proceedToConnection() {
-    this.isdownloadfileLoading = true;
+    this.isDownloadfileLoading = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
       this.isDownloadStepCompleted = true;
-      this.isdownloadfileLoading = false;
+      this.isDownloadfileLoading = false;
     });
   }
 
@@ -115,19 +123,24 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   onConnectionDone(event: checkBoxEmit) {
     if (event.value) {
-      this.qbdDirectConntorService.syncAttribuites().subscribe((sd: SyncDataType[]) => {
-        this.qbdFields = sd;
-        this.isConnectionCTAEnabled = true;
-        // Interval(3000).pipe(
-        //   SwitchMap(() => this.workspaceService.getWorkspace(this.user.org_id)), // Make HTTP request
-        //   TakeWhile((status: any) => !this.isTerminalStatus(status.onboarding_state as QbdDirectOnboardingState), true) // Stop if terminal status is reached
-        // )
-        // .subscribe(
-        //   (status) => this.handleStatus(status),
-        //   (error) => console.error('Error polling workspace status:', error)
-        // );
-      });
+      interval(3000).pipe(
+        switchMap(() => this.workspaceService.getWorkspace(this.user.org_id)), // Make HTTP request
+        takeWhile((status: any) => !this.isTerminalStatus(status[0].onboarding_state as QbdDirectOnboardingState), true) // Stop if terminal status is reached
+      )
+      .subscribe(
+        (status) => this.handleStatus(status[0]),
+        (error) => console.error('Error polling workspace status:', error)
+      );
     }
+  }
+
+  handleDataSyncState(status: QbdDirectWorkspace) {
+    const onboardingState = status.onboarding_state;
+    this.qbdDirectConntorService.syncAttribuites().subscribe((qbdAttribuites: SyncDataType[]) => {
+      this.qbdFields = qbdAttribuites;
+      this.isDataSyncLoading = false;
+      this.isDataSyncCTADisabled = onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE ? false : true;
+    });
   }
 
   handleStatus(status: QbdDirectWorkspace): void {
@@ -136,10 +149,12 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     if (onboardingState === QbdDirectOnboardingState.INCORRECT_COMPANY_PATH) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.INCORRECT_COMPANY_PATH;
+      this.warningDialogText = 'Incorrect company file path detected. Please check and try again.';
       this.isDialogVisible = true;
-    } else if (onboardingState === QbdDirectOnboardingState.IN_CORRECT_PASSWORD) {
+    } else if (onboardingState === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.IN_CORRECT_PASSWORD;
+      this.warningDialogText = 'Incorrect password detected. Please check and try again.';
       this.isDialogVisible = true;
     } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
       // Set success status, enable connection CTA, and stop polling
@@ -149,38 +164,66 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   }
 
   isTerminalStatus(status: QbdDirectOnboardingState): boolean {
-    return [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS, QbdDirectOnboardingState.IN_CORRECT_PASSWORD, QbdDirectOnboardingState.INCORRECT_COMPANY_PATH, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE].includes(status);
+    return [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS, QbdDirectOnboardingState.INCORRECT_PASSWORD, QbdDirectOnboardingState.INCORRECT_COMPANY_PATH, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE].includes(status);
+  }
+
+  isTerminalStatusDataSync(status: QbdDirectOnboardingState): boolean {
+    return [QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE].includes(status);
   }
 
   proceedToSyncData() {
     this.isConnectionStepCompleted = true;
     this.isDataSyncCTADisabled= true;
-
-    // If DESTINATION_SYNC_IN_PROGRESS -> start polling workspaces/
-    // Set value to qbdFields when getting API response
-    // If DESTINATION_SYNC_COMPLETE => stop polling, set isDataSyncCTADisabled to false
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaceResponse: QbdDirectWorkspace[]) => {
+      if (workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS) {
+        interval(3000).pipe(
+          switchMap(() => this.workspaceService.getWorkspace(this.user.org_id)), // Make HTTP request
+          takeWhile((status: any) => !this.isTerminalStatusDataSync(status[0].onboarding_state as QbdDirectOnboardingState), true) // Stop if terminal status is reached
+        )
+        .subscribe(
+          (status) => this.handleDataSyncState(status[0]),
+          (error) => console.error('Error polling workspace status:', error)
+        );
+      } else {
+        this.handleDataSyncState(workspaceResponse[0]);
+      }
+    });
   }
 
 
+  closeDialog(event: any) {
+    this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.isDialogVisible = false;
+      this.isConnectionStepCompleted = false;
+      this.isDownloadStepCompleted = false;
+      this.showDownloadLink = false;
+      this.isCompanyPathInvalid = true;
+      this.isDownloadfileLoading = false;
+      this.isConnectionLoading = false;
+    });
+  }
+
   proceedToExportSetting() {
     this.isLoading = true;
-    this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.EXPORT_SETTINGS}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+    this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: "EXPORT_SETTING"}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'QuickBooks Desktop connection successful');
     });
   }
 
 
   setupPage() {
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaceResponse: QbdDirectWorkspace) => {
-      if (workspaceResponse.onboarding_state === QbdDirectOnboardingState.PENDING_QWC_UPLOAD) {
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaceResponse: QbdDirectWorkspace[]) => {
+      if (workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.PENDING_QWC_UPLOAD) {
         this.isDownloadStepCompleted = true;
-        this.isdownloadfileLoading = false;
-      } else if (workspaceResponse.onboarding_state === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS) {
+        this.isDownloadfileLoading = false;
+      } else if (workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
         this.isDownloadStepCompleted = true;
         this.isConnectionStepCompleted = true;
-        this.isconnectionLoading = false;
-        this.isdownloadfileLoading = false;
+        this.isConnectionLoading = false;
+        this.isDownloadfileLoading = false;
+        this.proceedToSyncData();
       }
       this.isLoading = false;
     });

@@ -15,6 +15,8 @@ export class QbdDirectDataSyncComponent implements OnInit {
 
   @Input({required: true}) qbdFields: SyncDataType[];
 
+  @Input({required: true}) isLoading: boolean;
+
   @Input({required: true}) isCTAEnabled: boolean;
 
   @Input({required: true}) showSection: boolean;
@@ -30,7 +32,7 @@ export class QbdDirectDataSyncComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fieldLength = this.qbdFields.length;
+    this.fieldLength = this.qbdFields?.length;
   }
 
 }

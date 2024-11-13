@@ -15,7 +15,7 @@
             <div class="tw-px-24-px">
                 <div class="tw-py-24-px">
                     <app-qbd-direct-download-file
-                    [isLoading]="isdownloadfileLoading"
+                    [isLoading]="isDownloadfileLoading"
                     [showDownloadLink]="showDownloadLink"
                     [isStepCompleted]="isDownloadStepCompleted"
                     [isCompanyPathInvalid]="isCompanyPathInvalid"
@@ -28,7 +28,7 @@
                     <app-qbd-direct-setup-connection
                     [showSection]="isDownloadStepCompleted"
                     [password]="password"
-                    [isLoading]="isconnectionLoading"
+                    [isLoading]="isConnectionLoading"
                     [connectionStatus]="connectionStatus"
                     [isStepCompleted]="isConnectionStepCompleted"
                     [isCTAEnabled]="isConnectionCTAEnabled"
@@ -37,6 +37,7 @@
                 </div>
                 <div class="tw-py-24-px">
                     <app-qbd-direct-data-sync
+                    [isLoading]="isDataSyncLoading"
                     [qbdFields]="qbdFields"
                     [isCTAEnabled]="isDataSyncCTADisabled"
                     [showSection]="isConnectionStepCompleted"
@@ -45,4 +46,16 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="isDialogVisible">
+    <app-configuration-confirmation-dialog
+        (warningAccepted)="closeDialog($event)"
+        [isWarningVisible]="isDialogVisible"
+        [headerText]="'Connection failed'"
+        [contextText]="warningDialogText"
+        [confirmBtnText]="'Got it'"
+        [appName]="appName"
+        [showSecondaryCTA]="false">
+    </app-configuration-confirmation-dialog>
 </div>
