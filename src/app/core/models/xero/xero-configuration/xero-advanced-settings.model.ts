@@ -95,7 +95,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
