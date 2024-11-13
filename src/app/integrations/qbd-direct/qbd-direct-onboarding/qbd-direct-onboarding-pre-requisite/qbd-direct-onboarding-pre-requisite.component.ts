@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { ConfigurationCta, QbdDirectOnboardingState, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
@@ -64,7 +64,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private workspaceService: WorkspaceService
   ) { }
 
-  qbdWebConnectorStatus(status: checkBoxEmit): void {
+  updateConnectorStatus(status: CheckBoxUpdate): void {
     this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
     if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE) {
       this.isContinueDisabled = false;
@@ -72,7 +72,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
   }
 
   continueToNextStep(): void{
-    this.workspaceService.updateWorkspaceOnboardingState({"onboarding_state": QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+    this.saveInProgress = true;
+    this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.saveInProgress = false;
       this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
