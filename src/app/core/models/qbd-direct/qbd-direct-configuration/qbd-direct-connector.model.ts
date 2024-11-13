@@ -26,6 +26,5 @@ export type QBDPrerequisiteObject = {
 }
 
 export type SyncDataType = {
-    attribute_type: string;
-    count: null | number
+    [key: string]: number | null;
   };

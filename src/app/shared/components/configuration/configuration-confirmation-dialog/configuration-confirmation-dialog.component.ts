@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
@@ -22,19 +22,9 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() event: ConfigurationWarningEvent;
 
-  @Input() appName: string;
-
-  @Input() subLable: string;
-
-  @Input() redirectLink: string;
-
   @Output() warningAccepted = new EventEmitter<ConfigurationWarningOut>();
 
   readonly brandingConfig = brandingConfig;
-
-  AppName = AppName;
-
-  brandIcon: string;
 
   constructor() { }
 
@@ -43,7 +33,6 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandIcon = `assets/${brandingConfig.brandId === 'co' ? 'co' : 'fyle'}/favicon.png`;
   }
 
 }

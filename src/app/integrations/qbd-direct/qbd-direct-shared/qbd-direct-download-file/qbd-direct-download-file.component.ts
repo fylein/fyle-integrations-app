@@ -25,7 +25,7 @@ export class QbdDirectDownloadFileComponent {
 
   @Output() nextStep = new EventEmitter();
 
-  @Output() downloadClick: EventEmitter<string> = new EventEmitter();
+  @Output() downloadClick = new EventEmitter();
 
   @Output() retryClick = new EventEmitter();
 
@@ -40,7 +40,7 @@ export class QbdDirectDownloadFileComponent {
   }
 
   onDownloadClick() {
-    this.downloadClick.emit(this.downloadFilePath);
+    this.downloadClick.emit();
   }
 
   onManualDownload() {
