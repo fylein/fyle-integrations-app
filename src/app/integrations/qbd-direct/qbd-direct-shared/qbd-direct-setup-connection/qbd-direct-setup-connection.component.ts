@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { ConfigurationCta, QBDConnectionStatus } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-qbd-direct-setup-connection',
@@ -14,15 +16,19 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 })
 export class QbdDirectSetupConnectionComponent {
 
-  password: string = '098765';
+  @Input({required: true}) password: string = '098765';
 
-  isLoading: boolean;
+  @Input({required: true}) isLoading: boolean;
 
-  connectionStatus: QBDConnectionStatus;
+  @Input({required: true}) connectionStatus: QBDConnectionStatus;
 
-  isStepCompleted: boolean;
+  @Input({required: true}) isStepCompleted: boolean;
 
-  isCTAEnabled: boolean;
+  @Input({required: true}) isCTAEnabled: boolean;
+
+  @Output() doneClick: EventEmitter<CheckBoxUpdate> = new EventEmitter();
+
+  @Output() nextClick = new EventEmitter();
 
   qbdConnectionStatus = QBDConnectionStatus;
 
@@ -32,19 +38,35 @@ export class QbdDirectSetupConnectionComponent {
 
   readonly brandingConfig = brandingConfig;
 
-  onDoneClick(event: any) {
-    // Emit output
+  constructor(private messageService: MessageService) {}
+
+  onDoneClick(event: CheckBoxUpdate) {
+    this.doneClick.emit(event);
   }
 
   onNextClick() {
-    // Emit output
+    this.nextClick.emit();
   }
 
   onClipboardCopy() {
-    // Copy password to clipboard
+    const selBox = document.createElement('textarea');
+    selBox.value = this.password;
+    document.body.appendChild(selBox);
+    selBox.select();
+    selBox.click();
+    document.execCommand('copy');
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Password copied to clipboard'
+    });
+
+    document.body.removeChild(selBox);
+    event?.stopPropagation();
   }
 
   showPassword(isPasswordVisible: boolean) {
+    this.isPasswordShown = isPasswordVisible;
   }
 
 }
