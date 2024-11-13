@@ -6,14 +6,19 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     qbd_direct: {
         landing: {
-            contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
+            contentText: 'Import data from QuickBooks Desktop to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
+            preRequisite: {
+                stepName: 'Prerequisites',
+                configurationHeaderText: 'Getting started',
+                configurationSubHeaderText: 'Begin your QuickBooks integration by completing the following steps.'
+            },
             connector: {
-                configurationHeaderText: 'Connect to NetSuite subsidary',
-                configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
-                stepName: 'Connect to NetSuite',
+                configurationHeaderText: 'Connect to QuickBooks Desktop',
+                configurationSubHeaderText: 'Connect to QuickBooks desktop by completing the following steps.',
+                stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
             },
             exportSetting: {
@@ -73,7 +78,7 @@ export const c1Contents = {
                 stepName: 'Advanced settings',
                 contentText: 'Customize the integration based on your accounting requirements.',
                 customizeSectionLabel: 'Customization',
-                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from Fyle to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
                 automationLabel: 'Automation',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleAutoExportLabel: 'Schedule automatic export',
@@ -88,7 +93,7 @@ export const c1Contents = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from ' + brandingConfig.brandName + '.',
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
-                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
+                autoCreateMerchantsAsVendorsSubLabel: '' + brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Desktop if a merchant added by an employee does not have a corresponding match in QuickBooks Desktop. ',
                 skipExportLabel: 'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
                 skipExportSubLabel: 'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop by setting up a conditional rule. ',
                 autoCreateReimbursableEnitityLabel: 'Auto create reimbursable enitity',

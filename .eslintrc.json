@@ -65,6 +65,7 @@
         "space-before-function-paren": "off",
         "@typescript-eslint/quotes": "off",
         "@angular-eslint/no-empty-lifecycle-method": "off",
+        "@angular-eslint/no-input-rename": "off",
         "linebreak-style": "off",
         "key-spacing": ["error", { "beforeColon": false }],
         "keyword-spacing": ["error", { "before": true }],

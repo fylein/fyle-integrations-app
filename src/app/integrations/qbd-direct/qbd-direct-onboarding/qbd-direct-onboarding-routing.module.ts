@@ -7,6 +7,7 @@ import { QbdDirectOnboardingExportSettingsComponent } from './qbd-direct-onboard
 import { QbdDirectOnboardingImportSettingsComponent } from './qbd-direct-onboarding-import-settings/qbd-direct-onboarding-import-settings.component';
 import { QbdDirectOnboardingLandingComponent } from './qbd-direct-onboarding-landing/qbd-direct-onboarding-landing.component';
 import { QbdDirectOnboardingComponent } from './qbd-direct-onboarding.component';
+import { QbdDirectOnboardingPreRequisiteComponent } from './qbd-direct-onboarding-pre-requisite/qbd-direct-onboarding-pre-requisite.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'landing',
         component: QbdDirectOnboardingLandingComponent
+      },
+      {
+        path: 'pre_requisite',
+        component: QbdDirectOnboardingPreRequisiteComponent
       },
       {
         path: 'connector',

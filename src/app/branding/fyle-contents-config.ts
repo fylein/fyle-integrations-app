@@ -6,14 +6,19 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const fyleContents = {
     qbd_direct: {
         landing: {
-            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            contentText: 'Import data from QuickBooks Desktop to Fyle and export expenses from Fyle to QuickBooks Desktop',
             guideHeaderText: 'Guide to setup your integrations'
         },
         configuration: {
+            preRequisite: {
+                stepName: 'Prerequisites',
+                configurationHeaderText: 'Getting started',
+                configurationSubHeaderText: 'Begin your QuickBooks integration by completing the following steps.'
+            },
             connector: {
-                configurationHeaderText: 'Connect to NetSuite Tenant',
-                configurationSubHeaderText: 'Connect to the NetSuite Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and NetSuite Tenant cannot be changed once the configuration steps are complete.',
-                stepName: 'Connect to NetSuite',
+                configurationHeaderText: 'Connect to QuickBooks desktop',
+                configurationSubHeaderText: 'Connect to QuickBooks desktop by completing the following steps.',
+                stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Expenses will be posted to the NetSuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
             },
             exportSetting: {
