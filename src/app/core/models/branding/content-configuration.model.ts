@@ -6,6 +6,11 @@ export type ContentConfiguration = {
                 guideHeaderText: string;
             },
             configuration: {
+                preRequisite: {
+                    stepName: string;
+                    configurationHeaderText: string;
+                    configurationSubHeaderText: string;
+                }
                 connector: {
                     stepName: string;
                     subLabel: string;
