@@ -78,7 +78,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
-    private qbdDirectConntorService: QbdDirectConnectorService,
+    private qbdDirectConnectorService: QbdDirectConnectorService,
     private toastService: IntegrationsToastService
   ) { }
 
@@ -88,10 +88,10 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     this.isCompanyPathInvalid = filePathRegex.test(normalizedPath);
     if (this.isCompanyPathInvalid) {
       this.isDownloadfileLoading = true;
-      this.qbdDirectConntorService.postQbdDirectConntion({file_location: normalizedPath}).subscribe((connectionResponse: QbdConnectorGet) => {
+      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: normalizedPath}).subscribe((connectionResponse: QbdConnectorGet) => {
         this.password = connectionResponse.password;
         this.xmlFileContent = connectionResponse.qwc;
-        // This.triggerManualDownload();
+        this.triggerManualDownload();
         this.showDownloadLink = true;
       });
       this.isDownloadfileLoading = false;
@@ -136,7 +136,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   handleDataSyncState(status: QbdDirectWorkspace) {
     const onboardingState = status.onboarding_state;
-    this.qbdDirectConntorService.syncAttribuites().subscribe((qbdAttribuites: SyncDataType[]) => {
+    this.qbdDirectConnectorService.syncAttribuites().subscribe((qbdAttribuites: SyncDataType[]) => {
       this.qbdFields = qbdAttribuites;
       this.isDataSyncLoading = false;
       this.isDataSyncCTADisabled = onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE ? false : true;
