@@ -96,7 +96,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.workspace_general_settings.sync_fyle_to_qbo_payments ? QBOPaymentSyncDirection.FYLE_TO_QBO : advancedSettings?.workspace_general_settings.sync_qbo_to_fyle_payments ? QBOPaymentSyncDirection.QBO_TO_FYLE : null),
       billPaymentAccount: new FormControl(advancedSettings?.general_mappings.bill_payment_account?.id ? advancedSettings?.general_mappings.bill_payment_account : null),
-      changeAccountingPeriod: new FormControl(advancedSettings?.workspace_general_settings.change_accounting_period),
+      changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings?.workspace_general_settings.change_accounting_period),
       singleCreditLineJE: new FormControl(advancedSettings?.workspace_general_settings.je_single_credit_line),
       autoCreateVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_destination_entity),
       autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_merchants_as_vendors),
