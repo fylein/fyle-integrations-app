@@ -23,4 +23,9 @@ export type QBDPrerequisiteObject = {
     externalLink?: string,
     iconName: string,
     state: QBDPreRequisiteState
-  }
+}
+
+export type SyncDataType = {
+    attribute_type: string;
+    count: null | number
+  };

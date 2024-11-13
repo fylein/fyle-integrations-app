@@ -9,6 +9,8 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   @Input() infoText: string;
 
+  @Input() showIcon: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
