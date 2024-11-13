@@ -1,10 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from "../../../../shared/shared.module";
 import { QbdDirectSharedComponent } from '../qbd-direct-shared.component';
 import { CardModule } from 'primeng/card';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { CommonModule } from '@angular/common';
-import { required } from '@rxweb/reactive-form-validators';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
@@ -24,23 +23,32 @@ export class QbdDirectDownloadFileComponent {
 
   @Input({required: true}) isCompanyPathInvalid: boolean;
 
+  @Output() nextStep = new EventEmitter();
+
+  @Output() downloadClick: EventEmitter<string> = new EventEmitter();
+
+  @Output() retryClick = new EventEmitter();
+
+  @Output() manualDownload = new EventEmitter();
+
   downloadFilePath: string;
 
   ConfigurationCtaText = ConfigurationCta;
 
   continueToNextStep() {
+    this.nextStep.emit();
   }
 
   onDownloadClick() {
-    // Emit output
+    this.downloadClick.emit(this.downloadFilePath);
   }
 
   onManualDownload() {
-    // Emit output
+    this.manualDownload.emit();
   }
 
   onRetryClick() {
-    // Emit output
+    this.retryClick.emit();
   }
 
 }

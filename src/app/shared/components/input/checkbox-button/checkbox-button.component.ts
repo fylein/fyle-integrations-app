@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { checkBoxEvent } from 'src/app/core/models/common/helper.model';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
   selector: 'app-checkbox-button',
@@ -19,7 +19,7 @@ export class CheckboxButtonComponent {
 
   @Input({required: true}) id: number;
 
-  @Output() checkBoxUpdated: EventEmitter<checkBoxEvent> = new EventEmitter();
+  @Output() checkBoxUpdated: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
   isCheckboxSelected: boolean = false;
 

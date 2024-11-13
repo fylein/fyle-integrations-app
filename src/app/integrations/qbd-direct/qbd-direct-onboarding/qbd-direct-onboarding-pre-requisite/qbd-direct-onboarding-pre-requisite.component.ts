@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
-import { ConfigurationCta, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
+import { ConfigurationCta, QbdDirectOnboardingState, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -46,7 +47,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       caption: 'Download and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.',
       externalLink: 'https://qbd.com',
       iconName: 'download-medium',
-      state: QBDPreRequisiteState.COMPLETE // INCOMPLETE
+      state: QBDPreRequisiteState.INCOMPLETE
     },
     {
       id: 2,
@@ -54,22 +55,29 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       caption: 'Make sure the QuickBooks Company you want to connect to Fyle is open during the integration setup.',
       externalLink: 'https://qbd.com',
       iconName: 'expand',
-      state: QBDPreRequisiteState.INCOMPLETE // INCOMPLETE
+      state: QBDPreRequisiteState.INCOMPLETE
     }
   ];
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService,
-    private storageService: StorageService
+    private workspaceService: WorkspaceService
   ) { }
 
-  qbdWebConnectorStatus(status: checkBoxEmit): void {
+  updateConnectorStatus(status: CheckBoxUpdate): void {
+    this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
+    if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE) {
+      this.isContinueDisabled = false;
+    }
   }
 
   continueToNextStep(): void{
+    this.saveInProgress = true;
+    this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
+      this.saveInProgress = false;
+      this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
+    });
   }
 
 }
