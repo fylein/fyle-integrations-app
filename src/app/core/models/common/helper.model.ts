@@ -1,6 +1,6 @@
 import { FormGroup, Validators } from "@angular/forms";
 
-export type checkBoxEmit = {
+export type checkBoxEvent = {
     id: number;
     value: boolean;
 }
