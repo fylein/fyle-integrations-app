@@ -9,8 +9,7 @@ import { QbdDirectComponent } from './qbd-direct.component';
   imports: [
     CommonModule,
     QbdDirectRoutingModule,
-    SharedModule,
-    QbdDirectComponent
+    SharedModule
   ]
 })
 export class QbdDirectModule { }

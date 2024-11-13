@@ -56,7 +56,11 @@ const ICON_MAPPING = {
   'arrow-left-medium': 'grv-chevron-left-medium',
   'arrow-right-medium': 'grv-chevron-right-medium',
   'arrow-bar-left-medium': 'grv-chevron-first-medium',
-  'arrow-bar-right-medium': 'grv-chevron-last-medium'
+  'arrow-bar-right-medium': 'grv-chevron-last-medium',
+  'upload': 'grv-upload',
+  'lock': 'grv-lock',
+  'eye-slash-medium': 'grv-show-hide-medium',
+  'eye-medium': 'grv-show-medium'
 };
 
 @Component({

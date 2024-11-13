@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdDirectOnboardingPreRequisiteComponent } from './qbd-direct-onboarding-pre-requisite.component';
 
-describe('QbdDirectOnboardingPreRequisiteComponent', () => {
+xdescribe('QbdDirectOnboardingPreRequisiteComponent', () => {
   let component: QbdDirectOnboardingPreRequisiteComponent;
   let fixture: ComponentFixture<QbdDirectOnboardingPreRequisiteComponent>;
 

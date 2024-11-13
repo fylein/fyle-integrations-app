@@ -337,7 +337,7 @@ export enum QbdDirectOnboardingState {
   CONFIRM_PRE_REQUISITES = 'CONFIRM_PRE_REQUISITES',
   PENDING_QWC_UPLOAD = 'PENDING_QWC_UPLOAD',
   INCORRECT_COMPANY_PATH = 'INCORRECT_COMPANY_PATH',
-  IN_CORRECT_PASSWORD = 'IN_CORRECT_PASSWORD',
+  INCORRECT_PASSWORD = 'INCORRECT_PASSWORD',
   DESTINATION_SYNC_IN_PROGRESS = 'DESTINATION_SYNC_IN_PROGRESS',
   DESTINATION_SYNC_COMPLETE = 'DESTINATION_SYNC_COMPLETE',
 }
@@ -348,7 +348,8 @@ export enum ConfigurationCta {
   CONTINUE = 'Continue',
   SAVING = 'Saving',
   SYNCING = 'Syncing',
-  UPDATE = 'Update connection'
+  UPDATE = 'Update connection',
+  NEXT = 'Next'
 }
 
 export enum QBDReimbursableExpensesObject {
@@ -882,4 +883,15 @@ export enum ThemeOption {
   BRAND = 'brand',
   LIGHT = 'light',
   DARK = 'dark'
+}
+
+export enum QBDPreRequisiteState {
+  COMPLETE = 'COMPLETE',
+  INCOMPLETE = 'INCOMPLETE'
+}
+
+export enum QBDConnectionStatus {
+  SUCCESS = 'SUCCESS',
+  INCORRECT_COMPANY_PATH = 'INCORRECT_COMPANY_PATH',
+  IN_CORRECT_PASSWORD = 'IN_CORRECT_PASSWORD'
 }
