@@ -4,7 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { ConfigurationCta, QBDConnectionStatus } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -26,7 +26,7 @@ export class QbdDirectSetupConnectionComponent {
 
   @Input({required: true}) isCTAEnabled: boolean;
 
-  @Output() doneClick: EventEmitter<checkBoxEmit> = new EventEmitter();
+  @Output() doneClick: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
   @Output() nextClick = new EventEmitter();
 
@@ -40,7 +40,7 @@ export class QbdDirectSetupConnectionComponent {
 
   constructor(private messageService: MessageService) {}
 
-  onDoneClick(event: checkBoxEmit) {
+  onDoneClick(event: CheckBoxUpdate) {
     this.doneClick.emit(event);
   }
 
