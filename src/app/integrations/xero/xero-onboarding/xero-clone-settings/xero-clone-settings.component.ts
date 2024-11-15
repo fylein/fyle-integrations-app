@@ -365,6 +365,20 @@ export class XeroCloneSettingsComponent implements OnInit {
       this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT);
       this.setupAdvancedSettingFormWatcher();
 
+      // Convert field values from destination attributes to *default* destination attributes
+      const controls = [
+        this.exportSettingForm.get('bankAccount'),
+        this.importSettingForm.get('defaultTaxCode'),
+        this.advancedSettingForm.get('billPaymentAccount')
+      ];
+
+      for (const control of controls) {
+        const fullDestinationAttribute: DestinationAttribute | null = control?.value;
+        control?.setValue(
+          fullDestinationAttribute && ExportSettingModel.formatGeneralMappingPayload(fullDestinationAttribute)
+        );
+      }
+
       this.isLoading = false;
     });
   }
