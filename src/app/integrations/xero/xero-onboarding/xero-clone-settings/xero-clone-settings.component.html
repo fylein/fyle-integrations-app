@@ -178,6 +178,21 @@
                         [tooltipText]="'The selected date will reflect in the corporate card expenses exported to Xero.'">
                     </app-clone-setting-field>
                 </div>
+        
+                <div class="clone-setting--field" *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+                    exportSettingForm.controls.creditCardExportType.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION">
+                    <app-clone-setting-field
+                        [iconSource]="'question-square-outline'"
+                        [label]="'How should the split expenses be grouped?'"
+                        [options]="splitExpenseGroupingOptions"
+                        [placeholder]="'Select split expense grouping'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'splitExpenseGrouping'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'The selected option will dictate how split expenses will be exported to Xero.'">
+                    </app-clone-setting-field>
+                </div>
             </div>
         </div>
     
