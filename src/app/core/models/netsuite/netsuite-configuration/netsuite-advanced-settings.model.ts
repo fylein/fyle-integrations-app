@@ -122,7 +122,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean): FormGroup {
     const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
     const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
     return new FormGroup({

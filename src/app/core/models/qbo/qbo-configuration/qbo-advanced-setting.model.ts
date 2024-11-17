@@ -92,7 +92,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: QBOAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: QBOAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean): FormGroup {
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.workspace_general_settings.sync_fyle_to_qbo_payments ? QBOPaymentSyncDirection.FYLE_TO_QBO : advancedSettings?.workspace_general_settings.sync_qbo_to_fyle_payments ? QBOPaymentSyncDirection.QBO_TO_FYLE : null),
       billPaymentAccount: new FormControl(advancedSettings?.general_mappings.bill_payment_account?.id ? advancedSettings?.general_mappings.bill_payment_account : null),
