@@ -11,6 +11,7 @@ import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { Org } from 'src/app/core/models/org/org.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -20,6 +21,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
   selector: 'app-netsuite-advanced-settings',
@@ -96,6 +98,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isTaxGroupSyncAllowed: boolean;
 
+  org: Org = this.orgService.getCachedOrg();
+
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
@@ -106,7 +110,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private router: Router,
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private orgService: OrgService,
   ) { }
 
   isOptional(): string {
@@ -283,7 +288,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = NetsuiteAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails);
+      this.advancedSettingForm = NetsuiteAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at));
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.isLoading = false;
       this.setupFormWatchers();
