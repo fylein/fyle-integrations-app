@@ -111,7 +111,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService,
+    private orgService: OrgService
   ) { }
 
   isOptional(): string {

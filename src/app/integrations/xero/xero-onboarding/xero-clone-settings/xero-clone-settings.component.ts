@@ -149,7 +149,7 @@ export class XeroCloneSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService,
+    private orgService: OrgService
   ) { }
 
   resetCloneSetting(): void {
