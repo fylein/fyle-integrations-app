@@ -6,7 +6,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState, XeroCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroExportSettingGet, XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -49,6 +49,8 @@ export class XeroExportSettingsComponent implements OnInit {
 
   cccExpenseGroupingDateOptions = XeroExportSettingModel.getCCCExpenseGroupingDateOptions();
 
+  splitExpenseGroupingOptions = XeroExportSettingModel.getSplitExpenseGroupingOptions();
+
   autoMapEmployeeTypes = XeroExportSettingModel.getAutoMapEmployeeOptions();
 
   expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
@@ -85,6 +87,8 @@ export class XeroExportSettingsComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.exportSetting;
+
+  readonly XeroCorporateCreditCardExpensesObject = XeroCorporateCreditCardExpensesObject;
 
   constructor(
     public helperService: HelperService,
