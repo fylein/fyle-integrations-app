@@ -12,6 +12,7 @@ import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.mode
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, DefaultImportFields, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { Org } from 'src/app/core/models/org/org.model';
 import { QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
 import { QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
@@ -24,6 +25,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
@@ -153,6 +155,8 @@ export class QboCloneSettingsComponent implements OnInit {
 
   splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
 
+  org: Org = this.orgService.getCachedOrg();
+
   scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
       label: (day + 1).toString(),
@@ -198,7 +202,8 @@ export class QboCloneSettingsComponent implements OnInit {
     private qboImportSettingsService: QboImportSettingsService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private orgService: OrgService
   ) { }
 
   resetCloneSetting(): void {
@@ -502,7 +507,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
 
         this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails);
+        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
 
         this.setupAdvancedSettingFormWatcher();
 

@@ -122,7 +122,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean): FormGroup {
     const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
     const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
     return new FormGroup({
@@ -137,7 +137,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       netsuiteClass: new FormControl(advancedSettings?.general_mappings.netsuite_class?.id ? advancedSettings?.general_mappings.netsuite_class : null),
       netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_class_level) : this.getDefaultLevelOptions()[0]),
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
-      changeAccountingPeriod: new FormControl(advancedSettings?.configuration.change_accounting_period),
+      changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
       singleCreditLineJE: new FormControl(advancedSettings?.configuration.je_single_credit_line),
       exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
