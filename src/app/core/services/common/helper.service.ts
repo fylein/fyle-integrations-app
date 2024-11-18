@@ -27,6 +27,8 @@ export class HelperService {
 
   @Output() oauthCallbackUrl: EventEmitter<string> = new EventEmitter();
 
+  private readonly AUTO_ENABLE_ACCOUNTING_PERIOD_DATE = new Date('2024-03-18');
+
   constructor(
     private apiService: ApiService,
     private router: Router,
