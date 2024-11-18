@@ -45,7 +45,7 @@ describe('QboAdvancedSettingsComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
-  
+
     orgServiceSpy.getCachedOrg.and.returnValue(orgMockData);
     helperServiceSpy.shouldAutoEnableAccountingPeriod.and.returnValue(false);
 
