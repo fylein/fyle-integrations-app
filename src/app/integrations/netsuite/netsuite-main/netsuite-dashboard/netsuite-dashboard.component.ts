@@ -129,7 +129,7 @@ export class NetsuiteDashboardComponent implements OnInit {
       }
       this.destinationFieldMap = {
         EMPLOYEE: responses[4].configuration.employee_field_mapping,
-        CATEGORY: (responses[4].configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT
+        CATEGORY: (responses[4].configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || responses[4].configuration.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT
       };
 
       this.isLoading = false;

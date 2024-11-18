@@ -24,6 +24,12 @@ export class XeroCloneSettingModel {
         const importSettingPayload = XeroImportSettingModel.constructPayload(importSettingForm);
         const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(advancedSettingForm);
 
+        // Set the bank_account in the payload to the selected field value without formatting it
+        // Since we format them on component init (clone settings only)
+        exportSettingPayload.general_mappings.bank_account = exportSettingForm.get('bankAccount')?.value;
+        importSettingPayload.general_mappings.default_tax_code = importSettingForm.get('defaultTaxCode')?.value;
+        advancedSettingPayload.general_mappings.payment_account = advancedSettingForm.get('billPaymentAccount')?.value;
+
         if (!isTaxGroupSyncAllowed) {
             importSettingPayload.workspace_general_settings.import_tax_codes = false;
         }
