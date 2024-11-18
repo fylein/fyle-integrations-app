@@ -2,7 +2,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
-import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
+import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, SplitExpenseGrouping, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { brandingContent } from "src/app/branding/branding-config";
 
@@ -12,7 +12,8 @@ export type XeroExpenseGroupSettingPost = {
   reimbursable_export_date_type: ExportDateType | null;
   corporate_credit_card_expense_group_fields?: string[] | null;
   ccc_export_date_type: ExportDateType | null;
-  reimbursable_expense_state: ExpenseState
+  reimbursable_expense_state: ExpenseState;
+  split_expense_grouping: SplitExpenseGrouping
 };
 
 export interface XeroExpenseGroupSettingGet extends XeroExpenseGroupSettingPost {}
@@ -167,10 +168,23 @@ export class XeroExportSettingModel {
     ];
   }
 
+  static getSplitExpenseGroupingOptions() {
+    return [
+      {
+        label: 'Single Line Item',
+        value: SplitExpenseGrouping.SINGLE_LINE_ITEM
+      },
+      {
+        label: 'Multiple Line Item',
+        value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+      }
+    ];
+  }
+
   static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
       reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
-      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'bankAccount']
+      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'bankAccount', 'splitExpenseGrouping']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -204,7 +218,8 @@ export class XeroExportSettingModel {
       creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
       bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? findObjectByDestinationId(destinationAttribute, exportSettings.general_mappings.bank_account.id) : null),
       autoMapEmployees: new FormControl(exportSettings?.workspace_general_settings?.auto_map_employees),
-      searchOption: new FormControl('')
+      searchOption: new FormControl(''),
+      splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping)
     });
   }
 
@@ -215,7 +230,8 @@ export class XeroExportSettingModel {
         reimbursable_expense_state: exportSettingsForm.get('expenseState')?.value,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : ExportDateType.CURRENT_DATE,
         ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value,
-        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : ExportDateType.SPENT_AT
+        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : ExportDateType.SPENT_AT,
+        split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExpense')?.value ? XeroReimbursableExpensesObject.PURCHASE_BILL : null,

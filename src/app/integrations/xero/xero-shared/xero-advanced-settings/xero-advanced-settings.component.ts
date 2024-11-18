@@ -7,11 +7,14 @@ import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/commo
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroFyleField, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { Org } from 'src/app/core/models/org/org.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroAdvancedSettingGet, XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
@@ -46,6 +49,8 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingModel.getPaymentSyncOptions();
 
+  org: Org = this.orgService.getCachedOrg();
+
   hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
       label: (day + 1).toString(),
@@ -68,7 +73,9 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private xeroHelperService: XeroHelperService,
     private mappingService: MappingService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private orgService: OrgService,
+    private helperService: HelperService
   ) { }
 
   navigateToPreviousStep(): void {
@@ -114,8 +121,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
-
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts);
+      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
 
       this.setupFormWatchers();
       this.isLoading = false;

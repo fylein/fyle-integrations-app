@@ -27,11 +27,18 @@ export class HelperService {
 
   @Output() oauthCallbackUrl: EventEmitter<string> = new EventEmitter();
 
+  private readonly AUTO_ENABLE_ACCOUNTING_PERIOD_DATE = new Date('2024-11-18');
+
   constructor(
     private apiService: ApiService,
     private router: Router,
     private storageService: StorageService
   ) {}
+
+  shouldAutoEnableAccountingPeriod(workspaceCreatedAt: Date): boolean {
+    const createdAt = new Date(workspaceCreatedAt);
+    return createdAt >= this.AUTO_ENABLE_ACCOUNTING_PERIOD_DATE;
+  }
 
   get apiBaseUrl(): string {
     return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
