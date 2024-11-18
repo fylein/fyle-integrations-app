@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
@@ -10,8 +10,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 

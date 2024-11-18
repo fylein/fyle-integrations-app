@@ -74,12 +74,12 @@
             </div>
         </div>
         <div *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted">
-            <app-chechbox-button
+            <app-checkbox-button
                 [checkedText]="'Done'"
                 [unCheckedText]="'Mark as done'"
                 [id]="0"
                 (checkBoxUpdated)="onDoneClick($event)">
-            </app-chechbox-button>
+            </app-checkbox-button>
         </div>
         <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>

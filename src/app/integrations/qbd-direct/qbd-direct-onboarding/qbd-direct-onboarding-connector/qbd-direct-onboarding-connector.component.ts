@@ -14,10 +14,10 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
-import { checkBoxEmit } from 'src/app/core/models/common/helper.model';
 import { interval, switchMap, from, takeWhile } from 'rxjs';
 import { QbdDirectTaskResponse } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-connector',
@@ -121,7 +121,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     this.showDownloadLink = false;
   }
 
-  onConnectionDone(event: checkBoxEmit) {
+  onConnectionDone(event: CheckBoxUpdate) {
     if (event.value) {
       interval(3000).pipe(
         switchMap(() => this.workspaceService.getWorkspace(this.user.org_id)), // Make HTTP request
