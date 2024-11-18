@@ -2,13 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -42,6 +42,8 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
+  brandingFeatureConfig = brandingFeatureConfig;
+
   bankAccounts: DefaultDestinationAttribute[];
 
   reimbursableExportTypes = XeroExportSettingModel.getReimbursableExportTypes();
@@ -61,6 +63,8 @@ export class XeroCloneSettingsComponent implements OnInit {
   expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
 
   cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions();
+
+  splitExpenseGroupingOptions = XeroExportSettingModel.getSplitExpenseGroupingOptions();
 
   exportSettingForm: FormGroup;
 
@@ -136,6 +140,8 @@ export class XeroCloneSettingsComponent implements OnInit {
   customFieldType: string;
 
   brandingContent = brandingContent;
+
+  XeroCorporateCreditCardExpensesObject = XeroCorporateCreditCardExpensesObject;
 
   constructor(
     private cloneSettingService: CloneSettingService,
