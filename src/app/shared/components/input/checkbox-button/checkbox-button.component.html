@@ -1,10 +1,8 @@
-<div [ngClass]="isCheckboxSelected ? 'checked-text' : 'unchecked-text'">
+<div [ngClass]="isCheckboxSelected ? 'checkedText' : 'unCheckedText'" (click)="onCheckBoxClick()">
     <p-button>
         <ng-template pTemplate="content">
-            <label class="tw-flex tw-items-center">
-                <input type="checkbox" (click)="onCheckBoxClick($event)"/>
+                <input type="checkbox" [(ngModel)]="isCheckboxSelected"/>
                 {{ isCheckboxSelected ? checkedText : unCheckedText}}
-            </label>
         </ng-template>
     </p-button>      
 </div>

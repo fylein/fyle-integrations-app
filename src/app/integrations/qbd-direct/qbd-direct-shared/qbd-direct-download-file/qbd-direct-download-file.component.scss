@@ -1,5 +1,5 @@
 .downloadBtn, .downloadBtn:hover {
-    @apply tw-h-40-px tw-text-14-px tw-font-500 tw-text-white tw-bg-btn-secondary-bg tw-rounded-sm #{!important};
+    @apply tw-h-40-px tw-text-14-px tw-font-500 tw-text-white tw-bg-btn-secondary-bg tw-rounded-border-radius-2xs #{!important};
 }
 
 :host ::ng-deep .p-button-label{
@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .p-card-body, :host ::ng-deep .p-card-content {
-    @apply tw-p-0 #{!important};
+    @apply tw-p-0 tw-rounded-border-radius-2xl #{!important};
 }
 
 :host ::ng-deep .p-card-body {

@@ -1,23 +1,23 @@
-<div class="tw-border tw-rounded-border-radius-sm tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-sm tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-8-px">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
                     2
                 </div>
-                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary tw-pt-4-px">
+                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary">
                     <span>Set up Quickbooks web connector</span>
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
                 <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
-                    <app-svg-icon svgSource="check-medium" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white '"></app-svg-icon>
+                    <app-svg-icon svgSource="check-small" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white'"></app-svg-icon>
                 </div>
             </div>
         </div>
-        <div  *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px">
+        <div  *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted" class="tw-flex tw-items-start tw-justify-between tw-pt-32-px">
             <div>
-                <div class="tw-pt-24-px">
+                <div>
                     <div class="tw-flex tw-items-center tw-justify-start">
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tw-pt-24-px">
+                <div class="tw-pt-40-px">
                     <div class="tw-flex tw-items-center tw-justify-start">
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tw-pt-24-px">
+                <div class="tw-pt-40-px">
                     <div class="tw-flex tw-items-center tw-justify-start">
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'check'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
@@ -64,6 +64,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="tw-pt-40-px">
+                    <app-checkbox-button
+                        [checkedText]="'Done'"
+                        [unCheckedText]="'Mark as done'"
+                        [id]="0"
+                        (checkBoxUpdated)="onDoneClick($event)">
+                    </app-checkbox-button>
+                </div>
             </div>
             <div class="tw-rounded-border-radius-2xl">
                 <p-card>
@@ -72,14 +80,6 @@
                     </div>
                 </p-card>
             </div>
-        </div>
-        <div *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted">
-            <app-checkbox-button
-                [checkedText]="'Done'"
-                [unCheckedText]="'Mark as done'"
-                [id]="0"
-                (checkBoxUpdated)="onDoneClick($event)">
-            </app-checkbox-button>
         </div>
         <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
@@ -96,6 +96,6 @@
         </div>
     </div>
     <div *ngIf="!isStepCompleted && showSection && !isStepCompleted">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
+        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
     </div>
 </div>

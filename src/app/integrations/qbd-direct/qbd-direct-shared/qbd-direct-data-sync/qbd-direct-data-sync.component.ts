@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -23,6 +23,8 @@ export class QbdDirectDataSyncComponent implements OnInit {
 
   @Output() continueClick = new EventEmitter();
 
+  appName = AppName;
+
   fieldLength: number;
 
   ConfigurationCtaText = ConfigurationCta;
@@ -32,7 +34,6 @@ export class QbdDirectDataSyncComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fieldLength = this.qbdFields?.length;
   }
 
 }

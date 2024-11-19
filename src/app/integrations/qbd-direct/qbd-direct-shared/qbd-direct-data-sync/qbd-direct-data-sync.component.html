@@ -1,24 +1,26 @@
-<div class="tw-border tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-sm tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-8-px">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
                     3
                 </div>
-                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary tw-pt-4-px">
+                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary">
                     <span>Data sync</span>
                 </div>
             </div>
         </div>
-        <div class="tw-py-24-px" *ngIf="!isLoading && showSection">
-            <div *ngFor="let field of qbdFields; let i = index" class="tw-flex tw-items-center tw-justify-between tw-p-14-px" [ngClass]=" i < fieldLength-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
-                <div>
-                    <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | titlecase}}</span>
-                </div>
-                <div>
-                    <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
-                    <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
-                        <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
+        <div class="tw-py-20-px" *ngIf="!isLoading && showSection">
+            <div *ngFor="let field of qbdFields; let i = index" [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
+                <div class="tw-flex tw-items-center tw-justify-between tw-px-12-px tw-py-20-px">
+                    <div>
+                        <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | titlecase}}</span>
+                    </div>
+                    <div>
+                        <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
+                        <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
+                            <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,6 +34,6 @@
         </div>
     </div>
     <div *ngIf="!isLoading && showSection">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [isButtonDisabled]="isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
+        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
     </div>
 </div>

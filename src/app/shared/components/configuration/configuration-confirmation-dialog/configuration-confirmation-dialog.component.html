@@ -20,16 +20,16 @@
             <div *ngIf="appName!==AppName.QBD_DIRECT" class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-text-secondary">
                 Are you sure you want to continue?
             </div>
-            <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px">
+            <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px tw-cursor-pointer" (click)="redirect()">
                 <p class="tw-text-12-px tw-font-500 tw-text-text-primary">Common QuickBooks Web Connector errors and solutions</p>
                 <div class="tw-flex tw-items-center tw-justify-start">
                     <div class="tw-pr-10-px">
                         <img [src]="brandIcon" width="12px" height="12px">
                     </div>
                     <div>
-                        <a class="tw-text-size-10 tw-text-text-disable tw-font-400" href="https://help.fylehq.com/en/articles/71773-common-quickbooks-web-connector-errors-and">
+                        <p class="tw-text-size-10 tw-text-text-disable tw-font-400">
                             https://help.fylehq.com/en/articles/71773-common-quickbooks-web-connector
-                        </a>
+                        </p>
                     </div>
                 </div>
             </div>

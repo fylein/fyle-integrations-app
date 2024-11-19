@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
@@ -7,7 +8,7 @@ import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 @Component({
   selector: 'app-checkbox-button',
   standalone: true,
-  imports: [ButtonModule, CommonModule],
+  imports: [ButtonModule, CommonModule, FormsModule],
   templateUrl: './checkbox-button.component.html',
   styleUrl: './checkbox-button.component.scss'
 })
@@ -25,9 +26,8 @@ export class CheckboxButtonComponent {
 
   brandingConfig = brandingConfig;
 
-  onCheckBoxClick(event: any) {
-    const inputElement = event.target as HTMLInputElement;
-    this.isCheckboxSelected = inputElement.checked;
+  onCheckBoxClick() {
+    this.isCheckboxSelected = !this.isCheckboxSelected;
     this.checkBoxUpdated.emit({id: this.id, value: this.isCheckboxSelected});
   }
 }

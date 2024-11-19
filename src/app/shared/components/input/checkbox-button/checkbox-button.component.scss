@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .p-button {
-    @apply tw-h-40-px tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-rounded-sm tw-border tw-border-btn-outline-secondary-border-color #{!important};
+    @apply tw-h-40-px tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 :host ::ng-deep .p-button:enabled:hover {
@@ -15,7 +15,6 @@
 }
 
 input[type="checkbox"] {
-    -webkit-appearance: none; /* Remove default styling */
     @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-10-px tw-rounded-sm tw-cursor-pointer #{!important};
 }
   
