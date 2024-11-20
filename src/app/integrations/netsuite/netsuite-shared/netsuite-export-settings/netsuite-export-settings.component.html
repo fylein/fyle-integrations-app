@@ -328,21 +328,6 @@
                             [formControllerName]="'splitExpenseGrouping'">
                         </app-configuration-select-field>
                     </div>
-<!-- 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingForm.get('creditCardExportType')?.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [showClearIcon]="true"
-                            [mandatoryErrorListName]="'split expense grouping'"
-                            [label]="'How should the split expenses be grouped?'"
-                            [subLabel]="'Choose how expenses should be grouped for split expenses'"
-                            [options]="splitExpenseGroupingOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select the split expense grouping type'"
-                            [formControllerName]="'splitExpenseGrouping'">
-                        </app-configuration-select-field>
-                    </div> -->
                 </div>
             </div>
             <app-configuration-step-footer
