@@ -255,7 +255,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
       this.workspaceService.getConfiguration(),
-      this.mappingService.getPaginatedDestinationAttributes(NetsuiteFyleField.TAX_ITEM)
+      this.mappingService.getPaginatedDestinationAttributes(NetsuiteFyleField.TAX_ITEM, '@0.0%')
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, workspaceGeneralSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
