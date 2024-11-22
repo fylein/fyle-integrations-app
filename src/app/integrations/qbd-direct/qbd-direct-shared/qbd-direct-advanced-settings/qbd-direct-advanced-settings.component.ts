@@ -137,6 +137,10 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     }
   }
 
+  navigateToPreviousStep() {
+    this.router.navigate([`/integrations/qbd_direct/onboarding/import_settings`]);
+  }
+
   save() {
     this.saveInProgress = true;
     this.saveSkipExport();
