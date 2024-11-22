@@ -14,14 +14,14 @@
             </div>
             <div class="tw-px-24-px tw-py-10-px">
                 <div *ngFor="let step of preRequisitesteps">
-                    <div class="tw-flex tw-items-center tw-justify-between tw-py-16-px">
-                        <div class="tw-flex tw-items-center tw-justify-center" [ngClass]="[step.state === qbdPreRequisiteState.COMPLETE ? 'tw-opacity-60' : 'tw-opacity-100']">
+                    <div class="tw-flex tw-items-center tw-justify-between tw-py-14-px">
+                        <div class="tw-flex tw-items-center tw-justify-center">
                             <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
-                                <app-svg-icon [svgSource]="step.iconName" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                                <app-svg-icon [svgSource]="step.iconName" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary'"></app-svg-icon>
                             </div>
                             <div class="tw-ml-16-px">
-                                <h4 class="tw-text-14-px tw-text-text-secondary tw-font-500">{{step.label}}</h4>
-                                <p class="tw-text-12-px tw-text-text-tertiary tw-font-400">{{step.caption}}</p>
+                                <h4 class="tw-text-14-px tw-font-500" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-secondary'">{{step.label}}</h4>
+                                <p class="tw-text-12-px tw-pt-4-px tw-font-400" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-tertiary'">{{step.caption}}</p>
                             </div>
                         </div>
                         <div>

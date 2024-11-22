@@ -1,11 +1,11 @@
-<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter tw-opacity-60': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter': !showSection}">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px" [ngClass]="[!showSection ? 'tw-opacity-60' : 'tw-opacity-100']">
                     3
                 </div>
-                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary">
+                <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection ? 'tw-text-text-disable' : 'tw-text-text-tertiary']">
                     <span>Data sync</span>
                 </div>
             </div>
