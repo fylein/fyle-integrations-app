@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const fyleContents = {
     qbd_direct: {
         landing: {
-            contentText: 'Import data from QuickBooks Desktop to Fyle and export expenses from Fyle to QuickBooks Desktop',
+            contentText: 'Import data from QuickBooks Desktop to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
             guideHeaderText: 'Guide to setup your integrations'
         },
         configuration: {
@@ -24,42 +24,42 @@ export const fyleContents = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop',
+                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' need to be exported to QuickBooks Desktop.',
                 reimbursable: {
                     reimbursableExpenseLabel: 'Export Reimbursable Expenses',
                     reimbursableExpenseSubLabel: 'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Quickbooks Desktop.',
                     reimbursableExpenseTypeLabel: 'How should the expenses be exported?',
                     reimbursableExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     reimbursableExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    reimbursableExpenseStateSubLabel: 'You can export expenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).',
+                    reimbursableExpenseStateSubLabel: 'You can export expenses either when they are awaiting payments after approval (Processing) or when the payment has been settled (Closed).',
                     reimbursableExpenseDateLabel: 'Set the expense ',
                     reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
                     reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                     employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
-                    employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
+                    employeeMappingSubLabel: 'Select how employees are represented in QuickBooks Desktop to ensure expenses from ' + brandingConfig.brandName + ' export to the correct employee/vendor record.',
                     autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
                     autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.',
-                    defaultReimbursableAccountPayableLabel: 'To which accounts payable account should the ',
+                    defaultReimbursableAccountPayableLabel: 'Select the Default Credit Account for adding ',
                     defaultReimbursableAccountPayableSubLabel: 'The integration will post the offset credit entry in '
                 },
                 corporateCard: {
                     creditCardExpenseLabel: 'Export corporate card expenses',
-                    creditCardExpenseSubLabel: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card </b> expenses will not be exported to Quickbooks Desktop.',
+                    creditCardExpenseSubLabel: 'Enable this to export the corporate credit card expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>non-reimbursable </b> expenses will not be exported to Quickbooks Desktop.',
                     creditCardExpenseTypeLabel: 'How should the expenses be exported?',
                     creditCardExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
+                    creditCardExpenseStateSubLabel: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the expense has been closed (Closed).',
                     creditCardExpenseDateLabel: 'Set the expense ',
                     creditCardExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                     creditCardExpenseNameinJELabel: 'Name in Journal Entry',
-                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
-                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
-                    defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
-                    defaultCCCAccountPayableLabel: 'To which accounts payable account should the ',
-                    defaultCCCAccountPayableSubLabel: 'The integration will post the offset credit entry in '
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.',
+                    defaultCCCAccountLabel: 'Set a Default Credit Card Account',
+                    defaultCCCAccountSubLabel: 'If there\'s no card-to-card mapping or when an expense lacks a corporate card transaction associated with it, expenses will be posted to the default card configured here.',
+                    defaultCCCAccountPayableLabel: 'Select the Default Credit Account for adding Journal Entry ',
+                    defaultCCCAccountPayableSubLabel: 'This account will be used for the credit line of the '
                 }
             },
             importSetting: {
