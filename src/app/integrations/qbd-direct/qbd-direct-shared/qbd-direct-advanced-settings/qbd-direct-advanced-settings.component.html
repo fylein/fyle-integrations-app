@@ -54,9 +54,9 @@
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.autoCreateReimbursableEnitityLabel" 
+                        [label]="brandingContent.autoCreateReimbursableEnitityLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + 's in QuickBooks Desktop'" 
                         [iconPath]="'user-plus'"
-                        [subLabel]="brandingContent.autoCreateReimbursableEnititySubLabel"
+                        [subLabel]="brandingContent.autoCreateReimbursableEnititySubLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ' record for them, ensuring expenses are posted to this new record.'"
                         [formControllerName]="'autoCreateReimbursableEnitity'">
                     </app-configuration-toggle-field>
 
@@ -128,7 +128,7 @@
                 </div>
 
             </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="true" (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
         </form>
     </div>
 </div>

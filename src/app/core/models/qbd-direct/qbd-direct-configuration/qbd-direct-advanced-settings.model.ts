@@ -26,7 +26,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
     }
 
     static defaultTopMemoOptions(): string[] {
-        return ["employee_name", "expense_key"];
+        return ["employee_name", "Expense/Report ID"];
     }
 
     static formatMemoStructure(memoStructure: string[], defaultMemoOptions: string[]): string[] {
@@ -57,6 +57,9 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
     static constructPayload (advancedSettingForm: FormGroup, adminEmails: EmailOption[]): QbdDirectAdvancedSettingsPost {
 
         const topMemo: string[] = advancedSettingForm.controls.topMemoStructure.value;
+
+        const index = topMemo.indexOf('Expense/Report ID');
+        topMemo[index] = 'expense_key';
 
         const allSelectedEmails: EmailOption[] = advancedSettingForm.get('email')?.value;
 

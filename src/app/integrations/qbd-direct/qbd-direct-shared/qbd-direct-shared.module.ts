@@ -5,6 +5,7 @@ import { QbdDirectDownloadFileComponent } from './qbd-direct-download-file/qbd-d
 import { QbdDirectSetupConnectionComponent } from './qbd-direct-setup-connection/qbd-direct-setup-connection.component';
 import { QbdDirectDataSyncComponent } from './qbd-direct-data-sync/qbd-direct-data-sync.component';
 import { QbdDirectExportSettingsComponent } from './qbd-direct-export-settings/qbd-direct-export-settings.component';
+import { QbdDirectImportSettingsComponent } from './qbd-direct-import-settings/qbd-direct-import-settings.component';
 
 @NgModule({
   declarations: [],
@@ -14,13 +15,15 @@ import { QbdDirectExportSettingsComponent } from './qbd-direct-export-settings/q
     QbdDirectDownloadFileComponent,
     QbdDirectSetupConnectionComponent,
     QbdDirectDataSyncComponent,
-    QbdDirectExportSettingsComponent
+    QbdDirectExportSettingsComponent,
+    QbdDirectImportSettingsComponent
   ],
   exports: [
     QbdDirectDownloadFileComponent,
     QbdDirectSetupConnectionComponent,
     QbdDirectDataSyncComponent,
-    QbdDirectExportSettingsComponent
+    QbdDirectExportSettingsComponent,
+    QbdDirectImportSettingsComponent
   ]
 })
 export class QbdDirectSharedModule { }
