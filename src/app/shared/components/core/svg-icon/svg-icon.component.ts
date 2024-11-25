@@ -20,6 +20,7 @@ const ICON_MAPPING = {
   'check-circle-outline-small': 'grv-checkmark-encircled-small',
   'check-circle-outline': 'grv-checkmark-encircled',
   'check-circle-outline-medium': 'grv-checkmark-encircled-medium',
+  'check-circle-outline-extra-large': 'grv-checkmark-encircled-extra-large',
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
   'check-large': 'grv-checkmark-large',
@@ -56,7 +57,11 @@ const ICON_MAPPING = {
   'arrow-left-medium': 'grv-chevron-left-medium',
   'arrow-right-medium': 'grv-chevron-right-medium',
   'arrow-bar-left-medium': 'grv-chevron-first-medium',
-  'arrow-bar-right-medium': 'grv-chevron-last-medium'
+  'arrow-bar-right-medium': 'grv-chevron-last-medium',
+  'upload': 'grv-upload',
+  'lock': 'grv-lock',
+  'eye-slash-medium': 'grv-show-hide-medium',
+  'eye-medium': 'grv-show-medium'
 };
 
 @Component({

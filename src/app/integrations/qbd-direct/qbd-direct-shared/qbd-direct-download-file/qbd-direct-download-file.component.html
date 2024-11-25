@@ -1,0 +1,72 @@
+<div class="tw-border tw-border-border-info-lighter tw-rounded-border-radius-2xs">
+    <div class="tw-p-24-px">
+        <div class="tw-flex tw-items-center tw-justify-between">
+            <div class="tw-flex tw-items-center tw-justify-start">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
+                    1
+                </div>
+                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary">
+                    <span>Download the integration file</span>
+                </div>
+            </div>
+            <div *ngIf="isStepCompleted">
+                <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
+                    <app-svg-icon svgSource="check-small" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white'"></app-svg-icon>
+                </div>
+            </div>
+        </div>
+        <div  *ngIf="!isLoading && !showDownloadLink && !isStepCompleted" class="tw-flex tw-items-center tw-justify-between tw-pt-32-px">
+            <div class="tw-w-350-px">
+                <h4 class="tw-text-16-px tw-pb-4-px tw-font-500 tw-text-text-tertiary">Enter company file path</h4>
+                <p class="tw-text-12-px tw-font-400 tw-text-text-muted tw-text-wrap">Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.</p>
+                <div>
+                    <div class="tw-pt-16-px">
+                        <input type="text" pInputText id="downloadFilePath" name="downloadFilePath" [(ngModel)]="downloadFilePath" 
+                        placeholder="Example: C:\Users\[Username]\Documents\QuickBooks" 
+                        class="tw-w-full tw-border tw-border-input-default-border tw-rounded-border-radius-2xs tw-px-12-px tw-py-8-px" 
+                        required
+                        #downloadFilePathField="ngModel"
+                        [ngClass]="{
+                            'error-box': (downloadFilePathField.invalid && downloadFilePathField.touched) || !isCompanyPathInvalid
+                          }">
+                        <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || !isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-2-px">
+                            <small *ngIf="downloadFilePathField.errors?.required || !isCompanyPathInvalid" class="tw-flex">
+                                <app-svg-icon [svgSource]="'info-circle-fill'" [isTextColorAllowed]="true" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-form-error-help-text-color'"></app-svg-icon>
+                                Enter a valid company file path.</small>
+                          </div>
+                    </div>
+                    <div class="tw-pt-40-px">
+                        <button pButton pRipple label="Download" class="downloadBtn" (click)="onDownloadClick()"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="tw-shadow-md tw-rounded-border-radius-2xl">
+                    <div class="tw-flex tw-justify-center">
+                        <iframe width="427" height="259" src="https://www.youtube.com/embed/2oYdc8KcQnk" frameborder="0"></iframe>
+                    </div>
+                    <div class="tw-p-16-px">
+                        <p class="tw-text-14-px tw-font-500 tw-text-text-tertiary">Where to find company file path?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
+            <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
+            <span class="tw-text-14-px tw-font-400 tw-text-text-primary">Loading</span>
+        </div>
+        <div *ngIf="!isLoading && showDownloadLink && !isStepCompleted" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px] tw-text-center">
+            <div class="tw-text-center">
+                <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+            </div>
+            <div>
+                <p class="tw-text-text-tertiary tw-text-16-px tw-font-500 tw-py-4-px">Your download will begin</p>
+                <span class="tw-text-text-muted tw-text-12-px tw-font-400 tw-pb-20-px">If it didn’t start, <a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">download the integration file manually</a>.</span>
+                <p class="tw-pt-16-px tw-text-text-muted tw-text-12-px tw-font-400">Not the right file? <a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">Try again.</a></p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isStepCompleted">
+        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" (save)="continueToNextStep()"></app-configuration-step-footer>
+    </div>
+</div>

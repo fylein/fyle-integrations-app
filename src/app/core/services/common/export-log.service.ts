@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { UserService } from '../misc/user.service';
 import { WorkspaceService } from './workspace.service';
-import { environment } from 'src/environments/environment';
 import { SkipExportLogResponse } from '../../models/intacct/db/expense-group.model';
-import { AppName, FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
+import { AccountingExportStatus, AppName, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
-import { AccountingExport } from '../../models/db/accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/qbd-date-filter.model';
 import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../models/db/expense-group.model';
 
@@ -87,6 +85,10 @@ export class ExportLogService {
     if (appName === AppName.NETSUITE) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
     } else if (appName === AppName.QBD_DIRECT) {
+      if (params.status__in?.includes(AccountingExportStatus.FAILED)) {
+        params.status__in = AccountingExportStatus.ERROR;
+      }
+
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, params);
     }
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);

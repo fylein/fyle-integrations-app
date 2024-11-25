@@ -490,6 +490,10 @@ p {
     @include spinner('100-px', '100-px', 'progress-spinner');
 }
 
+.spinner-30 {
+    @include spinner('30-px', '30-px', 'progress-spinner');
+}
+
 .p-skeleton {
     @apply tw-bg-disabled-bg-color #{!important};
 }

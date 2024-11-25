@@ -32,7 +32,7 @@
                                 [subLabel]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
                                 [options]="reimbursableExportTypes" 
                                 [iconPath]="'list'"
-                                [placeholder]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
+                                [placeholder]="'Select an export type'"
                                 [formControllerName]="'reimbursableExportType'" 
                                 [appName]="appName"
                                 [showExportPreview]="false">
@@ -65,8 +65,8 @@
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'accounts payable'"
-                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase)"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select accounts payable'"
                                 [isMultiLineOption]="true"
@@ -108,7 +108,7 @@
                             [label]="brandingContent.reimbursable.reimbursableExpenseDateLabel + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ' date as'"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseDateSubLabel"
                             [options]="reimbursableExpenseGroupingDateOptions" [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase)"
+                            [placeholder]="'Select date'"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
                     </div>
@@ -117,7 +117,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="brandingContent.headerText"
-                        [subLabel]="brandingContent.contentText"
+                        [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
@@ -132,10 +132,10 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="brandingContent.corporateCard.creditCardExpenseTypeLabel"
-                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
+                            [subLabel]="brandingContent.corporateCard.creditCardExpenseTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export type'"
+                            [placeholder]="'Select an export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
                             [showExportPreview]="false">
@@ -187,8 +187,8 @@
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'accounts payable'"
-                                [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase)"
+                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select accounts payable'"
                                 [isMultiLineOption]="true"
@@ -237,7 +237,7 @@
                         [options]="creditCardExpenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
-                        [isDisableTextRequired]="false"
+                        [isDisableTextRequired]="true"
                         [isDisabled]="exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
                         [formControllerName]="'creditCardExportGroup'">
                     </app-configuration-select-field>
@@ -252,7 +252,7 @@
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseDateSubLabel"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
-                        [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
+                        [placeholder]="'Select date'"
                         [formControllerName]="'creditCardExportDate'">
                     </app-configuration-select-field>
                 </div>
@@ -261,7 +261,7 @@
             <app-configuration-step-footer
                 [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [isButtonDisabled]="!exportSettingsForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
+                [showBackButton]="false"
                 (save)="save()"
                 (navigateToPreviousStep)="navigateToPreviousStep()">
             </app-configuration-step-footer>

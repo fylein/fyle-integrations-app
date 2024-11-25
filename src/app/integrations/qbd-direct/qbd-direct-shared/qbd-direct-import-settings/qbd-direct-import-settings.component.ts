@@ -115,6 +115,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
+    private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService
   ) { }
 
@@ -131,7 +132,9 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = false;
   }
 
-  refreshDimensions() {}
+  refreshDimensions() {
+    this.qbdDirectHelperService.importAttribuites(true);
+  }
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);

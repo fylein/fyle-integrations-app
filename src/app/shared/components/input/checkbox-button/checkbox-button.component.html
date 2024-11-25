@@ -1,0 +1,8 @@
+<div [ngClass]="isCheckboxSelected ? 'checkedText' : 'unCheckedText'" (click)="onCheckBoxClick()">
+    <p-button>
+        <ng-template pTemplate="content">
+                <input type="checkbox" [(ngModel)]="isCheckboxSelected"/>
+                {{ isCheckboxSelected ? checkedText : unCheckedText}}
+        </ng-template>
+    </p-button>      
+</div>

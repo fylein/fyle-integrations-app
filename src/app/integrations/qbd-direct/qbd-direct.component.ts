@@ -41,14 +41,14 @@ export class QbdDirectComponent implements OnInit {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
-    if (pathName === '/integrations/qbo') {
+    if (pathName === '/integrations/qbd_direct') {
       const onboardingStateComponentMap = {
         [QbdDirectOnboardingState.YET_TO_START]: '/integrations/qbd_direct/onboarding/landing',
-        [QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES]: '/integrations/qbd_direct/onboarding/pre_requisite',
         [QbdDirectOnboardingState.CONNECTION]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.PENDING_QWC_UPLOAD]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.INCORRECT_COMPANY_PATH]: '/integrations/qbd_direct/onboarding/connector',
-        [QbdDirectOnboardingState.IN_CORRECT_PASSWORD]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.INCORRECT_PASSWORD]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/export_settings',
@@ -64,7 +64,8 @@ export class QbdDirectComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.qbdDirectHelperService.importAttribuites(false);
+    this.workspaceService.importFyleAttributes(false).subscribe();
+    this.qbdDirectHelperService.importQBDAttributes(false).subscribe();
     this.isLoading = false;
     this.navigate();
   }

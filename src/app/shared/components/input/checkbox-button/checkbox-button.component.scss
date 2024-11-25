@@ -1,0 +1,33 @@
+.checkedText {
+    @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+.unCheckedText {
+    @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+:host ::ng-deep .p-button {
+    @apply tw-h-40-px tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+:host ::ng-deep .p-button:enabled:hover {
+    @apply tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-border tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+input[type="checkbox"] {
+    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-border-radius-2xs tw-cursor-pointer #{!important};
+}
+  
+.unCheckedText:hover input[type="checkbox"], input[type="checkbox"]:hover {
+    @apply tw-border-checkbox-icon-selected-color #{!important};
+}
+
+input[type="checkbox"]:checked {
+    @apply tw-bg-checkbox-icon-selected-color tw-border-checkbox-icon-selected-color #{!important};
+}
+  
+input[type="checkbox"]:checked::after {
+    content: url('./../../../../../assets/icons/co/grv-checkmark-small.svg') !important;
+    @apply tw-absolute tw-top-[-3px] tw-left-[2px] #{!important};
+}
+  

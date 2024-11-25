@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
-import { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AppName, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-configuration-confirmation-dialog',
@@ -22,17 +23,36 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() event: ConfigurationWarningEvent;
 
+  @Input() appName: string;
+
+  @Input() subLable: string;
+
+  @Input() redirectLink: string;
+
   @Output() warningAccepted = new EventEmitter<ConfigurationWarningOut>();
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  readonly brandingKbArticles = brandingKbArticles;
+
+  AppName = AppName;
+
+  brandIcon: string;
+
+  constructor(
+    private windowService: WindowService
+  ) { }
 
   acceptWarning(isWarningAccepted: boolean) {
     this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
   }
 
+  redirect() {
+    this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.QBD_DIRECT.HELPER_ARTICLE);
+  }
+
   ngOnInit(): void {
+    this.brandIcon = `assets/${brandingConfig.brandId === 'co' ? 'co' : 'fyle'}/favicon.png`;
   }
 
 }

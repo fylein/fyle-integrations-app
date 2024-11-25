@@ -58,7 +58,7 @@ export class DashboardService {
     }
 
     if (expenseGroupIds.length) {
-      const expenseKey = appName === AppName.INTACCT ? 'expense_group_ids' : appName === AppName.QBD_DIRECT ? 'export_log_id__in' : 'expense_group_id__in';
+      const expenseKey = appName === AppName.INTACCT ? 'expense_group_ids' : appName === AppName.QBD_DIRECT ? 'export_log__id' : 'expense_group_id__in';
       apiParams[expenseKey] = expenseGroupIds;
     }
 
