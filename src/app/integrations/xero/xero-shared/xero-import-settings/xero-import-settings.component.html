@@ -49,7 +49,11 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants && workspaceGeneralSettings.corporate_credit_card_expenses_object">
+                <div
+                    class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px"
+                    *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants 
+                        && workspaceGeneralSettings.corporate_credit_card_expenses_object
+                        && !workspaceGeneralSettings.auto_create_merchant_destination_entity">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
                         [label]="brandingContent.importSuppliersAsMerchantsLabel"
