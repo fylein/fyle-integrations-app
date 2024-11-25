@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -33,6 +33,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingKbArticles = brandingKbArticles;
+
   AppName = AppName;
 
   brandIcon: string;
@@ -46,7 +48,7 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   }
 
   redirect() {
-    this.windowService.openInNewTab(`${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`);
+    this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.QBD_DIRECT.HELPER_ARTICLE);
   }
 
   ngOnInit(): void {

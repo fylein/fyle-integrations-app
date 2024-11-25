@@ -152,19 +152,17 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.connectionStatus = QBDConnectionStatus.INCORRECT_COMPANY_PATH;
       this.warningDialogText = 'Incorrect company file path detected. Please check and try again.';
       this.isDialogVisible = true;
-      this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.IN_CORRECT_PASSWORD;
       this.warningDialogText = 'Incorrect password detected. Please check and try again.';
       this.isDialogVisible = true;
-      this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
       // Set success status, enable connection CTA, and stop polling
       this.connectionStatus = QBDConnectionStatus.SUCCESS;
       this.isConnectionCTAEnabled = true;
-      this.isConnectionLoading = false;
     }
+    this.isConnectionLoading = false;
   }
 
   isTerminalStatus(status: QbdDirectOnboardingState): boolean {
@@ -218,6 +216,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   proceedToExportSetting() {
     this.isLoading = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.EXPORT_SETTINGS}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'QuickBooks Desktop connection successful');
@@ -228,7 +227,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   setupPage() {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaceResponse: QbdDirectWorkspace[]) => {
       if (workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.PENDING_QWC_UPLOAD) {
-        this.qbdDirectConnectorService.getQbdDirectConnection().subscribe((qbdConntion: QbdConnectorGet) => {
+        this.qbdDirectConnectorService.getQBDConnectorSettings().subscribe((qbdConntion: QbdConnectorGet) => {
           this.password = qbdConntion.password;
           this.isDownloadStepCompleted = true;
           this.isDownloadfileLoading = false;
