@@ -34,9 +34,9 @@
                             <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
                         <div class="tw-ml-16-px">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500">Use this password to set up the connection</h4>
+                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">Use this password to set up the connection</h4>
                             <div class="tw-flex">
-                                <div class="tw-pr-30-px">
+                                <div class="tw-pr-30-px tw-w-70-px">
                                     <p *ngIf="!isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">****{{password.slice(4)}}</p>
                                     <p *ngIf="isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">{{password}}</p>
                                 </div>
@@ -85,7 +85,7 @@
         </div>
         <div *ngIf="!isLoading && !isStepCompleted && connectionStatus === qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px] tw-text-center">
             <div class="tw-text-center">
-                <app-svg-icon svgSource="check-circle-outline" [width]="'24px'" [height]="'24px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
+                <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
             </div>
             <div>
                 <p class="tw-pt-4-px tw-text-text-tertiary tw-text-16-px tw-font-500">Success!</p>
