@@ -17,6 +17,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -101,7 +102,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     private router: Router,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private qbdDirectHelperService: QbdDirectHelperService
   ) { }
 
   private saveSkipExportFields(): void {
@@ -139,6 +141,10 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   navigateToPreviousStep() {
     this.router.navigate([`/integrations/qbd_direct/onboarding/import_settings`]);
+  }
+
+  refreshDimensions() {
+    this.qbdDirectHelperService.importAttribuites(true);
   }
 
   save() {

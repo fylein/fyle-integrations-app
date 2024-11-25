@@ -19,6 +19,7 @@ import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestination
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -89,7 +90,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     public helperService: HelperService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private qbdDirectHelperService: QbdDirectHelperService
   ) { }
 
   isEmployeeMappingDisabled(): boolean {
@@ -165,7 +167,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
   }
 
-  refreshDimensions() {}
+  refreshDimensions() {
+    this.qbdDirectHelperService.importAttribuites(true);
+  }
 
   cccExportTypeWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
