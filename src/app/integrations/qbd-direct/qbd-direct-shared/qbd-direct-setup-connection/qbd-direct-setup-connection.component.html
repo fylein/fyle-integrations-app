@@ -19,7 +19,7 @@
             <div>
                 <div>
                     <div class="tw-flex tw-items-center tw-justify-start">
-                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
+                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
                         <div class="tw-ml-16-px">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="tw-pt-40-px">
                     <div class="tw-flex tw-items-center tw-justify-start">
-                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
+                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
                         <div class="tw-ml-16-px">
@@ -41,7 +41,7 @@
                                     <p *ngIf="isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">{{password}}</p>
                                 </div>
                                 <div class="tw-flex tw-items-center tw-justify-end">
-                                    <div class="tw-pr-10-px">
+                                    <div class="tw-pr-6-px">
                                         <app-svg-icon *ngIf="!isPasswordShown" [svgSource]="'eye-slash-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(true)"></app-svg-icon>
                                         <app-svg-icon *ngIf="isPasswordShown" [svgSource]="'eye-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(false)"></app-svg-icon>
                                     </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="tw-pt-40-px">
                     <div class="tw-flex tw-items-center tw-justify-start">
-                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color">
+                        <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'check'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
                         </div>
                         <div class="tw-ml-16-px">

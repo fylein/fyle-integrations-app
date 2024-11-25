@@ -15,7 +15,7 @@
 }
 
 input[type="checkbox"] {
-    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-sm tw-cursor-pointer #{!important};
+    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-border-radius-2xs tw-cursor-pointer #{!important};
 }
   
 .unCheckedText:hover input[type="checkbox"], input[type="checkbox"]:hover {
