@@ -20,6 +20,7 @@ export type KbArticle = {
                 LANDING: string;
                 CONNECTOR: string;
                 SKIP_EXPORT: string;
+                HELPER_ARTICLE: string;
             },
             INTACCT: {
                 IMPORT_SETTING: string;

@@ -64,7 +64,8 @@ export class QbdDirectComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.qbdDirectHelperService.importAttribuites(false);
+    this.workspaceService.importFyleAttributes(false).subscribe();
+    this.qbdDirectHelperService.importQBDAttributes(false).subscribe();
     this.isLoading = false;
     this.navigate();
   }

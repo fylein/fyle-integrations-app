@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from "../../../../shared/shared.module";
 import { QbdDirectSharedComponent } from '../qbd-direct-shared.component';
 import { CardModule } from 'primeng/card';
-import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
@@ -34,6 +34,8 @@ export class QbdDirectDownloadFileComponent {
   downloadFilePath: string;
 
   ConfigurationCtaText = ConfigurationCta;
+
+  appName = AppName;
 
   continueToNextStep() {
     this.nextStep.emit();

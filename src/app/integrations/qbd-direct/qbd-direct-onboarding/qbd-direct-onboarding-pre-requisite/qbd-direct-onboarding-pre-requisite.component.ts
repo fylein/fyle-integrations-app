@@ -5,7 +5,7 @@ import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-c
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
-import { ConfigurationCta, QbdDirectOnboardingState, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QbdDirectOnboardingState, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
@@ -38,6 +38,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   isContinueDisabled: boolean = true;
 
+  appName = AppName.QBD_DIRECT;
+
   preRequisitesteps: QBDPrerequisiteObject[] = [
     {
       id: 1,
@@ -56,6 +58,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       state: QBDPreRequisiteState.INCOMPLETE
     }
   ];
+
+  qbdPreRequisiteState = QBDPreRequisiteState;
 
   constructor(
     private router: Router,

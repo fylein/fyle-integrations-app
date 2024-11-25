@@ -622,7 +622,8 @@ export enum AccountingExportStatus {
   COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
   ENQUEUED = 'ENQUEUED',
-  EXPORT_QUEUED = 'EXPORT_QUEUED'
+  EXPORT_QUEUED = 'EXPORT_QUEUED',
+  ERROR = 'ERROR'
 }
 
 export enum AccountingExportType {

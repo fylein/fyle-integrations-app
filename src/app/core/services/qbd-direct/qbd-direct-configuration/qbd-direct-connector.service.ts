@@ -18,6 +18,10 @@ export class QbdDirectConnectorService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/connector_settings/`, payload);
   }
 
+  getQBDConnectorSettings(): Observable<QbdConnectorGet> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/connector_settings/`, {});
+  }
+
   syncAttribuites(): Observable<SyncDataType[]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/attribute_stats/`, {});
   }

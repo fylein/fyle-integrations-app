@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-configuration-step-footer',
@@ -16,11 +17,15 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   @Input() showResetButton: boolean;
 
+  @Input() AppName: string;
+
   @Output() resetCloneSetting = new EventEmitter();
 
   @Output() save = new EventEmitter();
 
   @Output() navigateToPreviousStep = new EventEmitter();
+
+  appName = AppName;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
