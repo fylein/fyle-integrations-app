@@ -115,7 +115,7 @@ export class QbdDirectDashboardComponent implements OnInit {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
           };
-          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);
           this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
           this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
@@ -143,7 +143,7 @@ export class QbdDirectDashboardComponent implements OnInit {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);
       }
       this.destinationFieldMap = {
-        EMPLOYEE: responses[3].employee_field_mapping,
+        EMPLOYEE: responses[4].employee_field_mapping,
         CATEGORY: 'ACCOUNT'
       };
 
