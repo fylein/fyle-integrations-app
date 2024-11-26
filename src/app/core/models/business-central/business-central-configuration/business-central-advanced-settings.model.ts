@@ -21,7 +21,7 @@ export interface BusinessCentralAdvancedSettingsPost extends BusinessCentralAdva
 export class BusinessCentralAdvancedSettingsModel {
 
   static mapAPIResponseToFormGroup(advancedSettings: BusinessCentralAdvancedSettingsGet | null, isSkipExportEnabled: boolean): FormGroup {
-    const defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+    const defaultMemoOptions: string[] = ['employee_email', 'employee_name','purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
     return new FormGroup({
       memoStructure: new FormControl(advancedSettings?.expense_memo_structure ? advancedSettings?.expense_memo_structure : defaultMemoOptions),
       scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled ? true : false),
