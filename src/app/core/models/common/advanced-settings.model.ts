@@ -69,7 +69,7 @@ export type AdvancedSettingValidatorRule = {
 
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'employee_name','merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
+    return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
