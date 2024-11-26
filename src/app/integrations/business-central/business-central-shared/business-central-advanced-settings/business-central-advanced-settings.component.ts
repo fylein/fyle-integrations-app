@@ -47,7 +47,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  defaultMemoOptions: string[] = ['employee_email', 'employee_name','purpose', 'category', 'spent_on', 'report_number', 'card_number'];
+  defaultMemoOptions: string[] = ['employee_email', 'employee_name', 'purpose', 'category', 'spent_on', 'report_number', 'card_number'];
 
   memoPreviewText: string;
 

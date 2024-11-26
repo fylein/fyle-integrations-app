@@ -52,7 +52,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  defaultMemoOptions: string[] = ['employee_email', 'employee_name','purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
+  defaultMemoOptions: string[] = ['employee_email', 'employee_name', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
 
   memoPreviewText: string;
 
