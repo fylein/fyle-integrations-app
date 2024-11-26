@@ -19,6 +19,7 @@ import { SkipExportService } from 'src/app/core/services/common/skip-export.serv
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
+import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
@@ -93,7 +94,8 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private exportSettingsService: QboExportSettingsService
   ) { }
 
 
@@ -229,8 +231,9 @@ export class QboAdvancedSettingsComponent implements OnInit {
       this.skipExportService.getExpenseFields('v1'),
       this.mappingService.getGroupedDestinationAttributes(['BANK_ACCOUNT'], 'v1', 'qbo'),
       this.configurationService.getAdditionalEmails(),
-      this.workspaceService.getWorkspaceGeneralSettings()
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, billPaymentAccounts, adminEmails, workspaceGeneralSettings]) => {
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.exportSettingsService.getExportSettings()
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, billPaymentAccounts, adminEmails, workspaceGeneralSettings, exportSettings]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
@@ -248,7 +251,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at));
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
-
+      this.defaultMemoOptions = AdvancedSettingsModel.getMemoOptions(exportSettings, AppName.QBO);
       this.setupFormWatchers();
       this.isLoading = false;
     });

@@ -1,11 +1,12 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
-import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, PaymentSyncDirection } from "../../enum/enum.model";
+import { AppName, NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, PaymentSyncDirection } from "../../enum/enum.model";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 import { environment } from "src/environments/environment";
+import { NetSuiteExportSettingGet } from "./netsuite-export-setting.model";
 
 
 export type NetsuiteAdvancedSettingConfiguration = {
@@ -68,6 +69,18 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
 export class NetsuiteAdvancedSettingModel extends HelperUtility {
   static getDefaultMemoOptions(): string[] {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'card_number'];
+  }
+
+  static getMemoOptions(exportSettings: NetSuiteExportSettingGet, appName: AppName): string[] {
+    const defaultOptions = this.getDefaultMemoOptions();
+    const cccExportType = exportSettings.configuration.corporate_credit_card_expenses_object;
+
+    // Filter out options based on cccExportType and appName
+    if (cccExportType && [AppName.NETSUITE, AppName.QBO, AppName.INTACCT].includes(appName as AppName)) {
+      return defaultOptions; // Allow all options including 'card_number'
+    } else {
+      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
+    }
   }
 
   static getPaymentSyncOptions(): SelectFormOption[] {
