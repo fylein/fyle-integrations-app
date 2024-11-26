@@ -78,9 +78,9 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     // Filter out options based on cccExportType and appName
     if (cccExportType && [AppName.NETSUITE, AppName.QBO, AppName.INTACCT].includes(appName as AppName)) {
       return defaultOptions; // Allow all options including 'card_number'
-    } else {
-      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
     }
+      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
+
   }
 
   static getPaymentSyncOptions(): SelectFormOption[] {

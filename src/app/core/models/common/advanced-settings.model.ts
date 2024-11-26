@@ -87,9 +87,9 @@ export class AdvancedSettingsModel {
     // Filter out options based on cccExportType and appName
     if (cccExportType && ['netsuite', 'qbo', 'sage intacct'].includes(appName.toLowerCase())) {
       return defaultOptions; // Allow all options including 'card_number'
-    } else {
-      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
     }
+      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
+
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
