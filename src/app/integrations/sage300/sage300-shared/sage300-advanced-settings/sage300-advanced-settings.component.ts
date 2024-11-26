@@ -91,6 +91,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
+      employee_name: 'John Doe',
+      card_number: '1234 5678 9012 3456',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
