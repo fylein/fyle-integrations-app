@@ -82,6 +82,8 @@ export class LandingComponent implements OnInit {
     'orOiAVGiOnrh'
   ];
 
+  readonly orgsToHideBusinessCentralBetaBadge = [''];
+
   readonly ThemeOption = ThemeOption;
 
   constructor(
