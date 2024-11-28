@@ -7,6 +7,7 @@ export type ExpenseGroupSettingPost = {
   reimbursable_export_date_type: ExportDateType | null;
   corporate_credit_card_expense_group_fields?: string[] | null;
   ccc_export_date_type: ExportDateType | null;
+  split_expense_grouping: SplitExpenseGrouping;
 };
 
 export interface ExpenseGroupSetting extends ExpenseGroupSettingPost {

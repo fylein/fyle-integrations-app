@@ -3,7 +3,7 @@ import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
 
@@ -237,7 +237,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
-          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
+          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'splitExpenseGrouping']
         };
 
         const exportModuleRule: ExportModuleRule[] = [
@@ -286,7 +286,8 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
           defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
           nameInJournalEntry: new FormControl(exportSettings?.configuration?.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : this.getNameInJournalOptions()[0].value),
-          searchOption: new FormControl('')
+          searchOption: new FormControl(''),
+          splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping)
         });
       }
 
@@ -306,7 +307,8 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.get('reimbursableExportGroup')?.value] : null,
             reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
             corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
-            ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
+            ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value,
+            split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
           },
           configuration: {
             reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,

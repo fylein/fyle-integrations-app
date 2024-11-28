@@ -18,7 +18,7 @@ export class QbdDirectConnectorService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/connector_settings/`, payload);
   }
 
-  getQbdDirectConnection(): Observable<QbdConnectorGet> {
+  getQBDConnectorSettings(): Observable<QbdConnectorGet> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/connector_settings/`, {});
   }
 

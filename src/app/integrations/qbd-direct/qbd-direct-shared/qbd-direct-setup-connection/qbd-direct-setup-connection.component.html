@@ -34,9 +34,9 @@
                             <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
                         <div class="tw-ml-16-px">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500">Use this password to set up the connection</h4>
+                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">Use this password to set up the connection</h4>
                             <div class="tw-flex">
-                                <div class="tw-pr-30-px">
+                                <div class="tw-pr-30-px tw-w-70-px">
                                     <p *ngIf="!isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">****{{password.slice(4)}}</p>
                                     <p *ngIf="isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">{{password}}</p>
                                 </div>

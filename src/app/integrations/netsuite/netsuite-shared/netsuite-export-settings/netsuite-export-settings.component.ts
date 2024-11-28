@@ -68,6 +68,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   nameInJournalOptions = NetSuiteExportSettingModel.getNameInJournalOptions();
 
+  readonly splitExpenseGroupingOptions = NetSuiteExportSettingModel.getSplitExpenseGroupingOptions();
+
   showNameInJournalOption: boolean;
 
   exportSettingForm: FormGroup;
