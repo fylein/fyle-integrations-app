@@ -57,7 +57,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="destinationOptionsWatcher(['AccountsPayable'] , destinationAccounts)"
+                                [destinationAttributes]="reimbursableAccpuntOptions()"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
@@ -156,6 +156,21 @@
                             </app-configuration-select-field>
                         </div>
 
+                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [showClearIcon]="true"
+                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [label]="brandingContent.corporateCard.creditCardExpenseNameinJELabel"
+                                [subLabel]="brandingContent.corporateCard.creditCardExpenseNameinJESubLabel"
+                                [options]="nameInJEOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select a name'"
+                                [formControllerName]="'nameInJE'">
+                            </app-configuration-select-field>
+                        </div>
+
                         <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'defaultCreditCardAccountName')">
                             <app-configuration-select-field
                               [form]="exportSettingsForm"
@@ -196,20 +211,6 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingsForm.value.creditCardExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                            <app-configuration-select-field
-                                [form]="exportSettingsForm"
-                                [isFieldMandatory]="true"
-                                [showClearIcon]="true"
-                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
-                                [label]="brandingContent.corporateCard.creditCardExpenseNameinJELabel"
-                                [subLabel]="brandingContent.corporateCard.creditCardExpenseNameinJESubLabel"
-                                [options]="nameInJEOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'Select a name'"
-                                [formControllerName]="'nameInJE'">
-                            </app-configuration-select-field>
-                        </div>
                     </div>
                 </div>
 
@@ -238,7 +239,7 @@
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [isDisableTextRequired]="true"
-                        [isDisabled]="exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
+                        [isDisabled]="exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false"
                         [formControllerName]="'creditCardExportGroup'">
                     </app-configuration-select-field>
                 </div>

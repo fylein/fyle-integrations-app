@@ -58,7 +58,7 @@ export const fyleContents = {
                     creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.',
                     defaultCCCAccountLabel: 'Set a Default Credit Card Account',
                     defaultCCCAccountSubLabel: 'If there\'s no card-to-card mapping or when an expense lacks a corporate card transaction associated with it, expenses will be posted to the default card configured here.',
-                    defaultCCCAccountPayableLabel: 'Select the Default Credit Account for adding Journal Entry ',
+                    defaultCCCAccountPayableLabel: 'Select the Default Credit Account for adding ',
                     defaultCCCAccountPayableSubLabel: 'This account will be used for the credit line of the '
                 }
             },

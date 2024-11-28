@@ -5,12 +5,14 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, AppName, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { FyleField, AppName, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, NameInJournalEntry } from 'src/app/core/models/enum/enum.model';
+import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
+import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -46,12 +48,17 @@ export class QbdDirectBaseMappingComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
+  nameInJE: NameInJournalEntry;
+
+  chartOfAccounts: string[];
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private expoerSettingService: QbdDirectExportSettingsService
+    private exportSettingService: QbdDirectExportSettingsService,
+    private importSettingService: QbdDirectImportSettingsService
   ) { }
 
   private getDestinationField(workspaceGeneralSetting: QbdDirectExportSettingGet, mappingSettings: MappingSetting[]): string {
@@ -64,23 +71,49 @@ export class QbdDirectBaseMappingComponent implements OnInit {
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
   }
 
+  destinationOptionsWatcher(detailAccountType?: string[]): void {
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName, '', detailAccountType).subscribe((responses) => {
+      this.destinationOptions = responses.results as QbdDirectDestinationAttribute[];
+      this.isLoading = false;
+    });
+  }
+
+  cccAccpuntOptions(): void {
+    if (this.cccExpenseObject === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+      this.destinationOptionsWatcher(['CreditCard']);
+    } else if (this.cccExpenseObject === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.employeeFieldMapping === FyleField.EMPLOYEE && this.nameInJE === NameInJournalEntry.EMPLOYEE) {
+      this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability']);
+    } else {
+      this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability']);
+    }
+  }
+
+  categoryOptions(): void {
+    this.destinationOptionsWatcher(this.chartOfAccounts);
+  }
+
   private setupPage(): void {
     this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin([
-      this.expoerSettingService.getQbdExportSettings(),
+      this.exportSettingService.getQbdExportSettings(),
+      this.importSettingService.getImportSettings(),
       this.mappingService.getMappingSettings()
     ]).subscribe((responses) => {
       this.reimbursableExpenseObject = responses[0].reimbursable_expense_export_type;
       this.cccExpenseObject = responses[0].credit_card_expense_export_type;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
+      this.nameInJE = responses[0].name_in_journal_entry;
+      this.chartOfAccounts = responses[1].import_settings.chart_of_accounts;
 
-      this.destinationField = this.getDestinationField(responses[0], responses[1].results);
+      this.destinationField = this.getDestinationField(responses[0], responses[2].results);
 
-
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {
-        this.destinationOptions = responses.results;
-        this.isLoading = false;
-      });
+      if (this.sourceField === 'CORPORATE_CARD') {
+        this.cccAccpuntOptions();
+      } else if (this.sourceField === 'CATEGORY') {
+        this.categoryOptions();
+      } else {
+        this.destinationOptionsWatcher();
+      }
     });
   }
 

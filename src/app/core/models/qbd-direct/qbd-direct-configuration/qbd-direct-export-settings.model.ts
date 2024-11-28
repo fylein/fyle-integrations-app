@@ -172,6 +172,8 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             return form.controls.reimbursableExportType.value === QBDReimbursableExpensesObject.JOURNAL_ENTRY;
           case 'nameInJE':
             return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          case 'defaultCreditCardAccountName':
+            return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
           default:
             return false;
         }
@@ -181,7 +183,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
 
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'employeeMapping'],
-          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState', 'defaultCreditCardAccountName']
+          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState']
         };
 
         const exportModuleRule: ExportModuleRule[] = [
@@ -195,7 +197,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
               {
                 formController: 'creditCardExportType',
                 requiredValue: {
-                  [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: [],
+                  [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCreditCardAccountName'],
                   [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['defaultCCCAccountsPayableAccountName', 'nameInJE']
                 }
               }
