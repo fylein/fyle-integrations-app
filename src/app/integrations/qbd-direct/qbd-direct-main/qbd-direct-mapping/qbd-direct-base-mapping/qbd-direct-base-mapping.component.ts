@@ -78,7 +78,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
     });
   }
 
-  cccAccpuntOptions(): void {
+  getCCCAccountOptions(): void {
     if (this.cccExpenseObject === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
       this.destinationOptionsWatcher(['CreditCard']);
     } else if (this.cccExpenseObject === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.employeeFieldMapping === FyleField.EMPLOYEE && this.nameInJE === NameInJournalEntry.EMPLOYEE) {
@@ -88,7 +88,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
     }
   }
 
-  categoryOptions(): void {
+  getAccountOptions(): void {
     this.destinationOptionsWatcher(this.chartOfAccounts);
   }
 
@@ -108,9 +108,9 @@ export class QbdDirectBaseMappingComponent implements OnInit {
       this.destinationField = this.getDestinationField(responses[0], responses[2].results);
 
       if (this.sourceField === 'CORPORATE_CARD') {
-        this.cccAccpuntOptions();
+        this.getCCCAccountOptions();
       } else if (this.sourceField === 'CATEGORY') {
-        this.categoryOptions();
+        this.getAccountOptions();
       } else {
         this.destinationOptionsWatcher();
       }
