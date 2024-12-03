@@ -44,7 +44,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     {
       id: 1,
       label: 'Install QuickBooks Web Connector',
-      caption: 'Download and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.',
+      caption: `<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target="_blank" class=" tw-underline !tw-underline-offset-1" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.`,
       externalLink: 'https://qbd.com',
       iconName: 'download-medium',
       state: QBDPreRequisiteState.INCOMPLETE
