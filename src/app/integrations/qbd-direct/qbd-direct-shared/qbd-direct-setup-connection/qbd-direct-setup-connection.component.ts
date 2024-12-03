@@ -32,6 +32,8 @@ export class QbdDirectSetupConnectionComponent {
 
   @Output() nextClick = new EventEmitter();
 
+  @Output() manualDownload = new EventEmitter();
+
   qbdConnectionStatus = QBDConnectionStatus;
 
   ConfigurationCtaText = ConfigurationCta;
@@ -71,6 +73,10 @@ export class QbdDirectSetupConnectionComponent {
 
   showPassword(isPasswordVisible: boolean) {
     this.isPasswordShown = isPasswordVisible;
+  }
+
+  onManualDownload() {
+    this.manualDownload.emit();
   }
 
 }

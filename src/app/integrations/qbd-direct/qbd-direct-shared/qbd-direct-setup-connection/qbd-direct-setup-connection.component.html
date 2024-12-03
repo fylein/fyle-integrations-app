@@ -1,8 +1,8 @@
-<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-info-lighter" [ngClass]="{'tw-bg-border-info-lighter': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-tertiary" [ngClass]="{'tw-opacity-50': !showSection}">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px" [ngClass]="[!showSection ? 'tw-opacity-60' : 'tw-opacity-100']">
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
                     2
                 </div>
                 <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection ? 'tw-text-text-disable' : 'tw-text-text-tertiary']">
@@ -22,8 +22,8 @@
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
-                        <div class="tw-ml-16-px">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">Open the integration file using QuickBooks Web Connector</h4>
+                        <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
+                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">Open the <a (click)="onManualDownload()" class=" tw-underline !tw-underline-offset-1 tw-cursor-pointer">integration file</a> using QuickBooks Web Connector</h4>
                             <p class="tw-text-12-px tw-text-text-muted tw-font-400">Watch the video for guidance on opening the downloaded integration file in QuickBooks Web Connector.</p>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'check'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
                         </div>
-                        <div class="tw-ml-16-px">
+                        <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
                             <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">Click on ‘Update Selected’ on QuickBooks Web Connector </h4>
                             <p class="tw-text-12-px tw-text-text-muted tw-font-400">Click the 'Update Selected' option to initiate a connection between Fyle and QuickBooks Desktop</p>
                         </div>
@@ -73,9 +73,9 @@
                     </app-checkbox-button>
                 </div>
             </div>
-            <div class="tw-rounded-border-radius-2xl">
+            <div class="tw-w-[40%]">
                 <div class="tw-flex tw-justify-center tw-shadow-sm">
-                    <iframe width="427" height="259" src="https://www.youtube.com/embed/2oYdc8KcQnk" frameborder="0"></iframe>
+                    <iframe class="tw-rounded-border-radius-2xl tw-w-[100%]" height="260" src="https://www.youtube.com/embed/2oYdc8KcQnk" frameborder="0"></iframe>
                 </div>
             </div>
         </div>

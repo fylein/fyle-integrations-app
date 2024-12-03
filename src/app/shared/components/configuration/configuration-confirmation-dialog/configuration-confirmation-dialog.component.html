@@ -6,12 +6,12 @@
                     <div *ngIf="appName!==AppName.QBD_DIRECT" class="tw-p-8-px tw-bg-bg-warning-lighter tw-mr-10-px">
                         <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning'"></app-svg-icon>
                     </div>
-                    <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-p-8-px tw-bg-bg-danger-lighter tw-mr-10-px">
+                    <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-p-8-px tw-bg-bg-danger-lighter tw-rounded-border-radius-2xs tw-mr-10-px">
                         <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast'"></app-svg-icon>
                     </div>
                     <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{headerText}}</p>
                 </div>
-                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptWarning(false)"></i>
+                <i [ngClass]="{'pi pi-times fyle' : brandingConfig.brandId === 'fyle' && appName!==AppName.QBD_DIRECT, 'pi pi-times fyle qbd' : brandingConfig.brandId === 'fyle' && appName===AppName.QBD_DIRECT, 'pi pi-times co' : brandingConfig.brandId !== 'fyle'}" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptWarning(false)"></i>
             </div>
         </div>
         <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
@@ -27,7 +27,7 @@
                         <img [src]="brandIcon" width="12px" height="12px">
                     </div>
                     <div>
-                        <p class="tw-text-size-10 tw-text-text-disable tw-font-400">
+                        <p class="tw-text-size-10 tw-text-text-disable tw-font-400 tw-max-w-[400px] tw-truncate">
                             {{brandingKbArticles.onboardingArticles.QBD_DIRECT.HELPER_ARTICLE}}
                         </p>
                     </div>

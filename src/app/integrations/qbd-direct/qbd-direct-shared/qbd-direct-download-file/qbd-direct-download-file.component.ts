@@ -9,7 +9,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-qbd-direct-download-file',
   standalone: true,
-  imports: [SharedModule, QbdDirectSharedComponent, CardModule, CommonModule, ProgressSpinnerModule],
+  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule],
   templateUrl: './qbd-direct-download-file.component.html',
   styleUrl: './qbd-direct-download-file.component.scss'
 })
