@@ -71,8 +71,9 @@
                     </div>
                     <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                         <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
-                        <span class="landing--accounting-app-name">
+                        <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
                             Dynamics 365 Business Central
+                            <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                         </span>
                     </div>
                 </div>
