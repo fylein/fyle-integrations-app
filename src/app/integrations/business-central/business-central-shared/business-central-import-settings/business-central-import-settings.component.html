@@ -16,7 +16,7 @@
                     <app-configuration-toggle-field 
                         [form]="importSettingForm"
                         [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName " 
-                        [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName " 
+                        [subLabel]="'Imported accounts will appear in a dropdown under the \'Category\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses. '" 
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -26,7 +26,7 @@
                     <app-configuration-toggle-field 
                         [form]="importSettingForm"
                         [label]="'Import Vendor as Merchant in ' + brandingConfig.brandName " 
-                        [subLabel]="'Imported Vendor will be available as Merchants in ' + brandingConfig.brandName " 
+                        [subLabel]="'Imported vendors will appear in a dropdown under the \'Merchant\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses.'" 
                         [formControllerName]="'importVendorAsMerchant'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
