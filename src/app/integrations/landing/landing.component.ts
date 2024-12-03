@@ -82,6 +82,28 @@ export class LandingComponent implements OnInit {
     'orOiAVGiOnrh'
   ];
 
+  readonly orgsToHideBusinessCentralBetaBadge = [
+    'oryfqquWUbFs',
+    'orWFZxhzXoUt',
+    'orieBe3QsGDn',
+    'orAevABamvVY',
+    'orfmXPsa3AJY',
+    'orT6KrlvEYeg',
+    'orcga0J6iyks',
+    'orBdtxeIkuX5',
+    'orEc2MUSD9vG',
+    'orOZjlaycN3l',
+    'orsxsebzGTJi',
+    'orBQ50NEdy9S',
+    'orKTGVGrPbO1',
+    'orWpX5yhnBbx',
+    'orIxlG5yySoz',
+    'orvNsxoSNCGP',
+    'orvysp2iDQKH',
+    'orRuH2BEKRnW',
+    'orfiqr2KayJy'
+  ];
+
   readonly ThemeOption = ThemeOption;
 
   constructor(
