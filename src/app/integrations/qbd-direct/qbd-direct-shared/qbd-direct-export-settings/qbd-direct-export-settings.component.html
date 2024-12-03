@@ -174,7 +174,7 @@
                         <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'defaultCreditCardAccountName')">
                             <app-configuration-select-field
                               [form]="exportSettingsForm"
-                              [destinationAttributes]="cccAccpuntOptions(exportSettingsForm.get('creditCardExportType')?.value)"
+                              [destinationAttributes]="cccAccountOptions(exportSettingsForm.get('creditCardExportType')?.value)"
                               [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
                               [isOptionSearchInProgress]="isOptionSearchInProgress"
                               [isAdvanceSearchEnabled]="true"
@@ -194,7 +194,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultCCCAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="cccAccpuntOptions(exportSettingsForm.get('creditCardExportType')?.value)"
+                                [destinationAttributes]="cccAccountOptions(exportSettingsForm.get('creditCardExportType')?.value)"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"

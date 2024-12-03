@@ -108,7 +108,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
   }
 
-  cccAccpuntOptions(cccExportType: string): DestinationAttribute[] {
+  cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
       return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
     } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
@@ -182,7 +182,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccExportTypeWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
-        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.creditCardExpenseGroupingFieldOptions[1].value);
+        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
         this.creditCardExpenseGroupingFieldOptions = [QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1]];
     });
