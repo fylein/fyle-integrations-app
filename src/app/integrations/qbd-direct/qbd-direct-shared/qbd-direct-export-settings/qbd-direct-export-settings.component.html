@@ -141,7 +141,7 @@
                             [showExportPreview]="false">
                         </app-configuration-select-field>
 
-                        <div *ngIf="!exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('creditCardExportType')?.value && exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'employeeMapping')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
