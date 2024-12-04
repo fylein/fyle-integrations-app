@@ -1,4 +1,5 @@
 import { BusinessCentralDestinationAttributes } from "../business-central/db/business-central-destination-attribute.model";
+import { QbdDirectDestinationAttribute } from "../qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
 import { PaginatedResponse } from "./paginated-response.model";
 
@@ -36,7 +37,7 @@ export interface PaginatedDestinationAttribute extends PaginatedResponse {
 }
 
 export type GroupedDestinationAttribute = {
-  ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[] | QbdDirectDestinationAttribute[],
   EXPENSE_TYPE: Sage300DestinationAttributes[],
   EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   VENDOR_PAYMENT_ACCOUNT: DestinationAttribute[],

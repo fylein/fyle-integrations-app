@@ -29,6 +29,15 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
         return ["employee_name", "Expense/Report ID"];
     }
 
+    static topMemoExpenseKeyNameConversion(keys: string[]): string[] {
+        keys.forEach((key: string, index: number) => {
+            if (key === 'expense_key') {
+                keys[index] = 'Expense/Report ID';
+            }
+        });
+        return keys;
+    }
+
     static formatMemoStructure(memoStructure: string[], defaultMemoOptions: string[]): string[] {
         const originMemo: string[] = [];
         defaultMemoOptions.forEach((field, index) => {
@@ -43,7 +52,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
 
         return new FormGroup({
             expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? this.formatMemoStructure(this.defaultMemoFields(), advancedSettings?.line_level_memo_structure) : this.defaultMemoFields(), Validators.required),
-            topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : this.defaultTopMemoOptions(), Validators.required),
+            topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? this.topMemoExpenseKeyNameConversion(advancedSettings?.top_level_memo_structure) : this.defaultTopMemoOptions(), Validators.required),
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
             email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),

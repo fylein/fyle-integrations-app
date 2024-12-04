@@ -13,6 +13,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -50,6 +51,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   @Input() isEmployeeMappingGeneric: boolean;
 
   @Input() importCodeFields: string[];
+
+  @Input() chartOfAccounts: string[];
 
   filteredMappings: ExtendedGenericMapping[];
 
@@ -134,6 +137,10 @@ export class DashboardErrorSectionComponent implements OnInit {
     }, 100);
   }
 
+  destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
+    return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
+  }
+
   private getDestinationOptionsV2(errorType: AccountingErrorType) {
     this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
@@ -142,7 +149,7 @@ export class DashboardErrorSectionComponent implements OnInit {
         if (this.destinationField === 'EXPENSE_TYPE') {
           this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
         } else {
-          this.destinationOptions = groupedDestinationResponse.ACCOUNT;
+          this.destinationOptions = this.appName !== AppName.QBD_DIRECT ? groupedDestinationResponse.ACCOUNT : this.destinationOptionsWatcher( this.chartOfAccounts, groupedDestinationResponse.ACCOUNT as QbdDirectDestinationAttribute[]);
         }
       }
 
