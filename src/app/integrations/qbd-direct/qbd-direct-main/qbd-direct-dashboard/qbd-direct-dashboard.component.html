@@ -1,4 +1,4 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%]"></div>
 
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
@@ -43,6 +43,7 @@
         [isImportItemsEnabled]="isImportItemsEnabled"
         [destinationOptionsVersion]="'v1'"
         [importCodeFields]="importCodeFields"
+        [chartOfAccounts]="chartOfAccounts"
         [errorsVersion]="'v1'">
     </app-dashboard-error-section>
 </div>

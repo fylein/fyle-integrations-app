@@ -101,9 +101,18 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return true;
   }
 
-  cccAccpuntOptions(cccExportType: string): DestinationAttribute[] {
+  reimbursableAccpuntOptions(): DestinationAttribute[] {
+    if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
+      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+    }
+    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+  }
+
+  cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
       return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
+    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
+      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
     }
     return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
   }
@@ -173,14 +182,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccExportTypeWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
-      if (creditCardExportTypeValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.creditCardExpenseGroupingFieldOptions[1].value);
+        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
         this.creditCardExpenseGroupingFieldOptions = [QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1]];
-      } else {
-        this.exportSettingsForm.controls.creditCardExportGroup.enable();
-        this.creditCardExpenseGroupingFieldOptions = QbdDirectExportSettingModel.expenseGroupingFieldOptions();
-      }
     });
   }
 

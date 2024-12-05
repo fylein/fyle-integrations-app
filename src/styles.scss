@@ -28,6 +28,10 @@ p {
     @apply tw-m-0-px;
 }
 
+.pi-times.fyle.qbd{
+    content: url('./assets/icons/cross.svg') !important;
+}
+
 .pi-times.fyle {
     content: url('./assets/icons/cross-medium.svg') !important;
 }
@@ -187,7 +191,7 @@ p {
 
 // Dialog
 .p-dialog .p-dialog-content {
-    @apply tw-p-0 #{!important};
+    @apply tw-p-0 tw-rounded-border-radius-2xs #{!important};
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {

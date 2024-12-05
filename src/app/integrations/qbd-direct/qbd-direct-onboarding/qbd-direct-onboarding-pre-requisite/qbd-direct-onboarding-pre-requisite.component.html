@@ -21,7 +21,7 @@
                             </div>
                             <div class="tw-ml-16-px">
                                 <h4 class="tw-text-14-px tw-font-500" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-secondary'">{{step.label}}</h4>
-                                <p class="tw-text-12-px tw-pt-4-px tw-font-400" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-tertiary'">{{step.caption}}</p>
+                                <p class="tw-text-12-px tw-pt-4-px tw-font-400" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-tertiary'" [innerHTML]="step.caption"></p>
                             </div>
                         </div>
                         <div>

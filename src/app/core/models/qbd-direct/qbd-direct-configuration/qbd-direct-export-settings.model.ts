@@ -172,6 +172,10 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
             return form.controls.reimbursableExportType.value === QBDReimbursableExpensesObject.JOURNAL_ENTRY;
           case 'nameInJE':
             return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          case 'defaultCreditCardAccountName':
+            return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
+          case 'employeeMapping':
+            return !form.get('reimbursableExportType')?.value && form.get('creditCardExportType')?.value && form.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
           default:
             return false;
         }
@@ -180,23 +184,23 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
 
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
-          reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'employeeMapping'],
-          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState', 'defaultCreditCardAccountName']
+          reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+          creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'creditCardExpenseState']
         };
 
         const exportModuleRule: ExportModuleRule[] = [
             {
                 formController: 'reimbursableExportType',
                 requiredValue: {
-                  [QbdDirectReimbursableExpensesObject.BILL]: [],
-                  [QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY]: ['defaultReimbursableAccountsPayableAccountName']
+                  [QbdDirectReimbursableExpensesObject.BILL]: ['employeeMapping'],
+                  [QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY]: ['defaultReimbursableAccountsPayableAccountName', 'employeeMapping']
                 }
               },
               {
                 formController: 'creditCardExportType',
                 requiredValue: {
-                  [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: [],
-                  [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['defaultCCCAccountsPayableAccountName', 'nameInJE']
+                  [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCreditCardAccountName'],
+                  [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['defaultCCCAccountsPayableAccountName', 'nameInJE', 'employeeMapping']
                 }
               }
         ];

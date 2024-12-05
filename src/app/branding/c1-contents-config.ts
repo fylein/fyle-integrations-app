@@ -58,8 +58,8 @@ export const c1Contents = {
                     creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
                     defaultCCCAccountLabel: 'Set Default Credit Card Account as',
                     defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
-                    defaultCCCAccountPayableLabel: 'To which accounts payable account should the ',
-                    defaultCCCAccountPayableSubLabel: 'The integration will post the offset credit entry in '
+                    defaultCCCAccountPayableLabel: 'Select the Default Credit Account for adding ',
+                    defaultCCCAccountPayableSubLabel: 'This account will be used for the credit line of the '
                 }
             },
             importSetting: {

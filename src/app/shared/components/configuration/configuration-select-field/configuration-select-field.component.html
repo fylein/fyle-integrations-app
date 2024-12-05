@@ -99,7 +99,7 @@
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
-                    <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value" class="sub-text">
+                    <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
                     </div>
                 </div>

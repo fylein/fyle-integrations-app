@@ -33,7 +33,8 @@
                     [isStepCompleted]="isConnectionStepCompleted"
                     [isCTAEnabled]="isConnectionCTAEnabled"
                     (doneClick)="onConnectionDone($event)"
-                    (nextClick)="proceedToSyncData()"></app-qbd-direct-setup-connection>
+                    (nextClick)="proceedToSyncData()"
+                    (manualDownload)="triggerManualDownload()"></app-qbd-direct-setup-connection>
                 </div>
                 <div class="tw-py-8-px">
                     <app-qbd-direct-data-sync
