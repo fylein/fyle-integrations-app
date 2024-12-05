@@ -211,6 +211,26 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  defaultAccountsPayableAccountWatcher() {
+    this.exportSettingsForm.controls.employeeMapping.valueChanges.subscribe((employeeMapping) => {
+      if (employeeMapping === EmployeeFieldMapping.EMPLOYEE) {
+        if (this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
+          this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.patchValue(null);
+        } else if (this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
+          this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.patchValue(null);
+        }
+      }
+    });
+  }
+
+  defaultCCCAccountsPayableAccountWatcher() {
+    this.exportSettingsForm.controls.nameInJE.valueChanges.subscribe((nameInJE) => {
+      if (nameInJE === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
+        this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.patchValue(null);
+      }
+    });
+  }
+
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
     return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
@@ -224,6 +244,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimbursableExpenseGroupWatcher();
 
     this.cccExpenseGroupWatcher();
+
+    this.defaultAccountsPayableAccountWatcher();
+
+    this.defaultCCCAccountsPayableAccountWatcher();
   }
 
   private setupCCCExpenseGroupingDateOptions(): void {
