@@ -76,7 +76,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     const cccExportType = exportSettings.configuration.corporate_credit_card_expenses_object;
 
     // Filter out options based on cccExportType and appName
-    if (cccExportType && [AppName.NETSUITE, AppName.QBO, AppName.INTACCT].includes(appName as AppName)) {
+    if (cccExportType) {
       return defaultOptions; // Allow all options including 'card_number'
     }
       return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps

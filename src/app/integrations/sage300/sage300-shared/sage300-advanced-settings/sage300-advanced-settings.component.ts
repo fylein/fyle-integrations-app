@@ -52,7 +52,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  defaultMemoOptions: string[] = ['employee_email', 'employee_name', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
+  defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
   memoPreviewText: string;
 
@@ -92,7 +92,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
       employee_name: 'John Doe',
-      card_number: '1234 5678 9012 3456',
+      card_number: '**3456',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
