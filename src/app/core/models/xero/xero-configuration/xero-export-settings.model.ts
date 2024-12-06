@@ -219,7 +219,7 @@ export class XeroExportSettingModel {
       bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? findObjectByDestinationId(destinationAttribute, exportSettings.general_mappings.bank_account.id) : null),
       autoMapEmployees: new FormControl(exportSettings?.workspace_general_settings?.auto_map_employees),
       searchOption: new FormControl(''),
-      splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping)
+      splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping ? exportSettings?.expense_group_settings?.split_expense_grouping : SplitExpenseGrouping.MULTIPLE_LINE_ITEM)
     });
   }
 
