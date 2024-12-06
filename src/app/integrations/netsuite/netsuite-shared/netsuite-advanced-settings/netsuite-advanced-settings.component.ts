@@ -10,7 +10,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
-import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -19,6 +19,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
+import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -51,6 +52,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   });
 
   advancedSetting: NetsuiteAdvancedSettingGet;
+
+  exportSettings: NetSuiteExportSettingGet;
 
   expenseFilters: ExpenseFilterResponse;
 
@@ -111,7 +114,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private exportSettingsService: NetsuiteExportSettingsService
   ) { }
 
   isOptional(): string {
@@ -261,12 +265,14 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getConfiguration(),
-      this.netsuiteConnectorService.getSubsidiaryMapping()
-    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings, subsidiaryMapping]) => {
+      this.netsuiteConnectorService.getSubsidiaryMapping(),
+      this.exportSettingsService.getExportSettings()
+    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings, subsidiaryMapping, exportSettings]) => {
       this.advancedSetting = netsuiteAdvancedSetting;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
-
+      this.exportSettings = exportSettings;
+      this.defaultMemoOptions = NetsuiteAdvancedSettingModel.getMemoOptions(this.exportSettings, this.appName);
       this.adminEmails = adminEmails;
       if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
         this.adminEmails = this.adminEmails.concat(this.advancedSetting.workspace_schedules?.additional_email_options);

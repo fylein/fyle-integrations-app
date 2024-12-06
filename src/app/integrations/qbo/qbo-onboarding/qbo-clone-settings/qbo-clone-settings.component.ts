@@ -511,6 +511,8 @@ export class QboCloneSettingsComponent implements OnInit {
 
         this.setupAdvancedSettingFormWatcher();
 
+        this.defaultMemoOptions = AdvancedSettingsModel.getMemoOptions(this.cloneSetting.export_settings, AppName.QBO);
+
         this.isLoading = false;
       });
     });
