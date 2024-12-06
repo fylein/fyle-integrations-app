@@ -78,6 +78,8 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   importCodeFields: any;
 
+  chartOfAccounts: string[];
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -150,6 +152,8 @@ export class QbdDirectDashboardComponent implements OnInit {
       this.isLoading = false;
 
       this.importCodeFields = responses[5].import_settings?.import_code_fields;
+
+      this.chartOfAccounts = responses[5].import_settings.chart_of_accounts;
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
