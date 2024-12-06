@@ -214,8 +214,8 @@ export const c1Contents = {
                     cccExpenseBankAccountLabel: 'Which bank account should the bank transactions post to?',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
                 },
-                memoStructureLabel: 'Set the line-item description field in NetSuite',
-                memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
+                memoStructureLabel: 'Set the line-item description field in Xero',
+                memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Xero. ',
                 stepSubLabel: 'Configure how and when expenses from Expense Management can be exported to Xero.',
                 cccExpenseStateLabel: 'How should expenses be labeled before exporting from Expense Management?'
             },
