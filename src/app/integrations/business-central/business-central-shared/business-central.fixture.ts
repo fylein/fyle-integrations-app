@@ -48,7 +48,8 @@ export const importSettingsResponse: BusinessCentralImportSettingsGet = {
   "id": 123,
   "import_settings": {
     "import_categories": true,
-    "import_vendors_as_merchants": true
+    "import_vendors_as_merchants": true,
+    "charts_of_accounts": ['Expense']
   },
   "mapping_settings": [],
   "workspace_id": 343,

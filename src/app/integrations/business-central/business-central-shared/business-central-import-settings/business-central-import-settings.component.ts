@@ -50,6 +50,8 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
+  readonly chartOfAccountTypesList: string[] = BusinessCentralImportSettingsModel.getChartOfAccountTypesList();
+
   readonly brandingConfig = brandingConfig;
 
   readonly supportArticleLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.IMPORT_SETTING;
@@ -68,7 +70,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private helperService: BusinessCentralHelperService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private helper: HelperService,
+    public helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService
