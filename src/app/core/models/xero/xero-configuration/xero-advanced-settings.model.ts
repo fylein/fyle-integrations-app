@@ -12,7 +12,8 @@ export type XeroAdvancedSettingWorkspaceGeneralSetting = {
   sync_xero_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
   change_accounting_period: boolean,
-  auto_create_merchant_destination_entity: boolean
+  auto_create_merchant_destination_entity: boolean,
+  memo_structure: string[]
 }
 
 export type XeroAdvancedSettingGeneralMapping = {
@@ -111,6 +112,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? true : false),
       exportScheduleFrequency: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : 1),
       autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
+      memoStructure: new FormControl(advancedSettings.workspace_general_settings.memo_structure),
       search: new FormControl(),
       searchOption: new FormControl(),
       email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
@@ -126,7 +128,8 @@ export class XeroAdvancedSettingModel extends HelperUtility{
         sync_xero_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.XERO_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
-        auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value
+        auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value,
+        memo_structure: advancedSettingsForm.get('memoStructure')?.value
       },
       general_mappings: {
         payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value) : emptyDestinationAttribute
