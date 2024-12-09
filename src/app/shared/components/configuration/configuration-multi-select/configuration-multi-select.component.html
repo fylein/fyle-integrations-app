@@ -15,7 +15,7 @@
         (onChange)="onMultiSelectChange()">
             <ng-template let-value pTemplate="selectedItems" >
                 <div *ngIf="form.get(formControllerName)?.value?.length>0" class="tw-flex">
-                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
+                    <p *ngFor="let name of value;let i = index">{{ getMemo(name) }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
                 </div>
                 <div *ngIf="form.get(formControllerName)?.value?.length === 0" class="tw-text-placeholder">
                     {{ placeholder }}
@@ -26,7 +26,7 @@
                     <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | titlecase | snakeCaseToSpaceCase }}</p>
                 </div> -->
                 <div>
-                    <p class="tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+                    <p class="tw-text-14-px">{{ getMemo(memo) }}</p>
                 </div>
             </ng-template>
         </p-multiSelect>
