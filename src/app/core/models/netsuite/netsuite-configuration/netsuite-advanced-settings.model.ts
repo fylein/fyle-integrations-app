@@ -68,7 +68,7 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
 
 export class NetsuiteAdvancedSettingModel extends HelperUtility {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'card_number'];
+    return AdvancedSettingsModel.getDefaultMemoOptions();
   }
 
   static getMemoOptions(exportSettings: NetSuiteExportSettingGet, appName: AppName): string[] {
