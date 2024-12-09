@@ -1,6 +1,9 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { JoinOption, Operator } from "../enum/enum.model";
 import { environment } from "src/environments/environment";
+import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
+import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
+import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
 
 export type EmailOption = {
     email: string;
@@ -69,7 +72,24 @@ export type AdvancedSettingValidatorRule = {
 
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+    return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
+  }
+
+  static getMemoOptions(exportSettings: ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
+    const defaultOptions = this.getDefaultMemoOptions();
+    let cccExportType: string | undefined;
+
+    // Extract cccExportType based on the type of exportSettings
+    if ('configurations' in exportSettings) {
+      cccExportType = exportSettings.configurations.corporate_credit_card_expenses_object ?? undefined;
+    }
+
+    // Filter out options based on cccExportType and appName
+    if (cccExportType && ['netsuite', 'qbo', 'sage intacct'].includes(appName.toLowerCase())) {
+      return defaultOptions; // Allow all options including 'card_number'
+    }
+      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
+
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
@@ -79,7 +99,7 @@ export class AdvancedSettingsModel {
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
       employee_name: 'John Doe',
-      card_number: '1234 5678 9012 3456',
+      card_number: '**** 3456',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
