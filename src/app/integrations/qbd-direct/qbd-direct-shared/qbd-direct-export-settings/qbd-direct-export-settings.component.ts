@@ -101,6 +101,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return true;
   }
 
+  isCccExportGroupDisabled(): boolean {
+    if (this.exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+      return true;
+    }
+      if (this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value?.detail.account_type === 'AccountsPayable') {
+        return true;
+      }
+      return false;
+
+  }
+
+  isReimbursableExportGroupDisabled(): boolean {
+    if (this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.value?.detail.account_type === 'AccountsPayable' && this.exportSettingsForm.controls.reimbursableExportType.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY) {
+      return true;
+    }
+    return false;
+  }
+
   reimbursableAccpuntOptions(): DestinationAttribute[] {
     if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
       return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
@@ -182,9 +200,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccExportTypeWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
+      if (creditCardExportTypeValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
         this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
-        this.creditCardExpenseGroupingFieldOptions = [QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1]];
+      }
     });
   }
 
@@ -214,10 +233,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   defaultAccountsPayableAccountWatcher() {
     this.exportSettingsForm.controls.employeeMapping.valueChanges.subscribe((employeeMapping) => {
       if (employeeMapping === EmployeeFieldMapping.EMPLOYEE) {
-        if (this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
-          this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.patchValue(null);
-        } else if (this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
+        if (this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
           this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.patchValue(null);
+          if (this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
+            this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.patchValue(null);
+          }
         }
       }
     });
@@ -227,6 +247,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.exportSettingsForm.controls.nameInJE.valueChanges.subscribe((nameInJE) => {
       if (nameInJE === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.value.detail.account_type === 'AccountsPayable') {
         this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.patchValue(null);
+      }
+    });
+  }
+
+  cccExportGroupingWatcher() {
+    this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.valueChanges.subscribe((defaultCCCAccountsPayableAccountNameValue: QbdDirectDestinationAttribute) => {
+      if (defaultCCCAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
+        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
+        this.exportSettingsForm.controls.creditCardExportGroup.disable();
+      }
+    });
+  }
+
+  reimburesmentExpenseGroupingWatcher() {
+    this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.valueChanges.subscribe((defaultReimbursableAccountsPayableAccountNameValue: QbdDirectDestinationAttribute) => {
+      if (defaultReimbursableAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
+        this.exportSettingsForm.controls.reimbursableExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
+        this.exportSettingsForm.controls.reimbursableExportGroup.disable();
       }
     });
   }
@@ -248,6 +286,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.defaultAccountsPayableAccountWatcher();
 
     this.defaultCCCAccountsPayableAccountWatcher();
+
+    this.cccExportGroupingWatcher();
+
+    this.reimburesmentExpenseGroupingWatcher();
   }
 
   private setupCCCExpenseGroupingDateOptions(): void {
