@@ -256,6 +256,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       if (defaultCCCAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
         this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
+      } else {
+        this.exportSettingsForm.controls.creditCardExportGroup.enable();
       }
     });
   }
@@ -265,6 +267,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       if (defaultReimbursableAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
         this.exportSettingsForm.controls.reimbursableExportGroup.patchValue(QbdDirectExportSettingModel.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.reimbursableExportGroup.disable();
+      } else {
+        this.exportSettingsForm.controls.reimbursableExportGroup.enable();
       }
     });
   }
