@@ -63,7 +63,7 @@ export class DashboardService {
     }
 
     if (taskType) {
-      const typeKey = appName===AppName.INTACCT ? 'task_type' : 'type__in';
+      const typeKey = appName === AppName.INTACCT ? 'task_type' : 'type__in';
       apiParams[typeKey] = taskType;
     }
 
