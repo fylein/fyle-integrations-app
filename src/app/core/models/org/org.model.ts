@@ -10,6 +10,7 @@ export type Org = {
     is_sendgrid_connected: boolean;
     allow_travelperk: boolean;
     allow_dynamics: boolean;
+    allow_qbd_direct_integration: boolean;
     created_at: Date;
     updated_at: Date;
 }
