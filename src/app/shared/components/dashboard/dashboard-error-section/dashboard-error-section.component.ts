@@ -128,7 +128,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     if (this.destinationField === AccountingField.ACCOUNT && this.appName === AppName.QBD_DIRECT) {
       this.detailAccountType = this.chartOfAccounts;
     } else {
-      this.detailAccountType = undefined
+      this.detailAccountType = undefined;
     }
 
     this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName, this.appName, this.detailAccountType).subscribe((response: any) => {
