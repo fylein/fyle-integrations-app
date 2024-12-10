@@ -210,7 +210,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   handleResolvedMappingStat(): void {
-    this.dashboardService.getExportErrors(this.errorsVersion).subscribe((errors) => {
+    this.dashboardService.getExportErrors(this.errorsVersion, this.appName).subscribe((errors) => {
       const argument = this.errorsVersion === 'v1' ? errors : (errors as ErrorResponse).results;
       const newError: AccountingGroupedErrors = this.formatErrors(argument);
 

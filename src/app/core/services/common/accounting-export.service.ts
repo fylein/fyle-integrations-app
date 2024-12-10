@@ -72,6 +72,10 @@ export class AccountingExportService {
     }
 
     if (appName === AppName.QBD_DIRECT) {
+      if (apiParams.status__in?.includes(AccountingExportStatus.FAILED)) {
+        apiParams.status__in = AccountingExportStatus.ERROR;
+      }
+      delete apiParams.type__in;
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, apiParams);
     }
       return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
