@@ -58,6 +58,8 @@ export class GenericMappingTableComponent implements OnInit {
 
   isSearchFocused: boolean;
 
+  uiExposedAppName: string;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
@@ -247,6 +249,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.constructDestinationOptions();
     this.optionSearchWatcher();
   }

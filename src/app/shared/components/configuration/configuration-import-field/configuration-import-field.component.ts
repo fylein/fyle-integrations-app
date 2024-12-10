@@ -59,6 +59,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   isXeroProjectMapped: boolean;
 
+  uiExposedAppName: string;
+
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
@@ -308,6 +310,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     if (this.form.controls?.dependentFieldImportToggle?.value) {
       this.form.controls?.dependentFieldImportToggle.disable();
     }
