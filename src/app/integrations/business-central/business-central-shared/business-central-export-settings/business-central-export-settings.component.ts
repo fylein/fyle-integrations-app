@@ -31,6 +31,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   bankOptions: DestinationAttribute[];
 
+  reimbursableBankOptions: DestinationAttribute[];
+
   vendorOptions: DestinationAttribute[];
 
   isLoading: boolean = true;
@@ -168,39 +170,63 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((event: ExportSettingOptionSearch) => {
 
-      let existingOptions: DestinationAttribute[];
-      switch (event.destinationOptionKey) {
-        case BCExportSettingDestinationOptionKey.ACCOUNT:
-          existingOptions = this.bankOptions;
-          break;
-        case BCExportSettingDestinationOptionKey.VENDOR:
-          existingOptions = this.vendorOptions;
-          break;
-      }
+      if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.REIMBURSABLE_BANK_ACCOUNT) {
+        const observables = [
+          this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT', event.searchTerm),
+          this.mappingService.getPaginatedDestinationAttributes(
+            'ACCOUNT', event.searchTerm, undefined, undefined, undefined, ['Assets', 'Liabilities']
+          )
+        ];
 
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+        forkJoin(observables).subscribe(([bankAccounts, accounts]) => {
+          // Insert new options (if any) to existing options, and sort them
+          const newOptions = [...bankAccounts.results, ...accounts.results];
+          newOptions.forEach((newOption) => {
+            if (!this.reimbursableBankOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
+              this.reimbursableBankOptions.push(newOption);
+            }
+          });
 
-        // Insert new options to existing options
-        response.results.forEach((option) => {
-          if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
-            existingOptions.push(option);
-          }
+          this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+          this.isOptionSearchInProgress = false;
         });
 
+      } else {
 
+        let existingOptions: DestinationAttribute[];
         switch (event.destinationOptionKey) {
           case BCExportSettingDestinationOptionKey.ACCOUNT:
-            this.bankOptions = existingOptions.concat();
-            this.bankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            existingOptions = this.bankOptions;
             break;
           case BCExportSettingDestinationOptionKey.VENDOR:
-            this.vendorOptions = existingOptions.concat();
-            this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            existingOptions = this.vendorOptions;
             break;
         }
 
-        this.isOptionSearchInProgress = false;
-      });
+        this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+
+          // Insert new options to existing options
+          response.results.forEach((option) => {
+            if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+              existingOptions.push(option);
+            }
+          });
+
+
+          switch (event.destinationOptionKey) {
+            case BCExportSettingDestinationOptionKey.ACCOUNT:
+              this.bankOptions = existingOptions.concat();
+              this.bankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+              break;
+            case BCExportSettingDestinationOptionKey.VENDOR:
+              this.vendorOptions = existingOptions.concat();
+              this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+              break;
+          }
+
+          this.isOptionSearchInProgress = false;
+        });
+      }
     });
   }
 
@@ -240,10 +266,19 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
     );
 
+    // For reimbursable default bank account options
+    const reimbursableBankAccountAttributes = [
+      this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT'),
+      this.mappingService.getPaginatedDestinationAttributes(
+        'ACCOUNT', undefined, undefined, undefined, undefined, ['Assets', 'Liabilities']
+      )
+    ];
+
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      ...groupedAttributes
-    ]).subscribe(([exportSettingsResponse, accounts, vendors]) => {
+      ...groupedAttributes,
+      ...reimbursableBankAccountAttributes
+    ]).subscribe(([exportSettingsResponse, accounts, vendors, reimbursableBankAccounts, reimbursableAccounts]) => {
       this.exportSettings = exportSettingsResponse;
 
       if (exportSettingsResponse) {
@@ -266,6 +301,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
       this.bankOptions = accounts.results;
       this.vendorOptions = vendors.results;
+      this.reimbursableBankOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
+      this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+
       this.setupCustomWatchers();
       this.optionSearchWatcher();
       this.isLoading = false;
