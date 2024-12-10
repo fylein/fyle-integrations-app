@@ -140,6 +140,7 @@ export class QbdDirectDashboardComponent implements OnInit {
       this.importSettingService.getImportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
+      console.log(this.errors)
       this.isImportItemsEnabled = responses[3].import_items;
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);

@@ -182,6 +182,8 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorArticle = accountingError.article_link;
     // @ts-ignore
     this.errorExpenses = accountingError[this.exportKey]?.expenses;
+    console.log(this.errorExpenses)
+
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {
