@@ -64,11 +64,11 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'default credit card account'"
+                                [mandatoryErrorListName]="'a default credit account'"
                                 [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase)"
                                 [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select default credit card account'"
+                                [placeholder]="'Select default account'"
                                 [isMultiLineOption]="true"
                                 [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
                             </app-configuration-select-field>
@@ -203,11 +203,11 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'default credit card account'"
+                                [mandatoryErrorListName]="'a default credit account'"
                                 [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase)"
                                 [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select default credit card account'"
+                                [placeholder]="'Select default account'"
                                 [isMultiLineOption]="true"
                                 [formControllerName]="'defaultCCCAccountsPayableAccountName'">
                             </app-configuration-select-field>
