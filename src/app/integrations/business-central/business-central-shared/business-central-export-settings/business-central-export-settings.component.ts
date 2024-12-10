@@ -188,6 +188,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
           });
 
           this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+          this.isOptionSearchInProgress = false;
         });
 
       } else {
