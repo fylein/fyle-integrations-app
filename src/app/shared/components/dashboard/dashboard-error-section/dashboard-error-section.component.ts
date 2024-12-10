@@ -125,7 +125,13 @@ export class DashboardErrorSectionComponent implements OnInit {
       this.displayName = undefined;
     }
 
-    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((response: any) => {
+    if (this.destinationField === AccountingField.ACCOUNT && this.appName === AppName.QBD_DIRECT) {
+      this.detailAccountType = this.chartOfAccounts;
+    } else {
+      this.detailAccountType = undefined
+    }
+
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName, this.appName, this.detailAccountType).subscribe((response: any) => {
       this.destinationOptions = response.results;
 
       this.setErrors(errorType);
@@ -149,13 +155,11 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
         this.destinationOptions = this.destinationField === FyleField.EMPLOYEE ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
-        this.detailAccountType = undefined;
       } else if (this.sourceField === 'CATEGORY') {
         if (this.destinationField === 'EXPENSE_TYPE') {
           this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
         } else {
-          this.detailAccountType = this.chartOfAccounts;
-          this.destinationOptions = this.appName !== AppName.QBD_DIRECT ? groupedDestinationResponse.ACCOUNT : this.destinationOptionsWatcher( this.chartOfAccounts, groupedDestinationResponse.ACCOUNT as QbdDirectDestinationAttribute[]);
+          this.destinationOptions = groupedDestinationResponse.ACCOUNT;
         }
       }
 
