@@ -17,7 +17,7 @@ export const c1Contents = {
             },
             connector: {
                 configurationHeaderText: 'Connect to QuickBooks Desktop',
-                configurationSubHeaderText: 'Connect to QuickBooks desktop by completing the following steps.',
+                configurationSubHeaderText: 'Connect to QuickBooks Desktop by completing the following steps.',
                 stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
             },

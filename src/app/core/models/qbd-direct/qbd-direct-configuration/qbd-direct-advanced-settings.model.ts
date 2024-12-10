@@ -9,7 +9,7 @@ export type QbdDirectAdvancedSettingsPost = {
     emails_added: EmailOption[],
     interval_hours: number,
     auto_create_merchant_as_vendor: boolean
-    auto_create_reimbursable_enitity: boolean,
+    auto_create_reimbursable_entity: boolean,
 }
 
 export interface QbdDirectAdvancedSettingsGet extends QbdDirectAdvancedSettingsPost {
@@ -56,7 +56,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.schedule_is_enabled : false),
             email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
             exportScheduleFrequency: new FormControl(advancedSettings?.schedule_is_enabled ? advancedSettings?.interval_hours : 1),
-            autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_enitity ? advancedSettings?.auto_create_reimbursable_enitity : false),
+            autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
             skipExport: new FormControl(isSkipExportEnabled),
             searchOption: new FormControl('')
@@ -79,7 +79,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
             emails_selected: advancedSettingForm.get('exportSchedule')?.value ? selectedEmailsEmails : [],
             interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
-            auto_create_reimbursable_enitity: advancedSettingForm.get('autoCreateReimbursableEnitity')?.value ? advancedSettingForm.get('autoCreateReimbursableEnitity')?.value : false,
+            auto_create_reimbursable_entity: advancedSettingForm.get('autoCreateReimbursableEnitity')?.value ? advancedSettingForm.get('autoCreateReimbursableEnitity')?.value : false,
             auto_create_merchant_as_vendor: advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value ? advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value : false,
             emails_added: advancedSettingForm.get('exportSchedule')?.value ? additionalEmails : []
         };

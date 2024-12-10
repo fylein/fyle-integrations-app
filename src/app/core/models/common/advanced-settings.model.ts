@@ -85,7 +85,7 @@ export class AdvancedSettingsModel {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_key: 'txDdlUFWkahX',
+      expense_key: 'E/2024/02/T/11',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     let memoPreviewText = '';

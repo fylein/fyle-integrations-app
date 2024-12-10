@@ -52,7 +52,7 @@ export class QbdDirectDashboardComponent implements OnInit {
     [AccountingErrorType.CATEGORY_MAPPING]: null
   };
 
-  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors(undefined, AppName.QBD_DIRECT);
+  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors(AppName.QBD_DIRECT);
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT);
 
