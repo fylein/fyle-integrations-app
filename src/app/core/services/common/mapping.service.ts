@@ -170,9 +170,9 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_accout_type?: string[]): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_accout_type?: string[], categories?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[]} = {
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[]} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
@@ -193,6 +193,10 @@ export class MappingService {
 
     if (detailed_accout_type) {
       params.detail__account_type__in = detailed_accout_type;
+    }
+
+    if (categories) {
+      params.detail__category__in = categories;
     }
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
