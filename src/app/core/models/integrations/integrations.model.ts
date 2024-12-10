@@ -31,6 +31,7 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.BUSINESS_CENTRAL]: string,
     [InAppIntegration.NETSUITE]: string,
     [InAppIntegration.XERO]: string
+    [InAppIntegration.QBD_DIRECT]: string
 }
 
 export type AppUrlMap = {
