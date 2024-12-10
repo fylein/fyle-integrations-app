@@ -102,6 +102,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   isMultiLineOption: boolean;
 
+  detailAccountType: string[] | undefined;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -145,10 +147,12 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
         this.destinationOptions = this.destinationField === FyleField.EMPLOYEE ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
+        this.detailAccountType = undefined;
       } else if (this.sourceField === 'CATEGORY') {
         if (this.destinationField === 'EXPENSE_TYPE') {
           this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
         } else {
+          this.detailAccountType = this.chartOfAccounts;
           this.destinationOptions = this.appName !== AppName.QBD_DIRECT ? groupedDestinationResponse.ACCOUNT : this.destinationOptionsWatcher( this.chartOfAccounts, groupedDestinationResponse.ACCOUNT as QbdDirectDestinationAttribute[]);
         }
       }
@@ -182,8 +186,6 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorArticle = accountingError.article_link;
     // @ts-ignore
     this.errorExpenses = accountingError[this.exportKey]?.expenses;
-    console.log(this.errorExpenses)
-
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {
@@ -212,8 +214,9 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   handleResolvedMappingStat(): void {
-    this.dashboardService.getExportErrors(this.errorsVersion).subscribe((errors) => {
-      const argument = this.errorsVersion === 'v1' ? errors : (errors as ErrorResponse).results;
+    const errorVersion = this.appName === AppName.QBD_DIRECT ? this.appName : this.errorsVersion;
+    this.dashboardService.getExportErrors(errorVersion).subscribe((errors) => {
+      const argument = errorVersion === 'v1' ? errors : (errors as ErrorResponse).results;
       const newError: AccountingGroupedErrors = this.formatErrors(argument);
 
       if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
