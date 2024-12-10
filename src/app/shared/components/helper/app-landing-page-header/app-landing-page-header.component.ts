@@ -59,6 +59,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px';
 
+  uiExposedAppName: string;
+
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 
   xeroConnectButtonSource: string = 'assets/buttons/connect-to-xero.svg';
@@ -104,6 +106,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
   }
 
 }

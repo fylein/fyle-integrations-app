@@ -2,7 +2,7 @@
     <ng-template pTemplate="header">
         <tr>
         <th class="!tw-pl-40-px">{{helper.sentenseCaseConversion(sourceField | snakeCaseToSpaceCase | titlecase)}} in {{brandingConfig.brandName}}</th>
-        <th>{{helper.sentenseCaseConversion(destinationField | snakeCaseToSpaceCase | titlecase)}} in {{appName}}</th>
+        <th>{{helper.sentenseCaseConversion(destinationField | snakeCaseToSpaceCase | titlecase)}} in {{uiExposedAppName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>

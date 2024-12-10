@@ -54,6 +54,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() chartOfAccounts: string[];
 
+  uiExposedAppName: string;
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -238,6 +240,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.employeeFieldMapping = this.destinationFieldMap.EMPLOYEE as unknown as FyleField;
   }
 
