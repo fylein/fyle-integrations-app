@@ -21,7 +21,7 @@
                             <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING.totalCount }} {{groupedErrorStat.EMPLOYEE_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">
-                                    <p>Map employees in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
+                                    <p>Map employees in {{brandingConfig.brandName}} to their corresponding records in {{uiExposedAppName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
                                     <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="[brandingConfig.brandId==='co' ? 'p-button primary-outline': 'p-button secondary-sm']">
@@ -45,7 +45,7 @@
                             <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingConfig.brandId === 'co' ? (brandingContent.categoryMappingErrorText | sentenceCase) : brandingContent.categoryMappingErrorText}}</h4>
                             <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING.totalCount }} {{groupedErrorStat.CATEGORY_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
-                                <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map categories in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
+                                <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map categories in {{brandingConfig.brandName}} to their corresponding records in {{uiExposedAppName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
                                     <span type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [ngClass]="[brandingConfig.brandId==='co' ? 'p-button primary-outline': 'p-button secondary-sm']">
@@ -66,8 +66,8 @@
                 <div *ngIf="errors?.ACCOUNTING_ERROR?.length" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="sub-text-container">
-                            <h4 class="tw-text-16-px !tw-font-500 tw-text-text-primary">{{appName}} {{brandingContent.qboErrorText}}</h4>
-                            <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">Resolve these errors on your {{appName}} account before trying to export them again.</h5>
+                            <h4 class="tw-text-16-px !tw-font-500 tw-text-text-primary">{{uiExposedAppName}} {{brandingContent.qboErrorText}}</h4>
+                            <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">Resolve these errors on your {{uiExposedAppName}} account before trying to export them again.</h5>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
 <div *ngIf="isAccountingErrorDialogVisible">
     <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
-            <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{appName}} {{brandingContent.qboErrorDialogHeaderText}}</p>
+            <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{uiExposedAppName}} {{brandingContent.qboErrorDialogHeaderText}}</p>
             <h3 class="dialog-sub-header">
                 <p>{{ errorDetail }}.
                     <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class=" tw-pr-4-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
@@ -133,7 +133,7 @@
     <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
         <p-header>
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{ brandingConfig.brandId === 'co' ? (errorType | snakeCaseToSpaceCase | sentenceCase) : (errorType | snakeCaseToSpaceCase | titlecase) }} {{brandingContentCommon.errors}}</p>
-            <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{appName}}</p>
+            <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{uiExposedAppName}}</p>
         </p-header>
           <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading" [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption"></app-generic-mapping-table>
     </p-dialog>

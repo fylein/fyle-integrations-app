@@ -40,6 +40,8 @@ export class DashboardExportSectionComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
+  uiExposedAppName: string;
+
   importStates: string;
 
   constructor() { }
@@ -74,6 +76,7 @@ export class DashboardExportSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.constructImportStates();
   }
 

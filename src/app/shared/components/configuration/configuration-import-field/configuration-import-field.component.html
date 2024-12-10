@@ -1,11 +1,11 @@
 <div [formGroup]="form">
     <div *ngIf="!isDestinationFixedImport && !isCloneSettingView" class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{appName}} Dimensions</div>
+        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{uiExposedAppName}} Dimensions</div>
         <div class="fields-header-text tw-w-30-vw">{{brandingConfig.brandName}} Fields</div>
         <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
             Import to {{brandingConfig.brandName}}
             <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipPosition]="'top'"
-                [tooltipText]="'Importing a dimension syncs active values from ' + appName + ' every 24 hours. Deactivated values in ' + appName + ' will also be disabled in ' + brandingConfig.brandName + ''">
+                [tooltipText]="'Importing a dimension syncs active values from ' + uiExposedAppName + ' every 24 hours. Deactivated values in ' + uiExposedAppName + ' will also be disabled in ' + brandingConfig.brandName + ''">
             </app-svg-icon>
         </div>
     </div>
@@ -38,24 +38,24 @@
                       </div>
                       <div>
                         <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                            Import {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase ) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} from {{ appName }}
+                            Import {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase ) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} from {{ uiExposedAppName }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
                           The imported {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} 
-                          <span *ngIf="brandingConfig.brandId !== 'co'">from {{ appName }} will be a selectable field while creating an expense.</span>
+                          <span *ngIf="brandingConfig.brandId !== 'co'">from {{ uiExposedAppName }} will be a selectable field while creating an expense.</span>
                           <span *ngIf="brandingConfig.brandId === 'co'"> will be an available field when creating an expense.</span>
                         </h5>        
                       </div>
                     </div>
                     <div class="configuration--input-toggle-section">
-                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && appName === AppName.XERO && isXeroProjectMapped ? brandingXeroContent : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && appName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
+                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? brandingXeroContent : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
                     </div>
                 </div>
             </div>
             <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
-                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{uiExposedAppName}} field" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
@@ -71,7 +71,7 @@
                         </ng-template>
                     </p-dropdown>
                     <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                        {{appName}} Fields should be unique
+                        {{uiExposedAppName}} Fields should be unique
                     </p>
                 </div>
                     <div [ngClass]="{'tw-pt-16-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.uiExposedAppName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                 <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
@@ -92,7 +92,7 @@
                                 <p>
                                     {{ brandingConfig.brandId === 'co' ? (item.display_name | sentenceCase) : item.display_name }}
                                 </p>
-                                <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                                <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')) || (!expenseField.get('source_field')?.value && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
@@ -103,15 +103,15 @@
             </div>
             <div class="tw-pt-26-px" [ngClass]="{'tw-pr-24-px tw-pl-[58px]': brandingConfig.brandId === 'co'}" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
-                    <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and Cost Type from ')}} {{appName}} as dependent fields.
-                        <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                    <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and Cost Type from ')}} {{uiExposedAppName}} as dependent fields.
+                        <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             Read More
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
                         </a>
-                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="appName === AppName.SAGE300 ? false : undefined">
+                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="uiExposedAppName === AppName.SAGE300 ? false : undefined">
                         <span class="checkmark"></span>
                     </label>
                 </div>
@@ -144,7 +144,7 @@
                         </div>
                         <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-inputSwitch>
                     </div>
-                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
+                    <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
@@ -160,7 +160,7 @@
                 </div>
             </div>                      
             <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
-                *{{brandingConfig.brandName}} and {{appName}} Fields should be unique.
+                *{{brandingConfig.brandName}} and {{uiExposedAppName}} Fields should be unique.
             </div> 
         </div>  
     </div>               
@@ -171,7 +171,7 @@
             Add more fields
         </a>
     </div>
-    <div *ngIf="appName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
+    <div *ngIf="uiExposedAppName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
         <div class="tw-pt-24-px">
             <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                 <div>
@@ -189,16 +189,16 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && appName === AppName.SAGE300">
+        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && uiExposedAppName === AppName.SAGE300">
             <div *ngFor="let defaultField of defaultImportFields">
                 <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value && importCodeFieldConfig[defaultField.destination_field]">
                     <app-configuration-select-field
-                        [appName]="appName"
+                        [appName]="uiExposedAppName"
                         [form]="form"
                         [isDisableTextRequired]="false"
                         [options]="getImportCodeSelectorOptions(defaultField.destination_field)"
                         [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()"
-                        [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' from ' + appName + '?'"
+                        [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' from ' + uiExposedAppName + '?'"
                         [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' or both the names and codes.'"
                         [isMultiLineOption]="true"
                         [isFieldMandatory]="true"
@@ -213,12 +213,12 @@
                 <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div *ngIf="showImportCodeSection(expenseField)">
                         <app-configuration-select-field
-                            [appName]="appName"
+                            [appName]="uiExposedAppName"
                             [isDisableTextRequired]="false"
                             [form]="getFormGroup(expenseField)"
                             [options]="getImportCodeSelectorOptions(expenseField.value.destination_field)"
                             [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' from ' + appName + '?'"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' from ' + uiExposedAppName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' or both the names and codes.' + getContentForJob(expenseField.value.destination_field)"
                             [isMultiLineOption]="true"
                             [isimportSettings]="true"

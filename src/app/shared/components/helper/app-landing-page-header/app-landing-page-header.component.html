@@ -9,7 +9,7 @@
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
                     <div class="tw-flex tw-items-center tw-pt-6-px">
-                        <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ appName }}</p>
+                        <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ uiExposedAppName }}</p>
                         <div>
                             <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'Sync Data'" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
                         </div>
@@ -27,7 +27,7 @@
                     </p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">We are syncing your data between your {{brandingConfig.brandName}} - {{ appName }} account and this may take a few seconds</p>
+                        <p class="tw-pl-10-px">We are syncing your data between your {{brandingConfig.brandName}} - {{ uiExposedAppName }} account and this may take a few seconds</p>
                     </div>
                 </div>
             </div>
