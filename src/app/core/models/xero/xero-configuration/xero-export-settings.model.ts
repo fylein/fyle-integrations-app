@@ -243,7 +243,7 @@ export class XeroExportSettingModel {
         bank_account: exportSettingsForm.get('bankAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value) : emptyDestinationAttribute
       }
     };
-    
+
     return exportSettingPayload;
   }
 }
