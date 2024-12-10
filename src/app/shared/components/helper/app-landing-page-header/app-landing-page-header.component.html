@@ -40,9 +40,10 @@
                 <button *ngIf="isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button danger-outline" (click)="disconnect()">
                     {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
                 </button>
-                <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)" pButton type="button" class="p-button-raised" (click)="connect()">
+                <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName.includes('QuickBooks Desktop - Direct Integration'))" pButton type="button" class="p-button-raised" (click)="connect()">
                     {{buttonText}}
-                    <app-svg-icon *ngIf="appName === AppName.QBD && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
+                    <app-svg-icon *ngIf="(appName === AppName.QBD || appName.includes('QuickBooks Desktop - Direct Integration')) && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
+                    <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>
                 <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px"></iframe>
                 <div *ngIf="showQBOButton" class="tw-cursor-pointer">
