@@ -97,6 +97,8 @@
                             [options]="reimbursableExpenseGroupingFieldOptions" 
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'" 
+                            [isDisableTextRequired]="isReimbursableExportGroupDisabled()"
+                            [isDisabled]="isReimbursableExportGroupDisabled()"
                             [formControllerName]="'reimbursableExportGroup'">
                         </app-configuration-select-field>
                     </div>
@@ -239,7 +241,8 @@
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [isDisableTextRequired]="true"
-                        [isDisabled]="exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false"
+                        [appName]="appName"
+                        [isDisabled]="isCccExportGroupDisabled()"
                         [formControllerName]="'creditCardExportGroup'">
                     </app-configuration-select-field>
                 </div>
