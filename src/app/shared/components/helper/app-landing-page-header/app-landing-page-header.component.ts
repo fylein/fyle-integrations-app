@@ -92,7 +92,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   connect(): void {
-    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO || this.appName.includes('QuickBooks Desktop - Direct Integration')) {
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO || this.appName.includes('QuickBooks Desktop ')) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {

@@ -16,8 +16,8 @@ export const fyleContents = {
                 configurationSubHeaderText: 'Begin your QuickBooks integration by completing the following steps.'
             },
             connector: {
-                configurationHeaderText: 'Connect to QuickBooks desktop',
-                configurationSubHeaderText: 'Connect to QuickBooks desktop by completing the following steps.',
+                configurationHeaderText: 'Connect to QuickBooks Desktop',
+                configurationSubHeaderText: 'Connect to QuickBooks Desktop by completing the following steps.',
                 stepName: 'Connect to QuickBooks Desktop',
                 subLabel: 'Expenses will be posted to the NetSuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
             },

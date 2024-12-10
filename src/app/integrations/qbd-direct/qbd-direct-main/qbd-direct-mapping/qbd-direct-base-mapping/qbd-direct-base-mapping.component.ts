@@ -52,6 +52,8 @@ export class QbdDirectBaseMappingComponent implements OnInit {
 
   chartOfAccounts: string[];
 
+  detailAccountType: string[] | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -72,6 +74,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
   }
 
   destinationOptionsWatcher(detailAccountType?: string[]): void {
+    this.detailAccountType = detailAccountType;
     this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName, '', detailAccountType).subscribe((responses) => {
       this.destinationOptions = responses.results as QbdDirectDestinationAttribute[];
       this.isLoading = false;
