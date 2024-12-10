@@ -116,9 +116,9 @@ export class QbdDirectDashboardComponent implements OnInit {
             CATEGORY_MAPPING: null
           };
           this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);
-          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.ERROR || task.status === TaskLogState.FATAL).length;
 
-          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.id);
+          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.ERROR || task.status === TaskLogState.FATAL).map(taskLog => taskLog.id);
 
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
@@ -154,7 +154,7 @@ export class QbdDirectDashboardComponent implements OnInit {
       this.chartOfAccounts = responses[5].import_settings.chart_of_accounts;
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
-      this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+      this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.ERROR || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[3].exportable_export_log_ids?.length ? responses[3].exportable_export_log_ids : [];
 
