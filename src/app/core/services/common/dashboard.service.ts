@@ -37,7 +37,7 @@ export class DashboardService {
   }
 
   getExportErrors(version?: string | 'v1', appName?: string): Observable<any> {
-    if (version === 'v1') {
+    if (!appName && version === 'v1') {
       return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
     } else if (appName ===  AppName.QBD_DIRECT) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/errors/`, {is_resolved: false});
