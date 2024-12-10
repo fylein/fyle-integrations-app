@@ -38,7 +38,8 @@ export enum InAppIntegration {
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
-  XERO = 'Xero'
+  XERO = 'Xero',
+  QBD_DIRECT = 'QuickBooks Connector'
 }
 
 export enum ToastSeverity {

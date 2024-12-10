@@ -36,7 +36,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             NETSUITE: true,
             QBD: true,
             BAMBOO: true,
-            QBD_DIRECT: false
+            QBD_DIRECT: true
         }
     },
     co: {
