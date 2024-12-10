@@ -13,7 +13,8 @@ export const orgMockData: Org = {
     allow_travelperk: true,
     created_at: new Date(),
     updated_at: new Date(),
-    allow_dynamics: true
+    allow_dynamics: true,
+    allow_qbd_direct_integration: true
 };
 
 export const generateTokenData = {
