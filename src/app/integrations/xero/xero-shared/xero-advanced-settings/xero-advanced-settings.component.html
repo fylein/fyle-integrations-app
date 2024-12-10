@@ -100,6 +100,32 @@
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
             </div>
+            <div class="tw-mb-16-px">
+                <app-configuration-step-sub-header
+                    [label]="'Customization'"
+                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Xero. You can choose what data points need to be exported and what shouldn\'t be.'">
+                </app-configuration-step-sub-header>
+            </div>
+            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+                <app-configuration-multi-select
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="false"
+                    [mandatoryErrorListName]="'Item level description'"
+                    [label]="'Set the line item-level Description Field in Xero'"
+                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Xero.'"
+                    [options]="defaultMemoFields"
+                    [iconPath]="'list'"
+                    [placeholder]="'Set description'"
+                    [formControllerName]="'memoStructure'"
+                    (changeInMultiSelect)="onMultiSelectChange()">
+                </app-configuration-multi-select>
+                <div class="preview-text">
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
+                    <div class="preview-box">
+                        {{memoPreviewText}}
+                    </div>
+                </div>
+            </div>
         </div>
         <app-configuration-step-footer
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"

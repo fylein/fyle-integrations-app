@@ -184,7 +184,7 @@ export class XeroExportSettingModel {
   static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
       reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
-      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'bankAccount', 'splitExpenseGrouping']
+      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'splitExpenseGrouping']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -196,6 +196,7 @@ export class XeroExportSettingModel {
       {
         formController: 'creditCardExportType',
         requiredValue: {
+          [XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION]: ['bankAccount']
         }
       }
     ];
@@ -242,6 +243,7 @@ export class XeroExportSettingModel {
         bank_account: exportSettingsForm.get('bankAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value) : emptyDestinationAttribute
       }
     };
+
     return exportSettingPayload;
   }
 }

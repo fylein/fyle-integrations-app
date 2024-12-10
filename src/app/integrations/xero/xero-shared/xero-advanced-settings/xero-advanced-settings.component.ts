@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { environment } from 'src/environments/environment';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroFyleField, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -17,6 +17,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 
 @Component({
   selector: 'app-xero-advanced-settings',
@@ -34,6 +35,10 @@ export class XeroAdvancedSettingsComponent implements OnInit {
   supportArticleLink: string = brandingKbArticles.onboardingArticles.XERO.ADVANCED_SETTING;
 
   advancedSettings: XeroAdvancedSettingGet;
+
+  memoPreviewText: string;
+
+  defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
   workspaceGeneralSettings: XeroWorkspaceGeneralSetting;
 
@@ -82,6 +87,12 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     this.router.navigate([`/integrations/xero/onboarding/import_settings`]);
   }
 
+  onMultiSelectChange() {
+    const memo = this.advancedSettingForm.controls.memoStructure.value;
+    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoFields)[1];
+    this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
+  }
+
   save(): void {
     const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
@@ -108,6 +119,44 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     XeroAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
+  private formatMemoPreview(): void {
+    const time = Date.now();
+    const today = new Date(time);
+
+    const previewValues: { [key: string]: string } = {
+      employee_email: 'john.doe@acme.com',
+      category: 'Meals and Entertainment',
+      purpose: 'Client Meeting',
+      merchant: 'Pizza Hut',
+      report_number: 'C/2021/12/R/1',
+      spent_on: today.toLocaleDateString(),
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+    };
+
+    this.memoPreviewText = '';
+    const memo: string[] = [];
+    this.memoStructure.forEach((field, index) => {
+      if (field in previewValues) {
+        const defaultIndex = this.defaultMemoFields.indexOf(this.memoStructure[index]);
+        memo[defaultIndex] = previewValues[field];
+      }
+    });
+    memo.forEach((field, index) => {
+      this.memoPreviewText += field;
+      if (index + 1 !== memo.length) {
+        this.memoPreviewText = this.memoPreviewText + ' - ';
+      }
+    });
+  }
+
+  private createMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSettingForm.get('memoStructure')?.value;
+    this.formatMemoPreview();
+    this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
+      this.memoStructure = memoChanges;
+      this.formatMemoPreview();
+    });
+  }
 
   private setupPage() {
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -122,8 +171,8 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
       this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
-
       this.setupFormWatchers();
+      this.createMemoStructureWatcher();
       this.isLoading = false;
     });
   }

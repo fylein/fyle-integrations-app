@@ -88,6 +88,8 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
     const previewValues: { [key: string]: string } = {
       employee_email: 'john.doe@acme.com',
+      employee_name: 'John Doe',
+      card_number: '**** 3456',
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
