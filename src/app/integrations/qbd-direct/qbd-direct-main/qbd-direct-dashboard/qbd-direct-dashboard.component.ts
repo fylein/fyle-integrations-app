@@ -56,8 +56,6 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT);
 
-  accountingExportType: QbdDirectTaskLogType[] = [QbdDirectTaskLogType.BILL, QbdDirectTaskLogType.CREDIT_CARD_PURCHASE, QbdDirectTaskLogType.JOURNAL_ENTRY];
-
   exportLogProcessingStates: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
 
   isImportItemsEnabled: boolean;
@@ -97,7 +95,7 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.QBD_DIRECT))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, [], AppName.QBD_DIRECT))),
       takeWhile((response: QbdDirectTaskResponse) =>
         response.results.filter(task =>
           (this.exportLogProcessingStates.includes(task.status))
@@ -120,7 +118,7 @@ export class QbdDirectDashboardComponent implements OnInit {
           this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummaryForQbdDirect(responses[1]);
           this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
+          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.id);
 
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
@@ -134,7 +132,7 @@ export class QbdDirectDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.ERROR), undefined, this.accountingExportType, AppName.QBD_DIRECT),
+      this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.ERROR), undefined, [], AppName.QBD_DIRECT),
       this.dashboardService.getExportableAccountingExportIds('v2'),
       this.QbdDirectExportSettingsService.getQbdExportSettings(),
       this.importSettingService.getImportSettings()
