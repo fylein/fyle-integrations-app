@@ -36,10 +36,10 @@ export class DashboardService {
     return this.apiService.post(url, {});
   }
 
-  getExportErrors(version?: string | 'v1'): Observable<any> {
-    if (version === 'v1') {
+  getExportErrors(version?: string | 'v1', appName?: string): Observable<any> {
+    if (!appName && version === 'v1') {
       return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
-    } else if (version ===  AppName.QBD_DIRECT) {
+    } else if (appName ===  AppName.QBD_DIRECT) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/errors/`, {is_resolved: false});
     }
 
@@ -63,7 +63,7 @@ export class DashboardService {
     }
 
     if (taskType) {
-      const typeKey = appName===AppName.INTACCT ? 'task_type' : 'type__in';
+      const typeKey = appName === AppName.INTACCT ? 'task_type' : 'type__in';
       apiParams[typeKey] = taskType;
     }
 

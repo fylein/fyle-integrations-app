@@ -91,7 +91,7 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop '
+  QBD_DIRECT = 'QuickBooks Desktop Connector'
 }
 
 export enum AppNameInService {

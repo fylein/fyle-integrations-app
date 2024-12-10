@@ -29,7 +29,6 @@
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
         [appName]="appName"
         [exportLogVersion]="'v2'"
-        [accountingExportType]="accountingExportType"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
 
@@ -44,6 +43,7 @@
         [destinationOptionsVersion]="'v1'"
         [importCodeFields]="importCodeFields"
         [chartOfAccounts]="chartOfAccounts"
-        [errorsVersion]="'v1'">
+        [errorsVersion]="'v1'"
+        [exportKey]="'export_log'">
     </app-dashboard-error-section>
 </div>
