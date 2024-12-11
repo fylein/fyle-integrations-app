@@ -47,9 +47,7 @@ export class QbdDirectMainComponent implements OnInit {
   }
 
   refreshDimensions() {
-    this.workspaceService.importFyleAttributes(true).subscribe();
-    this.qbdDirectHelperService.importQBDAttributes(true).subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Desktop');
+    this.qbdDirectHelperService.importAttributes(true);
   }
 
   ngOnInit(): void {

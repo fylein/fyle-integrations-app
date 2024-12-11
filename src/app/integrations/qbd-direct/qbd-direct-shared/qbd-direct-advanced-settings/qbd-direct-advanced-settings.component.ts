@@ -144,7 +144,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   }
 
   refreshDimensions() {
-    this.qbdDirectHelperService.importAttribuites(true);
+    this.qbdDirectHelperService.importAttributes(true);
   }
 
   save() {
