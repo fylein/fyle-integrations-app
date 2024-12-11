@@ -95,7 +95,7 @@
                                 <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
-                      <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')) || (!expenseField.get('source_field')?.value && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                      <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field'))" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         {{brandingConfig.brandName}} Fields should be unique
                       </p>
                     </div>
