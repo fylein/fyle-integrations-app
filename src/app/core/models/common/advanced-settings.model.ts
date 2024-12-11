@@ -81,13 +81,11 @@ export class AdvancedSettingsModel {
     // Handle both configurations and configuration properties
     if ('configurations' in exportSettings) {
       cccExportType = exportSettings.configurations?.corporate_credit_card_expenses_object ?? undefined;
-    } else if ('configuration' in exportSettings) {
-      cccExportType = exportSettings.configuration?.corporate_credit_card_expenses_object ?? undefined;
     } else if ('workspace_general_settings' in exportSettings) {
       cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
     // Filter out options based on cccExportType and appName
-    if (cccExportType) {
+    if (cccExportType && ['netsuite', 'qbo', 'sage intacct'].includes(appName.toLowerCase())) {
       return defaultOptions; // Allow all options including 'card_number'
     }
       return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
