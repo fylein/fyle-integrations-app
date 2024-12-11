@@ -26,7 +26,7 @@ export class BusinessCentralImportSettingsModel extends ImportSettingsModel {
         const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-            chartOfAccountTypes: new FormControl(importSettings?.import_settings.charts_of_accounts ? importSettings?.import_settings.charts_of_accounts : ['Expense']),
+            chartOfAccountTypes: new FormControl(importSettings?.import_settings?.charts_of_accounts ? importSettings?.import_settings?.charts_of_accounts : ['Expense']),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false ),
             expenseFields: new FormArray(expenseFieldsArray)
         });
