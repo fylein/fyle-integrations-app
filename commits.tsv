@@ -1,0 +1,11 @@
+64a9f70f7fa22b780786ec862d701b1ff2fc0ecd\tDhaarani\tWed Dec 11 12:43:59 2024 +0530\tfix: dashboard error section fixes (#1107)\tintegrations_app_release_2024_12_06\tintegrations-app
+1a8fa49bd5b12eba678d70ceb5c7374fe3c35265\tAshwin Thanaraj\tWed Dec 11 11:48:28 2024 +0530\tfix: QBD fixes post testing (#1108)\tintegrations_app_release_2024_12_06\tintegrations-app
+b8e33e07bc65da9ee932d798b6ac21f0f67cec87\tDhaarani\tTue Dec 10 19:13:59 2024 +0530\tfix: QBD direct bug fixes (#1101)\tintegrations_app_release_2024_12_06\tintegrations-app
+4f73b406909e5713c4f79869da1b92af7b506a48\tAshwin Thanaraj\tTue Dec 10 19:05:59 2024 +0530\tfix: QBD app name references (#1106)\tintegrations_app_release_2024_12_06\tintegrations-app
+5e0d388d65064b145c368af59ac48e6e05b8fa03\tAshwin Thanaraj\tTue Dec 10 18:12:49 2024 +0530\tfix: QBD landing page (#1104)\tintegrations_app_release_2024_12_06\tintegrations-app
+0f88a7afc21f8e41557e97e76ebaf4e4fd8fcb6f\tAshwin Thanaraj\tTue Dec 10 15:14:27 2024 +0530\tfeat: Expose QBD connector app conditionally (#1100)\tintegrations_app_release_2024_12_06\tintegrations-app
+357a9866ab91d686f6162751ae62f6cb0d76cafe\tAshwin Thanaraj\tTue Dec 10 17:29:08 2024 +0530\tfix: QBD Dashboard bugs (#1103)\tintegrations_app_release_2024_12_06\tintegrations-app
+579ccd5469cffde6087481933ceefee1f41a3ee8\tViswas Haridas\tTue Dec 10 15:29:54 2024 +0530\tfix: update orgs to hide business central beta badge from (#1102)\tintegrations_app_release_2024_12_06\tintegrations-app
+77ed17b9902815ad16f35f4b41c43778b1b9e870\tDhaarani\tTue Dec 10 13:47:11 2024 +0530\tfix: qbd direct team testing fixes (#1095)\tintegrations_app_release_2024_12_06\tintegrations-app
+a11820f42d3538868891642368ba9baa2c54fd2a\tDhaarani\tTue Dec 10 13:43:04 2024 +0530\tfix: C1 xero bug fix (#1097)\tintegrations_app_release_2024_12_06\tintegrations-app
+a32b5f73853bb25cd3ef926adb7b6cbcc5a9fb60\tHrishabh Tiwari\tTue Dec 10 13:28:34 2024 +0530\tRevert "feat: memo structure in xero app (#1094)"\tintegrations_app_release_2024_12_06\tintegrations-app
