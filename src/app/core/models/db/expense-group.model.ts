@@ -32,7 +32,7 @@ export type ExpenseGroupParam = {
   limit: number;
   offset: number;
   tasklog__status?: string;
-  status__in?: string;
+  status__in?: string | string[];
   exported_at__gte?: string;
   exported_at__lte?: string;
   state?: string;
