@@ -250,6 +250,7 @@ export const fyleContents = {
                 topLevelMemoStructureSubLabel: 'Select the datapoints you\'d like to export to Xero’s top-level memo field when exporting expenses from Fyle.',
                 memoStructureLabel: 'Customize the Line-Item Level Memo Field',
                 memoStructureSubLabel: 'Select the datapoints you\'d like to export to Xero\’s line-item level memo field when exporting expenses from Fyle.',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Xero. You can choose what data points need to be exported and what shouldn\'t be.',
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to Xero.',
                 customPreferencesLabel: 'Other Preferences',
                 customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Xero from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)',

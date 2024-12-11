@@ -103,7 +103,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Customization'"
-                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Xero. You can choose what data points need to be exported and what shouldn\'t be.'">
+                    [subLabel]="brandingContent.customizeSectionSubLAbel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -111,8 +111,8 @@
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'Item level description'"
-                    [label]="'Set the line item-level Description Field in Xero'"
-                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Xero.'"
+                    [label]="brandingContent.memoStructureLabel"
+                    [subLabel]="brandingContent.memoStructureSubLabel"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
                     [placeholder]="'Set description'"
