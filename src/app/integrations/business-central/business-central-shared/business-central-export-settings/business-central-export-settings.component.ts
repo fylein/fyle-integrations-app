@@ -149,6 +149,16 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     this.businessCentralHelperService.importAttributes(isRefresh);
   }
 
+  updateExpenseGroupingValues() {
+    if (this.exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+      this.exportSettingForm.get('cccExportGroup')?.setValue(ExpenseGroupedBy.EXPENSE);
+    }
+
+    if (this.exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+      this.exportSettingForm.get('reimbursableExportGroup')?.setValue(ExpenseGroupedBy.EXPENSE);
+    }
+  }
+
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
@@ -169,6 +179,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         }
       }
     });
+
+    this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
+    this.exportSettingForm.get('cccExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
   }
 
   private optionSearchWatcher(): void {

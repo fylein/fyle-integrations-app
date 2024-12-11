@@ -113,7 +113,8 @@
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'reimbursableExportGroup'"
-                            [appName]="appName">
+                            [appName]="appName"
+                            [isDisabled]="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -217,7 +218,8 @@
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'cccExportGroup'"
-                            [appName]="appName">
+                            [appName]="appName"
+                            [isDisabled]="exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="!exportSettingForm.get('reimbursableExpense')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
