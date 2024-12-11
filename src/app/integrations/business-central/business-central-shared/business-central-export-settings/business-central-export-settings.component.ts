@@ -142,7 +142,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
       return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
     }
-    return options.filter(option => option.value !== ExportDateType.SPENT_AT);
+    return options.filter(option => (option.value !== ExportDateType.SPENT_AT && option.value !== ExportDateType.POSTED_AT));
   }
 
   refreshDimensions(isRefresh: boolean): void{
@@ -161,6 +161,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+
+        // If the selected value is not valid after the export group change, reset the field
+        const visibleValues = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup').map(option => option.value);
+        if (!visibleValues.includes(this.exportSettingForm.get('cccExportDate')?.value)) {
+          this.exportSettingForm.get('cccExportDate')?.reset();
+        }
       }
     });
   }
