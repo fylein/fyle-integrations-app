@@ -78,14 +78,16 @@ export class AdvancedSettingsModel {
   static getMemoOptions(exportSettings: ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
     const defaultOptions = this.getDefaultMemoOptions();
     let cccExportType: string | undefined;
-
-    // Extract cccExportType based on the type of exportSettings
+    // Handle both configurations and configuration properties
     if ('configurations' in exportSettings) {
-      cccExportType = exportSettings.configurations.corporate_credit_card_expenses_object ?? undefined;
+      cccExportType = exportSettings.configurations?.corporate_credit_card_expenses_object ?? undefined;
+    } else if ('configuration' in exportSettings) {
+      cccExportType = exportSettings.configuration?.corporate_credit_card_expenses_object ?? undefined;
+    } else if ('workspace_general_settings' in exportSettings) {
+      cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
-
     // Filter out options based on cccExportType and appName
-    if (cccExportType && ['netsuite', 'qbo', 'sage intacct'].includes(appName.toLowerCase())) {
+    if (cccExportType) {
       return defaultOptions; // Allow all options including 'card_number'
     }
       return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
