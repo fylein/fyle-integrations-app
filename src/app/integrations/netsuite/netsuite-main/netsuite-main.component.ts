@@ -33,14 +33,14 @@ export class NetsuiteMainComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private netsuiteHelperService: NetsuiteHelperService,
     private router: Router,
-    private toastServeice: IntegrationsToastService
+    private toastService: IntegrationsToastService
   ) { }
 
   refreshDimensions() {
     this.netsuiteHelperService.refreshNetsuiteDimensions().subscribe();
     this.netsuiteHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
-    this.toastServeice.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from NetSuite');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from NetSuite');
   }
 
   private setupPage() {

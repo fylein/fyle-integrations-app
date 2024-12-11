@@ -20,7 +20,7 @@ export class QbdDirectHelperService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/import_attributes/`, {refresh});
   }
 
-  importAttribuites(refresh: boolean): void {
+  importAttributes(refresh: boolean): void {
     this.workspaceService.importFyleAttributes(refresh).subscribe();
     this.importQBDAttributes(refresh).subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Quickbooks Desktop');
