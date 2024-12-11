@@ -76,3 +76,5 @@ documentation.json
 
 # Sentry Config File
 .sentryclirc
+
+commits.csv
