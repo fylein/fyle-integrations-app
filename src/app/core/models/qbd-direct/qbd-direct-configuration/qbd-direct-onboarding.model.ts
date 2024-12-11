@@ -26,7 +26,7 @@ export class QbdDirectOnboardingModel {
             completed: false,
             step: this.brandingContent.preRequisite.stepName,
             icon: 'arrow-tail-up-medium',
-            route: '/integrations/qbo/onboarding/pre_requisite',
+            route: '/integrations/qbd_direct/onboarding/pre_requisite',
             styleClasses: ['step-name-pre-requisite--text']
         },
         {
@@ -34,7 +34,7 @@ export class QbdDirectOnboardingModel {
           completed: false,
           step: this.brandingContent.connector.stepName,
           icon: 'link-vertical-medium',
-          route: '/integrations/qbo/onboarding/connector',
+          route: '/integrations/qbd_direct/onboarding/connector',
           styleClasses: ['step-name-connector--text !tw-left-[-70px]']
         },
         {
@@ -42,7 +42,7 @@ export class QbdDirectOnboardingModel {
           completed: false,
           step: this.brandingContent.exportSetting.stepName,
           icon: 'arrow-tail-up-medium',
-          route: '/integrations/qbo/onboarding/export_settings',
+          route: '/integrations/qbd_direct/onboarding/export_settings',
           styleClasses: ['step-name-export--text']
         },
         {
@@ -50,7 +50,7 @@ export class QbdDirectOnboardingModel {
           completed: false,
           step: this.brandingContent.importSetting.stepName,
           icon: 'arrow-tail-down-medium',
-          route: '/integrations/qbo/onboarding/import_settings',
+          route: '/integrations/qbd_direct/onboarding/import_settings',
           styleClasses: ['step-name-export--text']
         },
         {
@@ -58,7 +58,7 @@ export class QbdDirectOnboardingModel {
           completed: false,
           step: this.brandingContent.advancedSettings.stepName,
           icon: 'gear-medium',
-          route: '/integrations/qbo/onboarding/advanced_settings',
+          route: '/integrations/qbd_direct/onboarding/advanced_settings',
           styleClasses: ['step-name-advanced--text']
         }
     ];
