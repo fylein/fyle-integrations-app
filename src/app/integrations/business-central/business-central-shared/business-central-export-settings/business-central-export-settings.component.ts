@@ -29,9 +29,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   exportSettingForm: FormGroup;
 
-  bankOptions: DestinationAttribute[];
-
-  reimbursableBankOptions: DestinationAttribute[];
+  bankAccountOptions: DestinationAttribute[];
 
   vendorOptions: DestinationAttribute[];
 
@@ -189,7 +187,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((event: ExportSettingOptionSearch) => {
 
-      if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.REIMBURSABLE_BANK_ACCOUNT) {
+      if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.BANK_ACCOUNT) {
         const observables = [
           this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT', event.searchTerm),
           this.mappingService.getPaginatedDestinationAttributes(
@@ -201,12 +199,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
           // Insert new options (if any) to existing options, and sort them
           const newOptions = [...bankAccounts.results, ...accounts.results];
           newOptions.forEach((newOption) => {
-            if (!this.reimbursableBankOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
-              this.reimbursableBankOptions.push(newOption);
+            if (!this.bankAccountOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
+              this.bankAccountOptions.push(newOption);
             }
           });
 
-          this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+          this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
           this.isOptionSearchInProgress = false;
         });
 
@@ -214,9 +212,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
         let existingOptions: DestinationAttribute[];
         switch (event.destinationOptionKey) {
-          case BCExportSettingDestinationOptionKey.ACCOUNT:
-            existingOptions = this.bankOptions;
-            break;
           case BCExportSettingDestinationOptionKey.VENDOR:
             existingOptions = this.vendorOptions;
             break;
@@ -233,10 +228,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
 
           switch (event.destinationOptionKey) {
-            case BCExportSettingDestinationOptionKey.ACCOUNT:
-              this.bankOptions = existingOptions.concat();
-              this.bankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
-              break;
             case BCExportSettingDestinationOptionKey.VENDOR:
               this.vendorOptions = existingOptions.concat();
               this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
@@ -314,14 +305,13 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         });
       }
 
+      this.vendorOptions = vendors.results;
+      this.bankAccountOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
+      this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, accounts.results, vendors.results);
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
-      this.bankOptions = accounts.results;
-      this.vendorOptions = vendors.results;
-      this.reimbursableBankOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
-      this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
 
       this.setupCustomWatchers();
       this.optionSearchWatcher();

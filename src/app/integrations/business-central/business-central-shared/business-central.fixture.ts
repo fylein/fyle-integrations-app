@@ -12,6 +12,8 @@ export const exportSettingsResponse: BusinessCentralExportSettingGet = {
   "reimbursable_expenses_export_type": BusinessCentralExportType.JOURNAL_ENTRY,
   "default_bank_account_name": "XYZ",
   "default_bank_account_id": "1232",
+  "default_CCC_bank_account_name": "ABC",
+  "default_CCC_bank_account_id": "2321",
   "reimbursable_expense_state": ExpenseState.PAYMENT_PROCESSING,
   "reimbursable_expense_date": ExportDateType.LAST_SPENT_AT,
   "reimbursable_expense_grouped_by": ExpenseGroupedBy.EXPENSE,

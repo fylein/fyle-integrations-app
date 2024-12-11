@@ -91,8 +91,8 @@
                             [mandatoryErrorListName]="'Default Bank Account Name'"
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
-                            [destinationAttributes]="reimbursableBankOptions"
-                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.REIMBURSABLE_BANK_ACCOUNT"
+                            [destinationAttributes]="bankAccountOptions"
+                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
@@ -173,21 +173,21 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.get('cccExportType')?.value && exportSettingForm.get('reimbursableExportType')?.value !== BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Bank Account Name'"
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
-                            [destinationAttributes]="bankOptions"
-                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.ACCOUNT"
+                            [destinationAttributes]="bankAccountOptions"
+                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
-                            [formControllerName]="'defaultBankName'">
+                            [formControllerName]="'cccDefaultBankName'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
