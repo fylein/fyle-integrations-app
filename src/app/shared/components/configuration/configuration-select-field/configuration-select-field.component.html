@@ -97,8 +97,8 @@
                         <span *ngIf="brandingConfig.brandId === 'co'"> in {{uiExposedAppName}}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
-                        <span>Auto-selected based on your export module</span>
-                        <span *ngIf="(formControllerName === 'reimbursableExportGroup' || formControllerName === 'creditCardExportGroup') && appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE'"> Auto-selected when your default credit account is set to an Accounts Payable account</span>
+                        <span *ngIf="!((formControllerName === 'reimbursableExportGroup' || formControllerName === 'creditCardExportGroup') && appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && form.controls.reimbursableExportType.value !== 'BILL')">Auto-selected based on your export module</span>
+                        <span *ngIf="(formControllerName === 'reimbursableExportGroup' || formControllerName === 'creditCardExportGroup') && appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && form.controls.reimbursableExportType.value !== 'BILL'"> Auto-selected when your default credit account is set to an Accounts Payable account</span>
                     </div>
                     <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
