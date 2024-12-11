@@ -86,7 +86,7 @@ export class ExportLogService {
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
     } else if (appName === AppName.QBD_DIRECT) {
       if (params.status__in?.includes(AccountingExportStatus.FAILED)) {
-        params.status__in = AccountingExportStatus.ERROR;
+        params.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
 
       return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, params);

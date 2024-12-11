@@ -195,7 +195,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   refreshDimensions() {
-    this.qbdDirectHelperService.importAttribuites(true);
+    this.qbdDirectHelperService.importAttributes(true);
   }
 
   cccExportTypeWatcher(): void {
