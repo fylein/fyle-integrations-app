@@ -247,6 +247,29 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
+  addMissingOptions() {
+    // Since pagination API response is a subset of all options, we're making use of the export settings response to fill in options
+
+    if (this.exportSettings) {
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.bankAccountOptions,
+        value: this.exportSettings.default_CCC_bank_account_name,
+        destination_id: this.exportSettings.default_CCC_bank_account_id
+      });
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.bankAccountOptions,
+        value: this.exportSettings.default_bank_account_name,
+        destination_id: this.exportSettings.default_bank_account_id
+      });
+
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.vendorOptions,
+        value: this.exportSettings.default_vendor_name,
+        destination_id: this.exportSettings.default_vendor_id
+      });
+    }
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
@@ -308,7 +331,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.vendorOptions = vendors.results;
       this.bankAccountOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
       this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
-      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, accounts.results, vendors.results);
+      this.addMissingOptions();
+      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccountOptions, vendors.results);
+
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
