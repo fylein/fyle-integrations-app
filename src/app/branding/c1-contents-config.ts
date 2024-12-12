@@ -257,7 +257,7 @@ export const c1Contents = {
                 customPreferencesSubLabel: 'Create new records in Xero if no contacts found or the accounting period is closed.',
                 memoStructureLabel: 'Set the line-item description field in Xero',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Xero.',
-                customizeSectionSubLabel: 'Customize the data that you\'d like to export from Expense Management to Xero by choosing which data points need to be exported.',
+                customizeSectionSubLabel: 'Customize the data that you\'d like to export from Expense Management to Xero by choosing which data points need to be exported.'
             }
         }
     },
