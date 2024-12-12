@@ -118,13 +118,18 @@ export class QboExportSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.exportSetting;
 
   isMultilineOption: boolean;
-  
-  //Employee settings
+
+  // Employee settings
   employeeSettingForm: FormGroup;
+
   employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
+
   autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
+
   employeeSetting: QBOEmployeeSettingGet;
+
   existingEmployeeFieldMapping: EmployeeFieldMapping;
+
   liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
 
   constructor(
@@ -433,7 +438,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.employeeSettingService.getEmployeeSettings(),
     this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
-      ...groupedAttributes,
+      ...groupedAttributes
     ]).subscribe(([exportSetting, workspaceGeneralSettings, employeeSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
