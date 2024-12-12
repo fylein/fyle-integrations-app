@@ -67,7 +67,7 @@ export const fyleKbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
     },
     onboardingArticles: {
         INTACCT: {
@@ -126,12 +126,10 @@ export const fyleKbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_d95b791edd`
         },
         QBD_DIRECT: {
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
-            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
-            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_a170c7d562`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_1366df4107`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_b3850646c0`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         }
     }
