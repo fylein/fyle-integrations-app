@@ -8,6 +8,7 @@ import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { FyleField, AppName, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, NameInJournalEntry } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
+import { QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -106,7 +107,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
       this.cccExpenseObject = responses[0].credit_card_expense_export_type;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
       this.nameInJE = responses[0].name_in_journal_entry;
-      this.chartOfAccounts = responses[1].import_settings.chart_of_accounts;
+      this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts : QbdDirectImportSettingModel.getChartOfAccountTypesList();
 
       this.destinationField = this.getDestinationField(responses[0], responses[2].results);
 
