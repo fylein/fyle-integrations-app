@@ -83,7 +83,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   ) { }
 
   triggerDownload(filePath: string) {
-   if(filePath) {
+   if (filePath) {
       this.isDownloadfileLoading = true;
       this.isCompanyPathInvalid = false;
       this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
