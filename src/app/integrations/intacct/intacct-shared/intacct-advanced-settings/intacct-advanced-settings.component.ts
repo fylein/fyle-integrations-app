@@ -93,7 +93,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  defaultMemoFields: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
@@ -313,6 +313,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         if (this.advancedSettings.workspace_schedules?.additional_email_options) {
           this.adminEmails = this.adminEmails.concat(this.advancedSettings.workspace_schedules?.additional_email_options);
         }
+        this.defaultMemoFields = AdvancedSettingsModel.getMemoOptions(configuration, AppName.INTACCT);
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
