@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -16,6 +16,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+// Add to existing imports
+import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
+import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -114,6 +118,14 @@ export class QboExportSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.exportSetting;
 
   isMultilineOption: boolean;
+  
+  //Employee settings
+  employeeSettingForm: FormGroup;
+  employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
+  employeeSetting: QBOEmployeeSettingGet;
+  existingEmployeeFieldMapping: EmployeeFieldMapping;
+  liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
 
   constructor(
     private exportSettingService: QboExportSettingsService,
@@ -123,7 +135,8 @@ export class QboExportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private employeeSettingService: QboEmployeeSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -133,21 +146,29 @@ export class QboExportSettingsComponent implements OnInit {
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
-      this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: QBOExportSettingGet) => {
+      const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
+      forkJoin([
+        this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),
+        this.exportSettingService.postExportSettings(exportSettingPayload)
+      ]).subscribe(() => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
-
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Settings saved successfully');
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
-          this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
-        } else if (this.isAdvancedSettingAffected()) {
-          this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
+          this.router.navigate(['/integrations/qbo/onboarding/import_settings']);
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving settings, please try again later');
       });
     }
+  }
+
+  private setLiveEntityExample(destinationAttributes: DestinationAttribute[]): void {
+    this.liveEntityExample = {
+      [FyleField.EMPLOYEE]: destinationAttributes.find((attribute: DestinationAttribute) => attribute.attribute_type === FyleField.EMPLOYEE)?.value,
+      [FyleField.VENDOR]: destinationAttributes.find((attribute: DestinationAttribute) => attribute.attribute_type === FyleField.VENDOR)?.value
+    };
   }
 
   navigateToPreviousStep(): void {
@@ -410,12 +431,14 @@ export class QboExportSettingsComponent implements OnInit {
     forkJoin([
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      ...groupedAttributes
-    ]).subscribe(([exportSetting, workspaceGeneralSettings, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
+      this.employeeSettingService.getEmployeeSettings(),
+    this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
+      ...groupedAttributes,
+    ]).subscribe(([exportSetting, workspaceGeneralSettings, employeeSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
-      this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
-
+      this.employeeFieldMapping = employeeSettings.workspace_general_settings.employee_field_mapping;
+      this.setLiveEntityExample(destinationAttributes);
       this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -429,7 +452,11 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
-
+      this.employeeSettingForm = new FormGroup({
+        employeeMapping: new FormControl(this.existingEmployeeFieldMapping, Validators.required),
+        autoMapEmployee: new FormControl(employeeSettings.workspace_general_settings?.auto_map_employees),
+        searchOption: new FormControl('')
+      });
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }

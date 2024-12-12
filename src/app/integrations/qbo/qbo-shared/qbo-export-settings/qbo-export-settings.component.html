@@ -12,6 +12,28 @@
                 (refreshDimension)="refreshDimensions()">
             </app-configuration-step-header>
         </div>
+        <form [formGroup]="employeeSettingForm">
+            <div class="tw-p-24-px">
+              <app-configuration-select-field
+                [form]="employeeSettingForm"
+                [isFieldMandatory]="true"
+                [formControllerName]="'employeeMapping'"
+                [options]="employeeMappingOptions"
+                [label]="'How are your Employees represented in QuickBooks Online?'"
+                [placeholder]="'Select representation'"
+                [tooltipText]="'Select how you represent your employees in QuickBooks Online'">
+              </app-configuration-select-field>
+        
+              <app-configuration-select-field
+                [form]="employeeSettingForm"
+                [formControllerName]="'autoMapEmployee'"
+                [options]="autoMapEmployeeOptions"
+                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
+                [placeholder]="'Select matching preference'"
+                [tooltipText]="'Automatically map employees based on a unique parameter'">
+              </app-configuration-select-field>
+            </div>
+          </form>
         <form [formGroup]="exportSettingForm">
             <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
