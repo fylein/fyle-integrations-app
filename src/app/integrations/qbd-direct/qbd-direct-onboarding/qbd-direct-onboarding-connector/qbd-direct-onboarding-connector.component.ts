@@ -83,17 +83,19 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   ) { }
 
   triggerDownload(filePath: string) {
-    const normalizedPath = filePath.replace(/\\\\/g, "\\");
-    const filePathRegex = /^(\/?|\.?\/?|[a-zA-Z]:\\)([a-zA-Z0-9_-]+[\\/])*[a-zA-Z0-9 _-]+\.qbw$/;
-    this.isCompanyPathInvalid = filePathRegex.test(normalizedPath);
-    this.isDownloadfileLoading = true;
-    this.qbdDirectConnectorService.postQbdDirectConntion({file_location: normalizedPath}).subscribe((connectionResponse: QbdConnectorGet) => {
+   if (filePath) {
+      this.isDownloadfileLoading = true;
+      this.isCompanyPathInvalid = false;
+      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
       this.password = connectionResponse.password;
       this.xmlFileContent = connectionResponse.qwc;
       this.triggerManualDownload();
       this.showDownloadLink = true;
-    });
-    this.isDownloadfileLoading = false;
+      });
+      this.isDownloadfileLoading = false;
+    } else {
+      this.isCompanyPathInvalid = true;
+    }
   }
 
   triggerManualDownload() {
