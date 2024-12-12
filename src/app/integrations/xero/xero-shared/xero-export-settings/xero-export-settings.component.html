@@ -191,7 +191,7 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingForm.get('creditCardExportType')?.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
