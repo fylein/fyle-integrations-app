@@ -8,6 +8,7 @@
             [contentText]="brandingContent.contentText"
             [showSyncButton]="isOnboarding"
             [appName]="appName.QBD_DIRECT"
+            [redirectLink]="redirectLink"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
     </div>
@@ -88,6 +89,12 @@
                         [placeholder]="'Select top memo type'"
                         [formControllerName]="'topMemoStructure'">
                     </app-configuration-multi-select>
+                    <div class="tw-p-24-px">
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{brandingContent.previewDescriptionFieldLabel}}</p>
+                        <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+                            <span>{{ topMemoPreviewText }}</span>
+                        </div>
+                    </div>
 
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
@@ -114,8 +121,7 @@
                         [label]="brandingContent.skipExportLabel" 
                         [subLabel]="brandingContent.skipExportSubLabel"
                         [formControllerName]="'skipExport'"
-                        [iconPath]="'list'"
-                        [redirectLink]="skipExportRedirectLink">
+                        [iconPath]="'list'">
                     </app-configuration-toggle-field>
                     <div *ngIf="advancedSettingsForm.value.skipExport">
                         <app-configuration-skip-export
