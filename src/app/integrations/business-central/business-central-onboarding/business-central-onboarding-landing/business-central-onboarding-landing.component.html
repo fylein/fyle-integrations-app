@@ -1,4 +1,4 @@
-<div *ngIf="!isIncorrectQBOConnectedDialogVisible">
+<div *ngIf="!isIncorrectBCConnectedDialogVisible">
     <div>
         <app-landing-page-header [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/BusinessCentral-logo.svg'" [appName]="'Dynamics 365 Business Central'" [appDescription]="'Import data from Dynamics 365 Business Central to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central. '" [isLoading]="false" [isIntegrationSetupInProgress]="businessCentralConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'business_central/onboarding/connector'" (connectIntegration)="connectBusinessCentral()"></app-landing-page-header>
     </div>
@@ -6,9 +6,9 @@
         <app-landing-page-body [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [svgPath]="'assets/flow-charts/ms-dynamics-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
     </div>
 </div>
-<app-configuration-confirmation-dialog *ngIf="isIncorrectQBOConnectedDialogVisible"
+<app-configuration-confirmation-dialog *ngIf="isIncorrectBCConnectedDialogVisible"
     (warningAccepted)="acceptWarning($event)"
-    [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+    [isWarningVisible]="isIncorrectBCConnectedDialogVisible"
     [headerText]="'Incorrect account selected'"
     [contextText]="'You had previously set up the integration with a different Dynamic 365 Business Central account. Please choose the same to restore the settings'"
     [confirmBtnText]="'Re connect'"
