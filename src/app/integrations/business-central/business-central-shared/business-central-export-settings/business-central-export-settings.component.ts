@@ -287,11 +287,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultBankName', 'journalEntryNamePreference']
+          'JOURNAL_ENTRY': ['cccDefaultBankName', 'journalEntryNamePreference']
         }
       }
     ];
-    const commonFormFields: string[] = ['defaultBankName'];
+    const commonFormFields: string[] = [];
 
     const destinationAttributes = [BusinessCentralField.ACCOUNT, FyleField.VENDOR];
 
