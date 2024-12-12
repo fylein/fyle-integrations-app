@@ -64,6 +64,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   employeeMapping: EmployeeFieldMapping;
 
+  redirectLink = brandingKbArticles.onboardingArticles.QBD_DIRECT.ADVANCED_SETTING;
 
   AutoMapEmployeeOptions = AutoMapEmployeeOptions;
 
@@ -76,8 +77,6 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.qbd_direct.configuration.advancedSettings;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.SKIP_EXPORT;
 
   qbdDirectExportSettings: QbdDirectExportSettingGet;
 
@@ -92,6 +91,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   showAutoCreateMerchantsAsVendorsField: boolean;
 
   isImportVendorAsMerchantPresent: boolean;
+
+  topMemoPreviewText: string;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
@@ -198,6 +199,15 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     });
   }
 
+  private createTopMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSettingsForm.value.topMemoStructure;
+    this.topMemoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+    this.advancedSettingsForm.controls.topMemoStructure.valueChanges.subscribe((memoChanges) => {
+      this.memoStructure = memoChanges;
+      this.topMemoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+    });
+  }
+
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
       this.helper.markControllerAsRequired(this.advancedSettingsForm, 'exportScheduleFrequency');
@@ -216,6 +226,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     this.createMemoStructureWatcher();
     this.scheduledWatcher();
     this.skipExportWatcher();
+    this.createTopMemoStructureWatcher();
   }
 
   private getSettingsAndSetupForm(): void {
