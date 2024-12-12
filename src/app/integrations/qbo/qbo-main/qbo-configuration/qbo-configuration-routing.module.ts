@@ -12,10 +12,6 @@ const routes: Routes = [
     component: QboConfigurationComponent,
     children: [
       {
-        path: 'employee_settings',
-        component: QboEmployeeSettingsComponent
-      },
-      {
         path: 'export_settings',
         component: QboExportSettingsComponent
       },
