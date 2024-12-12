@@ -248,6 +248,9 @@ export type ContentConfiguration = {
                     scheduleSubLabel: string;
                     accountingPeriodSubLabel: string;
                     autoCreateVendorsSubLabel: string;
+                    memoStructureLabel: string;
+                    memoStructureSubLabel: string;
+                    customizeSectionSubLabel: string;
                     frequencySubLabel: string;
                 }
             },

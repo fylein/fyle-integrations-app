@@ -17,9 +17,7 @@ export type KbArticle = {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;
-                LANDING: string;
                 CONNECTOR: string;
-                SKIP_EXPORT: string;
                 HELPER_ARTICLE: string;
             },
             INTACCT: {

@@ -1,9 +1,10 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { JoinOption, Operator } from "../enum/enum.model";
+import { AppName, JoinOption, Operator } from "../enum/enum.model";
 import { environment } from "src/environments/environment";
 import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
 import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
 import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
+import { IntacctConfiguration } from "../db/configuration.model";
 
 export type EmailOption = {
     email: string;
@@ -75,17 +76,19 @@ export class AdvancedSettingsModel {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
   }
 
-  static getMemoOptions(exportSettings: ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
+  static getMemoOptions(exportSettings: IntacctConfiguration | ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
     const defaultOptions = this.getDefaultMemoOptions();
     let cccExportType: string | undefined;
     // Handle both configurations and configuration properties
-    if ('configurations' in exportSettings) {
+    if (appName === AppName.INTACCT) {
+      cccExportType = (exportSettings as IntacctConfiguration).corporate_credit_card_expenses_object ?? undefined;
+    } else if ('configurations' in exportSettings) {
       cccExportType = exportSettings.configurations?.corporate_credit_card_expenses_object ?? undefined;
     } else if ('workspace_general_settings' in exportSettings) {
       cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
     // Filter out options based on cccExportType and appName
-    if (cccExportType && ['netsuite', 'qbo', 'sage intacct'].includes(appName.toLowerCase())) {
+    if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase())) {
       return defaultOptions; // Allow all options including 'card_number'
     }
       return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
