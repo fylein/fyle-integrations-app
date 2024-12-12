@@ -12,32 +12,6 @@
                 (refreshDimension)="refreshDimensions()">
             </app-configuration-step-header>
         </div>
-        <form [formGroup]="employeeSettingForm">
-            <div class="tw-p-24-px">
-                <app-configuration-select-field
-                [form]="employeeSettingForm"
-                [isFieldMandatory]="true"
-                [mandatoryErrorListName]="'option'"
-                [label]="'How are your Employees represented in QuickBooks Online?'"
-                [subLabel]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'"
-                [options]="employeeMappingOptions"
-                [iconPath]="'user-two'"
-                [placeholder]="'Select representation'"
-                [formControllerName]="'employeeMapping'">
-            </app-configuration-select-field>
-            <app-configuration-select-field
-                [form]="employeeSettingForm"
-                [isFieldMandatory]="false"
-                [mandatoryErrorListName]="'option'"
-                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
-                [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'"
-                [options]="autoMapEmployeeOptions"
-                [iconPath]="'question-square-outline'"
-                [placeholder]="'Select representation'"
-                [formControllerName]="'autoMapEmployee'">
-            </app-configuration-select-field>
-            </div>
-          </form>
         <form [formGroup]="exportSettingForm">
             <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
@@ -126,6 +100,35 @@
                                     [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
+                        </div>
+
+                        <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                            <form [formGroup]="employeeSettingForm">
+                                <div class="tw-p-24-px">
+                                <app-configuration-select-field
+                                    [form]="employeeSettingForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'option'"
+                                    [label]="'How are your Employees represented in QuickBooks Online?'"
+                                    [subLabel]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'"
+                                    [options]="employeeMappingOptions"
+                                    [iconPath]="'user-two'"
+                                    [placeholder]="'Select representation'"
+                                    [formControllerName]="'employeeMapping'">
+                                </app-configuration-select-field>
+                                <app-configuration-select-field
+                                    [form]="employeeSettingForm"
+                                    [isFieldMandatory]="false"
+                                    [mandatoryErrorListName]="'option'"
+                                    [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
+                                    [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'"
+                                    [options]="autoMapEmployeeOptions"
+                                    [iconPath]="'question-square-outline'"
+                                    [placeholder]="'Select representation'"
+                                    [formControllerName]="'autoMapEmployee'">
+                                </app-configuration-select-field>
+                                </div>
+                              </form>
                         </div>
                         <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
