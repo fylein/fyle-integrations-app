@@ -29,9 +29,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   exportSettingForm: FormGroup;
 
-  bankOptions: DestinationAttribute[];
-
-  reimbursableBankOptions: DestinationAttribute[];
+  bankAccountOptions: DestinationAttribute[];
 
   vendorOptions: DestinationAttribute[];
 
@@ -142,11 +140,21 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
       return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
     }
-    return options.filter(option => option.value !== ExportDateType.SPENT_AT);
+    return options.filter(option => (option.value !== ExportDateType.SPENT_AT && option.value !== ExportDateType.POSTED_AT));
   }
 
   refreshDimensions(isRefresh: boolean): void{
     this.businessCentralHelperService.importAttributes(isRefresh);
+  }
+
+  updateExpenseGroupingValues() {
+    if (this.exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+      this.exportSettingForm.get('cccExportGroup')?.setValue(ExpenseGroupedBy.EXPENSE);
+    }
+
+    if (this.exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+      this.exportSettingForm.get('reimbursableExportGroup')?.setValue(ExpenseGroupedBy.EXPENSE);
+    }
   }
 
   private setupCustomWatchers(): void {
@@ -161,8 +169,17 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+
+        // If the selected value is not valid after the export group change, reset the field
+        const visibleValues = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup').map(option => option.value);
+        if (!visibleValues.includes(this.exportSettingForm.get('cccExportDate')?.value)) {
+          this.exportSettingForm.get('cccExportDate')?.reset();
+        }
       }
     });
+
+    this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
+    this.exportSettingForm.get('cccExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
   }
 
   private optionSearchWatcher(): void {
@@ -170,7 +187,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((event: ExportSettingOptionSearch) => {
 
-      if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.REIMBURSABLE_BANK_ACCOUNT) {
+      if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.BANK_ACCOUNT) {
         const observables = [
           this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT', event.searchTerm),
           this.mappingService.getPaginatedDestinationAttributes(
@@ -182,12 +199,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
           // Insert new options (if any) to existing options, and sort them
           const newOptions = [...bankAccounts.results, ...accounts.results];
           newOptions.forEach((newOption) => {
-            if (!this.reimbursableBankOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
-              this.reimbursableBankOptions.push(newOption);
+            if (!this.bankAccountOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
+              this.bankAccountOptions.push(newOption);
             }
           });
 
-          this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+          this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
           this.isOptionSearchInProgress = false;
         });
 
@@ -195,9 +212,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
         let existingOptions: DestinationAttribute[];
         switch (event.destinationOptionKey) {
-          case BCExportSettingDestinationOptionKey.ACCOUNT:
-            existingOptions = this.bankOptions;
-            break;
           case BCExportSettingDestinationOptionKey.VENDOR:
             existingOptions = this.vendorOptions;
             break;
@@ -214,10 +228,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
 
           switch (event.destinationOptionKey) {
-            case BCExportSettingDestinationOptionKey.ACCOUNT:
-              this.bankOptions = existingOptions.concat();
-              this.bankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
-              break;
             case BCExportSettingDestinationOptionKey.VENDOR:
               this.vendorOptions = existingOptions.concat();
               this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
@@ -234,6 +244,29 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     if (event.searchTerm) {
       this.isOptionSearchInProgress = true;
       this.optionSearchUpdate.next(event);
+    }
+  }
+
+  addMissingOptions() {
+    // Since pagination API response is a subset of all options, we're making use of the export settings response to fill in options
+
+    if (this.exportSettings) {
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.bankAccountOptions,
+        value: this.exportSettings.default_ccc_bank_account_name,
+        destination_id: this.exportSettings.default_ccc_bank_account_id
+      });
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.bankAccountOptions,
+        value: this.exportSettings.default_bank_account_name,
+        destination_id: this.exportSettings.default_bank_account_id
+      });
+
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.vendorOptions,
+        value: this.exportSettings.default_vendor_name,
+        destination_id: this.exportSettings.default_vendor_id
+      });
     }
   }
 
@@ -254,11 +287,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultBankName', 'journalEntryNamePreference']
+          'JOURNAL_ENTRY': ['cccDefaultBankName', 'journalEntryNamePreference']
         }
       }
     ];
-    const commonFormFields: string[] = ['defaultBankName'];
+    const commonFormFields: string[] = [];
 
     const destinationAttributes = [BusinessCentralField.ACCOUNT, FyleField.VENDOR];
 
@@ -295,14 +328,15 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         });
       }
 
-      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, accounts.results, vendors.results);
+      this.vendorOptions = vendors.results;
+      this.bankAccountOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
+      this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+      this.addMissingOptions();
+      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccountOptions, vendors.results);
+
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
-      this.bankOptions = accounts.results;
-      this.vendorOptions = vendors.results;
-      this.reimbursableBankOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
-      this.reimbursableBankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
 
       this.setupCustomWatchers();
       this.optionSearchWatcher();

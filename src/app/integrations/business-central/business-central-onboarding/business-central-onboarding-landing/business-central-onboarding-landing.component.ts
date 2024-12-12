@@ -33,7 +33,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   private oauthCallbackSubscription: Subscription;
 
-  isIncorrectQBOConnectedDialogVisible: boolean;
+  isIncorrectBCConnectedDialogVisible: boolean;
 
   constructor(
     private helperService: HelperService,
@@ -45,9 +45,9 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {
-    this.isIncorrectQBOConnectedDialogVisible = false;
+    this.isIncorrectBCConnectedDialogVisible = false;
     if (data.hasAccepted) {
-      this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+      this.router.navigate([`/integrations/business_central/onboarding/landing`]);
     }
   }
 
@@ -72,7 +72,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
-        this.isIncorrectQBOConnectedDialogVisible = false;
+        this.isIncorrectBCConnectedDialogVisible = true;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
         this.router.navigate([`/integrations/business_central/onboarding/landing`]);
