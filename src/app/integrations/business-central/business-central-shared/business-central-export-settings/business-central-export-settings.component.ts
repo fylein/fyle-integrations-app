@@ -253,8 +253,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     if (this.exportSettings) {
       this.helperService.addDestinationAttributeIfNotExists({
         options: this.bankAccountOptions,
-        value: this.exportSettings.default_CCC_bank_account_name,
-        destination_id: this.exportSettings.default_CCC_bank_account_id
+        value: this.exportSettings.default_ccc_bank_account_name,
+        destination_id: this.exportSettings.default_ccc_bank_account_id
       });
       this.helperService.addDestinationAttributeIfNotExists({
         options: this.bankAccountOptions,
