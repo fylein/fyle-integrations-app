@@ -83,17 +83,19 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   ) { }
 
   triggerDownload(filePath: string) {
-    // No empty input test, test for non whitespaces like spaces, tabs, etc.
-    const filePathRegex = /^\s*\S.*$/;
-    this.isCompanyPathInvalid = filePathRegex.test(filePath);
-    this.isDownloadfileLoading = true;
-    this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
+   if(filePath) {
+      this.isDownloadfileLoading = true;
+      this.isCompanyPathInvalid = false;
+      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
       this.password = connectionResponse.password;
       this.xmlFileContent = connectionResponse.qwc;
       this.triggerManualDownload();
       this.showDownloadLink = true;
-    });
-    this.isDownloadfileLoading = false;
+      });
+      this.isDownloadfileLoading = false;
+    } else {
+      this.isCompanyPathInvalid = true;
+    }
   }
 
   triggerManualDownload() {
