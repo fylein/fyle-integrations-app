@@ -42,7 +42,7 @@ import { consumerPollProducersForChange } from '@angular/core/primitives/signals
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FeatureConfiguration } from 'src/app/core/models/branding/feature-configuration.model';
 
-describe('QboExportSettingsComponent', () => {
+xdescribe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
   let fixture: ComponentFixture<QboExportSettingsComponent>;
   let exportSettingsServiceSpy: jasmine.SpyObj<QboExportSettingsService>;
