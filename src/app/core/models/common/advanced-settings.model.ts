@@ -87,12 +87,15 @@ export class AdvancedSettingsModel {
     } else if ('workspace_general_settings' in exportSettings) {
       cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
-    // Filter out options based on cccExportType and appName
-    if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && brandingConfig.brandId === 'fyle') {
-      return defaultOptions; // Allow all options including 'card_number'
-    }
-      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
 
+    if(brandingConfig.brandId === 'co') {
+      return defaultOptions.filter(option => option !== 'card_number' && option !== 'employee_name');
+    } else {
+      if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && brandingConfig.brandId === 'fyle') {
+        return defaultOptions;
+      }
+      return defaultOptions.filter(option => option !== 'card_number');
+    }
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
