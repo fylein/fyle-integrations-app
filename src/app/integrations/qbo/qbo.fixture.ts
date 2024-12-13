@@ -340,7 +340,7 @@ export const mockWorkspaceGeneralSettings = {
   id: 684,
   reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL,
   corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.BILL,
-  employee_field_mapping: EmployeeFieldMapping.VENDOR,
+  employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
   map_merchant_to_vendor: true,
   import_categories: true,
   import_items: false,
