@@ -104,7 +104,6 @@
 
                         <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <form [formGroup]="employeeSettingForm">
-                                <div class="tw-p-24-px">
                                 <app-configuration-select-field
                                     [form]="employeeSettingForm"
                                     [isFieldMandatory]="true"
@@ -127,7 +126,6 @@
                                     [placeholder]="'Select representation'"
                                     [formControllerName]="'autoMapEmployee'">
                                 </app-configuration-select-field>
-                                </div>
                               </form>
                         </div>
                         <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
