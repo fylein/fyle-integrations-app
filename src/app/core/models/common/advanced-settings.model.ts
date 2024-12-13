@@ -5,7 +5,7 @@ import { ExportSettingGet } from "../intacct/intacct-configuration/export-settin
 import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
 import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
 import { IntacctConfiguration } from "../db/configuration.model";
-
+import { brandingConfig } from 'src/app/branding/branding-config';
 export type EmailOption = {
     email: string;
     name: string;
@@ -87,11 +87,14 @@ export class AdvancedSettingsModel {
     } else if ('workspace_general_settings' in exportSettings) {
       cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
-    // Filter out options based on cccExportType and appName
-    if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase())) {
-      return defaultOptions; // Allow all options including 'card_number'
+
+    if (brandingConfig.brandId === 'co') {
+      return defaultOptions.filter(option => option !== 'card_number' && option !== 'employee_name');
     }
-      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
+      if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && brandingConfig.brandId === 'fyle') {
+        return defaultOptions;
+      }
+      return defaultOptions.filter(option => option !== 'card_number');
 
   }
 
