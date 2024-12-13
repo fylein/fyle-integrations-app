@@ -702,9 +702,8 @@ export enum Sage300ExportSettingDestinationOptionKey {
 }
 
 export enum BCExportSettingDestinationOptionKey {
-  ACCOUNT = 'ACCOUNT',
   VENDOR = 'VENDOR',
-  REIMBURSABLE_BANK_ACCOUNT = 'REIMBURSABLE_BANK_ACCOUNT'
+  BANK_ACCOUNT = 'BANK_ACCOUNT'
 }
 
 export enum QbdDirectExportSettingDestinationOptionKey {
