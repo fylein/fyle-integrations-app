@@ -88,14 +88,14 @@ export class AdvancedSettingsModel {
       cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
     }
 
-    if(brandingConfig.brandId === 'co') {
+    if (brandingConfig.brandId === 'co') {
       return defaultOptions.filter(option => option !== 'card_number' && option !== 'employee_name');
-    } else {
+    }
       if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && brandingConfig.brandId === 'fyle') {
         return defaultOptions;
       }
       return defaultOptions.filter(option => option !== 'card_number');
-    }
+
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
