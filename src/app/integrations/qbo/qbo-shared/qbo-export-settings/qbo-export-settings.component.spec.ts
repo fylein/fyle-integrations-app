@@ -76,10 +76,10 @@ describe('QboExportSettingsComponent', () => {
     };
     const integrationsToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const router = jasmine.createSpyObj('Router', ['navigate']);
-  
+
     await TestBed.configureTestingModule({
       declarations: [ QboExportSettingsComponent ],
-      imports: [ 
+      imports: [
         ReactiveFormsModule,
         HttpClientTestingModule // Add this import
       ],
@@ -95,8 +95,8 @@ describe('QboExportSettingsComponent', () => {
         { provide: MessageService, useValue: {} },
         { provide: Router, useValue: router },
         { provide: 'brandingFeatureConfig', useValue: mockBrandingConfig },
-        { 
-          provide: QboEmployeeSettingsService, 
+        {
+          provide: QboEmployeeSettingsService,
           useValue: jasmine.createSpyObj('QboEmployeeSettingsService', [
             'getEmployeeSettings',
             'getDistinctQBODestinationAttributes'
@@ -423,7 +423,7 @@ describe('QboExportSettingsComponent', () => {
       workspaceServiceSpy.setOnboardingState = jasmine.createSpy('setOnboardingState');
       // Spy on the save method
       spyOn(component, 'save').and.callThrough();
-      
+
       // Initialize the form with required values
       component.exportSettingForm.patchValue({
         reimbursableExpenseObject: mockExportSettingsResponse.workspace_general_settings.reimbursable_expenses_object,
@@ -450,18 +450,18 @@ describe('QboExportSettingsComponent', () => {
         autoMapEmployee: [AutoMapEmployeeOptions.EMAIL]
       });
     });
-  
+
     xit('should handle error when saving export settings', fakeAsync(() => {
       // Mock the postExportSettings to return an error
       exportSettingsServiceSpy.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
-  
+
       // Spy on the isAdvancedSettingAffected method to return false
       spyOn<any>(component, 'isAdvancedSettingAffected').and.returnValue(false);
-  
+
       // Call the save method
       component.save();
       tick();
-  
+
       // Assert that the error handling is done correctly
       expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
       expect(component.isSaveInProgress).toBeFalse();
