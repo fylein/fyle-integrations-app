@@ -75,12 +75,15 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     const defaultOptions = this.getDefaultMemoOptions();
     const cccExportType = exportSettings.configuration.corporate_credit_card_expenses_object;
 
-    // Filter out options based on cccExportType and appName
-    if (cccExportType) {
-      return defaultOptions; // Allow all options including 'card_number'
+    if (brandingConfig.brandId === 'co') {
+      return defaultOptions.filter(option => !['card_number', 'employee_name'].includes(option));
     }
-      return defaultOptions.filter(option => option !== 'card_number'); // Omit 'card_number' for other apps
 
+    if (!cccExportType) {
+      return defaultOptions.filter(option => option !== 'card_number');
+    }
+
+    return defaultOptions;
   }
 
   static getPaymentSyncOptions(): SelectFormOption[] {
