@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, concat, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -152,19 +152,25 @@ export class QboExportSettingsComponent implements OnInit {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
       const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
-      forkJoin([
+      
+      concat(
         this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),
         this.exportSettingService.postExportSettings(exportSettingPayload)
-      ]).subscribe(() => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Settings saved successfully');
-        if (this.isOnboarding) {
-          this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
-          this.router.navigate(['/integrations/qbo/onboarding/import_settings']);
+      ).subscribe({
+        complete: () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export Settings saved successfully');
+          if (this.isOnboarding) {
+            this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
+            this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
+        } else if (this.isAdvancedSettingAffected()) {
+          this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
+          }
+        },
+        error: () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
         }
-      }, () => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving settings, please try again later');
       });
     }
   }
