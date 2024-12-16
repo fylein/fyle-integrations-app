@@ -107,7 +107,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
       this.cccExpenseObject = responses[0].credit_card_expense_export_type;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
       this.nameInJE = responses[0].name_in_journal_entry;
-      this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts : QbdDirectImportSettingModel.getChartOfAccountTypesList();
+      this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : QbdDirectImportSettingModel.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
 
       this.destinationField = this.getDestinationField(responses[0], responses[2].results);
 
