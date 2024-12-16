@@ -13,11 +13,15 @@ import { TravelperkPaymentProfileSettingResponse } from "../travelperk/travelper
 import { AdvancedSettingsGet } from "../intacct/intacct-configuration/advanced-settings.model";
 import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
 import { ImportSettingGet, ImportSettings } from "../intacct/intacct-configuration/import-settings.model";
+import { QbdDirectAdvancedSettingsPost } from "../qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model";
+import { QbdDirectExportSettingsPost } from "../qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model";
+import { QbdDirectImportSettingPost } from "../qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model";
+import { Workspace } from "../db/workspaces.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost,
-    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost
+    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost | QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace,
+    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost |  QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace
   };
 
 export type UpdateIntacctEventAdditionalProperty = {

@@ -5,12 +5,13 @@ import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-c
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
-import { AppName, ConfigurationCta, QbdDirectOnboardingState, QBDPreRequisiteState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, Page, ProgressPhase, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -61,9 +62,12 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   qbdPreRequisiteState = QBDPreRequisiteState;
 
+  sessionStartTime: Date = new Date();
+
   constructor(
     private router: Router,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private trackingService: TrackingService
   ) { }
 
   updateConnectorStatus(status: CheckBoxUpdate): void {
@@ -76,6 +80,22 @@ export class QbdDirectOnboardingPreRequisiteComponent {
   continueToNextStep(): void{
     this.saveInProgress = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.CONNECTION}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.CONFIRM_PRE_REQUISITES_QBD_DIRECT, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES, 1);
+      } else {
+        const oldWorkspaceResponse = workspaceResponse;
+        oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES;
+        this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.CONFIRM_PRE_REQUISITES_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse
+          }
+        );
+      }
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.saveInProgress = false;
       this.router.navigate([`/integrations/qbd_direct/onboarding/connector`]);
