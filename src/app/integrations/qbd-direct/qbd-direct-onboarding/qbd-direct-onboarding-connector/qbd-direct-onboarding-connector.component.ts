@@ -77,6 +77,8 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
+  workspace: QbdDirectWorkspace;
+
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
@@ -116,6 +118,22 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   proceedToConnection() {
     this.isDownloadfileLoading = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.workspace = workspaceResponse;
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.CONNECTION) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.CONNECTION, 2);
+      } else {
+          const oldWorkspaceResponse = workspaceResponse;
+          oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.CONNECTION;
+          this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.CONNECT_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse
+          }
+        );
+      }
       this.isDownloadStepCompleted = true;
       this.isDownloadfileLoading = false;
     });
@@ -193,6 +211,21 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       } else {
         this.handleDataSyncState(workspaceResponse[0]);
       }
+      if (workspaceResponse[0].onboarding_state in [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE]) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.PENDING_QWC_UPLOAD, 2);
+      } else {
+          const oldWorkspaceResponse = this.workspace;
+          oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.PENDING_QWC_UPLOAD;
+          this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.PENDING_QWC_UPLOAD_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse[0]
+          }
+        );
+      }
     });
   }
 
@@ -228,7 +261,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
           oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE;
           this.trackingService.onUpdateEvent(
           TrackingApp.QBD_DIRECT,
-          QbdDirectUpdateEvent.CONNECT_QBD_DIRECT,
+          QbdDirectUpdateEvent.DESTINATION_SYNC_COMPLETE_QBD_DIRECT,
           {
             phase: ProgressPhase.ONBOARDING,
             oldState: oldWorkspaceResponse,
