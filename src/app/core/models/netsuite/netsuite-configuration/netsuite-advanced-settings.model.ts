@@ -78,11 +78,11 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     if (brandingConfig.brandId === 'co') {
       return defaultOptions.filter(option => !['card_number', 'employee_name'].includes(option));
     }
-  
+
     if (!cccExportType) {
       return defaultOptions.filter(option => option !== 'card_number');
     }
-  
+
     return defaultOptions;
   }
 
