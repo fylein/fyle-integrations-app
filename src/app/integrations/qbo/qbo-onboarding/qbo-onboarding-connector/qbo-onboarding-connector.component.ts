@@ -167,11 +167,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   private handlePostQBOConnection(qboCredential: QBOCredential): void {
-    if (brandingFeatureConfig.featureFlags.mapEmployees) {
-      this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
-    } else {
-      this.workspaceService.setOnboardingState(QBOOnboardingState.EXPORT_SETTINGS);
-    }
+    this.workspaceService.setOnboardingState(QBOOnboardingState.EXPORT_SETTINGS);
 
     this.qboConnectionInProgress = false;
     this.qboCompanyName = qboCredential.company_name;
