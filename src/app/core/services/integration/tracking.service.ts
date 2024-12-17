@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
+import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent, QbdDirectOnboardingState, QbdDirectUpdateEvent } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
@@ -17,6 +17,9 @@ import { BusinessCentralAdvancedSettingsPost } from '../../models/business-centr
 import { NetsuiteSubsidiaryMappingPost } from '../../models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 import { TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import { QbdDirectAdvancedSettingsPost } from '../../models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
+import { QbdDirectExportSettingsPost } from '../../models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
+import { QbdDirectImportSettingPost } from '../../models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -100,11 +103,11 @@ export class TrackingService {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState | NetsuiteOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | NetsuiteSubsidiaryMappingPost | void): void {
+  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState | NetsuiteOnboardingState | QbdDirectOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | NetsuiteSubsidiaryMappingPost | QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  onUpdateEvent(trackingApp: TrackingApp, eventName: UpdateEvent | Sage300UpdateEvent | BusinessCentralUpdateEvent | TravelperkUpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
+  onUpdateEvent(trackingApp: TrackingApp, eventName: UpdateEvent | Sage300UpdateEvent | BusinessCentralUpdateEvent | TravelperkUpdateEvent | QbdDirectUpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
     this.eventTrack(`Update event: ${eventName}`, trackingApp, additionalProperties);
   }
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QBDExpenseGroupedBy, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -82,6 +82,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   isOptionSearchInProgress: boolean;
 
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  sessionStartTime: Date = new Date();
 
   constructor(
     private router: Router,
@@ -173,10 +175,29 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     }
   }
 
+  private getPhase(): ProgressPhase {
+    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
   save() {
     this.isSaveInProgress = true;
       const exportSettingPayload = QbdDirectExportSettingModel.constructPayload(this.exportSettingsForm);
       this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QbdDirectExportSettingGet) => {
+        this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.EXPORT_SETTING_QBD_DIRECT, this.sessionStartTime);
+        if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.EXPORT_SETTINGS) {
+          this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.EXPORT_SETTINGS, 3, exportSettingPayload);
+        } else {
+          this.trackingService.onUpdateEvent(
+            TrackingApp.QBD_DIRECT,
+            QbdDirectUpdateEvent.EXPORT_SETTING_QBD_DIRECT,
+            {
+              phase: this.getPhase(),
+              oldState: this.exportSettings,
+              newState: response
+            }
+          );
+        }
+
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
 

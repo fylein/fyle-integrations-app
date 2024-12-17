@@ -3,7 +3,7 @@ import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared
 import { SharedModule } from 'src/app/shared/shared.module';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingState, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, Page, ProgressPhase, QBDConnectionStatus, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { interval, switchMap, from, takeWhile } from 'rxjs';
 import { QbdDirectTaskResponse } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-connector',
@@ -74,12 +75,17 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   appName: string = AppName.QBD_DIRECT;
 
+  sessionStartTime: Date = new Date();
+
+  workspace: QbdDirectWorkspace;
+
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
     private qbdDirectConnectorService: QbdDirectConnectorService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService
   ) { }
 
   triggerDownload(filePath: string) {
@@ -112,6 +118,22 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   proceedToConnection() {
     this.isDownloadfileLoading = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.workspace = workspaceResponse;
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.CONNECTION) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.CONNECTION, 2);
+      } else {
+          const oldWorkspaceResponse = workspaceResponse;
+          oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.CONNECTION;
+          this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.CONNECT_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse
+          }
+        );
+      }
       this.isDownloadStepCompleted = true;
       this.isDownloadfileLoading = false;
     });
@@ -189,6 +211,21 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       } else {
         this.handleDataSyncState(workspaceResponse[0]);
       }
+      if (workspaceResponse[0].onboarding_state in [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE]) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.PENDING_QWC_UPLOAD, 2);
+      } else {
+          const oldWorkspaceResponse = this.workspace;
+          oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.PENDING_QWC_UPLOAD;
+          this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.PENDING_QWC_UPLOAD_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse[0]
+          }
+        );
+      }
     });
   }
 
@@ -216,6 +253,22 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   proceedToExportSetting() {
     this.isLoading = true;
     this.workspaceService.updateWorkspaceOnboardingState({onboarding_state: QbdDirectOnboardingState.EXPORT_SETTINGS}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
+      this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.CONNECT_QBD_DIRECT, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE, 2);
+      } else {
+          const oldWorkspaceResponse = workspaceResponse;
+          oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE;
+          this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.DESTINATION_SYNC_COMPLETE_QBD_DIRECT,
+          {
+            phase: ProgressPhase.ONBOARDING,
+            oldState: oldWorkspaceResponse,
+            newState: workspaceResponse
+          }
+        );
+      }
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
