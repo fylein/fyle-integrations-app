@@ -10,12 +10,13 @@ import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'sr
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QbdDirectImportSettingGet, QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState, ProgressPhase, QbdDirectUpdateEvent, TrackingApp, Page } from 'src/app/core/models/enum/enum.model';
+import { QbdDirectImportSettingGet, QbdDirectImportSettingModel, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
@@ -105,7 +106,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     ]
   };
 
-  workspaceGeneralSettings: any;
+  sessionStartTime: Date = new Date();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -116,7 +117,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
     private qbdDirectHelperService: QbdDirectHelperService,
-    public helper: HelperService
+    public helper: HelperService,
+    private trackingService: TrackingService
   ) { }
 
   closeModel() {
@@ -235,10 +237,29 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     });
   }
 
+  private getPhase(): ProgressPhase {
+    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
   save(): void {
     this.isSaveInProgress = true;
     const importSettingPayload = QbdDirectImportSettingModel.constructPayload(this.importSettingForm);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: QbdDirectImportSettingPost) => {
+      this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.IMPORT_SETTINGS_QBD_DIRECT, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.IMPORT_SETTINGS) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.IMPORT_SETTINGS, 4, importSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.IMPORT_SETTINGS_QBD_DIRECT,
+          {
+            phase: this.getPhase(),
+            oldState: this.importSettings,
+            newState: response
+          }
+        );
+      }
+
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.updateImportCodeFieldConfig();

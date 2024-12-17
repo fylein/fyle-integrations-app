@@ -6,13 +6,14 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, IntacctUpdateEvent, NameInJournalEntry, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
@@ -104,7 +105,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private qbdDirectHelperService: QbdDirectHelperService
+    private qbdDirectHelperService: QbdDirectHelperService,
+    private trackingService: TrackingService
   ) { }
 
   private saveSkipExportFields(): void {
@@ -148,11 +150,31 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     this.qbdDirectHelperService.importAttributes(true);
   }
 
+  private getPhase(): ProgressPhase {
+    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
   save() {
     this.saveInProgress = true;
     this.saveSkipExport();
     const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm, this.adminEmails);
     this.advancedSettingsService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QbdDirectAdvancedSettingsGet) => {
+
+      this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.ADVANCED_SETTINGS_QBD_DIRECT, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.ADVANCED_SETTINGS) {
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.ADVANCED_SETTINGS, 5, advancedSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          TrackingApp.QBD_DIRECT,
+          QbdDirectUpdateEvent.ADVANCED_SETTINGS_QBD_DIRECT,
+          {
+            phase: this.getPhase(),
+            oldState: this.advancedSettings,
+            newState: response
+          }
+        );
+      }
+
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
 

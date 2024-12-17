@@ -82,6 +82,16 @@ export enum TravelperkUpdateEvent {
   ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
 }
 
+export enum QbdDirectUpdateEvent {
+  CONFIRM_PRE_REQUISITES_QBD_DIRECT = 'Confirm Pre Requisites QuickBooks Desktop Connector',
+  CONNECT_QBD_DIRECT = 'Connect QuickBooks Desktop Connector',
+  PENDING_QWC_UPLOAD_QBD_DIRECT = 'Pending QWC Upload QuickBooks Desktop Connector',
+  DESTINATION_SYNC_COMPLETE_QBD_DIRECT = 'Destination Sync Complete QuickBooks Desktop Connector',
+  EXPORT_SETTING_QBD_DIRECT = 'Export Settings QuickBooks Desktop Connector',
+  IMPORT_SETTINGS_QBD_DIRECT = 'Import Settings QuickBooks Desktop Connector',
+  ADVANCED_SETTINGS_QBD_DIRECT = 'Advanced Settings QuickBooks Desktop Connector',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -126,6 +136,11 @@ export enum Page {
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
   PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings TravelPerk',
   ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
+  EXPORT_SETTING_QBD_DIRECT = 'Export Settings QuickBooks Desktop Connector',
+  CONNECT_QBD_DIRECT = 'Connect QuickBooks Desktop Connector',
+  CONFIRM_PRE_REQUISITES_QBD_DIRECT = 'Confirm Pre Requisites QuickBooks Desktop Connector',
+  IMPORT_SETTINGS_QBD_DIRECT = 'Import Settings QuickBooks Desktop Connector',
+  ADVANCED_SETTINGS_QBD_DIRECT = 'Advanced Settings QuickBooks Desktop Connector',
 }
 
 export enum ClickEvent {
