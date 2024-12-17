@@ -780,14 +780,8 @@ describe('QboExportSettingsComponent', () => {
   });
 
   describe('navigateToPreviousStep', () => {
-    it('should navigate to employee_settings when mapEmployees feature flag is true', () => {
+    it('should navigate to connector when mapEmployees feature flag is true', () => {
       mockBrandingConfig.featureFlags.mapEmployees = true;
-      component.navigateToPreviousStep();
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/employee_settings']);
-    });
-
-    xit('should navigate to connector when mapEmployees feature flag is false', () => {
-      mockBrandingConfig.featureFlags.mapEmployees = false;
       component.navigateToPreviousStep();
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/connector']);
     });

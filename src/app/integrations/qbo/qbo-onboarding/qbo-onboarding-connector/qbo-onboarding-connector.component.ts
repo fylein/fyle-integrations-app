@@ -104,7 +104,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     if (this.isContinueDisabled) {
       return;
     } else if (this.isCloneSettingsDisabled) {
-      this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+      this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
       return;
     }
 
@@ -145,7 +145,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+        this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
       }
     });
   }

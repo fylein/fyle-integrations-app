@@ -301,4 +301,12 @@ export class QBOExportSettingModel extends ExportSettingModel {
 
     return exportSettingPayload;
   }
+
+  static createEmployeeSettingsForm(existingEmployeeFieldMapping: EmployeeFieldMapping, autoMapEmployees: boolean): FormGroup {
+    return new FormGroup({
+      employeeMapping: new FormControl(existingEmployeeFieldMapping, Validators.required),
+      autoMapEmployee: new FormControl(autoMapEmployees),
+      searchOption: new FormControl('')
+    });
+  }
 }

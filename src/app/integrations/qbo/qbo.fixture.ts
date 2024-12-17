@@ -40,7 +40,6 @@ export const mockQBOCredential = {
 
 export const testOnboardingState = [
   { state: QBOOnboardingState.CONNECTION, route: '/integrations/qbo/onboarding/landing' },
-  { state: QBOOnboardingState.MAP_EMPLOYEES, route: '/integrations/qbo/onboarding/employee_settings' },
   { state: QBOOnboardingState.EXPORT_SETTINGS, route: '/integrations/qbo/onboarding/export_settings' },
   { state: QBOOnboardingState.IMPORT_SETTINGS, route: '/integrations/qbo/onboarding/import_settings' },
   { state: QBOOnboardingState.ADVANCED_CONFIGURATION, route: '/integrations/qbo/onboarding/advanced_settings' },

@@ -183,11 +183,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   navigateToPreviousStep(): void {
-    if (brandingFeatureConfig.featureFlags.mapEmployees) {
-      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
-    } else {
-      this.router.navigate([`/integrations/qbo/onboarding/connector`]);
-    }
+    this.router.navigate([`/integrations/qbo/onboarding/connector`]);
   }
 
   refreshDimensions() {
@@ -442,13 +438,12 @@ export class QboExportSettingsComponent implements OnInit {
     forkJoin([
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.employeeSettingService.getEmployeeSettings(),
     this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
-    ]).subscribe(([exportSetting, workspaceGeneralSettings, employeeSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
+    ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
-      this.employeeFieldMapping = employeeSettings.workspace_general_settings.employee_field_mapping;
+      this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
       this.setLiveEntityExample(destinationAttributes);
       this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -463,11 +458,10 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
-      this.employeeSettingForm = new FormGroup({
-        employeeMapping: new FormControl(this.existingEmployeeFieldMapping, Validators.required),
-        autoMapEmployee: new FormControl(employeeSettings.workspace_general_settings?.auto_map_employees),
-        searchOption: new FormControl('')
-      });
+      this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
+        this.existingEmployeeFieldMapping,
+        workspaceGeneralSettings.auto_map_employees
+      );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
