@@ -152,7 +152,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
       const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
-      
+
       concat(
         this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),
         this.exportSettingService.postExportSettings(exportSettingPayload)
