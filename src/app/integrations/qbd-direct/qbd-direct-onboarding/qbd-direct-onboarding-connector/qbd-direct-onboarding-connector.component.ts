@@ -55,7 +55,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   xmlFileContent: string;
 
-  isCompanyPathInvalid: boolean = true;
+  isCompanyPathInvalid: boolean = false;
 
   password: string;
 
