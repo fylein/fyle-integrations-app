@@ -126,7 +126,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     }
 
     if (this.destinationField === AccountingField.ACCOUNT && this.appName === AppName.QBD_DIRECT) {
-      this.detailAccountType = this.chartOfAccounts;
+      this.detailAccountType = this.chartOfAccounts.map((item: string) => item.replace(/\s+/g, ''));
     } else {
       this.detailAccountType = undefined;
     }
