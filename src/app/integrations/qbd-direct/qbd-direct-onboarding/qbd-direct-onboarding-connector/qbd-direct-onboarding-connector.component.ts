@@ -54,7 +54,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   xmlFileContent: string;
 
-  isCompanyPathInvalid: boolean = true;
+  isCompanyPathInvalid: boolean;
 
   password: string;
 
@@ -87,12 +87,12 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.isDownloadfileLoading = true;
       this.isCompanyPathInvalid = false;
       this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
-      this.password = connectionResponse.password;
-      this.xmlFileContent = connectionResponse.qwc;
-      this.triggerManualDownload();
-      this.showDownloadLink = true;
+        this.password = connectionResponse.password;
+        this.xmlFileContent = connectionResponse.qwc;
+        this.showDownloadLink = true;
+        this.isDownloadfileLoading = false;
+        this.triggerManualDownload();
       });
-      this.isDownloadfileLoading = false;
     } else {
       this.isCompanyPathInvalid = true;
     }
