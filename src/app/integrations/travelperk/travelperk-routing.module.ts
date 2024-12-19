@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TravelperkComponent } from './travelperk.component';
+import { TravelperkTokenGuard } from 'src/app/core/guard/travelperk-token.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
       },
       {
         path: 'main',
-        loadChildren: () => import('./travelperk-main/travelperk-main.module').then(m => m.TravelperkMainModule)
+        loadChildren: () => import('./travelperk-main/travelperk-main.module').then(m => m.TravelperkMainModule),
+        canActivate: [TravelperkTokenGuard]
       }
     ]
   }
