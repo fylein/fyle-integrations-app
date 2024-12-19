@@ -114,7 +114,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       return;
     }
     let valueField = this.skipExportForm.getRawValue();
-    if (!valueField.condition1.field_name) {
+    if (!valueField.condition1.field_name || !valueField.value1) {
       return;
     }
     valueField = SkipExportModel.constructSkipExportValue(valueField);
