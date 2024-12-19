@@ -27,10 +27,10 @@
                         required
                         #downloadFilePathField="ngModel"
                         [ngClass]="{
-                            'error-box': (downloadFilePathField.invalid && downloadFilePathField.touched) || !isCompanyPathInvalid
+                            'error-box': (downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid
                           }">
-                        <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || !isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-2-px">
-                            <small *ngIf="downloadFilePathField.errors?.required || !isCompanyPathInvalid" class="tw-flex">
+                        <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-2-px">
+                            <small *ngIf="downloadFilePathField.errors?.required || isCompanyPathInvalid" class="tw-flex">
                                 <app-svg-icon [svgSource]="'info-circle-fill'" [isTextColorAllowed]="true" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-form-error-help-text-color'"></app-svg-icon>
                                 Enter a valid company file path.</small>
                           </div>

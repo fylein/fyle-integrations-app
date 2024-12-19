@@ -32,64 +32,59 @@
                 Integrate your Expense Management account with the following accounting software.
             </p>
 
-            <div class="tw-flex">
+            <div class="tw-flex tw-flex-wrap tw-gap-5">
                 <div *ngIf="exposeApps.NETSUITE">
-                    <div class="landing--accounting-app tw-mr-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                        <img src="assets/logos/netsuite-logo.png" width="120px" height="60px" />
-                        <span class="landing--accounting-app-name">
+                    <div class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+                        <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
+                        <span class="landing--accounting-app-name !tw-pt-18-px">
                             NetSuite
                         </span>
                     </div>
-                    <!-- IIF -->
-                    <div *ngIf="!(exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration) && exposeApps.QBD" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                        <img src="assets/logos/quickbooks-logo.png" class="tw-mt-[-20px]" width="120px" height="60px" />
-                        <span class="landing--accounting-app-name">
-                            QuickBooks Desktop
-                        </span>
-                    </div>
-                    <!-- Direct -->
-                    <div *ngIf="exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                        <img src="assets/logos/quickbooks-logo.png" class="tw-mt-[-20px]" width="120px" height="60px" />
-                        <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                            QuickBooks Desktop
-                            <app-badge [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                        </span>
-                    </div>
                 </div>
-                <div>
-                    <div *ngIf="exposeApps.INTACCT" class="landing--accounting-app tw-mr-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                        <img src="assets/logos/intacct-logo.png" width="120px" height="60px" />
-                        <span class="landing--accounting-app-name">
-                            Sage Intacct
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                        <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                        <span class="landing--accounting-app-name tw-gap-2">
-                            Sage 300 CRE
-                            <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                        </span>
-                    </div>
+                <div *ngIf="exposeApps.INTACCT" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+                    <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]"  width="120px" height="60px" />
+                    <span class="landing--accounting-app-name !tw-pt-8-px">
+                        Sage Intacct
+                    </span>
                 </div>
-                <div>
-                    <div *ngIf="exposeApps.QBO" class="landing--accounting-app tw-mr-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                        <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
-                        <span class="landing--accounting-app-name !tw-pt-30-px">
-                            QuickBooks Online
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                        <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
-                        <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                            Dynamics 365 Business Central
-                            <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                        </span>
-                    </div>
+                <div *ngIf="exposeApps.QBO" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+                    <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
+                    <span class="landing--accounting-app-name">
+                        QuickBooks Online
+                    </span>
                 </div>
-                <div *ngIf="exposeApps.XERO" class="landing--accounting-app" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+                <div *ngIf="exposeApps.XERO" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
                     <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
                     <span class="landing--accounting-app-name">
                         Xero
+                    </span>
+                </div>
+                <div *ngIf="exposeApps.QBD" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
+                    <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
+                    <span class="landing--accounting-app-name">
+                        QuickBooks Desktop (IIF)
+                    </span>
+                </div>
+                <!-- Direct -->
+                <div *ngIf="exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+                    <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
+                    <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                        QuickBooks Desktop (Web Connector)
+                        <app-badge [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                    </span>
+                </div>
+                <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+                    <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
+                    <span class="landing--accounting-app-name tw-gap-2">
+                        Sage 300 CRE
+                        <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                    </span>
+                </div>
+                <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+                    <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
+                    <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                        Dynamics 365 Business Central
+                        <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                     </span>
                 </div>
             </div>
