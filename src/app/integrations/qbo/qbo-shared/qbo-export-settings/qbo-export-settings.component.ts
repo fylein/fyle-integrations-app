@@ -148,7 +148,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   isEmployeeMappingDisabled(): boolean {
     const exportType = this.exportSettingForm.get('reimbursableExportType')?.value;
-    return exportType === QBOReimbursableExpensesObject.BILL || 
+    return exportType === QBOReimbursableExpensesObject.BILL ||
            exportType === QBOReimbursableExpensesObject.CHECK ||
            exportType === QBOReimbursableExpensesObject.EXPENSE;
   }
@@ -156,7 +156,7 @@ export class QboExportSettingsComponent implements OnInit {
   setupExportTypeWatcher(): void {
     this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe((exportType) => {
       const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
-      
+
       if (exportType === QBOReimbursableExpensesObject.BILL) {
         employeeMappingControl?.patchValue(EmployeeFieldMapping.VENDOR);
         employeeMappingControl?.disable();
