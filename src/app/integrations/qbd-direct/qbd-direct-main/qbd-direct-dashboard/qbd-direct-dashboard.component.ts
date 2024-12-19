@@ -6,13 +6,13 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AccountingGroupedErrors, AccountingGroupedErrorStat, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AppName, AccountingErrorType, QbdDirectTaskLogType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
+import { AppName, AccountingErrorType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectTaskResponse, QbdDirectTaskLog } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
 import { QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -83,12 +83,13 @@ export class QbdDirectDashboardComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private QbdDirectExportSettingsService: QbdDirectExportSettingsService,
-    private workspaceService: WorkspaceService,
+    private trackingService: TrackingService,
     private importSettingService: QbdDirectImportSettingsService
   ) { }
 
   export() {
     this.isExportInProgress = true;
+    this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_EXPORT);
     this.dashboardService.triggerAccountingExport('v1').subscribe(() => {
       this.pollExportStatus(this.exportableAccountingExportIds);
     });
