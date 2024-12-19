@@ -146,6 +146,53 @@ export class QboExportSettingsComponent implements OnInit {
     this.windowReference = this.windowService.nativeWindow;
   }
 
+  isEmployeeMappingDisabled(): boolean {
+    const exportType = this.exportSettingForm.get('reimbursableExportType')?.value;
+    return exportType === QBOReimbursableExpensesObject.BILL || 
+           exportType === QBOReimbursableExpensesObject.CHECK ||
+           exportType === QBOReimbursableExpensesObject.EXPENSE;
+  }
+
+  setupExportTypeWatcher(): void {
+    this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe((exportType) => {
+      const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
+      
+      if (exportType === QBOReimbursableExpensesObject.BILL) {
+        employeeMappingControl?.patchValue(EmployeeFieldMapping.VENDOR);
+        employeeMappingControl?.disable();
+      } else if (exportType === QBOReimbursableExpensesObject.CHECK) {
+        employeeMappingControl?.patchValue(EmployeeFieldMapping.EMPLOYEE);
+        employeeMappingControl?.disable();
+      } else if (exportType === QBOReimbursableExpensesObject.EXPENSE) {
+        employeeMappingControl?.patchValue(EmployeeFieldMapping.EMPLOYEE);
+        employeeMappingControl?.enable();
+      } else if (exportType === QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
+        employeeMappingControl?.enable();
+      }
+    });
+  }
+
+  getAllReimbursableExportTypeOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'Check',
+        value: QBOReimbursableExpensesObject.CHECK
+      },
+      {
+        label: 'Bill',
+        value: QBOReimbursableExpensesObject.BILL
+      },
+      {
+        label: 'Expense',
+        value: QBOReimbursableExpensesObject.EXPENSE
+      },
+      {
+        label: 'Journal Entry',
+        value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
+      }
+    ];
+  }
+
   constructPayloadAndSave(data: ConfigurationWarningOut): void {
     this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
@@ -484,10 +531,9 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
+      this.setupExportTypeWatcher();
       this.setupCustomWatchers();
-
       this.setupCustomDateOptionWatchers();
-
       this.optionSearchWatcher();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);

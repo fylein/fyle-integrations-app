@@ -32,7 +32,7 @@
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
                                 [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
-                                [options]="reimbursableExportTypes"
+                                [options]="getAllReimbursableExportTypeOptions()"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -113,7 +113,8 @@
                                     [options]="employeeMappingOptions"
                                     [iconPath]="'user-two'"
                                     [placeholder]="'Select representation'"
-                                    [formControllerName]="'employeeMapping'">
+                                    [formControllerName]="'employeeMapping'"
+                                    [isDisabled]="isEmployeeMappingDisabled()">
                                 </app-configuration-select-field>
                                 <app-configuration-select-field
                                     [form]="employeeSettingForm"
