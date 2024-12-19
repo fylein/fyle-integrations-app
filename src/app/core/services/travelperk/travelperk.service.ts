@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../common/api.service';
@@ -30,7 +30,14 @@ export class TravelperkService {
   }
 
   getTravelperkData(): Observable<Travelperk> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/`, {}).pipe(
+      catchError(error => {
+        if (error.status === 400 && error.error?.message?.includes('token expired')) {
+          error.error.is_expired = true;
+        }
+        return throwError(() => error);
+      })
+    );
   }
 
   connectTravelperk(): Observable<{}>{
