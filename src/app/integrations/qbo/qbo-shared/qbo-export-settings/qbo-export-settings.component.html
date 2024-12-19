@@ -32,7 +32,7 @@
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
                                 [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
-                                [options]="reimbursableExportTypes"
+                                [options]="getAllReimbursableExportTypeOptions()"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -100,6 +100,34 @@
                                     [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
+                        </div>
+
+                        <div *ngIf="brandingConfig.brandId === 'fyle'" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                            <form [formGroup]="employeeSettingForm">
+                                <app-configuration-select-field
+                                    [form]="employeeSettingForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'option'"
+                                    [label]="'How are your Employees represented in QuickBooks Online?'"
+                                    [subLabel]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'"
+                                    [options]="employeeMappingOptions"
+                                    [iconPath]="'user-two'"
+                                    [placeholder]="'Select representation'"
+                                    [formControllerName]="'employeeMapping'"
+                                    [isDisabled]="isEmployeeMappingDisabled()">
+                                </app-configuration-select-field>
+                                <app-configuration-select-field
+                                    [form]="employeeSettingForm"
+                                    [isFieldMandatory]="false"
+                                    [mandatoryErrorListName]="'option'"
+                                    [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
+                                    [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'"
+                                    [options]="autoMapEmployeeOptions"
+                                    [iconPath]="'question-square-outline'"
+                                    [placeholder]="'Select representation'"
+                                    [formControllerName]="'autoMapEmployee'">
+                                </app-configuration-select-field>
+                              </form>
                         </div>
                         <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">

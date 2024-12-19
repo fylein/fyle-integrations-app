@@ -94,7 +94,7 @@ export class AdvancedSettingsModel {
       if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && brandingConfig.brandId === 'fyle') {
         return defaultOptions;
       }
-      return defaultOptions.filter(option => option !== 'card_number');
+    return defaultOptions.filter(option => option !== 'card_number');
 
   }
 

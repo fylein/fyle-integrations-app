@@ -40,7 +40,6 @@ export const mockQBOCredential = {
 
 export const testOnboardingState = [
   { state: QBOOnboardingState.CONNECTION, route: '/integrations/qbo/onboarding/landing' },
-  { state: QBOOnboardingState.MAP_EMPLOYEES, route: '/integrations/qbo/onboarding/employee_settings' },
   { state: QBOOnboardingState.EXPORT_SETTINGS, route: '/integrations/qbo/onboarding/export_settings' },
   { state: QBOOnboardingState.IMPORT_SETTINGS, route: '/integrations/qbo/onboarding/import_settings' },
   { state: QBOOnboardingState.ADVANCED_CONFIGURATION, route: '/integrations/qbo/onboarding/advanced_settings' },
@@ -340,7 +339,7 @@ export const mockWorkspaceGeneralSettings = {
   id: 684,
   reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL,
   corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.BILL,
-  employee_field_mapping: EmployeeFieldMapping.VENDOR,
+  employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
   map_merchant_to_vendor: true,
   import_categories: true,
   import_items: false,
