@@ -165,7 +165,9 @@ export enum ClickEvent {
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
   INTACCT_EXPORT = 'Export Sage Intacct',
   CONNECT_SAGE300 = 'Connect Sage 300 CRE',
-  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central'
+  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central',
+  QBD_DIRECT_EXPORT = 'Direct Export Quickbooks Desktop',
+  QBD_DIRECT_SYNC = 'Sync Quickbooks Desktop Direct'
 }
 
 export enum ProgressPhase {
