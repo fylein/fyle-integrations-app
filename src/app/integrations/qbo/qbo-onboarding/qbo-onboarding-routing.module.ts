@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { QboOnboardingComponent } from './qbo-onboarding.component';
 import { QboOnboardingLandingComponent } from './qbo-onboarding-landing/qbo-onboarding-landing.component';
 import { QboOnboardingConnectorComponent } from './qbo-onboarding-connector/qbo-onboarding-connector.component';
-import { QboOnboardingEmployeeSettingsComponent } from './qbo-onboarding-employee-settings/qbo-onboarding-employee-settings.component';
 import { QboOnboardingExportSettingsComponent } from './qbo-onboarding-export-settings/qbo-onboarding-export-settings.component';
 import { QboOnboardingImportSettingsComponent } from './qbo-onboarding-import-settings/qbo-onboarding-import-settings.component';
 import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advanced-settings/qbo-onboarding-advanced-settings.component';
@@ -23,11 +22,6 @@ const routes: Routes = [
       {
         path: 'connector',
         component: QboOnboardingConnectorComponent
-      },
-      {
-        path: 'employee_settings',
-        component: QboOnboardingEmployeeSettingsComponent,
-        canActivate: [QboTokenGuard]
       },
       {
         path: 'export_settings',

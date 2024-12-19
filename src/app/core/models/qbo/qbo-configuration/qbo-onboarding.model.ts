@@ -4,7 +4,6 @@ import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
 type QBOOnboardingStepperMap = {
     [QBOOnboardingState.CONNECTION]: number,
-    [QBOOnboardingState.MAP_EMPLOYEES]: number,
     [QBOOnboardingState.EXPORT_SETTINGS]: number,
     [QBOOnboardingState.IMPORT_SETTINGS]: number,
     [QBOOnboardingState.ADVANCED_CONFIGURATION]: number,
@@ -23,14 +22,6 @@ export class QBOOnboardingModel {
           icon: 'link-vertical-medium',
           route: '/integrations/qbo/onboarding/connector',
           styleClasses: ['step-name-connector--text']
-        },
-        {
-            active: false,
-            completed: false,
-            step: brandingContent.configuration.employeeSetting.stepName,
-            icon: 'mapping-medium',
-            route: '/integrations/qbo/onboarding/employee_settings',
-            styleClasses: ['step-name-export--text']
         },
         {
           active: false,
@@ -60,12 +51,11 @@ export class QBOOnboardingModel {
 
     private readonly onboardingStateStepMap: QBOOnboardingStepperMap = {
         [QBOOnboardingState.CONNECTION]: 1,
-        [QBOOnboardingState.MAP_EMPLOYEES]: 2,
-        [QBOOnboardingState.EXPORT_SETTINGS]: 3,
-        [QBOOnboardingState.IMPORT_SETTINGS]: 4,
-        [QBOOnboardingState.ADVANCED_CONFIGURATION]: 5,
-        [QBOOnboardingState.COMPLETE]: 6,
-        [QBOOnboardingState.CLONE_SETTINGS]: 7
+        [QBOOnboardingState.EXPORT_SETTINGS]: 2,
+        [QBOOnboardingState.IMPORT_SETTINGS]: 3,
+        [QBOOnboardingState.ADVANCED_CONFIGURATION]: 4,
+        [QBOOnboardingState.COMPLETE]: 5,
+        [QBOOnboardingState.CLONE_SETTINGS]: 6
       };
 
     getOnboardingSteps(currentStep: string, onboardingState: QBOOnboardingState): OnboardingStepper[] {

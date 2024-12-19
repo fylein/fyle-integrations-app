@@ -104,7 +104,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     if (this.isContinueDisabled) {
       return;
     } else if (this.isCloneSettingsDisabled) {
-      this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+      this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
       return;
     }
 
@@ -145,7 +145,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+        this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
       }
     });
   }
@@ -167,11 +167,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   private handlePostQBOConnection(qboCredential: QBOCredential): void {
-    if (brandingFeatureConfig.featureFlags.mapEmployees) {
-      this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
-    } else {
-      this.workspaceService.setOnboardingState(QBOOnboardingState.EXPORT_SETTINGS);
-    }
+    this.workspaceService.setOnboardingState(QBOOnboardingState.EXPORT_SETTINGS);
 
     this.qboConnectionInProgress = false;
     this.qboCompanyName = qboCredential.company_name;

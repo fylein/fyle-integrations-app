@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, concat, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -16,6 +16,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+// Add to existing imports
+import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
+import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -115,6 +119,19 @@ export class QboExportSettingsComponent implements OnInit {
 
   isMultilineOption: boolean;
 
+  // Employee settings
+  employeeSettingForm: FormGroup;
+
+  employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
+
+  autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
+
+  employeeSetting: QBOEmployeeSettingGet;
+
+  existingEmployeeFieldMapping: EmployeeFieldMapping;
+
+  liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
+
   constructor(
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
@@ -123,9 +140,55 @@ export class QboExportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private employeeSettingService: QboEmployeeSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
+  }
+
+  isEmployeeMappingDisabled(): boolean {
+    const exportType = this.exportSettingForm.get('reimbursableExportType')?.value;
+    return exportType === QBOReimbursableExpensesObject.BILL ||
+           exportType === QBOReimbursableExpensesObject.CHECK;
+  }
+
+  setupExportTypeWatcher(): void {
+    this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe((exportType) => {
+      const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
+
+      if (exportType === QBOReimbursableExpensesObject.BILL) {
+        employeeMappingControl?.patchValue(EmployeeFieldMapping.VENDOR);
+        employeeMappingControl?.disable();
+      } else if (exportType === QBOReimbursableExpensesObject.CHECK) {
+        employeeMappingControl?.patchValue(EmployeeFieldMapping.EMPLOYEE);
+        employeeMappingControl?.disable();
+      } else if (exportType === QBOReimbursableExpensesObject.EXPENSE) {
+        employeeMappingControl?.enable();
+      } else if (exportType === QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
+        employeeMappingControl?.enable();
+      }
+    });
+  }
+
+  getAllReimbursableExportTypeOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'Check',
+        value: QBOReimbursableExpensesObject.CHECK
+      },
+      {
+        label: 'Bill',
+        value: QBOReimbursableExpensesObject.BILL
+      },
+      {
+        label: 'Expense',
+        value: QBOReimbursableExpensesObject.EXPENSE
+      },
+      {
+        label: 'Journal Entry',
+        value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
+      }
+    ];
   }
 
   constructPayloadAndSave(data: ConfigurationWarningOut): void {
@@ -133,29 +196,39 @@ export class QboExportSettingsComponent implements OnInit {
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
-      this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: QBOExportSettingGet) => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
 
-        if (this.isOnboarding) {
-          this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
-          this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
+      concat(
+        this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),
+        this.exportSettingService.postExportSettings(exportSettingPayload)
+      ).subscribe({
+        complete: () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export Settings saved successfully');
+          if (this.isOnboarding) {
+            this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
+            this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
         } else if (this.isAdvancedSettingAffected()) {
           this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
+          }
+        },
+        error: () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
         }
-      }, () => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
       });
     }
   }
 
+  private setLiveEntityExample(destinationAttributes: DestinationAttribute[]): void {
+    this.liveEntityExample = {
+      [FyleField.EMPLOYEE]: destinationAttributes.find((attribute: DestinationAttribute) => attribute.attribute_type === FyleField.EMPLOYEE)?.value,
+      [FyleField.VENDOR]: destinationAttributes.find((attribute: DestinationAttribute) => attribute.attribute_type === FyleField.VENDOR)?.value
+    };
+  }
+
   navigateToPreviousStep(): void {
-    if (brandingFeatureConfig.featureFlags.mapEmployees) {
-      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
-    } else {
-      this.router.navigate([`/integrations/qbo/onboarding/connector`]);
-    }
+    this.router.navigate([`/integrations/qbo/onboarding/connector`]);
   }
 
   refreshDimensions() {
@@ -410,12 +483,13 @@ export class QboExportSettingsComponent implements OnInit {
     forkJoin([
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getWorkspaceGeneralSettings(),
+    this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
-    ]).subscribe(([exportSetting, workspaceGeneralSettings, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
+    ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
       this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
-
+      this.setLiveEntityExample(destinationAttributes);
       this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -429,7 +503,10 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
-
+      this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
+        this.existingEmployeeFieldMapping,
+        workspaceGeneralSettings.auto_map_employees
+      );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
@@ -452,10 +529,9 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
+      this.setupExportTypeWatcher();
       this.setupCustomWatchers();
-
       this.setupCustomDateOptionWatchers();
-
       this.optionSearchWatcher();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);

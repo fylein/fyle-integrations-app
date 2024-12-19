@@ -218,7 +218,7 @@ export class QboCloneSettingsComponent implements OnInit {
   acceptWarning(data: ConfigurationWarningOut): void {
     this.isWarningDialogVisible = false;
     if (data.hasAccepted) {
-      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+      this.router.navigate([`/integrations/qbo/onboarding/export_settings`]);
     }
   }
 
