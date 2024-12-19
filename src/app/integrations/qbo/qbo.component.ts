@@ -45,7 +45,6 @@ export class QboComponent implements OnInit {
     if (pathName === '/integrations/qbo') {
       const onboardingStateComponentMap = {
         [QBOOnboardingState.CONNECTION]: '/integrations/qbo/onboarding/landing',
-        [QBOOnboardingState.MAP_EMPLOYEES]: '/integrations/qbo/onboarding/employee_settings',
         [QBOOnboardingState.EXPORT_SETTINGS]: '/integrations/qbo/onboarding/export_settings',
         [QBOOnboardingState.IMPORT_SETTINGS]: '/integrations/qbo/onboarding/import_settings',
         [QBOOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbo/onboarding/advanced_settings',
