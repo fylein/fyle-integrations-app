@@ -84,9 +84,9 @@ export enum TravelperkUpdateEvent {
 
 export enum QbdDirectUpdateEvent {
   CONFIRM_PRE_REQUISITES_QBD_DIRECT = 'Confirm Pre Requisites QuickBooks Desktop Connector',
-  CONNECT_QBD_DIRECT = 'Connect QuickBooks Desktop Connector',
-  PENDING_QWC_UPLOAD_QBD_DIRECT = 'Pending QWC Upload QuickBooks Desktop Connector',
-  DESTINATION_SYNC_COMPLETE_QBD_DIRECT = 'Destination Sync Complete QuickBooks Desktop Connector',
+  CONNECT_QBD_DIRECT = 'Step 2.1 - Connect QuickBooks Desktop Connector',
+  PENDING_QWC_UPLOAD_QBD_DIRECT = 'Step 2.2 - Upload QWC downloaded file to QuickBooks Desktop Connector',
+  DESTINATION_SYNC_COMPLETE_QBD_DIRECT = 'Step 2.3 - Sync destination entities with QuickBooks Desktop Connector',
   EXPORT_SETTING_QBD_DIRECT = 'Export Settings QuickBooks Desktop Connector',
   IMPORT_SETTINGS_QBD_DIRECT = 'Import Settings QuickBooks Desktop Connector',
   ADVANCED_SETTINGS_QBD_DIRECT = 'Advanced Settings QuickBooks Desktop Connector',
@@ -165,7 +165,9 @@ export enum ClickEvent {
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
   INTACCT_EXPORT = 'Export Sage Intacct',
   CONNECT_SAGE300 = 'Connect Sage 300 CRE',
-  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central'
+  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central',
+  QBD_DIRECT_EXPORT = 'Direct Export Quickbooks Desktop',
+  QBD_DIRECT_SYNC = 'Sync Quickbooks Desktop Direct'
 }
 
 export enum ProgressPhase {
