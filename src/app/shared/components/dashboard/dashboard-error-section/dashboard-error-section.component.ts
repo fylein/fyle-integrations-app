@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -175,7 +174,11 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.groupedError = groupedError;
     this.sourceField = sourceField;
     this.destinationField = this.destinationFieldMap[this.sourceField];
-    this.isMultiLineOption = this.importCodeFields?.includes(this.destinationField);
+    if ([AppName.QBD_DIRECT, AppName.QBO].includes(this.appName)) {
+      this.isMultiLineOption = this.destinationField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false;
+    } else {
+      this.isMultiLineOption = this.importCodeFields?.includes(this.destinationField) && brandingConfig.brandId !== 'co' ? true : false;
+    }
 
     if (this.destinationOptionsVersion === 'v1') {
       this.getDestinationOptionsV1(errorType);
