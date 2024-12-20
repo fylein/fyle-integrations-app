@@ -175,7 +175,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.sourceField = sourceField;
     this.destinationField = this.destinationFieldMap[this.sourceField];
     if ([AppName.QBD_DIRECT, AppName.QBO].includes(this.appName)) {
-      this.isMultiLineOption = this.destinationField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false;
+      this.isMultiLineOption = this.sourceField === ExportErrorSourceType.CATEGORY && brandingConfig.brandId !== 'co' ? true : false;
     } else {
       this.isMultiLineOption = this.importCodeFields?.includes(this.destinationField) && brandingConfig.brandId !== 'co' ? true : false;
     }
