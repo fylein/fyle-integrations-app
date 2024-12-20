@@ -145,6 +145,6 @@ export const fyleDemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
         NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8',
-        QBD_DIRECT: 'https://www.youtube.com/embed/b63lS2DG5j4'
+        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo'
     }
 };

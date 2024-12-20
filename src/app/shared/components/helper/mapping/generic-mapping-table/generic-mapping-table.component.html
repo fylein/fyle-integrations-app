@@ -29,7 +29,9 @@
                     [emptyFilterMessage]="isSearching ? 'Searching...' : 'No results found'"
                     (onFilter)="searchOptions($event)">
                     <ng-template let-value pTemplate="selectedItem">
-                        <div *ngIf="value">
+                        <div *ngIf="value" #textElement
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                        [pTooltip]="isOverflowing(textElement, value)" tooltipPosition="top">
                             <p>
                                 <span *ngIf="value?.code && isMultiLineOption && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
                                 {{ value?.value }} 
