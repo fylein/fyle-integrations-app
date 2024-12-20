@@ -22,26 +22,13 @@ export class TravelperkTokenGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-
-    if (!workspaceId) {
-      this.router.navigateByUrl('workspaces');
-      return throwError(() => new Error('Workspace not found'));
-    }
-
-    return this.travelperkService.getTravelperkData().pipe(
+    return this.travelperkService.getTravelperkTokenHealth().pipe(
       map(() => true),
       catchError(error => {
         if (error.status === 400) {
           globalCacheBusterNotifier.next();
           this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your TravelPerk connection expired, please connect again');
-
-          const onboardingState = this.workspaceService.getOnboardingState();
-          if (onboardingState !== TravelPerkOnboardingState.COMPLETE) {
-            this.router.navigateByUrl('integrations/travelperk/onboarding/landing');
-          } else {
-            this.router.navigateByUrl('integrations/travelperk/onboarding/landing');
-          }
+          this.router.navigateByUrl('integrations/travelperk/onboarding/landing');
         }
         return throwError(() => error);
       })

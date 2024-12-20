@@ -40,6 +40,17 @@ export class TravelperkService {
     );
   }
 
+  getTravelperkTokenHealth(): Observable<{}> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/token_health/`, {}).pipe(
+      catchError(error => {
+        if (error.status === 400) {
+          error.error.is_expired = true;
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
   connectTravelperk(): Observable<{}>{
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/travelperk_connection/`, {});
   }
