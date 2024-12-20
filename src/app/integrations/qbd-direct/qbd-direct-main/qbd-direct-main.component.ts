@@ -3,9 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -35,9 +33,7 @@ export class QbdDirectMainComponent implements OnInit {
 
   constructor(
     private qbdDirectHelperService: QbdDirectHelperService,
-    private router: Router,
-    private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private router: Router
   ) { }
 
 
