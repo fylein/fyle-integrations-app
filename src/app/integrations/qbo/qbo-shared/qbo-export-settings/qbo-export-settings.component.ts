@@ -293,7 +293,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private isExportSettingsUpdated(): boolean {
-    return this.exportSettings.workspace_general_settings.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object !== null;
+    return this.exportSettings.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
   }
 
   private isSingleItemizedJournalEntryAffected(): boolean {
@@ -519,14 +519,14 @@ return of(null);
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      if (this.exportSettings.workspace_general_settings.reimbursable_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.workspace_general_settings.reimbursable_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
+      if (this.exportSettings.workspace_general_settings?.reimbursable_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.workspace_general_settings?.reimbursable_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
-      if (this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
+      if (this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
       this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
