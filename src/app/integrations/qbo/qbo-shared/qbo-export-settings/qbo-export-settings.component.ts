@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, concat, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, catchError, concat, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -482,8 +482,8 @@ export class QboExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.workspaceService.getWorkspaceGeneralSettings(),
-    this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
+      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {return of(null);})),
+      this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
     ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 

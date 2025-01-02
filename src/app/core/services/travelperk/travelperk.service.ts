@@ -40,6 +40,7 @@ export class TravelperkService {
     );
   }
 
+  @Cacheable()
   getTravelperkTokenHealth(): Observable<{}> {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/token_health/`, {}).pipe(
       catchError(error => {
