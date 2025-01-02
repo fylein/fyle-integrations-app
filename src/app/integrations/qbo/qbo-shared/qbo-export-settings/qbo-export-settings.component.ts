@@ -482,7 +482,9 @@ export class QboExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {return of(null);})),
+      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {
+return of(null);
+})),
       this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
     ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
