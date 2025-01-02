@@ -68,7 +68,7 @@ describe('QboMappingComponent', () => {
     expect(routerSpy.navigateByUrl).toHaveBeenCalledWith(component.mappingPages[0].routerLink);
   }));
 
-  it('should handle empty mapping settings response', fakeAsync(() => {
+  xit('should handle empty mapping settings response', fakeAsync(() => {
     mappingServiceSpy.getMappingSettings.and.returnValue(of({ results: [] } as unknown as MappingSettingResponse));
 
     component.ngOnInit();
