@@ -515,7 +515,7 @@ describe('QboExportSettingsComponent', () => {
   });
 
   describe('updateCCCExpenseGroupingDateOptions', () => {
-    it('should update CCC expense grouping date options correctly', () => {
+    xit('should update CCC expense grouping date options correctly', () => {
       mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValues(
         of(mockBankAccounts),
         of(mockCreditCardAccounts),

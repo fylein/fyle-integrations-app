@@ -258,7 +258,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
       defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
       qboExpenseAccount: new FormControl(exportSettings?.general_mappings?.qbo_expense_account?.id ? exportSettings.general_mappings.qbo_expense_account : null),
       defaultDebitCardAccount: new FormControl(exportSettings?.general_mappings?.default_debit_card_account?.id ? exportSettings.general_mappings.default_debit_card_account : null),
-      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE ),
+      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings?.name_in_journal_entry ? exportSettings.workspace_general_settings?.name_in_journal_entry : NameInJournalEntry.EMPLOYEE ),
       searchOption: new FormControl(''),
       splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping)
     });
