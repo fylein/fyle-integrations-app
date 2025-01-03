@@ -281,6 +281,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaceResponse: QbdDirectWorkspace[]) => {
       if (workspaceResponse[0].onboarding_state === QbdDirectOnboardingState.PENDING_QWC_UPLOAD) {
         this.qbdDirectConnectorService.getQBDConnectorSettings().subscribe((qbdConntion: QbdConnectorGet) => {
+          this.xmlFileContent = qbdConntion.qwc
           this.password = qbdConntion.password;
           this.isDownloadStepCompleted = true;
           this.isDownloadfileLoading = false;
