@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, InAppIntegration, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
 import { InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -30,10 +30,6 @@ export class LandingV2Component implements OnInit {
   InAppIntegration = InAppIntegration;
 
   org: Org = this.orgService.getCachedOrg();
-
-  isTravelperkAllowed: boolean = this.org.allow_travelperk;
-
-  readonly exposeC1Apps = brandingFeatureConfig.exposeC1Apps;
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
@@ -114,6 +110,40 @@ export class LandingV2Component implements OnInit {
     // Resetting to initial state and setting clicked view to true
     this.integrationTabs = initialState;
     this.integrationTabs[clickedView] = true;
+  }
+
+  isAppShown(appKey: IntegrationAppKey) {
+    // If this app disabled for this org
+    if (
+      (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
+      (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
+      (appKey === 'TRAVELPERK' && !this.org.allow_travelperk)
+    ) {
+      return false;
+    }
+
+    // If this app allowed and all apps are shown
+    if (this.integrationTabs.ALL) {
+      return true;
+    }
+
+    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
+
+    if (appKey === 'BAMBOO_HR') {
+      return this.exposeApps.BAMBOO && this.integrationTabs.HRMS;
+    }
+
+    if (appKey === 'TRAVELPERK') {
+      return this.exposeApps.TRAVELPERK && this.integrationTabs.TRAVEL;
+    }
+
+    // If the app was not BAMBOO_HR or TRAVELPERK, it must be an accounting app
+    if (allAppKeys.includes(appKey)) {
+      return this.exposeApps[appKey] && this.integrationTabs.ACCOUNTING;
+    }
+
+    // TS catch-all (shouln't reach here)
+    return false;
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
