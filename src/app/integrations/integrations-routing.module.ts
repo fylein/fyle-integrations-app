@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IntegrationsComponent } from './integrations.component';
 import { LandingComponent } from './landing/landing.component';
+import { LandingV2Component } from './landing-v2/landing-v2.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'landing',
         component: LandingComponent
+      },
+      {
+        path: 'landing-v2',
+        component: LandingV2Component
       },
       {
         path: 'bamboo_hr',

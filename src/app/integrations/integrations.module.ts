@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { Sage300Component } from './sage300/sage300.component';
 import { XeroComponent } from './xero/xero.component';
 import { TravelperkComponent } from './travelperk/travelperk.component';
+import { LandingV2Component } from './landing-v2/landing-v2.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TravelperkComponent } from './travelperk/travelperk.component';
     QbdComponent,
     Sage300Component,
     XeroComponent,
-    TravelperkComponent
+    TravelperkComponent,
+    LandingV2Component
   ],
   imports: [
     CommonModule,
