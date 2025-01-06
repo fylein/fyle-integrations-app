@@ -46,7 +46,7 @@ export class QBOEmployeeSettingModel {
     const employeeSettingPayload: QBOEmployeeSettingPost = {
       workspace_general_settings: {
         employee_field_mapping: employeeSettingsForm.get('employeeMapping')?.value || EmployeeFieldMapping.EMPLOYEE,
-        auto_map_employees: employeeSettingsForm.get('autoMapEmployee')?.value
+        auto_map_employees: employeeSettingsForm.get('autoMapEmployee')?.value || AutoMapEmployeeOptions.NAME
       }
     };
     return employeeSettingPayload;
