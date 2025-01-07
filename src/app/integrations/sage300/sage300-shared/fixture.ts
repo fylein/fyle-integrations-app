@@ -72,7 +72,7 @@ export const sage300FieldsResponse: IntegrationField[] =
 ];
 
 export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
-    memo_structure: [
+    expense_memo_structure: [
         "employee_email",
         "category",
         "spent_on",
