@@ -42,6 +42,8 @@ export enum InAppIntegration {
   QBD_DIRECT = 'QuickBooks Connector'
 }
 
+export type IntegrationAppKey = keyof typeof InAppIntegration;
+
 export enum ToastSeverity {
   SUCCESS = 'success',
   ERROR = 'error',
