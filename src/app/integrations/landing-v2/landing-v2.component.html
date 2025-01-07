@@ -36,101 +36,132 @@
             </div>
         </div>
 
-        <div class="tw-flex tw-flex-wrap tw-gap-5">
+        <div
+            class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
             <div *ngIf="isAppShown('NETSUITE')">
                 <div class="landing-v2--accounting-app"
-                    [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                     (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                    <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
-                    <span class="landing-v2--accounting-app-name !tw-pt-18-px">
-                        NetSuite
-                    </span>
+                    <img src="assets/logos/netsuite-logo.png" />
+                    <div>
+                        <span class="landing-v2--accounting-app-name">
+                            NetSuite
+                        </span>
+                        <span class="landing-v2--accounting-app-type">
+                            Accounting
+                        </span>
+                    </div>
                 </div>
             </div>
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
-                <span class="landing-v2--accounting-app-name !tw-pt-8-px">
-                    Sage Intacct
-                </span>
+                <img src="assets/logos/intacct-logo.png" />
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Sage Intacct
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
             </div>
             <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px" />
-                <span class="landing-v2--accounting-app-name">
-                    QuickBooks Online
-                </span>
+                <img src="assets/logos/quickbooks-logo.png" />
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        QuickBooks Online
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
             </div>
             <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
-                <span class="landing-v2--accounting-app-name">
-                    Xero
-                </span>
+                <img src="assets/logos/xero-logo.png" />
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Xero
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
             </div>
             <div *ngIf="isAppShown('QBD')" class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                 (click)="openInAppIntegration(InAppIntegration.QBD)">
-                <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                <span class="landing-v2--accounting-app-name">
-                    QuickBooks Desktop (IIF)
-                </span>
+                <img src="assets/logos/quickbooks-logo.png" />
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        QuickBooks Desktop (IIF)
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
             </div>
             <!-- Direct -->
-            <div *ngIf="isAppShown('QBD_DIRECT')"
-                class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
+            <div *ngIf="isAppShown('QBD_DIRECT')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                <span class="landing-v2--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                    QuickBooks Desktop (Web Connector)
+                <img src="assets/logos/quickbooks-logo.png" />
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        QuickBooks Desktop (Web Connector)
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
                     <app-badge [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                 </span>
             </div>
             <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
                 (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                <span class="landing-v2--accounting-app-name tw-gap-2">
-                    Sage 300 CRE
+                <img src="assets/logos/sage300-logo.svg" />
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        Sage 300 CRE
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
                     <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK"
                         text="Beta"></app-badge>
                 </span>
             </div>
-            <div *ngIf="isAppShown('BUSINESS_CENTRAL')"
-                class="landing-v2--accounting-app"
-                [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
+            <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
-                <span class="landing-v2--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                    Dynamics 365 Business Central
+                <img src="assets/logos/BusinessCentral-logo.svg" />
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        Dynamics 365 Business Central
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
                     <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
                         [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                 </span>
             </div>
 
             <div *ngIf="isAppShown('BAMBOO_HR')">
-                <div class="landing-v2--accounting-app tw-mr-20-px"
-                    [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                    (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-                    <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
-                    <span class="landing-v2--accounting-app-name">
-                        BambooHR
-                    </span>
+                <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
+                    <img src="assets/logos/bamboo-hr-logo.svg" />
+                    <div>
+                        <span class="landing-v2--accounting-app-name">
+                            BambooHR
+                        </span>
+                        <span class="landing-v2--accounting-app-type">
+                            HRMS
+                        </span>
+                    </div>
                 </div>
             </div>
 
             <div *ngIf="isAppShown('TRAVELPERK')">
-                <div class="landing-v2--accounting-app tw-mr-20-px"
-                    [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                    (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-                    <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
-                    <span class="landing-v2--accounting-app-name">
-                        TravelPerk
-                    </span>
+                <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+                    <img src="assets/logos/travelperk-logo.svg" />
+                    <div>
+                        <span class="landing-v2--accounting-app-name">
+                            TravelPerk
+                        </span>
+                        <span class="landing-v2--accounting-app-type">
+                            Travel
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
