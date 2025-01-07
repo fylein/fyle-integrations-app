@@ -1,0 +1,52 @@
+
+.landing-v2 {
+    &--container {
+        @apply tw-p-6 tw-flex tw-flex-col tw-gap-6;
+        @apply tw-rounded-8-px tw-border tw-border-solid tw-border-separator tw-bg-white;
+    }
+
+    &--active-tag {
+        @apply tw-bg-slightly-normal-text-color tw-h-2-px tw-w-[100%] tw-rounded-tr-4-px tw-rounded-tl-4-px tw-mt-4;
+    }
+
+    &--tab {
+        @apply tw-flex tw-flex-col tw-justify-between tw-items-center tw-cursor-pointer tw-pt-4 tw-px-6;
+    }
+
+    &--divider {
+        @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
+    }
+
+    &--section-divider {
+        @extend .landing-v2--divider;
+        @apply tw-my-40-px;
+    }
+
+    &--accounting-app {
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-8-px tw-border-1-px tw-bg-white tw-border-none;
+    }
+
+    &--accounting-app-name {
+        @apply tw-pt-22-px tw-text-14-px tw-flex tw-text-text-secondary;
+    }
+
+    &--accounting-app-open {
+        @apply tw-pl-6-px tw-pt-3-px tw-text-slightly-normal-text-color;
+    }
+
+    &--section-heading {
+        @apply tw-text-18-px tw-pb-8-px tw-text-text-primary tw-font-500;
+    }
+
+    &--section-caption {
+        @apply tw-text-text-tertiary tw-text-14-px;
+    }
+
+    &--other-integrations {
+        @apply tw-grid tw-grid-cols-3 tw-mt-50-px;
+    }
+
+    &--other-integration-app {
+        @apply tw-flex tw-items-center tw-justify-center;
+    }
+}
