@@ -41,7 +41,10 @@
             <div *ngIf="isAppShown('NETSUITE')">
                 <div class="landing-v2--accounting-app"
                     (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                    <img src="assets/logos/netsuite-logo.png" />
+                    <div class="tw-flex tw-justify-between">
+                        <img src="assets/logos/netsuite-logo.png" />
+                        <button class="btn-connect">Connect</button>
+                    </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">
                             NetSuite
@@ -54,7 +57,10 @@
             </div>
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <img src="assets/logos/intacct-logo.png" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/intacct-logo.png" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
                         Sage Intacct
@@ -66,7 +72,10 @@
             </div>
             <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                <img src="assets/logos/quickbooks-logo.png" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
                         QuickBooks Online
@@ -78,7 +87,10 @@
             </div>
             <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                <img src="assets/logos/xero-logo.png" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/xero-logo.png" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
                         Xero
@@ -90,7 +102,10 @@
             </div>
             <div *ngIf="isAppShown('QBD')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.QBD)">
-                <img src="assets/logos/quickbooks-logo.png" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
                         QuickBooks Desktop (IIF)
@@ -103,7 +118,10 @@
             <!-- Direct -->
             <div *ngIf="isAppShown('QBD_DIRECT')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                <img src="assets/logos/quickbooks-logo.png" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
                         QuickBooks Desktop (Web Connector)
@@ -114,7 +132,10 @@
             </div>
             <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                <img src="assets/logos/sage300-logo.svg" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/sage300-logo.png" class="tw-py-[4px]" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
                         Sage 300 CRE
@@ -126,7 +147,10 @@
             </div>
             <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                <img src="assets/logos/BusinessCentral-logo.svg" />
+                <div class="tw-flex tw-justify-between">
+                    <img src="assets/logos/BusinessCentral-logo.svg" />
+                    <button class="btn-connect">Connect</button>
+                </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
                         Dynamics 365 Business Central
@@ -139,7 +163,10 @@
 
             <div *ngIf="isAppShown('BAMBOO_HR')">
                 <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-                    <img src="assets/logos/bamboo-hr-logo.svg" />
+                    <div class="tw-flex tw-justify-between">
+                        <img src="assets/logos/bamboo-hr-logo.png" />
+                        <button class="btn-connect">Connect</button>
+                    </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">
                             BambooHR
@@ -153,7 +180,10 @@
 
             <div *ngIf="isAppShown('TRAVELPERK')">
                 <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-                    <img src="assets/logos/travelperk-logo.svg" />
+                    <div class="tw-flex tw-justify-between">
+                        <img src="assets/logos/travelperk-logo.png" class="tw-py-[5px]" />
+                        <button class="btn-connect">Connect</button>
+                    </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">
                             TravelPerk
