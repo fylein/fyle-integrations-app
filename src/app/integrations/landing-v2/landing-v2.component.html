@@ -12,7 +12,7 @@
                     href="mailto:support@fylehq.com">support{{'@'}}fylehq.com</a>
             </p>
         </header>
-        <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
+        <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
             <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
                 (click)="switchView(IntegrationsView.ALL)">
                 All
