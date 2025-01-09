@@ -41,9 +41,13 @@
             <div *ngIf="isAppShown('NETSUITE')">
                 <div class="landing-v2--accounting-app"
                     (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                    <div class="tw-flex tw-justify-between">
+                    <div class="tw-flex tw-justify-between tw-items-center">
                         <img src="assets/logos/netsuite-logo.png" />
-                        <button class="btn-connect">Connect</button>
+                        @if (isAppConnected('NETSUITE')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
                     </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">
@@ -57,9 +61,13 @@
             </div>
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/intacct-logo.png" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('INTACCT')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
@@ -72,9 +80,13 @@
             </div>
             <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('QBO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
@@ -87,9 +99,13 @@
             </div>
             <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/xero-logo.png" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('XERO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
@@ -102,9 +118,13 @@
             </div>
             <div *ngIf="isAppShown('QBD')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.QBD)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('QBD')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <div>
                     <span class="landing-v2--accounting-app-name">
@@ -118,9 +138,13 @@
             <!-- Direct -->
             <div *ngIf="isAppShown('QBD_DIRECT')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('QBD_DIRECT')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
@@ -132,9 +156,13 @@
             </div>
             <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/sage300-logo.png" class="tw-py-[4px]" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('SAGE300')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
@@ -147,9 +175,13 @@
             </div>
             <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                <div class="tw-flex tw-justify-between">
+                <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/BusinessCentral-logo.svg" />
-                    <button class="btn-connect">Connect</button>
+                    @if (isAppConnected('BUSINESS_CENTRAL')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
                 </div>
                 <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
                     <div>
@@ -163,9 +195,13 @@
 
             <div *ngIf="isAppShown('BAMBOO_HR')">
                 <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-                    <div class="tw-flex tw-justify-between">
+                    <div class="tw-flex tw-justify-between tw-items-center">
                         <img src="assets/logos/bamboo-hr-logo.png" />
-                        <button class="btn-connect">Connect</button>
+                        @if (isAppConnected('BAMBOO_HR')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
                     </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">
@@ -180,9 +216,13 @@
 
             <div *ngIf="isAppShown('TRAVELPERK')">
                 <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-                    <div class="tw-flex tw-justify-between">
+                    <div class="tw-flex tw-justify-between tw-items-center">
                         <img src="assets/logos/travelperk-logo.png" class="tw-py-[5px]" />
-                        <button class="btn-connect">Connect</button>
+                        @if (isAppConnected('TRAVELPERK')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
                     </div>
                     <div>
                         <span class="landing-v2--accounting-app-name">

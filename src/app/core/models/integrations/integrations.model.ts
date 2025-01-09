@@ -1,5 +1,16 @@
 import { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
 
+export type Integration = {
+    id: number;
+    org_id: string;
+    org_name: string;
+    tpa_id: string;
+    tpa_name: string;
+    type: string;
+    is_active: boolean;
+    is_beta: boolean;
+}
+
 export type IntegrationsView = {
     [IntegrationView.ACCOUNTING]: boolean,
     [IntegrationView.ALL]: boolean,
