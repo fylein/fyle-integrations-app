@@ -22,6 +22,11 @@
     @apply tw-text-badge-dark-text-color;
 }
 
+.theme-success {
+    @apply tw-bg-bg-success-light tw-border tw-border-solid tw-border-border-success-light;
+    @apply tw-text-text-success;
+}
+
 .size-large {
     @apply tw-min-w-24-px;
     @apply tw-min-h-24-px;
