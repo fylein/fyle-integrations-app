@@ -15,6 +15,7 @@ import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.serv
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
   selector: 'app-landing-v2',
@@ -30,6 +31,8 @@ export class LandingV2Component implements OnInit {
   InAppIntegration = InAppIntegration;
 
   org: Org = this.orgService.getCachedOrg();
+
+  private connectedApps: IntegrationAppKey[];
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
@@ -72,6 +75,19 @@ export class LandingV2Component implements OnInit {
     [AccountingIntegrationApp.XERO]: '/integrations/xero'
   };
 
+  private readonly tpaNameToIntegrationKeyMap: Record<string, IntegrationAppKey> = {
+    'Fyle Netsuite Integration': 'NETSUITE',
+    'Fyle Sage Intacct Integration': 'INTACCT',
+    'Fyle Quickbooks Integration': 'QBO',
+    'Fyle Xero Integration': 'XERO',
+    'Fyle Quickbooks Desktop (IIF) Integration': 'QBD',
+    'Fyle Quickbooks Desktop Integration': 'QBD_DIRECT',
+    'Fyle Sage 300 Integration': 'SAGE300',
+    'Fyle Business Central Integration': 'BUSINESS_CENTRAL',
+    'Fyle TravelPerk Integration': 'TRAVELPERK',
+    'Fyle BambooHR Integration': 'BAMBOO_HR'
+  };
+
   readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
@@ -100,7 +116,8 @@ export class LandingV2Component implements OnInit {
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private integrationService: IntegrationsService
   ) { }
 
 
@@ -144,6 +161,10 @@ export class LandingV2Component implements OnInit {
 
     // TS catch-all (shouln't reach here)
     return false;
+  }
+
+  isAppConnected(appKey: IntegrationAppKey) {
+    return this.connectedApps.includes(appKey);
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
@@ -215,7 +236,17 @@ export class LandingV2Component implements OnInit {
     });
   }
 
+  private storeConnectedApps() {
+    this.integrationService.getIntegrations().subscribe(integrations => {
+      const tpaNames = integrations.map(integration => integration.tpa_name);
+      const connectedApps = tpaNames.map(tpaName => this.tpaNameToIntegrationKeyMap[tpaName]);
+
+      this.connectedApps = connectedApps;
+    });
+  }
+
   ngOnInit(): void {
     this.setupLoginWatcher();
+    this.storeConnectedApps();
   }
 }
