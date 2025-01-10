@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HelperService } from './helper.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('HelperService', () => {
   let service: HelperService;
@@ -10,11 +11,13 @@ xdescribe('HelperService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      providers: [
-        { provide: Router, useValue: routerSpy }
-      ]
-    });
+    imports: [],
+    providers: [
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     service = TestBed.inject(HelperService);
   });
 

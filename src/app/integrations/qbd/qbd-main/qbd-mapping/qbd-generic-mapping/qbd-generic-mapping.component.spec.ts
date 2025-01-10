@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdGenericMappingComponent } from './qbd-generic-mapping.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -12,6 +12,7 @@ import { of, throwError } from 'rxjs';
 import { MappingState, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { getMappingResponse, getMappingStatsResponse, postMappingPayload, postMappingResponse } from './qbd-generic-mapping.fixture';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdGenericMappingComponent', () => {
   let component: QbdGenericMappingComponent;
@@ -35,14 +36,13 @@ xdescribe('QbdGenericMappingComponent', () => {
       displayToastMessage: () => undefined
     };
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ QbdGenericMappingComponent],
-      providers: [QbdMappingService,
+    declarations: [QbdGenericMappingComponent],
+    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule],
+    providers: [QbdMappingService,
         { provide: QbdMappingService, useValue: service1 },
         { provide: WindowService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }
-      ]
-    })
+        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdGenericMappingComponent);

@@ -1,10 +1,11 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { OrgService } from '../org/org.service';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHRMockConnectionPayload, bambooHrMockData } from './bamboo-hr.fixture';
 
 import { BambooHrService } from './bamboo-hr.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('BambooHrService', () => {
   let service: BambooHrService;
@@ -18,13 +19,13 @@ xdescribe('BambooHrService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        { provide: OrgService, useValue: service1 }
-      ]
-    });
+    imports: [],
+    providers: [
+        { provide: OrgService, useValue: service1 },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     injector = getTestBed();
     service = TestBed.inject(BambooHrService);
     orgService = injector.inject(OrgService);

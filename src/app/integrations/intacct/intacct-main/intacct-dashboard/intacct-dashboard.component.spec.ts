@@ -1,6 +1,6 @@
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { IntacctDashboardComponent } from './intacct-dashboard.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
@@ -14,6 +14,7 @@ import { mockAccountingExportSummary, mockCompletedTasksWithFailures, mockConfig
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Error } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IntacctDashboardComponent', () => {
 
@@ -35,17 +36,19 @@ describe('IntacctDashboardComponent', () => {
     const exportLogServiceSpyObj = jasmine.createSpyObj('ExportLogService', ['getExportLogs']);
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, SharedModule],
-      declarations: [IntacctDashboardComponent],
-      providers: [
+    declarations: [IntacctDashboardComponent],
+    imports: [SharedModule],
+    providers: [
         { provide: DashboardService, useValue: dashboardServiceSpyObj },
         { provide: AccountingExportService, useValue: accountingExportServiceSpyObj },
         { provide: UserService, useValue: userServiceSpyObj },
         { provide: WorkspaceService, useValue: workspaceServiceSpyObj },
         { provide: SiExportSettingService, useValue: intacctExportSettingServiceSpyObj },
-        { provide: ExportLogService, useValue: exportLogServiceSpyObj }
-      ]
-    }).compileComponents();
+        { provide: ExportLogService, useValue: exportLogServiceSpyObj },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     dashboardServiceSpy = TestBed.inject(DashboardService) as jasmine.SpyObj<DashboardService>;
     accountingExportServiceSpy = TestBed.inject(AccountingExportService) as jasmine.SpyObj<AccountingExportService>;
