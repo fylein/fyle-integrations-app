@@ -78,3 +78,6 @@ documentation.json
 .sentryclirc
 
 commits.csv
+
+.nx/cache
+.nx/workspace-data
