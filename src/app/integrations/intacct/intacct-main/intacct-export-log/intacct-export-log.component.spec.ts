@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntacctExportLogComponent } from './intacct-export-log.component';
 import { FormBuilder } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, Router } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IntacctExportLogComponent', () => {
   let component: IntacctExportLogComponent;
@@ -12,10 +13,10 @@ describe('IntacctExportLogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ IntacctExportLogComponent ],
-      providers: [ FormBuilder, provideRouter([]) ]
-    })
+    declarations: [IntacctExportLogComponent],
+    imports: [],
+    providers: [FormBuilder, provideRouter([]), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     router = TestBed.inject(Router);

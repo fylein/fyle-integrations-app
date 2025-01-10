@@ -11,7 +11,8 @@ import { AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.mo
 import { mockUser, testOnboardingState, workspaceResponse } from './intacct.fixture';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IntacctComponent', () => {
   let component: IntacctComponent;
@@ -40,17 +41,19 @@ describe('IntacctComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [IntacctComponent],
-      imports: [SharedModule, HttpClientTestingModule],
-      providers: [
+    declarations: [IntacctComponent],
+    imports: [SharedModule],
+    providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: StorageService, useValue: storageSpy },
         { provide: UserService, useValue: userSpy },
         { provide: SiWorkspaceService, useValue: workspaceSpy },
         { provide: WindowService, useValue: windowServiceMock },
-        provideRouter([])
-      ]
-    }).compileComponents();
+        provideRouter([]),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     workspaceServiceSpy = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;

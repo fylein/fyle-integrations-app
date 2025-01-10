@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QbdExportTriggerResponse, QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
@@ -17,9 +17,9 @@ xdescribe('QbdIifLogsService', () => {
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdIifLogsService]
-    });
+    imports: [],
+    providers: [QbdIifLogsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
       service = TestBed.inject(QbdIifLogsService);
       injector = getTestBed();
       service = injector.inject(QbdIifLogsService);

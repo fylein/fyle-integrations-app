@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,17 +50,18 @@ describe('QbdExportSettingComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ QbdExportSettingComponent ],
-      providers: [
+    declarations: [QbdExportSettingComponent],
+    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
+    providers: [
         FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
-        { provide: QbdMappingService, useValue: service4 }
-      ]
-    })
+        { provide: QbdMappingService, useValue: service4 },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdExportSettingComponent);

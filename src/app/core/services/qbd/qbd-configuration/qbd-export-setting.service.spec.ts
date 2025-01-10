@@ -1,10 +1,11 @@
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdExportSettingService } from './qbd-export-setting.service';
 import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdExportSettingService', () => {
   let service: QbdExportSettingService;
@@ -16,9 +17,9 @@ xdescribe('QbdExportSettingService', () => {
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdExportSettingService]
-    });
+    imports: [],
+    providers: [QbdExportSettingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = injector.inject(QbdExportSettingService);
     httpMock = injector.inject(HttpTestingController);

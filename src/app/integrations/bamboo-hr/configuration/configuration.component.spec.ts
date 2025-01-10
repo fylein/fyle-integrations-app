@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
@@ -19,15 +19,14 @@ xdescribe('ConfigurationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule
-      ],
-      declarations: [ ConfigurationComponent ],
-      providers: [
+    declarations: [ConfigurationComponent],
+    imports: [],
+    providers: [
         FormBuilder,
-        { provide: OrgService, useValue: service1 }
-      ]
-    })
+        { provide: OrgService, useValue: service1 },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationComponent);

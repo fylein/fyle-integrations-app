@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,15 +41,14 @@ describe('QbdFieldMappingComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ QbdFieldMappingComponent ],
-      providers: [FormBuilder,
+    declarations: [QbdFieldMappingComponent],
+    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
+    providers: [FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }
-      ]
-    })
+        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi())]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdFieldMappingComponent);

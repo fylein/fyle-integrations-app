@@ -1,10 +1,11 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { UserService } from '../misc/user.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { loginResponse, minimalUser, tokenResponse } from '../../interceptor/jwt.fixture';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('AuthService', () => {
   let service: AuthService;
@@ -21,13 +22,15 @@ xdescribe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         AuthService,
-        { provide: UserService, useValue: service1},
-        { provide: Router, useValue: routerSpy }
-      ]
-    });
+        { provide: UserService, useValue: service1 },
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     injector = getTestBed();
     service = injector.inject(AuthService);
     userService = injector.inject(UserService);

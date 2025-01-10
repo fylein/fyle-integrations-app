@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdWorkspaceService } from './qbd-workspace.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdWorkspaceService', () => {
   let service: QbdWorkspaceService;
@@ -13,9 +14,9 @@ xdescribe('QbdWorkspaceService', () => {
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdWorkspaceService]
-    });
+    imports: [],
+    providers: [QbdWorkspaceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = TestBed.inject(QbdWorkspaceService);
     httpMock = injector.inject(HttpTestingController);

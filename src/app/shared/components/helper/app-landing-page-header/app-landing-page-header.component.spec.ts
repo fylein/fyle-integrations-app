@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,16 +14,15 @@ xdescribe('AppLandingPageHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppLandingPageHeaderComponent],
-      imports: [
-        HttpClientModule,
-        HttpClientTestingModule,
-        RouterTestingModule // Added RouterTestingModule for navigation testing
-      ],
-      providers: [
-        { provide: Router, useValue: routerSpy }
-      ]
-    }).compileComponents();
+    declarations: [AppLandingPageHeaderComponent],
+    imports: [RouterTestingModule // Added RouterTestingModule for navigation testing
+    ],
+    providers: [
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

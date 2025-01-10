@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { of, throwError } from 'rxjs';
@@ -44,17 +44,17 @@ xdescribe('TravelperkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TravelperkComponent ],
-      imports: [
-        HttpClientModule, HttpClientTestingModule
-      ],
-      providers: [
-        {provide: TravelperkService, useValue: service1},
-        {provide: OrgService, useValue: service2 },
-        {provide: EventsService, useValue: service3},
-        MessageService
-      ]
-    })
+    declarations: [TravelperkComponent],
+    imports: [],
+    providers: [
+        { provide: TravelperkService, useValue: service1 },
+        { provide: OrgService, useValue: service2 },
+        { provide: EventsService, useValue: service3 },
+        MessageService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(TravelperkComponent);

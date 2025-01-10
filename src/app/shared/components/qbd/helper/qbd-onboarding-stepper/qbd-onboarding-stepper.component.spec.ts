@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -22,13 +22,14 @@ describe('QbdOnboardingStepperComponent', () => {
     };
     localStorage.setItem('QBDOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ QbdOnboardingStepperComponent ],
-      providers: [
+    declarations: [QbdOnboardingStepperComponent],
+    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule],
+    providers: [
         { provide: Router, useValue: routerSpy },
-        { provide: QbdWorkspaceService, useValue: service2 }
-      ]
-    })
+        { provide: QbdWorkspaceService, useValue: service2 },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdOnboardingStepperComponent);

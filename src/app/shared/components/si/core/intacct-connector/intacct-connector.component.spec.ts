@@ -8,7 +8,7 @@ import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
 import { IntacctComponent } from 'src/app/integrations/intacct/intacct.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
 
 xdescribe('IntacctConnectorComponent', () => {
@@ -26,17 +26,18 @@ xdescribe('IntacctConnectorComponent', () => {
     mockMessageService = jasmine.createSpyObj('MessageService', ['add']);
     localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
-      declarations: [IntacctConnectorComponent, IntacctComponent],
-      imports: [ReactiveFormsModule, HttpClientModule],
-      providers: [
+    declarations: [IntacctConnectorComponent, IntacctComponent],
+    imports: [ReactiveFormsModule],
+    providers: [
         FormBuilder,
         { provide: IntacctConnectorService, useValue: mockConnectorService },
         { provide: SiMappingsService, useValue: mockMappingsService },
         { provide: MessageService, useValue: mockMessageService },
         IntacctComponent,
-        IntacctOnboardingConnectorComponent
-      ]
-    }).compileComponents();
+        IntacctOnboardingConnectorComponent,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(IntacctConnectorComponent);
     component = fixture.componentInstance;

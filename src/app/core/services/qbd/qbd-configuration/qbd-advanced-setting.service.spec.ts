@@ -1,10 +1,11 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdAdvancedSettingService } from './qbd-advanced-setting.service';
 import { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdAdvancedSettingService', () => {
   let service: QbdAdvancedSettingService;
@@ -15,9 +16,9 @@ xdescribe('QbdAdvancedSettingService', () => {
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdAdvancedSettingService]
-    });
+    imports: [],
+    providers: [QbdAdvancedSettingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = injector.inject(QbdAdvancedSettingService);
     httpMock = injector.inject(HttpTestingController);

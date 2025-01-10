@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -22,52 +22,46 @@ import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/
 import * as Sentry from "@sentry/angular";
 import { Router } from '@angular/router';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ToastModule,
-    SharedModule,
-    RippleModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    Sage300ConfigurationModule
-  ],
-  providers: [
-    MessageService,
-    {
-      provide: JWT_OPTIONS,
-      useValue: JWT_OPTIONS
-    },
-    JwtHelperService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    },
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    },
-    {
-      provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler()
-    },
-    {
-      provide: Sentry.TraceService,
-      deps: [Router]
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (brandingService: BrandingService) => () => brandingService.init(),
-      deps: [BrandingService, Sentry.TraceService],
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ToastModule,
+        SharedModule,
+        RippleModule,
+        IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+        Sage300ConfigurationModule], providers: [
+        MessageService,
+        {
+            provide: JWT_OPTIONS,
+            useValue: JWT_OPTIONS
+        },
+        JwtHelperService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        },
+        {
+            provide: ErrorHandler,
+            useClass: GlobalErrorHandler
+        },
+        {
+            provide: ErrorHandler,
+            useValue: Sentry.createErrorHandler()
+        },
+        {
+            provide: Sentry.TraceService,
+            deps: [Router]
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (brandingService: BrandingService) => () => brandingService.init(),
+            deps: [BrandingService, Sentry.TraceService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

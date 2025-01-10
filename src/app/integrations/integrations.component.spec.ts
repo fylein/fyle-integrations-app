@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -21,15 +21,15 @@ xdescribe('IntegrationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntegrationsComponent ],
-      imports: [
-        HttpClientModule, HttpClientTestingModule
-      ],
-      providers: [
+    declarations: [IntegrationsComponent],
+    imports: [],
+    providers: [
         { provide: OrgService, useValue: service1 },
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(IntegrationsComponent);

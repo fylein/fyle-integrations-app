@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -23,23 +23,22 @@ xdescribe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule, RouterTestingModule
-      ],
-      declarations: [ LoginComponent ],
-      providers: [
+    declarations: [LoginComponent],
+    imports: [RouterTestingModule],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: of({
-              code: 'dummy-auth-code'
-            })
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                queryParams: of({
+                    code: 'dummy-auth-code'
+                })
+            }
         },
-        { provide: AuthService, useValue: service1},
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
+        { provide: AuthService, useValue: service1 },
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);

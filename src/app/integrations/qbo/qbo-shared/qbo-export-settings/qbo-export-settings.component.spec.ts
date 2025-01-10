@@ -5,7 +5,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError, Subject } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { QboExportSettingsComponent } from './qbo-export-settings.component';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -42,6 +42,7 @@ import { consumerPollProducersForChange } from '@angular/core/primitives/signals
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FeatureConfiguration } from 'src/app/core/models/branding/feature-configuration.model';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -78,12 +79,9 @@ describe('QboExportSettingsComponent', () => {
     const router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboExportSettingsComponent ],
-      imports: [
-        ReactiveFormsModule,
-        HttpClientTestingModule // Add this import
-      ],
-      providers: [
+    declarations: [QboExportSettingsComponent],
+    imports: [ReactiveFormsModule],
+    providers: [
         FormBuilder,
         { provide: QboExportSettingsService, useValue: exportSettingsService },
         { provide: HelperService, useValue: helperService },
@@ -96,14 +94,16 @@ describe('QboExportSettingsComponent', () => {
         { provide: Router, useValue: router },
         { provide: 'brandingFeatureConfig', useValue: mockBrandingConfig },
         {
-          provide: QboEmployeeSettingsService,
-          useValue: jasmine.createSpyObj('QboEmployeeSettingsService', [
-            'getEmployeeSettings',
-            'getDistinctQBODestinationAttributes'
-          ])
-        }
-      ]
-    }).compileComponents();
+            provide: QboEmployeeSettingsService,
+            useValue: jasmine.createSpyObj('QboEmployeeSettingsService', [
+                'getEmployeeSettings',
+                'getDistinctQBODestinationAttributes'
+            ])
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     exportSettingsServiceSpy = TestBed.inject(QboExportSettingsService) as jasmine.SpyObj<QboExportSettingsService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;

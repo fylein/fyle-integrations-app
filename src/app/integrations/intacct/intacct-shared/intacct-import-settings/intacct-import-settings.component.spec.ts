@@ -17,10 +17,11 @@ import { blankMapping, configuration, costCodeFieldValue, costTypeFieldValue, cu
 import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, MappingSourceField, Page, ProgressPhase, SageIntacctField, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { IntacctSharedModule } from '../intacct-shared.module';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IntacctImportSettingsComponent', () => {
   let component: IntacctImportSettingsComponent;
@@ -47,9 +48,9 @@ describe('IntacctImportSettingsComponent', () => {
     const siWorkspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
 
     await TestBed.configureTestingModule({
-      declarations: [IntacctImportSettingsComponent],
-      imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([]), HttpClientTestingModule],
-      providers: [
+    declarations: [IntacctImportSettingsComponent],
+    imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
+    providers: [
         FormBuilder,
         { provide: SiImportSettingService, useValue: siImportSettingServiceSpy },
         { provide: SiMappingsService, useValue: siMappingsServiceSpy },
@@ -59,9 +60,11 @@ describe('IntacctImportSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: StorageService, useValue: storageServiceSpy },
         { provide: SiWorkspaceService, useValue: siWorkspaceServiceSpy },
-        provideRouter([])
-      ]
-    })
+        provideRouter([]),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     siImportSettingService = TestBed.inject(SiImportSettingService) as jasmine.SpyObj<SiImportSettingService>;

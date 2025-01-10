@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from '../services/common/auth.service';
 import { Router } from '@angular/router';
@@ -19,12 +19,13 @@ describe('AuthGuard', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
-      providers: [
-        {provide: AuthService, useValue: service1},
-        {provide: Router, useValue: router}
-      ]
-    });
+    imports: [RouterTestingModule],
+    providers: [
+        { provide: AuthService, useValue: service1 },
+        { provide: Router, useValue: router },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
 
     authService = TestBed.inject(AuthService);
     guard = TestBed.inject(AuthGuard);

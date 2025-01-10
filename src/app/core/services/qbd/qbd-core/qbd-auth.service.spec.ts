@@ -1,10 +1,11 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 
 import { QbdAuthService } from './qbd-auth.service';
 import { environment } from 'src/environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdAuthService', () => {
   let service: QbdAuthService;
@@ -14,9 +15,9 @@ xdescribe('QbdAuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdAuthService]
-    });
+    imports: [],
+    providers: [QbdAuthService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = TestBed.inject(QbdAuthService);
     httpMock = injector.inject(HttpTestingController);

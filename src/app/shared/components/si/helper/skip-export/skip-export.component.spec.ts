@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SkipExportComponent } from './skip-export.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('SkipExportComponent', () => {
   let component: SkipExportComponent;
@@ -10,10 +11,10 @@ xdescribe('SkipExportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ SkipExportComponent ],
-      providers: [FormBuilder]
-    })
+    declarations: [SkipExportComponent],
+    imports: [],
+    providers: [FormBuilder, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SkipExportComponent);

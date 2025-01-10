@@ -1,8 +1,8 @@
 import { getTestBed, inject, TestBed } from '@angular/core/testing';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { HttpClient, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpRequest, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/common/api.service';
 import { Observable, of } from 'rxjs';
@@ -29,26 +29,28 @@ xdescribe('JwtInterceptor', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         ApiService, JwtHelperService,
         {
-          provide: HTTP_INTERCEPTORS,
-          useClass: JwtInterceptor,
-          multi: true
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
         },
         {
-          provide: JWT_OPTIONS,
-          useValue: JWT_OPTIONS
+            provide: JWT_OPTIONS,
+            useValue: JWT_OPTIONS
         },
         {
-          provide: AuthService,
-          useValue: service1
+            provide: AuthService,
+            useValue: service1
         },
         JwtInterceptor,
-        JwtHelperService
-      ]
-    });
+        JwtHelperService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
     injector = getTestBed();
     client = TestBed.inject(HttpClient);

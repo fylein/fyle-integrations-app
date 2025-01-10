@@ -1,4 +1,4 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { AppName } from '../../models/enum/enum.model';
@@ -7,6 +7,7 @@ import { StorageService } from '../common/storage.service';
 import { orgMockData, generateTokenData } from './org.fixture';
 
 import { OrgService } from './org.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('OrgService', () => {
   let service: OrgService;
@@ -21,13 +22,13 @@ xdescribe('OrgService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        { provide: StorageService, useValue: service1 }
-      ]
-    });
+    imports: [],
+    providers: [
+        { provide: StorageService, useValue: service1 },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     injector = getTestBed();
     service = TestBed.inject(OrgService);
     storageService = injector.inject(StorageService);

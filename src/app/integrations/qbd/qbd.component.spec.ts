@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
@@ -25,12 +25,14 @@ describe('QbdComponent', () => {
       syncFyleDimensions: () => of({})
     };
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
-      declarations: [ QbdComponent ],
-      providers: [
-        { provide: QbdWorkspaceService, useValue: service1 }
-      ]
-    })
+    declarations: [QbdComponent],
+    imports: [RouterTestingModule],
+    providers: [
+        { provide: QbdWorkspaceService, useValue: service1 },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdComponent);
