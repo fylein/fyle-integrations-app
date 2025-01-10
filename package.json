@@ -22,7 +22,6 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "^17.3.8",
-    "@angular-eslint/schematics": "^17.5.1",
     "@angular/animations": "^17.3.10",
     "@angular/cli": "^17.3.8",
     "@angular/common": "^17.3.10",
@@ -56,6 +55,7 @@
     "@angular-eslint/builder": "14.1.2",
     "@angular-eslint/eslint-plugin": "14.1.2",
     "@angular-eslint/eslint-plugin-template": "14.1.2",
+    "@angular-eslint/schematics": "^18.4.3",
     "@angular-eslint/template-parser": "14.1.2",
     "@compodoc/compodoc": "^1.1.23",
     "@storybook/addon-docs": "^7.6.3",
