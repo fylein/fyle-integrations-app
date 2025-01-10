@@ -1,16 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SiImportSettingService } from './si-import-setting.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('SiImportSettingService', () => {
   let service: SiImportSettingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [SiImportSettingService]
-    });
+    imports: [],
+    providers: [SiImportSettingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(SiImportSettingService);
   });
 

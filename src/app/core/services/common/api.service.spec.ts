@@ -1,9 +1,9 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
-import { HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpEventType, HttpHeaders, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 xdescribe('ApiService', () => {
@@ -19,11 +19,13 @@ xdescribe('ApiService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        ApiService
-      ]
-    });
+    imports: [],
+    providers: [
+        ApiService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     injector = getTestBed();
     service = injector.inject(ApiService);
     httpMock = injector.inject(HttpTestingController);

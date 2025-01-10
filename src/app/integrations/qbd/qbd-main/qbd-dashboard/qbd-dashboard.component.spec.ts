@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -36,14 +36,13 @@ describe('QbdDashboardComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, RouterTestingModule],
-      declarations: [ QbdDashboardComponent ],
-      providers: [ FormBuilder,
+    declarations: [QbdDashboardComponent],
+    imports: [RouterTestingModule],
+    providers: [FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
         { provide: QbdAdvancedSettingService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }
-      ]
-    })
+        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi())]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(QbdDashboardComponent);
