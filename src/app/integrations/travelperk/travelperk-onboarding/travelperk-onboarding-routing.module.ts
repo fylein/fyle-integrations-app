@@ -5,6 +5,7 @@ import { TravelperkOnboardingAdvancedSettingsComponent } from './travelperk-onbo
 import { TravelperkOnboardingComponent } from './travelperk-onboarding.component';
 import { TravelperkOnboardingLandingComponent } from './travelperk-onboarding-landing/travelperk-onboarding-landing.component';
 import { TravelperkOnboardingDoneComponent } from './travelperk-onboarding-done/travelperk-onboarding-done.component';
+import { TravelperkTokenGuard } from 'src/app/core/guard/travelperk-token.guard';
 
 const routes: Routes = [
   {
@@ -17,15 +18,18 @@ const routes: Routes = [
       },
       {
         path: 'payment_profile_settings',
-        component: TravelperkOnboardingPaymentProfileSettingsComponent
+        component: TravelperkOnboardingPaymentProfileSettingsComponent,
+        canActivate: [TravelperkTokenGuard]
       },
       {
         path: 'advanced_settings',
-        component: TravelperkOnboardingAdvancedSettingsComponent
+        component: TravelperkOnboardingAdvancedSettingsComponent,
+        canActivate: [TravelperkTokenGuard]
       },
       {
         path: 'done',
-        component: TravelperkOnboardingDoneComponent
+        component: TravelperkOnboardingDoneComponent,
+        canActivate: [TravelperkTokenGuard]
       }
     ]
   }

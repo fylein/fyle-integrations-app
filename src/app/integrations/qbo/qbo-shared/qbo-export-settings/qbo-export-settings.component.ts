@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, concat, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, catchError, concat, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -293,7 +293,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private isExportSettingsUpdated(): boolean {
-    return this.exportSettings.workspace_general_settings.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object !== null;
+    return this.exportSettings.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
   }
 
   private isSingleItemizedJournalEntryAffected(): boolean {
@@ -482,13 +482,15 @@ export class QboExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.workspaceService.getWorkspaceGeneralSettings(),
-    this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
+      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {
+return of(null);
+})),
+      this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
     ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
-      this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
+      this.employeeFieldMapping = workspaceGeneralSettings?.employee_field_mapping || EmployeeFieldMapping.EMPLOYEE;
       this.setLiveEntityExample(destinationAttributes);
       this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -496,7 +498,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.vendors = vendors.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
 
-      this.isImportItemsEnabled = workspaceGeneralSettings.import_items;
+      this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
 
       this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(this.employeeFieldMapping);
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
@@ -505,7 +507,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
       this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
         this.existingEmployeeFieldMapping,
-        workspaceGeneralSettings.auto_map_employees
+        workspaceGeneralSettings?.auto_map_employees || false
       );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
@@ -517,14 +519,14 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      if (this.exportSettings.workspace_general_settings.reimbursable_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.workspace_general_settings.reimbursable_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
+      if (this.exportSettings.workspace_general_settings?.reimbursable_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.workspace_general_settings?.reimbursable_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
-      if (this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
+      if (this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
       this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
