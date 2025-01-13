@@ -13,10 +13,10 @@ export class IntegrationsService {
     private apiService: ApiService,
     private helper: HelperService
   ) {
-    helper.setBaseApiURL(AppUrl.INTEGRATION);
   }
 
   getIntegrations(): Observable<Integration[]> {
+    this.helper.setBaseApiURL(AppUrl.INTEGRATION);
     return this.apiService.get(`/integrations/`, {});
   }
 }

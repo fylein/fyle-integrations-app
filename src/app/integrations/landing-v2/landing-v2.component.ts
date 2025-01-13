@@ -166,7 +166,7 @@ export class LandingV2Component implements OnInit {
   }
 
   isAppConnected(appKey: IntegrationAppKey) {
-    return this.connectedApps.includes(appKey);
+    return this.connectedApps?.includes(appKey);
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
