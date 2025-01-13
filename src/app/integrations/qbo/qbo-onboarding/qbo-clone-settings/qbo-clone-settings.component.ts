@@ -9,7 +9,7 @@ import { ExpenseField, ImportCodeFieldConfigType, ImportSettingsModel } from 'sr
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, DefaultImportFields, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, DefaultImportFields, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -324,12 +324,22 @@ export class QboCloneSettingsComponent implements OnInit {
   private updateCCCExpenseGroupingDateOptions(selectedValue: QBOCorporateCreditCardExpensesObject): void {
     if ([QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(selectedValue)) {
       this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
+      if (selectedValue === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+        this.cccExpenseGroupingDateOptions.push({
+          label: brandingContent.common.currentDate,
+          value: ExportDateType.CURRENT_DATE
+        });
+      }
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     } else {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
       this.helperService.clearValidatorAndResetValue(this.exportSettingForm, 'creditCardExportGroup');
       this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
+    }
+    const allowedValues = this.cccExpenseGroupingDateOptions.map(option => option.value);
+    if (!allowedValues.includes(this.exportSettingForm.get('creditCardExportDate')?.value)) {
+      this.exportSettingForm.get('creditCardExportDate')?.setValue(null);
     }
   }
 
