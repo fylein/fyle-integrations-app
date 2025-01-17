@@ -88,6 +88,8 @@ export class LandingComponent implements OnInit {
     'orRuH2BEKRnW'
   ];
 
+  readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
+
   readonly ThemeOption = ThemeOption;
 
   constructor(

@@ -5,4 +5,5 @@ export interface QBDWorkspace extends Workspace {
   reimbursable_last_synced_at: Date | null;
   ccc_last_synced_at: Date | null;
   onboarding_state: QBDOnboardingState;
+  migrated_to_qbd_direct: boolean;
 }
