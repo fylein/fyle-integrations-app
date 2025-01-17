@@ -42,6 +42,8 @@ export enum InAppIntegration {
   QBD_DIRECT = 'QuickBooks Connector'
 }
 
+export type IntegrationAppKey = keyof typeof InAppIntegration;
+
 export enum ToastSeverity {
   SUCCESS = 'success',
   ERROR = 'error',
@@ -900,7 +902,8 @@ export enum SizeOption {
 export enum ThemeOption {
   BRAND = 'brand',
   LIGHT = 'light',
-  DARK = 'dark'
+  DARK = 'dark',
+  SUCCESS = 'success'
 }
 
 export enum QBDPreRequisiteState {
