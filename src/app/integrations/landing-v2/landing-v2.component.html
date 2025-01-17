@@ -12,7 +12,7 @@
                     href="mailto:support@fylehq.com">support{{'@'}}fylehq.com</a>
             </p>
         </header>
-        <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
+        <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
             <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
                 (click)="switchView(IntegrationsView.ALL)">
                 All
@@ -42,7 +42,7 @@
                 <div class="landing-v2--accounting-app"
                     (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
                     <div class="tw-flex tw-justify-between tw-items-center">
-                        <img src="assets/logos/netsuite-logo.png" />
+                        <img src="assets/logos/netsuite-logo-new.png" />
                         @if (isAppConnected('NETSUITE')) {
                             <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                         } @else {
@@ -62,7 +62,7 @@
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
                 <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/intacct-logo.png" />
+                    <img src="assets/logos/intacct-logo-new.png" />
                     @if (isAppConnected('INTACCT')) {
                         <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                     } @else {
@@ -100,7 +100,7 @@
             <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
                 (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
                 <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/xero-logo.png" />
+                    <img src="assets/logos/xero-logo-new.png" />
                     @if (isAppConnected('XERO')) {
                         <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                     } @else {

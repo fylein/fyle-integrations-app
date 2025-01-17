@@ -34,6 +34,8 @@ export class LandingV2Component implements OnInit {
 
   private connectedApps: IntegrationAppKey[];
 
+  readonly exposeC1Apps = brandingFeatureConfig.exposeC1Apps;
+
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
@@ -164,7 +166,7 @@ export class LandingV2Component implements OnInit {
   }
 
   isAppConnected(appKey: IntegrationAppKey) {
-    return this.connectedApps.includes(appKey);
+    return this.connectedApps?.includes(appKey);
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
