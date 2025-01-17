@@ -11,6 +11,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-qbd-dashboard',
@@ -69,12 +70,15 @@ export class QbdDashboardComponent implements OnInit {
 
   hideCalendar: boolean;
 
+  disableQBDExportButton: boolean = false;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingService: QbdAdvancedSettingService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private storageService: StorageService
   ) { }
 
   showCalendar(event: Event) {
@@ -226,6 +230,7 @@ export class QbdDashboardComponent implements OnInit {
 
   setUpDashboard(): void {
     this.isLoading = true;
+    this.disableQBDExportButton = this.storageService.get('disableQBDExportButton');
     this.exportLogForm = this.formBuilder.group({
       searchOption: [''],
       dateRange: [null],
