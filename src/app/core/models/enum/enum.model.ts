@@ -902,7 +902,8 @@ export enum SizeOption {
 export enum ThemeOption {
   BRAND = 'brand',
   LIGHT = 'light',
-  DARK = 'dark'
+  DARK = 'dark',
+  SUCCESS = 'success'
 }
 
 export enum QBDPreRequisiteState {
