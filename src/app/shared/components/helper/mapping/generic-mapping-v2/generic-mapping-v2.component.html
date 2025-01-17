@@ -20,8 +20,8 @@
                 </div>
                 <div *ngIf="!filteredMappingCount">
                     <app-zero-state-with-illustration 
-                    [mainText]="brandingConfig.brandId === 'fyle' ? 'No search result to show yet!': 'Looks like your search term doesn\'t match any ' + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings.'"
-                    [subText]="brandingConfig.brandId === 'fyle' ? 'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': 'Try searching again'">
+                    [mainText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSerchZeroStateHeaderText : brandingContent.mappingSerchZeroStateHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings.'"
+                    [subText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSerchZeroStateSubHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': brandingContent.mappingSerchZeroStateSubHeaderText">
                   </app-zero-state-with-illustration>              
                 </div>
             </div>

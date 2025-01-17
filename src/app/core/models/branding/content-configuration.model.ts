@@ -429,6 +429,8 @@ export type ContentConfiguration = {
             qboErrorDialogHeaderText: string;
             exportLogHeader: string;
             exportLogSubHeader: string;
+            dashboardExportZeroStateHeaderText: string;
+            dashboardExportZeroStateSubHeaderText: string;
         },
         exportLog: {
             tableHeaders: {
@@ -441,12 +443,24 @@ export type ContentConfiguration = {
             },
             searchPlaceholder: string;
             dateRangeLabel: string;
+            completeExportLogZeroStateHeaderText: string;
+            completeExportLogZeroStateSubHeaderText: string;
+            completeExportLogCountZeroStateHeaderText: string;
+            completeExportLogCountZeroStateSubHeaderText: string;
+            skipExportLogZeroStateHeaderText: string;
+            skipExportLogZeroStateSubHeaderText: string;
+            skipExportLogCountZeroStateHeaderText: string;
+            skipExportLogCountZeroStateSubHeaderText: string;
         },
         mapping: {
             filterPlaceholder: string;
             employeeMappingToastText: string;
             categoryMappingToastText: string;
             mappingToastText: string;
+            mappingSerchZeroStateHeaderText: string;
+            mappingSerchZeroStateSubHeaderText: string;
+            mappedHeader: string;
+            unMappedHeader: string;
         },
         landing: {
             contentText: string;

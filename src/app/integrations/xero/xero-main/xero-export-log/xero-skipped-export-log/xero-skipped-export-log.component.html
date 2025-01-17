@@ -25,14 +25,14 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="brandingConfig.brandId === 'fyle' ? 'Sorry, no results found!': 'Sorry, no results found'"
-            [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
+            [mainText]="brandingContent.skipExportLogZeroStateHeaderText"
+            [subText]="brandingContent.skipExportLogZeroStateSubHeaderText">
         </app-zero-state-with-illustration>
 
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-    [mainText]="brandingConfig.brandId === 'fyle' ? 'No records to show yet!': 'No records to show yet'"
-    [subText]="brandingConfig.brandId === 'fyle' ? 'All your expenses that were skipped from exporting will be stored here.': 'All your expenses that are skipped from exporting will be visible here'">
+    [mainText]="brandingContent.skipExportLogCountZeroStateHeaderText"
+    [subText]="brandingContent.skipExportLogCountZeroStateSubHeaderText">
     </app-zero-state-with-illustration>
 </div>

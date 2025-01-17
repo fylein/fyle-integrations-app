@@ -26,7 +26,7 @@
             </div>
         </div>
         <div *ngIf="!isLoading && showSection">
-            <app-configuration-info-label [infoText]="'The values displayed here are synced from QuickBooks Desktop to Fyle. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values.'" [showIcon]="false"></app-configuration-info-label>
+            <app-configuration-info-label [infoText]="'The values displayed here are synced from QuickBooks Desktop to ' + brandingConfig.brandName + '. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values.'" [showIcon]="false"></app-configuration-info-label>
         </div>
         <div *ngIf="isLoading && showSection" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
