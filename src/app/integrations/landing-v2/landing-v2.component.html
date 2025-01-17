@@ -28,7 +28,7 @@
                 HRMS
                 <p *ngIf="integrationTabs.HRMS" class="landing-v2--active-tag"></p>
             </div>
-            <div *ngIf="isTravelperkAllowed" class="landing-v2--tab"
+            <div *ngIf="org.allow_travelperk" class="landing-v2--tab"
                 [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL}"
                 (click)="switchView(IntegrationsView.TRAVEL)">
                 Travel
@@ -36,140 +36,200 @@
             </div>
         </div>
 
-        <div class="tw-pt-40-px"
-            [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
-            <div *ngIf="integrationTabs.ALL || integrationTabs.ACCOUNTING">
-                <p class="landing-v2--section-heading">
-                    Accounting
-                </p>
-                <p class="landing-v2--section-caption" *ngIf="brandingConfig.brandId !== 'co'">
-                    If your company uses any of the accounting systems below, you can easily integrate your {{
-                    brandingConfig.brandName }} account with it.
-                </p>
-                <p class="landing-v2--section-caption" *ngIf="brandingConfig.brandId === 'co'">
-                    Integrate your Expense Management account with the following accounting software.
-                </p>
-
-                <div class="tw-flex tw-flex-wrap tw-gap-5">
-                    <div *ngIf="exposeApps.NETSUITE">
-                        <div class="landing-v2--accounting-app tw-mt-20-px"
-                            [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                            <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px"
-                                height="60px" />
-                            <span class="landing-v2--accounting-app-name !tw-pt-18-px">
-                                NetSuite
-                            </span>
-                        </div>
+        <div
+            class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
+            <div *ngIf="isAppShown('NETSUITE')">
+                <div class="landing-v2--accounting-app"
+                    (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+                    <div class="tw-flex tw-justify-between tw-items-center">
+                        <img src="assets/logos/netsuite-logo-new.png" />
+                        @if (isAppConnected('NETSUITE')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
                     </div>
-                    <div *ngIf="exposeApps.INTACCT" class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                        <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
-                        <span class="landing-v2--accounting-app-name !tw-pt-8-px">
-                            Sage Intacct
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.QBO" class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                        <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px" />
+                    <div>
                         <span class="landing-v2--accounting-app-name">
-                            QuickBooks Online
+                            NetSuite
                         </span>
-                    </div>
-                    <div *ngIf="exposeApps.XERO" class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                        <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
-                        <span class="landing-v2--accounting-app-name">
-                            Xero
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.QBD" class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.QBD)">
-                        <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                        <span class="landing-v2--accounting-app-name">
-                            QuickBooks Desktop (IIF)
-                        </span>
-                    </div>
-                    <!-- Direct -->
-                    <div *ngIf="exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration"
-                        class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                        <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                        <span class="landing-v2--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                            QuickBooks Desktop (Web Connector)
-                            <app-badge [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.SAGE300" class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                        <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                        <span class="landing-v2--accounting-app-name tw-gap-2">
-                            Sage 300 CRE
-                            <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)"
-                                [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                        </span>
-                    </div>
-                    <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics"
-                        class="landing-v2--accounting-app tw-mt-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                        <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px"
-                            height="60px" />
-                        <span class="landing-v2--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                            Dynamics 365 Business Central
-                            <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
-                                [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                        <span class="landing-v2--accounting-app-type">
+                            Accounting
                         </span>
                     </div>
                 </div>
             </div>
+            <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/intacct-logo-new.png" />
+                    @if (isAppConnected('INTACCT')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Sage Intacct
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    @if (isAppConnected('QBO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        QuickBooks Online
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/xero-logo-new.png" />
+                    @if (isAppConnected('XERO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Xero
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="isAppShown('QBD')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.QBD)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    @if (isAppConnected('QBD')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        QuickBooks Desktop (IIF)
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
+            <!-- Direct -->
+            <div *ngIf="isAppShown('QBD_DIRECT')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    @if (isAppConnected('QBD_DIRECT')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        QuickBooks Desktop (Web Connector)
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
+                    <app-badge [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                </span>
+            </div>
+            <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/sage300-logo.png" class="tw-py-[4px]" />
+                    @if (isAppConnected('SAGE300')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        Sage 300 CRE
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
+                    <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK"
+                        text="Beta"></app-badge>
+                </span>
+            </div>
+            <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/BusinessCentral-logo.svg" />
+                    @if (isAppConnected('BUSINESS_CENTRAL')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                    <div>
+                        Dynamics 365 Business Central
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
+                    <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
+                        [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                </span>
+            </div>
 
-            <div *ngIf="(integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO">
-                <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing-v2--section-divider"></p>
-                <p class="landing-v2--section-heading">
-                    HRMS
-                </p>
-                <p class="landing-v2--section-caption">
-                    If your company uses any of the HR Management Systems below, you can easily integrate your {{
-                    brandingConfig.brandName }} account with it.
-                </p>
-
-                <div class="tw-flex">
-                    <div class="landing-v2--accounting-app tw-mr-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-                        <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
+            <div *ngIf="isAppShown('BAMBOO_HR')">
+                <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
+                    <div class="tw-flex tw-justify-between tw-items-center">
+                        <img src="assets/logos/bamboo-hr-logo.png" />
+                        @if (isAppConnected('BAMBOO_HR')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
+                    </div>
+                    <div>
                         <span class="landing-v2--accounting-app-name">
                             BambooHR
                         </span>
+                        <span class="landing-v2--accounting-app-type">
+                            HRMS
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <div
-                *ngIf="isTravelperkAllowed && exposeApps.TRAVELPERK && (integrationTabs.ALL || integrationTabs.TRAVEL)">
-                <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing-v2--section-divider"></p>
-                <p class="landing-v2--section-heading">
-                    Travel
-                </p>
-                <p class="landing-v2--section-caption">
-                    If your company uses any of the Travel Management Systems below, you can easily integrate your {{
-                    brandingConfig.brandName }} account with it.
-                </p>
-
-                <div class="tw-flex">
-                    <div class="landing-v2--accounting-app tw-mr-20-px"
-                        [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}"
-                        (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-                        <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
+            <div *ngIf="isAppShown('TRAVELPERK')">
+                <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+                    <div class="tw-flex tw-justify-between tw-items-center">
+                        <img src="assets/logos/travelperk-logo.png" class="tw-py-[5px]" />
+                        @if (isAppConnected('TRAVELPERK')) {
+                            <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                        } @else {
+                            <button class="btn-connect">Connect</button>
+                        }
+                    </div>
+                    <div>
                         <span class="landing-v2--accounting-app-name">
                             TravelPerk
+                        </span>
+                        <span class="landing-v2--accounting-app-type">
+                            Travel
                         </span>
                     </div>
                 </div>

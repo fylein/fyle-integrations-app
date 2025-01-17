@@ -23,11 +23,24 @@
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-8-px tw-border-1-px tw-bg-white tw-border-none;
+        @apply tw-h-full tw-flex tw-flex-col tw-p-4 tw-gap-4 tw-justify-evenly tw-cursor-pointer tw-rounded-8-px tw-border tw-border-separator tw-bg-white;
+        @apply tw-transition-shadow;
+
+        img {
+            @apply tw-h-[40px];
+        }
+
+        .btn-connect {
+            @apply tw-text-14-px tw-hidden;
+        }
     }
 
     &--accounting-app-name {
-        @apply tw-pt-22-px tw-text-14-px tw-flex tw-text-text-secondary;
+        @apply tw-text-14-px tw-leading-[20px] tw-flex tw-text-text-primary;
+    }
+
+    &--accounting-app-type {
+        @apply tw-text-12-px tw-leading-[15px] tw-text-text-tertiary;
     }
 
     &--accounting-app-open {
@@ -48,5 +61,12 @@
 
     &--other-integration-app {
         @apply tw-flex tw-items-center tw-justify-center;
+    }
+}
+
+.landing-v2--accounting-app:hover {
+    box-shadow: 0px 4px 4px 0px rgba(44, 48, 78, 0.10);
+    .btn-connect {
+        @apply tw-block;
     }
 }

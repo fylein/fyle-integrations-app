@@ -14,7 +14,7 @@ const routes: Routes = [
         component: LandingComponent
       },
       {
-        path: 'landing-v2',
+        path: 'landing_v2',
         component: LandingV2Component
       },
       {
