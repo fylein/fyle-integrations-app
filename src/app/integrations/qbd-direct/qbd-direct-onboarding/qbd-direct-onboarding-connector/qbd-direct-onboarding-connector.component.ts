@@ -174,17 +174,19 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.connectionStatus = QBDConnectionStatus.INCORRECT_COMPANY_PATH;
       this.warningDialogText = 'Incorrect company file path detected. Please check and try again.';
       this.isDialogVisible = true;
+      this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.IN_CORRECT_PASSWORD;
       this.warningDialogText = 'Incorrect password detected. Please check and try again.';
       this.isDialogVisible = true;
+      this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
       // Set success status, enable connection CTA, and stop polling
       this.connectionStatus = QBDConnectionStatus.SUCCESS;
       this.isConnectionCTAEnabled = true;
+      this.isConnectionLoading = false;
     }
-    this.isConnectionLoading = false;
   }
 
   isTerminalStatus(status: QbdDirectOnboardingState): boolean {
@@ -257,7 +259,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE, 2);
       } else {
-          const oldWorkspaceResponse = workspaceResponse;
+          const oldWorkspaceResponse = Object.assign({}, workspaceResponse) ;
           oldWorkspaceResponse.onboarding_state = QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE;
           this.trackingService.onUpdateEvent(
           TrackingApp.QBD_DIRECT,
