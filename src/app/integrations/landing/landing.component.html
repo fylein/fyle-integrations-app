@@ -59,7 +59,7 @@
                         Xero
                     </span>
                 </div>
-                <div *ngIf="exposeApps.QBD" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
+                <div *ngIf="exposeApps.QBD && showQBDIIFIntegration" class="landing--accounting-app tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
                     <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
                     <span class="landing--accounting-app-name">
                         QuickBooks Desktop (IIF)

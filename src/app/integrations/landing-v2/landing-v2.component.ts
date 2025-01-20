@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page, ThemeOption } from 'src/app/core/models/enum/enum.model';
-import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
+import { AccountingIntegrationApp, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
+import { InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -16,13 +15,14 @@ import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.serv
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  selector: 'app-landing-v2',
+  templateUrl: './landing-v2.component.html',
+  styleUrl: './landing-v2.component.scss'
 })
-export class LandingComponent implements OnInit {
+export class LandingV2Component implements OnInit {
 
   IntegrationsView = IntegrationView;
 
@@ -32,7 +32,7 @@ export class LandingComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  isTravelperkAllowed: boolean = this.org.allow_travelperk;
+  private connectedApps: IntegrationAppKey[];
 
   readonly exposeC1Apps = brandingFeatureConfig.exposeC1Apps;
 
@@ -70,6 +70,26 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct'
   };
 
+  private readonly accountingIntegrationUrlMap = {
+    [AccountingIntegrationApp.NETSUITE]: '/integrations/netsuite',
+    [AccountingIntegrationApp.SAGE_INTACCT]: '/integrations/intacct',
+    [AccountingIntegrationApp.QBO]: '/integrations/qbo',
+    [AccountingIntegrationApp.XERO]: '/integrations/xero'
+  };
+
+  private readonly tpaNameToIntegrationKeyMap: Record<string, IntegrationAppKey> = {
+    'Fyle Netsuite Integration': 'NETSUITE',
+    'Fyle Sage Intacct Integration': 'INTACCT',
+    'Fyle Quickbooks Integration': 'QBO',
+    'Fyle Xero Integration': 'XERO',
+    'Fyle Quickbooks Desktop (IIF) Integration': 'QBD',
+    'Fyle Quickbooks Desktop Integration': 'QBD_DIRECT',
+    'Fyle Sage 300 Integration': 'SAGE300',
+    'Fyle Business Central Integration': 'BUSINESS_CENTRAL',
+    'Fyle TravelPerk Integration': 'TRAVELPERK',
+    'Fyle BambooHR Integration': 'BAMBOO_HR'
+  };
+
   readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
@@ -88,8 +108,6 @@ export class LandingComponent implements OnInit {
     'orRuH2BEKRnW'
   ];
 
-  readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
-
   readonly ThemeOption = ThemeOption;
 
   constructor(
@@ -100,7 +118,8 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private integrationService: IntegrationsService
   ) { }
 
 
@@ -112,7 +131,53 @@ export class LandingComponent implements OnInit {
     this.integrationTabs[clickedView] = true;
   }
 
+  isAppShown(appKey: IntegrationAppKey) {
+    // If this app disabled for this org
+    if (
+      (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
+      (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
+      (appKey === 'TRAVELPERK' && !this.org.allow_travelperk)
+    ) {
+      return false;
+    }
+
+    // If this app allowed and all apps are shown
+    if (this.integrationTabs.ALL) {
+      return true;
+    }
+
+    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
+
+    if (appKey === 'BAMBOO_HR') {
+      return this.exposeApps.BAMBOO && this.integrationTabs.HRMS;
+    }
+
+    if (appKey === 'TRAVELPERK') {
+      return this.exposeApps.TRAVELPERK && this.integrationTabs.TRAVEL;
+    }
+
+    // If the app was not BAMBOO_HR or TRAVELPERK, it must be an accounting app
+    if (allAppKeys.includes(appKey)) {
+      return this.exposeApps[appKey] && this.integrationTabs.ACCOUNTING;
+    }
+
+    // TS catch-all (shouln't reach here)
+    return false;
+  }
+
+  isAppConnected(appKey: IntegrationAppKey) {
+    return this.connectedApps?.includes(appKey);
+  }
+
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
+
+    // For local dev, we perform auth via loginWithRefreshToken on Fyle login redirect (/auth/redirect)
+    // So we can simply redirect to the integration page.
+    if (!environment.production) {
+      this.router.navigate([this.accountingIntegrationUrlMap[accountingIntegrationApp]]);
+      return;
+    }
+
     const payload = {
       callbackUrl: this.integrationCallbackUrlMap[accountingIntegrationApp][0],
       clientId: this.integrationCallbackUrlMap[accountingIntegrationApp][1]
@@ -173,7 +238,17 @@ export class LandingComponent implements OnInit {
     });
   }
 
+  private storeConnectedApps() {
+    this.integrationService.getIntegrations().subscribe(integrations => {
+      const tpaNames = integrations.map(integration => integration.tpa_name);
+      const connectedApps = tpaNames.map(tpaName => this.tpaNameToIntegrationKeyMap[tpaName]);
+
+      this.connectedApps = connectedApps;
+    });
+  }
+
   ngOnInit(): void {
     this.setupLoginWatcher();
+    this.storeConnectedApps();
   }
 }
