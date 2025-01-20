@@ -7,7 +7,7 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -65,6 +65,8 @@ export class IntacctSkipExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   hideCalendar: boolean;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   constructor(
     private formBuilder: FormBuilder,

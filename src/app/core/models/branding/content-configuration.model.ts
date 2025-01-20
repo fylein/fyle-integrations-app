@@ -395,7 +395,7 @@ export type ContentConfiguration = {
                 otherPreferencesSubLabel: string;
                 accountingPeriodLabel: string;
                 accountingPeriodSubLabel: string;
-                customizeSectionSubLAbel: string;
+                customizeSectionSubLabel: string;
                 autoCreateVendorsLabel: string;
                 paymentSyncLabel: string;
                 customizationSubLabel: string;
@@ -429,6 +429,8 @@ export type ContentConfiguration = {
             qboErrorDialogHeaderText: string;
             exportLogHeader: string;
             exportLogSubHeader: string;
+            dashboardExportZeroStateHeaderText: string;
+            dashboardExportZeroStateSubHeaderText: string;
         },
         exportLog: {
             tableHeaders: {
@@ -441,12 +443,24 @@ export type ContentConfiguration = {
             },
             searchPlaceholder: string;
             dateRangeLabel: string;
+            completeExportLogZeroStateHeaderText: string;
+            completeExportLogZeroStateSubHeaderText: string;
+            completeExportLogCountZeroStateHeaderText: string;
+            completeExportLogCountZeroStateSubHeaderText: string;
+            skipExportLogZeroStateHeaderText: string;
+            skipExportLogZeroStateSubHeaderText: string;
+            skipExportLogCountZeroStateHeaderText: string;
+            skipExportLogCountZeroStateSubHeaderText: string;
         },
         mapping: {
             filterPlaceholder: string;
             employeeMappingToastText: string;
             categoryMappingToastText: string;
             mappingToastText: string;
+            mappingSearchZeroStateHeaderText: string;
+            mappingSearchZeroStateSubHeaderText: string;
+            mappedHeader: string;
+            unMappedHeader: string;
         },
         landing: {
             contentText: string;

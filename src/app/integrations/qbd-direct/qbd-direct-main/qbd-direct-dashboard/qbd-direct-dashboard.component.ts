@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of } from 'rxjs';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
@@ -74,6 +74,8 @@ export class QbdDirectDashboardComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
 
   importCodeFields: any;
 

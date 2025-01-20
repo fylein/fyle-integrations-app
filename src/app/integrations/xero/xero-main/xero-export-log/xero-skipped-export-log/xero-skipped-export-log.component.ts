@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
@@ -43,6 +43,8 @@ export class XeroSkippedExportLogComponent implements OnInit {
   selectedDateFilter: SelectedDateFilter | null;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 

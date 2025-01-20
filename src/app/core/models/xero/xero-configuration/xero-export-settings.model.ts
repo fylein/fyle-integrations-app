@@ -4,7 +4,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, SplitExpenseGrouping, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { brandingContent } from "src/app/branding/branding-config";
+import { brandingConfig, brandingContent } from "src/app/branding/branding-config";
 
 export type XeroExpenseGroupSettingPost = {
   ccc_expense_state: XeroCCCExpenseState;
@@ -94,11 +94,11 @@ export class XeroExportSettingModel {
         value: null
       },
       {
-        label: 'Employee name on Fyle to contact name on Xero',
+        label: 'Employee name on ' + brandingConfig.brandName + ' to contact name on Xero',
         value: AutoMapEmployeeOptions.NAME
       },
       {
-        label: 'Employee email on Fyle to contact email on Xero',
+        label: 'Employee email on ' + brandingConfig.brandName + ' to contact email on Xero',
         value: AutoMapEmployeeOptions.EMAIL
       }
     ];

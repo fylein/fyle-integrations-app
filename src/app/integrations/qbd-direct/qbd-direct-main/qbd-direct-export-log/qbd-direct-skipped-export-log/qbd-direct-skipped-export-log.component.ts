@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/c1-contents-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLogResponse, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
@@ -47,6 +47,8 @@ export class QbdDirectSkippedExportLogComponent implements OnInit {
   selectedDateFilter: SelectedDateFilter | null;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 
