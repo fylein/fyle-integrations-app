@@ -411,7 +411,7 @@ export const fyleContents = {
             accountingPeriodLabel: 'Post entries in the current accounting period',
             accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Online, you can export those to the current month by enabling this option.',
             autoCreateMerchantsAsVendorsSubLabel: brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
-            customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
+            customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
             memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the Description Field'
         },
@@ -461,11 +461,11 @@ export const fyleContents = {
     },
     mapping: {
         filterPlaceholder: 'Select Status',
-        employeeMappingToastText: 'Employee Mapping saved successfully',
-        categoryMappingToastText: 'Category Mapping saved successfully',
-        mappingToastText: 'Mapping saved successfully',
-        mappingSerchZeroStateHeaderText: 'No search result to show yet!',
-        mappingSerchZeroStateSubHeaderText: 'Looks like your search term does not match any of ',
+        employeeMappingToastText: 'Employee Mapping saved successfully.',
+        categoryMappingToastText: 'Category Mapping saved successfully.',
+        mappingToastText: 'Mapping saved successfully.',
+        mappingSearchZeroStateHeaderText: 'No search result to show yet!',
+        mappingSearchZeroStateSubHeaderText: 'Looks like your search term does not match any of ',
         mappedHeader: 'MAPPED',
         unMappedHeader: 'UNMAPPED'
     },

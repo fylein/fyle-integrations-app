@@ -411,7 +411,7 @@ export const c1Contents = {
             accountingPeriodLabel: 'Post entries in the current open accounting period.',
             accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
             autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in QuickBooks Online if an added merchant doesn\'t have a corresponding match.',
-            customizeSectionSubLAbel: 'Customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online by choosing which data points need to be exported.',
+            customizeSectionSubLabel: 'Customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online by choosing which data points need to be exported.',
             memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the description field'
         },
@@ -462,9 +462,9 @@ export const c1Contents = {
         filterPlaceholder: 'Select status',
         employeeMappingToastText: 'Employee mapping saved successfully.',
         categoryMappingToastText: 'Category mapping saved successfully.',
-        mappingToastText: 'Mapping saved successfully.',
-        mappingSerchZeroStateHeaderText: 'Looks like your search term doesn\'t match any ',
-        mappingSerchZeroStateSubHeaderText: 'Try searching again',
+        mappingToastText: 'Mapping saved successfully..',
+        mappingSearchZeroStateHeaderText: 'Looks like your search term doesn\'t match any ',
+        mappingSearchZeroStateSubHeaderText: 'Try searching again',
         mappedHeader: 'Mapped',
         unMappedHeader: 'Unmapped'
     },

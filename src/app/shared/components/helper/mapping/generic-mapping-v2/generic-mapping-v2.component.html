@@ -20,8 +20,8 @@
                 </div>
                 <div *ngIf="!filteredMappingCount">
                     <app-zero-state-with-illustration 
-                    [mainText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSerchZeroStateHeaderText : brandingContent.mappingSerchZeroStateHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings.'"
-                    [subText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSerchZeroStateSubHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': brandingContent.mappingSerchZeroStateSubHeaderText">
+                    [mainText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSearchZeroStateHeaderText : brandingContent.mappingSearchZeroStateHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings.'"
+                    [subText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSearchZeroStateSubHeaderText + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': brandingContent.mappingSearchZeroStateSubHeaderText">
                   </app-zero-state-with-illustration>              
                 </div>
             </div>

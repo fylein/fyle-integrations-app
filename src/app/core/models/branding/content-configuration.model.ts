@@ -395,7 +395,7 @@ export type ContentConfiguration = {
                 otherPreferencesSubLabel: string;
                 accountingPeriodLabel: string;
                 accountingPeriodSubLabel: string;
-                customizeSectionSubLAbel: string;
+                customizeSectionSubLabel: string;
                 autoCreateVendorsLabel: string;
                 paymentSyncLabel: string;
                 customizationSubLabel: string;
@@ -457,8 +457,8 @@ export type ContentConfiguration = {
             employeeMappingToastText: string;
             categoryMappingToastText: string;
             mappingToastText: string;
-            mappingSerchZeroStateHeaderText: string;
-            mappingSerchZeroStateSubHeaderText: string;
+            mappingSearchZeroStateHeaderText: string;
+            mappingSearchZeroStateSubHeaderText: string;
             mappedHeader: string;
             unMappedHeader: string;
         },
