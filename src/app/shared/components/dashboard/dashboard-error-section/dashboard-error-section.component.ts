@@ -53,6 +53,10 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() chartOfAccounts: string[];
 
+  @Input() exportableExpenseGroupIds: number[];
+
+  @Input() lastExportDetails: any;
+
   uiExposedAppName: string;
 
   filteredMappings: ExtendedGenericMapping[];
@@ -112,6 +116,10 @@ export class DashboardErrorSectionComponent implements OnInit {
     public helper: HelperService,
     public windowService: WindowService
   ) { }
+
+  get shouldShowErrorSection(): boolean {
+    return !!(this.exportableExpenseGroupIds?.length && this.lastExportDetails);
+  }
 
   getSourceType() {
     return this.destinationFieldMap[this.sourceField];
