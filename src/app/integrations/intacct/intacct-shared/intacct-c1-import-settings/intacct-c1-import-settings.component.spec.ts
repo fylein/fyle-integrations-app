@@ -28,11 +28,12 @@ import {
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { ImportSettingGet, ImportSettingPost, ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
@@ -69,9 +70,9 @@ describe('IntacctC1ImportSettingsComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [IntacctC1ImportSettingsComponent],
-      imports: [SharedModule, RouterModule.forRoot([]), HttpClientTestingModule, ReactiveFormsModule],
-      providers: [
+    declarations: [IntacctC1ImportSettingsComponent],
+    imports: [SharedModule, RouterModule.forRoot([]), ReactiveFormsModule],
+    providers: [
         FormBuilder,
         { provide: SiMappingsService, useValue: mappingServiceSpy },
         { provide: SiImportSettingService, useValue: importSettingServiceSpy },
@@ -81,9 +82,11 @@ describe('IntacctC1ImportSettingsComponent', () => {
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: HelperService, useValue: helperServiceSpy },
-        provideRouter([])
-      ]
-    }).compileComponents();
+        provideRouter([]),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(IntacctC1ImportSettingsComponent);
     component = fixture.componentInstance;

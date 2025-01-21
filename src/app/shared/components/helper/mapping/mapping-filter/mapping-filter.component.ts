@@ -27,11 +27,13 @@ export class MappingFilterComponent implements OnInit {
 
   filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
+  readonly brandingContent = brandingContent.mapping;
+
   mappingsFilter: SelectFormOption[] = [{
-    label: brandingConfig.brandId === 'fyle' ? 'MAPPED' : 'Mapped',
+    label: this.brandingContent.mappedHeader,
     value: MappingState.MAPPED
   }, {
-    label: brandingConfig.brandId === 'fyle' ? 'UNMAPPED': 'Unmapped',
+    label: this.brandingContent.unMappedHeader,
     value: MappingState.UNMAPPED
   }];
 
@@ -42,8 +44,6 @@ export class MappingFilterComponent implements OnInit {
   @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.mapping;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: UntypedFormBuilder,

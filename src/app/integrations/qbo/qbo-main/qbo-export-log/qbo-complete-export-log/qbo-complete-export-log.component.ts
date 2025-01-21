@@ -10,7 +10,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -53,6 +53,8 @@ export class QboCompleteExportLogComponent implements OnInit {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 

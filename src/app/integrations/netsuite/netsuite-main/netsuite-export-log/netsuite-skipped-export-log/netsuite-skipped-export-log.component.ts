@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AppName, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLogResponse, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
@@ -47,6 +47,8 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   hideCalendar: boolean;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   constructor(
     private formBuilder: FormBuilder,

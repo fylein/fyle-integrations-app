@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AccountingIntegrationApp, InAppIntegration, IntegrationView } from 'src/app/core/models/enum/enum.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { LandingComponent } from './landing.component';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { environment } from 'src/environments/environment';
@@ -27,16 +27,16 @@ xdescribe('LandingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LandingComponent ],
-      imports: [
-        HttpClientModule, HttpClientTestingModule
-      ],
-      providers: [
+    declarations: [LandingComponent],
+    imports: [],
+    providers: [
         { provide: EventsService, useValue: service1 },
         { provide: OrgService, useValue: service2 },
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
+        { provide: Router, useValue: routerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(LandingComponent);
