@@ -301,6 +301,19 @@ export class HelperService {
     options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   }
 
+  brandingCaseConversion(content: string, coCondition?: string): string {
+    const snakecasedContent = new SnakeCaseToSpaceCasePipe().transform(content);
+    if (brandingConfig.brandId === 'fyle') {
+      return new TitleCasePipe().transform(snakecasedContent);
+    } else if (brandingConfig.brandId === 'co') {
+      if (coCondition) {
+        return new SentenceCasePipe().transform(snakecasedContent);
+      }
+      return snakecasedContent.toLowerCase();
+    }
+    return snakecasedContent;
+  }
+
 
   /**
    * Checks every `DIMENSIONS_POLLING_INTERVAL` ms whether dimensions have been refreshed

@@ -77,7 +77,7 @@
                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
                             <span>
-                            {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}</span>
+                            {{ helper.sentenseCaseConversion(option.label)}}</span>
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
@@ -85,7 +85,7 @@
                     <ng-template pTemplate="selectedItem" let-item>
                         <div class="selected-item-container">
                             <span class="selected-item-text">
-                                {{ brandingConfig.brandId === 'co' ? (item.label | sentenceCase) : (item.label)}}
+                                {{ helper.sentenseCaseConversion(item.label) }}
                             </span>
                             <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                         </div>
@@ -171,12 +171,12 @@
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                             [pTooltip]="isOverflowing(textElement) ? option.name : null" tooltipPosition="top">
-                            {{ brandingConfig.brandId === 'co' ? (option.name | sentenceCase) : (option.name)}}
+                            {{ helper.sentenseCaseConversion(option.name) }}
                         </div>
                     </ng-template>
                     <ng-template pTemplate="selectedItem" let-item>
                         <p>
-                            {{ brandingConfig.brandId === 'co' ? (item.name | sentenceCase) : (item.name)}}
+                            {{ helper.sentenseCaseConversion(item.name) }}
                         </p>
                         <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>

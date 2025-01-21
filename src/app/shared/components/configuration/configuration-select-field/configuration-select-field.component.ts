@@ -16,6 +16,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -115,7 +116,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   constructor(
     private trackingService: TrackingService,
-    private router: Router
+    private router: Router,
+    public helper: HelperService
   ) { }
 
   onSearchFocus(isSearchFocused: boolean): void {

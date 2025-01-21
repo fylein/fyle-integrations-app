@@ -17,7 +17,7 @@
                 <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingConfig.brandId === 'co' ? (brandingContent.employeeMappingErrorText | sentenceCase) : brandingContent.employeeMappingErrorText}}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{helper.sentenseCaseConversion(brandingContent.employeeMappingErrorText)}}</h4>
                             <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING.totalCount }} {{groupedErrorStat.EMPLOYEE_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">
@@ -42,7 +42,7 @@
                 <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingConfig.brandId === 'co' ? (brandingContent.categoryMappingErrorText | sentenceCase) : brandingContent.categoryMappingErrorText}}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{ helper.sentenseCaseConversion(brandingContent.categoryMappingErrorText) }}</h4>
                             <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING.totalCount }} {{groupedErrorStat.CATEGORY_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map categories in {{brandingConfig.brandName}} to their corresponding records in {{uiExposedAppName}}.</p>

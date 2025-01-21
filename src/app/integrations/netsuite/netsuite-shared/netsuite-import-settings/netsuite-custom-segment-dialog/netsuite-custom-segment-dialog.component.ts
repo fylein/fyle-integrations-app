@@ -5,6 +5,7 @@ import { brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
@@ -39,7 +40,9 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor(
+    public helper: HelperService
+  ) { }
 
   save() {
     this.saveClick.emit();
@@ -71,7 +74,7 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
   }
 
   getCustomSegmentTypeLabel(): string {
-    return brandingConfig.brandId === 'co' ? 'Choose custom field type' : 'Choose Custom Field Type';
+    return this.helper.sentenseCaseConversion('Choose Custom Field Type');
   }
 
   getInternalIDLabel(): string {
@@ -82,7 +85,7 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
   }
 
   getTransactionIdLabel(): string {
-    return this.brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform('Enter Transaction Line Field') + ' ID' : 'Enter Transaction Line Field ID';
+    return this.helper.sentenseCaseConversion('Enter Transaction Line Field') + ' ID';
   }
 
   setImagesForCustomSegment(): string {

@@ -38,11 +38,11 @@
                       </div>
                       <div>
                         <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                            Import {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase ) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} from {{ uiExposedAppName }}
+                            Import {{ helper.brandingCaseConversion(getDestinationField(expenseField.get('destination_field')?.value)) }} from {{ uiExposedAppName }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
-                          The imported {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} 
+                          The imported {{ helper.brandingCaseConversion(getDestinationField(expenseField.get('destination_field')?.value)) }} 
                           <span *ngIf="brandingConfig.brandId !== 'co'">from {{ uiExposedAppName }} will be a selectable field while creating an expense.</span>
                           <span *ngIf="brandingConfig.brandId === 'co'"> will be an available field when creating an expense.</span>
                         </h5>        
@@ -59,13 +59,13 @@
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
-                                {{ brandingConfig.brandId === 'co' ? (option.display_name | snakeCaseToSpaceCase | sentenceCase) : option.display_name | snakeCaseToSpaceCase | titlecase }}
+                                {{ helper.brandingCaseConversion(option.display_name, 'sentenceCase') }}
                             </div>
                         </ng-template>
                         <ng-template pTemplate="selectedItem" let-item>
                             <div class="tw-flex tw-justify-between tw-items-center">
                                 <span>
-                                    {{ brandingConfig.brandId === 'co' ? (item.display_name | snakeCaseToSpaceCase | sentenceCase) : item.display_name | snakeCaseToSpaceCase | titlecase }}
+                                    {{ helper.brandingCaseConversion(item.display_name, 'sentenceCase') }}
                                 </span>
                             </div>
                         </ng-template>
@@ -85,12 +85,12 @@
                                 <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
                                     <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
                                 </div>
-                                {{ brandingConfig.brandId === 'co' ? (option.display_name | sentenceCase) : option.display_name }}
+                                {{ helper.sentenseCaseConversion(option.display_name) }}
                             </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
                                 <p>
-                                    {{ brandingConfig.brandId === 'co' ? (item.display_name | sentenceCase) : item.display_name }}
+                                    {{ helper.sentenseCaseConversion(item.display_name) }}
                                 </p>
                                 <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
@@ -129,7 +129,7 @@
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
                             </div>
                             <div>
-                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{brandingConfig.brandName}} {{brandingConfig.brandId === 'co' ? 'field' : 'Field'}} <app-mandatory-field></app-mandatory-field> </p>
+                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{brandingConfig.brandName}} {{helper.brandingCaseConversion('Field')}} <app-mandatory-field></app-mandatory-field> </p>
                                 <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
