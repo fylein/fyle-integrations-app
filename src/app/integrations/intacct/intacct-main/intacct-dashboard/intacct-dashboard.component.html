@@ -22,8 +22,8 @@
 
     <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="brandingConfig.brandId === 'fyle' ? 'Looks like you have': 'No records to show yet'"
-        [subHeaderText]="brandingConfig.brandId === 'fyle' ? '0 expenses to export right now': 'Looks like you have no records to export right now.'">
+        [headerText]="brandingContent.dashboardExportZeroStateHeaderText"
+        [subHeaderText]="brandingContent.dashboardExportZeroStateSubHeaderText">
     </app-zero-state>
 
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"

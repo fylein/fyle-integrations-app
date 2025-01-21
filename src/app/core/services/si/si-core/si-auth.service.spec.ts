@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { SiAuthService } from './si-auth.service';
 import { environment } from 'src/environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('SiAuthService', () => {
   let service: SiAuthService;
@@ -13,9 +14,9 @@ xdescribe('SiAuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [SiAuthService]
-    });
+    imports: [],
+    providers: [SiAuthService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = TestBed.inject(SiAuthService);
     httpMock = injector.inject(HttpTestingController);

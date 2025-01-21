@@ -5,6 +5,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
 import { ExportSettingModel } from "../../common/export-settings.model";
+import { brandingConfig } from "src/app/branding/branding-config";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -64,11 +65,11 @@ export class XeroAdvancedSettingModel extends HelperUtility{
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Export Fyle ACH Payments to Xero',
+        label: 'Export ' + brandingConfig.brandName + ' ACH Payments to Xero',
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
       {
-        label: 'Import Xero Payments into Fyle',
+        label: 'Import Xero Payments into ' + brandingConfig.brandName,
         value: PaymentSyncDirection.XERO_TO_FYLE
       }
     ];

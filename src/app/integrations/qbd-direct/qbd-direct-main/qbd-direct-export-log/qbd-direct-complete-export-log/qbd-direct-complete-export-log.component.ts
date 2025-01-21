@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
+import { brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { AccountingExportModel, AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
@@ -56,6 +57,8 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 

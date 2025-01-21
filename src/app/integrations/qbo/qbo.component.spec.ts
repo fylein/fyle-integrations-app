@@ -11,7 +11,8 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 import { QBOOnboardingState, AppUrl } from 'src/app/core/models/enum/enum.model';
 import { mockUser, mockWorkspace, testOnboardingState } from './qbo.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -47,18 +48,20 @@ describe('QboComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [QboComponent],
-      imports: [SharedModule, HttpClientTestingModule],
-      providers: [
+    declarations: [QboComponent],
+    imports: [SharedModule],
+    providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: QboHelperService, useValue: qboHelperSpy },
         { provide: StorageService, useValue: storageSpy },
         { provide: IntegrationsUserService, useValue: userSpy },
         { provide: WorkspaceService, useValue: workspaceSpy },
         { provide: WindowService, useValue: windowServiceMock },
-        provideRouter([])
-      ]
-    }).compileComponents();
+        provideRouter([]),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     qboHelperServiceSpy = TestBed.inject(QboHelperService) as jasmine.SpyObj<QboHelperService>;

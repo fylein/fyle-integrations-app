@@ -1,8 +1,9 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 
 import { CloneSettingService } from './clone-setting.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('CloneSettingService', () => {
   let service: CloneSettingService;
@@ -13,10 +14,9 @@ xdescribe('CloneSettingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = TestBed.inject(CloneSettingService);
     httpMock = injector.inject(HttpTestingController);

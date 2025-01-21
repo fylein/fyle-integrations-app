@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 
 import { QbdFieldMappingService } from './qbd-field-mapping.service';
 import { QBDFieldMappingGet, QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdFieldMappingService', () => {
   let service: QbdFieldMappingService;
@@ -15,9 +16,9 @@ xdescribe('QbdFieldMappingService', () => {
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [QbdFieldMappingService]
-    });
+    imports: [],
+    providers: [QbdFieldMappingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
       service = TestBed.inject(QbdFieldMappingService);
       injector = getTestBed();
       service = injector.inject(QbdFieldMappingService);

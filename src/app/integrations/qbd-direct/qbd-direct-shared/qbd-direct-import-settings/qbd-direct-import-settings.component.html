@@ -65,7 +65,7 @@
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors in QuickBooks will be imported as Merchants in Fyle, available in a dropdown for employees to select when coding expenses.'"
+                        [subLabel]="'Vendors in QuickBooks will be imported as Merchants in ' + brandingConfig.brandName + ', available in a dropdown for employees to select when coding expenses.'"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>

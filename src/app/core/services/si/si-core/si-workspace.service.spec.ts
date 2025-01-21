@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { SiWorkspaceService } from './si-workspace.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('SiWorkspaceService', () => {
   let service: SiWorkspaceService;
@@ -13,9 +14,9 @@ xdescribe('SiWorkspaceService', () => {
   beforeEach(() => {
     localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [SiWorkspaceService]
-    });
+    imports: [],
+    providers: [SiWorkspaceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     injector = getTestBed();
     service = TestBed.inject(SiWorkspaceService);
     httpMock = injector.inject(HttpTestingController);

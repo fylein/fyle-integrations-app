@@ -53,7 +53,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     {
       id: 2,
       label: 'Keep your Quickbooks company file open',
-      caption: 'Make sure the QuickBooks Company you want to connect to Fyle is open during the integration setup.',
+      caption: 'Make sure the QuickBooks Company you want to connect to ' + brandingConfig.brandName + ' is open during the integration setup.',
       externalLink: 'https://qbd.com',
       iconName: 'expand',
       state: QBDPreRequisiteState.INCOMPLETE

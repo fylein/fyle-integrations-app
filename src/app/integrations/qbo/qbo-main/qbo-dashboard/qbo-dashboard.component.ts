@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -67,6 +67,8 @@ export class QboDashboardComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
 
   importCodeFields: any;
 
