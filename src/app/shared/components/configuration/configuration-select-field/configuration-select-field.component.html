@@ -154,7 +154,7 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
+            <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px', formControllerName === 'import_code' && appName === AppName.INTACCT ? 'tw-ml-14-px' : '']">
                 <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled && !isSearchFocused" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
             </div>
         </div>
