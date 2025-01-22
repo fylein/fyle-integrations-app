@@ -13,7 +13,7 @@ jobs:
     - name: Setup GitHub Action
       uses: actions/setup-node@v1
       with:
-        node-version: 22.2.0
+        node-version: 22.0.0
     - name: Install dependencies
       run: npm install
     - name: Test
