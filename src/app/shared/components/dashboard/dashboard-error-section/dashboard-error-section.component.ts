@@ -55,7 +55,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() exportableExpenseGroupIds: number[];
 
-  @Input() lastExportDetails: any;
+  @Input() accountingExportSummary: any;
 
   uiExposedAppName: string;
 
@@ -119,7 +119,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   get shouldShowErrorSection(): boolean {
     if (this.appName === AppName.QBO) {
-      return !!(this.exportableExpenseGroupIds?.length && this.lastExportDetails);
+      return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary.failed_accounting_export_count);
     }
     return true;
   }
