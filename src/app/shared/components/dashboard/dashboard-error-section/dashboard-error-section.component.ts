@@ -118,7 +118,10 @@ export class DashboardErrorSectionComponent implements OnInit {
   ) { }
 
   get shouldShowErrorSection(): boolean {
-    return !!(this.exportableExpenseGroupIds?.length && this.lastExportDetails);
+    if (this.appName === AppName.QBO) {
+      return !!(this.exportableExpenseGroupIds?.length && this.lastExportDetails);
+    }
+    return true;
   }
 
   getSourceType() {

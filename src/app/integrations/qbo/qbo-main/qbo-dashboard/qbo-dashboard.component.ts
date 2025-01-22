@@ -72,6 +72,8 @@ export class QboDashboardComponent implements OnInit {
 
   importCodeFields: any;
 
+  lastExportDetails: any;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
