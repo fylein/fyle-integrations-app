@@ -119,7 +119,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   get shouldShowErrorSection(): boolean {
     if (this.appName === AppName.QBO) {
-      return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary.failed_accounting_export_count);
+      return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary.total_accounting_export_count);
     }
     return true;
   }
