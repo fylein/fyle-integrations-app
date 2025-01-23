@@ -70,7 +70,7 @@ export class QboDashboardComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
-  importCodeFields: any;  
+  importCodeFields: any;
 
   constructor(
     private accountingExportService: AccountingExportService,
