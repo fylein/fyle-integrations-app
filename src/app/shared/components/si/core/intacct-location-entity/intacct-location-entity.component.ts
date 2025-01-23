@@ -155,7 +155,12 @@ export class IntacctLocationEntityComponent implements OnInit {
         workspace: this.workspaceId,
         detail: {}
       };
-      this.locationEntityOptions = [topLevelOption].concat(locationEntities);
+
+      // Only add top level option if there are multiple location entities
+      this.locationEntityOptions = locationEntities.length > 1
+        ? [topLevelOption].concat(locationEntities)
+        : locationEntities;
+
       this.setupLocationEntityMapping();
     });
   }
