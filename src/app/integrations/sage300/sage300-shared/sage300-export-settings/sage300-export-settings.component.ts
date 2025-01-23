@@ -100,7 +100,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   sage300Field = Sage300Field;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,

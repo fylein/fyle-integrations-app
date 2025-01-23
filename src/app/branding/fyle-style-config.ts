@@ -5,6 +5,8 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 
 export const fyleStyles = {
     common: {
-        configurationCommonStyle: 'tw-mx-120-px tw-shadow-app-card'
+        configurationCommonStyle: 'tw-mx-120-px tw-shadow-app-card',
+        mainPaddingStyle: 'tw-px-120-px',
+        mainShadowStyle: 'tw-shadow-app-card'
     }
 };

@@ -6,7 +6,7 @@
 </div>
 
 
-<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainPaddingStyle">
     <app-sub-menu [modules]="modules" [activeModule]="activeModule"></app-sub-menu>
     <div>
         <router-outlet></router-outlet>

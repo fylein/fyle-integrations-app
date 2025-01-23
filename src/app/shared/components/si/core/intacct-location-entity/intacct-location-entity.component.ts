@@ -53,7 +53,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

@@ -79,7 +79,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   workspace: QbdDirectWorkspace;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

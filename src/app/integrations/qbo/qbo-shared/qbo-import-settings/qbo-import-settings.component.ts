@@ -103,7 +103,7 @@ export class QboImportSettingsComponent implements OnInit {
     ]
   };
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

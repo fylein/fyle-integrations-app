@@ -156,7 +156,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   isMultiLineOption: boolean;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

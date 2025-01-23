@@ -72,7 +72,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   appName = AppName.BUSINESS_CENTRAL;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private onboardingService: BusinessCentralOnboardingService,

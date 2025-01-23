@@ -1,4 +1,4 @@
-<div class="tw-py-32-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+<div class="tw-py-32-px" [ngClass]="brandingStyle.common.mainPaddingStyle">
     <div *ngIf="!isImportInProgress" class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-z-1 tw-relative" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">

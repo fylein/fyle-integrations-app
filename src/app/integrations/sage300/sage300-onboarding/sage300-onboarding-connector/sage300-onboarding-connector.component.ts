@@ -34,7 +34,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   isSage300Connected: boolean = false;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private onboardingService: Sage300OnboardingService,

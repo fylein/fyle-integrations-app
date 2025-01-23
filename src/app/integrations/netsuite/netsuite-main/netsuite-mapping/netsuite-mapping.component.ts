@@ -2,7 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
@@ -27,6 +27,8 @@ export class NetsuiteMappingComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private mappingService: MappingService,

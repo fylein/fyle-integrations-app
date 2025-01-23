@@ -73,7 +73,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   appName = AppName.QBO;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private cloneSettingService: CloneSettingService,

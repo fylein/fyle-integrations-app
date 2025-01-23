@@ -62,7 +62,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

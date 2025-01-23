@@ -191,7 +191,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   cloneQboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private cloneSettingService: CloneSettingService,

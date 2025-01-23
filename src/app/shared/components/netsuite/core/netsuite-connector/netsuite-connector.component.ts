@@ -38,7 +38,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   netsuiteCredential: NetsuiteConnectorGet | null = null;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

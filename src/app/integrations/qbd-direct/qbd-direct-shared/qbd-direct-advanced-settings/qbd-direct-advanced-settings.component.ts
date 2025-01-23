@@ -95,7 +95,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   topMemoPreviewText: string;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,

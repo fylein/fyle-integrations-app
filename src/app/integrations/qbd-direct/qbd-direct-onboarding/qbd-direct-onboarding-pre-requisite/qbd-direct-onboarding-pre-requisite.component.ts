@@ -64,7 +64,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   sessionStartTime: Date = new Date();
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

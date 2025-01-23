@@ -5,7 +5,7 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainPaddingStyle">
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div *ngIf="exportPresent" class="tw-flex tw-justify-between tw-items-center ">

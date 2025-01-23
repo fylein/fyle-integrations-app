@@ -95,7 +95,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   isCustomSegmentSaveInProgress: boolean = false;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

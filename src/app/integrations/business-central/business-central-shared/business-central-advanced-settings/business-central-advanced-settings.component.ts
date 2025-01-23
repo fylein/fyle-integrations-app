@@ -61,7 +61,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   isSkipExportFormInvalid: boolean;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,

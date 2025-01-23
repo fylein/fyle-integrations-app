@@ -108,7 +108,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   sage300ImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

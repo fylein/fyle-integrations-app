@@ -108,7 +108,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private formBuilder: FormBuilder,

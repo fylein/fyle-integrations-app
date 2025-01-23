@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
@@ -45,6 +45,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent.dashboard;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private accountingExportService: AccountingExportService,
