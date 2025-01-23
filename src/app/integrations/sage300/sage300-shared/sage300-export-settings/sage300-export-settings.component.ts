@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportSettingDestinationOptionKey, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { ExportSettingModel as CommonExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
@@ -99,6 +99,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
   sage300ImportCodeFields: string[];
 
   sage300Field = Sage300Field;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,

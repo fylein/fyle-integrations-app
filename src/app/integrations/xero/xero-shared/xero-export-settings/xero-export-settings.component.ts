@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -89,6 +89,8 @@ export class XeroExportSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.xero.configuration.exportSetting;
 
   readonly XeroCorporateCreditCardExpensesObject = XeroCorporateCreditCardExpensesObject;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     public helperService: HelperService,

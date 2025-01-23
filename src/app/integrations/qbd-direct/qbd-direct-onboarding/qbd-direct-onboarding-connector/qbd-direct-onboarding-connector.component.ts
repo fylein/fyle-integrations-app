@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDConnectionStatus, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
@@ -78,6 +78,8 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   sessionStartTime: Date = new Date();
 
   workspace: QbdDirectWorkspace;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

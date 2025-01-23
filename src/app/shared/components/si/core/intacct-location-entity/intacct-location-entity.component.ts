@@ -12,7 +12,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { interval, take } from 'rxjs';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
@@ -52,6 +52,8 @@ export class IntacctLocationEntityComponent implements OnInit {
   readonly brandingContent = brandingContent;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

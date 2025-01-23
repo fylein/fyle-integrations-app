@@ -11,7 +11,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { FormGroup } from '@angular/forms';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, CustomOperatorOption, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
@@ -60,6 +60,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   isSkipExportFormInvalid: boolean;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,

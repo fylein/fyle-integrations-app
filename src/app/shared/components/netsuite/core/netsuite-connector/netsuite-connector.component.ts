@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConnectorGet, NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -37,6 +37,8 @@ export class NetsuiteConnectorComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   netsuiteCredential: NetsuiteConnectorGet | null = null;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

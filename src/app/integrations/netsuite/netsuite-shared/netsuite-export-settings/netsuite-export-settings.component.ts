@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -113,6 +113,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
   NetsuiteExportSettingDestinationOptionKey = NetsuiteExportSettingDestinationOptionKey;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: NetsuiteExportSettingsService,

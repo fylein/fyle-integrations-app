@@ -14,7 +14,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
@@ -107,6 +107,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   sage300ImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

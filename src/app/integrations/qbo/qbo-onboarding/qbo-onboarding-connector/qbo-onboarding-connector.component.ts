@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -72,6 +72,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   warningEvent: ConfigurationWarningEvent;
 
   appName = AppName.QBO;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private cloneSettingService: CloneSettingService,

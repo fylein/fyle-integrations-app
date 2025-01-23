@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConfigurationCta, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
@@ -33,6 +33,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   isSage300Connected: boolean = false;
+
+  brandingStyle = brandingStyle;
 
   constructor(
     private onboardingService: Sage300OnboardingService,
