@@ -8,5 +8,8 @@ export const c1Styles = {
         configurationCommonStyle: 'tw-mx-60-px tw-shadow-shadow-level-1',
         mainPaddingStyle: 'tw-px-60-px',
         mainShadowStyle: 'tw-shadow-shadow-level-1'
+    },
+    mapping: {
+        mappingHeaderBoxShadow: 'tw-shadow-shadow-level-1'
     }
 };

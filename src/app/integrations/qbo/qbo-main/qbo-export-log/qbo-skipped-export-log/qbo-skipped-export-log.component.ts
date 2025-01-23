@@ -9,7 +9,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -53,6 +53,8 @@ export class QboSkippedExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   hideCalendar: boolean;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private formBuilder: FormBuilder,
