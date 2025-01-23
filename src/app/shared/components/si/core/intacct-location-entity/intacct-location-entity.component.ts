@@ -145,7 +145,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     this.mappingsService.getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY).subscribe((locationEntities) => {
       const topLevelOption = {
         id: 1,
-        attribute_type: 'LOCATION_ENTITY', 
+        attribute_type: 'LOCATION_ENTITY',
         display_name: 'Location Entity',
         destination_id: 'top_level',
         value: 'Top Level',
@@ -155,12 +155,12 @@ export class IntacctLocationEntityComponent implements OnInit {
         workspace: this.workspaceId,
         detail: {}
       };
-  
+
       // Only add top level option if there are multiple location entities
-      this.locationEntityOptions = locationEntities.length > 1 
+      this.locationEntityOptions = locationEntities.length > 1
         ? [topLevelOption].concat(locationEntities)
         : locationEntities;
-  
+
       this.setupLocationEntityMapping();
     });
   }
