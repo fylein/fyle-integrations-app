@@ -514,7 +514,7 @@ return of(null);
       this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
       this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
-        this.existingEmployeeFieldMapping,
+        this.employeeFieldMapping,
         workspaceGeneralSettings?.auto_map_employees || false
       );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
