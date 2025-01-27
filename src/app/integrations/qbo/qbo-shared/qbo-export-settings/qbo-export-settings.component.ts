@@ -54,8 +54,6 @@ export class QboExportSettingsComponent implements OnInit {
 
   isImportItemsEnabled: boolean;
 
-  reimbursableExportTypes: SelectFormOption[];
-
   creditCardExportTypes = QBOExportSettingModel.getCreditCardExportTypes();
 
   cccExpenseStateOptions = QBOExportSettingModel.getCCCExpenseStateOptions();
@@ -348,10 +346,8 @@ export class QboExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
-      }
+      this.reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
@@ -500,7 +496,7 @@ return of(null);
     ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
 
       this.exportSettings = exportSetting;
-      this.employeeFieldMapping = workspaceGeneralSettings?.employee_field_mapping || EmployeeFieldMapping.EMPLOYEE;
+      this.employeeFieldMapping = workspaceGeneralSettings?.employee_field_mapping;
       this.setLiveEntityExample(destinationAttributes);
       this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -510,13 +506,12 @@ return of(null);
 
       this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
 
-      this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(this.employeeFieldMapping);
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
       this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
-        this.existingEmployeeFieldMapping,
+        this.employeeFieldMapping,
         workspaceGeneralSettings?.auto_map_employees || false
       );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
