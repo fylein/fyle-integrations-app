@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="tw-py-16-px" [ngClass]="brandingStyle.common.mainPaddingStyle">
+<div *ngIf="!isLoading" class="tw-py-16-px" [ngClass]="brandingStyle.common.mainComponentPadding">
     <div>
         <app-qbd-mapping-header-section [sourceType]="sourceType" [mappingStats]="mappingStats"></app-qbd-mapping-header-section>
     </div>
