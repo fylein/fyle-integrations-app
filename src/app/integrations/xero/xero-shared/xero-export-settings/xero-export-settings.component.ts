@@ -112,8 +112,8 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     // Removing not relevant date options
+    this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.CLAIM_NUMBER, this.reimbursableExpenseGroupingDateOptions);
     if (brandingConfig.brandId==='fyle') {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.CLAIM_NUMBER, this.reimbursableExpenseGroupingDateOptions);
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.EXPENSE_ID, this.cccExpenseGroupingDateOptions);
     }
   }

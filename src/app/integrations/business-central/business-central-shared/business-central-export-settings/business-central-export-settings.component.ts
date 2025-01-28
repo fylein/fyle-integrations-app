@@ -161,22 +161,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.reimbursableExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
-      }
+      this.reimbursableExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
 
-        // If the selected value is not valid after the export group change, reset the field
-        const visibleValues = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup').map(option => option.value);
-        if (!visibleValues.includes(this.exportSettingForm.get('cccExportDate')?.value)) {
-          this.exportSettingForm.get('cccExportDate')?.reset();
-        }
+      // If the selected value is not valid after the export group change, reset the field
+      const visibleValues = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup').map(option => option.value);
+      if (!visibleValues.includes(this.exportSettingForm.get('cccExportDate')?.value)) {
+        this.exportSettingForm.get('cccExportDate')?.reset();
       }
     });
 

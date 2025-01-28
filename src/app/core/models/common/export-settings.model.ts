@@ -94,7 +94,7 @@ export class ExportSettingModel {
     }
 
     static constructGroupingDateOptions(exportGroupType: ExpenseGroupingFieldOption, dateOptions: SelectFormOption[]) {
-      if (exportGroupType===ExpenseGroupingFieldOption.EXPENSE_ID) {
+      if (exportGroupType === ExpenseGroupingFieldOption.EXPENSE_ID) {
         return ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, dateOptions);
       } else if (exportGroupType===ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroupType===ExpenseGroupingFieldOption.REPORT_ID) {
         return ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, dateOptions);

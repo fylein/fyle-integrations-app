@@ -6,7 +6,7 @@
 </div>
 
 
-<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainPaddingStyle">
+<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
     <app-sub-menu [modules]="modules" [activeModule]="activeModule"></app-sub-menu>
     <div>
         <router-outlet></router-outlet>
