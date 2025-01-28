@@ -77,11 +77,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null) {
-    const dateFilter:SelectedDateFilter = {
-      startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
-      endDate: new Date()
-    };
-    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt, null, this.appName).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, null, lastExportedAt, null, this.appName).subscribe(accountingExportResponse => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
         AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
       );
