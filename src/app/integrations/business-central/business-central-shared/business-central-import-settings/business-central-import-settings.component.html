@@ -26,7 +26,7 @@
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
                                 Select the accounts from {{ appName }} to import as categories in {{brandingConfig.brandName}}
-                                <p class="tw-text-text-muted" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
+                                <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                                     By default expense will be selected. Open the dropdown to select more as per your requirements.
                                 </p>
                             </h5>

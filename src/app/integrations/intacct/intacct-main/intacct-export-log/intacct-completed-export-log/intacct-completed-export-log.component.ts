@@ -69,10 +69,9 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   readonly brandingContent = brandingContent.exportLog;
-  
-  readonly brandingStyle = brandingStyle;
 
   readonly brandingStyle = brandingStyle;
+
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
