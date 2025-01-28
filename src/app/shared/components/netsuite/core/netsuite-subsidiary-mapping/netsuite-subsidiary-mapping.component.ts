@@ -57,7 +57,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

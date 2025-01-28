@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -27,6 +27,8 @@ export class QbdDirectExportLogComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router

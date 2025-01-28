@@ -143,7 +143,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   XeroCorporateCreditCardExpensesObject = XeroCorporateCreditCardExpensesObject;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private cloneSettingService: CloneSettingService,

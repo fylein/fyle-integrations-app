@@ -1,5 +1,5 @@
-<div class="tw-py-24-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
-    <div *ngIf="errors" class="tw-mt-24-px tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+<div class="tw-py-24-px" [ngClass]="brandingStyle.common.mainComponentPadding">
+    <div *ngIf="errors" class="tw-mt-24-px tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-text-text-primary !tw-font-500 !tw-text-18-px">Errors</h4>
         </div>

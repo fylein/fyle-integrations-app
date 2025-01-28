@@ -5,6 +5,11 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 
 export const c1Styles = {
     common: {
-        configurationCommonStyle: 'tw-mx-60-px tw-shadow-shadow-level-1'
+        configurationContents: 'tw-mx-60-px tw-shadow-shadow-level-1',
+        mainComponentPadding: 'tw-px-60-px',
+        mainComponentShadow: 'tw-shadow-shadow-level-1'
+    },
+    mapping: {
+        mappingHeaderBoxShadow: 'tw-shadow-shadow-level-1'
     }
 };

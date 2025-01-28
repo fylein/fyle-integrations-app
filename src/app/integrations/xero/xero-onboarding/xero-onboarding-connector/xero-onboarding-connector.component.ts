@@ -82,7 +82,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
 
   isDisconnectClicked: boolean;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private workspaceService: WorkspaceService,

@@ -84,7 +84,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private importSettingService: XeroImportSettingsService,

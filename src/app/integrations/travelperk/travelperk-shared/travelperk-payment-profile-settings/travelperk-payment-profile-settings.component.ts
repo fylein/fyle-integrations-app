@@ -55,7 +55,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     value: 'value'
   };
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

@@ -90,7 +90,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   readonly XeroCorporateCreditCardExpensesObject = XeroCorporateCreditCardExpensesObject;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     public helperService: HelperService,

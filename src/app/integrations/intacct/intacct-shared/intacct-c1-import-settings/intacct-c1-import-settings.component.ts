@@ -99,7 +99,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

@@ -71,7 +71,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.xero.configuration.advancedSettings;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
 
   constructor(

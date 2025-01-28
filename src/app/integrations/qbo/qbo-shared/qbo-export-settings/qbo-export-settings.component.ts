@@ -132,7 +132,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: QboExportSettingsService,

@@ -2,7 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -27,6 +27,8 @@ export class Sage300MappingComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -27,5 +27,7 @@ export class QbdDirectConfigurationComponent {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
 }

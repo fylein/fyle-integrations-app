@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbo-export-log',
@@ -22,6 +22,8 @@ export class QboExportLogComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router

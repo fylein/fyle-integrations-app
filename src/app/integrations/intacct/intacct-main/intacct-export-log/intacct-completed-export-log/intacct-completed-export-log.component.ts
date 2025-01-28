@@ -9,7 +9,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { environment } from 'src/environments/environment';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { Subject } from 'rxjs/internal/Subject';
@@ -69,6 +69,8 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   readonly brandingContent = brandingContent.exportLog;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

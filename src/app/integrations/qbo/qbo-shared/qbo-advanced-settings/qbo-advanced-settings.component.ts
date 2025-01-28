@@ -84,7 +84,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: QboAdvancedSettingsService,

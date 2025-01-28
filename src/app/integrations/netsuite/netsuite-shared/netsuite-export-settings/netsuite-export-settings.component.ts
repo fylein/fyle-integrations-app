@@ -114,7 +114,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   NetsuiteExportSettingDestinationOptionKey = NetsuiteExportSettingDestinationOptionKey;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: NetsuiteExportSettingsService,

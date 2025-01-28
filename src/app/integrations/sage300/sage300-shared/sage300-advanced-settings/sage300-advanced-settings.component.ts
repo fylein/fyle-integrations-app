@@ -70,7 +70,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   isSkipExportFormInvalid: boolean;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,

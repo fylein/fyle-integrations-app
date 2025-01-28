@@ -85,7 +85,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   BCExportSettingDestinationOptionKey = BCExportSettingDestinationOptionKey;
 
-  brandingStyle = brandingStyle;
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
