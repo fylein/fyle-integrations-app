@@ -8,5 +8,8 @@ export const fyleStyles = {
         configurationCommonStyle: 'tw-mx-120-px tw-shadow-app-card',
         mainPaddingStyle: 'tw-px-120-px',
         mainShadowStyle: 'tw-shadow-app-card'
+    },
+    mapping: {
+        mappingHeaderBoxShadow: 'tw-shadow-stats-box'
     }
 };
