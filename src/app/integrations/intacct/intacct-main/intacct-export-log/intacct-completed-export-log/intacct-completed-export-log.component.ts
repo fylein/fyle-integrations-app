@@ -72,6 +72,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,

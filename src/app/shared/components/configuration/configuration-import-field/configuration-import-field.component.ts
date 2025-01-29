@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
@@ -109,6 +109,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
   readonly brandingXeroContent = brandingContent.xero.configuration.importSetting.toggleToastMessage;
+
+  readonly brandingStyle = brandingStyle;
 
   @Output() xeroProjectMapping:EventEmitter<boolean> = new EventEmitter();
 

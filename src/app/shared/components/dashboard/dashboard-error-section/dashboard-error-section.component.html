@@ -24,7 +24,7 @@
                                     <p>Map employees in {{brandingConfig.brandName}} to their corresponding records in {{uiExposedAppName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
-                                    <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="[brandingConfig.brandId==='co' ? 'p-button primary-outline': 'p-button secondary-sm']">
+                                    <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         Resolve
                                     </span>
                                 </div>
@@ -48,7 +48,7 @@
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map categories in {{brandingConfig.brandName}} to their corresponding records in {{uiExposedAppName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
-                                    <span type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [ngClass]="[brandingConfig.brandId==='co' ? 'p-button primary-outline': 'p-button secondary-sm']">
+                                    <span type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         Resolve
                                     </span>
                                 </div>
@@ -89,7 +89,7 @@
                                     </p>
                                 </h5>
                                 <div>
-                                    <span type="button" (click)="showErrorDialog(error)" [ngClass]="[brandingConfig.brandId==='co' ? 'p-button primary-outline': 'p-button secondary-sm']">
+                                    <span type="button" (click)="showErrorDialog(error)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{brandingContentCommon.viewExpenseText}}
                                     </span>
                                 </div>
