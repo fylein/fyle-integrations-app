@@ -7,15 +7,17 @@ import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AppName, AccountingErrorType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, AccountingErrorType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState, ClickEvent, TrackingApp, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectTaskResponse, QbdDirectTaskLog } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
 import { QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-qbd-direct-dashboard',
@@ -86,7 +88,8 @@ export class QbdDirectDashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private QbdDirectExportSettingsService: QbdDirectExportSettingsService,
     private trackingService: TrackingService,
-    private importSettingService: QbdDirectImportSettingsService
+    private importSettingService: QbdDirectImportSettingsService,
+    private refinerService: RefinerService
   ) { }
 
   export() {
