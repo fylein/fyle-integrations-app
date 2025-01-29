@@ -38,6 +38,9 @@ const environment = {
     intacct: {
       onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,
       export_done_survery_id: `${process.env.REFINER_INTACCT_EXPORT_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_EXPORT_DONE_SURVEY_ID : '{{REFINER_INTACCT_EXPORT_DONE_SURVEY_ID}}'}`,
+    },
+    qbd: {
+      onboarding_done_survery_id: `${process.env.REFINER_QBD_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_QBD_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_QBD_ONBOARDING_DONE_SURVEY_ID}}'}`,
     }
   },
 };

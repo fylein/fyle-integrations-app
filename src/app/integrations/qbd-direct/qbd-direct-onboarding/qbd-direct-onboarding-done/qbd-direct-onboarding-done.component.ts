@@ -23,7 +23,7 @@ export class QbdDirectOnboardingDoneComponent {
   navigateToDashboard(): void {
     this.router.navigate([`/integrations/qbd_direct/main/dashboard`]);
     this.refinerService.triggerSurvey(
-      AppName.QBD_DIRECT, environment.refiner_survey.intacct.onboarding_done_survery_id, RefinerSurveyType.ONBOARDING_DONE
+      AppName.QBD_DIRECT, environment.refiner_survey.qbd.onboarding_done_survery_id, RefinerSurveyType.ONBOARDING_DONE
     );
   }
 
