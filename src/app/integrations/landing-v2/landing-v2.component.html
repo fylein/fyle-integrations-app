@@ -48,7 +48,7 @@
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
                     <div>
                         Dynamics 365 Business Central
                         <div class="landing-v2--accounting-app-type">Accounting</div>
@@ -108,7 +108,7 @@
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
                     <div>
                         QuickBooks Desktop (Web Connector)
                         <div class="landing-v2--accounting-app-type">Accounting</div>
@@ -137,14 +137,14 @@
             <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.SAGE300)">
                 <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/sage300-logo.png" class="tw-py-[4px]" />
+                    <img src="assets/logos/sage300-logo.png" class="tw-py-[5px]" />
                     @if (isAppConnected('SAGE300')) {
                         <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                     } @else {
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
                     <div>
                         Sage 300 CRE
                         <div class="landing-v2--accounting-app-type">Accounting</div>
