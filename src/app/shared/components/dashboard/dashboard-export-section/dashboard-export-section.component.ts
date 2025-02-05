@@ -44,6 +44,8 @@ export class DashboardExportSectionComponent implements OnInit {
 
   importStates: string;
 
+  AppName = AppName;
+
   constructor() { }
 
   triggerExport() {
