@@ -48,6 +48,11 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="appName === AppName.QBD_DIRECT && isExportInProgress" class="tw-pt-16-px">
+                <app-configuration-info-label
+                    [infoText]="'Click \‘Update Selected\’ in QuickBooks Web Connector after exporting to sync your expenses immediately'">
+                </app-configuration-info-label>
+            </div>
         </div>
         <div  *ngIf="isExportInProgress">
             <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false' [mode]="loaderType"></p-progressBar>

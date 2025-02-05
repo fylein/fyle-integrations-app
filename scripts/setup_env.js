@@ -41,6 +41,7 @@ const environment = {
     },
     qbd: {
       onboarding_done_survery_id: `${process.env.REFINER_QBD_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_QBD_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_QBD_ONBOARDING_DONE_SURVEY_ID}}'}`,
+      export_done_survery_id: `${process.env.REFINER_QBD_EXPORT_DONE_SURVEY_ID ? process.env.REFINER_QBD_EXPORT_DONE_SURVEY_ID : '{{REFINER_QBD_EXPORT_DONE_SURVEY_ID}}'}`,
     }
   },
 };
