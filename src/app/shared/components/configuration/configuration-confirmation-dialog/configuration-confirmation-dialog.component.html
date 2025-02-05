@@ -11,7 +11,7 @@
                     </div>
                     <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{headerText}}</p>
                 </div>
-                <i [ngClass]="{'pi pi-times fyle' : brandingConfig.brandId === 'fyle' && appName!==AppName.QBD_DIRECT, 'pi pi-times fyle qbd' : brandingConfig.brandId === 'fyle' && appName===AppName.QBD_DIRECT, 'pi pi-times co' : brandingConfig.brandId !== 'fyle'}" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptWarning(false)"></i>
+                <i [ngClass]="[appName!==AppName.QBD_DIRECT ? brandingStyle.common.configurationBrandingClass : brandingStyle.common.configurationBrandingClass + ' qbd']" class="tw-cursor-pointer pi pi-times" style="font-size: 12px" (click)="acceptWarning(false)"></i>
             </div>
         </div>
         <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">

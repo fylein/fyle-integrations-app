@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -34,6 +34,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingKbArticles = brandingKbArticles;
+
+  readonly brandingStyle = brandingStyle;
 
   AppName = AppName;
 

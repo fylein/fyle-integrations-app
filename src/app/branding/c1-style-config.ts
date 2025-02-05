@@ -14,7 +14,8 @@ export const c1Styles = {
         importFieldDependentField: 'tw-pr-24-px tw-pl-[58px]',
         importFieldDependentFieldSvg: 'tw-pt-42-px',
         importFieldDropDownText: '!tw-font-600 tw-text-12-px',
-        stepHeaderH3Text: 'tw-text-18-px'
+        stepHeaderH3Text: 'tw-text-18-px',
+        searchIconFocus: 'tw-text-search-focused-filled-border'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline'

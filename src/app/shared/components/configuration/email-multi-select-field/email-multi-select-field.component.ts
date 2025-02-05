@@ -8,7 +8,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -55,6 +55,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   emails: QBDEmailOptions[];
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
