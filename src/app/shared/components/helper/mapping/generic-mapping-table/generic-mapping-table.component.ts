@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
@@ -67,6 +67,8 @@ export class GenericMappingTableComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent.mapping;
+
+  readonly brandingStyle = brandingStyle;
 
   optionSearchUpdate = new Subject<{searchTerm: string}>();
 

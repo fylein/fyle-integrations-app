@@ -14,7 +14,8 @@ export const fyleStyles = {
         importFieldDependentField: '',
         importFieldDependentFieldSvg: 'tw-pt-46-px',
         importFieldDropDownText: '!tw-font-400 tw-text-14-px',
-        stepHeaderH3Text: ''
+        stepHeaderH3Text: '',
+        searchIconFocus: 'tw-text-search-focused-search-icon'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm'

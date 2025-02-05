@@ -55,7 +55,7 @@
                         <app-search [form]="form" [isDropdown]="true" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="simpleSearch($event)" (searchFocused)="onSearchFocus($event)"></app-search>
                     </ng-template>
                     <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </div>
