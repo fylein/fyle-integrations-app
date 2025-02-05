@@ -1,3 +1,4 @@
+import { brandingContent } from "src/app/branding/branding-config";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
 import { DestinationOptionKey, ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
 import { SelectFormOption } from "./select-form-option.model";
@@ -84,6 +85,78 @@ export class ExportSettingModel {
                   value: IntacctReimbursableExpensesObject.BILL
                 }
               ];
+
+    }
+
+    static getCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
+      return [
+        {
+          label: 'Card Transaction Post Date',
+          value: ExportDateType.POSTED_AT
+        },
+        {
+          label: 'Spend date',
+          value: ExportDateType.SPENT_AT
+        },
+        {
+          label: 'Last Spend date',
+          value: ExportDateType.LAST_SPENT_AT
+        },
+        {
+          label: brandingContent.common.currentDate,
+          value: ExportDateType.CURRENT_DATE
+        }
+      ];
+    }
+
+    static getReimbursableExpenseGroupingDateOption(): SelectFormOption[] {
+      return [
+        {
+          label: brandingContent.common.currentDate,
+          value: ExportDateType.CURRENT_DATE
+        },
+        {
+          label: 'Verification date',
+          value: ExportDateType.VERIFIED_AT
+        },
+        {
+          label: 'Spend date',
+          value: ExportDateType.SPENT_AT
+        },
+        {
+          label: 'Approval date',
+          value: ExportDateType.APPROVED_AT
+        },
+        {
+          label: 'Last Spend date',
+          value: ExportDateType.LAST_SPENT_AT
+        }
+      ];
+    }
+
+    static dateGrouping(exportType:string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
+      
+      const excludedDate = expenseGrouping === 'expense' 
+      ? ExportDateType.LAST_SPENT_AT 
+      : ExportDateType.SPENT_AT;
+      
+      if (exportType === 'CCC') {
+        return this.getCreditCardExpenseGroupingDateOptions().filter(option => option.value !== excludedDate);
+      }
+
+      let dateOptions = this.getReimbursableExpenseGroupingDateOption();
+      let filterOptions: ExportDateType[] = [];
+
+      if (showApprovedDate) {
+        filterOptions.push(ExportDateType.VERIFIED_AT);
+      } else if (showVerificationDate) {
+        filterOptions.push(ExportDateType.APPROVED_AT);
+      }
+
+      filterOptions.push(excludedDate);
+      
+      return dateOptions.filter((item): item is { label: string; value: ExportDateType } =>
+        item.value !== null && !filterOptions.includes(item.value as ExportDateType))
 
     }
 

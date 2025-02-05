@@ -312,17 +312,12 @@ export class QboExportSettingsComponent implements OnInit {
 
   private updateCCCExpenseGroupingDateOptions(selectedValue: QBOCorporateCreditCardExpensesObject): void {
     if ([QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(selectedValue)) {
-      this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
-      if (selectedValue === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-        this.cccExpenseGroupingDateOptions.push({
-          label: brandingContent.common.currentDate,
-          value: ExportDateType.CURRENT_DATE
-        });
-      }
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
+
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.dateGrouping('CCC', this.exportSettingForm.controls.creditCardExportGroup.value, false, false);
     } else {
-      this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.dateGrouping('rem', this.exportSettingForm.controls.creditCardExportGroup.value, false, false);
       this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
     }
     const allowedValues = this.cccExpenseGroupingDateOptions.map(option => option.value);
@@ -346,19 +341,21 @@ export class QboExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      // this.reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+      // this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.dateGrouping('rem', this.exportSettingForm.controls.reimbursableExportGroup.value, true, false)
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
+      this.updateCCCExpenseGroupingDateOptions(creditCardExportType);
     });
 
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle'  && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
-        this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+      if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
+    //     // this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+    //     // this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.dateGrouping('rem', creditCardExportGroup, true, false)
       }
     });
   }
