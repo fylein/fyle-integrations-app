@@ -137,7 +137,7 @@ export class ExportSettingModel {
 
     static dateGrouping(exportType:string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
       
-      const excludedDate = expenseGrouping === 'expense' 
+      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
       ? ExportDateType.LAST_SPENT_AT 
       : ExportDateType.SPENT_AT;
       
@@ -155,9 +155,15 @@ export class ExportSettingModel {
       }
 
       filterOptions.push(excludedDate);
-      
-      return dateOptions.filter((item): item is { label: string; value: ExportDateType } =>
+
+      console.log(filterOptions, excludedDate)
+
+      const d = dateOptions.filter((item): item is { label: string; value: ExportDateType } =>
         item.value !== null && !filterOptions.includes(item.value as ExportDateType))
+
+      console.log(d)
+      
+      return d;
 
     }
 
