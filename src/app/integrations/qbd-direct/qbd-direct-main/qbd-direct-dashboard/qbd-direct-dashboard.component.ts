@@ -130,6 +130,12 @@ export class QbdDirectDashboardComponent implements OnInit {
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
+
+          if (this.failedExpenseGroupCount === 0) {
+            this.refinerService.triggerSurvey(
+              AppName.QBD_DIRECT, environment.refiner_survey.qbd.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            );
+          }
         });
       }
     });
