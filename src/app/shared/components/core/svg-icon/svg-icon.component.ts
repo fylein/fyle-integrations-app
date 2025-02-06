@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 const ICON_MAPPING = {
   'arrow-down': 'grv-chevron-down',
@@ -96,7 +96,7 @@ export class SvgIconComponent implements OnInit {
   }
 
   private setupProperties(): void {
-    if (brandingConfig.brandId === 'co') {
+    if (brandingFeatureConfig.featureFlags.c1Icon) {
       if (this.c1SvgSource) {
         this.svgSource = this.c1SvgSource.toString();
       } else {

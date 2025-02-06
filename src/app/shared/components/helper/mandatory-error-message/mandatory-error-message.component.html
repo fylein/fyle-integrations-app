@@ -1,5 +1,5 @@
 <div class="tw-text-form-error-help-text-color tw-text-12-px tw-font-400 tw-pt-4-px tw-max-w-300-px tw-flex tw-text-pretty tw-items-center">
-    <app-svg-icon *ngIf="brandingConfig.brandId === 'co'" [c1SvgSource]="'grv-caution-triangle-critical-small'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-pr-4-px tw-text-form-error-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+    <app-svg-icon *ngIf="brandingFeatureConfig.featureFlags.c1Icon" [c1SvgSource]="'grv-caution-triangle-critical-small'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-pr-4-px tw-text-form-error-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
     <span *ngIf="listName">Please select {{ listName }} from the list</span>
     <span *ngIf="customErrorMessage">{{ customErrorMessage }}</span>
   </div>

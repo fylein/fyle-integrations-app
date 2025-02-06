@@ -7,14 +7,25 @@ export type FeatureConfiguration = {
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
         allowIntacctHelperDoc: boolean;
+        loginRedirectUri: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
+            c1Icon: boolean;
+            c1Options: boolean;
+            allowForC1: boolean;
             exportSettings: {
                 reimbursableExpenses: boolean;
                 nameInJournalEntry: boolean;
                 useMerchantInJournalLine: boolean;
                 splitExpenseGrouping: boolean;
+                cccDateConfiguration: boolean;
+                cccExportGroupConfiguration: boolean;
+                isEmployeeMappingIsEmployee: boolean;
+                sentenseCaseConversion: boolean;
+                lowerCaseConversion: boolean;
+                allowAccountsPayableInCoCCC: boolean;
+                allowBankAccountInCoCCC: boolean;
             },
             importSettings: {
                 tax: boolean;
@@ -25,6 +36,9 @@ export type FeatureConfiguration = {
                 allowCustomSegment: boolean;
                 dependentField: boolean;
                 allowImportCode: boolean;
+                categoryImportEnabled: boolean;
+                intacctC1ImportSettings: boolean;
+                disableCustomerSourceField: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
@@ -36,6 +50,7 @@ export type FeatureConfiguration = {
                 autoCreateContacts: boolean;
                 useEmployeeAttributes: boolean;
                 autoCreateMerchants: boolean;
+                excludeCardNumberAndEmployeeNameInMemo: boolean;
             },
             exportLog: {
                 expenseType: boolean;

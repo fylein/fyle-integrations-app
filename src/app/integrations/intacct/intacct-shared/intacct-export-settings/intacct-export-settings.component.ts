@@ -392,7 +392,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
 
     private setupCCCGroupingWatcher(): void {
-      if (brandingConfig.brandId === 'co') {
+      if (brandingFeatureConfig.featureFlags.exportSettings.cccExportGroupConfiguration) {
         this.updateCCCGroupingDateOptions(this.exportSettingsForm.get('cccExportGroup')?.value);
         this.exportSettingsForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
           this.updateCCCGroupingDateOptions(cccExportGroup);
@@ -484,7 +484,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         splitExpenseGrouping: new FormControl(this.exportSettings?.expense_group_settings?.split_expense_grouping)
       });
 
-      if (brandingConfig.brandId === 'co') {
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingIsEmployee) {
         this.exportSettingsForm.controls.creditCardExpense.patchValue(true);
         this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
       }
@@ -525,7 +525,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
+      if (brandingFeatureConfig.featureFlags.exportSettings.cccDateConfiguration) {
         this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
         if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {

@@ -264,7 +264,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static getEmployeeFieldMapping(employeeFieldMapping: string): string {
-        return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
+        return !brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingIsEmployee ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
       }
 
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
@@ -295,7 +295,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
         const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
-        if (brandingConfig.brandId === 'co') {
+        if (!brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingIsEmployee) {
           exportSettingsForm.controls.creditCardExpense.patchValue(true);
           exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         }

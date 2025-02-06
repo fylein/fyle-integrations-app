@@ -13,7 +13,7 @@
     </div>
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
-            <div *ngIf="brandingConfig.brandId === 'fyle'" class="tw-mb-16-px">
+            <div *ngIf="!brandingFeatureConfig.featureFlags.allowForC1" class="tw-mb-16-px">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"

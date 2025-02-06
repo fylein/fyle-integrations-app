@@ -14,14 +14,25 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isBackgroundColorAllowed: true,
     isAsterikAllowed: false,
     allowIntacctHelperDoc: false,
+    loginRedirectUri: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
+        c1Icon: true,
+        c1Options: true,
+        allowForC1: true,
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,
             useMerchantInJournalLine: false,
-            splitExpenseGrouping: false
+            splitExpenseGrouping: false,
+            cccDateConfiguration: true,
+            isEmployeeMappingIsEmployee: false,
+            sentenseCaseConversion: true,
+            cccExportGroupConfiguration: true,
+            lowerCaseConversion: true,
+            allowAccountsPayableInCoCCC: true,
+            allowBankAccountInCoCCC: true
         },
         importSettings: {
             tax: false,
@@ -31,7 +42,10 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: false,
             dependentField: true,
-            allowImportCode: false
+            allowImportCode: false,
+            categoryImportEnabled: false,
+            intacctC1ImportSettings: true,
+            disableCustomerSourceField: true
         },
         advancedSettings: {
             autoCreateVendors: false,
@@ -42,7 +56,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             skipExport: false,
             autoCreateContacts: false,
             useEmployeeAttributes: true,
-            autoCreateMerchants: true
+            autoCreateMerchants: true,
+            excludeCardNumberAndEmployeeNameInMemo: true
         },
         exportLog: {
             expenseType: false

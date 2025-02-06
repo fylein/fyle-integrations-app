@@ -8,11 +8,11 @@
             <div>
                 <h5 class="tw-text-text-secondary tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
                 <h5 *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}" [innerHTML]="subLabel"></h5>
-                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingConfig.brandId === 'co' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
+                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.allowForC1 && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
                     Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for more details.</span>
                 </h5>
                 <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for Preview</span></h5>
-                <h5 *ngIf="formControllerName === 'cccExportType' && brandingConfig.brandId === 'co' && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >Select the type of Sage Intacct transaction to export your expenses.<span class="tw-pl-4-px">Learn<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> more</a> about exporting.</span></h5>
+                <h5 *ngIf="formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.allowForC1 && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >Select the type of Sage Intacct transaction to export your expenses.<span class="tw-pl-4-px">Learn<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> more</a> about exporting.</span></h5>
             </div>
         </div>
         <div>
@@ -77,7 +77,7 @@
                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
                             <span>
-                            {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}</span>
+                            {{ (option.label | sentenceCase) }}</span>
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
@@ -85,7 +85,7 @@
                     <ng-template pTemplate="selectedItem" let-item>
                         <div class="selected-item-container">
                             <span class="selected-item-text">
-                                {{ brandingConfig.brandId === 'co' ? (item.label | sentenceCase) : (item.label)}}
+                                {{ (item.label | sentenceCase) }}
                             </span>
                             <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                         </div>
@@ -93,14 +93,14 @@
                 </p-dropdown>                
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
-                        <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{uiExposedAppName}}</span>
-                        <span *ngIf="brandingConfig.brandId === 'co'"> in {{uiExposedAppName}}</span>
+                        <span *ngIf="!brandingFeatureConfig.featureFlags.allowForC1"> how it looks on {{uiExposedAppName}}</span>
+                        <span *ngIf="brandingFeatureConfig.featureFlags.allowForC1"> in {{uiExposedAppName}}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span *ngIf="(appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value === 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup') || (appName !== AppName.QBD_DIRECT)">Auto-selected based on your export module</span>
                         <span *ngIf="(formControllerName === 'reimbursableExportGroup' && form.controls.reimbursableExportType.value !== 'BILL' && appName === AppName.QBD_DIRECT) || (appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup')"> Auto-selected when your default credit account is set to an Accounts Payable account</span>
                     </div>
-                    <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
+                    <div *ngIf="!brandingFeatureConfig.featureFlags.allowForC1 && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                         <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                             <ng-template let-value pTemplate="selectedItem" >
                                 <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                                    <p>{{ value | titlecase | snakeCaseToSpaceCase }}</p>
+                                    <p>{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
                                 </div>
                                 <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
                                     {{ placeholder }}
@@ -118,7 +118,7 @@
                             </ng-template>
                             <ng-template let-day pTemplate="item">
                                 <div>
-                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | titlecase | snakeCaseToSpaceCase }}</p>
+                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | snakeCaseToSpaceCase | sentenceCase }}</p>
                                 </div>
                             </ng-template>
                         </p-dropdown>
@@ -140,7 +140,7 @@
                 <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | titlecase | snakeCaseToSpaceCase }}</p>
+                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
                             <p *ngIf="formControllerName === 'defaultEmployee'">{{ value }}</p>
                         </div>
                         <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
@@ -149,7 +149,7 @@
                     </ng-template>
                     <ng-template let-memo pTemplate="item">
                         <div>
-                            <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | snakeCaseToSpaceCase | sentenceCase }}</p>
                         </div>
                     </ng-template>
                 </p-dropdown>
@@ -171,12 +171,12 @@
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                             [pTooltip]="isOverflowing(textElement) ? option.name : null" tooltipPosition="top">
-                            {{ brandingConfig.brandId === 'co' ? (option.name | sentenceCase) : (option.name)}}
+                            {{ (option.name | sentenceCase) }}
                         </div>
                     </ng-template>
                     <ng-template pTemplate="selectedItem" let-item>
                         <p>
-                            {{ brandingConfig.brandId === 'co' ? (item.name | sentenceCase) : (item.name)}}
+                            {{ (item.name | sentenceCase) }}
                         </p>
                         <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>

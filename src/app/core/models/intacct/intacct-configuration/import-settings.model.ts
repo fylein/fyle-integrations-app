@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { FyleField } from "../../enum/enum.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 
 const emptyDestinationAttribute = { id: null, name: null };
@@ -88,7 +88,7 @@ export class ImportSettings {
 
         let isCategoryImportEnabled = false;
 
-        if (brandingConfig.brandId === 'fyle') {
+        if (brandingFeatureConfig.featureFlags.importSettings.categoryImportEnabled) {
             isCategoryImportEnabled = importSettingsForm.get('importCategories')?.value ? importSettingsForm.get('importCategories')?.value : false;
         } else {
             isCategoryImportEnabled = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field === 'CATEGORY' && field.import_to_fyle).length > 0 ? true : false;

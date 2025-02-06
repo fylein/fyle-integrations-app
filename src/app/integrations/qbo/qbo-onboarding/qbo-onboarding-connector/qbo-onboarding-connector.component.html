@@ -24,7 +24,7 @@
                     [isAccountingCompanyConnected]="isQboConnected"
                     [showDisconnect]="showDisconnectQBO"
                     [accountingCompanyConnectionInProgress]="qboConnectionInProgress"
-                    [switchLinkText]="brandingConfig.brandId === 'co' ? 'Disconnect company' : 'Disconnect'"
+                    [switchLinkText]="brandingFeatureConfig.featureFlags.exportSettings.sentenseCaseConversion ? 'Disconnect company' : 'Disconnect'"
                     (switchCompany)="disconnectQbo()"
                     (connectCompany)="connectQbo()">
                 </app-configuration-connector>
