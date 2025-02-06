@@ -136,11 +136,11 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to NetSuite.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
-                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase)"
+                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
                         </div>
@@ -306,11 +306,11 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>

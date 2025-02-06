@@ -82,7 +82,7 @@
             <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                     [options]="reimbursableExpenseGroupingDateOptions"
                     [placeholder]="'Select export date'"
                     [form]="exportSettingForm"
@@ -124,7 +124,7 @@
 
                     <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                         <app-clone-setting-field
-                            [label]="'To which Bank Account should the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [label]="'To which Bank Account should the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                             [options]="bankAccounts"
                             [placeholder]="'Select bank account'"
                             [form]="exportSettingForm"
@@ -168,7 +168,7 @@
                 <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
-                        [label]="'Set the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                        [label]="'Set the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                         [options]="cccExpenseGroupingDateOptions"
                         [placeholder]="'Select export date'"
                         [form]="exportSettingForm"

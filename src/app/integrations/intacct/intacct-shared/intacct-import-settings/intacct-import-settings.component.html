@@ -34,7 +34,7 @@
         </div>
         <div class="tw-flex tw-pt-18-px">
             <div class="tw-pl-48-px">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{(intacctCategoryDestination | snakeCaseToSpaceCase | titlecase).replace('Gl ', 'GL ')}}" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{(intacctCategoryDestination | snakeCaseToSpaceCase | sentenceCase).replace('Gl ', 'GL ')}}" disabled>
             </div>
             <div class="tw-pt-16-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>

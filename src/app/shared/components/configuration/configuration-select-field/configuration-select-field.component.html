@@ -110,7 +110,7 @@
                         <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                             <ng-template let-value pTemplate="selectedItem" >
                                 <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                                    <p>{{ value | titlecase | snakeCaseToSpaceCase }}</p>
+                                    <p>{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
                                 </div>
                                 <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
                                     {{ placeholder }}
@@ -118,7 +118,7 @@
                             </ng-template>
                             <ng-template let-day pTemplate="item">
                                 <div>
-                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | titlecase | snakeCaseToSpaceCase }}</p>
+                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | snakeCaseToSpaceCase | sentenceCase }}</p>
                                 </div>
                             </ng-template>
                         </p-dropdown>
@@ -140,7 +140,7 @@
                 <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | titlecase | snakeCaseToSpaceCase }}</p>
+                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
                             <p *ngIf="formControllerName === 'defaultEmployee'">{{ value }}</p>
                         </div>
                         <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
@@ -149,7 +149,7 @@
                     </ng-template>
                     <ng-template let-memo pTemplate="item">
                         <div>
-                            <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | snakeCaseToSpaceCase | sentenceCase }}</p>
                         </div>
                     </ng-template>
                 </p-dropdown>

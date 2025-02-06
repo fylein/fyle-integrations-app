@@ -1,8 +1,8 @@
 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{helper.sentenseCaseConversion(sourceField | snakeCaseToSpaceCase | titlecase)}} in {{brandingConfig.brandName}}</th>
-        <th>{{helper.sentenseCaseConversion(destinationField | snakeCaseToSpaceCase | titlecase)}} in {{uiExposedAppName}}</th>
+        <th class="!tw-pl-40-px">{{ (sourceField | snakeCaseToSpaceCase | sentenceCase) }} in {{brandingConfig.brandName}}</th>
+        <th>{{ (destinationField | snakeCaseToSpaceCase | sentenceCase) }} in {{uiExposedAppName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>
