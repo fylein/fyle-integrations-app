@@ -23,7 +23,7 @@ export class RefinerService {
       this.refiner('identifyUser', {
         id: this.user.org_id,
         account: {
-          workspace_id: this.user.org_id
+          org_id: this.user.org_id
         },
         source: 'Fyle Integration Settings',
         action_name: actionName,
