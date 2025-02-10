@@ -23,7 +23,7 @@ describe('TrackingService', () => {
   });
 
   it('should track Open Landing Page event', () => {
-    expect(service.onOpenLandingPage('ashwin.t@fyle.in', 1, 'or767asdih5')).toBeUndefined();
+    expect(service.onOpenLandingPage('ashwin.t@fyle.in', 'or767asdih5')).toBeUndefined();
   });
 
   it('should flatten the payload', () => {
