@@ -73,12 +73,11 @@ export class TrackingService {
     }
   }
 
-  onOpenLandingPage(userId: string | undefined, orgId: number, fyleOrgId: string): void {
+  onOpenLandingPage(userId: string | undefined, fyleOrgId: string): void {
     try {
       if (this.tracking) {
         this.tracking.identify(userId);
         this.tracking.people.set({
-          orgId,
           fyleOrgId
         });
         this.identityEmail = userId;

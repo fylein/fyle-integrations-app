@@ -63,7 +63,7 @@ export class IntegrationsComponent implements OnInit {
     this.user = this.userService.getUserProfile();
     this.getOrCreateOrg().then((org: Org | undefined) => {
       if (org) {
-        this.trackingService.onOpenLandingPage(this.user?.user_id, org.id, org.name);
+        this.trackingService.onOpenLandingPage(this.user?.user_id, org.fyle_org_id);
         this.org = org;
         this.storageService.set('orgId', this.org.id);
         this.storageService.set('org', this.org);
