@@ -92,7 +92,7 @@ export class ExportSettingModel {
     static getCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Card Transaction Post Date',
+          label: 'Card transaction post date',
           value: ExportDateType.POSTED_AT
         },
         {
@@ -100,11 +100,11 @@ export class ExportSettingModel {
           value: ExportDateType.SPENT_AT
         },
         {
-          label: 'Last Spend date',
+          label: 'Last dpend date',
           value: ExportDateType.LAST_SPENT_AT
         },
         {
-          label: brandingContent.common.currentDate,
+          label: 'Export date',
           value: ExportDateType.CURRENT_DATE
         }
       ];
@@ -113,7 +113,7 @@ export class ExportSettingModel {
     static getReimbursableExpenseGroupingDateOption(): SelectFormOption[] {
       return [
         {
-          label: brandingContent.common.currentDate,
+          label: 'Export date',
           value: ExportDateType.CURRENT_DATE
         },
         {
@@ -129,42 +129,37 @@ export class ExportSettingModel {
           value: ExportDateType.APPROVED_AT
         },
         {
-          label: 'Last Spend date',
+          label: 'Last spend date',
           value: ExportDateType.LAST_SPENT_AT
         }
       ];
     }
 
-    static dateGrouping(exportType:string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
-      
-      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
-      ? ExportDateType.LAST_SPENT_AT 
-      : ExportDateType.SPENT_AT;
-      
+    static dateGrouping(exportType: string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
+      // Determine the excluded date based on expenseGrouping
+      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID 
+        ? ExportDateType.LAST_SPENT_AT 
+        : ExportDateType.SPENT_AT;
+    
+      // Handle CCC export type
       if (exportType === 'CCC') {
         return this.getCreditCardExpenseGroupingDateOptions().filter(option => option.value !== excludedDate);
       }
-
-      let dateOptions = this.getReimbursableExpenseGroupingDateOption();
-      let filterOptions: ExportDateType[] = [];
-
-      if (showApprovedDate) {
-        filterOptions.push(ExportDateType.VERIFIED_AT);
-      } else if (showVerificationDate) {
-        filterOptions.push(ExportDateType.APPROVED_AT);
-      }
-
-      filterOptions.push(excludedDate);
-
-      console.log(filterOptions, excludedDate)
-
-      const d = dateOptions.filter((item): item is { label: string; value: ExportDateType } =>
-        item.value !== null && !filterOptions.includes(item.value as ExportDateType))
-
-      console.log(d)
-      
-      return d;
-
+    
+      // Get base date options
+      const dateOptions = this.getReimbursableExpenseGroupingDateOption();
+    
+      // Determine filter options based on showApprovedDate and showVerificationDate
+      const filterOptions = [
+        ...(showApprovedDate ? [ExportDateType.VERIFIED_AT] : []),
+        ...(showVerificationDate ? [ExportDateType.APPROVED_AT] : []),
+        excludedDate
+      ];
+    
+      // Filter out excluded and unwanted dates
+      return dateOptions.filter(option => 
+        option.value !== null && !filterOptions.includes(option.value as ExportDateType)
+      );
     }
 
     static filterDateOptions(exportDateType: ExportDateType, dateOptions: SelectFormOption[]){
