@@ -137,27 +137,27 @@ export class ExportSettingModel {
 
     static dateGrouping(exportType: string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
       // Determine the excluded date based on expenseGrouping
-      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID 
-        ? ExportDateType.LAST_SPENT_AT 
+      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
+        ? ExportDateType.LAST_SPENT_AT
         : ExportDateType.SPENT_AT;
-    
+
       // Handle CCC export type
       if (exportType === 'CCC') {
         return this.getCreditCardExpenseGroupingDateOptions().filter(option => option.value !== excludedDate);
       }
-    
+
       // Get base date options
       const dateOptions = this.getReimbursableExpenseGroupingDateOption();
-    
+
       // Determine filter options based on showApprovedDate and showVerificationDate
       const filterOptions = [
         ...(showApprovedDate ? [ExportDateType.VERIFIED_AT] : []),
         ...(showVerificationDate ? [ExportDateType.APPROVED_AT] : []),
         excludedDate
       ];
-    
+
       // Filter out excluded and unwanted dates
-      return dateOptions.filter(option => 
+      return dateOptions.filter(option =>
         option.value !== null && !filterOptions.includes(option.value as ExportDateType)
       );
     }
