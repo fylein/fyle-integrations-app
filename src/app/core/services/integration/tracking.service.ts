@@ -73,16 +73,14 @@ export class TrackingService {
     }
   }
 
-  onOpenLandingPage(email: string | undefined, orgId: number, orgName: string, fyleOrgId: string): void {
+  onOpenLandingPage(userId: string | undefined, fyleOrgId: string): void {
     try {
       if (this.tracking) {
-        this.tracking.identify(email);
+        this.tracking.identify(userId);
         this.tracking.people.set({
-          orgId,
-          orgName,
           fyleOrgId
         });
-        this.identityEmail = email;
+        this.identityEmail = userId;
       }
     } catch (e) {
       console.error('Tracking error:', e);
