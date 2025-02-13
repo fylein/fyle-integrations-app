@@ -214,7 +214,7 @@ export class XeroImportSettingsComponent implements OnInit {
   }
 
   private createImportCustomerWatcher(): void {
-    if (brandingFeatureConfig.featureFlags.c1Options) {
+    if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField) {
       const formArray = this.importSettingsForm.get('expenseFields') as FormArray;
       const index = formArray.value.findIndex((data:any) => data.destination_field === XeroFyleField.CUSTOMER);
       formArray.controls[index]?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
@@ -275,7 +275,7 @@ export class XeroImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
       // This is only for C1
-      if (brandingFeatureConfig.featureFlags.c1Options) {
+      if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField) {
         this.xeroExpenseFields = response[2];
       }
 

@@ -52,7 +52,7 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandIcon = `assets/${brandingFeatureConfig.featureFlags.c1Icon ? 'co' : 'fyle'}/favicon.png`;
+    this.brandIcon = `assets/${brandingConfig.brandId}/favicon.png`;
   }
 
 }

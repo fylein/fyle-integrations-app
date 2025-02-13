@@ -93,8 +93,7 @@
                 </p-dropdown>                
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
-                        <span *ngIf="!brandingFeatureConfig.featureFlags.allowForC1"> how it looks on {{uiExposedAppName}}</span>
-                        <span *ngIf="brandingFeatureConfig.featureFlags.allowForC1"> in {{uiExposedAppName}}</span>
+                        <span> in {{uiExposedAppName}}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span *ngIf="(appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value === 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup') || (appName !== AppName.QBD_DIRECT)">Auto-selected based on your export module</span>

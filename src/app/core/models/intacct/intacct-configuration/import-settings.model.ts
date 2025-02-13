@@ -88,7 +88,7 @@ export class ImportSettings {
 
         let isCategoryImportEnabled = false;
 
-        if (brandingFeatureConfig.featureFlags.importSettings.categoryImportEnabled) {
+        if (brandingFeatureConfig.featureFlags.importSettings.importSettingsV1) {
             isCategoryImportEnabled = importSettingsForm.get('importCategories')?.value ? importSettingsForm.get('importCategories')?.value : false;
         } else {
             isCategoryImportEnabled = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field === 'CATEGORY' && field.import_to_fyle).length > 0 ? true : false;

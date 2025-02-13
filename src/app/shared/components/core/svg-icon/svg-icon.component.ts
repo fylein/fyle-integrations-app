@@ -96,7 +96,7 @@ export class SvgIconComponent implements OnInit {
   }
 
   private setupProperties(): void {
-    if (brandingFeatureConfig.featureFlags.c1Icon) {
+    if (brandingFeatureConfig.featureFlags.useCustomIcon) {
       if (this.c1SvgSource) {
         this.svgSource = this.c1SvgSource.toString();
       } else {

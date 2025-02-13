@@ -15,11 +15,8 @@
     </div>
     <div>
         <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
-            <span *ngIf="brandingFeatureConfig.featureFlags.allowForC1">
+            <span>
                 {{ ctaText | sentenceCase}}
-            </span>
-            <span *ngIf="!brandingFeatureConfig.featureFlags.allowForC1">
-                {{ ctaText }}
             </span>
             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save' && AppName !== appName.QBD_DIRECT" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
         </button>

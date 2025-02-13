@@ -260,7 +260,7 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     content = new SnakeCaseToSpaceCasePipe().transform(content);
-    return brandingFeatureConfig.featureFlags.exportSettings.sentenseCaseConversion ? new SentenceCasePipe().transform(content) : content;
+    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(content) : content;
   }
 
   /**

@@ -9,20 +9,24 @@ export type FeatureConfiguration = {
         allowIntacctHelperDoc: boolean;
         loginRedirectUri: boolean;
         featureFlags: {
+            showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
             mapEmployees: boolean;
             c1Icon: boolean;
+            useCustomIcon: boolean;
             c1Options: boolean;
             allowForC1: boolean;
+            displayAppLogoInDashboard: boolean;
             exportSettings: {
+                isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;
                 nameInJournalEntry: boolean;
                 useMerchantInJournalLine: boolean;
                 splitExpenseGrouping: boolean;
                 cccDateConfiguration: boolean;
                 cccExportGroupConfiguration: boolean;
-                isEmployeeMappingIsEmployee: boolean;
-                sentenseCaseConversion: boolean;
+                isEmployeeMappingFixed: boolean;
+                transformContentToSentenceCase: boolean;
                 lowerCaseConversion: boolean;
                 allowAccountsPayableInCoCCC: boolean;
                 allowBankAccountInCoCCC: boolean;
@@ -36,7 +40,7 @@ export type FeatureConfiguration = {
                 allowCustomSegment: boolean;
                 dependentField: boolean;
                 allowImportCode: boolean;
-                categoryImportEnabled: boolean;
+                importSettingsV1: boolean;
                 intacctC1ImportSettings: boolean;
                 disableCustomerSourceField: boolean;
             },

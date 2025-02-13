@@ -107,6 +107,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
     }
 
     static getCreditCardExportTypes(): SelectFormOption[] {
+      if (brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+        return this.getCoCreditCardExportTypes();
+      }
       return [
         {
           label: 'Bill',
@@ -264,7 +267,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static getEmployeeFieldMapping(employeeFieldMapping: string): string {
-        return !brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingIsEmployee ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
+        return brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
       }
 
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
@@ -295,7 +298,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
         const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
-        if (!brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingIsEmployee) {
+        if (brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed) {
           exportSettingsForm.controls.creditCardExpense.patchValue(true);
           exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         }

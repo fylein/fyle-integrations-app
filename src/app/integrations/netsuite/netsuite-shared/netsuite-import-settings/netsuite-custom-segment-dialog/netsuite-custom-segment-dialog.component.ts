@@ -70,21 +70,6 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
     return this.form.controls.internalId.invalid;
   }
 
-  getCustomSegmentTypeLabel(): string {
-    return brandingFeatureConfig.featureFlags.exportSettings.sentenseCaseConversion ? 'Choose custom field type' : 'Choose Custom Field Type';
-  }
-
-  getInternalIDLabel(): string {
-    if (brandingFeatureConfig.featureFlags.exportSettings.sentenseCaseConversion) {
-      return new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform('Enter ' + this.form.controls.customFieldType.value)) + ' internal ID';
-    }
-    return 'Enter ' + new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' Internal ID';
-  }
-
-  getTransactionIdLabel(): string {
-    return brandingFeatureConfig.featureFlags.exportSettings.sentenseCaseConversion ? new SentenceCasePipe().transform('Enter Transaction Line Field') + ' ID' : 'Enter Transaction Line Field ID';
-  }
-
   setImagesForCustomSegment(): string {
     if (this.stepNumber === 1) {
       return 'assets/illustrations/netsuite/custom-field-type.mov';
