@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'Import settings'"
-            [contentText]="brandingConfig.brandId === 'co' ? 'Choose the required import fields from Sage Intacct to Expense Management.' : 'Select the field information to import from Sage Intacct to ' + brandingConfig.brandName + '. '"
+            [contentText]="'Choose the required import fields from Sage Intacct to Expense Management.'"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>

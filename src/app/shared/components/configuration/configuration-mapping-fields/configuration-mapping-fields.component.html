@@ -12,7 +12,7 @@
                             <ng-template pTemplate="selectedItem" let-item>
                                 <div class="tw-flex tw-justify-between tw-items-center">
                                     <span>
-                                        {{ item[destinationAttributeNames.label] | snakeCaseToSpaceCase | titlecase }}
+                                        {{ item[destinationAttributeNames.label] | snakeCaseToSpaceCase | sentenceCase }}
                                     </span>
                                 </div>
                             </ng-template>

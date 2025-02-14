@@ -75,7 +75,7 @@
                 <div *ngFor="let error of errors?.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary tw-w-600-px">{{ error.error_title | snakeCaseToSpaceCase | titlecase }}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary tw-w-600-px">{{ error.error_title | snakeCaseToSpaceCase | sentenceCase }}</h4>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start">
                                     <p>{{ error.error_detail }}
@@ -132,7 +132,7 @@
 <div>
     <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
         <p-header>
-            <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{ brandingConfig.brandId === 'co' ? (errorType | snakeCaseToSpaceCase | sentenceCase) : (errorType | snakeCaseToSpaceCase | titlecase) }} {{brandingContentCommon.errors}}</p>
+            <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{ brandingConfig.brandId === 'co' ? (errorType | snakeCaseToSpaceCase | sentenceCase) : (errorType | snakeCaseToSpaceCase | lowercase) }} {{brandingContentCommon.errors}}</p>
             <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{uiExposedAppName}}</p>
         </p-header>
           <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading" [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>

@@ -14,7 +14,7 @@
             <div *ngFor="let field of qbdFields; let i = index" [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
                 <div class="tw-flex tw-items-center tw-justify-between tw-px-12-px tw-py-20-px">
                     <div>
-                        <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | titlecase}}</span>
+                        <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
                     </div>
                     <div>
                         <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
