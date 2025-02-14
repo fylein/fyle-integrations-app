@@ -9,7 +9,7 @@ import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 
@@ -71,6 +71,8 @@ export class QbdDashboardComponent implements OnInit {
   hideCalendar: boolean;
 
   disableQBDExportButton: boolean = false;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private iifLogsService: QbdIifLogsService,

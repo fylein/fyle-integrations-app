@@ -12,7 +12,7 @@ import { BusinessCentralOnboardingService } from 'src/app/core/services/business
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { environment } from 'src/environments/environment';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -71,6 +71,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   businessCentralCompanyselected: BusinessCentralDestinationAttributes;
 
   appName = AppName.BUSINESS_CENTRAL;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private onboardingService: BusinessCentralOnboardingService,

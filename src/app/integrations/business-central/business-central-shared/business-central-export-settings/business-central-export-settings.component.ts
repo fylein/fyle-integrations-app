@@ -9,7 +9,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -84,6 +84,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
   BCExportSettingDestinationOptionKey = BCExportSettingDestinationOptionKey;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,

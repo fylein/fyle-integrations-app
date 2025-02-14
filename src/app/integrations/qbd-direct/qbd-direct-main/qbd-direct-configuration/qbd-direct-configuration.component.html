@@ -1,7 +1,7 @@
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-84-px tw-w-[100%]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-84-px tw-w-[100%]"></div>
 <div class="tw-py-40-px">
-    <div [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+    <div [ngClass]="brandingStyle.common.mainComponentPadding">
         <app-sub-menu [activeModule]="activeModule" [modules]="modules" ></app-sub-menu>
     </div>
     <div>
