@@ -11,7 +11,7 @@ import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service'
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
@@ -91,6 +91,8 @@ export class LandingComponent implements OnInit {
   readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
 
   readonly ThemeOption = ThemeOption;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private eventsService: EventsService,

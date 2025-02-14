@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
@@ -65,6 +65,8 @@ export class XeroCompleteExportLogComponent implements OnInit {
   xeroShortCode: string;
 
   hideCalendar: boolean;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

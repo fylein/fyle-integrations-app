@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-xero-configuration',
@@ -22,6 +22,8 @@ export class XeroConfigurationComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor() { }
 

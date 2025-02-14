@@ -4,7 +4,7 @@
 </div>
 
 <div class=" tw-pb-48-px">
-    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
         <app-clone-setting-header [headerText]="'Employee Mapping'" [subHeaderText]="'Choose appropriate representation of your Employees in QuickBooks Online.'"></app-clone-setting-header>
     
         <div class="clone-setting--field-section">

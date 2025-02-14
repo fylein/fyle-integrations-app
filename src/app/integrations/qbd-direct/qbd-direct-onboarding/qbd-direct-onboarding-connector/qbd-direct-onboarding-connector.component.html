@@ -4,7 +4,7 @@
         <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
             <app-loader></app-loader>
         </div>
-        <div *ngIf="!isLoading" class="configuration--contents !tw-rounded-border-radius-2xs tw-border-border-tertiary tw-mt-24-px" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+        <div *ngIf="!isLoading" class="configuration--contents !tw-rounded-border-radius-2xs tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
                     [headerText]="brandingContent.configurationHeaderText"

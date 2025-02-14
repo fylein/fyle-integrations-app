@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent, AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -61,6 +61,8 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   };
 
   lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

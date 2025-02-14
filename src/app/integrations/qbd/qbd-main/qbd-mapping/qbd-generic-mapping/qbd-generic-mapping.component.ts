@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
@@ -52,6 +52,8 @@ export class QbdGenericMappingComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly AppName = AppName;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private mappingService: QbdMappingService,
