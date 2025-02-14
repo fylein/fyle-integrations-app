@@ -13,11 +13,8 @@ export type FeatureConfiguration = {
             cloneSettings: boolean;
             mapEmployees: boolean;
             useCustomIcon: boolean;
-            allowForC1: boolean;
             displayAppLogoInDashboard: boolean;
-            connector: {
-                contentVersion: string;
-            }
+            contentVersion: string;
             exportSettings: {
                 isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;

@@ -18,13 +18,10 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
-        allowForC1: true,
         showOptionalTextInsteadOfAsterisk: true,
         useCustomIcon: true,
         displayAppLogoInDashboard: true,
-        connector: {
-            contentVersion: 'v2'
-        },
+        contentVersion: 'v2',
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,

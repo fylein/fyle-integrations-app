@@ -18,13 +18,10 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
-        allowForC1: false,
         showOptionalTextInsteadOfAsterisk: false,
         useCustomIcon: false,
         displayAppLogoInDashboard: false,
-        connector: {
-            contentVersion: 'v1'
-        },
+        contentVersion: 'v1',
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
