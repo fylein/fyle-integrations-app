@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-text-field',
@@ -24,6 +24,8 @@ export class ConfigurationTextFieldComponent implements OnInit {
   @Input() type: string = 'text';
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   isPasswordField: any;
 

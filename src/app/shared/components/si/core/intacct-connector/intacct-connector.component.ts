@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -34,6 +34,8 @@ export class IntacctConnectorComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

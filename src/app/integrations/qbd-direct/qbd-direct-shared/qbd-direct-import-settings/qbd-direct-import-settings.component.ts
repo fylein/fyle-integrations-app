@@ -4,7 +4,7 @@ import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '
 import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingKbArticles, brandingFeatureConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingKbArticles, brandingFeatureConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -107,6 +107,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   };
 
   sessionStartTime: Date = new Date();
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private formBuilder: FormBuilder,

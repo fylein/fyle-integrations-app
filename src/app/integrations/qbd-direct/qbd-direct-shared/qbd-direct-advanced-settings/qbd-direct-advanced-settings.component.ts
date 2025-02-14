@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, IntacctUpdateEvent, NameInJournalEntry, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -94,6 +94,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   isImportVendorAsMerchantPresent: boolean;
 
   topMemoPreviewText: string;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private advancedSettingsService: QbdDirectAdvancedSettingsService,

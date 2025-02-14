@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-intacct-configuration',
@@ -17,6 +17,8 @@ export class IntacctConfigurationComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent;
+
+  readonly brandingStyle = brandingStyle;
 
   modules: MenuItem[] = [
     {label: this.brandingContent.configuration.exportSetting.stepName, routerLink: '/integrations/intacct/main/configuration/export_settings'},

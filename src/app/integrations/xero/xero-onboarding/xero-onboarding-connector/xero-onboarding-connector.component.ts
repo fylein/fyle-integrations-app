@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -81,6 +81,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   xeroTenantselected: DestinationAttribute;
 
   isDisconnectClicked: boolean;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private workspaceService: WorkspaceService,

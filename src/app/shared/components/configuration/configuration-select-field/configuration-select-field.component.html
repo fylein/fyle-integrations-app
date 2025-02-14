@@ -7,8 +7,8 @@
 
             <div>
                 <h5 class="tw-text-text-secondary tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-                <h5 *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}" [innerHTML]="subLabel"></h5>
-                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingConfig.brandId === 'co' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
+                <h5 *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="brandingStyle.common.inputLabelTextStyle" [innerHTML]="subLabel"></h5>
+                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingConfig.brandId === 'co' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                     Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for more details.</span>
                 </h5>
                 <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for Preview</span></h5>
@@ -55,7 +55,7 @@
                         <app-search [form]="form" [isDropdown]="true" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="simpleSearch($event)" (searchFocused)="onSearchFocus($event)"></app-search>
                     </ng-template>
                     <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </div>
