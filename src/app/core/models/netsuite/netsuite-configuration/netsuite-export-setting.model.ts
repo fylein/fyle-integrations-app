@@ -89,28 +89,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       ];
     }
 
-    static getCoCreditCardExportTypes(): SelectFormOption[] {
-      return [
-        {
-          label: 'Bill',
-          value: NetSuiteCorporateCreditCardExpensesObject.BILL
-        },
-        {
-          label: 'Credit Card Charge',
-          value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
-        },
-        {
-          label: 'Journal Entry',
-          value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-        }
-      ];
-    }
-
     static getCreditCardExportTypes(): SelectFormOption[] {
-      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
-        return this.getCoCreditCardExportTypes();
-      }
-      return [
+
+      const exportType = [
         {
           label: 'Bill',
           value: NetSuiteCorporateCreditCardExpensesObject.BILL
@@ -124,10 +105,14 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
         },
         {
-            label: 'Expense Report',
-            value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+          label: 'Expense Report',
+          value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
         }
       ];
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+        return exportType.filter((item) => item.value !== NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT);
+      }
+      return exportType;
     }
 
     static getCCCExpenseStateOptions(): SelectFormOption[] {

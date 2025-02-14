@@ -22,6 +22,9 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         showOptionalTextInsteadOfAsterisk: true,
         useCustomIcon: true,
         displayAppLogoInDashboard: true,
+        connector: {
+            contentVersion: 'v2'
+        },
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,

@@ -15,6 +15,9 @@ export type FeatureConfiguration = {
             useCustomIcon: boolean;
             allowForC1: boolean;
             displayAppLogoInDashboard: boolean;
+            connector: {
+                contentVersion: string;
+            }
             exportSettings: {
                 isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;

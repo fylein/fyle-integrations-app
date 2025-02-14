@@ -46,7 +46,7 @@
             </div>
         </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
-            <h3 *ngIf="accountingCompanyName && brandingFeatureConfig.featureFlags.allowForC1" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
+            <h3 *ngIf="accountingCompanyName && brandingFeatureConfig.featureFlags.connector.contentVersion === 'v2'" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
                 {{ accountingCompanyName }}
             </h3>
             <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingFeatureConfig.featureFlags.allowForC1">

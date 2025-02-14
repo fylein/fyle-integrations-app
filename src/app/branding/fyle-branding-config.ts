@@ -22,6 +22,9 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         showOptionalTextInsteadOfAsterisk: false,
         useCustomIcon: false,
         displayAppLogoInDashboard: false,
+        connector: {
+            contentVersion: 'v1'
+        },
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
