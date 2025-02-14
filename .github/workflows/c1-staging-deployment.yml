@@ -1,9 +1,6 @@
 name: Deploy to C1 Staging
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     types: [labeled]
 

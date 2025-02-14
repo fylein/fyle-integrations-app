@@ -53,6 +53,10 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() chartOfAccounts: string[];
 
+  @Input() exportableExpenseGroupIds: number[];
+
+  @Input() accountingExportSummary: any;
+
   uiExposedAppName: string;
 
   filteredMappings: ExtendedGenericMapping[];
@@ -114,6 +118,14 @@ export class DashboardErrorSectionComponent implements OnInit {
     public helper: HelperService,
     public windowService: WindowService
   ) { }
+
+  get shouldShowErrorSection(): boolean {
+     // TODO: Remove this once we implement the error section for all apps
+    if (this.appName === AppName.QBO) {
+      return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary?.total_accounting_export_count);
+    }
+    return true;
+  }
 
   getSourceType() {
     return this.destinationFieldMap[this.sourceField];

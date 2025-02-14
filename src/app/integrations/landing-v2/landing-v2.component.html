@@ -38,6 +38,25 @@
 
         <div
             class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
+            <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/BusinessCentral-logo.svg" />
+                    @if (isAppConnected('BUSINESS_CENTRAL')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
+                    <div>
+                        Dynamics 365 Business Central
+                        <div class="landing-v2--accounting-app-type">Accounting</div>
+                    </div>
+                    <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
+                        [theme]="ThemeOption.DARK" text="Beta"></app-badge>
+                </span>
+            </div>
             <div *ngIf="isAppShown('NETSUITE')">
                 <div class="landing-v2--accounting-app"
                     (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
@@ -57,63 +76,6 @@
                             Accounting
                         </span>
                     </div>
-                </div>
-            </div>
-            <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
-                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/intacct-logo-new.png" />
-                    @if (isAppConnected('INTACCT')) {
-                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">Connect</button>
-                    }
-                </div>
-                <div>
-                    <span class="landing-v2--accounting-app-name">
-                        Sage Intacct
-                    </span>
-                    <span class="landing-v2--accounting-app-type">
-                        Accounting
-                    </span>
-                </div>
-            </div>
-            <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
-                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-                    @if (isAppConnected('QBO')) {
-                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">Connect</button>
-                    }
-                </div>
-                <div>
-                    <span class="landing-v2--accounting-app-name">
-                        QuickBooks Online
-                    </span>
-                    <span class="landing-v2--accounting-app-type">
-                        Accounting
-                    </span>
-                </div>
-            </div>
-            <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
-                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/xero-logo-new.png" />
-                    @if (isAppConnected('XERO')) {
-                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">Connect</button>
-                    }
-                </div>
-                <div>
-                    <span class="landing-v2--accounting-app-name">
-                        Xero
-                    </span>
-                    <span class="landing-v2--accounting-app-type">
-                        Accounting
-                    </span>
                 </div>
             </div>
             <div *ngIf="isAppShown('QBD')" class="landing-v2--accounting-app"
@@ -146,24 +108,43 @@
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
                     <div>
                         QuickBooks Desktop (Web Connector)
                         <div class="landing-v2--accounting-app-type">Accounting</div>
                     </div>
                 </span>
             </div>
+            <div *ngIf="isAppShown('QBO')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+                    @if (isAppConnected('QBO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        QuickBooks Online
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
             <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.SAGE300)">
                 <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/sage300-logo.png" class="tw-py-[4px]" />
+                    <img src="assets/logos/sage300-logo.png" class="tw-py-[5px]" />
                     @if (isAppConnected('SAGE300')) {
                         <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                     } @else {
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
                     <div>
                         Sage 300 CRE
                         <div class="landing-v2--accounting-app-type">Accounting</div>
@@ -172,24 +153,43 @@
                         text="Beta"></app-badge>
                 </span>
             </div>
-            <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
-                (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+            <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
                 <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/BusinessCentral-logo.svg" />
-                    @if (isAppConnected('BUSINESS_CENTRAL')) {
+                    <img src="assets/logos/intacct-logo-new.png" />
+                    @if (isAppConnected('INTACCT')) {
                         <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
                     } @else {
                         <button class="btn-connect">Connect</button>
                     }
                 </div>
-                <span class="landing-v2--accounting-app-name tw-items-center tw-gap-4">
-                    <div>
-                        Dynamics 365 Business Central
-                        <div class="landing-v2--accounting-app-type">Accounting</div>
-                    </div>
-                    <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
-                        [theme]="ThemeOption.DARK" text="Beta"></app-badge>
-                </span>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Sage Intacct
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="isAppShown('XERO')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/xero-logo-new.png" />
+                    @if (isAppConnected('XERO')) {
+                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">Connect</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        Xero
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        Accounting
+                    </span>
+                </div>
             </div>
 
             <div *ngIf="isAppShown('BAMBOO_HR')">

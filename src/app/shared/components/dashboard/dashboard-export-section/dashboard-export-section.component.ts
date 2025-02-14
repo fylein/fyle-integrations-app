@@ -46,6 +46,8 @@ export class DashboardExportSectionComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  AppName = AppName;
+
   constructor() { }
 
   triggerExport() {
