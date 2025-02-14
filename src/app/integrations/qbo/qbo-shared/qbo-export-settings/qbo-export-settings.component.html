@@ -165,10 +165,10 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + helperService.brandingCaseConversion(exportSettingForm.get('reimbursableExportType')?.value) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                                [placeholder]="'Select the date of the ' + helperService.brandingCaseConversion(exportSettingForm.get('reimbursableExportType')?.value)"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
@@ -332,11 +332,11 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + helperService.brandingCaseConversion(exportSettingForm.get('creditCardExportType')?.value)  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + helperService.brandingCaseConversion(exportSettingForm.get('creditCardExportType')?.value)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 

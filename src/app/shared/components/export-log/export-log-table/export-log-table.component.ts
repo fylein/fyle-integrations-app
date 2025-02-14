@@ -4,6 +4,7 @@ import { BrandingConfiguration } from 'src/app/core/models/branding/branding-con
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -34,7 +35,8 @@ export class ExportLogTableComponent implements OnInit {
   readonly brandingContent = brandingContent.exportLog;
 
   constructor(
-    private windowService: WindowService
+    private windowService: WindowService,
+    public helper: HelperService
   ) { }
 
   handleDialogClose(){

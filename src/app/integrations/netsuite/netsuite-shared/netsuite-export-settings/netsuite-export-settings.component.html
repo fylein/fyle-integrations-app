@@ -306,11 +306,11 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + helperService.brandingCaseConversion(exportSettingForm.get('creditCardExportType')?.value)  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + helperService.brandingCaseConversion(exportSettingForm.get('creditCardExportType')?.value)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>
