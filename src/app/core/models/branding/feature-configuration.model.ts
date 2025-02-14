@@ -12,9 +12,7 @@ export type FeatureConfiguration = {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
             mapEmployees: boolean;
-            c1Icon: boolean;
             useCustomIcon: boolean;
-            c1Options: boolean;
             allowForC1: boolean;
             displayAppLogoInDashboard: boolean;
             exportSettings: {
@@ -23,13 +21,8 @@ export type FeatureConfiguration = {
                 nameInJournalEntry: boolean;
                 useMerchantInJournalLine: boolean;
                 splitExpenseGrouping: boolean;
-                cccDateConfiguration: boolean;
-                cccExportGroupConfiguration: boolean;
                 isEmployeeMappingFixed: boolean;
                 transformContentToSentenceCase: boolean;
-                lowerCaseConversion: boolean;
-                allowAccountsPayableInCoCCC: boolean;
-                allowBankAccountInCoCCC: boolean;
             },
             importSettings: {
                 tax: boolean;
@@ -41,7 +34,6 @@ export type FeatureConfiguration = {
                 dependentField: boolean;
                 allowImportCode: boolean;
                 importSettingsV1: boolean;
-                intacctC1ImportSettings: boolean;
                 disableCustomerSourceField: boolean;
             },
             advancedSettings: {

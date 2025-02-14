@@ -107,7 +107,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
     }
 
     static getCreditCardExportTypes(): SelectFormOption[] {
-      if (brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
         return this.getCoCreditCardExportTypes();
       }
       return [

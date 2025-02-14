@@ -18,8 +18,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
-        c1Icon: true,
-        c1Options: true,
         allowForC1: true,
         showOptionalTextInsteadOfAsterisk: true,
         useCustomIcon: true,
@@ -29,14 +27,9 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             nameInJournalEntry: false,
             useMerchantInJournalLine: false,
             splitExpenseGrouping: false,
-            cccDateConfiguration: true,
             isEmployeeMappingFixed: true,
             transformContentToSentenceCase: true,
-            cccExportGroupConfiguration: true,
-            lowerCaseConversion: true,
-            allowAccountsPayableInCoCCC: true,
-            allowBankAccountInCoCCC: true,
-            isReimbursableExpensesAllowed: true
+            isReimbursableExpensesAllowed: false
         },
         importSettings: {
             tax: false,
@@ -48,7 +41,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             dependentField: true,
             allowImportCode: false,
             importSettingsV1: false,
-            intacctC1ImportSettings: true,
             disableCustomerSourceField: true
         },
         advancedSettings: {

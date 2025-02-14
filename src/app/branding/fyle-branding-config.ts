@@ -18,8 +18,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
-        c1Icon: false,
-        c1Options: false,
         allowForC1: false,
         showOptionalTextInsteadOfAsterisk: false,
         useCustomIcon: false,
@@ -29,14 +27,9 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             nameInJournalEntry: true,
             useMerchantInJournalLine: true,
             splitExpenseGrouping: true,
-            cccDateConfiguration: true,
             isEmployeeMappingFixed: false,
             transformContentToSentenceCase: false,
-            cccExportGroupConfiguration: false,
-            lowerCaseConversion: false,
-            allowAccountsPayableInCoCCC: false,
-            allowBankAccountInCoCCC: false,
-            isReimbursableExpensesAllowed: false
+            isReimbursableExpensesAllowed: true
         },
         importSettings: {
             tax: true,
@@ -48,7 +41,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             dependentField: true,
             allowImportCode: true,
             importSettingsV1: true,
-            intacctC1ImportSettings: false,
             disableCustomerSourceField: false
         },
         advancedSettings: {
