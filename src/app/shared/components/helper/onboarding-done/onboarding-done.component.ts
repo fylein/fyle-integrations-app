@@ -17,7 +17,7 @@ export class OnboardingDoneComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.done;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-  
+
   readonly brandingStyle = brandingStyle;
 
   constructor() { }
