@@ -1,6 +1,6 @@
 import { brandingContent } from "src/app/branding/branding-config";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { DestinationOptionKey, ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
+import { DestinationOptionKey, ExpenseGroupingFieldOption, ExportDateType, FundSource, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
 import { SelectFormOption } from "./select-form-option.model";
 
 export type ExportSettingValidatorRule = {
@@ -109,7 +109,7 @@ export class ExportSettingModel {
       ];
     }
 
-    static getReimbursableExpenseGroupingDateOption(): SelectFormOption[] {
+    static expenseGroupingDateOption(): SelectFormOption[] {
       return [
         {
           label: 'Export date',
@@ -130,34 +130,36 @@ export class ExportSettingModel {
         {
           label: 'Last spend date',
           value: ExportDateType.LAST_SPENT_AT
+        },
+        {
+          label: 'Card transaction post date',
+          value: ExportDateType.POSTED_AT
         }
       ];
     }
 
-    static dateGrouping(exportType: string, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
+    static dateGrouping(exportType: FundSource, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
+
       // Determine the excluded date based on expenseGrouping
       const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
         ? ExportDateType.LAST_SPENT_AT
         : ExportDateType.SPENT_AT;
 
-      // Handle CCC export type
-      if (exportType === 'CCC') {
-        return this.getCreditCardExpenseGroupingDateOptions().filter(option => option.value !== excludedDate);
-      }
+      // Determine the excluded date based on customer choose
+      const excludeApprovedAtOrVerified = showApprovedDate ? ExportDateType.VERIFIED_AT : (showVerificationDate ? ExportDateType.APPROVED_AT : null);
+
+      // Determine the excluded date based on export Type
+      const excludedPostedAt = exportType !== FundSource.CORPORATE_CARD ? ExportDateType.POSTED_AT : null;
+
+      // Array of unwanted dates
+      const dateOptionsToBeExcluded = [excludedDate, excludeApprovedAtOrVerified, excludedPostedAt];
 
       // Get base date options
-      const dateOptions = this.getReimbursableExpenseGroupingDateOption();
-
-      // Determine filter options based on showApprovedDate and showVerificationDate
-      const filterOptions = [
-        ...(showApprovedDate ? [ExportDateType.VERIFIED_AT] : []),
-        ...(showVerificationDate ? [ExportDateType.APPROVED_AT] : []),
-        excludedDate
-      ];
+      const dateOptions = this.expenseGroupingDateOption();
 
       // Filter out excluded and unwanted dates
       return dateOptions.filter(option =>
-        option.value !== null && !filterOptions.includes(option.value as ExportDateType)
+        option.value !== null && !dateOptionsToBeExcluded.includes(option.value as ExportDateType)
       );
     }
 
