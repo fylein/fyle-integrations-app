@@ -2,8 +2,7 @@
     <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
         <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6"
-        [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
         <div>
             <app-configuration-step-header [headerText]="brandingContent.stepName"
                 [contentText]="brandingContent.contentText" [redirectLink]="redirectLink"
@@ -65,8 +64,8 @@
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'accounts payable'"
-                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase)"
-                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select accounts payable'"
                                 [isMultiLineOption]="true"
@@ -205,8 +204,8 @@
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'a default credit account'"
-                                [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase)"
-                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
+                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select default account'"
                                 [isMultiLineOption]="true"
@@ -253,7 +252,7 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (brandingConfig.brandId === 'fyle' ? (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase) : (exportSettingsForm.value.creditCardExportType | lowercase))  + ' date as'"
+                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ' date as'"
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseDateSubLabel"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"

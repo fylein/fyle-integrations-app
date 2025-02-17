@@ -2,7 +2,7 @@
     <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
         <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
@@ -46,7 +46,7 @@
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'bank account'"
-                                    [label]="'To which Bank Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                    [label]="'To which Bank Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                                     [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
@@ -66,7 +66,7 @@
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'expense account'"
-                                    [label]="'To which Expense Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                                    [label]="'To which Expense Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                                     [subLabel]="'The expenses exported will be added to the selected Expense Payment Account.'"
                                     [destinationAttributes]="expenseAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT"
@@ -92,8 +92,8 @@
                                     [optionLabel]="'name'"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'accounts payable'"
-                                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
+                                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
+                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' to the selected accounts payable account.'"
                                     [iconPath]="'list'"
                                     [placeholder]="'Select accounts payable'"
                                     [isMultiLineOption]="isMultilineOption"
@@ -165,10 +165,10 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
@@ -289,8 +289,8 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'accounts payable'"
-                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + brandingContent.corporateCard.accountsPayableSubLabel"
+                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
+                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + brandingContent.corporateCard.accountsPayableSubLabel"
                               [placeholder]="'Select accounts payable'"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'accountsPayable'">
@@ -332,11 +332,11 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 

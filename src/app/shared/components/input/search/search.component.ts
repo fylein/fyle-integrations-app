@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-search',
@@ -31,6 +31,8 @@ export class SearchComponent implements OnInit {
   isSearchFocused: boolean;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   @ViewChild('search') search: any;
 

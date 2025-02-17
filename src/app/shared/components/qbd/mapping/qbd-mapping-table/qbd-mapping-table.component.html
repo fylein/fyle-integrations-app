@@ -2,7 +2,7 @@
     <p-table [value]="mappings" [tableStyle]="{ 'min-width': '50rem' }" [sortField]="'source_value'" [sortOrder]="1">
         <ng-template pTemplate="header">
             <tr>
-                <th class="tw-flex tw-justify-start tw-items-center">{{ fyleHeaderName | snakeCaseToSpaceCase | titlecase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i></th>
+                <th class="tw-flex tw-justify-start tw-items-center">{{ fyleHeaderName | snakeCaseToSpaceCase | sentenceCase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i></th>
                 <th>{{ destinationHeaderName }}</th>
                 <th>Status</th>
             </tr>

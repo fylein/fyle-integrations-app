@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 
@@ -43,6 +43,8 @@ export class DashboardExportSectionComponent implements OnInit {
   uiExposedAppName: string;
 
   importStates: string;
+
+  readonly brandingStyle = brandingStyle;
 
   AppName = AppName;
 

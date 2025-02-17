@@ -1,8 +1,8 @@
 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{helper.sentenseCaseConversion(sourceField | snakeCaseToSpaceCase | titlecase)}} in {{brandingConfig.brandName}}</th>
-        <th>{{helper.sentenseCaseConversion(destinationField | snakeCaseToSpaceCase | titlecase)}} in {{uiExposedAppName}}</th>
+        <th class="!tw-pl-40-px">{{ (sourceField | snakeCaseToSpaceCase | sentenceCase) }} in {{brandingConfig.brandName}}</th>
+        <th>{{ (destinationField | snakeCaseToSpaceCase | sentenceCase) }} in {{uiExposedAppName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>
@@ -52,7 +52,7 @@
                         </div>
                     </ng-template>
                     <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </td>

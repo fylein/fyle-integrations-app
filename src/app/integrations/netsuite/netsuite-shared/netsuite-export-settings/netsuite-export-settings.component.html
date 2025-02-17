@@ -2,7 +2,7 @@
     <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
         <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
@@ -136,11 +136,11 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to NetSuite.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
-                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase)"
+                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
                         </div>
@@ -306,11 +306,11 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>

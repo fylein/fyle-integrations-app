@@ -4,7 +4,7 @@
 </div>
 
 <div class=" tw-pb-48-px">
-    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
         <app-clone-setting-header [headerText]="'Employee Mapping'" [subHeaderText]="'Choose appropriate representation of your Employees in QuickBooks Online.'"></app-clone-setting-header>
     
         <div class="clone-setting--field-section">
@@ -66,7 +66,7 @@
     
                 <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
                     <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')"
-                        [label]="'To which Bank Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [label]="'To which Bank Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                         [options]="bankAccounts"
                         [placeholder]="'Select bank account'"
                         [form]="exportSettingForm"
@@ -77,7 +77,7 @@
                     </app-clone-setting-field>
     
                     <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')"
-                        [label]="'To which Expense Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [label]="'To which Expense Account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                         [options]="expenseAccounts"
                         [placeholder]="'Select Expense account'"
                         [form]="exportSettingForm"
@@ -88,14 +88,14 @@
                     </app-clone-setting-field>
     
                     <app-clone-setting-field *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))"
-                        [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                         [options]="accountsPayables"
                         [placeholder]="'Select accounts payable'"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'accountsPayable'"
                         [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+                        [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' to the selected Accounts Payable Account.'">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -131,7 +131,7 @@
             <div class="clone-setting--field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                     [options]="reimbursableExpenseGroupingDateOptions"
                     [placeholder]="'Select export date'"
                     [form]="exportSettingForm"
@@ -216,14 +216,14 @@
     
                     <div [ngClass]="{'clone-setting--dependent-field': helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')}">
                         <app-clone-setting-field *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))"
-                            [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [label]="'To which Accounts Payable account should the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
                             [options]="accountsPayables"
                             [placeholder]="'Select accounts payable'"
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [formControllerName]="'accountsPayable'"
                             [dropdownDisplayKey]="'name'"
-                            [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+                            [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' to the selected Accounts Payable Account.'">
                         </app-clone-setting-field>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
             <div class="clone-setting--field" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [label]="'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
                     [options]="cccExpenseGroupingDateOptions"
                     [placeholder]="'Select export date'"
                     [form]="exportSettingForm"

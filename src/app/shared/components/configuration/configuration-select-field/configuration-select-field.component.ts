@@ -11,7 +11,7 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
@@ -114,6 +114,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   readonly AppName = AppName;
 
   isSearchFocused: boolean = false;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private trackingService: TrackingService,

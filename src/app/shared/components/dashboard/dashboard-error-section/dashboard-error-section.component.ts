@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -53,6 +53,10 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() chartOfAccounts: string[];
 
+  @Input() exportableExpenseGroupIds: number[];
+
+  @Input() accountingExportSummary: any;
+
   uiExposedAppName: string;
 
   filteredMappings: ExtendedGenericMapping[];
@@ -105,6 +109,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   detailAccountType: string[] | undefined;
 
+  readonly brandingStyle = brandingStyle;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -112,6 +118,14 @@ export class DashboardErrorSectionComponent implements OnInit {
     public helper: HelperService,
     public windowService: WindowService
   ) { }
+
+  get shouldShowErrorSection(): boolean {
+     // TODO: Remove this once we implement the error section for all apps
+    if (this.appName === AppName.QBO) {
+      return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary?.total_accounting_export_count);
+    }
+    return true;
+  }
 
   getSourceType() {
     return this.destinationFieldMap[this.sourceField];

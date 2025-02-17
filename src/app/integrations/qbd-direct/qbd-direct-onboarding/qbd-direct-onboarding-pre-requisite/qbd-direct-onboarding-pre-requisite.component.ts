@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
@@ -63,6 +63,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
   qbdPreRequisiteState = QBDPreRequisiteState;
 
   sessionStartTime: Date = new Date();
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

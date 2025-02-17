@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
@@ -79,6 +79,8 @@ export class GenericMappingV2Component implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent.mapping;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private mappingService: MappingService,

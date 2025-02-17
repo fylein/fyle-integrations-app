@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-onboarding-done',
@@ -17,6 +17,8 @@ export class OnboardingDoneComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.done;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+  
+  readonly brandingStyle = brandingStyle;
 
   constructor() { }
 
