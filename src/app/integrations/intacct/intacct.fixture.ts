@@ -273,7 +273,6 @@ export const mockConfiguration = {
   ],
   "auto_create_destination_entity": true,
   "is_journal_credit_billable": true,
-  "is_simplify_report_closure_enabled": true,
   "change_accounting_period": true,
   "import_vendors_as_merchants": true,
   "use_merchant_in_journal_line": false,

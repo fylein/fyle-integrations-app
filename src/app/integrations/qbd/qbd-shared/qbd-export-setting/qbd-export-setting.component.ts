@@ -33,8 +33,6 @@ export class QbdExportSettingComponent implements OnInit {
 
   cccExpenseStateOptions: QBDExportSettingFormOption[];
 
-  is_simplify_report_closure_enabled: boolean = false;
-
   redirectLink = brandingKbArticles.topLevelArticles.QBD;
 
   expenseGroupingFieldOptions: QBDExportSettingFormOption[] = [
@@ -268,21 +266,6 @@ export class QbdExportSettingComponent implements OnInit {
       {
         label: 'Approved',
         value: CCCExpenseState.APPROVED
-      },
-      {
-        label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: CCCExpenseState.PAID
-      }
-    ];
-
-    this.expenseStateOptions = [
-      {
-        label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-        value: ExpenseState.PAYMENT_PROCESSING
-      },
-      {
-        label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: ExpenseState.PAID
       }
     ];
   }
@@ -301,7 +284,6 @@ export class QbdExportSettingComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.exportSettingService.getQbdExportSettings().subscribe((exportSettingResponse : QBDExportSettingGet) => {
       this.exportSettings = exportSettingResponse;
-      this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
       this.setUpExpenseStates();
       this.setupCCCExpenseGroupingDateOptions();
 
