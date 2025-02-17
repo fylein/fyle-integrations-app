@@ -27,5 +27,4 @@ export type QBOWorkspaceGeneralSetting = {
   map_merchant_to_vendor: boolean;
   skip_cards_mapping: boolean;
   name_in_journal_entry: NameInJournalEntry;
-  is_simplify_report_closure_enabled: boolean;
 };

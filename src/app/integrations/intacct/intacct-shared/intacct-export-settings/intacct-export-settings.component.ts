@@ -46,8 +46,6 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   cccExpenseStateOptions: ExportSettingFormOption[];
 
-  is_simplify_report_closure_enabled: boolean = true;
-
   exportSettings: ExportSettingGet;
 
   customMessage: string;
@@ -202,21 +200,6 @@ export class IntacctExportSettingsComponent implements OnInit {
         {
           label: 'Approved',
           value: CCCExpenseState.APPROVED
-        },
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-          value: CCCExpenseState.PAID
-        }
-      ];
-
-      this.expenseStateOptions = [
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-          value: ExpenseState.PAYMENT_PROCESSING
-        },
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-          value: ExpenseState.PAID
         }
       ];
     }
