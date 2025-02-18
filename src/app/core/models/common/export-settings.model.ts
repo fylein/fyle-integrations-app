@@ -88,28 +88,7 @@ export class ExportSettingModel {
 
     }
 
-    static getCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
-      return [
-        {
-          label: 'Card transaction post date',
-          value: ExportDateType.POSTED_AT
-        },
-        {
-          label: 'Spend date',
-          value: ExportDateType.SPENT_AT
-        },
-        {
-          label: 'Last dpend date',
-          value: ExportDateType.LAST_SPENT_AT
-        },
-        {
-          label: 'Export date',
-          value: ExportDateType.CURRENT_DATE
-        }
-      ];
-    }
-
-    static expenseGroupingDateOption(): SelectFormOption[] {
+    static getExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
           label: 'Export date',
@@ -138,27 +117,27 @@ export class ExportSettingModel {
       ];
     }
 
-    static dateGrouping(exportType: FundSource, expenseGrouping: string, showApprovedDate: boolean, showVerificationDate: boolean): SelectFormOption[] {
+    static constructExportDateOptions(exportType: FundSource, expenseGrouping: ExpenseGroupingFieldOption, isApprovedAtSelected: boolean, isVerifiedAtSelected: boolean): SelectFormOption[] {
 
       // Determine the excluded date based on expenseGrouping
-      const excludedDate = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
+      const excludedSpendDateOption = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
         ? ExportDateType.LAST_SPENT_AT
         : ExportDateType.SPENT_AT;
 
       // Determine the excluded date based on customer choose
-      const excludeApprovedAtOrVerified = showApprovedDate ? ExportDateType.VERIFIED_AT : (showVerificationDate ? ExportDateType.APPROVED_AT : null);
+      const excludedApprovedOrVerifiedOption = isApprovedAtSelected ? ExportDateType.VERIFIED_AT : (isVerifiedAtSelected ? ExportDateType.APPROVED_AT : null);
 
       // Determine the excluded date based on export Type
-      const excludedPostedAt = exportType !== FundSource.CORPORATE_CARD ? ExportDateType.POSTED_AT : null;
+      const excludedPostedAtOption = exportType !== FundSource.CORPORATE_CARD ? ExportDateType.POSTED_AT : null;
 
       // Array of unwanted dates
-      const dateOptionsToBeExcluded = [excludedDate, excludeApprovedAtOrVerified, excludedPostedAt];
+      const dateOptionsToBeExcluded = [excludedSpendDateOption, excludedApprovedOrVerifiedOption, excludedPostedAtOption];
 
       // Get base date options
-      const dateOptions = this.expenseGroupingDateOption();
+      const unfilteredDateOptions = this.getExpenseGroupingDateOptions();
 
       // Filter out excluded and unwanted dates
-      return dateOptions.filter(option =>
+      return unfilteredDateOptions.filter(option =>
         option.value !== null && !dateOptionsToBeExcluded.includes(option.value as ExportDateType)
       );
     }
