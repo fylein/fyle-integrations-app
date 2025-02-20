@@ -242,6 +242,17 @@ export const mockCCCExpenseGroupingDateOptionsForCreditDebit: SelectFormOption[]
   }
 ];
 
+export const mockCCCExpenseDateGrouping: SelectFormOption[] = [
+  {label: 'Export date', value: ExportDateType.CURRENT_DATE},
+  {label: 'Verification date', value: ExportDateType.VERIFIED_AT},
+  {label: 'Spend date', value: ExportDateType.SPENT_AT}
+];
+
+export const mockReimbursableExpenseDateGrouping: SelectFormOption[] = [
+  {label: 'Export date', value: ExportDateType.CURRENT_DATE},
+  {label: 'Spend date', value: ExportDateType.SPENT_AT}
+];
+
 export const mockPaginatedDestinationAttributes = {
     "count": 5,
     "next": null,
