@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, viewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 
 @Component({
   selector: 'app-main-menu',
@@ -14,7 +17,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() activeItem: MenuItem;
 
-  @Input() moreDropdown = null;
+  @Input() dropdownValue = null;
 
   @Input() appName: string = '';
 
@@ -32,13 +35,40 @@ export class MainMenuComponent implements OnInit {
 
   @Output() disconnectClick = new EventEmitter();
 
+  private pDropdown = viewChild(Dropdown);
+
+  dropdownOptions: MainMenuDropdownGroup[] = [
+    {
+      label: 'Integrations',
+      items: [
+        {
+          label: 'Add more integrations',
+          handler: () => {
+            this.router.navigate(['/integrations/landing_v2']);
+          }
+        }
+      ]
+    }
+  ];
+
   isDisabled: boolean = false;
 
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
+
+  handleDropdownChange(event: any) {
+    if (event.value === null) {
+      return;
+    }
+
+    event.value.handler();
+    this.pDropdown()?.clear();
+  }
 
   disconnect() {
     this.isDisabled = true;
@@ -50,6 +80,20 @@ export class MainMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isDisconnectRequired) {
+      this.dropdownOptions[0].items.push(
+        {
+          label: '[divider]',
+          disabled: true
+        },
+        {
+          label: 'Disconnect',
+          handler: () => {
+            this.disconnect();
+          }
+        }
+      );
+    }
   }
 
 }

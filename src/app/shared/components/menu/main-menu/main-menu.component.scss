@@ -9,9 +9,9 @@
 }
 
 :host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-28-px tw-text-sub-text-color #{!important};
+    @apply tw-ml-8-px tw-w-14-px tw-text-sub-text-color #{!important};
 }
 
 :host ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
-    @apply tw-pt-4-px tw-pl-12-px tw-pr-0 tw-pb-0 tw-text-slightly-normal-text-color #{!important};
+    @apply tw-text-slightly-normal-text-color tw-rounded-none #{!important};
 }
