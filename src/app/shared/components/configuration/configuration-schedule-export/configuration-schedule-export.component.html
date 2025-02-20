@@ -37,7 +37,7 @@
                                 <span>
                                     {{ item.label }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-chevron-down fyle' : 'pi pi-chevron-down co']"></i>
+                                <i class="pi pi-chevron-down" [ngClass]="brandingStyle.common.configurationBrandingClass"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>

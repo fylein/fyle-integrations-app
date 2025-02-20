@@ -4,7 +4,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Category</th>
-                <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | titlecase}}</th>
+                <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error let-rowIndex="rowIndex">

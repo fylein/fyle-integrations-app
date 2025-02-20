@@ -8,7 +8,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -48,6 +48,8 @@ export class QbdFieldMappingComponent implements OnInit {
   fieldMapping: QBDFieldMappingGet;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -54,6 +54,8 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     label: 'label',
     value: 'value'
   };
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

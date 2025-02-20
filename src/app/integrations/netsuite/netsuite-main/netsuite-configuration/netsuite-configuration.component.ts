@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { brandingContent, brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingContent, brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-netsuite-configuration',
@@ -22,6 +22,8 @@ export class NetsuiteConfigurationComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor() { }
 
