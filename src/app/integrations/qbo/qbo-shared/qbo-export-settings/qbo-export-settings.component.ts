@@ -314,10 +314,9 @@ export class QboExportSettingsComponent implements OnInit {
     if ([QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(selectedValue)) {
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
-
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(FundSource.CCC, this.exportSettingForm.controls.creditCardExportGroup.value, false, false);
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
     } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(FundSource.REIMBURSABLE, this.exportSettingForm.controls.creditCardExportGroup.value, false, false);
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
       this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
     }
   }
@@ -337,18 +336,14 @@ export class QboExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      const isApprovedAtSelected = this.exportSettingForm.controls.reimbursableExportDate.value === ExportDateType.APPROVED_AT ? true : false;
-      const isVerifiedAtSelected = this.exportSettingForm.controls.reimbursableExportDate.value === ExportDateType.VERIFIED_AT ? true : false;
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(FundSource.REIMBURSABLE, this.exportSettingForm.controls.reimbursableExportGroup.value, isApprovedAtSelected, isVerifiedAtSelected);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      const isApprovedAtSelected = this.exportSettingForm.controls.creditCardExportDate.value === ExportDateType.APPROVED_AT ? true : false;
-        const isVerifiedAtSelected = this.exportSettingForm.controls.creditCardExportDate.value === ExportDateType.VERIFIED_AT ? true : false;
       if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(FundSource.REIMBURSABLE, creditCardExportGroup, isApprovedAtSelected, isVerifiedAtSelected);
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
       } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(FundSource.CORPORATE_CARD, creditCardExportGroup, isApprovedAtSelected, isVerifiedAtSelected);
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
       }
     });
   }

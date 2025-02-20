@@ -117,7 +117,7 @@ export class ExportSettingModel {
       ];
     }
 
-    static constructExportDateOptions(exportType: FundSource, expenseGrouping: ExpenseGroupingFieldOption, isApprovedAtSelected: boolean, isVerifiedAtSelected: boolean): SelectFormOption[] {
+    static constructExportDateOptions(isCoreCCCModule: boolean, expenseGrouping: ExpenseGroupingFieldOption, exportDateGroupingValue: ExportDateType): SelectFormOption[] {
 
       // Determine the excluded date based on expenseGrouping
       const excludedSpendDateOption = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
@@ -125,13 +125,13 @@ export class ExportSettingModel {
         : ExportDateType.SPENT_AT;
 
       // Determine the excluded date based on customer choose
-      const excludedApprovedOrVerifiedOption = isApprovedAtSelected ? ExportDateType.VERIFIED_AT : (isVerifiedAtSelected ? ExportDateType.APPROVED_AT : null);
+      const excludedApprovedOrVerifiedOption = exportDateGroupingValue === ExportDateType.APPROVED_AT ? [ExportDateType.VERIFIED_AT] : (exportDateGroupingValue === ExportDateType.VERIFIED_AT ? [ExportDateType.APPROVED_AT] : [ExportDateType.APPROVED_AT, ExportDateType.VERIFIED_AT]);
 
       // Determine the excluded date based on export Type
-      const excludedPostedAtOption = exportType !== FundSource.CORPORATE_CARD ? ExportDateType.POSTED_AT : null;
+      const excludedPostedAtOption = !isCoreCCCModule ? ExportDateType.POSTED_AT : null;
 
       // Array of unwanted dates
-      const dateOptionsToBeExcluded = [excludedSpendDateOption, excludedApprovedOrVerifiedOption, excludedPostedAtOption];
+      const dateOptionsToBeExcluded = [excludedSpendDateOption, excludedPostedAtOption].concat(excludedApprovedOrVerifiedOption);
 
       // Get base date options
       const unfilteredDateOptions = this.getExpenseGroupingDateOptions();

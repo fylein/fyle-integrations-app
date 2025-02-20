@@ -29,7 +29,9 @@ import {
   mockGeneralEvent,
   mockBrandingConfig,
   mockExportSettingFormValueforNavigate,
-  mockDateOptionsforWatchers
+  mockDateOptionsforWatchers,
+  mockCCCExpenseDateGrouping,
+  mockReimbursableExpenseDateGrouping
 } from '../../qbo.fixture';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -704,7 +706,7 @@ describe('QboExportSettingsComponent', () => {
         reimbursableExportGroup: ExpenseGroupingFieldOption.EXPENSE_ID
       });
 
-      expect(component.reimbursableExpenseGroupingDateOptions).toEqual([]);
+      expect(component.reimbursableExpenseGroupingDateOptions).toEqual(mockReimbursableExpenseDateGrouping);
     });
 
     it('should call updateCCCExpenseGroupingDateOptions when creditCardExportType changes', () => {
@@ -725,7 +727,7 @@ describe('QboExportSettingsComponent', () => {
         creditCardExportGroup: ExpenseGroupingFieldOption.EXPENSE_ID
       });
 
-      expect(component.cccExpenseGroupingDateOptions).toEqual([]);
+      expect(component.cccExpenseGroupingDateOptions).toEqual(mockCCCExpenseDateGrouping);
     });
   });
 
