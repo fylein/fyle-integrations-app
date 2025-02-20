@@ -37,7 +37,12 @@
                 @if (option.label === "[divider]") {
                     <div class="tw-border-t tw-border-separator tw-w-full"></div>
                 } @else {
-                    <span>{{option.label}}</span>
+                    <span [class]="{
+                        'tw-text-text-danger': option.label === 'Disconnect',
+                        'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
+                    }">
+                        {{option.label}}
+                    </span>
                 }
             </ng-template>
         </p-dropdown>
