@@ -57,37 +57,11 @@ export class LandingV2Component implements OnInit {
     [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
   };
 
-  private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
-    [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/',
-    [InAppIntegration.QBD]: '/integrations/qbd/',
-    [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
-    [InAppIntegration.INTACCT]: '/integrations/intacct',
-    [InAppIntegration.QBO]: '/integrations/qbo',
-    [InAppIntegration.SAGE300]: '/integrations/sage300',
-    [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
-    [InAppIntegration.NETSUITE]: '/integrations/netsuite',
-    [InAppIntegration.XERO]: '/integrations/xero',
-    [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct'
-  };
-
   private readonly accountingIntegrationUrlMap = {
     [AccountingIntegrationApp.NETSUITE]: '/integrations/netsuite',
     [AccountingIntegrationApp.SAGE_INTACCT]: '/integrations/intacct',
     [AccountingIntegrationApp.QBO]: '/integrations/qbo',
     [AccountingIntegrationApp.XERO]: '/integrations/xero'
-  };
-
-  private readonly tpaNameToIntegrationKeyMap: Record<string, IntegrationAppKey> = {
-    'Fyle Netsuite Integration': 'NETSUITE',
-    'Fyle Sage Intacct Integration': 'INTACCT',
-    'Fyle Quickbooks Integration': 'QBO',
-    'Fyle Xero Integration': 'XERO',
-    'Fyle Quickbooks Desktop (IIF) Integration': 'QBD',
-    'Fyle Quickbooks Desktop Integration': 'QBD_DIRECT',
-    'Fyle Sage 300 Integration': 'SAGE300',
-    'Fyle Business Central Integration': 'BUSINESS_CENTRAL',
-    'Fyle TravelPerk Integration': 'TRAVELPERK',
-    'Fyle BambooHR Integration': 'BAMBOO_HR'
   };
 
   readonly brandingConfig = brandingConfig;
@@ -187,7 +161,7 @@ export class LandingV2Component implements OnInit {
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
-    this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
+    this.router.navigate([this.integrationService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
   private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
@@ -241,9 +215,13 @@ export class LandingV2Component implements OnInit {
   private storeConnectedApps() {
     this.integrationService.getIntegrations().subscribe(integrations => {
       const tpaNames = integrations.map(integration => integration.tpa_name);
-      const connectedApps = tpaNames.map(tpaName => this.tpaNameToIntegrationKeyMap[tpaName]);
+      const connectedApps = tpaNames
+        .map(tpaName =>
+          this.integrationService.getIntegrationKey(tpaName)
+        )
+        .filter(key => key !== null);
 
-      this.connectedApps = connectedApps;
+      this.connectedApps = connectedApps as IntegrationAppKey[];
     });
   }
 

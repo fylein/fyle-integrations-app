@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, InAppIntegration } from 'src/app/core/models/enum/enum.model';
+import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -37,19 +39,7 @@ export class MainMenuComponent implements OnInit {
 
   private pDropdown = viewChild(Dropdown);
 
-  dropdownOptions: MainMenuDropdownGroup[] = [
-    {
-      label: 'Integrations',
-      items: [
-        {
-          label: 'Add more integrations',
-          handler: () => {
-            this.router.navigate(['/integrations/landing_v2']);
-          }
-        }
-      ]
-    }
-  ];
+  dropdownOptions: MainMenuDropdownGroup[];
 
   isDisabled: boolean = false;
 
@@ -58,7 +48,8 @@ export class MainMenuComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private integrationsService: IntegrationsService,
   ) { }
 
   handleDropdownChange(event: any) {
@@ -79,9 +70,49 @@ export class MainMenuComponent implements OnInit {
     this.refreshDimensionClick.emit(true);
   }
 
-  ngOnInit(): void {
+  isCurrentIntegration(integrationName: InAppIntegration) {
+    return this.router.url.includes(
+      this.integrationsService.inAppIntegrationUrlMap[integrationName]
+    );
+  }
+
+  private addDropdownOptions(integrations: Integration[]) {
+    const options: MainMenuDropdownGroup[] = [
+      {
+        label: 'Integrations',
+        items: [
+          {
+            label: 'Add more integrations',
+            handler: () => {
+              this.router.navigate(['/integrations/landing_v2']);
+            }
+          }
+        ]
+      }
+    ];
+
+    /**
+     * Iterate backwards because the most recently connected integration
+     * at integrations[0] should be unshifted last
+     */
+    for (let i = integrations.length - 1; i >= 0; i--) {
+      const integration = integrations[i];
+      const integrationName = this.integrationsService.getIntegrationName(integration.tpa_name);
+      if (integrationName === null) {
+        continue;
+      }
+
+      options[0].items.unshift({
+        label: integrationName,
+        handler: () => {
+          this.integrationsService.navigateToIntegration(integrationName);
+        }
+      });
+    }
+
+
     if (this.isDisconnectRequired) {
-      this.dropdownOptions[0].items.push(
+      options[0].items.push(
         {
           label: '[divider]',
           disabled: true
@@ -94,6 +125,13 @@ export class MainMenuComponent implements OnInit {
         }
       );
     }
+
+    this.dropdownOptions = options;
   }
 
+  ngOnInit(): void {
+    this.integrationsService.getIntegrations().subscribe(integrations => {
+      this.addDropdownOptions(integrations);
+    });
+  }
 }
