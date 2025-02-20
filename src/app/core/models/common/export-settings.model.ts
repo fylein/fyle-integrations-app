@@ -117,7 +117,7 @@ export class ExportSettingModel {
       ];
     }
 
-    static constructExportDateOptions(isCoreCCCModule: boolean, expenseGrouping: ExpenseGroupingFieldOption, exportDateGroupingValue: ExportDateType): SelectFormOption[] {
+    static constructExportDateOptions(isCoreCCCModule: boolean, expenseGrouping: ExpenseGroupingFieldOption, exportDateType: ExportDateType): SelectFormOption[] {
 
       // Determine the excluded date based on expenseGrouping
       const excludedSpendDateOption = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
@@ -125,7 +125,7 @@ export class ExportSettingModel {
         : ExportDateType.SPENT_AT;
 
       // Determine the excluded date based on customer choose
-      const excludedApprovedOrVerifiedOption = exportDateGroupingValue === ExportDateType.APPROVED_AT ? [ExportDateType.VERIFIED_AT] : (exportDateGroupingValue === ExportDateType.VERIFIED_AT ? [ExportDateType.APPROVED_AT] : [ExportDateType.APPROVED_AT, ExportDateType.VERIFIED_AT]);
+      const excludedApprovedOrVerifiedOption = exportDateType === ExportDateType.APPROVED_AT ? [ExportDateType.VERIFIED_AT] : (exportDateType === ExportDateType.VERIFIED_AT ? [ExportDateType.APPROVED_AT] : [ExportDateType.APPROVED_AT, ExportDateType.VERIFIED_AT]);
 
       // Determine the excluded date based on export Type
       const excludedPostedAtOption = !isCoreCCCModule ? ExportDateType.POSTED_AT : null;
