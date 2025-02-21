@@ -14,10 +14,12 @@ import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleF
 import { ExportSettingOptionSearch, ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { TitleCasePipe } from '@angular/common';
+import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
+import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 
 
 describe('IntacctExportSettingsComponent', () => {
@@ -426,6 +428,7 @@ describe('IntacctExportSettingsComponent', () => {
   describe('C1 Specific Behavior', () => {
     it('should handle setup with c1 branding', () => {
       brandingConfig.brandId = 'co';
+      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed = c1FeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
 
       fixture = TestBed.createComponent(IntacctExportSettingsComponent);
       component = fixture.componentInstance;
@@ -438,6 +441,7 @@ describe('IntacctExportSettingsComponent', () => {
 
     afterAll(() => {
       brandingConfig.brandId = 'fyle';
+      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed = fyleFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
     });
   });
 
