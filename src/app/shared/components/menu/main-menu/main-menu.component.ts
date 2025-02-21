@@ -130,8 +130,10 @@ export class MainMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.integrationsService.getIntegrations().subscribe(integrations => {
-      this.addDropdownOptions(integrations);
-    });
+    if (brandingConfig.brandId === 'fyle') {
+      this.integrationsService.getIntegrations().subscribe(integrations => {
+        this.addDropdownOptions(integrations);
+      });
+    }
   }
 }
