@@ -4,7 +4,7 @@ import { DefaultDestinationAttribute } from "../../db/destination-attribute.mode
 import { AppName, NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, PaymentSyncDirection } from "../../enum/enum.model";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { environment } from "src/environments/environment";
 import { NetSuiteExportSettingGet } from "./netsuite-export-setting.model";
 
@@ -75,7 +75,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     const defaultOptions = this.getDefaultMemoOptions();
     const cccExportType = exportSettings.configuration.corporate_credit_card_expenses_object;
 
-    if (brandingConfig.brandId === 'co') {
+    if (brandingFeatureConfig.featureFlags.advancedSettings.excludeCardNumberAndEmployeeNameInMemo) {
       return defaultOptions.filter(option => !['card_number', 'employee_name'].includes(option));
     }
 

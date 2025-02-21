@@ -7,6 +7,8 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { mockMappingSettingsResponse, mockMappingSettingsWithCustomFieldResponse } from '../../intacct.fixture';
 import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
+import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 
 describe('IntacctMappingComponent', () => {
   let component: IntacctMappingComponent;
@@ -70,8 +72,12 @@ describe('IntacctMappingComponent', () => {
   it('should handle different branding configurations', () => {
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsWithCustomFieldResponse as MappingSettingResponse));
     brandingConfig.brandId = 'co';
+    brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase = c1FeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase;
+
     fixture.detectChanges();
 
     expect(component.mappingPages[3].label).toBe('Sample custom field');
+
+    brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase = fyleFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase;
   });
 });

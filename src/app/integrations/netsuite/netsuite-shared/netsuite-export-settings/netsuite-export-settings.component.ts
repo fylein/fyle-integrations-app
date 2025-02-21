@@ -54,7 +54,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   employeeFieldOptions: SelectFormOption[] = NetSuiteExportSettingModel.getEmployeeFieldOptions();
 
-  creditCardExportTypes = brandingConfig.brandId === 'co' ? NetSuiteExportSettingModel.getCoCreditCardExportTypes() : NetSuiteExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes = NetSuiteExportSettingModel.getCreditCardExportTypes();
 
   cccExpenseStateOptions = NetSuiteExportSettingModel.getCCCExpenseStateOptions();
 
@@ -310,10 +310,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      if (brandingConfig.brandId === 'fyle') {
-        const reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-        this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(reimbursableExportGroup, reimbursableExpenseGroupingDateOptions);
-      }
+      const reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+      this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(reimbursableExportGroup, reimbursableExpenseGroupingDateOptions);
     });
 
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
@@ -321,7 +319,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle' && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (brandingConfig.brandId === 'fyle' && this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         const cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(creditCardExportGroup, cccExpenseGroupingDateOptions);
       }

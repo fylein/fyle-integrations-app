@@ -46,12 +46,12 @@
             </div>
         </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
-            <h3 *ngIf="accountingCompanyName && brandingConfig.brandId === 'co'" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
+            <h3 *ngIf="accountingCompanyName && brandingFeatureConfig.featureFlags.contentVersion === 'v2'" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
                 {{ accountingCompanyName }}
             </h3>
-            <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingConfig.brandId === 'co'">
+            <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v2'">
                 Fetching data from your {{appName}} account…</p> 
-            <div [ngClass]="{'tw-mt-16-px': brandingConfig.brandId !== 'co'}">
+            <div [ngClass]="{'tw-mt-16-px': brandingFeatureConfig.featureFlags.contentVersion === 'v1'}">
                 <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
             </div>
         </div>

@@ -14,14 +14,22 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     isBackgroundColorAllowed: false,
     isAsterikAllowed: true,
     allowIntacctHelperDoc: true,
+    loginRedirectUri: false,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
+        showOptionalTextInsteadOfAsterisk: false,
+        useCustomIcon: false,
+        displayAppLogoInDashboard: false,
+        contentVersion: 'v1',
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
             useMerchantInJournalLine: true,
-            splitExpenseGrouping: true
+            splitExpenseGrouping: true,
+            isEmployeeMappingFixed: false,
+            transformContentToSentenceCase: false,
+            isReimbursableExpensesAllowed: true
         },
         importSettings: {
             tax: true,
@@ -31,7 +39,9 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: true,
             dependentField: true,
-            allowImportCode: true
+            allowImportCode: true,
+            importSettingsV1: true,
+            disableCustomerSourceField: false
         },
         advancedSettings: {
             autoCreateVendors: true,
@@ -42,7 +52,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             skipExport: true,
             autoCreateContacts: true,
             useEmployeeAttributes: true,
-            autoCreateMerchants: true
+            autoCreateMerchants: true,
+            excludeCardNumberAndEmployeeNameInMemo: false
         },
         exportLog: {
             expenseType: true

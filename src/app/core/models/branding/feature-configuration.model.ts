@@ -7,14 +7,22 @@ export type FeatureConfiguration = {
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
         allowIntacctHelperDoc: boolean;
+        loginRedirectUri: boolean;
         featureFlags: {
+            showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
             mapEmployees: boolean;
+            useCustomIcon: boolean;
+            displayAppLogoInDashboard: boolean;
+            contentVersion: string;
             exportSettings: {
+                isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;
                 nameInJournalEntry: boolean;
                 useMerchantInJournalLine: boolean;
                 splitExpenseGrouping: boolean;
+                isEmployeeMappingFixed: boolean;
+                transformContentToSentenceCase: boolean;
             },
             importSettings: {
                 tax: boolean;
@@ -25,6 +33,8 @@ export type FeatureConfiguration = {
                 allowCustomSegment: boolean;
                 dependentField: boolean;
                 allowImportCode: boolean;
+                importSettingsV1: boolean;
+                disableCustomerSourceField: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
@@ -36,6 +46,7 @@ export type FeatureConfiguration = {
                 autoCreateContacts: boolean;
                 useEmployeeAttributes: boolean;
                 autoCreateMerchants: boolean;
+                excludeCardNumberAndEmployeeNameInMemo: boolean;
             },
             exportLog: {
                 expenseType: boolean;

@@ -486,7 +486,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         splitExpenseGrouping: new FormControl(this.exportSettings?.expense_group_settings?.split_expense_grouping)
       });
 
-      if (brandingConfig.brandId === 'co') {
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
         this.exportSettingsForm.controls.creditCardExpense.patchValue(true);
         this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
       }
