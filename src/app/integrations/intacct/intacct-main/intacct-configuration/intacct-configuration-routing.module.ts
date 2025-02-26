@@ -23,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'import_settings',
-        component: !brandingFeatureConfig.featureFlags.importSettings.importSettingsV1 ? IntacctImportSettingsComponent : IntacctC1ImportSettingsComponent
+        component: brandingFeatureConfig.featureFlags.importSettings.importSettingsV1 ? IntacctImportSettingsComponent : IntacctC1ImportSettingsComponent
       },
       {
         path: 'advanced_settings',
