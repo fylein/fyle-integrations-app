@@ -121,7 +121,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   get shouldShowErrorSection(): boolean {
      // TODO: Remove this once we implement the error section for all apps
-    if (this.appName === AppName.QBO) {
+    if (this.appName === AppName.QBO || this.appName === AppName.NETSUITE || this.appName === AppName.SAGE300 || this.appName === AppName.INTACCT || this.appName === AppName.BUSINESS_CENTRAL) {
       return !!(this.exportableExpenseGroupIds?.length && this.accountingExportSummary?.total_accounting_export_count);
     }
     return true;
