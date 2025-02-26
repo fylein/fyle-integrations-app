@@ -7,6 +7,7 @@ export type FeatureConfiguration = {
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
         allowIntacctHelperDoc: boolean;
+        showMoreDropdownInMainMenu: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;

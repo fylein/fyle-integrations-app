@@ -2,7 +2,7 @@
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
-        <button *ngIf="isDisconnectRequired && brandingConfig.brandId !== 'fyle'" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+        <button *ngIf="isDisconnectRequired && !brandingFeatureConfig.showMoreDropdownInMainMenu" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
             <span class="tw-text-14-px">
                 {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
             </span>
@@ -25,7 +25,7 @@
         </span>
 
         <p-dropdown
-            *ngIf="brandingConfig.brandId === 'fyle'"
+            *ngIf="brandingFeatureConfig.showMoreDropdownInMainMenu"
             [(ngModel)]="dropdownValue"
             (onChange)="handleDropdownChange($event)"
             appendTo="body"
