@@ -16,7 +16,7 @@ export type ExportSettingOptionSearch = {
   searchTerm: string,
   destinationAttributes: any[],
   destinationOptionKey: DestinationOptionKey,
-  destinationAccountType?: DestinationAccountType,
+  formControllerName: string,
 };
 
 export class ExportSettingModel {

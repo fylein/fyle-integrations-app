@@ -125,20 +125,60 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return false;
   }
 
-  reimbursableAccpuntOptions(): DestinationAttribute[] {
+  getReimbursableAccountTypes(): QbdDirectExportSettingDestinationAccountType[] {
     if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+      return [
+        QbdDirectExportSettingDestinationAccountType.Bank,
+        QbdDirectExportSettingDestinationAccountType.CreditCard,
+        QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+        QbdDirectExportSettingDestinationAccountType.LongTermLiability
+      ];
     }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+    return [
+      QbdDirectExportSettingDestinationAccountType.Bank,
+      QbdDirectExportSettingDestinationAccountType.AccountsPayable,
+      QbdDirectExportSettingDestinationAccountType.CreditCard,
+      QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+      QbdDirectExportSettingDestinationAccountType.LongTermLiability
+    ];
+  }
+
+  reimbursableAccpuntOptions(): DestinationAttribute[] {
+    const accountTypes = this.getReimbursableAccountTypes();
+    if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
+      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+    }
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+  }
+
+  getCCCAccountTypes(cccExportType: string) {
+    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+      return [QbdDirectExportSettingDestinationAccountType.CreditCard];
+    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
+      return [
+        QbdDirectExportSettingDestinationAccountType.Bank,
+        QbdDirectExportSettingDestinationAccountType.CreditCard,
+        QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+        QbdDirectExportSettingDestinationAccountType.LongTermLiability
+      ];
+    }
+    return [
+      QbdDirectExportSettingDestinationAccountType.Bank,
+      QbdDirectExportSettingDestinationAccountType.AccountsPayable,
+      QbdDirectExportSettingDestinationAccountType.CreditCard,
+      QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+      QbdDirectExportSettingDestinationAccountType.LongTermLiability
+    ];
   }
 
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
+    const accountTypes = this.getCCCAccountTypes(cccExportType);
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-      return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
+      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
     } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
     }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
   private optionSearchWatcher(): void {
@@ -152,9 +192,16 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       let newOptions: QbdDirectDestinationAttribute[];
 
       let accountTypes: QbdDirectExportSettingDestinationAccountType[] | undefined;
-      if (event.destinationAccountType) {
-        accountTypes = [event.destinationAccountType];
+      if (event.formControllerName === 'defaultReimbursableAccountsPayableAccountName') {
+        accountTypes = this.getReimbursableAccountTypes();
+      } else if (['defaultCreditCardAccountName', 'defaultCCCAccountsPayableAccountName'].includes(event.formControllerName)){
+        accountTypes = this.getCCCAccountTypes(this.exportSettingsForm.get('creditCardExportType')?.value);
       }
+
+      console.log({
+        controller: event.formControllerName,
+        accountTypes
+      })
 
       this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm, undefined, undefined, accountTypes).subscribe((response) => {
 

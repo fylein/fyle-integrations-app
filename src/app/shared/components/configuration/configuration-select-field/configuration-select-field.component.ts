@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Simp
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, DestinationAccountType, DestinationOptionKey, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, DestinationOptionKey, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
@@ -60,8 +60,6 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   @Input() isDefaultFields: boolean = false;
 
   @Input() destinationOptionKey: DestinationOptionKey;
-
-  @Input() destinationAccountType?: DestinationAccountType;
 
   @Input() isOptionSearchInProgress: boolean;
 
@@ -163,7 +161,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, destinationAccountType: this.destinationAccountType});
+    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
   }
 
   ngOnInit(): void {
