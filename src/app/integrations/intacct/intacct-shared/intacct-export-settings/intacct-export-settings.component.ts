@@ -223,16 +223,6 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     private setCCExpenseDateOptions(cccExportType: IntacctCorporateCreditCardExpensesObject) : void {
     if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-      this.cccExpenseGroupingDateOptions = [
-        {
-          label: 'Card Transaction Post date',
-          value: ExportDateType.POSTED_AT
-        },
-        {
-          label: 'Spend Date',
-          value: ExportDateType.SPENT_AT
-        }
-      ];
       this.exportSettingsForm?.controls.cccExportDate.patchValue(ExportDateType.SPENT_AT);
     } else {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions;
@@ -287,7 +277,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     private cccExportTypeWatcher(): void {
       this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
-        this.setCCExpenseDateOptions(isCCCExportTypeSelected);
+        // This.setCCExpenseDateOptions(isCCCExportTypeSelected);
         if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.creditCard.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
@@ -352,56 +342,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       });
     }
 
-    private updateCCCGroupingDateOptions(cccExportGroup: ExpenseGroupingFieldOption): void {
-      const options: ExportSettingFormOption[] = [];
-      if (cccExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || cccExportGroup === ExpenseGroupingFieldOption.REPORT_ID) {
-        options.push(
-          {
-            label: brandingContent.common.currentDate,
-            value: ExportDateType.CURRENT_DATE
-          },
-          {
-            label: 'Last Spend Date',
-            value: ExportDateType.LAST_SPENT_AT
-          },
-          {
-            label: 'Approved Date',
-            value: ExportDateType.APPROVAL_DATE
-          }
-        );
-      } else {
-        options.push(
-          {
-            label: brandingContent.common.currentDate,
-            value: ExportDateType.CURRENT_DATE
-          },
-          {
-            label: 'Spend Date',
-            value: ExportDateType.SPENT_AT
-          }
-        );
-      }
-
-      if (this.exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-        options.push(
-          {
-            label: 'Card Transaction Post date',
-            value: ExportDateType.POSTED_AT
-          }
-        );
-      }
-      this.cccExpenseGroupingDateOptions = options.concat();
-    }
-
-    private setupCCCGroupingWatcher(): void {
-      if (brandingConfig.brandId === 'co') {
-        this.updateCCCGroupingDateOptions(this.exportSettingsForm.get('cccExportGroup')?.value);
-        this.exportSettingsForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-          this.updateCCCGroupingDateOptions(cccExportGroup);
-        });
-      }
-    }
-
     private exportFieldsWatcher(): void {
       if (this.exportSettings?.configurations?.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configurations?.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
         this.exportSettingsForm.get('employeeFieldMapping')?.enable();
@@ -416,7 +356,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.createReimbursableExpenseWatcher();
       this.createCreditCardExpenseWatcher();
       this.cccWatcher();
-      this.setupCCCGroupingWatcher();
     }
 
     private setupCCCExpenseGroupingDateOptions(): void {
@@ -522,17 +461,14 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingsForm.controls.reimbursableExportDate.value);
     });
 
     this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
-        if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-          this.setCCExpenseDateOptions(this.exportSettingsForm?.value.cccExportType);
-        }
+      if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value);
+      } else {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value);
       }
     });
   }
