@@ -145,9 +145,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableAccpuntOptions(): DestinationAttribute[] {
     const accountTypes = this.getReimbursableAccountTypes();
-    if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-    }
     return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
@@ -173,11 +170,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     const accountTypes = this.getCCCAccountTypes(cccExportType);
-    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-    }
     return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
@@ -197,11 +189,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       } else if (['defaultCreditCardAccountName', 'defaultCCCAccountsPayableAccountName'].includes(event.formControllerName)){
         accountTypes = this.getCCCAccountTypes(this.exportSettingsForm.get('creditCardExportType')?.value);
       }
-
-      console.log({
-        controller: event.formControllerName,
-        accountTypes
-      })
 
       this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm, undefined, undefined, accountTypes).subscribe((response) => {
 
