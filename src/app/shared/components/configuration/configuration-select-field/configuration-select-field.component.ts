@@ -161,7 +161,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
+    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
   }
 
   ngOnInit(): void {
