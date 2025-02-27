@@ -156,8 +156,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         accountTypes = [event.destinationAccountType];
       }
 
-      console.log('got', {event});
-
       this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm, undefined, undefined, accountTypes).subscribe((response) => {
 
         // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
