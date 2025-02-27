@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
-import { InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
+import { integrationCallbackUrlMap, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
@@ -48,13 +48,6 @@ export class LandingV2Component implements OnInit {
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true,
     [IntegrationView.TRAVEL]: false
-  };
-
-  private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
-    [AccountingIntegrationApp.NETSUITE]: [`${environment.fyle_app_url}/netsuite`, environment.ns_client_id],
-    [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
-    [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
-    [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
   };
 
   private readonly accountingIntegrationUrlMap = {
@@ -153,9 +146,11 @@ export class LandingV2Component implements OnInit {
     }
 
     const payload = {
-      callbackUrl: this.integrationCallbackUrlMap[accountingIntegrationApp][0],
-      clientId: this.integrationCallbackUrlMap[accountingIntegrationApp][1]
+      callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
+      clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
     };
+
+    console.log({payload});
 
     this.eventsService.postEvent(payload);
   }
