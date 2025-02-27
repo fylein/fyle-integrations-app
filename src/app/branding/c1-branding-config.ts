@@ -14,6 +14,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isBackgroundColorAllowed: true,
     isAsterikAllowed: false,
     allowIntacctHelperDoc: false,
+    showMoreDropdownInMainMenu: false,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
