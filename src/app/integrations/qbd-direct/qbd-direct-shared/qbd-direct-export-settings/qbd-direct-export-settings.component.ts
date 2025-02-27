@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -79,6 +79,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
 
+  QbdDirectExportSettingDestinationAccountType = QbdDirectExportSettingDestinationAccountType;
+
   isOptionSearchInProgress: boolean;
 
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -149,7 +151,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
       let newOptions: QbdDirectDestinationAttribute[];
 
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+      let accountTypes: QbdDirectExportSettingDestinationAccountType[] | undefined;
+      if (event.destinationAccountType) {
+        accountTypes = [event.destinationAccountType];
+      }
+
+      console.log('got', {event});
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm, undefined, undefined, accountTypes).subscribe((response) => {
 
         // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
         newOptions = response.results as QbdDirectDestinationAttribute[];
