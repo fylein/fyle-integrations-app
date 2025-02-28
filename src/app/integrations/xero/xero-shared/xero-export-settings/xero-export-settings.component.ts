@@ -112,10 +112,8 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     // Removing not relevant date options
-    this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.CLAIM_NUMBER, this.reimbursableExpenseGroupingDateOptions);
-    if (brandingConfig.brandId==='fyle') {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.EXPENSE_ID, this.cccExpenseGroupingDateOptions);
-    }
+    this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, this.exportSettingForm.controls.eimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
+    this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
   }
 
   save() {
