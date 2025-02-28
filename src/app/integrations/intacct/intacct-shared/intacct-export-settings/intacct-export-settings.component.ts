@@ -277,7 +277,6 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     private cccExportTypeWatcher(): void {
       this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
-        // This.setCCExpenseDateOptions(isCCCExportTypeSelected);
         if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.creditCard.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
