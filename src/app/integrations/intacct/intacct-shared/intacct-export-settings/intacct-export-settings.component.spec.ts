@@ -331,24 +331,6 @@ describe('IntacctExportSettingsComponent', () => {
           value: ExportDateType.SPENT_AT
         });
       }));
-
-      it('should update CCC expense grouping date options when group changes', fakeAsync(() => {
-        spyOn<IntacctExportSettingsComponent, any>(component, 'setCCExpenseDateOptions').and.callThrough();
-        spyOn(IntacctExportSettingModel, 'getExpenseGroupingDateOptions').and.callThrough();
-        spyOn(ExportSettingModel, 'constructGroupingDateOptions').and.callThrough();
-
-        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-        component.exportSettingsForm.get('cccExportGroup')?.setValue(ExpenseGroupingFieldOption.CLAIM_NUMBER);
-
-        tick();
-
-        expect(IntacctExportSettingModel.getExpenseGroupingDateOptions).toHaveBeenCalledWith();
-        expect(ExportSettingModel.constructGroupingDateOptions).toHaveBeenCalledWith(
-          ExpenseGroupingFieldOption.CLAIM_NUMBER,
-          IntacctExportSettingModel.getExpenseGroupingDateOptions()
-        );
-        expect(component['setCCExpenseDateOptions']).toHaveBeenCalled();
-      }));
     });
 
     describe('Export Selection Validator', () => {
@@ -465,23 +447,18 @@ describe('IntacctExportSettingsComponent', () => {
       fixture.detectChanges();
 
       component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-      component['updateCCCGroupingDateOptions'](ExpenseGroupingFieldOption.CLAIM_NUMBER);
 
       expect(component.cccExpenseGroupingDateOptions).toEqual([
         {
-          label: brandingContent.common.currentDate,
+          label: 'Export date',
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Last Spend Date',
-          value: ExportDateType.LAST_SPENT_AT
+          label: 'Spend date',
+          value: ExportDateType.SPENT_AT
         },
         {
-          label: 'Approved Date',
-          value: ExportDateType.APPROVAL_DATE
-        },
-        {
-          label: 'Card Transaction Post date',
+          label: 'Card transaction post date',
           value: ExportDateType.POSTED_AT
         }
       ]);
