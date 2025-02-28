@@ -117,6 +117,7 @@ export class MainMenuComponent implements OnInit {
           } else if (integrationName === InAppIntegration.XERO) {
             accountingIntegrationApp = AccountingIntegrationApp.XERO;
           } else {
+            this.integrationsService.navigateToIntegration(integrationName);
             return;
           }
 
