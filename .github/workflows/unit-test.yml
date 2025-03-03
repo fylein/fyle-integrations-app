@@ -34,7 +34,7 @@ jobs:
         SAGE300_API_URL: "http://lolo.fyle.tech"
         QBD_DIRECT_API_URL": "http://lolo.fyle.tech"
     - name: Unit Test Coverage
-      uses: fylein/comment-test-coverage@update-packages
+      uses: fylein/comment-test-coverage@update-packages-2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         path: coverage/coverage-summary.json
