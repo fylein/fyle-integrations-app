@@ -90,10 +90,10 @@ export const fyleKbArticles: KbArticle[string] = {
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         NETSUITE: {
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_20f149b0ea`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_20e388249e`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_e1a04ead5b`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_1e280cab10`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_20f149b0ea`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_20e388249e`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_e1a04ead5b`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_1e280cab10`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/6967005-how-to-skip-exporting-specific-expenses-from-fyle-to-netsuite.`
         },
         // TODO: Update KB articles for Sage 300
