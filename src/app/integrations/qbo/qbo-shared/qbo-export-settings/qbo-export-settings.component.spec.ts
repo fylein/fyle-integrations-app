@@ -241,7 +241,8 @@ describe('QboExportSettingsComponent', () => {
         const mockSearchEvent = {
           searchTerm: 'Savings',
           destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'expenseAccount'
         };
 
         component.expenseAccounts = [];
@@ -369,7 +370,8 @@ describe('QboExportSettingsComponent', () => {
         component['handleOptionSearch']({
           searchTerm: 'anish',
           destinationOptionKey: QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'accountsPayable'
         });
         tick();
         expect(component.accountsPayables).toEqual(mockOptions);
@@ -378,7 +380,8 @@ describe('QboExportSettingsComponent', () => {
         component['handleOptionSearch']({
           searchTerm: 'anish',
           destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'bankAccount'
         });
         tick();
         expect(component.bankAccounts).toEqual(mockOptions);
@@ -387,7 +390,8 @@ describe('QboExportSettingsComponent', () => {
         component['handleOptionSearch']({
           searchTerm: 'anish',
           destinationOptionKey: QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'creditCardAccount'
         });
         tick();
         expect(component.cccAccounts).toEqual(mockOptions);
@@ -396,7 +400,8 @@ describe('QboExportSettingsComponent', () => {
         component['handleOptionSearch']({
           searchTerm: 'anish',
           destinationOptionKey: QboExportSettingDestinationOptionKey.VENDOR,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'vendor'
         });
         tick();
         expect(component.vendors).toEqual(mockOptions);
@@ -408,7 +413,8 @@ describe('QboExportSettingsComponent', () => {
         component['handleOptionSearch']({
           searchTerm: 'anish',
           destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
-          destinationAttributes: []
+          destinationAttributes: [],
+          formControllerName: 'expenseAccount'
         });
         tick();
         expect(component.expenseAccounts).toEqual(mockOptions);
@@ -483,7 +489,8 @@ describe('QboExportSettingsComponent', () => {
       const event: ExportSettingOptionSearch = {
         searchTerm: 'anish',
         destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-        destinationAttributes: []
+        destinationAttributes: [],
+        formControllerName: 'bankAccount'
       };
 
       component.searchOptionsDropdown(event);
@@ -496,7 +503,8 @@ describe('QboExportSettingsComponent', () => {
       const event: ExportSettingOptionSearch = {
         searchTerm: '',
         destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-        destinationAttributes: []
+        destinationAttributes: [],
+        formControllerName: 'bankAccount'
       };
 
       component.searchOptionsDropdown(event);
