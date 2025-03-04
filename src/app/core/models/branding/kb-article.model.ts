@@ -47,7 +47,6 @@ export type KbArticle = {
             QBO: {
                 LANDING: string;
                 CONNECTOR: string;
-                EMPLOYEE_SETTING: string;
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
@@ -68,7 +67,6 @@ export type KbArticle = {
             XERO: {
                 LANDING: string;
                 CONNECTOR: string;
-                EMPLOYEE_SETTING: string;
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
