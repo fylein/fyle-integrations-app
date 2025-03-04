@@ -6,6 +6,8 @@ import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { HelperService } from '../common/helper.service';
+import { AppUrl } from '../../models/enum/enum.model';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 
@@ -18,7 +20,8 @@ export class TravelperkService {
 
   constructor(
     private apiService: ApiService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private helperService: HelperService
   ) { }
 
   createFolder(): Observable<{}> {
@@ -30,6 +33,7 @@ export class TravelperkService {
   }
 
   getTravelperkData(): Observable<Travelperk> {
+    this.helperService.setBaseApiURL(AppUrl.INTEGRATION);
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/`, {}).pipe(
       catchError(error => {
         if (error.status === 400 && error.error?.message?.includes('token expired')) {
