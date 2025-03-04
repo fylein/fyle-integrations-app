@@ -159,54 +159,6 @@ export class LandingV2Component implements OnInit {
     this.router.navigate([this.integrationService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
-  private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
-    const authCode = redirectUri.split('code=')[1].split('&')[0];
-    let login$;
-    if (inAppIntegration === InAppIntegration.INTACCT) {
-      login$ = this.siAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegration === InAppIntegration.QBO) {
-      login$ = this.qboAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegration === InAppIntegration.XERO) {
-      login$ = this.xeroAuthService.login(authCode);
-    } else if (inAppIntegration === InAppIntegration.NETSUITE) {
-      login$ = this.nsAuthService.loginWithAuthCode(authCode);
-    } else {
-      return;
-    }
-
-    login$.subscribe((token: Token) => {
-      const user: MinimalUser = {
-        'email': token.user.email,
-        'access_token': token.access_token,
-        'refresh_token': token.refresh_token,
-        'full_name': token.user.full_name,
-        'user_id': token.user.user_id,
-        'org_id': token.user.org_id,
-        'org_name': token.user.org_name
-      };
-      this.storageService.set('user', user);
-      this.openInAppIntegration(inAppIntegration);
-    });
-  }
-
-  private setupLoginWatcher(): void {
-    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.INTACCT);
-    });
-
-    this.eventsService.qboLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.QBO);
-    });
-
-    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.XERO);
-    });
-
-    this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.NETSUITE);
-    });
-  }
-
   private storeConnectedApps() {
     this.integrationService.getIntegrations().subscribe(integrations => {
       const tpaNames = integrations.map(integration => integration.tpa_name);
@@ -221,7 +173,6 @@ export class LandingV2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setupLoginWatcher();
     this.storeConnectedApps();
   }
 }

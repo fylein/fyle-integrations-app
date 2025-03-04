@@ -52,7 +52,7 @@ export class EventsService {
   }
 
   receiveEvent(): void {
-    console.log('receivers ready');
+    console.log('event receivers ready');
     this.windowService.nativeWindow.addEventListener('message', (message) => {
       if (message.data && message.data.redirectUri && (message.origin === environment.fyle_app_url || message.origin === environment.fyle_app_local)) {
         console.log({

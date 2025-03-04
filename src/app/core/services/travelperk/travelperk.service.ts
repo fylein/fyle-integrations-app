@@ -21,7 +21,7 @@ export class TravelperkService {
   constructor(
     private apiService: ApiService,
     private orgService: OrgService,
-    private helperService: HelperService,
+    private helperService: HelperService
   ) { }
 
   createFolder(): Observable<{}> {
