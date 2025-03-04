@@ -60,7 +60,7 @@ describe('IntacctMappingComponent', () => {
     brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase = fyleFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase;
 
     expect(component.mappingPages.length).toBe(4);
-    expect(component.mappingPages[3].label).toBe('Sample Custom Field');
+    expect(component.mappingPages[3].label).toBe('Sample custom field');
     expect(component.mappingPages[3].routerLink).toBe('/integrations/intacct/main/mapping/sample_custom_field');
   });
 
