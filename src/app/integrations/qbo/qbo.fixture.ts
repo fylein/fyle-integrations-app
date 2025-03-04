@@ -677,19 +677,22 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
 export const mockExportSettingOptionSearch: ExportSettingOptionSearch = {
   searchTerm: 'anish',
   destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-  destinationAttributes: []
+  destinationAttributes: [],
+  formControllerName: 'bankAccount'
 };
 
 export const mockExpenseAccountEvent: ExportSettingOptionSearch = {
   searchTerm: 'anish',
   destinationOptionKey: QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT,
-  destinationAttributes: []
+  destinationAttributes: [],
+  formControllerName: 'expenseAccount'
 };
 
 export const mockGeneralEvent: ExportSettingOptionSearch = {
   searchTerm: 'anish',
   destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
-  destinationAttributes: []
+  destinationAttributes: [],
+  formControllerName: 'bankAccount'
 };
 
 // ... (existing imports and fixtures)
