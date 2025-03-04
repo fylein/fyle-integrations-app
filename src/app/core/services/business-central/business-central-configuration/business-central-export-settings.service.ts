@@ -13,8 +13,6 @@ const businessCentralExportSettingCache$ = new Subject<void>();
 })
 export class BusinessCentralExportSettingsService {
 
-  private readonly workspaceId = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
@@ -27,13 +25,13 @@ export class BusinessCentralExportSettingsService {
     cacheBusterObserver: businessCentralExportSettingCache$
   })
   getExportSettings(): Observable<BusinessCentralExportSettingGet> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: businessCentralExportSettingCache$
   })
   postExportSettings(exportSettingsPayload: BusinessCentralExportSettingPost): Observable<BusinessCentralExportSettingGet> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/export_settings/`, exportSettingsPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 }

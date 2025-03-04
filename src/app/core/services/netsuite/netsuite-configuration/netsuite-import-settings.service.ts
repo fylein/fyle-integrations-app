@@ -14,8 +14,6 @@ const netsuiteImportSettingGetCache$ = new Subject<void>();
 })
 export class NetsuiteImportSettingsService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -25,21 +23,21 @@ export class NetsuiteImportSettingsService {
     cacheBusterObserver: netsuiteImportSettingGetCache$
   })
   getImportSettings(): Observable<NetsuiteImportSettingGet> {
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/import_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: netsuiteImportSettingGetCache$
   })
   postImportSettings(importSettingsPayload: NetsuiteImportSettingPost): Observable<NetsuiteImportSettingGet> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
 
   getNetsuiteFields(): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/netsuite/netsuite_fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/netsuite_fields/`, {});
   }
 
   postNetsuiteCustomSegments(customSegmentsPayload: CustomSegment): Observable<CustomSegment> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/netsuite/custom_segments/`, customSegmentsPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/custom_segments/`, customSegmentsPayload);
   }
 }

@@ -13,8 +13,6 @@ import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 })
 export class DashboardService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
@@ -26,24 +24,24 @@ export class DashboardService {
   getExportableAccountingExportIds(version?: 'v1' | 'v2'): Observable<any> {
     // Dedicated to qbd direct
     if (version === 'v2') {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/ready_to_export/`, {});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/ready_to_export/`, {});
     }
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
 
   triggerAccountingExport(version?: 'v1'): Observable<{}> {
-    const url = version === 'v1' ? `/workspaces/${this.workspaceId}/qbd/export/` : `/workspaces/${this.workspaceId}/exports/trigger/`;
+    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`;
     return this.apiService.post(url, {});
   }
 
   getExportErrors(version?: string | 'v1'): Observable<any> {
     if (version === 'v1') {
-      return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+      return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/errors/`, {is_resolved: false});
     } else if (version ===  AppName.QBD_DIRECT) {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/errors/`, {is_resolved: false});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/errors/`, {is_resolved: false});
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/errors/`, {is_resolved: false});
   }
 
   private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null, appName?: AppName): Observable<any> {
@@ -74,11 +72,11 @@ export class DashboardService {
     let url = '';
 
     if (appName === AppName.INTACCT || appName === AppName.NETSUITE) {
-      url = `/workspaces/${this.workspaceId}/tasks/v2/all/`;
+      url = `/workspaces/${this.workspaceService.getWorkspaceId()}/tasks/v2/all/`;
     } else if (appName === AppName.QBD_DIRECT) {
-      url = `/workspaces/${this.workspaceId}/export_logs/`;
+      url = `/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/`;
     } else {
-      url = `/workspaces/${this.workspaceId}/tasks/all/`;
+      url = `/workspaces/${this.workspaceService.getWorkspaceId()}/tasks/all/`;
     }
 
     return this.apiService.get(url, apiParams);

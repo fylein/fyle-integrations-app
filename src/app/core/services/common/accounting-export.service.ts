@@ -14,8 +14,6 @@ import { Cacheable } from 'ts-cacheable';
 })
 export class AccountingExportService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
@@ -26,19 +24,19 @@ export class AccountingExportService {
 
   getAccountingExportSummary(version?: string | 'v1'): Observable<AccountingExportSummary> {
     if (version === 'v1') {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, {});
     } else if (version === AppName.QBD_DIRECT) {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/summary/`, {});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, {});
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`, {});
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
     };
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/count/`, apiParams);
   }
 
   getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null, appName?: string): Observable<any> {
@@ -76,9 +74,9 @@ export class AccountingExportService {
         apiParams.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
       delete apiParams.type__in;
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, apiParams);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/`, apiParams);
     }
-      return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/`, apiParams);
 
   }
 
@@ -86,8 +84,8 @@ export class AccountingExportService {
   importExpensesFromFyle(version?: 'v1' | 'v2'): Observable<{}> {
     // Dedicated to qbd direct
     if (version === 'v2') {
-      return this.apiService.post(`/workspaces/${this.workspaceId}/export_logs/sync/`, {});
+      return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/sync/`, {});
     }
-    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
   }
 }
