@@ -83,17 +83,17 @@ export const fyleKbArticles: KbArticle[string] = {
     onboardingArticles: {
         INTACCT: {
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_c3fd287601`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_37d1d125da`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_2ca779bd7e`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_b7ed01ec6c`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_eedea087a8`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_4eaff6e237`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_a75fae54f4`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_2a81c02bd0`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         NETSUITE: {
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_025d972834`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_35688938fe`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_04350573e5`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_982e2b447e`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_c0fb09216c`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_b39c272fff`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_1ed0b1a285`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_d9e37228b7`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/6967005-how-to-skip-exporting-specific-expenses-from-fyle-to-netsuite.`
         },
         // TODO: Update KB articles for Sage 300
