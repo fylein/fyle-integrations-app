@@ -95,12 +95,13 @@ export class MainMenuComponent implements OnInit {
 
     /**
      * Iterate backwards because the most recently connected integration
-     * at integrations[0] should be unshifted last
+     * at integrations[0] should be unshifted last (to make it the first option)
      */
     for (let i = integrations.length - 1; i >= 0; i--) {
       const integration = integrations[i];
       const integrationName = this.integrationsService.getIntegrationName(integration.tpa_name);
-      if (integrationName === null) {
+      const existingOptions = options[0].items.map(i => i.label);
+      if (integrationName === null || existingOptions.includes(integrationName)) {
         continue;
       }
 
