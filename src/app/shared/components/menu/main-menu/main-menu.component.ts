@@ -127,8 +127,6 @@ export class MainMenuComponent implements OnInit {
             clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
           };
 
-          console.log({payload})
-
           this.eventsService.postEvent(payload);
         }
       });

@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     private nsAuthService: NetsuiteAuthService,
     private storageService: StorageService,
     private router: Router,
-    private integrationsService: IntegrationsService,
+    private integrationsService: IntegrationsService
   ) { }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
@@ -67,7 +67,6 @@ export class AppComponent implements OnInit {
   }
 
   private setupLoginWatcher(): void {
-    console.log('watchers ready');
     this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
       this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.INTACCT);
     });
