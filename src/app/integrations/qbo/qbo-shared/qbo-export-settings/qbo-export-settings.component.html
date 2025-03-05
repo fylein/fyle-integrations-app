@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="brandingConfig.brandId === 'fyle'" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <form [formGroup]="employeeSettingForm">
                                 <app-configuration-select-field
                                     [form]="employeeSettingForm"

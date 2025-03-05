@@ -13,8 +13,6 @@ import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../
 })
 export class ExportLogService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private userService: UserService,
@@ -46,7 +44,7 @@ export class ExportLogService {
       params.updated_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
     if (appName === AppName.NETSUITE) {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expenses/v2/`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expenses/v2/`, params);
     }
       return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
 
@@ -83,15 +81,15 @@ export class ExportLogService {
     }
 
     if (appName === AppName.NETSUITE) {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/v2/`, params);
     } else if (appName === AppName.QBD_DIRECT) {
       if (params.status__in?.includes(AccountingExportStatus.FAILED)) {
         params.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
 
-      return this.apiService.get(`/workspaces/${this.workspaceId}/export_logs/`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/`, params);
     }
-      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/`, params);
 
   }
 }

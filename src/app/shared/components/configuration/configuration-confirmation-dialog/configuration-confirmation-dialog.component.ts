@@ -54,7 +54,7 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandIcon = `assets/${brandingConfig.brandId === 'co' ? 'co' : 'fyle'}/favicon.png`;
+    this.brandIcon = `assets/${brandingConfig.brandId}/favicon.png`;
   }
 
 }

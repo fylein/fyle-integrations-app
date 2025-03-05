@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, InAppIntegration } from 'src/app/core/models/enum/enum.model';
-import { Integration } from 'src/app/core/models/integrations/integrations.model';
+import { AccountingIntegrationApp, AppName, InAppIntegration } from 'src/app/core/models/enum/enum.model';
+import { Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
+import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
@@ -50,6 +51,7 @@ export class MainMenuComponent implements OnInit {
   constructor(
     private router: Router,
     private integrationsService: IntegrationsService,
+    private eventsService: EventsService
   ) { }
 
   handleDropdownChange(event: any) {
@@ -93,19 +95,39 @@ export class MainMenuComponent implements OnInit {
 
     /**
      * Iterate backwards because the most recently connected integration
-     * at integrations[0] should be unshifted last
+     * at integrations[0] should be unshifted last (to make it the first option)
      */
     for (let i = integrations.length - 1; i >= 0; i--) {
       const integration = integrations[i];
       const integrationName = this.integrationsService.getIntegrationName(integration.tpa_name);
-      if (integrationName === null) {
+      const existingOptions = options[0].items.map(i => i.label);
+      if (integrationName === null || existingOptions.includes(integrationName)) {
         continue;
       }
 
       options[0].items.unshift({
         label: integrationName,
         handler: () => {
-          this.integrationsService.navigateToIntegration(integrationName);
+          let accountingIntegrationApp: AccountingIntegrationApp;
+          if (integrationName === InAppIntegration.NETSUITE) {
+            accountingIntegrationApp = AccountingIntegrationApp.NETSUITE;
+          } else if (integrationName === InAppIntegration.INTACCT) {
+            accountingIntegrationApp = AccountingIntegrationApp.SAGE_INTACCT;
+          } else if (integrationName === InAppIntegration.QBO) {
+            accountingIntegrationApp = AccountingIntegrationApp.QBO;
+          } else if (integrationName === InAppIntegration.XERO) {
+            accountingIntegrationApp = AccountingIntegrationApp.XERO;
+          } else {
+            this.integrationsService.navigateToIntegration(integrationName);
+            return;
+          }
+
+          const payload = {
+            callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
+            clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
+          };
+
+          this.eventsService.postEvent(payload);
         }
       });
     }

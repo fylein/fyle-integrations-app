@@ -7,14 +7,14 @@
     </div>
     <div class="tw-text-center">
       <h2 class="tw-text-text-primary !tw-font-400 !tw-text-18-px">
-        <span *ngIf="brandingConfig.brandId !== 'co'">
+        <span *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
           Congratulations!
         </span>
         <span>
           {{brandingContent.doneHeaderText}}
         </span>
       </h2>
-      <div *ngIf="brandingConfig.brandId === 'co'" class="tw-py-10-px">
+      <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v2'" class="tw-py-10-px">
         <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
       </div>
     </div>
@@ -25,7 +25,7 @@
         </button>
       </div>
     </div>
-    <div *ngIf="brandingConfig.brandId !== 'co'" class="tw-py-20-px">
+    <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'" class="tw-py-20-px">
       <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
     </div>
   </div>

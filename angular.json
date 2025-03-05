@@ -93,14 +93,14 @@
               "buildTarget": "fyle-integrations-app:build:production"
             },
             "development": {
-              "browserTarget": "fyle-integrations-app:build:development"
+              "buildTarget": "fyle-integrations-app:build:development"
             },
             "fyle": {
-              "browserTarget": "fyle-integrations-app:build:fyle",
+              "buildTarget": "fyle-integrations-app:build:fyle",
               "port": 4201
             },
             "c1": {
-              "browserTarget": "fyle-integrations-app:build:c1",
+              "buildTarget": "fyle-integrations-app:build:c1",
               "port": 4202
             }
           },
@@ -146,7 +146,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "fyle-integrations-app:build",
+            "buildTarget": "fyle-integrations-app:build",
             "compodoc": true,
             "styles": [
               "src/styles.scss",
@@ -179,7 +179,7 @@
               "src/assets"
             ],
             "configDir": ".storybook",
-            "browserTarget": "fyle-integrations-app:build",
+            "buildTarget": "fyle-integrations-app:build",
             "compodoc": true,
             "compodocArgs": [
               "-e",
