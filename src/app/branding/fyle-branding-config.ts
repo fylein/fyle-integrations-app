@@ -14,6 +14,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     isBackgroundColorAllowed: false,
     isAsterikAllowed: true,
     allowIntacctHelperDoc: true,
+    showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
     featureFlags: {
         cloneSettings: true,

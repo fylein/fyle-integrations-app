@@ -2,12 +2,12 @@
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
-        <button *ngIf="isDisconnectRequired" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+        <button *ngIf="isDisconnectRequired && !brandingFeatureConfig.showMoreDropdownInMainMenu" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
             <span class="tw-text-14-px">
                 {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
             </span>
         </button>
-        
+
         <span *ngIf="isSyncVisible">
             <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText"
                 (click)="refreshDimensions()"
@@ -24,12 +24,33 @@
             </div>
         </span>
 
-        <p-dropdown *ngIf="isDropdrownRequired" [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px tw-w-fit" [options]="['Submit Feedback']" placeholder="More">
-            <ng-template let-option pTemplate="item">
-                <div class="tw-flex tw-justify-center">
-                    <app-svg-icon [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-pt-4-px tw-pr-8-px tw-text-mandatory-field-color'"></app-svg-icon>
-                    <span>{{option}}</span>
+        <p-dropdown
+            *ngIf="brandingFeatureConfig.showMoreDropdownInMainMenu"
+            [(ngModel)]="dropdownValue"
+            (onChange)="handleDropdownChange($event)"
+            appendTo="body"
+            class="tw-mr-26-px tw-w-fit"
+            [options]="dropdownOptions"
+            [placeholder]="isConnectionInProgress ? 'Disconnecting' : 'More'"
+            [group]="true"
+            [disabled]="isDisabled"
+        >
+            <ng-template let-group pTemplate="group">
+                <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
+                    <span>{{group.label}}</span>
                 </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+                @if (option.label === "[divider]") {
+                    <div class="tw-border-t tw-border-separator tw-w-full"></div>
+                } @else {
+                    <span [class]="{
+                        'tw-text-text-danger': option.label === 'Disconnect',
+                        'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
+                    }">
+                        {{option.label}}
+                    </span>
+                }
             </ng-template>
         </p-dropdown>
     </div>
