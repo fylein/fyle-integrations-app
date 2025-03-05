@@ -1,7 +1,7 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingContent } from 'src/app/branding/branding-config';
+import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
@@ -68,21 +68,6 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
       return this.form.controls.customFieldType.invalid;
     }
     return this.form.controls.internalId.invalid;
-  }
-
-  getCustomSegmentTypeLabel(): string {
-    return brandingConfig.brandId === 'co' ? 'Choose custom field type' : 'Choose Custom Field Type';
-  }
-
-  getInternalIDLabel(): string {
-    if (brandingConfig.brandId === 'co') {
-      return new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform('Enter ' + this.form.controls.customFieldType.value)) + ' internal ID';
-    }
-    return 'Enter ' + new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' Internal ID';
-  }
-
-  getTransactionIdLabel(): string {
-    return this.brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform('Enter Transaction Line Field') + ' ID' : 'Enter Transaction Line Field ID';
   }
 
   setImagesForCustomSegment(): string {

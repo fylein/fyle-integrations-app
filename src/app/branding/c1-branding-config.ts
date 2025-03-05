@@ -14,14 +14,23 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isBackgroundColorAllowed: true,
     isAsterikAllowed: false,
     allowIntacctHelperDoc: false,
+    showMoreDropdownInMainMenu: false,
+    loginRedirectUri: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
+        showOptionalTextInsteadOfAsterisk: true,
+        useCustomIcon: true,
+        displayAppLogoInDashboard: true,
+        contentVersion: 'v2',
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,
             useMerchantInJournalLine: false,
-            splitExpenseGrouping: false
+            splitExpenseGrouping: false,
+            isEmployeeMappingFixed: true,
+            transformContentToSentenceCase: true,
+            isReimbursableExpensesAllowed: false
         },
         importSettings: {
             tax: false,
@@ -31,7 +40,9 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: false,
             dependentField: true,
-            allowImportCode: false
+            allowImportCode: false,
+            importSettingsV1: false,
+            disableCustomerSourceField: true
         },
         advancedSettings: {
             autoCreateVendors: false,
@@ -42,7 +53,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             skipExport: false,
             autoCreateContacts: false,
             useEmployeeAttributes: true,
-            autoCreateMerchants: true
+            autoCreateMerchants: true,
+            excludeCardNumberAndEmployeeNameInMemo: true
         },
         exportLog: {
             expenseType: false
@@ -97,7 +109,6 @@ export const c1KbArticles: KbArticle[string] = {
         QBO: {
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
-            EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_6c60e48783`,
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_faf3a93ed6`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_fe18937876`,
@@ -119,7 +130,6 @@ export const c1KbArticles: KbArticle[string] = {
         XERO: {
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_9b4570099f`,
-            EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-xero-integration-v2-0#h_d70f1d54cc`,
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_0f42f8bf02`,
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_19858cad25`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`

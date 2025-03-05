@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-mandatory-error-message',
@@ -13,6 +13,8 @@ export class MandatoryErrorMessageComponent implements OnInit {
   @Input() customErrorMessage: string;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
 

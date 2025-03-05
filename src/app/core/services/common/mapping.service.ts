@@ -25,14 +25,12 @@ export class MappingService {
     helper.setBaseApiURL();
   }
 
-  workspaceId = this.workspaceService.getWorkspaceId();
-
   getExportSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
   getImportSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/import_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
@@ -52,10 +50,10 @@ export class MappingService {
     }
 
     if (version === 'v1') {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/${apiPath}/destination_attributes/`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/${apiPath}/destination_attributes/`, params);
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`, params);
   }
 
   getGroupedDestinationAttributes(attributeTypes: string[], version: 'v1' | 'v2', apiPath?: string): Observable<GroupedDestinationAttribute> {
@@ -88,11 +86,11 @@ export class MappingService {
   }
 
   getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/${app_name}/fields/`, {});
   }
 
   getFyleFields(version?: 'v1'): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
@@ -170,7 +168,7 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_accout_type?: string[], categories?: string[]): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[]} = {
       limit: 100,
@@ -191,8 +189,8 @@ export class MappingService {
       params.display_name__in = display_name;
     }
 
-    if (detailed_accout_type) {
-      params.detail__account_type__in = detailed_accout_type;
+    if (detailed_account_type) {
+      params.detail__account_type__in = detailed_account_type;
     }
 
     if (categories) {

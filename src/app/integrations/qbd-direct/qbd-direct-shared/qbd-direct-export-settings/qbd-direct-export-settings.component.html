@@ -17,7 +17,7 @@
                         <app-configuration-toggle-field [form]="exportSettingsForm"
                             [label]="brandingContent.reimbursable.reimbursableExpenseLabel"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseSubLabel"
-                            [formControllerName]="'reimbursableExpense'" 
+                            [formControllerName]="'reimbursableExpense'"
                             [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
@@ -29,10 +29,10 @@
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="brandingContent.reimbursable.reimbursableExpenseTypeLabel"
                                 [subLabel]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
-                                [options]="reimbursableExportTypes" 
+                                [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select an export type'"
-                                [formControllerName]="'reimbursableExportType'" 
+                                [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
                                 [showExportPreview]="false">
                             </app-configuration-select-field>
@@ -57,7 +57,7 @@
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [destinationAttributes]="reimbursableAccpuntOptions()"
-                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
@@ -80,8 +80,8 @@
                             [mandatoryErrorListName]="'expense state'"
                             [label]="brandingContent.reimbursable.reimbursableExpenseStateLabel"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseStateSubLabel"
-                            [options]="expenseStateOptions" 
-                            [iconPath]="'list'" 
+                            [options]="expenseStateOptions"
+                            [iconPath]="'list'"
                             [placeholder]="'Select export state'"
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
@@ -93,9 +93,9 @@
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="brandingContent.reimbursable.reimbursableExpenseGroupLabel"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseGroupSubLabel"
-                            [options]="reimbursableExpenseGroupingFieldOptions" 
+                            [options]="reimbursableExpenseGroupingFieldOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'" 
+                            [placeholder]="'Select expense grouping'"
                             [appName]="appName"
                             [isDisableTextRequired]="isReimbursableExportGroupDisabled()"
                             [isDisabled]="isReimbursableExportGroupDisabled()"
@@ -177,7 +177,7 @@
                             <app-configuration-select-field
                               [form]="exportSettingsForm"
                               [destinationAttributes]="cccAccountOptions(exportSettingsForm.get('creditCardExportType')?.value)"
-                              [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                              [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNT"
                               [isOptionSearchInProgress]="isOptionSearchInProgress"
                               [isAdvanceSearchEnabled]="true"
                               (searchOptionsDropdown)="searchOptionsDropdown($event)"
@@ -197,7 +197,7 @@
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [destinationAttributes]="cccAccountOptions(exportSettingsForm.get('creditCardExportType')?.value)"
-                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                                [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"

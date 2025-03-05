@@ -7,7 +7,7 @@ import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
 import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingModel } from "../../common/export-settings.model";
 
 
@@ -65,7 +65,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
 
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean, destinationAttribute: DestinationAttribute[]): FormGroup {
     let additionalOption: any[] = [];
-    if (brandingConfig.brandId === 'co' && isCustomerPresent) {
+    if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField && isCustomerPresent) {
       const additionalMappingSetting = {
         source_field: 'DISABLED_XERO_SOURCE_FIELD',
         destination_field: XeroFyleField.CUSTOMER,
@@ -80,7 +80,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts.map((account) => account.toUpperCase()) : ['EXPENSE']),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts.map((name: string) => name[0]+name.substr(1).toLowerCase()) : ['Expense']),
       importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),

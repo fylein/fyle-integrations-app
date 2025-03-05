@@ -21,20 +21,18 @@ export class BusinessCentralImportSettingsService {
     helper.setBaseApiURL();
   }
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   @Cacheable({
     cacheBusterObserver: businessCentralImportSettingGetCache$
   })
   getBusinessCentralImportSettings(): Observable<BusinessCentralImportSettingsGet> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/import_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: businessCentralImportSettingGetCache$
   })
   postBusinessCentralImportSettings(importSettingsPayload: BusinessCentralImportSettingsPost): Observable<BusinessCentralImportSettingsGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
 
 }
