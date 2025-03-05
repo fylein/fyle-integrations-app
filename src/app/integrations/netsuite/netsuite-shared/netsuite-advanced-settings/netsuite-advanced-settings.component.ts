@@ -121,7 +121,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   ) { }
 
   isOptional(): string {
-    return brandingConfig.brandId === 'co' ? ' \(optional\)' : '';
+    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? ' \(optional\)' : '';
   }
 
   invalidSkipExportForm($event: boolean) {
@@ -130,13 +130,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   getCreateVendorLabel(): string {
     if (this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR) {
-      return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.VENDOR);
+      return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? EmployeeFieldMapping.VENDOR.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.VENDOR);
     }
-    return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
+    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
   }
 
   getCreateMerchantLabel(): string {
-    return brandingConfig.brandId === 'co' ? NameInJournalEntry.MERCHANT.toLowerCase() : new TitleCasePipe().transform(NameInJournalEntry.MERCHANT);
+    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? NameInJournalEntry.MERCHANT.toLowerCase() : new TitleCasePipe().transform(NameInJournalEntry.MERCHANT);
   }
 
   navigateToPreviousStep(): void {

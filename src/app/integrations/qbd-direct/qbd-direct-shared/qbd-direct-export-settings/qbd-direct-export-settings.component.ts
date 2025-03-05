@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -79,6 +79,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
 
+  QbdDirectExportSettingDestinationAccountType = QbdDirectExportSettingDestinationAccountType;
+
   isOptionSearchInProgress: boolean;
 
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -123,20 +125,52 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return false;
   }
 
-  reimbursableAccpuntOptions(): DestinationAttribute[] {
+  getReimbursableAccountTypes(): QbdDirectExportSettingDestinationAccountType[] {
     if (this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+      return [
+        QbdDirectExportSettingDestinationAccountType.Bank,
+        QbdDirectExportSettingDestinationAccountType.CreditCard,
+        QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+        QbdDirectExportSettingDestinationAccountType.LongTermLiability
+      ];
     }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+    return [
+      QbdDirectExportSettingDestinationAccountType.Bank,
+      QbdDirectExportSettingDestinationAccountType.AccountsPayable,
+      QbdDirectExportSettingDestinationAccountType.CreditCard,
+      QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+      QbdDirectExportSettingDestinationAccountType.LongTermLiability
+    ];
+  }
+
+  reimbursableAccpuntOptions(): DestinationAttribute[] {
+    const accountTypes = this.getReimbursableAccountTypes();
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+  }
+
+  getCCCAccountTypes(cccExportType: string) {
+    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+      return [QbdDirectExportSettingDestinationAccountType.CreditCard];
+    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
+      return [
+        QbdDirectExportSettingDestinationAccountType.Bank,
+        QbdDirectExportSettingDestinationAccountType.CreditCard,
+        QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+        QbdDirectExportSettingDestinationAccountType.LongTermLiability
+      ];
+    }
+    return [
+      QbdDirectExportSettingDestinationAccountType.Bank,
+      QbdDirectExportSettingDestinationAccountType.AccountsPayable,
+      QbdDirectExportSettingDestinationAccountType.CreditCard,
+      QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+      QbdDirectExportSettingDestinationAccountType.LongTermLiability
+    ];
   }
 
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
-    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-      return this.destinationOptionsWatcher(['CreditCard'], this.destinationAccounts);
-    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && this.exportSettingsForm.controls.nameInJE.value === EmployeeFieldMapping.EMPLOYEE) {
-      return this.destinationOptionsWatcher(['Bank', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
-    }
-    return this.destinationOptionsWatcher(['Bank', 'AccountsPayable', 'CreditCard', 'OtherCurrentLiability', 'LongTermLiability'], this.destinationAccounts);
+    const accountTypes = this.getCCCAccountTypes(cccExportType);
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
   private optionSearchWatcher(): void {
@@ -149,7 +183,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
       let newOptions: QbdDirectDestinationAttribute[];
 
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+      let accountTypes: QbdDirectExportSettingDestinationAccountType[] | undefined;
+      if (event.formControllerName === 'defaultReimbursableAccountsPayableAccountName') {
+        accountTypes = this.getReimbursableAccountTypes();
+      } else if (['defaultCreditCardAccountName', 'defaultCCCAccountsPayableAccountName'].includes(event.formControllerName)){
+        accountTypes = this.getCCCAccountTypes(this.exportSettingsForm.get('creditCardExportType')?.value);
+      }
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm, undefined, undefined, accountTypes).subscribe((response) => {
 
         // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
         newOptions = response.results as QbdDirectDestinationAttribute[];

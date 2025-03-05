@@ -15,14 +15,22 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     isAsterikAllowed: true,
     allowIntacctHelperDoc: true,
     showMoreDropdownInMainMenu: true,
+    loginRedirectUri: false,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
+        showOptionalTextInsteadOfAsterisk: false,
+        useCustomIcon: false,
+        displayAppLogoInDashboard: false,
+        contentVersion: 'v1',
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
             useMerchantInJournalLine: true,
-            splitExpenseGrouping: true
+            splitExpenseGrouping: true,
+            isEmployeeMappingFixed: false,
+            transformContentToSentenceCase: false,
+            isReimbursableExpensesAllowed: true
         },
         importSettings: {
             tax: true,
@@ -32,7 +40,9 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: true,
             dependentField: true,
-            allowImportCode: true
+            allowImportCode: true,
+            importSettingsV1: true,
+            disableCustomerSourceField: false
         },
         advancedSettings: {
             autoCreateVendors: true,
@@ -43,7 +53,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             skipExport: true,
             autoCreateContacts: true,
             useEmployeeAttributes: true,
-            autoCreateMerchants: true
+            autoCreateMerchants: true,
+            excludeCardNumberAndEmployeeNameInMemo: false
         },
         exportLog: {
             expenseType: true
@@ -62,28 +73,28 @@ export const fyleKbArticles: KbArticle[string] = {
         BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
         QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
         NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration`,
-        QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+        QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration`,
         INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
         TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
-        XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
+        XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
         QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
     },
     onboardingArticles: {
         INTACCT: {
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
-            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
+            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_eedea087a8`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_4eaff6e237`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_a75fae54f4`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_2a81c02bd0`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         NETSUITE: {
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_20f149b0ea`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_20e388249e`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_e1a04ead5b`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-onboarding-process-to-set-up-fyle-netsuite-integration#h_1e280cab10`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_c0fb09216c`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_b39c272fff`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_1ed0b1a285`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_d9e37228b7`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/6967005-how-to-skip-exporting-specific-expenses-from-fyle-to-netsuite.`
         },
         // TODO: Update KB articles for Sage 300
@@ -97,12 +108,11 @@ export const fyleKbArticles: KbArticle[string] = {
             COMMITMENT_FIELD: `${brandingConfig.helpArticleDomain}/en/articles/9144059-how-to-set-up-dependant-fields-in-sage-300-cre#h_5981f2ce79`
         },
         QBO: {
-            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
-            EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
+            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration#h_c16cb2d4e7`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration#h_a3a395b35e`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration#h_decaf812af`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-setting-up-quickbooks-online-integration#h_86edf1cae2`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
         },
         BUSINESS_CENTRAL: {
@@ -119,12 +129,11 @@ export const fyleKbArticles: KbArticle[string] = {
         },
         // TODO
         XERO: {
-            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_e3ade308dc`,
-            EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-xero-integration-v2-0#h_d70f1d54cc`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_ad07470d98`,
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_04d289fd42`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_d95b791edd`
+            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration#h_138bed4f7d`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration#h_8faefa5953`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration#h_275fa52ac9`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration#h_1dcd9e64e5`
         },
         QBD_DIRECT: {
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_a170c7d562`,

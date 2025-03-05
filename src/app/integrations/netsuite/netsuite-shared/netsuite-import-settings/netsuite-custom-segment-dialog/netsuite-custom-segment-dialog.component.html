@@ -14,7 +14,7 @@
                     <div *ngIf="isCustomTypeSelectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
-                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{getCustomSegmentTypeLabel()}}</label>
+                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">Choose custom field type</label>
                             </div>
                             <div>
                                 <p-dropdown appendTo="body" [options]="options"
@@ -50,10 +50,10 @@
                     <div *ngIf="isInternalIDSelectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
-                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{getInternalIDLabel()}}</label>
+                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">Enter {{ this.form.controls.customFieldType.value | snakeCaseToSpaceCase | lowercase }} internal id</label>
                             </div>
                             <div>
-                                <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.internalId.invalid && form.controls.internalId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="internalId" [placeholder]="getInternalIDLabel()" required>
+                                <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.internalId.invalid && form.controls.internalId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="internalId" [placeholder]="'Enter {{ this.form.controls.customFieldType.value | snakeCaseToSpaceCase | lowercase }} internal id'" required>
                                 <app-mandatory-error-message *ngIf="form.controls.internalId.touched && !form.controls.internalId.valid && !form.controls.internalId.disabled" [customErrorMessage]="'Please enter internal id'"></app-mandatory-error-message>
                             </div>
                         </div>
@@ -67,10 +67,10 @@
                     <div *ngIf="isTransactionLineSectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
-                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{getTransactionIdLabel()}}</label>
+                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">Enter transaction line field id</label>
                             </div>
                             <div>
-                                <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.scriptId.invalid && form.controls.scriptId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="scriptId" [placeholder]="getTransactionIdLabel()" required>
+                                <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.scriptId.invalid && form.controls.scriptId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="scriptId" [placeholder]="'Enter transaction line field id'" required>
                                 <app-mandatory-error-message *ngIf="form.controls.scriptId.touched && !form.controls.scriptId.valid && !form.controls.scriptId.disabled" [customErrorMessage]="'Please enter transaction line field id'"></app-mandatory-error-message>
                             </div>
                         </div>
