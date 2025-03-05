@@ -12,8 +12,6 @@ import { XeroCloneSetting, XeroCloneSettingPost } from '../../models/xero/xero-c
 
 export class CloneSettingService {
 
-  workspaceId = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -24,10 +22,10 @@ export class CloneSettingService {
   }
 
   getCloneSettings(): Observable<any> {
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/clone_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/clone_settings/`, {});
   }
 
   postCloneSettings(cloneSettingsPayload: QBOCloneSettingPost | XeroCloneSettingPost): Observable<any> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/clone_settings/`, cloneSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/clone_settings/`, cloneSettingsPayload);
   }
 }

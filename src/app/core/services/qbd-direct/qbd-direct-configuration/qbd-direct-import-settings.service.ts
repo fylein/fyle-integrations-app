@@ -14,8 +14,6 @@ const qbdDirectImportSettingGetCache$ = new Subject<void>();
 })
 export class QbdDirectImportSettingsService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -25,18 +23,18 @@ export class QbdDirectImportSettingsService {
     cacheBusterObserver: qbdDirectImportSettingGetCache$
   })
   getImportSettings(): Observable<QbdDirectImportSettingGet> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/import_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: qbdDirectImportSettingGetCache$
   })
   postImportSettings(importSettingsPayload: QbdDirectImportSettingPost): Observable<QbdDirectImportSettingGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
 
   getQbdDirectFields(): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/qbd/fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/fields/`, {});
   }
 
   getImportCodeFieldConfig(): Observable<ImportCodeFieldConfigType>{

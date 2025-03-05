@@ -16,8 +16,6 @@ import { ApiService } from '../../common/api.service';
 })
 export class ExportLogService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
@@ -44,7 +42,7 @@ export class ExportLogService {
       params.exported_at = exportedAt;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/`, params);
   }
 
   getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
