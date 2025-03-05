@@ -10,7 +10,8 @@ export const workspaceResponse = {
     "onboarding_state": QBDOnboardingState.EXPORT_SETTINGS,
     "created_at": "2023-01-23T05:37:56.907997Z",
     "updated_at": "2023-01-23T05:37:56.908051Z",
-    "user": [1]
+    "user": [1],
+    "migrated_to_qbd_direct": false
   };
 
   export const errorResponse = {

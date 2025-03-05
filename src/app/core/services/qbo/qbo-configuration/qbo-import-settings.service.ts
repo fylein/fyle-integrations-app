@@ -13,8 +13,6 @@ const qboImportSettingGetCache$ = new Subject<void>();
 })
 export class QboImportSettingsService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -24,18 +22,18 @@ export class QboImportSettingsService {
     cacheBusterObserver: qboImportSettingGetCache$
   })
   getImportSettings(): Observable<QBOImportSettingGet> {
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/import_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: qboImportSettingGetCache$
   })
   postImportSettings(importSettingsPayload: QBOImportSettingPost): Observable<QBOImportSettingGet> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
 
   getQBOFields(): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/qbo/fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbo/fields/`, {});
   }
 
   getImportCodeFieldConfig() {

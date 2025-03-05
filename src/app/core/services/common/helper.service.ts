@@ -9,7 +9,7 @@ import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage3
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 import { StorageService } from './storage.service';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
 import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
@@ -260,7 +260,7 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     content = new SnakeCaseToSpaceCasePipe().transform(content);
-    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
+    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(content) : content;
   }
 
   /**

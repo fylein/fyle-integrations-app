@@ -190,7 +190,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
+                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="accountsPayables"
@@ -209,7 +209,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
+                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="bankAccounts"

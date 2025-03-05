@@ -14,8 +14,6 @@ const businessCentralCredentialsCache$ = new Subject<void>();
 })
 export class BusinessCentralConnectorService {
 
-  private readonly workspaceId = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -26,7 +24,7 @@ export class BusinessCentralConnectorService {
   })
   connectBusinessCentral(businessCentralConnector: BusinessCentralConnectorPost): Observable<BusinessCentralCredential> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${this.workspaceId}/connect_business_central/authorization_code/`, businessCentralConnector);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/connect_business_central/authorization_code/`, businessCentralConnector);
   }
 
   @Cacheable({
@@ -37,7 +35,7 @@ export class BusinessCentralConnectorService {
   }
 
   postBusinessCentralCompany(companyPayload: BusinessCentralCompanyPost): Observable<BusinessCentralWorkspace> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/business_central/company/`, companyPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/company/`, companyPayload);
   }
 
   @Cacheable({

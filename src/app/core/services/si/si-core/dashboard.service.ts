@@ -14,8 +14,6 @@ import { ApiService } from '../../common/api.service';
 })
 export class DashboardService {
 
-  workspaceId: string = this.workspaceService.getWorkspaceId();
-
   constructor(
     private apiService: ApiService,
     private workspaceService: SiWorkspaceService
@@ -24,28 +22,28 @@ export class DashboardService {
   // TODO: cleanup all methods once dashboard impl is done
 
   getExportableGroupsIds(): Observable<ExportableExpenseGroup> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_expense_groups/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/exportable_expense_groups/`, {});
   }
 
   getExportErrors(): Observable<Error[]> {
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/errors/`, {is_resolved: false});
   }
 
   syncExpensesFromFyle(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/expense_groups/sync/`, {});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/sync/`, {});
   }
 
   @Cacheable()
   importExpenseGroups(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/expense_groups/sync/`, {});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/sync/`, {});
   }
 
   exportExpenseGroups(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`, {});
   }
 
   getLastExport(): Observable<LastExport> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, {});
   }
 
   getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: TaskLogType[] = []): Observable<IntacctTaskResponse> {
@@ -105,7 +103,7 @@ export class DashboardService {
     }
 
     return this.apiService.get(
-      `/workspaces/${this.workspaceId}/tasks/v2/all/`, apiParams
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/tasks/v2/all/`, apiParams
     );
   }
 
