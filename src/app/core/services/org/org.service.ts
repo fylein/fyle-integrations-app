@@ -29,10 +29,12 @@ export class OrgService {
   }
 
   createOrg(): Observable<Org> {
+    this.helper.setBaseApiURL(AppUrl.INTEGRATION);
     return this.apiService.patch('/orgs/', {});
   }
 
   getOrgs(orgId: string | undefined): Observable<Org> {
+    this.helper.setBaseApiURL(AppUrl.INTEGRATION);
     return this.apiService.get(`/orgs/`, {
       org_id: orgId
     });

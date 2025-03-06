@@ -18,6 +18,7 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QbdDirectAuthService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-auth.service';
+import { EventsService } from 'src/app/core/services/common/events.service';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit {
     private netsuiteAuthService: NetsuiteAuthService,
     private xeroAuthService: XeroAuthService,
     private storageService: StorageService,
-    private userService: UserService
+    private userService: UserService,
+    private eventsService: EventsService
   ) { }
 
   private redirect(redirectUri: string | undefined, code:string): void {
@@ -124,6 +126,9 @@ export class LoginComponent implements OnInit {
   private login(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
+        if (params.redirect_uri) {
+          this.eventsService.resetNavigationHistory(params.redirect_uri);
+        }
         this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
     });
