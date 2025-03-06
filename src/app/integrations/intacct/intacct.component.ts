@@ -6,6 +6,7 @@ import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.mode
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
@@ -26,6 +27,7 @@ export class IntacctComponent implements OnInit {
   windowReference: Window;
 
   constructor(
+    private appcuesService: AppcuesService,
     private helperService: HelperService,
     private router: Router,
     private route: ActivatedRoute,
@@ -57,6 +59,7 @@ export class IntacctComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
+    this.appcuesService.initialiseAppcues(AppName.INTACCT, this.workspace.created_at);
     this.workspaceService.syncFyleDimensions().subscribe();
     this.workspaceService.syncIntacctDimensions().subscribe();
     this.isLoading = false;
@@ -91,6 +94,11 @@ export class IntacctComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        (window as any).Appcues && (window as any).Appcues.page();
+      }
+    });
     this.handleAuthParameters();
   }
 

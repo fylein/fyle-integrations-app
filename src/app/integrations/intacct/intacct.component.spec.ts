@@ -5,6 +5,7 @@ import { IntacctComponent } from './intacct.component';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -22,6 +23,7 @@ describe('IntacctComponent', () => {
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
   let storageServiceSpy: jasmine.SpyObj<StorageService>;
   let windowServiceMock: Partial<WindowService>;
+  let appcuesServiceSpy: jasmine.SpyObj<AppcuesService>;
   let router: Router;
 
   beforeEach(async () => {
@@ -29,6 +31,7 @@ describe('IntacctComponent', () => {
     const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getWorkspace', 'postWorkspace', 'syncFyleDimensions', 'syncIntacctDimensions']);
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
+    const appcuesSpy = jasmine.createSpyObj('AppcuesService', ['initialiseAppcues']);
 
     windowServiceMock = {
       get nativeWindow() {
@@ -45,6 +48,7 @@ describe('IntacctComponent', () => {
     imports: [SharedModule],
     providers: [
         { provide: HelperService, useValue: helperSpy },
+        { provide: AppcuesService, useValue: appcuesSpy },
         { provide: StorageService, useValue: storageSpy },
         { provide: UserService, useValue: userSpy },
         { provide: SiWorkspaceService, useValue: workspaceSpy },
@@ -60,6 +64,7 @@ describe('IntacctComponent', () => {
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
     router = TestBed.inject(Router);
+    appcuesServiceSpy = TestBed.inject(AppcuesService) as jasmine.SpyObj<AppcuesService>;
 
     spyOn(router, 'navigateByUrl');
     spyOnProperty(router, 'events').and.returnValue(of(new NavigationEnd(0, '', '')));
@@ -119,5 +124,16 @@ describe('IntacctComponent', () => {
     fixture.detectChanges();
 
     expect(router.navigateByUrl).not.toHaveBeenCalled();
+  });
+
+  it('should initialise Appcues', () => {
+    (window as any).Appcues = {
+      page: jasmine.createSpy('Appcues.page')
+    };
+
+    fixture.detectChanges();
+
+    expect(appcuesServiceSpy.initialiseAppcues).toHaveBeenCalled();
+    expect((window as any).Appcues.page).toHaveBeenCalled();
   });
 });
