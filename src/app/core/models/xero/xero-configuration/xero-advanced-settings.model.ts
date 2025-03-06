@@ -121,8 +121,16 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     });
   }
 
-  static constructPayload(advancedSettingsForm: FormGroup): XeroAdvancedSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+  static constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
+    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+    let paymentAccount = {...emptyDestinationAttribute};
+    if (advancedSettingsForm.get('billPaymentAccount')?.value) {
+      if (isCloneSettings) {
+        paymentAccount = advancedSettingsForm.get('billPaymentAccount')?.value;
+      } else {
+        paymentAccount = ExportSettingModel.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
+      }
+    }
     const advancedSettingPayload: XeroAdvancedSettingPost = {
       workspace_general_settings: {
         sync_fyle_to_xero_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_XERO ? true : false,
@@ -133,7 +141,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
         memo_structure: advancedSettingsForm.get('memoStructure')?.value
       },
       general_mappings: {
-        payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value) : emptyDestinationAttribute
+        payment_account: paymentAccount
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
