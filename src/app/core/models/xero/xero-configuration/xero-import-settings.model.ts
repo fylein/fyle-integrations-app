@@ -89,13 +89,21 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
+  static constructPayload(importSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroImportSettingPost {
 
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     const COA = importSettingsForm.get('chartOfAccountTypes')?.value.map((name: string) => name.toUpperCase());
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
+    let defaultTaxCode = {...emptyDestinationAttribute};
+    if (importSettingsForm.get('defaultTaxCode')?.value) {
+      if (isCloneSettings) {
+        defaultTaxCode = importSettingsForm.get('defaultTaxCode')?.value;
+      } else {
+        defaultTaxCode = ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
+      }
+    }
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('importCategories')?.value ?? false,
@@ -105,7 +113,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
       },
       general_mappings: {
-        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute
+        default_tax_code: defaultTaxCode
       },
       mapping_settings: mappingSettings
     };
