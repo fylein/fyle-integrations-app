@@ -120,4 +120,5 @@ describe('IntacctComponent', () => {
 
     expect(router.navigateByUrl).not.toHaveBeenCalled();
   });
+
 });

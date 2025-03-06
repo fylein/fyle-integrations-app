@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AppUrl, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class QbdDirectComponent implements OnInit {
   windowReference: Window;
 
   constructor(
+    private appcuesService: AppcuesService,
     private helperService: HelperService,
     private qbdDirectHelperService: QbdDirectHelperService,
     private router: Router,
@@ -64,6 +66,7 @@ export class QbdDirectComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
+    this.appcuesService.initialiseAppcues(AppName.QBD_DIRECT, this.workspace.created_at);
     this.workspaceService.importFyleAttributes(false).subscribe();
     this.qbdDirectHelperService.importQBDAttributes(false).subscribe();
     this.isLoading = false;
