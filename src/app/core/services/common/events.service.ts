@@ -2,9 +2,7 @@ import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
 import { WindowService } from './window.service';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { brandingConfig } from 'src/app/branding/c1-contents-config';
+import { NavigationStart, Router } from '@angular/router';
 
 
 const MODULE_PATHS = [
@@ -30,11 +28,10 @@ export class EventsService {
   history: string[] = [];
 
   constructor(
-    private location: Location,
     private router: Router,
-    private windowService: WindowService,
-    private route: ActivatedRoute
+    private windowService: WindowService
   ) {
+    // Initially, we have no previous page to navigate to. So, hide the back button
     this.postEvent({ updateIframedAppNavigationAvailability: false });
   }
 
@@ -61,10 +58,7 @@ export class EventsService {
   }
 
   private navigateBack(numberOfPages = 1): void {
-    // this.location.historyGo(-numberOfPages);
     const x = this.history.splice(-numberOfPages, numberOfPages);
-    console.log('removed', x);
-    console.log('history now:', this.history);
     if (this.history.length > 0) {
       this.router.navigate([this.history[this.history.length - 1]], { skipLocationChange: true });
     }
@@ -76,10 +70,8 @@ export class EventsService {
     // Start checking from second-to-last item
     for (let i = this.history.length - 2; i >= 0; i--) {
       const currentRoute: string = this.history[i];
-      console.log({currentRoute});
 
       // If this route is a module, then go back again
-      console.log(`is currentRoute a module? ${currentRoute && MODULE_PATHS.indexOf((currentRoute.split('/').pop() as string)) > -1}`);
       if (currentRoute && this.isModule(currentRoute)) {
         numberOfPages++;
       } else {
@@ -117,8 +109,6 @@ export class EventsService {
   }
 
   setupRouteWatcher(): void {
-    // Updating the iframe app navigation availability to true on page load
-    // this.postEvent({ updateIframedAppNavigationAvailability: true });
     this.router.events.subscribe((routerEvent) => {
       if (routerEvent instanceof NavigationStart) {
         // Keep updating the current route to the parent app to help in navigation during browser refresh
@@ -126,22 +116,12 @@ export class EventsService {
           currentRoute: routerEvent.url.substring(1)
         });
 
-        console.log('in', routerEvent.url);
-
         // Check if this route has already been added to history - this happens with export_logs
         const isDuplicate = this.history.length > 0 && (routerEvent.url === this.history[this.history.length - 1]);
-
-        if (isDuplicate) {
-          console.log('skipping duplicate', routerEvent.url);
-        }
 
         // Add the current route to the history stack only if the user is navigating forward
         if (!routerEvent.restoredState && !isDuplicate) {
           this.history.push(routerEvent.url);
-          console.log('history updated:');
-          console.log(this.history);
-        } else {
-          console.log({navid: routerEvent.restoredState?.navigationId})
         }
 
         // Hide the 'back' button in fyle app if there is no previous navigatable page
@@ -154,6 +134,5 @@ export class EventsService {
 
   resetNavigationHistory(path: string) {
     this.history = [path];
-    console.log('history:', this.history);
   }
 }
