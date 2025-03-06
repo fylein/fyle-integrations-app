@@ -9,7 +9,7 @@ import { SiAuthService } from './core/services/si/si-core/si-auth.service';
 import { XeroAuthService } from './core/services/xero/xero-core/xero-auth.service';
 import { NetsuiteAuthService } from './core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { StorageService } from './core/services/common/storage.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { IntegrationsService } from './core/services/common/integrations.service';
 
 @Component({
@@ -89,6 +89,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        (window as any).Appcues && (window as any).Appcues.page();
+      }
+    });
     this.eventsService.receiveEvent();
     this.setupLoginWatcher();
     this.primengConfig.ripple = true;

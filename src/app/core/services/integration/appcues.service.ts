@@ -25,13 +25,10 @@ export class AppcuesService {
     if (this.appcues) {
       const user = this.userService.getUserProfile();
       this.appcues.identify(user.user_id, {
-        email: user.email,
-        name: user.full_name,
         'Org ID': user.org_id,
-        'Workspace Name': user.org_name,
+        'User ID': user.user_id,
         source: 'Fyle Integration Settings',
-        'App Name': appName,
-        'Flow Version': workspace_created_at > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD'
+        'App Name': appName
       });
     }
   }

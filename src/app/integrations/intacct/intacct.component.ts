@@ -27,7 +27,6 @@ export class IntacctComponent implements OnInit {
   windowReference: Window;
 
   constructor(
-    private appcuesService: AppcuesService,
     private helperService: HelperService,
     private router: Router,
     private route: ActivatedRoute,
@@ -59,7 +58,6 @@ export class IntacctComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.appcuesService.initialiseAppcues(AppName.INTACCT, this.workspace.created_at);
     this.workspaceService.syncFyleDimensions().subscribe();
     this.workspaceService.syncIntacctDimensions().subscribe();
     this.isLoading = false;
@@ -94,11 +92,6 @@ export class IntacctComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        (window as any).Appcues && (window as any).Appcues.page();
-      }
-    });
     this.handleAuthParameters();
   }
 
