@@ -27,7 +27,7 @@ export class AppcuesService {
       this.appcues.identify(user.user_id, {
         'Org ID': user.org_id,
         'User ID': user.user_id,
-        source: 'Fyle Integration Settings',
+        source: 'Fyle Integrations App',
         'App Name': appName
       });
     }
