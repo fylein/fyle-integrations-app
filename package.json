@@ -74,7 +74,6 @@
     "svg2sprite-cli": "^2.0.1"
   },
   "overrides": {
-    "esbuild": "^0.25.0",
     "trim-newlines": "^4.0.2",
     "vite": "5.4.12",
     "webpack-dev-server": "^5.2.0"
