@@ -6,6 +6,8 @@ import { UserService } from '../misc/user.service';
 import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
+import { IntegrationAppKey } from '../../models/enum/enum.model';
+import { IntegrationTokensMap, Tokens } from '../../models/misc/integration-tokens-map';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +36,23 @@ export class AuthService {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token: refreshToken });
   }
 
+  storeTokens(appKey: IntegrationAppKey, tokens: Tokens) {
+    let integrationTokens: IntegrationTokensMap | undefined = this.storageService.get('integration-tokens');
+    if (integrationTokens) {
+      integrationTokens[appKey] = tokens;
+    } else {
+      integrationTokens = {[appKey]: tokens};
+    }
+
+    console.log('[x] storing', appKey, {integrationTokens});
+    this.storageService.set('integration-tokens', integrationTokens);
+  }
+
+  private getTokens(appKey: IntegrationAppKey) {
+    let integrationTokens: IntegrationTokensMap | undefined = this.storageService.get('integration-tokens');
+    return integrationTokens?.[appKey];
+  }
+
   getAccessToken(): string | null {
     const user: MinimalUser | null = this.userService.getUserProfile();
 
@@ -60,6 +79,27 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  /**
+   * Update the access token and refresh token in the `user` object
+   * These tokens will be used in all further requests by [JwtInterceptor](../../interceptor/jwt.interceptor.ts)
+   * @param appKey
+   */
+  updateUserTokens(appKey: IntegrationAppKey) {
+    const user: MinimalUser | null = this.userService.getUserProfile();
+    const tokens = this.getTokens(appKey);
+
+    if (user && tokens) {
+      user.refresh_token = tokens.refresh_token;
+      user.access_token = tokens.access_token;
+    } else {
+      console.log('%c !!!No user / tokens!!!', 'font-size: 40px;');
+      console.log({user, tokens});
+      return;
+    }
+
+    this.userService.storeUserProfile(user);
   }
 
   logout(): void {

@@ -12,6 +12,7 @@ export class UserService {
   ) { }
 
   storeUserProfile(userProfile: MinimalUser): void {
+    console.log('[x] updating user:', userProfile);
     this.storageService.set('user', userProfile);
   }
 

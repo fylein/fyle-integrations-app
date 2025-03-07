@@ -83,6 +83,7 @@ export class QboComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const authCode = params.code;
 
+      console.log('in qbo component', authCode);
       if (authCode) {
         this.qboAuthService.loginWithAuthCode(authCode).subscribe(
           () => this.setupWorkspace()

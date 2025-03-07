@@ -3,12 +3,13 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { EventsService } from './core/services/common/events.service';
 import { QboAuthService } from './core/services/qbo/qbo-core/qbo-auth.service';
 import { Token } from 'src/app/core/models/misc/token.model';
-import { MinimalUser } from './core/models/db/user.model';
-import { InAppIntegration } from './core/models/enum/enum.model';
+import { InAppIntegration, IntegrationAppKey } from './core/models/enum/enum.model';
 import { SiAuthService } from './core/services/si/si-core/si-auth.service';
 import { XeroAuthService } from './core/services/xero/xero-core/xero-auth.service';
 import { NetsuiteAuthService } from './core/services/netsuite/netsuite-core/netsuite-auth.service';
-import { StorageService } from './core/services/common/storage.service';
+import { brandingFeatureConfig } from './branding/branding-config';
+import { Tokens } from './core/models/misc/integration-tokens-map';
+import { AuthService } from './core/services/common/auth.service';
 import { Router } from '@angular/router';
 import { IntegrationsService } from './core/services/common/integrations.service';
 
@@ -27,60 +28,59 @@ export class AppComponent implements OnInit {
     private qboAuthService: QboAuthService,
     private xeroAuthService: XeroAuthService,
     private nsAuthService: NetsuiteAuthService,
-    private storageService: StorageService,
     private router: Router,
-    private integrationsService: IntegrationsService
+    private integrationsService: IntegrationsService,
+    private authService: AuthService
   ) { }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
     this.router.navigate([this.integrationsService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
-  loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
+  loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
     const authCode = redirectUri.split('code=')[1].split('&')[0];
+    console.log('[x] logging in to', inAppIntegrationKey);
     let login$;
-    if (inAppIntegration === InAppIntegration.INTACCT) {
+    if (inAppIntegrationKey === "INTACCT") {
       login$ = this.siAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegration === InAppIntegration.QBO) {
+    } else if (inAppIntegrationKey === "QBO") {
       login$ = this.qboAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegration === InAppIntegration.XERO) {
+    } else if (inAppIntegrationKey === "XERO") {
       login$ = this.xeroAuthService.login(authCode);
-    } else if (inAppIntegration === InAppIntegration.NETSUITE) {
+    } else if (inAppIntegrationKey === "NETSUITE") {
       login$ = this.nsAuthService.loginWithAuthCode(authCode);
     } else {
       return;
     }
 
     login$.subscribe((token: Token) => {
-      const user: MinimalUser = {
-        'email': token.user.email,
+      const tokens: Tokens = {
         'access_token': token.access_token,
-        'refresh_token': token.refresh_token,
-        'full_name': token.user.full_name,
-        'user_id': token.user.user_id,
-        'org_id': token.user.org_id,
-        'org_name': token.user.org_name
+        'refresh_token': token.refresh_token
       };
-      this.storageService.set('user', user);
-      this.openInAppIntegration(inAppIntegration);
+
+      this.authService.storeTokens(inAppIntegrationKey, tokens);
+      this.authService.updateUserTokens(inAppIntegrationKey);
+      console.log('[x] redirecting watcher:', inAppIntegrationKey);
+      this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
     });
   }
 
   private setupLoginWatcher(): void {
     this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.INTACCT);
+      this.loginAndRedirectToInAppIntegration(redirectUri, "INTACCT");
     });
 
     this.eventsService.qboLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.QBO);
+      this.loginAndRedirectToInAppIntegration(redirectUri, "QBO");
     });
 
     this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.XERO);
+      this.loginAndRedirectToInAppIntegration(redirectUri, "XERO");
     });
 
     this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.NETSUITE);
+      this.loginAndRedirectToInAppIntegration(redirectUri, "NETSUITE");
     });
   }
 
@@ -90,7 +90,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventsService.receiveEvent();
-    this.setupLoginWatcher();
+    if (brandingFeatureConfig.loginToAllConnectedApps) {
+      this.setupLoginWatcher();
+    }
     this.primengConfig.ripple = true;
+    console.log('in app');
   }
 }
