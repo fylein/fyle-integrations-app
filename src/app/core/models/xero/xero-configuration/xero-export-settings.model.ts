@@ -24,10 +24,6 @@ export type XeroExportSettingWorkspaceGeneralSettingPost = {
   auto_map_employees: AutoMapEmployeeOptions | null,
 }
 
-export interface XeroExportSettingWorkspaceGeneralSetting extends XeroExportSettingWorkspaceGeneralSettingPost {
-  is_simplify_report_closure_enabled: boolean
-}
-
 export type XeroExportSettingGeneralMapping = {
   bank_account: DefaultDestinationAttribute
 }
@@ -40,7 +36,7 @@ export type XeroExportSettingPost = {
 
 export type XeroExportSettingGet = {
   expense_group_settings: XeroExpenseGroupSettingGet,
-  workspace_general_settings: XeroExportSettingWorkspaceGeneralSetting,
+  workspace_general_settings: XeroExportSettingWorkspaceGeneralSettingPost,
   general_mappings: XeroExportSettingGeneralMapping,
   workspace_id: number
 }

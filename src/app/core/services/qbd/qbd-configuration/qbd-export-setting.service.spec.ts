@@ -47,8 +47,7 @@ xdescribe('QbdExportSettingService', () => {
       credit_card_account_name: "string",
       credit_card_expense_grouped_by: QBDExpenseGroupedBy.EXPENSE,
       credit_card_expense_date: QBDExportDateType.LAST_SPENT_AT,
-      workspace: 1,
-      is_simplify_report_closure_enabled: true
+      workspace: 1
   };
     service.getQbdExportSettings().subscribe((value) => {
       expect(value).toEqual(response);
@@ -92,8 +91,7 @@ xdescribe('QbdExportSettingService', () => {
       credit_card_account_name: "string",
       credit_card_expense_grouped_by: QBDExpenseGroupedBy.EXPENSE,
       credit_card_expense_date: QBDExportDateType.LAST_SPENT_AT,
-      workspace: 1,
-      is_simplify_report_closure_enabled: true
+      workspace: 1
   };
     service.postQbdExportSettings(exportSettingPayload).subscribe(value => {
       expect(value).toEqual(response);
