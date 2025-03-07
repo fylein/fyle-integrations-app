@@ -13,7 +13,13 @@ jobs:
     - name: Install Trivy
       run: |
         curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.48.1
-    - name: Run Trivy Scan
+    - name: Setup GitHub Action
+      uses: actions/setup-node@v1
+      with:
+        node-version: 23
+    - name: Install dependencies
+      run: npm install
+        - name: Run Trivy Scan
       id: trivy
       run: |
         # Run Trivy scan for all vulnerabilities
@@ -128,12 +134,6 @@ jobs:
         echo "❌ Security scan failed: ${HIGH_CRIT_COUNT} Critical/High severity vulnerabilities detected"
         echo "Please review the PR comments for details and fix the Critical/High severity issues before merging"
         exit 1
-    - name: Setup GitHub Action
-      uses: actions/setup-node@v1
-      with:
-        node-version: 23
-    - name: Install dependencies
-      run: npm install
     - name: Test
       run: npm run unit_test:ci
       env:
