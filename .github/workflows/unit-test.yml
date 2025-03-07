@@ -2,7 +2,7 @@ name: Unit Test
 
 on:
   pull_request:
-    types: [opened,  synchronize,  reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   unit-test:
@@ -16,10 +16,10 @@ jobs:
     - name: Setup GitHub Action
       uses: actions/setup-node@v1
       with:
-        node-version: 23
+        node-version: 20
     - name: Install dependencies
       run: npm install
-        - name: Run Trivy Scan
+    - name: Run Trivy Scan
       id: trivy
       run: |
         # Run Trivy scan for all vulnerabilities
