@@ -8,6 +8,7 @@ import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
 import { IntegrationAppKey } from '../../models/enum/enum.model';
 import { IntegrationTokensMap, Tokens } from '../../models/misc/integration-tokens-map';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,6 @@ export class AuthService {
       integrationTokens = {[appKey]: tokens};
     }
 
-    console.log('[x] storing', appKey, {integrationTokens});
     this.storageService.set('integration-tokens', integrationTokens);
   }
 
@@ -87,16 +87,17 @@ export class AuthService {
    * @param appKey
    */
   updateUserTokens(appKey: IntegrationAppKey) {
+    if (!brandingFeatureConfig.loginToAllConnectedApps) {
+      return;
+    }
+
     const user: MinimalUser | null = this.userService.getUserProfile();
     const tokens = this.getTokens(appKey);
 
-    console.log('[x] updated user\'s tokens for', appKey);
     if (user && tokens) {
       user.refresh_token = tokens.refresh_token;
       user.access_token = tokens.access_token;
     } else {
-      console.log('%c !!!No user / tokens!!!', 'font-size: 40px;');
-      console.log({user, tokens});
       return;
     }
 

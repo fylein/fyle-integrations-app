@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   private redirect(redirectUri: string | undefined, code:string): void {
-    console.log('[x] redirecting to', redirectUri);
     if (redirectUri) {
       brandingFeatureConfig.loginRedirectUri ? this.router.navigate([redirectUri], { queryParams: { code: code } }) : this.router.navigate([redirectUri]);
     } else {
@@ -83,7 +82,6 @@ export class LoginComponent implements OnInit {
       this.integrationsService.getIntegrationKey(integration.tpa_name)!
     );
 
-    console.log({connectedAppKeys});
     const appsWithUniqueTpaIds: IntegrationAppKey[] = [
       "NETSUITE", "INTACCT", "QBO", "XERO"
     ];
@@ -101,7 +99,6 @@ export class LoginComponent implements OnInit {
           clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
         };
 
-        console.log("[x] posting:", {payload});
         this.eventsService.postEvent(payload);
 
         // We will need to wait for new tokens from fyle-app before we can redirect.
@@ -173,33 +170,16 @@ export class LoginComponent implements OnInit {
             this.helperService.setBaseApiURL(AppUrl.XERO);
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          // this.redirect(redirectUri, code);
-
-          // TODO: remove this for local -
+          this.redirect(redirectUri, code);
+        // } else if (brandingFeatureConfig.loginToAllConnectedApps) {
+        } else if (true) {
+          // Login to all connected apps for non-local envs (fyle theme only)
           const integrationsAppTokens = {
             refresh_token: clusterDomainWithToken.tokens.refresh_token,
             access_token: response.access_token
           };
           this.integrationsService.getIntegrations().subscribe((integrations) => {
             const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
-            console.log('[x]', {deferRedirect});
-            if (deferRedirect) {
-              // This will later be used to redirect once login is done
-              this.redirectUriStorageService.set(redirectUri);
-            } else {
-              this.redirect(redirectUri, code);
-            }
-          });
-
-        } else {
-
-          const integrationsAppTokens = {
-            refresh_token: clusterDomainWithToken.tokens.refresh_token,
-            access_token: response.access_token
-          };
-          this.integrationsService.getIntegrations().subscribe((integrations) => {
-            const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
-            console.log('[x]', {deferRedirect});
             if (deferRedirect) {
               // This will later be used to redirect once login is done
               this.redirectUriStorageService.set(redirectUri);

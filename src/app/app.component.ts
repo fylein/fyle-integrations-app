@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
 
   loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
     const authCode = redirectUri.split('code=')[1].split('&')[0];
-    console.log('[x] logging in to', inAppIntegrationKey);
     let login$;
     if (inAppIntegrationKey === "INTACCT") {
       login$ = this.siAuthService.loginWithAuthCode(authCode);
@@ -62,13 +61,10 @@ export class AppComponent implements OnInit {
       };
 
       this.authService.storeTokens(inAppIntegrationKey, tokens);
-      console.log('[x] redirecting from watcher:', inAppIntegrationKey);
-
       const redirect_uri = this.redirectUriStorageService.pop();
 
       if (redirect_uri) {
         // If the integration iframe was passed a redirect uri from fyle-app before login
-        console.log('[x] found', {redirect_uri});
         this.router.navigate([redirect_uri]);
       } else {
         this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
@@ -104,6 +100,5 @@ export class AppComponent implements OnInit {
       this.setupLoginWatcher();
     }
     this.primengConfig.ripple = true;
-    console.log('in app');
   }
 }
