@@ -171,8 +171,7 @@ export class LoginComponent implements OnInit {
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
           this.redirect(redirectUri, code);
-        // } else if (brandingFeatureConfig.loginToAllConnectedApps) {
-        } else if (true) {
+        } else if (brandingFeatureConfig.loginToAllConnectedApps) {
           // Login to all connected apps for non-local envs (fyle theme only)
           const integrationsAppTokens = {
             refresh_token: clusterDomainWithToken.tokens.refresh_token,
@@ -187,6 +186,9 @@ export class LoginComponent implements OnInit {
               this.redirect(redirectUri, code);
             }
           });
+        } else {
+          // For c1, redirect along with auth code
+          this.redirect(redirectUri, code);
         }
       });
     });
