@@ -108,26 +108,7 @@ export class MainMenuComponent implements OnInit {
       options[0].items.unshift({
         label: integrationName,
         handler: () => {
-          let accountingIntegrationApp: AccountingIntegrationApp;
-          if (integrationName === InAppIntegration.NETSUITE) {
-            accountingIntegrationApp = AccountingIntegrationApp.NETSUITE;
-          } else if (integrationName === InAppIntegration.INTACCT) {
-            accountingIntegrationApp = AccountingIntegrationApp.SAGE_INTACCT;
-          } else if (integrationName === InAppIntegration.QBO) {
-            accountingIntegrationApp = AccountingIntegrationApp.QBO;
-          } else if (integrationName === InAppIntegration.XERO) {
-            accountingIntegrationApp = AccountingIntegrationApp.XERO;
-          } else {
-            this.integrationsService.navigateToIntegration(integrationName);
-            return;
-          }
-
-          const payload = {
-            callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
-            clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
-          };
-
-          this.eventsService.postEvent(payload);
+          this.integrationsService.navigateToIntegration(integrationName);
         }
       });
     }
