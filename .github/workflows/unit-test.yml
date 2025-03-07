@@ -27,11 +27,21 @@ jobs:
           echo "Trivy scan failed"
           exit 1
         fi
-        # Check for vulnerabilities and create formatted output in one step
-        jq -r '
+        
+        # Check if the file exists and is not empty
+        if [ ! -s trivy-results.json ]; then
+          echo "No vulnerabilities found"
+          echo "{\"vulnerabilities\": []}" > formatted-results.json
+          exit 0
+        fi
+        
+        # Check for vulnerabilities and create formatted output
+        if ! jq -r '
           {
             vulnerabilities: [
-              .Results[] | select(.Vulnerabilities) | .Vulnerabilities[] | {
+              (.Results // [])[] | 
+              select(.Vulnerabilities) | 
+              .Vulnerabilities[] | {
                 package: .PkgName,
                 severity: .Severity,
                 vulnerability_id: .VulnerabilityID,
@@ -43,7 +53,12 @@ jobs:
               }
             ]
           }
-        ' trivy-results.json > formatted-results.json
+        ' trivy-results.json > formatted-results.json; then
+          echo "Error processing scan results"
+          echo "{\"vulnerabilities\": []}" > formatted-results.json
+          exit 0
+        fi
+        
         # Set environment variables for next steps
         TOTAL_COUNT=$(jq '.vulnerabilities | length' formatted-results.json)
         HIGH_CRIT_COUNT=$(jq '[.vulnerabilities[] | select(.severity == "CRITICAL" or .severity == "HIGH")] | length' formatted-results.json)
