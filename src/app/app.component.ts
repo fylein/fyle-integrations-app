@@ -12,6 +12,7 @@ import { Tokens } from './core/models/misc/integration-tokens-map';
 import { AuthService } from './core/services/common/auth.service';
 import { Router } from '@angular/router';
 import { IntegrationsService } from './core/services/common/integrations.service';
+import { RedirectUriStorageService } from './core/services/misc/redirect-uri-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
     private nsAuthService: NetsuiteAuthService,
     private router: Router,
     private integrationsService: IntegrationsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private redirectUriStorageService: RedirectUriStorageService
   ) { }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
@@ -60,9 +62,17 @@ export class AppComponent implements OnInit {
       };
 
       this.authService.storeTokens(inAppIntegrationKey, tokens);
-      this.authService.updateUserTokens(inAppIntegrationKey);
-      console.log('[x] redirecting watcher:', inAppIntegrationKey);
-      this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
+      console.log('[x] redirecting from watcher:', inAppIntegrationKey);
+
+      const redirect_uri = this.redirectUriStorageService.pop();
+
+      if (redirect_uri) {
+        // If the integration iframe was passed a redirect uri from fyle-app before login
+        console.log('[x] found', {redirect_uri});
+        this.router.navigate([redirect_uri]);
+      } else {
+        this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
+      }
     });
   }
 

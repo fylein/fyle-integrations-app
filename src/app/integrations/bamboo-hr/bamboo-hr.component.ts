@@ -7,6 +7,7 @@ import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrMod
 import { AppName, AppUrl, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -61,7 +62,8 @@ export class BambooHrComponent implements OnInit {
     private helperService: HelperService,
     private messageService: MessageService,
     private orgService: OrgService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private authService: AuthService
   ) { }
 
   openDialog(): void {
@@ -162,6 +164,7 @@ export class BambooHrComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.updateUserTokens('BAMBOO_HR');
     this.setupPage();
   }
 

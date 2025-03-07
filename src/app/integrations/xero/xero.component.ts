@@ -10,6 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-xero',
@@ -35,7 +36,8 @@ export class XeroComponent implements OnInit {
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
     private helperService: HelperService,
-    private xeroAuthService: XeroAuthService
+    private xeroAuthService: XeroAuthService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -98,6 +100,7 @@ export class XeroComponent implements OnInit {
           () => this.setupWorkspace()
         );
       } else {
+        this.authService.updateUserTokens('XERO')
         this.setupWorkspace();
       }
     });

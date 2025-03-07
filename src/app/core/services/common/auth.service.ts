@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   private getTokens(appKey: IntegrationAppKey) {
-    let integrationTokens: IntegrationTokensMap | undefined = this.storageService.get('integration-tokens');
+    const integrationTokens: IntegrationTokensMap | undefined = this.storageService.get('integration-tokens');
     return integrationTokens?.[appKey];
   }
 
@@ -90,6 +90,7 @@ export class AuthService {
     const user: MinimalUser | null = this.userService.getUserProfile();
     const tokens = this.getTokens(appKey);
 
+    console.log('[x] updated user\'s tokens for', appKey);
     if (user && tokens) {
       user.refresh_token = tokens.refresh_token;
       user.access_token = tokens.access_token;

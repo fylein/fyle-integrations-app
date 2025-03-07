@@ -9,6 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-netsuite',
@@ -34,7 +35,8 @@ export class NetsuiteComponent implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private nsAuthService: NetsuiteAuthService
+    private nsAuthService: NetsuiteAuthService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -88,6 +90,7 @@ export class NetsuiteComponent implements OnInit {
           () => this.setupWorkspace()
         );
       } else {
+        this.authService.updateUserTokens('NETSUITE');
         this.setupWorkspace();
       }
     });

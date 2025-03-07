@@ -22,6 +22,7 @@ import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 import { Tokens } from 'src/app/core/models/misc/integration-tokens-map';
 import { appKeyToAccountingIntegrationApp, Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
+import { RedirectUriStorageService } from 'src/app/core/services/misc/redirect-uri-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,8 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService,
     private userService: UserService,
     private eventsService: EventsService,
-    private integrationsService: IntegrationsService
+    private integrationsService: IntegrationsService,
+    private redirectUriStorageService: RedirectUriStorageService
   ) { }
 
   private redirect(redirectUri: string | undefined, code:string): void {
@@ -181,7 +183,10 @@ export class LoginComponent implements OnInit {
           this.integrationsService.getIntegrations().subscribe((integrations) => {
             const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
             console.log('[x]', {deferRedirect});
-            if (!deferRedirect) {
+            if (deferRedirect) {
+              // This will later be used to redirect once login is done
+              this.redirectUriStorageService.set(redirectUri);
+            } else {
               this.redirect(redirectUri, code);
             }
           });
@@ -195,7 +200,10 @@ export class LoginComponent implements OnInit {
           this.integrationsService.getIntegrations().subscribe((integrations) => {
             const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
             console.log('[x]', {deferRedirect});
-            if (!deferRedirect) {
+            if (deferRedirect) {
+              // This will later be used to redirect once login is done
+              this.redirectUriStorageService.set(redirectUri);
+            } else {
               this.redirect(redirectUri, code);
             }
           });
