@@ -27,7 +27,6 @@ export class WorkspaceService {
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getWorkspace(orgId: string): any {
-    this.helper.setBaseApiURL();
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 

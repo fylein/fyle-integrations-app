@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteWorkspace } from 'src/app/core/models/netsuite/db/netsuite-workspace.model';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -10,6 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-netsuite',
@@ -36,7 +37,8 @@ export class NetsuiteComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
     private nsAuthService: NetsuiteAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private helperService: HelperService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -68,7 +70,7 @@ export class NetsuiteComponent implements OnInit {
 
 
   private setupWorkspace(): void {
-
+    this.helperService.setBaseApiURL(AppUrl.NETSUITE);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: NetsuiteWorkspace[]) => {
       if (workspaces.length) {
         this.storeWorkspaceAndNavigate(workspaces[0]);
