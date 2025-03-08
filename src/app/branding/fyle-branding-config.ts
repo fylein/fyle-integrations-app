@@ -16,6 +16,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     allowIntacctHelperDoc: true,
     showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
+    loginToAllConnectedApps: true,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,

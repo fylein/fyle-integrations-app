@@ -5,6 +5,7 @@ import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-travelperk',
@@ -25,7 +26,8 @@ export class TravelperkComponent implements OnInit {
     private travelperkService: TravelperkService,
     private storageService: StorageService,
     private windowService: WindowService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -61,6 +63,7 @@ export class TravelperkComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.updateUserTokens('TRAVELPERK');
     this.setupPage();
   }
 }

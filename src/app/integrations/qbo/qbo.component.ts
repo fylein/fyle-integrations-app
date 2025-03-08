@@ -10,6 +10,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-qbo',
@@ -35,7 +36,8 @@ export class QboComponent implements OnInit {
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -88,6 +90,7 @@ export class QboComponent implements OnInit {
           () => this.setupWorkspace()
         );
       } else {
+        this.authService.updateUserTokens('QBO');
         this.setupWorkspace();
       }
     });
