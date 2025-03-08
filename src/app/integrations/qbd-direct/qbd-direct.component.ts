@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -36,7 +37,8 @@ export class QbdDirectComponent implements OnInit {
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -75,6 +77,7 @@ export class QbdDirectComponent implements OnInit {
 
   private setupWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.QBD_DIRECT);
+    this.authService.updateUserTokens('QBD_DIRECT');
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: QbdDirectWorkspace[]) => {
       if (workspaces.length) {
         this.storeWorkspaceAndNavigate(workspaces[0]);
