@@ -9,6 +9,7 @@ export type FeatureConfiguration = {
         allowIntacctHelperDoc: boolean;
         showMoreDropdownInMainMenu: boolean;
         loginRedirectUri: boolean;
+        loginToAllConnectedApps: boolean;
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

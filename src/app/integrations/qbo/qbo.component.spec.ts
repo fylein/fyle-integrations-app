@@ -13,6 +13,7 @@ import { mockUser, mockWorkspace, testOnboardingState } from './qbo.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -22,6 +23,7 @@ describe('QboComponent', () => {
   let storageServiceSpy: jasmine.SpyObj<StorageService>;
   let userServiceSpy: jasmine.SpyObj<IntegrationsUserService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
   let windowServiceMock: Partial<WindowService>;
   let router: Router;
 
@@ -31,6 +33,8 @@ describe('QboComponent', () => {
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
     const userSpy = jasmine.createSpyObj('IntegrationsUserService', ['getUserProfile']);
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspace', 'postWorkspace']);
+    const authSpy = jasmine.createSpyObj('AuthService', ['updateUserTokens']);
+
     windowServiceMock = {
       get nativeWindow() {
         return {
@@ -57,6 +61,7 @@ describe('QboComponent', () => {
         { provide: IntegrationsUserService, useValue: userSpy },
         { provide: WorkspaceService, useValue: workspaceSpy },
         { provide: WindowService, useValue: windowServiceMock },
+        { provide: AuthService, useValue: authSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -68,6 +73,7 @@ describe('QboComponent', () => {
     storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
     userServiceSpy = TestBed.inject(IntegrationsUserService) as jasmine.SpyObj<IntegrationsUserService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
+    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
 
@@ -83,6 +89,11 @@ describe('QboComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should update the user\'s tokens', () => {
+    fixture.detectChanges();
+    expect(authServiceSpy.updateUserTokens).toHaveBeenCalledOnceWith('QBO');
   });
 
   it('should setup workspace and navigate when workspace exists', fakeAsync(() => {

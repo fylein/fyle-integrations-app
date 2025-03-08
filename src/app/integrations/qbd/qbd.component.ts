@@ -8,6 +8,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-qbd',
@@ -29,7 +30,8 @@ export class QbdComponent implements OnInit {
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: QbdWorkspaceService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -50,6 +52,7 @@ export class QbdComponent implements OnInit {
 
   private setupWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.QBD);
+    this.authService.updateUserTokens('QBD');
     this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
         this.workspaceSetting(workspaces);
