@@ -100,7 +100,7 @@ export class XeroComponent implements OnInit {
           () => this.setupWorkspace()
         );
       } else {
-        this.authService.updateUserTokens('XERO')
+        this.authService.updateUserTokens('XERO');
         this.setupWorkspace();
       }
     });
