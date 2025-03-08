@@ -10,7 +10,7 @@ import { NetsuiteAuthService } from './core/services/netsuite/netsuite-core/nets
 import { brandingFeatureConfig } from './branding/branding-config';
 import { Tokens } from './core/models/misc/integration-tokens-map';
 import { AuthService } from './core/services/common/auth.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { IntegrationsService } from './core/services/common/integrations.service';
 import { RedirectUriStorageService } from './core/services/misc/redirect-uri-storage.service';
 
@@ -95,6 +95,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        (window as any).Appcues && (window as any).Appcues.page();
+      }
+    });
     this.eventsService.receiveEvent();
     if (brandingFeatureConfig.loginToAllConnectedApps) {
       this.setupLoginWatcher();

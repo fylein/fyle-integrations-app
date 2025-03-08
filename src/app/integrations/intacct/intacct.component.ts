@@ -6,6 +6,7 @@ import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.mode
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
