@@ -16,6 +16,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     allowIntacctHelperDoc: false,
     showMoreDropdownInMainMenu: false,
     loginRedirectUri: true,
+    loginToAllConnectedApps: false,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
