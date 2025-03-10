@@ -278,7 +278,6 @@ export class HelperService {
         value: value || '',
         destination_id
       } as DestinationAttribute);
-
     }
 
     options.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
@@ -295,7 +294,6 @@ export class HelperService {
       !options.find((option) => option.id === newOption.id)
     ) {
       options.push(newOption);
-
     }
 
     options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));

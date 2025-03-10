@@ -56,7 +56,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'defaultReimbursableAccountsPayableAccountName')">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [destinationAttributes]="reimbursableAccpuntOptions()"
+                                [destinationAttributes]="reimbursableAccountOptions()"
                                 [destinationOptionKey]="QbdDirectExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [isAdvanceSearchEnabled]="true"

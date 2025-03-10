@@ -143,9 +143,17 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     ];
   }
 
-  reimbursableAccpuntOptions(): DestinationAttribute[] {
+  reimbursableAccountOptions(): DestinationAttribute[] {
     const accountTypes = this.getReimbursableAccountTypes();
-    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+    const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+
+    // Since the paginated GET call may not include the default accounts that have already been saved, we need to add them to the options
+    this.helperService.addDestinationAttributeIfNotExists({
+      options: accountOptions,
+      destination_id: this.exportSettings?.default_reimbursable_accounts_payable_account_id,
+      value: this.exportSettings?.default_reimbursable_accounts_payable_account_name
+    });
+    return accountOptions;
   }
 
   getCCCAccountTypes(cccExportType: string) {
@@ -170,7 +178,21 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     const accountTypes = this.getCCCAccountTypes(cccExportType);
-    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+    const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
+
+    // Since the paginated GET call may not include the default accounts that have already been saved, we need to add them to the options
+    this.helperService.addDestinationAttributeIfNotExists({
+      options: this.destinationAccounts,
+      destination_id: this.exportSettings?.default_ccc_accounts_payable_account_id,
+      value: this.exportSettings?.default_ccc_accounts_payable_account_name
+    });
+    this.helperService.addDestinationAttributeIfNotExists({
+      options: this.destinationAccounts,
+      destination_id: this.exportSettings?.default_credit_card_account_id,
+      value: this.exportSettings?.default_credit_card_account_name
+    });
+
+    return accountOptions;
   }
 
   private optionSearchWatcher(): void {
