@@ -3,7 +3,7 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { EventsService } from './core/services/common/events.service';
 import { QboAuthService } from './core/services/qbo/qbo-core/qbo-auth.service';
 import { Token } from 'src/app/core/models/misc/token.model';
-import { InAppIntegration, IntegrationAppKey } from './core/models/enum/enum.model';
+import { IframeOrigin, InAppIntegration, IntegrationAppKey } from './core/models/enum/enum.model';
 import { SiAuthService } from './core/services/si/si-core/si-auth.service';
 import { XeroAuthService } from './core/services/xero/xero-core/xero-auth.service';
 import { NetsuiteAuthService } from './core/services/netsuite/netsuite-core/netsuite-auth.service';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { IntegrationsService } from './core/services/common/integrations.service';
 import { RedirectUriStorageService } from './core/services/misc/redirect-uri-storage.service';
 import { Tokens } from './core/models/misc/integration-tokens-map';
+import { IframeOriginStorageService } from './core/services/misc/iframe-origin-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private integrationsService: IntegrationsService,
     private authService: AuthService,
-    private redirectUriStorageService: RedirectUriStorageService
+    private redirectUriStorageService: RedirectUriStorageService,
+    private iframeOriginStorageService: IframeOriginStorageService
   ) { }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
@@ -96,7 +98,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventsService.receiveEvent();
-    if (brandingFeatureConfig.loginToAllConnectedApps) {
+    if (
+      brandingFeatureConfig.loginToAllConnectedApps &&
+      this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD
+    ) {
       this.setupLoginWatcher();
     }
     this.primengConfig.ripple = true;

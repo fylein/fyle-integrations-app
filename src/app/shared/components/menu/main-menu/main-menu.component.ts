@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingIntegrationApp, AppName, InAppIntegration } from 'src/app/core/models/enum/enum.model';
-import { Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
+import { IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
+import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -44,6 +45,8 @@ export class MainMenuComponent implements OnInit {
 
   isDisabled: boolean = false;
 
+  showMoreDropdown: boolean;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -51,8 +54,13 @@ export class MainMenuComponent implements OnInit {
   constructor(
     private router: Router,
     private integrationsService: IntegrationsService,
-    private eventsService: EventsService
-  ) { }
+    private eventsService: EventsService,
+    private iframeOriginStorageService: IframeOriginStorageService
+  ) {
+    this.showMoreDropdown =
+      this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
+      this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD;
+  }
 
   handleDropdownChange(event: any) {
     if (event.value === null) {
