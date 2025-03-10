@@ -370,6 +370,25 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExpenseExportGroup);
   }
 
+  private addMissingOptions() {
+      // Since paginated call doesn't return all results for options, we use the export settings response to fill in options
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.destinationAccounts,
+        destination_id: this.exportSettings?.default_ccc_accounts_payable_account_id,
+        value: this.exportSettings?.default_ccc_accounts_payable_account_name
+      });
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.destinationAccounts,
+        destination_id: this.exportSettings?.default_reimbursable_accounts_payable_account_id,
+        value: this.exportSettings?.default_reimbursable_accounts_payable_account_name
+      });
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.destinationAccounts,
+        destination_id: this.exportSettings?.default_credit_card_account_id,
+        value: this.exportSettings?.default_credit_card_account_name
+      });
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -396,6 +415,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       this.setupReimbursableExpenseGroupingDateOptions();
       this.setupCCCExpenseGroupingDateOptions();
 
+      this.addMissingOptions();
       this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
