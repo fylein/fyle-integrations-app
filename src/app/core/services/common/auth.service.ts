@@ -6,9 +6,10 @@ import { UserService } from '../misc/user.service';
 import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
-import { IntegrationAppKey } from '../../models/enum/enum.model';
+import { IframeOrigin, IntegrationAppKey } from '../../models/enum/enum.model';
 import { IntegrationTokensMap, Tokens } from '../../models/misc/integration-tokens-map';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { IframeOriginStorageService } from '../misc/iframe-origin-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(
     private apiService: ApiService,
     private storageService: StorageService,
-    private userService: UserService
+    private userService: UserService,
+    private iframeOriginStorageService: IframeOriginStorageService
   ) { }
 
   isLoggedIn(): boolean | null {
@@ -87,7 +89,10 @@ export class AuthService {
    * @param appKey
    */
   updateUserTokens(appKey: IntegrationAppKey) {
-    if (!brandingFeatureConfig.loginToAllConnectedApps) {
+    if (
+      !brandingFeatureConfig.loginToAllConnectedApps ||
+      this.iframeOriginStorageService.get() !== IframeOrigin.ADMIN_DASHBOARD
+    ) {
       return;
     }
 
