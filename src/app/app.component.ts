@@ -26,71 +26,9 @@ export class AppComponent implements OnInit {
     private eventsService: EventsService,
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
-    private siAuthService: SiAuthService,
-    private qboAuthService: QboAuthService,
-    private xeroAuthService: XeroAuthService,
-    private nsAuthService: NetsuiteAuthService,
     private router: Router,
-    private integrationsService: IntegrationsService,
-    private authService: AuthService,
-    private redirectUriStorageService: RedirectUriStorageService,
     private iframeOriginStorageService: IframeOriginStorageService
   ) { }
-
-  openInAppIntegration(inAppIntegration: InAppIntegration): void {
-    this.router.navigate([this.integrationsService.inAppIntegrationUrlMap[inAppIntegration]]);
-  }
-
-  loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
-    const authCode = redirectUri.split('code=')[1].split('&')[0];
-    let login$;
-    if (inAppIntegrationKey === "INTACCT") {
-      login$ = this.siAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegrationKey === "QBO") {
-      login$ = this.qboAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegrationKey === "XERO") {
-      login$ = this.xeroAuthService.login(authCode);
-    } else if (inAppIntegrationKey === "NETSUITE") {
-      login$ = this.nsAuthService.loginWithAuthCode(authCode);
-    } else {
-      return;
-    }
-
-    login$.subscribe((token: Token) => {
-      const tokens: Tokens = {
-        'access_token': token.access_token,
-        'refresh_token': token.refresh_token
-      };
-
-      this.authService.storeTokens(inAppIntegrationKey, tokens);
-      const redirect_uri = this.redirectUriStorageService.pop();
-
-      if (redirect_uri) {
-        // If the integration iframe was passed a redirect uri from fyle-app before login
-        this.router.navigate([redirect_uri]);
-      } else {
-        this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
-      }
-    });
-  }
-
-  private setupLoginWatcher(): void {
-    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "INTACCT");
-    });
-
-    this.eventsService.qboLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "QBO");
-    });
-
-    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "XERO");
-    });
-
-    this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "NETSUITE");
-    });
-  }
 
   closeToast(): void {
     this.messageService.clear('');
@@ -98,12 +36,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventsService.receiveEvent();
-    if (
-      brandingFeatureConfig.loginToAllConnectedApps &&
-      this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD
-    ) {
-      this.setupLoginWatcher();
-    }
     this.primengConfig.ripple = true;
   }
 }

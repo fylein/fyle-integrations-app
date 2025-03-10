@@ -10,8 +10,8 @@ import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/s
 import { BusinessCentralAuthService } from 'src/app/core/services/business-central/business-central-core/business-central-auth.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { AppUrl, IframeOrigin, IntegrationAppKey } from 'src/app/core/models/enum/enum.model';
-import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
+import { AppUrl, IframeOrigin, InAppIntegration, IntegrationAppKey } from 'src/app/core/models/enum/enum.model';
+import { ClusterDomainWithToken, Token } from 'src/app/core/models/misc/token.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sage300AuthService: Sage300AuthService,
     private siAuthService : SiAuthService,
-    private netsuiteAuthService: NetsuiteAuthService,
+    private nsAuthService: NetsuiteAuthService,
     private xeroAuthService: XeroAuthService,
     private storageService: StorageService,
     private userService: UserService,
@@ -58,6 +58,62 @@ export class LoginComponent implements OnInit {
     private redirectUriStorageService: RedirectUriStorageService,
     private iframeOriginStorageService: IframeOriginStorageService
   ) { }
+
+
+  openInAppIntegration(inAppIntegration: InAppIntegration): void {
+    this.router.navigate([this.integrationsService.inAppIntegrationUrlMap[inAppIntegration]]);
+  }
+
+  loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
+    const authCode = redirectUri.split('code=')[1].split('&')[0];
+    let login$;
+    if (inAppIntegrationKey === "INTACCT") {
+      login$ = this.siAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegrationKey === "QBO") {
+      login$ = this.qboAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegrationKey === "XERO") {
+      login$ = this.xeroAuthService.login(authCode);
+    } else if (inAppIntegrationKey === "NETSUITE") {
+      login$ = this.nsAuthService.loginWithAuthCode(authCode);
+    } else {
+      return;
+    }
+
+    login$.subscribe((token: Token) => {
+      const tokens: Tokens = {
+        'access_token': token.access_token,
+        'refresh_token': token.refresh_token
+      };
+
+      this.authService.storeTokens(inAppIntegrationKey, tokens);
+      const redirect_uri = this.redirectUriStorageService.pop();
+
+      if (redirect_uri) {
+        // If the integration iframe was passed a redirect uri from fyle-app before login
+        this.router.navigate([redirect_uri]);
+      } else {
+        this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
+      }
+    });
+  }
+
+  private setupLoginWatcher(): void {
+    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "INTACCT");
+    });
+
+    this.eventsService.qboLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "QBO");
+    });
+
+    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "XERO");
+    });
+
+    this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "NETSUITE");
+    });
+  }
 
   private redirect(redirectUri: string | undefined, code:string): void {
     if (redirectUri) {
@@ -166,7 +222,7 @@ export class LoginComponent implements OnInit {
           }
           if (this.exposeApps?.NETSUITE) {
             this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-            this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+            this.nsAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
           if (this.exposeApps?.XERO) {
             this.helperService.setBaseApiURL(AppUrl.XERO);
@@ -178,6 +234,7 @@ export class LoginComponent implements OnInit {
           this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD
         ) {
           // Login to all connected apps for non-local envs (fyle theme & admin app only)
+          this.setupLoginWatcher();
           const integrationsAppTokens = {
             refresh_token: clusterDomainWithToken.tokens.refresh_token,
             access_token: response.access_token
