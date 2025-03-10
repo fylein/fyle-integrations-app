@@ -10,7 +10,7 @@ import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/s
 import { BusinessCentralAuthService } from 'src/app/core/services/business-central/business-central-core/business-central-auth.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { AppUrl, IntegrationAppKey } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, IframeOrigin, IntegrationAppKey } from 'src/app/core/models/enum/enum.model';
 import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
@@ -23,6 +23,7 @@ import { IntegrationsService } from 'src/app/core/services/common/integrations.s
 import { Tokens } from 'src/app/core/models/misc/integration-tokens-map';
 import { appKeyToAccountingIntegrationApp, Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
 import { RedirectUriStorageService } from 'src/app/core/services/misc/redirect-uri-storage.service';
+import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +55,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private eventsService: EventsService,
     private integrationsService: IntegrationsService,
-    private redirectUriStorageService: RedirectUriStorageService
+    private redirectUriStorageService: RedirectUriStorageService,
+    private iframeOriginStorageService: IframeOriginStorageService
   ) { }
 
   private redirect(redirectUri: string | undefined, code:string): void {
@@ -171,8 +173,11 @@ export class LoginComponent implements OnInit {
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
           this.redirect(redirectUri, code);
-        } else if (brandingFeatureConfig.loginToAllConnectedApps) {
-          // Login to all connected apps for non-local envs (fyle theme only)
+        } else if (
+          brandingFeatureConfig.loginToAllConnectedApps &&
+          this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD
+        ) {
+          // Login to all connected apps for non-local envs (fyle theme & admin app only)
           const integrationsAppTokens = {
             refresh_token: clusterDomainWithToken.tokens.refresh_token,
             access_token: response.access_token
@@ -187,7 +192,7 @@ export class LoginComponent implements OnInit {
             }
           });
         } else {
-          // For c1, redirect along with auth code
+          // For c1 and native_apps, redirect without logging in to anything (along with auth code for c1)
           this.redirect(redirectUri, code);
         }
       });
@@ -199,6 +204,11 @@ export class LoginComponent implements OnInit {
       if (params.code) {
         if (params.redirect_uri) {
           this.eventsService.resetNavigationHistory(params.redirect_uri);
+        }
+        if (params.origin && params.origin === 'native_apps') {
+          this.iframeOriginStorageService.set(IframeOrigin.NATIVE_APPS);
+        } else {
+          this.iframeOriginStorageService.set(IframeOrigin.ADMIN_DASHBOARD);
         }
         this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
