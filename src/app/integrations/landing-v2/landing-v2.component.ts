@@ -75,6 +75,8 @@ export class LandingV2Component implements OnInit {
     'orRuH2BEKRnW'
   ];
 
+  readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
+
   readonly ThemeOption = ThemeOption;
 
   constructor(
@@ -103,7 +105,8 @@ export class LandingV2Component implements OnInit {
     if (
       (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
       (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
-      (appKey === 'TRAVELPERK' && !this.org.allow_travelperk)
+      (appKey === 'TRAVELPERK' && !this.org.allow_travelperk) ||
+      (appKey === 'QBD' && !this.showQBDIIFIntegration)
     ) {
       return false;
     }
