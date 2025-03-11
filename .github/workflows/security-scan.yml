@@ -12,5 +12,3 @@ jobs:
         uses: fylein/vulnerability-scan-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          is_frontend: true
-          node_version: 23
