@@ -62,7 +62,15 @@ export class IntegrationsService {
 
   @Cacheable()
   getIntegrations(): Observable<Integration[]> {
+    // Store the existing base API URL
+    const previousBaseApiUrl = this.apiService.getBaseApiURL();
+
+    // Set the base API URL to the integrations URL
     this.helper.setBaseApiURL(AppUrl.INTEGRATION);
-    return this.apiService.get(`/integrations/`, {});
+    const integrationsObservable = this.apiService.get(`/integrations/`, {});
+
+    // Reset the base API URL to the previous one, so that the following requests are not affected
+    this.apiService.setBaseApiURL(previousBaseApiUrl);
+    return integrationsObservable;
   }
 }
