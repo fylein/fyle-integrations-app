@@ -145,9 +145,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableAccountOptions(): DestinationAttribute[] {
     const accountTypes = this.getReimbursableAccountTypes();
-    const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-
-    return accountOptions;
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
   getCCCAccountTypes(cccExportType: string) {
@@ -172,9 +170,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     const accountTypes = this.getCCCAccountTypes(cccExportType);
-    const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-
-    return accountOptions;
+    return this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
   }
 
   private optionSearchWatcher(): void {
