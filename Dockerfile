@@ -1,5 +1,5 @@
 # base image
-FROM node:18-slim as build
+FROM node:22-slim as build
 
 ARG SENTRY_AUTH_TOKEN
 
