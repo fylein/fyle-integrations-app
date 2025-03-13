@@ -147,12 +147,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     const accountTypes = this.getReimbursableAccountTypes();
     const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
 
-    // Since the paginated GET call may not include the default accounts that have already been saved, we need to add them to the options
-    this.helperService.addDestinationAttributeIfNotExists({
-      options: accountOptions,
-      destination_id: this.exportSettings?.default_reimbursable_accounts_payable_account_id,
-      value: this.exportSettings?.default_reimbursable_accounts_payable_account_name
-    });
     return accountOptions;
   }
 
@@ -179,18 +173,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   cccAccountOptions(cccExportType: string): DestinationAttribute[] {
     const accountTypes = this.getCCCAccountTypes(cccExportType);
     const accountOptions = this.destinationOptionsWatcher(accountTypes, this.destinationAccounts);
-
-    // Since the paginated GET call may not include the default accounts that have already been saved, we need to add them to the options
-    this.helperService.addDestinationAttributeIfNotExists({
-      options: this.destinationAccounts,
-      destination_id: this.exportSettings?.default_ccc_accounts_payable_account_id,
-      value: this.exportSettings?.default_ccc_accounts_payable_account_name
-    });
-    this.helperService.addDestinationAttributeIfNotExists({
-      options: this.destinationAccounts,
-      destination_id: this.exportSettings?.default_credit_card_account_id,
-      value: this.exportSettings?.default_credit_card_account_name
-    });
 
     return accountOptions;
   }
@@ -392,6 +374,62 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExpenseExportGroup);
   }
 
+  private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: PaginatedDestinationAttribute): void {
+    this.exportSettings = exportSettingResponse;
+
+    this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
+    this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
+
+    this.destinationAccounts = accounts.results as QbdDirectDestinationAttribute[];
+
+    this.setupReimbursableExpenseGroupingDateOptions();
+    this.setupCCCExpenseGroupingDateOptions();
+
+    this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
+
+    this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
+
+    const [exportSettingValidatorRule, exportModuleRule] = QbdDirectExportSettingModel.getValidators();
+
+    this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingsForm);
+
+    this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingsForm);
+
+    this.exportsettingsWatcher();
+
+    this.optionSearchWatcher();
+
+    this.isLoading = false;
+  }
+
+  /**
+   * Get an observable to fetch default accounts if they are not already fetched by getPaginatedDestinationAttributes
+   * @param exportSettingResponse The response from the export settings API (containing default account ids)
+   * @param accounts The destination accounts fetched by getPaginatedDestinationAttributes
+   * @returns If the default accounts are not already fetched, return an observable to fetch them. Otherwise, return null.
+   */
+  private getDefaultAccounts(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: PaginatedDestinationAttribute): Observable<PaginatedDestinationAttribute> | null {
+    const defaultDestinationIds = [
+      exportSettingResponse?.default_credit_card_account_id,
+      exportSettingResponse?.default_reimbursable_accounts_payable_account_id,
+      exportSettingResponse?.default_ccc_accounts_payable_account_id
+    ];
+
+    const existingDestinationIds = accounts.results.map((account) => account.destination_id);
+    const destinationIdsToFetch = [];
+
+    for (const defaultDestinationId of defaultDestinationIds) {
+      if (defaultDestinationId && !existingDestinationIds.includes(defaultDestinationId)) {
+        destinationIdsToFetch.push(defaultDestinationId);
+      }
+    }
+
+    if (destinationIdsToFetch.length > 0) {
+      return this.mappingService.getPaginatedDestinationAttributes('ACCOUNT', undefined, undefined, undefined, undefined, undefined, destinationIdsToFetch);
+    }
+    return null;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -408,31 +446,19 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
     ]).subscribe(([exportSettingResponse, accounts]) => {
-      this.exportSettings = exportSettingResponse;
 
-      this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
-      this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
+      const defaultAccountsObservable = this.getDefaultAccounts(exportSettingResponse, accounts);
 
-      this.destinationAccounts = accounts.results as QbdDirectDestinationAttribute[];
-
-      this.setupReimbursableExpenseGroupingDateOptions();
-      this.setupCCCExpenseGroupingDateOptions();
-
-      this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
-
-      this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
-
-      const [exportSettingValidatorRule, exportModuleRule] = QbdDirectExportSettingModel.getValidators();
-
-      this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingsForm);
-
-      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingsForm);
-
-      this.exportsettingsWatcher();
-
-      this.optionSearchWatcher();
-
-      this.isLoading = false;
+      // If default accounts are not already fetched, make an additional GET call
+      // To fetch the missing destination attributes, and then set up the form
+      if (defaultAccountsObservable) {
+        defaultAccountsObservable.subscribe((response) => {
+          accounts.results = accounts.results.concat(response.results);
+          this.setupForm(exportSettingResponse, accounts);
+        });
+      } else {
+        this.setupForm(exportSettingResponse, accounts);
+      }
     });
   }
 
