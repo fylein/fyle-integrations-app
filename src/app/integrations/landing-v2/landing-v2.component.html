@@ -53,8 +53,6 @@
                         Dynamics 365 Business Central
                         <div class="landing-v2--accounting-app-type">Accounting</div>
                     </div>
-                    <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
-                        [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                 </span>
             </div>
             <div *ngIf="isAppShown('NETSUITE')">
@@ -149,8 +147,6 @@
                         Sage 300 CRE
                         <div class="landing-v2--accounting-app-type">Accounting</div>
                     </div>
-                    <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK"
-                        text="Beta"></app-badge>
                 </span>
             </div>
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
