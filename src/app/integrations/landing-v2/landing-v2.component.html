@@ -42,11 +42,6 @@
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/BusinessCentral-logo.svg" />
-                    @if (isAppConnected('BUSINESS_CENTRAL')) {
-                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">Connect</button>
-                    }
                 </div>
                 <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
                     <div>
