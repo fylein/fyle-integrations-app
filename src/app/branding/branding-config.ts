@@ -3,7 +3,7 @@ import { ContentConfiguration } from '../core/models/branding/content-configurat
 import { DemoVideo } from '../core/models/branding/demo-video.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
-import { c1Contents } from './c1-contents-config';
+import { c1Content } from './c1-content-config';
 import config from './config.json';
 import { fyleContents } from './fyle-contents-config';
 import { fyleDemoVideoLinks, fyleFeatureConfig, fyleKbArticles } from './fyle-branding-config';
@@ -40,7 +40,7 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 const content: ContentConfiguration = {
     fyle: fyleContents,
-    co: c1Contents
+    co: c1Content
 };
 
 // @ts-ignore
