@@ -72,7 +72,7 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   importCodeFields: any;
 
-  private destroy$ = new Subject<void>(); // why this subject? -> to stop polling when the component is destroyed/page closed.
+  private destroy$ = new Subject<void>(); // Why this subject? -> to stop polling when the component is destroyed/page closed.
 
   constructor(
     private accountingExportService: AccountingExportService,
