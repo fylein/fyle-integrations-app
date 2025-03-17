@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-contents-config';
+import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({

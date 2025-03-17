@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingKbArticles, brandingFeatureConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-contents-config';
+import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
