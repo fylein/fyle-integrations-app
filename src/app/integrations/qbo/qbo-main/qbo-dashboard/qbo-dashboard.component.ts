@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
@@ -17,7 +17,7 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
   templateUrl: './qbo-dashboard.component.html',
   styleUrls: ['./qbo-dashboard.component.scss']
 })
-export class QboDashboardComponent implements OnInit {
+export class QboDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -72,6 +72,8 @@ export class QboDashboardComponent implements OnInit {
 
   importCodeFields: any;
 
+  private destroy$ = new Subject<void>(); // why this subject? -> to stop polling when the component is destroyed/page closed.
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -90,6 +92,7 @@ export class QboDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
+      takeUntil(this.destroy$),
       takeWhile((response: QBOTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -171,6 +174,11 @@ export class QboDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
