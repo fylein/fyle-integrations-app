@@ -3,7 +3,7 @@ import config from './config.json';
 
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
-export const c1Contents = {
+export const c1Content = {
     qbd_direct: {
         landing: {
             contentText: 'Import data from QuickBooks Desktop to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop',
@@ -469,7 +469,7 @@ export const c1Contents = {
         unMappedHeader: 'Unmapped'
     },
     landing: {
-        contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your ' + brandingConfig.brandName + ' account.',
+        contentText: 'If you have an existing QuickBooks Online integration with your Capital One account, you\'ll need to disconnect it in your QuickBooks Online account before setting up your connection with Expense Management.',
         guideHeaderText: 'How to setup your integration'
     },
     common: {
