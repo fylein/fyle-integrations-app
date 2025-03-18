@@ -16,6 +16,7 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-landing-v2',
@@ -88,7 +89,8 @@ export class LandingV2Component implements OnInit {
     private siAuthService: SiAuthService,
     private storageService: StorageService,
     private orgService: OrgService,
-    private integrationService: IntegrationsService
+    private integrationService: IntegrationsService,
+    private trackingService: TrackingService
   ) { }
 
 
@@ -175,5 +177,6 @@ export class LandingV2Component implements OnInit {
 
   ngOnInit(): void {
     this.storeConnectedApps();
+    this.trackingService.onLandingV2Open();
   }
 }

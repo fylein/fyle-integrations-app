@@ -65,7 +65,7 @@ export class TrackingService {
       ...flattenedObject,
       Asset: 'Integration Settings Web'
     };
-    console.log('attempting:', action, properties);
+    console.log('attempting to track:', action, properties);
     try {
       if (this.tracking) {
         this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
@@ -89,6 +89,10 @@ export class TrackingService {
       console.error('Tracking error:', e);
     }
     this.eventTrack('Opened Landing Page');
+  }
+
+  onLandingV2Open(): void {
+    this.eventTrack('Opened Landing V2');
   }
 
   onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent): void {
@@ -130,5 +134,9 @@ export class TrackingService {
 
   onDropDownOpen(trackingApp: TrackingApp): void {
     this.eventTrack('Dropdown Open', trackingApp);
+  }
+
+  onDropDownItemClick(trackingApp: TrackingApp, options: { option: string }): void {
+    this.eventTrack('Dropdown option clicked', trackingApp, options);
   }
 }
