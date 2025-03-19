@@ -55,7 +55,6 @@ export class TrackingService {
 }
 
   get tracking() {
-    console.log('got', (window as any).mixpanel);
     return (window as any).mixpanel;
   }
 
@@ -65,11 +64,9 @@ export class TrackingService {
       ...flattenedObject,
       Asset: 'Integration Settings Web'
     };
-    console.log('attempting to track:', action, properties);
     try {
       if (this.tracking) {
         this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
-        console.log(`tracked: ${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
       }
     } catch (e) {
       console.error('Tracking error:', e);
