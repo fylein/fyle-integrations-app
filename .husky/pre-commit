@@ -1,4 +1,3 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-
-ng lint --fix
+npx ng lint --fix
