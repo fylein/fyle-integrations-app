@@ -49,11 +49,7 @@ export class IntacctMappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
 
-        // Show display names only for projects and cost centers
-        const attributeTypes = response.results
-          .map((item) => item.source_field)
-          .filter(fieldType => fieldType === FyleField.PROJECT || fieldType === FyleField.COST_CENTER);
-
+        const attributeTypes = response.results.map((item) => item.source_field);
         this.commonResourcesService.getDimensionDetails({sourceType: 'FYLE', attributeTypes}).subscribe((dimensionDetails) => {
           /**
            * For every mapping
