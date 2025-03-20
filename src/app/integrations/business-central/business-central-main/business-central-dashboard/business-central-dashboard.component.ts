@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -74,6 +74,7 @@ export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
+      takeUntil(this.destroy$),
       takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
