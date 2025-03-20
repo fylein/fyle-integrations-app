@@ -2,7 +2,7 @@
   "name": "fyle-integrations-app",
   "version": "0.0.0",
   "scripts": {
-    "postinstall": "npx husky install && (grep -qxF 'npx ng lint --fix' .husky/pre-commit || npx husky add .husky/pre-commit 'npx ng lint --fix')",
+    "postinstall": "npx husky install",
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run setup:env && npm run setup:branding && ng build && npm run sentry:sourcemaps",
