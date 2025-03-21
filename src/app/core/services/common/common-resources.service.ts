@@ -52,6 +52,13 @@ export class CommonResourcesService {
   ): Observable<PaginatedDimensionDetails> {
     this.helper.setBaseApiURL();
 
+
+    // Clear the cache by default - this is the case when calling this method for the first time
+    // Explicitly set keepOldCache to true when we want to store multiple responses in the cache
+    if (!keepOldCache) {
+      this.dimensionDetailCache = [];
+    }
+
     const params: Record<string, string[] | string | number> = {
       attribute_type__in: attributeTypes,
       source_type: sourceType,
@@ -66,13 +73,7 @@ export class CommonResourcesService {
 
     observable.subscribe(
       (paginatedDimensionDetails) => {
-        // Clear the cache by default - this is the case when calling this method for the first time
-        // Explicitly set keepOldCache to true when we want to store multiple responses in the cache
-        if (keepOldCache) {
-          this.dimensionDetailCache.push(...paginatedDimensionDetails.results);
-        } else {
-          this.dimensionDetailCache = [...paginatedDimensionDetails.results];
-        }
+        this.dimensionDetailCache.push(...paginatedDimensionDetails.results);
       }
     );
 
