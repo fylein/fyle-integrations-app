@@ -24,7 +24,11 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() sourceField: string;
 
+  @Input() sourceFieldDisplayName?: string;
+
   @Input() destinationField: string;
+
+  @Input() destinationFieldDisplayName?: string;
 
   @Input() employeeFieldMapping: FyleField;
 

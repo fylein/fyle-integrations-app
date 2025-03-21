@@ -28,9 +28,13 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() sourceField: string;
 
+  @Input() sourceFieldDisplayName?: string;
+
   @Input() mappingStats: MappingStats;
 
   @Input() destinationField: string;
+
+  @Input() destinationFieldDisplayName?: string;
 
   @Input() employeeFieldMapping: FyleField;
 

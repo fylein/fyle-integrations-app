@@ -2,6 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
@@ -49,8 +50,14 @@ export class IntacctMappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
 
-        const attributeTypes = response.results.map((item) => item.source_field);
-        this.commonResourcesService.getDimensionDetails({sourceType: 'FYLE', attributeTypes}).subscribe((dimensionDetails) => {
+        const sourceAttributeTypes = response.results.map((item) => item.source_field);
+        const destinationAttributeTypes = response.results.map((item) => item.destination_field);
+
+        forkJoin({
+          sourceDimensionDetails: this.commonResourcesService.getDimensionDetails({sourceType: 'FYLE', attributeTypes: sourceAttributeTypes}),
+          // This response will be cached and used in IntacctBaseMappingComponent
+          destinationDimensionDetails: this.commonResourcesService.getDimensionDetails({sourceType: 'ACCOUNTING', attributeTypes: destinationAttributeTypes})
+        }).subscribe(({sourceDimensionDetails}) => {
           /**
            * For every mapping
            * 1. Get the source_field
@@ -62,7 +69,7 @@ export class IntacctMappingComponent implements OnInit {
             if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
               const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
 
-              const displayName = dimensionDetails.results.find((detail) => detail.attribute_type === item.source_field)?.display_name;
+              const displayName = sourceDimensionDetails.results.find((detail) => detail.attribute_type === item.source_field)?.display_name;
 
               let label;
               if (displayName) {
