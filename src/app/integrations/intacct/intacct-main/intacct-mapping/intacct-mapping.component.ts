@@ -67,10 +67,8 @@ export class IntacctMappingComponent implements OnInit {
               let label;
               if (displayName) {
                 label = displayName;
-              } else if (brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase) {
-                label = new SentenceCasePipe().transform(mappingPage);
               } else {
-                label = new TitleCasePipe().transform(mappingPage);
+                label = new SentenceCasePipe().transform(mappingPage);
               }
 
               this.mappingPages.push({
