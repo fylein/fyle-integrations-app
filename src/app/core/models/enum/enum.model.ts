@@ -321,6 +321,8 @@ export enum FyleField {
   EMPLOYEE = 'EMPLOYEE',
   VENDOR = 'VENDOR',
   CATEGORY = 'CATEGORY',
+  PROJECT = 'PROJECT',
+  COST_CENTER = 'COST_CENTER'
 }
 
 export enum NetsuiteCustomSegmentOption {
