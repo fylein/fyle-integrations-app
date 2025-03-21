@@ -56,7 +56,7 @@ export class IntacctMappingComponent implements OnInit {
         forkJoin({
           sourceDimensionDetails: this.commonResourcesService.getDimensionDetails({sourceType: 'FYLE', attributeTypes: sourceAttributeTypes}),
           // This response will be cached and used in IntacctBaseMappingComponent
-          destinationDimensionDetails: this.commonResourcesService.getDimensionDetails({sourceType: 'ACCOUNTING', attributeTypes: destinationAttributeTypes})
+          destinationDimensionDetails: this.commonResourcesService.getDimensionDetails({sourceType: 'ACCOUNTING', attributeTypes: destinationAttributeTypes, keepOldCache: true})
         }).subscribe(({sourceDimensionDetails}) => {
           /**
            * For every mapping

@@ -47,8 +47,8 @@ export class CommonResourcesService {
   }
 
   getDimensionDetails(
-    { attributeTypes, sourceType }:
-    { attributeTypes: string[], sourceType: 'FYLE' | 'ACCOUNTING' }
+    { attributeTypes, sourceType, keepOldCache = false }:
+    { attributeTypes: string[], sourceType: 'FYLE' | 'ACCOUNTING', keepOldCache?: boolean }
   ): Observable<PaginatedDimensionDetails> {
     this.helper.setBaseApiURL();
 
@@ -66,7 +66,13 @@ export class CommonResourcesService {
 
     observable.subscribe(
       (paginatedDimensionDetails) => {
-        this.dimensionDetailCache = [...paginatedDimensionDetails.results];
+        // Clear the cache by default - this is the case when calling this method for the first time
+        // Explicitly set keepOldCache to true when we want to store multiple responses in the cache
+        if (keepOldCache) {
+          this.dimensionDetailCache.push(...paginatedDimensionDetails.results);
+        } else {
+          this.dimensionDetailCache = [...paginatedDimensionDetails.results];
+        }
       }
     );
 
