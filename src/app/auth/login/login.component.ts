@@ -32,7 +32,7 @@ import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-or
 })
 export class LoginComponent implements OnInit {
 
-  readonly brandingConfig = brandingConfig; // Test 1
+  readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
 
