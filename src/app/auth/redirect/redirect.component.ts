@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './redirect.component.html',
   styleUrls: ['./redirect.component.scss']
 })
-export class RedirectComponent implements OnInit {
+export class RedirectComponent implements OnInit { // Test 2
 
   constructor(
     private route: ActivatedRoute,
