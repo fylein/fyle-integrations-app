@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
+import { forkJoin, from, interval, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QBDAccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
@@ -18,7 +18,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
   templateUrl: './qbd-dashboard.component.html',
   styleUrls: ['./qbd-dashboard.component.scss']
 })
-export class QbdDashboardComponent implements OnInit {
+export class QbdDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
 
@@ -73,6 +73,8 @@ export class QbdDashboardComponent implements OnInit {
   disableQBDExportButton: boolean = false;
 
   readonly brandingStyle = brandingStyle;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private iifLogsService: QbdIifLogsService,
@@ -138,6 +140,7 @@ export class QbdDashboardComponent implements OnInit {
     this.exportProgressPercentage = 25;
     interval(3000).pipe(
       switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS, QBDAccountingExportsState.COMPLETE], this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]))),
+      takeUntil(this.destroy$),
       takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
     ).subscribe((res) => {
       this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
@@ -259,6 +262,11 @@ export class QbdDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUpDashboard();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
