@@ -49,4 +49,9 @@ export class BambooHrService {
   syncEmployees(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/bamboohr/refresh_employees/`, {});
   }
+
+  checkHealth(): Observable<{}> {
+    return this.apiService.get(`/orgs/${this.orgId}/bamboohr/health_check/`, {});
+  }
+
 }
