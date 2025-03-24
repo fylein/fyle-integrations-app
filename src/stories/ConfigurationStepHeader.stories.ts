@@ -32,7 +32,7 @@ export const simple: Story = {
   args: {
     headerText: 'Advanced Settings',
     contentText: 'In this section, you can customize the integration based on your accounting requirements.',
-    redirectLink: 'https://help.fylehq.com/en/articles/5239189-advanced-settings',
+    redirectLink: 'https://www.fylehq.com/help/en/articles/5239189-advanced-settings',
     showSyncButton: true,
     appName: AppName.QBO
   }
