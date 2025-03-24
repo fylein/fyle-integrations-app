@@ -88,6 +88,10 @@ export class TrackingService {
     this.eventTrack('Opened Landing Page');
   }
 
+  onLandingV2Open(): void {
+    this.eventTrack('Opened Landing V2');
+  }
+
   onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent): void {
     this.eventTrack(`Click event: ${eventName}`, trackingApp, {});
   }
@@ -123,5 +127,13 @@ export class TrackingService {
 
   onErrorResolve(trackingApp: TrackingApp, properties: ResolveMappingErrorProperty): void {
     this.eventTrack('Resolve Mapping Error', trackingApp, properties);
+  }
+
+  onDropDownOpen(trackingApp: TrackingApp): void {
+    this.eventTrack('Dropdown Open', trackingApp);
+  }
+
+  onDropDownItemClick(trackingApp: TrackingApp, options: { option: string }): void {
+    this.eventTrack('Dropdown option clicked', trackingApp, options);
   }
 }

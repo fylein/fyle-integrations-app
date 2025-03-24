@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
+import { AppName, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
+import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
@@ -23,7 +25,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() dropdownValue = null;
 
-  @Input() appName: string = '';
+  @Input() appName: AppName;
 
   @Input() isDropdrownRequired: boolean;
 
@@ -33,7 +35,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isConnectionInProgress: boolean;
 
-  @Input() toolTipText: string = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
+  @Input() toolTipText: string;
 
   @Output() refreshDimensionClick = new EventEmitter<boolean>();
 
@@ -55,7 +57,8 @@ export class MainMenuComponent implements OnInit {
     private router: Router,
     private integrationsService: IntegrationsService,
     private eventsService: EventsService,
-    private iframeOriginStorageService: IframeOriginStorageService
+    private iframeOriginStorageService: IframeOriginStorageService,
+    private trackingService: TrackingService
   ) {
     this.showMoreDropdown =
       this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
@@ -69,6 +72,15 @@ export class MainMenuComponent implements OnInit {
 
     event.value.handler();
     this.pDropdown()?.clear();
+
+    this.trackingService.onDropDownItemClick(
+      trackingAppMap[this.appName],
+      { option: event.value.label }
+    );
+  }
+
+  handleDropdownClick() {
+    this.trackingService.onDropDownOpen(trackingAppMap[this.appName]);
   }
 
   disconnect() {
@@ -145,6 +157,10 @@ export class MainMenuComponent implements OnInit {
       this.integrationsService.getIntegrations().subscribe(integrations => {
         this.addDropdownOptions(integrations);
       });
+    }
+
+    if (!this.toolTipText) {
+      this.toolTipText = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
     }
   }
 }
