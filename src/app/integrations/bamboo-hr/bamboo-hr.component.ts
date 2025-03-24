@@ -163,9 +163,9 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
       this.getBambooHrConfiguration();
 
-      if(this.isBambooConnected && this.isBombooTokenExpired == false){
+      if (this.isBambooConnected && this.isBombooTokenExpired === false){
         this.bambooHrData = bambooHrData;
-      } else if(this.isBambooConnected) {
+      } else if (this.isBambooConnected) {
         this.isBambooConnected = false;
         this.displayToastMessage(ToastSeverity.ERROR, 'Session expired on BambooHR, Please connect again to continue..!', 6000);
       }
