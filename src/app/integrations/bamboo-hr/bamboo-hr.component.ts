@@ -23,7 +23,7 @@ export class BambooHrComponent implements OnInit {
 
   isBambooConnected: boolean;
 
-  isBombooTokenExpired: boolean;
+  isBambooTokenExpired: boolean;
 
   isBambooConnectionInProgress: boolean;
 
@@ -163,7 +163,7 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
       this.getBambooHrConfiguration();
 
-      if (this.isBambooConnected && this.isBombooTokenExpired === false){
+      if (this.isBambooConnected && this.isBambooTokenExpired === false){
         this.bambooHrData = bambooHrData;
       } else if (this.isBambooConnected) {
         this.isBambooConnected = false;
@@ -178,10 +178,10 @@ export class BambooHrComponent implements OnInit {
 
   private checkTokenHealth(): void{
     this.bambooHrService.checkHealth().subscribe(() => {
-      this.isBombooTokenExpired = false;
+      this.isBambooTokenExpired = false;
       this.loadBambooHR();
     }, () => {
-      this.isBombooTokenExpired = true;
+      this.isBambooTokenExpired = true;
       this.loadBambooHR();
     });
   }
