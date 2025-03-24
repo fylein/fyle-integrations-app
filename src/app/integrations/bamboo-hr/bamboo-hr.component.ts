@@ -23,6 +23,8 @@ export class BambooHrComponent implements OnInit {
 
   isBambooConnected: boolean;
 
+  isBombooTokenExpired: boolean;
+
   isBambooConnectionInProgress: boolean;
 
   isBambooSetupInProgress: boolean;
@@ -154,29 +156,33 @@ export class BambooHrComponent implements OnInit {
   private setupPage(): void {
     this.helperService.setBaseApiURL(AppUrl.BAMBOO_HR);
     this.checkTokenHealth();
+  }
+
+  private loadBambooHR(): void {
     this.bambooHrService.getBambooHRData().subscribe((bambooHrData: BambooHr) => {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
-      this.bambooHrData = bambooHrData;
       this.getBambooHrConfiguration();
+
+      if(this.isBambooConnected && this.isBombooTokenExpired == false){
+        this.bambooHrData = bambooHrData;
+      } else if(this.isBambooConnected) {
+        this.isBambooConnected = false;
+        this.displayToastMessage(ToastSeverity.ERROR, 'Session expired on BambooHR, Please connect again to continue..!', 6000);
+      }
+
     }, () => {
       this.isBambooConnected = false;
       this.getBambooHrConfiguration();
-    });
-  }
-
-  tokenExpiredBambooHr(): void {
-    this.isLoading = true;
-    this.bambooHrService.disconnectBambooHr().subscribe(() => {
-      this.displayToastMessage(ToastSeverity.ERROR, 'Session expired on BambooHR! Please connect again to continue.');
-      this.isBambooConnected = false;
-      this.isLoading = false;
     });
   }
 
   private checkTokenHealth(): void{
-    this.bambooHrService.checkHealth().subscribe((data) => {
+    this.bambooHrService.checkHealth().subscribe(() => {
+      this.isBombooTokenExpired = false;
+      this.loadBambooHR();
     }, () => {
-      this.tokenExpiredBambooHr();
+      this.isBombooTokenExpired = true;
+      this.loadBambooHR();
     });
   }
 
