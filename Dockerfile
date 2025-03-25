@@ -38,18 +38,8 @@ COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /app/run.sh ./
 
-#================================================================
-# Setup non-root user and permissions
-#================================================================
-RUN groupadd -r -g 1001 integrations_app_service && \
-    useradd -r -g integrations_app_service integrations_app_user && \
-    chown -R integrations_app_user:integrations_app_service /usr/share/nginx/html /etc/nginx/nginx.conf /run.sh
-
-# Switch to non-root user
-USER integrations_app_user
-
-# expose port 6060
-EXPOSE 6060
+# expose port 80
+EXPOSE 80
 
 # run nginx
 CMD bash run.sh
