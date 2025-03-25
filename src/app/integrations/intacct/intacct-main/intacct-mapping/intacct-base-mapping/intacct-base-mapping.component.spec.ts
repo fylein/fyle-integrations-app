@@ -11,6 +11,7 @@ import { mockConfigurationResponse, mockMappingSettingsResponse, mockDestination
 import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 
 
 describe('IntacctBaseMappingComponent', () => {
@@ -20,6 +21,7 @@ describe('IntacctBaseMappingComponent', () => {
   let mappingServiceSpy: jasmine.SpyObj<MappingService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
   let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
+  let commonResourcesServiceSpy: jasmine.SpyObj<CommonResourcesService>;
 
   beforeEach(async () => {
     routeSpy = jasmine.createSpyObj('ActivatedRoute', [], {
@@ -29,6 +31,7 @@ describe('IntacctBaseMappingComponent', () => {
     mappingServiceSpy = jasmine.createSpyObj('MappingService', ['getMappingSettings', 'getPaginatedDestinationAttributes', 'triggerAutoMapEmployees']);
     workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getConfiguration']);
     toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
+    commonResourcesServiceSpy = jasmine.createSpyObj('CommonResourcesService', ['getCachedDisplayName']);
 
     await TestBed.configureTestingModule({
       declarations: [IntacctBaseMappingComponent],
@@ -36,7 +39,8 @@ describe('IntacctBaseMappingComponent', () => {
         { provide: ActivatedRoute, useValue: routeSpy },
         { provide: MappingService, useValue: mappingServiceSpy },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
-        { provide: IntegrationsToastService, useValue: toastServiceSpy }
+        { provide: IntegrationsToastService, useValue: toastServiceSpy },
+        { provide: CommonResourcesService, useValue: commonResourcesServiceSpy }
       ]
     }).compileComponents();
 
@@ -52,13 +56,16 @@ describe('IntacctBaseMappingComponent', () => {
     workspaceServiceSpy.getConfiguration.and.returnValue(of(mockConfigurationResponse));
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsResponse as MappingSettingResponse));
     mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockDestinationAttributesResponse as PaginatedDestinationAttribute));
+    commonResourcesServiceSpy.getCachedDisplayName.and.returnValues(undefined, 'Employee');
 
     fixture.detectChanges();
     tick();
 
     expect(component.isLoading).toBeFalse();
     expect(component.sourceField).toBe(FyleField.EMPLOYEE);
+    expect(component.sourceFieldDisplayName).toBe(undefined);
     expect(component.destinationField).toBe('EMPLOYEE');
+    expect(component.destinationFieldDisplayName).toBe('Employee');
     expect(component.destinationOptions).toEqual(mockDestinationAttributesResponse.results as DestinationAttribute[]);
     expect(component.showAutoMapEmployee).toBeTrue();
   }));
