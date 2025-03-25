@@ -43,7 +43,7 @@ COPY --from=build /app/run.sh ./
 #================================================================
 RUN groupadd -r -g 1001 integrations_app_service && \
     useradd -r -g integrations_app_service integrations_app_user && \
-    chown -R integrations_app_user:integrations_app_service /usr/share/nginx/html /etc/nginx/nginx.conf /run.sh
+    chown -R integrations_app_user:integrations_app_service /usr/share/nginx/html /etc/nginx/nginx.conf /run.sh /var/cache/nginx
 
 # Switch to non-root user
 USER integrations_app_user
