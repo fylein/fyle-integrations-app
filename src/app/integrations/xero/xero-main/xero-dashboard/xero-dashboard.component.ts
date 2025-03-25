@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
@@ -18,7 +18,7 @@ import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/
   templateUrl: './xero-dashboard.component.html',
   styleUrls: ['./xero-dashboard.component.scss']
 })
-export class XeroDashboardComponent implements OnInit {
+export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -83,6 +83,8 @@ export class XeroDashboardComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private dashboardService: DashboardService,
     private accountingExportService: AccountingExportService,
@@ -102,6 +104,7 @@ export class XeroDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
+      takeUntil(this.destroy$),
       takeWhile((response: XeroTaskResponse) =>
       response.results.filter(task =>
         (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -185,4 +188,8 @@ export class XeroDashboardComponent implements OnInit {
     this.setupPage();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

@@ -4,7 +4,7 @@
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
     <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
-                <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses">
+                <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
                     <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
+            <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
                 <button *ngIf="!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button-raised" (click)="connect()" [disabled]="isConnectionInProgress">
                     {{ isConnectionInProgress ? 'Connecting' : 'Connect' }}
                     <app-svg-icon *ngIf="!isConnectionInProgress && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>

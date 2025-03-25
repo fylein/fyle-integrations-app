@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { catchError, forkJoin, from, interval, of, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -17,7 +17,7 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
   templateUrl: './netsuite-dashboard.component.html',
   styleUrls: ['./netsuite-dashboard.component.scss']
 })
-export class NetsuiteDashboardComponent implements OnInit {
+export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -68,6 +68,8 @@ export class NetsuiteDashboardComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -85,6 +87,7 @@ export class NetsuiteDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, this.appName))),
+      takeUntil(this.destroy$),
       takeWhile((response: NetsuiteTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -163,5 +166,9 @@ export class NetsuiteDashboardComponent implements OnInit {
     this.setupPage();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
 }

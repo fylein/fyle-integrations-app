@@ -28,6 +28,7 @@
             *ngIf="showMoreDropdown"
             [(ngModel)]="dropdownValue"
             (onChange)="handleDropdownChange($event)"
+            (onClick)="handleDropdownClick()"
             appendTo="body"
             class="tw-mr-26-px tw-w-fit"
             [options]="dropdownOptions"
