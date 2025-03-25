@@ -53,7 +53,7 @@ export class CommonResourcesService {
     this.helper.setBaseApiURL();
 
 
-    // Clear the cache by default - this is the case when calling this method for the first time
+    // Clear the cache by default - in case there is stale data in it, from another app for example
     // Explicitly set keepOldCache to true when we want to store multiple responses in the cache
     if (!keepOldCache) {
       this.dimensionDetailCache = [];
