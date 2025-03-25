@@ -6,6 +6,7 @@ import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, MappingSourceField, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -30,7 +31,11 @@ export class IntacctBaseMappingComponent implements OnInit {
 
   sourceField: string;
 
+  sourceFieldDisplayName?: string;
+
   destinationField: string;
+
+  destinationFieldDisplayName?: string;
 
   showAutoMapEmployee: boolean;
 
@@ -46,7 +51,8 @@ export class IntacctBaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private commonResourcesService: CommonResourcesService
   ) { }
 
   triggerAutoMapEmployees(): void {
@@ -76,6 +82,11 @@ export class IntacctBaseMappingComponent implements OnInit {
 
   private setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
+    this.sourceFieldDisplayName = this.commonResourcesService.getCachedDisplayName({
+      attributeType: this.sourceField,
+      sourceType: 'FYLE'
+    });
+
     forkJoin([
       this.workspaceService.getConfiguration(),
       this.mappingService.getMappingSettings()
@@ -86,6 +97,10 @@ export class IntacctBaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
+      this.destinationFieldDisplayName = this.commonResourcesService.getCachedDisplayName({
+        attributeType: this.destinationField,
+        sourceType: 'ACCOUNTING'
+      });
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined).subscribe((response: any) => {
         this.destinationOptions = response.results;
