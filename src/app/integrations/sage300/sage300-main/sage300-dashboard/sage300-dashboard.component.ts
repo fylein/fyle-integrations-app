@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, catchError, forkJoin, from, interval, map, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, CCCImportState, FyleField, LoaderType, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -18,7 +18,7 @@ import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage
   templateUrl: './sage300-dashboard.component.html',
   styleUrls: ['./sage300-dashboard.component.scss']
 })
-export class Sage300DashboardComponent implements OnInit {
+export class Sage300DashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -39,6 +39,8 @@ export class Sage300DashboardComponent implements OnInit {
   processedCount: number = 0;
 
   errors: AccountingGroupedErrors;
+
+  private destroy$ = new Subject<void>();
 
   readonly destinationFieldMap : DestinationFieldMap = {
     'EMPLOYEE': 'VENDOR',
@@ -81,6 +83,7 @@ export class Sage300DashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(20000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
+      takeUntil(this.destroy$),
       takeWhile((response: Sage300AccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
@@ -166,5 +169,10 @@ export class Sage300DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

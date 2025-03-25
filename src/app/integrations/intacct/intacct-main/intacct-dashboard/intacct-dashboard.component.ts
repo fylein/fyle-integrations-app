@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingErrorType, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctErrorType, IntacctReimbursableExpensesObject, MappingSourceField, ReimbursableImportState, SageIntacctField, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
@@ -21,7 +21,7 @@ import { SiExportSettingService } from 'src/app/core/services/si/si-configuratio
   templateUrl: './intacct-dashboard.component.html',
   styleUrls: ['./intacct-dashboard.component.scss']
 })
-export class IntacctDashboardComponent implements OnInit {
+export class IntacctDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -111,6 +111,8 @@ export class IntacctDashboardComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private dashboardService: DashboardService,
     private accountingExportService: AccountingExportService,
@@ -130,6 +132,7 @@ export class IntacctDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.INTACCT))),
+      takeUntil(this.destroy$),
       takeWhile((response: IntacctTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -225,4 +228,8 @@ export class IntacctDashboardComponent implements OnInit {
     this.setupPage();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

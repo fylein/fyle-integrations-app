@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of } from 'rxjs';
+import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -26,7 +26,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './qbd-direct-dashboard.component.html',
   styleUrl: './qbd-direct-dashboard.component.scss'
 })
-export class QbdDirectDashboardComponent implements OnInit {
+export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -83,6 +83,8 @@ export class QbdDirectDashboardComponent implements OnInit {
 
   chartOfAccounts: string[];
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -103,6 +105,7 @@ export class QbdDirectDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, [], AppName.QBD_DIRECT))),
+      takeUntil(this.destroy$),
       takeWhile((response: QbdDirectTaskResponse) =>
         response.results.filter(task =>
           (this.exportLogProcessingStates.includes(task.status))
@@ -193,4 +196,8 @@ export class QbdDirectDashboardComponent implements OnInit {
     this.setupPage();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

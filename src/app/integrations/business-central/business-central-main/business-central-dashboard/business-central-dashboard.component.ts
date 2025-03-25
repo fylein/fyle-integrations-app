@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './business-central-dashboard.component.html',
   styleUrls: ['./business-central-dashboard.component.scss']
 })
-export class BusinessCentralDashboardComponent implements OnInit {
+export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -62,6 +62,8 @@ export class BusinessCentralDashboardComponent implements OnInit {
 
   private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private refinerService: RefinerService,
     private dashboardService: DashboardService,
@@ -72,6 +74,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
+      takeUntil(this.destroy$),
       takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
@@ -160,4 +163,8 @@ export class BusinessCentralDashboardComponent implements OnInit {
     this.setupPage();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
