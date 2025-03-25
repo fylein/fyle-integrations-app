@@ -48,8 +48,8 @@ RUN groupadd -r -g 1001 integrations_app_service && \
 # Switch to non-root user
 USER integrations_app_user
 
-# expose port 80
-EXPOSE 80
+# expose port 6060
+EXPOSE 6060
 
 # run nginx
 CMD bash run.sh
