@@ -80,8 +80,8 @@ export class ImportSettings {
                 is_import_enabled: importSettingsForm.get('isDependentImportEnabled')?.value,
                 cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
                 cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
-                cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
-                cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
+                cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type ?? null,
+                cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder ?? null,
                 workspace: importSettingsForm.get('workspaceId')?.value
             };
         }

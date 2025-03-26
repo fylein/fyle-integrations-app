@@ -147,7 +147,8 @@ describe('IntacctImportSettingsComponent', () => {
         expect(component.importSettingsForm.get('importCategories')).toBeTruthy();
         expect(component.importSettingsForm.get('importTaxCodes')).toBeTruthy();
         expect(component.importSettingsForm.get('costCodes')).toBeTruthy();
-        expect(component.importSettingsForm.get('dependentFieldImportToggle')).toBeTruthy();
+        expect(component.importSettingsForm.get('costCodeImportToggle')).toBeTruthy();
+        expect(component.importSettingsForm.get('costTypeImportToggle')).toBeTruthy();
         expect(component.importSettingsForm.get('workspaceId')).toBeTruthy();
         expect(component.importSettingsForm.get('costTypes')).toBeTruthy();
         expect(component.importSettingsForm.get('isDependentImportEnabled')).toBeTruthy();
