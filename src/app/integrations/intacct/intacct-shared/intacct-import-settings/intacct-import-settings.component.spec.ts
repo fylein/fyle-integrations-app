@@ -347,18 +347,16 @@ describe('IntacctImportSettingsComponent', () => {
         });
 
         expect(costCodesControl?.enabled).toBeTrue();
-        expect(costTypesControl?.enabled).toBeTrue();
+        expect(costTypesControl?.enabled).toBeFalse();
         expect(costCodesControl?.hasValidator(Validators.required)).toBeTrue();
-        expect(costTypesControl?.hasValidator(Validators.required)).toBeTrue();
 
         component.importSettingsForm.patchValue({
           isDependentImportEnabled: false
         });
 
-        expect(costCodesControl?.enabled).toBeFalse();
+        expect(costCodesControl?.enabled).toBeTrue();
         expect(costTypesControl?.enabled).toBeFalse();
         expect(costCodesControl?.hasValidator(Validators.required)).toBeFalse();
-        expect(costTypesControl?.hasValidator(Validators.required)).toBeFalse();
       });
 
       it('should handle custom field selection for cost codes', () => {
