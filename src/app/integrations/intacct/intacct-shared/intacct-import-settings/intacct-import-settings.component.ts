@@ -339,7 +339,6 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (this.importSettingsForm.get('costTypes')?.value) {
       this.costTypeFieldOption = [this.importSettingsForm.get('costTypes')?.value];
       this.importSettingsForm.controls.costTypes.disable();
-      this.importSettingsForm.get('costTypeImportToggle')?.disable();
     }
 
     this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
@@ -386,10 +385,6 @@ export class IntacctImportSettingsComponent implements OnInit {
               source_field: null
             });
         }
-      } else if (value) {
-        // Once the dialog is submitted and the field value is set, disable the field
-        this.importSettingsForm.get('costTypeImportToggle')?.setValue(true);
-        this.importSettingsForm.get('costTypeImportToggle')?.disable();
       }
     });
   }
@@ -547,9 +542,9 @@ export class IntacctImportSettingsComponent implements OnInit {
       importTaxCodes: [importSettings.configurations.import_tax_codes || null],
       costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
       costCodeImportToggle: [true],
-      costTypeImportToggle: [!!importSettings.dependent_field_settings?.cost_type_field_name],
+      costTypeImportToggle: [!!importSettings.dependent_field_settings?.is_cost_type_import_enabled],
       workspaceId: this.storageService.get('workspaceId'),
-      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
+      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder!) : null],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
