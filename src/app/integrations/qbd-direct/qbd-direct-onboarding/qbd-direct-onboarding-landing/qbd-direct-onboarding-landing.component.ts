@@ -47,7 +47,6 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
   ngOnInit(): void {
     const user = this.userService.getUserProfile();
     this.workspaceService.getWorkspace(user.org_id).subscribe((workspaces: QbdDirectWorkspace[]) => {
-      workspaces = [];
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {
         this.router.navigate([`/integrations/qbd_direct`]);
       }
