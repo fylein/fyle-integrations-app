@@ -12,7 +12,6 @@ export type XeroWorkspaceGeneralSetting = {
     auto_map_employees: string;
     auto_create_destination_entity: boolean;
     auto_create_merchant_destination_entity: boolean;
-    skip_cards_mapping?: boolean;
     import_tax_codes: boolean;
     import_customers: boolean;
     import_suppliers_as_merchants: boolean;

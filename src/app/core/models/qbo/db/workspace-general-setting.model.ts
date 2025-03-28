@@ -25,6 +25,5 @@ export type QBOWorkspaceGeneralSetting = {
   category_sync_version: string;
   map_fyle_cards_qbo_account: boolean;
   map_merchant_to_vendor: boolean;
-  skip_cards_mapping: boolean;
   name_in_journal_entry: NameInJournalEntry;
 };
