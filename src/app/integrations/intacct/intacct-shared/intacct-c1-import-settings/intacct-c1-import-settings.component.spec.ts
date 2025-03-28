@@ -144,9 +144,10 @@ describe('IntacctC1ImportSettingsComponent', () => {
       expect(component.importSettingsForm.get('importCategories')).toBeDefined();
       expect(component.importSettingsForm.get('importTaxCodes')).toBeDefined();
       expect(component.importSettingsForm.get('costCodes')).toBeDefined();
-      expect(component.importSettingsForm.get('dependentFieldImportToggle')).toBeDefined();
+      expect(component.importSettingsForm.get('costCodesImportToggle')).toBeDefined();
       expect(component.importSettingsForm.get('workspaceId')).toBeDefined();
       expect(component.importSettingsForm.get('costTypes')).toBeDefined();
+      expect(component.importSettingsForm.get('costTypesImportToggle')).toBeDefined();
       expect(component.importSettingsForm.get('isDependentImportEnabled')).toBeDefined();
       expect(component.importSettingsForm.get('sageIntacctTaxCodes')).toBeDefined();
       expect(component.importSettingsForm.get('expenseFields')).toBeDefined();
@@ -263,23 +264,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
       it('should handle isDependentImportEnabled being set', () => {
         component.importSettingsForm.get('isDependentImportEnabled')?.setValue(true);
 
-        expect(helperService.enableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
-        expect(helperService.enableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
         expect(helperService.markControllerAsRequired).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
-        expect(helperService.markControllerAsRequired).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
-        expect(component.dependentImportFields[0].isDisabled).toBeFalse();
-        expect(component.dependentImportFields[1].isDisabled).toBeFalse();
-      });
-
-      it('should handle isDependentImportEnabled being unset', () => {
-        component.importSettingsForm.get('isDependentImportEnabled')?.setValue(false);
-
-        expect(helperService.disableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
-        expect(helperService.disableFormField).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
-        expect(helperService.clearValidatorAndResetValue).toHaveBeenCalledWith(component.importSettingsForm, 'costCodes');
-        expect(helperService.clearValidatorAndResetValue).toHaveBeenCalledWith(component.importSettingsForm, 'costTypes');
-        expect(component.dependentImportFields[0].isDisabled).toBeTrue();
-        expect(component.dependentImportFields[1].isDisabled).toBeTrue();
       });
     });
 
@@ -310,7 +295,6 @@ describe('IntacctC1ImportSettingsComponent', () => {
 
       it('should handle non-custom field selection', () => {
         component.importSettingsForm.controls.costCodes.setValue({ attribute_type: 'some_field' });
-        expect(component.dependentImportFields[0].isDisabled).toBeTrue();
       });
     });
 

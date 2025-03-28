@@ -18,9 +18,9 @@
                         [appName]="appName"
                         [accountingFieldOptions]="sageIntacctFields"
                         [fyleFieldOptions]="fyleFields"
-                        [costCategoryOption]="costCategoryOption" 
-                        [costCodeFieldOption]="costCodeFieldOption" 
-                        [dependentImportFields]="dependentImportFields" 
+                        [costCategoryOption]="costCategoryOption"
+                        [costCodeFieldOption]="costCodeFieldOption"
+                        [dependentImportFields]="dependentImportFields"
                         [dependentDestinationValue]="'PROJECT'"
                         [isDestinationFixedImport]="true"
                         (showWarningForDependentFields)="showWarningForDependentFields()">
@@ -46,11 +46,11 @@
     </div>
 </div>
 <div>
-    <app-configuration-confirmation-dialog 
+    <app-configuration-confirmation-dialog
         (warningAccepted)="acceptDependentFieldWarning($event)"
-        [isWarningVisible]="showDependentFieldWarning" 
+        [isWarningVisible]="showDependentFieldWarning"
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported Cost codes' + (importSettings?.dependent_field_settings?.cost_type_field_name ? ' and Cost Types' : '') + ' from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>
 </div>
