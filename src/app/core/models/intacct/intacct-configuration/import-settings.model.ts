@@ -77,6 +77,8 @@ export class ImportSettings {
 
         let dependentFieldSetting = null;
         if (existingDependentFieldSettings || importSettingsForm.get('isDependentImportEnabled')?.value) {
+            // Cost types are disabled by setting cost_type_field_name to null
+            // We support disabling cost types, but not cost codes
             let cost_type_field_name = null;
             let cost_type_placeholder = null;
             const is_cost_type_import_enabled = importSettingsForm.get('costTypesImportToggle')?.value;

@@ -499,7 +499,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   save(): void {
     this.saveInProgress = true;
-    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, null);
+    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings.dependent_field_settings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
