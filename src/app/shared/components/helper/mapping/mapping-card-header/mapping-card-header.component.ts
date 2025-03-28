@@ -26,20 +26,20 @@ export class MappingCardHeaderComponent implements OnInit {
 
   constructor() { }
 
-  getSourceField(destinationField: string): string {
-    destinationField = new SnakeCaseToSpaceCasePipe().transform(destinationField).toLowerCase();
-    const lastChar = destinationField.slice(-1).toLowerCase();
-    const lastTwoChars = destinationField.slice(-2).toLowerCase();
+  getPluralOfSourceField(sourceField: string): string {
+    sourceField = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
+    const lastChar = sourceField.slice(-1).toLowerCase();
+    const lastTwoChars = sourceField.slice(-2).toLowerCase();
     const pattern = new RegExp('[^a-zA-Z\d\s:]');
 
     if (lastChar === 'y') {
-        return destinationField.slice(0, -1) + 'ies';
+        return sourceField.slice(0, -1) + 'ies';
     } else if (['s', 'x', 'z'].includes(lastChar) || ['sh', 'ch'].includes(lastTwoChars)) {
-        return destinationField + 'es';
+        return sourceField + 'es';
     } else if (pattern.test(lastChar)) {
-      return destinationField;
+      return sourceField;
     }
-    return destinationField + 's';
+    return sourceField + 's';
   }
 
   triggerAutoMapEmployees() {

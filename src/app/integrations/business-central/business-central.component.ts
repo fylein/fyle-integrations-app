@@ -4,6 +4,7 @@ import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/d
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -32,7 +33,8 @@ export class BusinessCentralComponent implements OnInit {
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -77,6 +79,7 @@ export class BusinessCentralComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.updateUserTokens('BUSINESS_CENTRAL');
     this.setupWorkspace();
   }
 

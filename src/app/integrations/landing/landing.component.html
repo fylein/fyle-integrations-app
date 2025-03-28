@@ -76,14 +76,12 @@
                     <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
                     <span class="landing--accounting-app-name tw-gap-2">
                         Sage 300 CRE
-                        <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                     </span>
                 </div>
                 <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                     <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
                     <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
                         Dynamics 365 Business Central
-                        <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                     </span>
                 </div>
             </div>
@@ -134,7 +132,7 @@
                 Looking for something else?
             </p>
             <p class="landing--section-caption">
-                We are looking forward to building integrations with a few other applications in the market, as listed below. 
+                We are looking forward to building integrations with a few other applications in the market, as listed below.
                 If you have a use case to integrate with these, we would love to hear them at <span class="tw-text-link-primary">{{brandingConfig.supportEmail}}</span>
             </p>
 

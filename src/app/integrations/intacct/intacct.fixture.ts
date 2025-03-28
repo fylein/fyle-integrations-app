@@ -322,6 +322,20 @@ export const mockMappingSettingsWithCustomFieldResponse = {
   ]
 };
 
+export const mockDimensionDetailsForFyleFields = {
+  results: [
+    { attribute_type: 'PROJECT', display_name: 'Project Display Name', source_type: 'FYLE' }
+  ]
+};
+
+export const mockDimensionDetailsForAccountingFields = {
+  results: [
+    { attribute_type: 'EMPLOYEE', display_name: 'Employee', source_type: 'ACCOUNTING' },
+    { attribute_type: 'EXPENSE_TYPE', display_name: 'Expense Type Display Name', source_type: 'ACCOUNTING' },
+    { attribute_type: 'LOCATION', display_name: 'Location Display Name', source_type: 'ACCOUNTING' }
+  ]
+};
+
 export const mockConfigurationResponse = {
   employee_field_mapping: 'EMPLOYEE',
   reimbursable_expenses_object: null,

@@ -7,7 +7,7 @@ import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
 import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingModel } from "../../common/export-settings.model";
 
 
@@ -65,7 +65,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
 
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean, destinationAttribute: DestinationAttribute[]): FormGroup {
     let additionalOption: any[] = [];
-    if (brandingConfig.brandId === 'co' && isCustomerPresent) {
+    if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField && isCustomerPresent) {
       const additionalMappingSetting = {
         source_field: 'DISABLED_XERO_SOURCE_FIELD',
         destination_field: XeroFyleField.CUSTOMER,
@@ -80,7 +80,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts.map((account) => account.toUpperCase()) : ['EXPENSE']),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts.map((name: string) => name[0]+name.substr(1).toLowerCase()) : ['Expense']),
       importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),
@@ -89,13 +89,21 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
+  static constructPayload(importSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroImportSettingPost {
 
-    const emptyDestinationAttribute = {id: null, name: null};
+    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     const COA = importSettingsForm.get('chartOfAccountTypes')?.value.map((name: string) => name.toUpperCase());
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
+    let defaultTaxCode = {...emptyDestinationAttribute};
+    if (importSettingsForm.get('defaultTaxCode')?.value) {
+      if (isCloneSettings) {
+        defaultTaxCode = importSettingsForm.get('defaultTaxCode')?.value;
+      } else {
+        defaultTaxCode = ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
+      }
+    }
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('importCategories')?.value ?? false,
@@ -105,7 +113,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
       },
       general_mappings: {
-        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute
+        default_tax_code: defaultTaxCode
       },
       mapping_settings: mappingSettings
     };

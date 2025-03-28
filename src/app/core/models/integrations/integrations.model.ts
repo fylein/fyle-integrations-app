@@ -1,4 +1,5 @@
-import { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
+import { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationAppKey, IntegrationView } from "../enum/enum.model";
+import { environment } from 'src/environments/environment';
 
 export type Integration = {
     id: number;
@@ -58,3 +59,17 @@ export type AppUrlMap = {
     [AppUrl.XERO]: string
     [AppUrl.QBD_DIRECT]:string
 }
+
+export const integrationCallbackUrlMap: IntegrationCallbackUrl = {
+    [AccountingIntegrationApp.NETSUITE]: [`${environment.fyle_app_url}/netsuite`, environment.ns_client_id],
+    [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
+    [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
+    [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
+};
+
+export const appKeyToAccountingIntegrationApp: Partial<Record<IntegrationAppKey, AccountingIntegrationApp>> = {
+    NETSUITE: AccountingIntegrationApp.NETSUITE,
+    INTACCT: AccountingIntegrationApp.SAGE_INTACCT,
+    QBO: AccountingIntegrationApp.QBO,
+    XERO: AccountingIntegrationApp.XERO
+};

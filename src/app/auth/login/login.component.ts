@@ -10,14 +10,20 @@ import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/s
 import { BusinessCentralAuthService } from 'src/app/core/services/business-central/business-central-core/business-central-auth.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { AppUrl } from 'src/app/core/models/enum/enum.model';
-import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
+import { AppUrl, IframeOrigin, InAppIntegration, IntegrationAppKey } from 'src/app/core/models/enum/enum.model';
+import { ClusterDomainWithToken, Token } from 'src/app/core/models/misc/token.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QbdDirectAuthService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-auth.service';
+import { EventsService } from 'src/app/core/services/common/events.service';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { Tokens } from 'src/app/core/models/misc/integration-tokens-map';
+import { appKeyToAccountingIntegrationApp, Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
+import { RedirectUriStorageService } from 'src/app/core/services/misc/redirect-uri-storage.service';
+import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -43,18 +49,127 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sage300AuthService: Sage300AuthService,
     private siAuthService : SiAuthService,
-    private netsuiteAuthService: NetsuiteAuthService,
+    private nsAuthService: NetsuiteAuthService,
     private xeroAuthService: XeroAuthService,
     private storageService: StorageService,
-    private userService: UserService
+    private userService: UserService,
+    private eventsService: EventsService,
+    private integrationsService: IntegrationsService,
+    private redirectUriStorageService: RedirectUriStorageService,
+    private iframeOriginStorageService: IframeOriginStorageService
   ) { }
+
+
+  openInAppIntegration(inAppIntegration: InAppIntegration): void {
+    this.router.navigate([this.integrationsService.inAppIntegrationUrlMap[inAppIntegration]]);
+  }
+
+  loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
+    const authCode = redirectUri.split('code=')[1].split('&')[0];
+    let login$;
+    if (inAppIntegrationKey === "INTACCT") {
+      login$ = this.siAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegrationKey === "QBO") {
+      login$ = this.qboAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegrationKey === "XERO") {
+      login$ = this.xeroAuthService.login(authCode);
+    } else if (inAppIntegrationKey === "NETSUITE") {
+      login$ = this.nsAuthService.loginWithAuthCode(authCode);
+    } else {
+      return;
+    }
+
+    login$.subscribe((token: Token) => {
+      const tokens: Tokens = {
+        'access_token': token.access_token,
+        'refresh_token': token.refresh_token
+      };
+
+      this.authService.storeTokens(inAppIntegrationKey, tokens);
+      const redirect_uri = this.redirectUriStorageService.pop();
+
+      if (redirect_uri) {
+        // If the integration iframe was passed a redirect uri from fyle-app before login
+        this.router.navigate([redirect_uri]);
+      } else {
+        this.openInAppIntegration(InAppIntegration[inAppIntegrationKey]);
+      }
+    });
+  }
+
+  private setupLoginWatcher(): void {
+    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "INTACCT");
+    });
+
+    this.eventsService.qboLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "QBO");
+    });
+
+    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "XERO");
+    });
+
+    this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, "NETSUITE");
+    });
+  }
 
   private redirect(redirectUri: string | undefined, code:string): void {
     if (redirectUri) {
-      brandingConfig.brandId === 'co' ? this.router.navigate([redirectUri], { queryParams: { code: code } }) : this.router.navigate([redirectUri]);
+      brandingFeatureConfig.loginRedirectUri ? this.router.navigate([redirectUri], { queryParams: { code: code } }) : this.router.navigate([redirectUri]);
     } else {
       this.router.navigate(['/integrations']);
     }
+  }
+
+  /**
+   * Logs in to all connected apps
+   * @param integrations The list of connected integrations
+   * @param integrationsAppTokens Refresh and access tokens of the integrations app
+   * @returns Whether redirection will be performed by the postMessage listener
+   */
+  private loginToConnectedApps(integrations: Integration[], integrationsAppTokens: Tokens) {
+    /**
+     * We have 4 apps with unique TPA IDs: Netsuite, Intacct, QBO, and Xero.
+     * We log in to all currently connected apps on page load, and store their tokens.
+     * When an app is switched, we replace the tokens in localstorage > 'user' object
+     * with the stored token of the current app. (also see AppComponent)
+     */
+    const connectedAppKeys = integrations.map(integration =>
+      this.integrationsService.getIntegrationKey(integration.tpa_name)!
+    );
+
+    const appsWithUniqueTpaIds: IntegrationAppKey[] = [
+      "NETSUITE", "INTACCT", "QBO", "XERO"
+    ];
+
+    let deferRedirect = false;
+
+    for (const appKey of connectedAppKeys) {
+      if (appsWithUniqueTpaIds.includes(appKey)) {
+        // If this app has a unique TPA ID, log in to it.
+        // When fyle-app sends back tokens, store them in localstorage and redirect to the logged-in app.
+        // (it is safe to assume only one such app can be connected at a time)
+        const accountingIntegrationApp = appKeyToAccountingIntegrationApp[appKey]!;
+        const payload = {
+          callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
+          clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
+        };
+
+        this.eventsService.postEvent(payload);
+
+        // We will need to wait for new tokens from fyle-app before we can redirect.
+        // Defer this redirection to the watcher in AppComponent
+        deferRedirect = true;
+      } else {
+        // Otherwise, this app has the same TPA ID as the integrations app,
+        // So we map this app to the tokens of integrations app.
+        this.authService.storeTokens(appKey, integrationsAppTokens);
+      }
+    }
+
+    return deferRedirect;
   }
 
   private saveUserProfileAndNavigate(code: string, redirectUri: string | undefined): void {
@@ -107,14 +222,34 @@ export class LoginComponent implements OnInit {
           }
           if (this.exposeApps?.NETSUITE) {
             this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-            this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+            this.nsAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
           if (this.exposeApps?.XERO) {
             this.helperService.setBaseApiURL(AppUrl.XERO);
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
           this.redirect(redirectUri, code);
+        } else if (
+          brandingFeatureConfig.loginToAllConnectedApps &&
+          this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD
+        ) {
+          // Login to all connected apps for non-local envs (fyle theme & admin app only)
+          this.setupLoginWatcher();
+          const integrationsAppTokens = {
+            refresh_token: clusterDomainWithToken.tokens.refresh_token,
+            access_token: response.access_token
+          };
+          this.integrationsService.getIntegrations().subscribe((integrations) => {
+            const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
+            if (deferRedirect) {
+              // This will later be used to redirect once login is done
+              this.redirectUriStorageService.set(redirectUri);
+            } else {
+              this.redirect(redirectUri, code);
+            }
+          });
         } else {
+          // For c1 and native_apps, redirect without logging in to anything (along with auth code for c1)
           this.redirect(redirectUri, code);
         }
       });
@@ -124,6 +259,14 @@ export class LoginComponent implements OnInit {
   private login(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
+        if (params.redirect_uri) {
+          this.eventsService.resetNavigationHistory(params.redirect_uri);
+        }
+        if (params.origin && params.origin === 'native_apps') {
+          this.iframeOriginStorageService.set(IframeOrigin.NATIVE_APPS);
+        } else {
+          this.iframeOriginStorageService.set(IframeOrigin.ADMIN_DASHBOARD);
+        }
         this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
     });

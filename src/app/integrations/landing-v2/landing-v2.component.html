@@ -42,19 +42,12 @@
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/BusinessCentral-logo.svg" />
-                    @if (isAppConnected('BUSINESS_CENTRAL')) {
-                        <app-badge text="Connected" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">Connect</button>
-                    }
                 </div>
                 <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
                     <div>
                         Dynamics 365 Business Central
                         <div class="landing-v2--accounting-app-type">Accounting</div>
                     </div>
-                    <app-badge *ngIf="!orgsToHideBusinessCentralBetaBadge.includes(org.fyle_org_id)"
-                        [theme]="ThemeOption.DARK" text="Beta"></app-badge>
                 </span>
             </div>
             <div *ngIf="isAppShown('NETSUITE')">
@@ -149,8 +142,6 @@
                         Sage 300 CRE
                         <div class="landing-v2--accounting-app-type">Accounting</div>
                     </div>
-                    <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" [theme]="ThemeOption.DARK"
-                        text="Beta"></app-badge>
                 </span>
             </div>
             <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"

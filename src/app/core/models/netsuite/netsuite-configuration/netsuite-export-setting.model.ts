@@ -89,25 +89,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       ];
     }
 
-    static getCoCreditCardExportTypes(): SelectFormOption[] {
-      return [
-        {
-          label: 'Bill',
-          value: NetSuiteCorporateCreditCardExpensesObject.BILL
-        },
-        {
-          label: 'Credit Card Charge',
-          value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
-        },
-        {
-          label: 'Journal Entry',
-          value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-        }
-      ];
-    }
-
     static getCreditCardExportTypes(): SelectFormOption[] {
-      return [
+
+      const exportType = [
         {
           label: 'Bill',
           value: NetSuiteCorporateCreditCardExpensesObject.BILL
@@ -121,10 +105,14 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
         },
         {
-            label: 'Expense Report',
-            value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+          label: 'Expense Report',
+          value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
         }
       ];
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+        return exportType.filter((item) => item.value !== NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT);
+      }
+      return exportType;
     }
 
     static getCCCExpenseStateOptions(): SelectFormOption[] {
@@ -264,7 +252,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static getEmployeeFieldMapping(employeeFieldMapping: string): string {
-        return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
+        return brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
       }
 
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
@@ -295,7 +283,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
         const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
-        if (brandingConfig.brandId === 'co') {
+        if (brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed) {
           exportSettingsForm.controls.creditCardExpense.patchValue(true);
           exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         }

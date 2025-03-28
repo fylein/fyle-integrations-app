@@ -21,6 +21,10 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+  getBaseApiURL(): string {
+    return API_BASE_URL;
+  }
+
   setBaseApiURL(url: string): void {
     API_BASE_URL = url;
   }

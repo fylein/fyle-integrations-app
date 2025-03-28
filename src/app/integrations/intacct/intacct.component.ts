@@ -6,9 +6,11 @@ import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.mode
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
   selector: 'app-intacct',
@@ -33,7 +35,8 @@ export class IntacctComponent implements OnInit {
     private userService: UserService,
     private windowService: WindowService,
     private workspaceService: SiWorkspaceService,
-    private siAuthService: SiAuthService
+    private siAuthService: SiAuthService,
+    private authService: AuthService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -85,6 +88,7 @@ export class IntacctComponent implements OnInit {
           () => this.getOrCreateWorkspace()
         );
       } else {
+        this.authService.updateUserTokens('INTACCT');
         this.getOrCreateWorkspace();
       }
     });

@@ -4,7 +4,7 @@
 
 <div>
         <div>
-            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
+            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceFieldDisplayName ?? sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
         </div>
 
         <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-mt-16-px" [ngClass]="brandingStyle.common.mainComponentShadow">
@@ -13,18 +13,24 @@
             </div>
             <div *ngIf="!isLoading">
                 <div *ngIf="filteredMappingCount">
-                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>
+                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [destinationFieldDisplayName]="destinationFieldDisplayName" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [sourceFieldDisplayName]="sourceFieldDisplayName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>
                 </div>
                 <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount && !isLoading" >
                     <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
                 </div>
                 <div *ngIf="!filteredMappingCount">
-                    <app-zero-state-with-illustration 
-                    [mainText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSearchZeroStateHeaderText : brandingContent.mappingSearchZeroStateHeaderText + (this.sourceField | snakeCaseToSpaceCase | lowercase) + ' mappings.'"
-                    [subText]="brandingConfig.brandId === 'fyle' ? brandingContent.mappingSearchZeroStateSubHeaderText + (this.sourceField | snakeCaseToSpaceCase | lowercase) + ' mappings': brandingContent.mappingSearchZeroStateSubHeaderText">
-                  </app-zero-state-with-illustration>              
+                    <app-zero-state-with-illustration
+                    [mainText]="brandingConfig.brandId === 'fyle' ?
+                        brandingContent.mappingSearchZeroStateHeaderText :
+                        brandingContent.mappingSearchZeroStateHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ' mappings.'
+                    "
+                    [subText]="brandingConfig.brandId === 'fyle' ?
+                        brandingContent.mappingSearchZeroStateSubHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ' mappings' :
+                        brandingContent.mappingSearchZeroStateSubHeaderText
+                    ">
+                  </app-zero-state-with-illustration>
                 </div>
             </div>
-            
+
         </div>
 </div>

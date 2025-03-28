@@ -1,8 +1,8 @@
 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{ (sourceField | snakeCaseToSpaceCase | sentenceCase) }} in {{brandingConfig.brandName}}</th>
-        <th>{{ (destinationField | snakeCaseToSpaceCase | sentenceCase) }} in {{uiExposedAppName}}</th>
+        <th class="!tw-pl-40-px">{{ sourceFieldDisplayName ?? (sourceField | snakeCaseToSpaceCase | sentenceCase) }} in {{brandingConfig.brandName}}</th>
+        <th>{{ destinationFieldDisplayName ?? (destinationField | snakeCaseToSpaceCase | sentenceCase) }} in {{uiExposedAppName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>
@@ -16,12 +16,12 @@
             </td>
             <td>
                 <p-dropdown #destinationAttributes
-                    appendTo="body" 
+                    appendTo="body"
                     (onShow)="tableDropdownWidth()"
-                    [ngModel]="getDropdownValue(mapping)" 
-                    [options]="destinationOptions" 
-                    optionLabel="value" 
-                    placeholder="Select an option" 
+                    [ngModel]="getDropdownValue(mapping)"
+                    [options]="destinationOptions"
+                    optionLabel="value"
+                    placeholder="Select an option"
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
                     [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
@@ -34,7 +34,7 @@
                         [pTooltip]="isOverflowing(textElement, value)" tooltipPosition="top">
                             <p>
                                 <span *ngIf="value?.code && isMultiLineOption && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
-                                {{ value?.value }} 
+                                {{ value?.value }}
                             </p>
                         </div>
                         <div *ngIf="!value" class="tw-text-placeholder">

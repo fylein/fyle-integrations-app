@@ -42,7 +42,7 @@ export class NetsuiteMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
+              label: brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
               routerLink: `/integrations/netsuite/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

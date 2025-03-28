@@ -220,8 +220,19 @@ export class XeroExportSettingModel {
     });
   }
 
-  static constructPayload(exportSettingsForm: FormGroup): XeroExportSettingPost {
-    const emptyDestinationAttribute = {id: null, name: null};
+  static constructPayload(exportSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroExportSettingPost {
+    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+
+    let bankAccount = {...emptyDestinationAttribute};
+
+    if (exportSettingsForm.get('bankAccount')?.value) {
+      if (isCloneSettings) {
+        bankAccount = exportSettingsForm.get('bankAccount')?.value;
+      } else {
+        bankAccount = ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
+      }
+    }
+
     const exportSettingPayload: XeroExportSettingPost = {
       expense_group_settings: {
         reimbursable_expense_state: exportSettingsForm.get('expenseState')?.value,
@@ -236,7 +247,7 @@ export class XeroExportSettingModel {
         auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
       },
       general_mappings: {
-        bank_account: exportSettingsForm.get('bankAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value) : emptyDestinationAttribute
+        bank_account: bankAccount
       }
     };
 

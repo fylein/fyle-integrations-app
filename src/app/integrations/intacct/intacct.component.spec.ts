@@ -13,6 +13,7 @@ import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.mode
 import { SharedModule } from 'src/app/shared/shared.module';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 describe('IntacctComponent', () => {
   let component: IntacctComponent;
@@ -21,6 +22,7 @@ describe('IntacctComponent', () => {
   let workspaceServiceSpy: jasmine.SpyObj<SiWorkspaceService>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
   let storageServiceSpy: jasmine.SpyObj<StorageService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
   let windowServiceMock: Partial<WindowService>;
   let router: Router;
 
@@ -29,6 +31,7 @@ describe('IntacctComponent', () => {
     const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getWorkspace', 'postWorkspace', 'syncFyleDimensions', 'syncIntacctDimensions']);
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
+    const authSpy = jasmine.createSpyObj('AuthService', ['updateUserTokens']);
 
     windowServiceMock = {
       get nativeWindow() {
@@ -49,6 +52,7 @@ describe('IntacctComponent', () => {
         { provide: UserService, useValue: userSpy },
         { provide: SiWorkspaceService, useValue: workspaceSpy },
         { provide: WindowService, useValue: windowServiceMock },
+        { provide: AuthService, useValue: authSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -59,6 +63,7 @@ describe('IntacctComponent', () => {
     workspaceServiceSpy = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
+    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router);
 
     spyOn(router, 'navigateByUrl');
@@ -74,6 +79,11 @@ describe('IntacctComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should update the user\'s tokens', () => {
+    fixture.detectChanges();
+    expect(authServiceSpy.updateUserTokens).toHaveBeenCalledOnceWith('INTACCT');
   });
 
   it('should setup workspace and navigate when workspace exists', () => {
@@ -120,4 +130,5 @@ describe('IntacctComponent', () => {
 
     expect(router.navigateByUrl).not.toHaveBeenCalled();
   });
+
 });

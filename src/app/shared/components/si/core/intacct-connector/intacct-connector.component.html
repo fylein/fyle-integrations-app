@@ -34,14 +34,9 @@
                   Incorrect {{brandingContent.intacct.common.password}}. Enter correct {{brandingContent.intacct.common.password}}.
                 </div>
              </div>
-             <div *ngIf="brandingConfig.brandId === 'co'" class="tw-w-400-px tw-py-8-px tw-px-16-px tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator">
-              <p class="tw-text-14-px tw-text-text-primary">
-                  {{brandingContent.intacct.configuration.connector.connectorInfoLabel}}
-              </p>
-            </div>
-            <div *ngIf="brandingConfig.brandId !== 'co'" class="tw-w-400-px">
+            <div class="tw-w-400-px">
               <app-configuration-info-label
-                [infoText]="brandingContent.intacct.configuration.connector.connectorInfoLabel">
+                [infoText]="brandingContent.intacct.configuration.connector.connectorInfoLabel" [showIcon]="brandingFeatureConfig.featureFlags.contentVersion === 'v2' ? false : true">
               </app-configuration-info-label>
             </div>
            </div>

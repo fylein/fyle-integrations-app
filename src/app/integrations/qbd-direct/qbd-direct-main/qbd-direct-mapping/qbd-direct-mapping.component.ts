@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-contents-config';
+import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
@@ -46,7 +46,7 @@ export class QbdDirectMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
+              label: brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
               routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

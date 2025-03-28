@@ -78,3 +78,5 @@ documentation.json
 .sentryclirc
 
 commits.csv
+dependency-check-report.csv
+dependency-check-report.html

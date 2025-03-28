@@ -321,6 +321,8 @@ export enum FyleField {
   EMPLOYEE = 'EMPLOYEE',
   VENDOR = 'VENDOR',
   CATEGORY = 'CATEGORY',
+  PROJECT = 'PROJECT',
+  COST_CENTER = 'COST_CENTER'
 }
 
 export enum NetsuiteCustomSegmentOption {
@@ -726,17 +728,38 @@ export enum BCExportSettingDestinationOptionKey {
 
 export enum QbdDirectExportSettingDestinationOptionKey {
   CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
-  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE'
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  ACCOUNT = 'ACCOUNT'
 }
 
 export type DestinationOptionKey =
-  IntacctExportSettingDestinationOptionKey |
-  NetsuiteExportSettingDestinationOptionKey |
-  QboExportSettingDestinationOptionKey |
-  XeroExportSettingDestinationOptionKey |
-  Sage300ExportSettingDestinationOptionKey |
-  BCExportSettingDestinationOptionKey |
-  QbdDirectExportSettingDestinationOptionKey;
+IntacctExportSettingDestinationOptionKey |
+NetsuiteExportSettingDestinationOptionKey |
+QboExportSettingDestinationOptionKey |
+XeroExportSettingDestinationOptionKey |
+Sage300ExportSettingDestinationOptionKey |
+BCExportSettingDestinationOptionKey |
+QbdDirectExportSettingDestinationOptionKey;
+
+export enum QbdDirectExportSettingDestinationAccountType {
+  OtherCurrentAsset = 'OtherCurrentAsset',
+  CreditCard = 'CreditCard',
+  OtherAsset = 'OtherAsset',
+  OtherCurrentLiability = 'OtherCurrentLiability',
+  OtherIncome = 'OtherIncome',
+  Equity = 'Equity',
+  AccountsReceivable = 'AccountsReceivable',
+  Income = 'Income',
+  Expense = 'Expense',
+  CostOfGoodsSold = 'CostOfGoodsSold',
+  AccountsPayable = 'AccountsPayable',
+  Bank = 'Bank',
+  LongTermLiability = 'LongTermLiability',
+  FixedAsset = 'FixedAsset',
+  NonPosting = 'NonPosting',
+}
+
+export type DestinationAccountType = QbdDirectExportSettingDestinationAccountType;
 
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
@@ -915,4 +938,9 @@ export enum QBDConnectionStatus {
   SUCCESS = 'SUCCESS',
   INCORRECT_COMPANY_PATH = 'INCORRECT_COMPANY_PATH',
   IN_CORRECT_PASSWORD = 'IN_CORRECT_PASSWORD'
+}
+
+export enum IframeOrigin {
+  ADMIN_DASHBOARD = 'ADMIN_DASHBOARD',
+  NATIVE_APPS = 'NATIVE_APPS'
 }

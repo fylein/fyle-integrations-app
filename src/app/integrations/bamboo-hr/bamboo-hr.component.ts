@@ -7,6 +7,7 @@ import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrMod
 import { AppName, AppUrl, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -61,7 +62,8 @@ export class BambooHrComponent implements OnInit {
     private helperService: HelperService,
     private messageService: MessageService,
     private orgService: OrgService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private authService: AuthService
   ) { }
 
   openDialog(): void {
@@ -151,17 +153,37 @@ export class BambooHrComponent implements OnInit {
 
   private setupPage(): void {
     this.helperService.setBaseApiURL(AppUrl.BAMBOO_HR);
+    this.checkTokenHealth();
+  }
+
+  private loadBambooHR(isBambooTokenExpired: boolean): void {
     this.bambooHrService.getBambooHRData().subscribe((bambooHrData: BambooHr) => {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
-      this.bambooHrData = bambooHrData;
       this.getBambooHrConfiguration();
+
+      if (this.isBambooConnected && isBambooTokenExpired === false){
+        this.bambooHrData = bambooHrData;
+      } else if (this.isBambooConnected) {
+        this.isBambooConnected = false;
+        this.displayToastMessage(ToastSeverity.ERROR, 'Token expired on BambooHR, Please connect again to continue..!', 6000);
+      }
+
     }, () => {
       this.isBambooConnected = false;
       this.getBambooHrConfiguration();
     });
   }
 
+  private checkTokenHealth(): void{
+    this.bambooHrService.checkHealth().subscribe(() => {
+      this.loadBambooHR(false);
+    }, () => {
+      this.loadBambooHR(true);
+    });
+  }
+
   ngOnInit(): void {
+    this.authService.updateUserTokens('BAMBOO_HR');
     this.setupPage();
   }
 
