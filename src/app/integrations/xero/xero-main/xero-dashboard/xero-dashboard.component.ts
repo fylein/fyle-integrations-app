@@ -147,7 +147,7 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   private setupPage(): void {
 
-    if (this.router.url.includes("/token-expired/")){
+    if (this.router.url.includes("/token_expired/")){
       this.isTokenExpired = true;
     }
 

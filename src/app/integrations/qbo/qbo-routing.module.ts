@@ -18,7 +18,7 @@ const routes: Routes = [
         canActivate: [QboTokenGuard]
       },
       {
-        path: 'token-expired',
+        path: 'token_expired',
         loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
       }
     ]

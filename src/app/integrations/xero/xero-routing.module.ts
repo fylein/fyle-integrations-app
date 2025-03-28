@@ -18,7 +18,7 @@ const routes: Routes = [
         canActivate: [XeroTokenGuard]
       },
       {
-        path: 'token-expired',
+        path: 'token_expired',
         loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
       }
     ]

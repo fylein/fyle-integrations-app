@@ -43,7 +43,7 @@ export class XeroTokenGuard  {
                   globalCacheBusterNotifier.next();
 
                   if (error.error.message === "Xero connection expired"){
-                    return this.router.navigateByUrl('integrations/xero/token-expired/dashboard');
+                    return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
                   }
                     return this.router.navigateByUrl('integrations/xero/onboarding/landing');
 

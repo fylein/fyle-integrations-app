@@ -64,7 +64,7 @@ export class QboMainComponent implements OnInit {
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
 
-    if (this.router.url.includes("/token-expired/")){
+    if (this.router.url.includes("/token_expired/")){
       this.isMenuDisabled = true;
       this.modules = this.modules.map(item => ({ ...item, disabled: this.isMenuDisabled }));
     }
