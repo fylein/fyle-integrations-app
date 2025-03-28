@@ -17,8 +17,7 @@ export const QBDExportSettingResponse:QBDExportSettingGet = {
     credit_card_account_name: "string",
     credit_card_expense_grouped_by: QBDExpenseGroupedBy.EXPENSE,
     credit_card_expense_date: QBDExportDateType.LAST_SPENT_AT,
-    workspace: 1,
-    is_simplify_report_closure_enabled: true
+    workspace: 1
 };
 
 export const QBDExportSettingResponse2:QBDExportSettingGet = {
@@ -37,8 +36,7 @@ export const QBDExportSettingResponse2:QBDExportSettingGet = {
   credit_card_account_name: null,
   credit_card_expense_grouped_by: null,
   credit_card_expense_date: null,
-  workspace: 1,
-  is_simplify_report_closure_enabled: false
+  workspace: 1
 };
 
 export const errorResponse = {
