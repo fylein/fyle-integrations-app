@@ -144,9 +144,10 @@ describe('IntacctC1ImportSettingsComponent', () => {
       expect(component.importSettingsForm.get('importCategories')).toBeDefined();
       expect(component.importSettingsForm.get('importTaxCodes')).toBeDefined();
       expect(component.importSettingsForm.get('costCodes')).toBeDefined();
-      expect(component.importSettingsForm.get('dependentFieldImportToggle')).toBeDefined();
+      expect(component.importSettingsForm.get('costCodesImportToggle')).toBeDefined();
       expect(component.importSettingsForm.get('workspaceId')).toBeDefined();
       expect(component.importSettingsForm.get('costTypes')).toBeDefined();
+      expect(component.importSettingsForm.get('costTypesImportToggle')).toBeDefined();
       expect(component.importSettingsForm.get('isDependentImportEnabled')).toBeDefined();
       expect(component.importSettingsForm.get('sageIntacctTaxCodes')).toBeDefined();
       expect(component.importSettingsForm.get('expenseFields')).toBeDefined();

@@ -79,7 +79,7 @@ export class ImportSettings {
         if (existingDependentFieldSettings || importSettingsForm.get('isDependentImportEnabled')?.value) {
             let cost_type_field_name = null;
             let cost_type_placeholder = null;
-            const is_cost_type_import_enabled = importSettingsForm.get('costTypeImportToggle')?.value;
+            const is_cost_type_import_enabled = importSettingsForm.get('costTypesImportToggle')?.value;
             if (is_cost_type_import_enabled) {
                 cost_type_field_name = importSettingsForm.get('costTypes')?.value?.attribute_type ?? null;
                 cost_type_placeholder = importSettingsForm.get('costTypes')?.value?.source_placeholder ?? null;
