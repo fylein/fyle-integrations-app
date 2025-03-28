@@ -5,7 +5,7 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && !isTokenExpired">
     <app-dashboard-export-section
         (export)="export()"
         [appName]="appName"
@@ -44,4 +44,17 @@
         [isEmployeeMappingGeneric]="true"
         [errorsVersion]="'v1'">
     </app-dashboard-error-section>
+</div>
+
+<div *ngIf="!isLoading && isTokenExpired">
+    <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
+        <app-dashboard-token-expired
+        [title]="'Connection Expired'"
+        [description]="'your connection to xero has been expired, To continue using the integration seamlessly, please reconnect your account.'"
+        [buttonText]="'Reconnect to Xero'"
+        [buttonColor]="'#0c84ac'"
+        [buttonRouterURL]="'/integrations/xero/onboarding/landing'"
+        >
+        </app-dashboard-token-expired>
+    </div>
 </div>

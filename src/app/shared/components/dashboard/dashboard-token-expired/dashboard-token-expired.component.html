@@ -1,0 +1,19 @@
+<div class="tw-p-40-px tw-border tw-shadow-sm">
+    <div class="tw-flex tw-justify-center tw-pb-24-px">
+        <img *ngIf="brandingConfig.brandId === 'fyle'" src="assets/illustrations/login.svg" />
+    </div>
+    <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary">
+        {{ title }}
+    </p>
+    <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        {{ description }}
+    </p>
+    
+    <div class="tw-flex tw-justify-center tw-items-center">
+    <button type="button" routerLink="{{buttonRouterURL}}"
+    class="tw-inline-block tw-px-4 tw-py-2 tw-text-nowrap tw-rounded-md tw-shadow-sm !tw-w-auto tw-text-white" [style.background]="buttonColor">
+    <span class="tw-font-400 tw-text-16-px">
+        {{buttonText}}
+    </span>
+    </button> </div>
+</div>
