@@ -13,6 +13,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-xero-dashboard',
   templateUrl: './xero-dashboard.component.html',
@@ -21,6 +22,8 @@ import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/
 export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
+
+  isTokenExpired: boolean = false;
 
   AppUrl = AppUrl;
 
@@ -91,7 +94,8 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
     private exportLogService: ExportLogService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private xeroExportSettingService: XeroExportSettingsService
+    private xeroExportSettingService: XeroExportSettingsService,
+    private router: Router
   ) { }
 
   export() {
@@ -142,6 +146,11 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
   }
 
   private setupPage(): void {
+
+    if (this.router.url.includes("/token-expired/")){
+      this.isTokenExpired = true;
+    }
+
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),

@@ -1,5 +1,5 @@
 <div [ngClass]="{'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed}">
-    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions()" [isSyncVisible]="true" [isDisconnectRequired]="disconnectButton" (disconnectClick)="disconnect()"></app-main-menu>
+    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [isMenuDisabled]="isMenuDisabled" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions()" [isSyncVisible]="true" [isDisconnectRequired]="disconnectButton" (disconnectClick)="disconnect()"></app-main-menu>
     <div>
         <router-outlet></router-outlet>
     </div>

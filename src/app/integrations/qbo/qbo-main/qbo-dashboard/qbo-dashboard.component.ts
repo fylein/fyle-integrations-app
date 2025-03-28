@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -20,6 +21,8 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 export class QboDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
+
+  isTokenExpired: boolean = false;
 
   appName: AppName = AppName.QBO;
 
@@ -79,7 +82,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
     private dashboardService: DashboardService,
     private qboExportSettingsService: QboExportSettingsService,
     private workspaceService: WorkspaceService,
-    private importSettingService: QboImportSettingsService
+    private importSettingService: QboImportSettingsService,
+    private router: Router
   ) { }
 
   export() {
@@ -174,6 +178,11 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setupPage();
+
+    if (this.router.url.includes("/token-expired/")){
+      this.isTokenExpired = true;
+    }
+
   }
 
   ngOnDestroy(): void {

@@ -21,6 +21,8 @@ export class MainMenuComponent implements OnInit {
 
   @Input() modules: MenuItem[];
 
+  @Input() isMenuDisabled: boolean;
+
   @Input() activeItem: MenuItem;
 
   @Input() dropdownValue = null;

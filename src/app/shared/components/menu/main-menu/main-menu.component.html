@@ -2,21 +2,33 @@
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
-        <button *ngIf="isDisconnectRequired && !showMoreDropdown" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+        <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
             <span class="tw-text-14-px">
                 {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
             </span>
         </button>
 
         <span *ngIf="isSyncVisible">
-            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText"
-                (click)="refreshDimensions()"
-                class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-                <app-svg-icon [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
-                <span class="tw-text-14-px">
-                    Sync
-                </span>
-            </button>
+            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" 
+            [pTooltip]="toolTipText" 
+            [disabled]="isMenuDisabled"
+            (click)="refreshDimensions()"
+            [ngClass]="{
+                'tw-bg-white tw-text-black': !isMenuDisabled,
+                'tw-bg-gray-200 tw-text-menu-inactive-text-color': isMenuDisabled
+            }"
+            class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+            
+            <app-svg-icon [svgSource]="'arrow-rotate-sync'" 
+                [width]="'14px'" 
+                [height]="'14px'" 
+                [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'">
+            </app-svg-icon>
+        
+            <span class="tw-text-14-px">
+                Sync
+            </span>
+        </button>        
             <div class="tw-mr-22-px">
                 <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
                     Refresh data
