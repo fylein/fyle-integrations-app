@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
         [headerText]="'Import Settings'"
         [contentText]="'In this section, you can choose the fields required to be imported from Sage Intacct to ' + brandingConfig.brandName + '.'"
         [redirectLink]="redirectLink"
@@ -124,12 +124,12 @@
                                     </div>
                                     </ng-template>
                                     <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
-                                    
+
                                         <div>
                                             {{ item.display_name }}
                                         </div>
                                         <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(expenseField)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-                                    
+
                                     </ng-template>
                               </p-dropdown>
                               <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field') || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
@@ -143,7 +143,7 @@
                             <div>
                                 <input formControlName="isDependentImportEnabled" type="checkbox"/>
                             </div>
-                            <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields</label>
+                            <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and/or Cost Type from Sage Intacct as dependent fields</label>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
@@ -162,7 +162,7 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
@@ -180,13 +180,13 @@
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
-                    </div>                      
+                    </div>
                 </div>
                 <div class="tw-text-alert-toast tw-pt-4 tw-pl-14-px" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
                     *{{brandingConfig.brandName}} and Sage Intacct Fields should be unique.
-                  </div>                  
+                  </div>
             </div>
             <div *ngIf="showAddButton" class="add-button-container tw-pl-36-px">
                 <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
@@ -237,7 +237,7 @@
             </div>
         </div>
 
-        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>    
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>
     </form>
 </div>
 
@@ -292,8 +292,8 @@
                     [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter Text'">
                   </div>
                 </div>
-              </div>              
-            
+              </div>
+
             <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     Cancel
@@ -320,7 +320,7 @@
     </div>
     <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
         <div class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
-            You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in {{brandingConfig.brandName}}. By turning off the import, you would lose the mappings you've established for these fields.
+            You have imported Cost codes{{ dependentFieldSettings?.cost_type_field_name ? ' and Cost Types' : '' }} from Sage Intacct by mapping them to fields in {{brandingConfig.brandName}}. By turning off the import, you would lose the mappings you've established for these fields.
         </div>
         <div class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
             Are you sure you want to continue?
