@@ -29,7 +29,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   isLoading: boolean;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.QBO.CONNECTOR;
+  redirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
