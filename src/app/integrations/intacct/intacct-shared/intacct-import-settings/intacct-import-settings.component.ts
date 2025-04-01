@@ -328,12 +328,12 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (this.importSettingsForm.get('costCodes')?.value) {
       this.costCodeFieldOption = [this.importSettingsForm.get('costCodes')?.value];
       this.importSettingsForm.controls.costCodes.disable();
-      this.importSettingsForm.get('costCodeImportToggle')?.disable();
+      this.importSettingsForm.get('costCodesImportToggle')?.disable();
     } else {
       // Cost types cannot be edited without first mapping cost codes
       this.importSettingsForm.get('costTypes')?.disable();
-      this.importSettingsForm.get('costTypeImportToggle')?.disable();
-      this.importSettingsForm.get('costTypeImportToggle')?.setValue(false);
+      this.importSettingsForm.get('costTypesImportToggle')?.disable();
+      this.importSettingsForm.get('costTypesImportToggle')?.setValue(false);
     }
 
     if (this.importSettingsForm.get('costTypes')?.value) {
@@ -365,11 +365,11 @@ export class IntacctImportSettingsComponent implements OnInit {
         // Once the dialog is submitted and the field value is set,
         // 1. disable cost codes
         // 2. enable cost types
-        this.importSettingsForm.get('costCodeImportToggle')?.setValue(true);
-        this.importSettingsForm.get('costCodeImportToggle')?.disable();
+        this.importSettingsForm.get('costCodesImportToggle')?.setValue(true);
+        this.importSettingsForm.get('costCodesImportToggle')?.disable();
 
         this.importSettingsForm.get('costTypes')?.enable();
-        this.importSettingsForm.get('costTypeImportToggle')?.enable();
+        this.importSettingsForm.get('costTypesImportToggle')?.enable();
       }
     });
 
@@ -541,8 +541,8 @@ export class IntacctImportSettingsComponent implements OnInit {
       importCategories: [importSettings.configurations.import_categories || null],
       importTaxCodes: [importSettings.configurations.import_tax_codes || null],
       costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
-      costCodeImportToggle: [true],
-      costTypeImportToggle: [!!importSettings.dependent_field_settings?.is_cost_type_import_enabled],
+      costCodesImportToggle: [true],
+      costTypesImportToggle: [!!importSettings.dependent_field_settings?.is_cost_type_import_enabled],
       workspaceId: this.storageService.get('workspaceId'),
       costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder!) : null],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
