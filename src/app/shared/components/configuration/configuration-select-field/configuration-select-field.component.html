@@ -128,7 +128,7 @@
                     </div>
                     <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">Time</p>
-                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" placeholder="Select Time for export" ></p-dropdown>
+                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" placeholder="Select time for export" ></p-dropdown>
                     </div>
                     <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p-dropdown appendTo="body" [options]="meridiemOption" formControlName="meridiem" placeholder="Select meridiem of time" ></p-dropdown>

@@ -43,7 +43,7 @@
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                           The imported {{ (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) }}
-                          <span> will be an available field when creating an expense.</span>
+                          <span> Will be an available field when creating an expense.</span>
                         </h5>
                       </div>
                     </div>
@@ -105,7 +105,7 @@
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and' + (uiExposedAppName === AppName.INTACCT ? '/or' : '') + ' Cost Type from ')}} {{uiExposedAppName}} as dependent fields.
                         <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
-                            Read More
+                            Read more
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
@@ -151,7 +151,7 @@
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
-                                Read More
+                                Read more
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                     class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                                 </app-svg-icon>

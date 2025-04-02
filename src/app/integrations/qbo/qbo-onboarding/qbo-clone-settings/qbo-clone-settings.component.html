@@ -42,7 +42,7 @@
             <div class="clone-setting--field">
                 <div class="clone-setting--export-setting-header">
                     <div class="tw-flex tw-items-center">
-                        Export Reimbursable Expenses
+                        Export reimbursable expenses
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                     <div>
@@ -147,7 +147,7 @@
             <div class="clone-setting--field">
                 <div class="clone-setting--export-setting-header">
                     <div class="tw-flex tw-items-center">
-                        Export Corporate Credit Card Expenses
+                        Export corporate credit card expenses
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                     <div>
@@ -413,13 +413,13 @@
     
                 <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
-                        Send Error Notification to
+                        Send error notification to
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>
                     <app-email-multi-select-field
                         [form]="advancedSettingForm"
                         [appName]="AppName.QBO"
-                        [label]="'Send Error Notification to'"
+                        [label]="'Send error notification to'"
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'email for error notification'"
                         [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
@@ -507,7 +507,7 @@
                     <div class="tw-flex tw-items-center">
                         <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
                         <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
-                            Set the Description Field in QuickBooks Online
+                            Set the description field in QuickBooks Online
                             <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.'" [tooltipPosition]="'top'"></app-svg-icon>
                         </p>
                     </div>
@@ -526,7 +526,7 @@
                     </app-configuration-multi-select>
                 </div>
                 <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the description field</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>

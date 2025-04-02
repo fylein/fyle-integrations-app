@@ -14,7 +14,7 @@
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="getCategoryMappingOptions()" 
                     optionLabel="value" 
-                    placeholder="Select an Option" 
+                    placeholder="Select an option" 
                     (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
@@ -29,7 +29,7 @@
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
             <tr>
-            <th>Employee Email</th>
+            <th>Employee email</th>
             <th>Sage Intacct {{getEmployeeAttributeType() | titlecase}}</th>
             </tr>
         </ng-template>
@@ -40,7 +40,7 @@
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="fyleEmployeeOptions" 
                     optionLabel="value" 
-                    placeholder="Select an Option" 
+                    placeholder="Select an option" 
                     (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
