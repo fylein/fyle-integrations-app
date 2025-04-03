@@ -21,8 +21,6 @@ export class MainMenuComponent implements OnInit {
 
   @Input() modules: MenuItem[];
 
-  @Input() isMenuDisabled: boolean;
-
   @Input() activeItem: MenuItem;
 
   @Input() dropdownValue = null;
@@ -44,6 +42,8 @@ export class MainMenuComponent implements OnInit {
   @Output() disconnectClick = new EventEmitter();
 
   private pDropdown = viewChild(Dropdown);
+
+  isMenuDisabled: boolean = false;
 
   dropdownOptions: MainMenuDropdownGroup[];
 
@@ -163,6 +163,15 @@ export class MainMenuComponent implements OnInit {
 
     if (!this.toolTipText) {
       this.toolTipText = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
+    }
+
+    if (this.router.url.includes("/token_expired/")){
+      this.isMenuDisabled = true;
+      this.modules = this.modules.map(item => ({
+        ...item,
+        disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
+      }));
+      
     }
   }
 }

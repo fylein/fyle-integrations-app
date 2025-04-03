@@ -18,13 +18,12 @@ export class QboMainComponent implements OnInit {
 
   readonly brandingContent = brandingContent.common;
 
-  isMenuDisabled: boolean = false;
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard', disabled: this.isMenuDisabled},
-    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log', disabled: this.isMenuDisabled},
-    {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping', disabled: this.isMenuDisabled},
-    {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration', disabled: this.isMenuDisabled}
+    {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
+    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log'},
+    {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
+    {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
   ];
 
   activeModule: MenuItem;
@@ -63,11 +62,6 @@ export class QboMainComponent implements OnInit {
   private setupPage() {
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
-
-    if (this.router.url.includes("/token_expired/")){
-      this.isMenuDisabled = true;
-      this.modules = this.modules.map(item => ({ ...item, disabled: this.isMenuDisabled }));
-    }
   }
 
   ngOnInit(): void {
