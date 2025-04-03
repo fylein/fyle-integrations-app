@@ -10,8 +10,6 @@ npx ng lint --fix
 
 if [ -n "$STAGED_FILES" ]; then
   git add $STAGED_FILES
-else
-  git add .
 fi
 
 if git stash list | grep -q "$STASH_NAME"; then
