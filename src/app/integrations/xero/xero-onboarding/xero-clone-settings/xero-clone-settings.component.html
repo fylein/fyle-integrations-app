@@ -313,13 +313,13 @@
     
                 <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
-                        Send Error Notification to
+                        Send error notification to
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>
                     <app-email-multi-select-field
                         [form]="advancedSettingForm"
                         [appName]="appName"
-                        [label]="'Send Error Notification to'"
+                        [label]="'Send error notification to'"
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'email for error notification'"
                         [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"

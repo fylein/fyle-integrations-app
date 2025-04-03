@@ -20,14 +20,14 @@
             <div class="tw-flex dropdown-row tw-pb-24-px">
               <p class="tw-text-14-px tw-text-form-label-text-color">Where</p>
               <div class="tw-ml-80-px tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
+                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select condition">
                   For options
                   <ng-template let-option pTemplate="item">
                     <span *ngIf="option.field_name !== 'claim_number'">
                       {{ (option.field_name === 'report_title' ? 'report_name' : option.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                     </span>
                     <span *ngIf="option.field_name === 'claim_number'">
-                      Report Number
+                      Report number
                     </span>
                   </ng-template>
                   For selected option
@@ -36,7 +36,7 @@
                       {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                     </span>
                     <span *ngIf="selectedOption.field_name === 'claim_number'">
-                      Report Number
+                      Report number
                     </span>
                   </ng-template>
                 </p-dropdown>                               
@@ -44,22 +44,22 @@
                 [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
               </div>
               <div class="tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" placeholder="Select Operator"></p-dropdown>
+                <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" placeholder="Select operator"></p-dropdown>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
                 [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
               </div>
               <div class="tw-w-296-px" *ngIf="showInputField(1)">
-                <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter Value">
+                <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter value">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField(1)">
-                <p-calendar formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+                <p-calendar formControlName="value1" [readonlyInput]="true" placeholder="Select date"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField(1)">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
+                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," placeholder="Enter value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
               <div class="tw-w-296-px" *ngIf="showBooleanField(1)">
-                <p-dropdown appendTo="body" formControlName="value1" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+                <p-dropdown appendTo="body" formControlName="value1" placeholder="Select value" [options]="customCheckBoxValueOptions">
                 </p-dropdown>
               </div>
         </div>
@@ -91,14 +91,14 @@
               </p-dropdown>
             </div>
             <div class="tw-ml-24-px tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
+              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select condition">
                 For options
                 <ng-template let-option pTemplate="item">
                   <span *ngIf="option.field_name !== 'claim_number'">
                     {{ option.field_name | snakeCaseToSpaceCase | sentenceCase }}
                   </span>
                   <span *ngIf="option.field_name === 'claim_number'">
-                    Report Number
+                    Report number
                   </span>
                 </ng-template>
                 For selected option
@@ -107,7 +107,7 @@
                     {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
                   </span>
                   <span *ngIf="selectedOption.field_name === 'claim_number'">
-                    Report Number
+                    Report number
                   </span>
                 </ng-template>
               </p-dropdown>                            
@@ -117,23 +117,23 @@
               [customErrorMessage]="'Condition selected should be distinct.'"></app-mandatory-error-message>
             </div>
             <div class="tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select Operator"></p-dropdown>
+              <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select operator"></p-dropdown>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
               [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
             </div>
             <div *ngIf="showInputField(2)" class="tw-w-296-px">
-              <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter Value">
+              <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter value">
             </div>
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" placeholder="Enter Value"></p-chips>
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" placeholder="Enter value"></p-chips>
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
-              <p-dropdown appendTo="body" formControlName="value2" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+              <p-dropdown appendTo="body" formControlName="value2" placeholder="Select value" [options]="customCheckBoxValueOptions">
               </p-dropdown>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+              <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select date"></p-calendar>
             </div>
             <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
               <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
@@ -143,7 +143,7 @@
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pb-24-px" *ngIf="showAddButton">
           <app-svg-icon *ngIf="brandingFeatureConfig.illustrationsAllowed" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)" [styleClasses]="'tw-pr-8-px'"></app-svg-icon>
           <a class="btn-text-primary tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
-            Add More Fields
+            Add more fields
           </a>
         </div>
       </form>

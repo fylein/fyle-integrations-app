@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
         [headerText]="'Export Settings'"
         [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop.'"
         [redirectLink]="redirectLink"></app-configuration-step-header>
@@ -13,10 +13,10 @@
             <div class="tw-p-24-px">
                 <div class="tw-mb-16-px">
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                        <app-configuration-toggle-field 
+                        <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'" 
+                        [label]="'Export Reimbursable Expenses'"
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
@@ -40,7 +40,7 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.get('reimbursableExpense')?.value"> 
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -48,12 +48,12 @@
                             <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">To which account should the Mileage expenses be posted to?</h4>
+                                        <h4 class="!tw-text-14-px !tw-font-500">To which account should the mileage expenses be posted to?</h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from {{ brandingConfig.brandName }} will be posted.</h5>
                                     </div>
-                            
+
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" placeholder="Enter Mileage Account Name"> 
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" placeholder="Enter mileage account name">
                                     </div>
                                 </div>
                             </div>
@@ -111,9 +111,9 @@
                 </div>
                 <div>
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                        <app-configuration-toggle-field 
+                        <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export Corporate Card Expenses'" 
+                        [label]="'Export Corporate Card Expenses'"
                         [subLabel]="'Enable the export of <b>credit card</b> expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
@@ -133,12 +133,12 @@
                             <div *ngIf="exportSettingsForm.get('cccExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
+                                        <h4 class="!tw-text-14-px !tw-font-500">Enter the credit card account name<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name" [required]="exportSettingsForm.get('creditCardExpense')?.value"> 
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter credit card account name" [required]="exportSettingsForm.get('creditCardExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a Credit Card Account name'"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="tw-text-14-px tw-text-400 tw-text-text-muted">
                                             <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the integration dashboard after launching the integration.</span>
-                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the <a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">Mapping section</a>.</span>
+                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the <a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">mapping section</a>.</span>
                                         </div>
                                     </div>
                                 </div>

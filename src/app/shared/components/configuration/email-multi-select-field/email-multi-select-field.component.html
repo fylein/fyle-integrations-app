@@ -25,7 +25,7 @@
                     </p>
                 </div>
                 <div *ngIf="!selectedEmail" class="tw-text-placeholder">
-                    Select Email Address
+                    Select email address
                 </div>
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
@@ -34,14 +34,14 @@
                         <p-inputIcon>
                             <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                         </p-inputIcon>
-                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px !tw-pr-12-px !tw-py-12-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
+                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px !tw-pr-12-px !tw-py-12-px" (keyup)="options.filter($event)" pInputText placeholder="Search by name / email" formControlName="search"/>
                     </p-iconField>
                 </div>
             </ng-template>
             <ng-template let-user pTemplate="item">
                 <div>
                     <span class="tw-text-sub-text-color tw-text-14-px">
-                        <span #textElement 
+                        <span #textElement
                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                         [pTooltip]="isOverflowing(textElement) ? user.name : null" tooltipPosition="top">
                         {{ user.name }}
@@ -61,9 +61,9 @@
                     <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'"
                         [styleClasses]="'tw-text-mandatory-field-color'">
                     </app-svg-icon>
-                    <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new Email address</p>
+                    <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new email address</p>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 </div>
@@ -72,7 +72,7 @@
     <div [formGroup]="addEmailForm">
         <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
-                <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">Add new Email Address</p>
+                <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">Add new email address</p>
                 <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
@@ -87,7 +87,7 @@
             </p>
 
             <div>
-                <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter Email" [ngClass]="[addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled ? 'error-box' : 'normal-box']" required />
+                <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter email" [ngClass]="[addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled ? 'error-box' : 'normal-box']" required />
                 <app-mandatory-error-message *ngIf="addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled" [customErrorMessage]="'Enter a valid E-mail'"></app-mandatory-error-message>
             </div>
 
@@ -96,7 +96,7 @@
                     Cancel
                 </button>
                 <button type="button" class="save-btn" pButton [disabled]="!addEmailForm.valid" (click)="addEmail()">
-                    Add and Save
+                    Add and save
                 </button>
             </div>
         </div>

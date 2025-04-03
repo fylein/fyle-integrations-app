@@ -65,10 +65,10 @@
                 <p-table [value]="accountingExports.results">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Date and Time of Export</th>
+                            <th>Date and time of export</th>
                             <th>Exported as</th>
-                            <th>Expense Type</th>
-                            <th>Download IIF File</th>
+                            <th>Expense type</th>
+                            <th>Download IIF file</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-exports let-i="rowIndex">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
-                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">downloading...</p>
+                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">Downloading...</p>
                                 </div>
                             </td>
                         </tr>
