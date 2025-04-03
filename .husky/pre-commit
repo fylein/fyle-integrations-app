@@ -1,17 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-STASH_NAME="pre-commit-stash"
-git stash push -k -u -m "$STASH_NAME"
-
 STAGED_FILES=$(git diff --name-only --cached)
 
 npx ng lint --fix
 
 if [ -n "$STAGED_FILES" ]; then
   git add $STAGED_FILES
-fi
-
-if git stash list | grep -q "$STASH_NAME"; then
-  git stash pop
 fi
