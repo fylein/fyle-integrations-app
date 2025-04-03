@@ -31,6 +31,7 @@ export type DependentFieldSetting = {
     cost_code_placeholder: string,
     cost_type_field_name: string,
     cost_type_placeholder: string,
+    is_cost_type_import_enabled: boolean,
     workspace: number
   };
 
@@ -76,12 +77,22 @@ export class ImportSettings {
 
         let dependentFieldSetting = null;
         if (existingDependentFieldSettings || importSettingsForm.get('isDependentImportEnabled')?.value) {
+            // Cost types are disabled by setting cost_type_field_name to null
+            // We support disabling cost types, but not cost codes
+            let cost_type_field_name = null;
+            let cost_type_placeholder = null;
+            const is_cost_type_import_enabled = importSettingsForm.get('costTypesImportToggle')?.value;
+            if (is_cost_type_import_enabled) {
+                cost_type_field_name = importSettingsForm.get('costTypes')?.value?.attribute_type ?? null;
+                cost_type_placeholder = importSettingsForm.get('costTypes')?.value?.source_placeholder ?? null;
+            }
             dependentFieldSetting = {
                 is_import_enabled: importSettingsForm.get('isDependentImportEnabled')?.value,
                 cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
                 cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
-                cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
-                cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
+                cost_type_field_name,
+                cost_type_placeholder,
+                is_cost_type_import_enabled,
                 workspace: importSettingsForm.get('workspaceId')?.value
             };
         }

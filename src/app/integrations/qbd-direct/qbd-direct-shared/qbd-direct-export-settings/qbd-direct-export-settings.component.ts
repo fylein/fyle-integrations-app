@@ -370,13 +370,13 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExpenseExportGroup);
   }
 
-  private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: PaginatedDestinationAttribute): void {
+  private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
     this.exportSettings = exportSettingResponse;
 
     this.cccExpenseStateOptions = QbdDirectExportSettingModel.cccExpenseStateOptions();
     this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
-    this.destinationAccounts = accounts.results as QbdDirectDestinationAttribute[];
+    this.destinationAccounts = accounts as QbdDirectDestinationAttribute[];
 
     this.setupReimbursableExpenseGroupingDateOptions();
     this.setupCCCExpenseGroupingDateOptions();
@@ -404,14 +404,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
    * @param accounts The destination accounts fetched by getPaginatedDestinationAttributes
    * @returns If the default accounts are not already fetched, return an observable to fetch them. Otherwise, return null.
    */
-  private getDefaultAccounts(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: PaginatedDestinationAttribute): Observable<PaginatedDestinationAttribute> | null {
+  private getDefaultAccounts(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): Observable<PaginatedDestinationAttribute> | null {
     const defaultDestinationIds = [
       exportSettingResponse?.default_credit_card_account_id,
       exportSettingResponse?.default_reimbursable_accounts_payable_account_id,
       exportSettingResponse?.default_ccc_accounts_payable_account_id
     ];
 
-    const existingDestinationIds = accounts.results.map((account) => account.destination_id);
+    const existingDestinationIds = accounts.map((account) => account.destination_id);
     const destinationIdsToFetch = [];
 
     for (const defaultDestinationId of defaultDestinationIds) {
@@ -430,18 +430,29 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
-    const destinationAttributes = ['ACCOUNT'];
+    const accountTypes = [
+      QbdDirectExportSettingDestinationAccountType.Bank,
+      QbdDirectExportSettingDestinationAccountType.AccountsPayable,
+      QbdDirectExportSettingDestinationAccountType.CreditCard,
+      QbdDirectExportSettingDestinationAccountType.OtherCurrentLiability,
+      QbdDirectExportSettingDestinationAccountType.LongTermLiability
+    ];
 
     const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
 
-    destinationAttributes.forEach((destinationAttribute) => {
-      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
+    accountTypes.forEach((accountType) => {
+      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes('ACCOUNT', undefined, undefined, undefined, [accountType]).pipe(filter(response => !!response)));
     });
 
     forkJoin([
       this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
-    ]).subscribe(([exportSettingResponse, accounts]) => {
+    ]).subscribe(([exportSettingResponse, ...paginatedAccounts]) => {
+
+      let accounts: DestinationAttribute[] = [];
+      for (const response of paginatedAccounts) {
+        accounts.push(...response.results);
+      }
 
       const defaultAccountsObservable = this.getDefaultAccounts(exportSettingResponse, accounts);
 
@@ -449,7 +460,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       // To fetch the missing destination attributes, and then set up the form
       if (defaultAccountsObservable) {
         defaultAccountsObservable.subscribe((response) => {
-          accounts.results = accounts.results.concat(response.results);
+          accounts = accounts.concat(response.results);
           this.setupForm(exportSettingResponse, accounts);
         });
       } else {
