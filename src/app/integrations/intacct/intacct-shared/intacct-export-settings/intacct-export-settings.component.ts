@@ -200,6 +200,21 @@ export class IntacctExportSettingsComponent implements OnInit {
         {
           label: 'Approved',
           value: CCCExpenseState.APPROVED
+        },
+        {
+          label: 'Closed',
+          value: CCCExpenseState.PAID
+        }
+      ];
+
+      this.expenseStateOptions = [
+        {
+          label: 'Processing',
+          value: ExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: 'Closed',
+          value: ExpenseState.PAID
         }
       ];
     }
