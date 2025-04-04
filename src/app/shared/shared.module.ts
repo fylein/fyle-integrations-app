@@ -93,6 +93,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
+import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
 
 
 @NgModule({
@@ -129,6 +130,7 @@ import { CheckboxButtonComponent } from './components/input/checkbox-button/chec
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
+    DashboardTokenExpiredComponent,
     DashboardAccountingErrorDialogComponent,
     DashboardExportSummarySectionComponent,
     ConfigurationTextFieldComponent,
@@ -234,6 +236,7 @@ import { CheckboxButtonComponent } from './components/input/checkbox-button/chec
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
+    DashboardTokenExpiredComponent,
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
     OnboardingDoneComponent,
