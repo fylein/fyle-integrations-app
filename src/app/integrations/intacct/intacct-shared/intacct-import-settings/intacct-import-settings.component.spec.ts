@@ -147,7 +147,8 @@ describe('IntacctImportSettingsComponent', () => {
         expect(component.importSettingsForm.get('importCategories')).toBeTruthy();
         expect(component.importSettingsForm.get('importTaxCodes')).toBeTruthy();
         expect(component.importSettingsForm.get('costCodes')).toBeTruthy();
-        expect(component.importSettingsForm.get('dependentFieldImportToggle')).toBeTruthy();
+        expect(component.importSettingsForm.get('costCodesImportToggle')).toBeTruthy();
+        expect(component.importSettingsForm.get('costTypesImportToggle')).toBeTruthy();
         expect(component.importSettingsForm.get('workspaceId')).toBeTruthy();
         expect(component.importSettingsForm.get('costTypes')).toBeTruthy();
         expect(component.importSettingsForm.get('isDependentImportEnabled')).toBeTruthy();
@@ -346,18 +347,16 @@ describe('IntacctImportSettingsComponent', () => {
         });
 
         expect(costCodesControl?.enabled).toBeTrue();
-        expect(costTypesControl?.enabled).toBeTrue();
+        expect(costTypesControl?.enabled).toBeFalse();
         expect(costCodesControl?.hasValidator(Validators.required)).toBeTrue();
-        expect(costTypesControl?.hasValidator(Validators.required)).toBeTrue();
 
         component.importSettingsForm.patchValue({
           isDependentImportEnabled: false
         });
 
-        expect(costCodesControl?.enabled).toBeFalse();
+        expect(costCodesControl?.enabled).toBeTrue();
         expect(costTypesControl?.enabled).toBeFalse();
         expect(costCodesControl?.hasValidator(Validators.required)).toBeFalse();
-        expect(costTypesControl?.hasValidator(Validators.required)).toBeFalse();
       });
 
       it('should handle custom field selection for cost codes', () => {
