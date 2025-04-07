@@ -1,13 +1,11 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
+import { AccountingExportStatus, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
 import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
 import { Expense } from "../intacct/db/expense.model";
-import { TitleCasePipe } from "@angular/common";
-import { ExportLogService } from "../../services/common/export-log.service";
 import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
 import { ExpenseGroup } from "./expense-group.model";
-import { XeroWorkspace } from "../xero/db/xero-workspace.model";
+import { SentenceCasePipe } from "src/app/shared/pipes/sentence-case.pipe";
 
 export interface AccountingExportCount {
     count: number;
@@ -132,7 +130,7 @@ export class AccountingExportModel {
       exportType = exportType.substring('CREATING_'.length);
     }
     exportType = new SnakeCaseToSpaceCasePipe().transform(exportType);
-    return new TitleCasePipe().transform(exportType);
+    return new SentenceCasePipe().transform(exportType);
   }
 
   static getFyleReferenceNumber(referenceType: string, expense: Expense): string {
@@ -254,7 +252,7 @@ export class AccountingExportModel {
 
   static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
     const words: string[] = expenseGroup.response_logs?.type.split(/(?=[A-Z])/);
-    const exportType = new TitleCasePipe().transform(words?.join(' '));
+    const exportType = new SentenceCasePipe().transform(words?.join(' '));
 
     return [expenseGroup.export_url, exportType];
   }

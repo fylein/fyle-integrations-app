@@ -10,14 +10,13 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { mockExportSettings, mockPaginatedDestinationAttributes } from '../../intacct.fixture';
-import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingOptionSearch, ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { TitleCasePipe } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 
@@ -193,13 +192,13 @@ describe('IntacctExportSettingsComponent', () => {
 
       expect(
         component.getEmployeeFieldMapping(FyleField.VENDOR, IntacctReimbursableExpensesObject.BILL)
-      ).toBe('Vendor');
+      ).toBe('vendor');
 
       expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.JOURNAL_ENTRY))
-        .toBe(new TitleCasePipe().transform(component.exportSettingsForm.get('employeeFieldMapping')?.value));
+        .toBe(new LowerCasePipe().transform(component.exportSettingsForm.get('employeeFieldMapping')?.value));
 
       expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.BILL))
-        .toBe('Vendor');
+        .toBe('vendor');
     });
 
     it('should get the correct export type', () => {

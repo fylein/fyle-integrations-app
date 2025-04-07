@@ -62,7 +62,7 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)">
                                 </app-configuration-select-field>
                             </div>
-    
+
                             <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
                                 <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -338,7 +338,7 @@
             (navigateToPreviousStep)="navigateToPreviousStep()">
         </app-configuration-step-footer>
 
-        
+
         </form>
     </div>
 </div>
@@ -379,7 +379,7 @@
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value)}}</div>
+                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
                     <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">Auto-selected based on your export module</span>
                 </div>
             </div>

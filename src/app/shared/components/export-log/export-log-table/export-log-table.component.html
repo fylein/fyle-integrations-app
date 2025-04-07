@@ -31,7 +31,7 @@
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td class="tw-text-text-secondary" *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
+            <td class="tw-text-text-secondary" *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | sentenceCase}}</td>
             <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
             <td class="tw-text-text-secondary" *ngIf="!isDashboardFailed">
                 <span [ngClass]="{'truncate-export-type': rowData.exportedAs?.length > 10 && !isExportLogTable}"

@@ -8,7 +8,6 @@ import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intac
 import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
@@ -142,7 +141,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = 'Preview of a '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' exported to '+ this.appName;
+    this.dialogHeader = 'Preview of a '+ new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()) +' exported to '+ this.appName;
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
     this.isPreviewDialogVisible = true;

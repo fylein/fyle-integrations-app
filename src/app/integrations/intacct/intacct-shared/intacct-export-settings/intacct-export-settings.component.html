@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-    <app-configuration-step-header 
+    <app-configuration-step-header
     [headerText]="brandingContent.intacct.configuration.exportSetting.stepName"
     [contentText]="'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Sage Intacct.'"
     [redirectLink]="redirectLink"
@@ -15,10 +15,10 @@
         <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
             <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed" class="tw-mb-16-px">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                     [form]="exportSettingsForm"
-                    [label]="'Export reimbursable expenses'" 
-                    [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct.'" 
+                    [label]="'Export reimbursable expenses'"
+                    [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct.'"
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -130,8 +130,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                     [form]="exportSettingsForm"
-                    [label]="brandingContent.configuration.exportSetting.headerText" 
-                    [subLabel]="brandingContent.intacct.configuration.exportSetting.contentText" 
+                    [label]="brandingContent.configuration.exportSetting.headerText"
+                    [subLabel]="brandingContent.intacct.configuration.exportSetting.contentText"
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -201,10 +201,10 @@
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">
-                            <app-configuration-toggle-field 
+                            <app-configuration-toggle-field
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"
-                            [label]="'Export merchant data to the vendor field'" 
+                            [label]="'Export merchant data to the vendor field'"
                             [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry vendor field'"
                             [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
@@ -264,8 +264,8 @@
                         [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-                    
-                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+
+                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
                         exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -311,7 +311,7 @@
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value)}}</div>
+                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
                     <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">Auto-selected based on your export module</span>
                 </div>
             </div>

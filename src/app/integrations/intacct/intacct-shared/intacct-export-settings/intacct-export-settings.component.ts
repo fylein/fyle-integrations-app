@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -185,7 +185,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         employeeFieldMappingLabel = reimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT ? FyleField.EMPLOYEE : FyleField.VENDOR;
       }
 
-      return new TitleCasePipe().transform(employeeFieldMappingLabel);
+      return new LowerCasePipe().transform(employeeFieldMappingLabel);
     }
 
     getExportType(exportType: IntacctReimbursableExpensesObject | IntacctCorporateCreditCardExpensesObject | null): string {

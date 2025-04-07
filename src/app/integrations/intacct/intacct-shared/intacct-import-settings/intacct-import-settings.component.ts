@@ -228,12 +228,6 @@ export class IntacctImportSettingsComponent implements OnInit {
     return (formGroup as FormGroup).controls[controlName].valid;
   }
 
-  toTitleCase(str: string) {
-    return str.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
   showOrHideAddButton() {
     if (this.importSettingsForm.controls.expenseFields.value.length === this.sageIntacctFields.length) {
       return false;
@@ -608,7 +602,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
-            display_name: this.toTitleCase(field.display_name)
+            display_name: field.display_name
           };
         });
         this.fyleFields = fyleFields;

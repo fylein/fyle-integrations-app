@@ -77,7 +77,6 @@ describe('IntacctMappingComponent', () => {
     fixture.detectChanges();
 
     brandingConfig.brandId = 'fyle';
-    brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase = fyleFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase;
 
     expect(component.mappingPages.length).toBe(4);
     expect(component.mappingPages[3].label).toBe('Sample Custom Field');
@@ -95,7 +94,6 @@ describe('IntacctMappingComponent', () => {
   it('should handle different branding configurations', () => {
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsWithCustomFieldResponse as MappingSettingResponse));
     brandingConfig.brandId = 'co';
-    brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase = c1FeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase;
 
     fixture.detectChanges();
 

@@ -780,11 +780,11 @@ export const fyleFields = [
 export const sageIntacctFields = [
   {
     attribute_type: 'CUSTOMER',
-    display_name: 'customer'
+    display_name: 'Customer'
   },
   {
     attribute_type: 'ITEM',
-    display_name: 'item'
+    display_name: 'Item'
   },
   {
     attribute_type: 'PROJECT',
