@@ -81,14 +81,14 @@
                 Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
             <input formControlName="name" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter name" [ngClass]="[addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+            <app-mandatory-error-message *ngIf="addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled" [customErrorMessage]="'Enter a valid name'"></app-mandatory-error-message>
             <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
                 Email Address <span class="tw-text-mandatory-field-color">*</span>
             </p>
 
             <div>
                 <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter email" [ngClass]="[addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled ? 'error-box' : 'normal-box']" required />
-                <app-mandatory-error-message *ngIf="addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled" [customErrorMessage]="'Enter a valid E-mail'"></app-mandatory-error-message>
+                <app-mandatory-error-message *ngIf="addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled" [customErrorMessage]="'Enter a valid e-mail'"></app-mandatory-error-message>
             </div>
 
             <div class="tw-flex tw-justify-end tw-pt-24-px ">

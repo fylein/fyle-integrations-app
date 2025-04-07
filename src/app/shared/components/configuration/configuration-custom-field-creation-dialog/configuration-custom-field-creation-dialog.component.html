@@ -12,8 +12,7 @@
                     <span class="error-box tw-flex tw-p-4-px">
                         <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
                         <h5 class="tw-ml-6-px">
-                            Oops! It looks like another field with the same name already exists in your {{brandingConfig.brandName}} account. Would you please
-                            give the field a different name?
+                            Oops! It looks like another field with the same name already exists in your {{brandingConfig.brandName}} account. Would you please give the field a different name?
                         </h5>
                     </span>
                 </div>
@@ -29,7 +28,7 @@
                     {{brandingContent.customFieldPlaceholderName}} <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </p>
                 <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-h-32-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
-                <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+                <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid name'"></app-mandatory-error-message>
 
                 <div>
                     <h5 class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
@@ -47,7 +46,7 @@
                       </h5>
                       <div class="form-field tw-pt-4-px">
                         <input class="form-input tw-w-352-px" type="text" disabled
-                        [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter Text'">
+                        [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter text'">
                       </div>
                     </div>
                   </div>

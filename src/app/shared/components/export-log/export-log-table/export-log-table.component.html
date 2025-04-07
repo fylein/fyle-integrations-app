@@ -42,14 +42,14 @@
             </td>
             <td *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL">
                 <div>
-                  <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in New Tab'" tooltipPosition="top">
+                  <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in new tab'" tooltipPosition="top">
                     <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
                   </button>
                 </div>
             </td>
             <td *ngIf="isDashboardFailed">
                 <div>
-                  <button (click)="openUrl(rowData.fyleUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in New Tab'" tooltipPosition="top">
+                  <button (click)="openUrl(rowData.fyleUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in new tab'" tooltipPosition="top">
                     <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
                   </button>
                 </div>

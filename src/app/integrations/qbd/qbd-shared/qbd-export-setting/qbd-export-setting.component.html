@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-        [headerText]="'Export Settings'"
+        [headerText]="'Export settings'"
         [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop.'"
         [redirectLink]="redirectLink"></app-configuration-step-header>
     </div>
@@ -15,7 +15,7 @@
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export Reimbursable Expenses'"
+                        [label]="'Export reimbursable expenses'"
                         [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
@@ -101,7 +101,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
+                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.'"
                             [options]="expenseStateOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense state '"
@@ -113,7 +113,7 @@
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export Corporate Card Expenses'"
+                        [label]="'Export corporate card expenses'"
                         [subLabel]="'Enable the export of <b>credit card</b> expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
@@ -139,7 +139,7 @@
 
                                     <div class="tw-pl-18-px">
                                         <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter credit card account name" [required]="exportSettingsForm.get('creditCardExpense')?.value">
-                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a Credit Card Account name'"></app-mandatory-error-message>
+                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a credit card account name'"></app-mandatory-error-message>
                                     </div>
                                 </div>
 
@@ -162,10 +162,10 @@
                                         [form]="exportSettingsForm"
                                         [isFieldMandatory]="true"
                                         [mandatoryErrorListName]="'entity name'"
-                                        [label]="'Set the PURCHASED FROM field to'"
-                                        [subLabel]="'Select how the Vendor or Employee should be represented as Payee for the credit card purchase.'"
+                                        [label]="'Set the \'purchased from\' field to'"
+                                        [subLabel]="'Select how the vendor or employee should be represented as payee for the credit card purchase.'"
                                         [options]="cccEntityNameOptions"
-                                        [placeholder]="'Select Credit Card Entity Name Preference'"
+                                        [placeholder]="'Select credit card entity name preference'"
                                         [formControllerName]="'cccEntityName'"></app-configuration-select-field>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
+                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.'"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense state '"
