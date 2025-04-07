@@ -10,7 +10,6 @@ export type QBDExportSettingGet = {
     id: number,
     created_at: Date,
     updated_at: Date,
-    is_simplify_report_closure_enabled: boolean,
     reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
     bank_account_name: string | null,
     mileage_account_name : string | null,
