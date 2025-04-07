@@ -23,22 +23,22 @@ export const c1Content = {
             },
             exportSetting: {
                 stepName: 'Export settings',
-                headerText: ' Export Corporate Card Expenses',
+                headerText: ' Export corporate card expenses',
                 contentText: 'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop.',
                 reimbursable: {
-                    reimbursableExpenseLabel: 'Export Reimbursable Expenses',
+                    reimbursableExpenseLabel: 'Export reimbursable expenses',
                     reimbursableExpenseSubLabel: 'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Quickbooks Desktop.',
                     reimbursableExpenseTypeLabel: 'How should the expenses be exported?',
                     reimbursableExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     reimbursableExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    reimbursableExpenseStateSubLabel: 'You can export exxpenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).',
+                    reimbursableExpenseStateSubLabel: 'You can export exxpenses either when they are awaiting closure after approval (processing) or when the payment has been settled (closed).',
                     reimbursableExpenseDateLabel: 'Set the expense ',
                     reimbursableExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     reimbursableExpenseGroupLabel: 'How should the expenses be grouped?',
-                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
-                    employeeMappingLabel: 'How are your Employees represented in QuickBooks Desktop?',
+                    reimbursableExpenseGroupSubLabel: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
+                    employeeMappingLabel: 'How are your employees represented in QuickBooks Desktop?',
                     employeeMappingSubLabel: 'Select how you represent your employees in QuickBooks Desktop. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Desktop.',
-                    autoMapEmployeesLabel: 'How should Employees in ' + brandingConfig.brandName + ' be mapped to ',
+                    autoMapEmployeesLabel: 'How should employees in ' + brandingConfig.brandName + ' be mapped to ',
                     autoMapEmployeesSubLabel: 'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Desktop based on a unique parameter.',
                     defaultReimbursableAccountPayableLabel: 'To which accounts payable account should the ',
                     defaultReimbursableAccountPayableSubLabel: 'The integration will post the offset credit entry in '
@@ -53,12 +53,12 @@ export const c1Content = {
                     creditCardExpenseDateLabel: 'Set the expense ',
                     creditCardExpenseDateSubLabel: 'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName +' to QuickBooks Desktop',
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
-                    creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
-                    creditCardExpenseNameinJELabel: 'Name in Journal Entry',
-                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
-                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
+                    creditCardExpenseNameinJELabel: 'Name in journal entry',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
+                    defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
-                    defaultCCCAccountPayableLabel: 'Select the Default Credit Account for adding ',
+                    defaultCCCAccountPayableLabel: 'Select the default credit account for adding ',
                     defaultCCCAccountPayableSubLabel: 'This account will be used for the credit line of the '
                 }
             },
@@ -78,7 +78,7 @@ export const c1Content = {
                 stepName: 'Advanced settings',
                 contentText: 'Customize the integration based on your accounting requirements.',
                 customizeSectionLabel: 'Customization',
-                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Desktop You can choose what data points need to be exported and what shouldn\'t be.',
+                customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Desktop. You can choose what data points need to be exported and what shouldn\'t be.',
                 automationLabel: 'Automation',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleAutoExportLabel: 'Schedule automatic export',
@@ -117,7 +117,7 @@ export const c1Content = {
             },
             exportSetting: {
                 stepName: 'Export settings',
-                headerText: ' Export Corporate Card Expenses',
+                headerText: ' Export corporate card expenses',
                 contentText: 'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite.',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
@@ -148,10 +148,10 @@ export const c1Content = {
                 importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                 taxCodeLabel: 'Import tax from NetSuite',
                 taxCodeSubLabel: 'The imported tax codes from NetSuite will be set as tax group in ',
-                defaultTaxCodeLabel: 'Select Default tax Code',
+                defaultTaxCodeLabel: 'Select default tax code',
                 importSuppliersAsMerchantsLabel: 'Import vendors from NetSuite as merchants',
                 importSuppliersAsMerchantsSubLabel: 'The vendors in NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
-                notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
+                notes: 'Note: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
                 importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
@@ -185,8 +185,8 @@ export const c1Content = {
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
                 previewDescriptionFieldLabel: 'Preview of the description field',
                 autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge',
-                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
-                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.'
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
+                singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.'
             }
         }
     },
@@ -200,7 +200,7 @@ export const c1Content = {
                 configurationHeaderText: 'Connect to Xero tenant',
                 configurationSubHeaderText: 'Connect to Xero tenant to import and export data. The connection cannot be changed once the setup is complete.',
                 stepName: 'Connect to Xero',
-                subLabel: 'Expenses will be posted to the Xero tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
+                subLabel: 'Expenses will be posted to the Xero tenant mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
             },
             exportSetting: {
                 stepName: 'Export settings',
@@ -220,7 +220,7 @@ export const c1Content = {
                 cccExpenseStateLabel: 'How should expenses be labeled before exporting from ' + brandingConfig.brandName + '?'
             },
             importSetting: {
-                stepName: 'Import Settings',
+                stepName: 'Import settings',
                 headerText: '',
                 contentText: 'Choose the required import fields from Xero to ' + brandingConfig.brandName + '.',
                 importCategoriesLabel: 'Import the chart of accounts as categories.',
@@ -232,7 +232,7 @@ export const c1Content = {
                 defaultTaxCodeLabel: 'Select default tax code',
                 importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
                 importSuppliersAsMerchantsSubLabel: 'The suppliers in Xero will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
-                notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
+                notes: 'Note: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
                 toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import customers in the project field.',
                 chartOfAccountsLabel: 'Select accounts from Xero to import as categories.',
                 chartOfAccountsSubLabel: 'By default, expense will be selected. To select another option, open the dropdown. '
@@ -367,7 +367,7 @@ export const c1Content = {
                 defaultCCCVendorLabel: 'Set default corporate card vendor as',
                 defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
                 accountsPayableLabel: 'To which accounts payable account should the ',
-                accountsPayableSubLabel: ' to the selected accounts payable Account.',
+                accountsPayableSubLabel: ' to the selected accounts payable account.',
                 creditCardExpenseSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
                 creditCardExportGroupSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                 journalOptionLabel: 'Name in journal entry',
@@ -469,7 +469,7 @@ export const c1Content = {
         unMappedHeader: 'Unmapped'
     },
     landing: {
-        contentText: 'If you have an existing QuickBooks Online integration with your Capital One account, you\'ll need to disconnect it in your QuickBooks Online account before setting up your connection with Expense Management.',
+        contentText: 'If you have an existing QuickBooks Online integration with your capital one account, you\'ll need to disconnect it in your QuickBooks Online account before setting up your connection with Expense Management.',
         guideHeaderText: 'How to setup your integration'
     },
     common: {
