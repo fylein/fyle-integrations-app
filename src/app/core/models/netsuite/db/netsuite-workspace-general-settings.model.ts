@@ -25,9 +25,7 @@ export type NetsuiteConfiguration = {
   category_sync_version: string;
   map_merchant_to_vendor: boolean;
   import_netsuite_employees: boolean;
-  skip_cards_mapping: boolean;
   map_fyle_cards_netsuite_account: boolean;
   name_in_journal_entry: NameInJournalEntry;
-  is_simplify_report_closure_enabled: boolean;
   allow_intercompany_vendors: boolean;
 };
