@@ -15,7 +15,7 @@ export class OnboardingSteppersComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
-  @Input() disableFirstTwoSetupIfcompleted: boolean;
+  @Input() disableConnectionStepsIfCompleted: boolean;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -24,11 +24,18 @@ export class OnboardingSteppersComponent implements OnInit {
   ) { }
 
   navigate(index: number, canNavigate: boolean, route: string): void {
-    if (canNavigate && this.disableFirstTwoSetupIfcompleted === false) {
-      this.router.navigate([route]);
-    } else if (canNavigate && index !== 0 && index !== 1 && this.disableFirstTwoSetupIfcompleted === true){
-      this.router.navigate([route]);
+    if (!canNavigate) {
+      return;
     }
+
+  if (!this.disableConnectionStepsIfCompleted) {
+      this.router.navigate([route]);
+      return;
+  }
+
+  if (index > 1) {
+      this.router.navigate([route]);
+  }
   }
 
   ngOnInit(): void {
