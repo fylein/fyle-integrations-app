@@ -130,13 +130,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   getCreateVendorLabel(): string {
     if (this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR) {
-      return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? EmployeeFieldMapping.VENDOR.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.VENDOR);
+      return EmployeeFieldMapping.VENDOR.toLowerCase();
     }
-    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
+    return EmployeeFieldMapping.EMPLOYEE.toLowerCase();
   }
 
   getCreateMerchantLabel(): string {
-    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? NameInJournalEntry.MERCHANT.toLowerCase() : new TitleCasePipe().transform(NameInJournalEntry.MERCHANT);
+    return NameInJournalEntry.MERCHANT.toLowerCase();
   }
 
   navigateToPreviousStep(): void {

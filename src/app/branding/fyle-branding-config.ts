@@ -30,7 +30,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             useMerchantInJournalLine: true,
             splitExpenseGrouping: true,
             isEmployeeMappingFixed: false,
-            transformContentToSentenceCase: false,
             isReimbursableExpensesAllowed: true
         },
         importSettings: {
