@@ -15,14 +15,18 @@ export class OnboardingSteppersComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Input() disableFirstTwoSetupIfcompleted: boolean;
+
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router
   ) { }
 
-  navigate(canNavigate: boolean, route: string): void {
-    if (canNavigate) {
+  navigate(index: number, canNavigate: boolean, route: string): void {
+    if (canNavigate && this.disableFirstTwoSetupIfcompleted === false) {
+      this.router.navigate([route]);
+    } else if (canNavigate && index !== 0 && index !== 1 && this.disableFirstTwoSetupIfcompleted === true){
       this.router.navigate([route]);
     }
   }
