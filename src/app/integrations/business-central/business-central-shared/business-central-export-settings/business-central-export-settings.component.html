@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-            [headerText]="'Export Settings'"
+            [headerText]="'Export settings'"
             [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamics 365 Business Central. '"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
@@ -18,7 +18,7 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export Reimbursable Expenses'"
+                        [label]="'Export reimbursable expenses'"
                         [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamics 365 Business Central.'"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
@@ -47,7 +47,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
+                                [label]="'How are your employees represented in Dynamics 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -61,7 +61,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
+                                [label]="'How are your employees represented in Dynamics 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -73,7 +73,7 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="false"
-                            [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Vendors in Dynamics 365 Business Central ?'"
+                            [label]="'How should employees in  ' + brandingConfig.brandName + ' be mapped to vendors in Dynamics 365 Business Central?'"
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
                             [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
@@ -89,15 +89,15 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Bank Account Name'"
-                            [label]="'Set the Default Bank Account as?'"
-                            [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
+                            [label]="'Set the default bank account as?'"
+                            [subLabel]="'The integration will assign the expenses that is exported as journal entry to the bank account selected here.'"
                             [destinationAttributes]="bankAccountOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default Bank Account'"
+                            [placeholder]="'Select default bank account'"
                             [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
                         </div>
@@ -108,7 +108,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                            [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
@@ -123,7 +123,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Closed).'"
+                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (payment processing) or when the payment has been settled (closed).'"
                             [options]="reimbursableExpenseState"
                             [iconPath]="'list'"
                             [placeholder]="'Select export state'"
@@ -150,8 +150,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export Corporate Card Expenses'"
-                        [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Dynamics 365 Business Central.'"
+                        [label]="'Export corporate card expenses'"
+                        [subLabel]="'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Dynamics 365 Business Central.'"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -178,15 +178,15 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Bank Account Name'"
-                            [label]="'Set the Default Bank Account as?'"
-                            [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
+                            [label]="'Set the default bank account as?'"
+                            [subLabel]="'The integration will assign the expenses that is exported as journal entry to the bank account selected here.'"
                             [destinationAttributes]="bankAccountOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default Bank Account'"
+                            [placeholder]="'Select default bank account'"
                             [formControllerName]="'cccDefaultBankName'">
                         </app-configuration-select-field>
                     </div>
@@ -195,15 +195,15 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Vendor Name'"
-                            [label]="'Set the Default Vendor as?'"
-                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Journal Entry to the Vendor selected here.'"
+                            [label]="'Set the default vendor as?'"
+                            [subLabel]="'The integration will assign the corporate card expenses that is exported as journal entry to the vendor selected here.'"
                             [destinationAttributes]="vendorOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default Vendor'"
+                            [placeholder]="'Select default vendor'"
                             [formControllerName]="'defaultVendorName'">
                         </app-configuration-select-field>
                     </div>
@@ -213,7 +213,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                            [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
@@ -227,7 +227,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
+                            [label]="'How are your employees represented in Dynamics 365 Business Central?'"
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="employeeFieldMappingOptions"
                             [placeholder]="'Select representation'"
@@ -240,8 +240,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'Employees Name in Journal Entry?'"
-                            [subLabel]="'Select What should be the employee Name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [label]="'Employees name in journal entry?'"
+                            [subLabel]="'Select what should be the employee name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="nameReferenceInCCC"
                             [placeholder]="'Select representation'"
                             [iconPath]="'user-two'"
@@ -254,7 +254,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'"
+                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (approved) or when the payment has been settled (closed).'"
                             [options]="cccExpenseState"
                             [iconPath]="'list'"
                             [placeholder]="'Select export state'"

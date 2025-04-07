@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header 
-            [headerText]="'Advanced Settings'"
+            [headerText]="'Advanced settings'"
             [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
@@ -39,7 +39,7 @@
                                 [label]="'Set up export frequency'"
                                 [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Dynamics 365 Business Central'"
                                 [options]="hours"
-                                [placeholder]="'Set Schedule'"
+                                [placeholder]="'Set schedule'"
                                 [formControllerName]="'scheduleAutoExportFrequency'">
                             </app-configuration-schedule-export>
                         </div>
@@ -56,7 +56,7 @@
                         [form]="advancedSettingForm"
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
-                        [label]="'Set the line item-level Description Field in Dynamics 365 Business Central'"
+                        [label]="'Set the line item-level description field in Dynamics 365 Business Central'"
                         [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Dynamics 365 Business Central.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"

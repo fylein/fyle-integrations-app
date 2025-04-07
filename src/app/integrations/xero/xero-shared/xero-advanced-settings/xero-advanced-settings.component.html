@@ -76,7 +76,7 @@
                     [iconPath]="'arrow-rotate'"
                     [showClearIcon]="true"
                     [label]="brandingContent.paymentSyncLabel"
-                    [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to Paid and vice versa.'"
+                    [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to paid and vice versa.'"
                     [placeholder]="'Select how payments should be synced for reimbursable expenses'"
                     [formControllerName]="'paymentSync'">
                 </app-configuration-select-field>
@@ -89,7 +89,7 @@
                     [mandatoryErrorListName]="'payment account'"
                     [label]="brandingContent.billPaymentAccountLabel"
                     [subLabel]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + brandingContent.billPaymentAccountSubLabel + 'Xero.'"
-                    [placeholder]="'Select a Payment Account'"
+                    [placeholder]="'Select a payment account'"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
                 <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants"

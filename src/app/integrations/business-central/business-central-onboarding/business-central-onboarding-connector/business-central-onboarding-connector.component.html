@@ -10,7 +10,7 @@
             <div>
                 <app-configuration-step-header
                 [headerText]="'Connect to your Dynamics 365 Business Central account'"
-                [contentText]="'Expenses will be posted to the Dynamics 365 Business Central Location entity selected here.'"
+                [contentText]="'Expenses will be posted to the Dynamics 365 Business Central location entity selected here.'"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div class="tw-px-24-px tw-pb-24-px">
@@ -26,7 +26,7 @@
                     [isAccountingCompanyConnected]="isBusinessCentralConnected"
                     [showDisconnect]="showDisconnectBusinessCentral"
                     [accountingCompanyConnectionInProgress]="saveInProgress"
-                    [switchLinkText]="'Switch Entity'"
+                    [switchLinkText]="'Switch entity'"
                     (connectCompany)="connectBusinessCentralCompany($event)"
                     (switchCompany)="disconnectBusinessCentral()">
                 </app-configuration-connector>

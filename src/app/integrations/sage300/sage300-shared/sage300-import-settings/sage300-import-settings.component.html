@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'Import Settings'"
+        <app-configuration-step-header [headerText]="'Import settings'"
             [contentText]="'In this section, you can choose the fields required to be imported from Sage 300 CRE to ' + brandingConfig.brandName + '. '"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
@@ -73,7 +73,7 @@
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [isWarningVisible]="showDependentFieldWarning" 
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes and Cost Types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported cost codes and cost types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>
 </div>

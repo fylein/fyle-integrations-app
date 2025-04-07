@@ -1,9 +1,9 @@
 <div *ngIf="!isIncorrectBCConnectedDialogVisible">
     <div>
-        <app-landing-page-header [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/BusinessCentral-logo.svg'" [appName]="'Dynamics 365 Business Central'" [appDescription]="'Import data from Dynamics 365 Business Central to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central. '" [isLoading]="false" [isIntegrationSetupInProgress]="businessCentralConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'business_central/onboarding/connector'" (connectIntegration)="connectBusinessCentral()"></app-landing-page-header>
+        <app-landing-page-header [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/BusinessCentral-logo.svg'" [appName]="'Dynamics 365 Business Central'" [appDescription]="'Import data from Dynamics 365 Business Central to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central. '" [isLoading]="false" [isIntegrationSetupInProgress]="businessCentralConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'business_central/onboarding/connector'" (connectIntegration)="connectBusinessCentral()"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [svgPath]="'assets/flow-charts/ms-dynamics-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
+        <app-landing-page-body [headlineText]="'Guide to setup your integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [svgPath]="'assets/flow-charts/ms-dynamics-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
     </div>
 </div>
 <app-configuration-confirmation-dialog *ngIf="isIncorrectBCConnectedDialogVisible"

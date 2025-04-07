@@ -17,8 +17,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"
-                    [label]="'Export Reimbursable Expenses'" 
-                    [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct .'" 
+                    [label]="'Export reimbursable expenses'" 
+                    [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct.'" 
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -43,8 +43,8 @@
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'GL Account'"
-                                [label]="'To which GL Account should the expenses be credited to?'"
-                                [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
+                                [label]="'To which GL account should the expenses be credited to?'"
+                                [subLabel]="'The integration will credit the account selected here for reimbursable expenses exported as journal entries.'"
                                 [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -60,8 +60,8 @@
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'expense payment type'"
-                                [label]="'Set the Default Expense Payment Type as?'"
-                                [subLabel]="'The selected Expense Payment Type will be added to the reimbursable expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                                [label]="'Set the default expense payment type as?'"
+                                [subLabel]="'The selected expense payment type will be added to the reimbursable expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.'"
                                 [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -80,7 +80,7 @@
                             [isFieldMandatory]="false"
                             [showClearIcon]="true"
                             [mandatoryErrorListName]="'employee mapping'"
-                            [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) + ' in Sage Intacct?'"
+                            [label]="'How should employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) + ' in Sage Intacct?'"
                             [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Sage Intacct based on a unique parameter.'"
                             [options]="autoMapEmployeeOptions"
                             [iconPath]="'question-square-outline'"
@@ -94,7 +94,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).'"
+                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (processing) or when the payment has been settled (closed).'"
                         [options]="expenseStateOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select export state'"
@@ -106,7 +106,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
                         [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
+                        [subLabel]="'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)'"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
@@ -204,8 +204,8 @@
                             <app-configuration-toggle-field 
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"
-                            [label]="'Export Merchant data to the Vendor field'" 
-                            [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry Vendor field'"
+                            [label]="'Export merchant data to the vendor field'" 
+                            [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry vendor field'"
                             [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
                         <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
