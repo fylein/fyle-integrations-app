@@ -171,7 +171,7 @@ export class MainMenuComponent implements OnInit {
         ...item,
         disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
       }));
-      
+
     }
   }
 }

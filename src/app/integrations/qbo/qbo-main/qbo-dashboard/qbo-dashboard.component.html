@@ -52,11 +52,7 @@
 <div *ngIf="!isLoading && isTokenExpired">
     <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
         <app-dashboard-token-expired
-        [title]="'Connection Expired'"
-        [description]="'your connection to quick books has been expired, To continue using the integration seamlessly, please reconnect your account.'"
-        [buttonText]="'Reconnect to QuickBooks'"
-        [buttonColor]="'#38940c'"
-        [buttonRouterURL]="'/integrations/qbo/onboarding/landing'"
+        [appName]="appName"
         >
         </app-dashboard-token-expired>
     </div>

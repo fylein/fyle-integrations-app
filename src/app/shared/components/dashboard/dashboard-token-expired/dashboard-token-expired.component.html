@@ -1,19 +1,42 @@
-<div class="tw-p-40-px tw-border tw-shadow-sm">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="tw-p-40-px tw-border tw-shadow-sm">
     <div class="tw-flex tw-justify-center tw-pb-24-px">
-        <img *ngIf="brandingConfig.brandId === 'fyle'" src="assets/illustrations/login.svg" />
+        <img *ngIf="illustrationsAllowed" src="assets/illustrations/login.svg" />
     </div>
     <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary">
-        {{ title }}
+        Connection Expired
     </p>
     <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        {{ description }}
+        your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account.
     </p>
     
     <div class="tw-flex tw-justify-center tw-items-center">
-    <button type="button" routerLink="{{buttonRouterURL}}"
-    class="tw-inline-block tw-px-4 tw-py-2 tw-text-nowrap tw-rounded-md tw-shadow-sm !tw-w-auto tw-text-white" [style.background]="buttonColor">
-    <span class="tw-font-400 tw-text-16-px">
-        {{buttonText}}
-    </span>
-    </button> </div>
+
+    <div *ngIf="appName === AppName.QBO" class="tw-cursor-pointer">
+        <img
+        [src]="qboConnectButtonSource"
+            (click)="initiateOAuth()"
+            (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
+            (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
+    </div>
+
+    <div *ngIf="appName === AppName.XERO" class="tw-cursor-pointer">
+        <img
+            [src]="xeroConnectButtonSource"
+            (click)="initiateOAuth()">
+    </div>
+    </div>
+
 </div>
+
+<app-configuration-confirmation-dialog *ngIf="isIncorrectConnectedDialogVisible"
+    (warningAccepted)="acceptWarning($event)"
+    [isWarningVisible]="isIncorrectConnectedDialogVisible"
+    [headerText]="'Incorrect account selected'"
+    [contextText]="'You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings'"
+    [confirmBtnText]="'Re connect'"
+    [showSecondaryCTA]="false">
+</app-configuration-confirmation-dialog>

@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -9,6 +9,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
+import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
 
@@ -37,13 +38,16 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
 
   readonly brandingContent = brandingContent.xero.landing;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private helperService: HelperService,
     private xeroConnectorService: XeroConnectorService,
     private workspaceService: WorkspaceService,
     private router: Router,
     private xeroHelper: XeroHelperService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private xeroAuthService: XeroAuthService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -84,19 +88,32 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   connectXero() {
-    this.xeroConnectionInProgress = true;
-    const url = `${environment.xero_authorize_uri}?client_id=${environment.xero_oauth_client_id}&scope=${environment.xero_scope}&response_type=code&redirect_uri=${environment.xero_oauth_redirect_uri}&state=xero_local_redirect`;
-    this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
-      const code = callbackURL.split('code=')[1]?.split('&')[0];
-      this.postXeroCredentials(code);
-    });
-    this.helperService.oauthHandler(url);
+    this.xeroAuthService.connectXero();
   }
 
   ngOnInit(): void {
+    this.xeroAuthService.xeroConnectionInProgress$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((status: boolean) => {
+      this.xeroConnectionInProgress = status;
+    });
+
+    this.xeroAuthService.isIncorrectXeroConnectedDialogVisible$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((status: boolean) => {
+      this.isIncorrectXeroConnectedDialogVisible = status;
+    });
+
+    this.xeroAuthService.isIntegrationConnected$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((status: boolean) => {
+      this.isIntegrationConnected = status;
+    });
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.oauthCallbackSubscription) {
       this.oauthCallbackSubscription.unsubscribe();
     }
