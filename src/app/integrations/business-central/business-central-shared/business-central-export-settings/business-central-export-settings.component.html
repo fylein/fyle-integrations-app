@@ -3,9 +3,9 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
             [headerText]="'Export Settings'"
-            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamic 365 Business Central. '"
+            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamics 365 Business Central. '"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -16,10 +16,10 @@
         <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
             <div class="tw-mb-16-px">
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamic 365 Business Central.'" 
+                        [label]="'Export Reimbursable Expenses'"
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamics 365 Business Central.'"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -47,7 +47,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
+                                [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -61,7 +61,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
+                                [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -136,22 +136,22 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 365 Business Central.'"
+                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
                             [placeholder]="'Select date type'"
                             [options]="getExportDate(reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup')"
                             [iconPath]="'calendar'"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
                     </div>
-                    
+
                 </div>
             </div>
             <div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export Corporate Card Expenses'" 
-                        [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Dynamic 365 Business Central.'" 
+                        [label]="'Export Corporate Card Expenses'"
+                        [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Dynamics 365 Business Central.'"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -227,7 +227,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
+                            [label]="'How are your Employees represented in Dynamics 365 Business Central?'"
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="employeeFieldMappingOptions"
                             [placeholder]="'Select representation'"
@@ -267,7 +267,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 365 Business Central.'"
+                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
                             [options]="getExportDate(cccExpenseGroupingDateOptions, 'cccExportGroup')"
                             [iconPath]="'calendar'"
                             [placeholder]="'Select date'"
@@ -277,7 +277,7 @@
                 </div>
             </div>
         </div>
-        <app-configuration-step-footer 
+        <app-configuration-step-footer
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
             [showBackButton] = "isOnboarding"
             [isButtonDisabled]="!exportSettingForm.valid"

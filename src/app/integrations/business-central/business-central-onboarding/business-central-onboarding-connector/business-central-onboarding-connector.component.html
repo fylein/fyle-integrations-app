@@ -8,7 +8,7 @@
         </div>
         <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
             <div>
-                <app-configuration-step-header 
+                <app-configuration-step-header
                 [headerText]="'Connect to your Dynamics 365 Business Central account'"
                 [contentText]="'Expenses will be posted to the Dynamics 365 Business Central Location entity selected here.'"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
@@ -34,7 +34,7 @@
                     (warningAccepted)="acceptWarning($event)"
                     [isWarningVisible]="isIncorrectBusinessCentralConnectedDialogVisible"
                     [headerText]="'Incorrect account selected'"
-                    [contextText]="'You had previously set up the integration with a different Dynamic 365 Business Central account. Please choose the same to restore the settings'"
+                    [contextText]="'You had previously set up the integration with a different Dynamics 365 Business Central account. Please choose the same to restore the settings'"
                     [confirmBtnText]="'Re connect'"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
