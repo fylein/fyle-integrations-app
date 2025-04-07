@@ -55,7 +55,7 @@ export const c1Content = {
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
                     creditCardExpenseNameinJELabel: 'Name in journal entry',
-                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
                     defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountSubLabel: 'Post all your company corporate card transactions to a default credit card account.',
                     defaultCCCAccountPayableLabel: 'Select the default credit account for adding ',

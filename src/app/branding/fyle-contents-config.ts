@@ -55,7 +55,7 @@ export const fyleContents = {
                     creditCardExpenseGroupLabel: 'How should the expenses be grouped?',
                     creditCardExpenseGroupSubLabel: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
                     creditCardExpenseNameinJELabel: 'Name in journal entry',
-                    creditCardExpenseNameinJESubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.',
+                    creditCardExpenseNameinJESubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
                     defaultCCCAccountLabel: 'Set a default credit card account',
                     defaultCCCAccountSubLabel: 'If there\'s no card-to-card mapping or when an expense lacks a corporate card transaction associated with it, expenses will be posted to the default card configured here.',
                     defaultCCCAccountPayableLabel: 'Select the default credit account for adding ',
@@ -72,7 +72,7 @@ export const fyleContents = {
                 importItemsSubLabel: 'Products/services from QuickBooks Desktop will be imported as categories in ' + brandingConfig.brandName + '.',
                 importVendorsAsMerchantsLabel: 'Import vendors as merchants in ' + brandingConfig.brandName,
                 chartOfAccountTypes: 'Choose the type of accounts to be imported',
-                chartOfAccountTypesSubLabel: 'By default \'Expense\' type accounts will be imported. Open the dropdown to add or modify selections based on your needs.'
+                chartOfAccountTypesSubLabel: 'By default \'expense\' type accounts will be imported. Open the dropdown to add or modify selections based on your needs.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -135,7 +135,7 @@ export const fyleContents = {
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
                     accountsPayableLabel: 'Set vendor payables account as',
                     journalOptionLabel: 'Name in journal entry',
-                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.'
+                    journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
             },
             importSetting: {
@@ -184,7 +184,7 @@ export const fyleContents = {
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed).',
                 previewDescriptionFieldLabel: 'Preview of the description field',
-                autoCreateMerchantsLabel: 'Auto create Merchant on NetSuite for Credit Card Charge',
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge',
                 singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.'
             }
@@ -221,7 +221,7 @@ export const fyleContents = {
                 stepName: 'Import settings',
                 headerText: '',
                 contentText: 'In this section, you can choose the fields required to be imported from Xero to ' + brandingConfig.brandName,
-                importCategoriesLabel: 'Import the Chart of Accounts as categories in ' + brandingConfig.brandName + '.',
+                importCategoriesLabel: 'Import the chart of accounts as categories in ' + brandingConfig.brandName + '.',
                 importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
                 importCustomersLabel: 'Import customers from Xero',
                 importCustomersSubLabel: 'The customers in Xero will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
@@ -303,7 +303,7 @@ export const fyleContents = {
                     creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                     chargeCard: 'Set the default charge card',
                     chargeCardPlaceholder: 'Select corporate charge card',
-                    chargeCardSublabel: 'Expenses of Corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
+                    chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
                     cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed)',
                     cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
                     employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
@@ -365,13 +365,13 @@ export const fyleContents = {
                 defaultDebitCardAccountLabel: 'Set default debit card account as',
                 defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                 defaultCCCVendorLabel: 'Set default corporate card vendor as',
-                defaultCCCVendorSubLabel: 'This selected vendor will be applied on all Corporate card Transactions exported to QuickBooks Online.',
+                defaultCCCVendorSubLabel: 'This selected vendor will be applied on all corporate card transactions exported to QuickBooks Online.',
                 accountsPayableLabel: 'To which accounts payable account should the ',
                 accountsPayableSubLabel: ' to the selected accounts payable account.',
                 creditCardExpenseSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
                 creditCardExportGroupSubLabel: 'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report).',
                 journalOptionLabel: 'Name in journal entry',
-                journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your journal entries.',
+                journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
                 creditCardExpenseLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
                 creditCardExportTypeSubLabel: 'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName + ' expenses.'
             }
@@ -380,7 +380,7 @@ export const fyleContents = {
             stepName: 'Import settings',
             headerText: '',
             contentText: 'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. ',
-            importCategoriesLabel: 'Import the Chart of Accounts as categories in ' + brandingConfig.brandName,
+            importCategoriesLabel: 'Import the chart of accounts as categories in ' + brandingConfig.brandName,
             importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
             importItemsLabel: 'Import products/services from QuickBooks Online',
             importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ' + brandingConfig.brandName + '.',
