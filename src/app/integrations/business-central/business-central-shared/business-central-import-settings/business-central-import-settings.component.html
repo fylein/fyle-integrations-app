@@ -13,10 +13,10 @@
         <form [formGroup]="importSettingForm">
             <div class="tw-p-24-px">
                 <div class="tw-rounded-lg tw-border-separator tw-border">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName " 
-                        [subLabel]="'Imported accounts will appear in a dropdown under the \'Category\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses. '" 
+                        [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName "
+                        [subLabel]="'Imported accounts will appear in a dropdown under the \'category\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses. '"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -44,27 +44,27 @@
                     </div>
                 </div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import Vendor as Merchant in ' + brandingConfig.brandName " 
-                        [subLabel]="'Imported vendors will appear in a dropdown under the \'Merchant\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses.'" 
+                        [label]="'Import Vendor as Merchant in ' + brandingConfig.brandName "
+                        [subLabel]="'Imported vendors will appear in a dropdown under the \'merchant\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses.'"
                         [formControllerName]="'importVendorAsMerchant'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
                 <div>
-                    <app-configuration-import-field 
-                        [form]="importSettingForm" 
-                        [appName]="appName" 
-                        [accountingFieldOptions]="businessCentralFields" 
+                    <app-configuration-import-field
+                        [form]="importSettingForm"
+                        [appName]="appName"
+                        [accountingFieldOptions]="businessCentralFields"
                         [fyleFieldOptions]="fyleFields"
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
             </div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!importSettingForm.valid"
                 (navigateToPreviousStep)="navigateBack()"
@@ -73,16 +73,16 @@
         </form>
     </div>
     <div>
-        <app-configuration-custom-field-creation-dialog 
+        <app-configuration-custom-field-creation-dialog
             [customFieldForm]="customFieldForm"
-            [showCustomFieldCreationDialog]="showCustomFieldDialog" 
+            [showCustomFieldCreationDialog]="showCustomFieldDialog"
             (saveCustomFieldFn)="saveFyleExpenseField()"
             (closeModelFn)="closeModel()">
         </app-configuration-custom-field-creation-dialog>
     </div>
 </div>
 <div *ngIf="isPreviewDialogVisible">
-    <app-preview-dialog 
+    <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
         [header]="'Preview'">

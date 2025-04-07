@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
             [headerText]="'Advanced Settings'"
             [contentText]="'In this section, you can customize the data you want to include in your ' + brandingConfig.brandName + ' Expenses created from your TravelPerk Invoices. '"
             [redirectLink]="supportArticleLink"
@@ -20,7 +20,7 @@
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="">
-                    <app-configuration-mapping-fields 
+                    <app-configuration-mapping-fields
                         [appName]="appName"
                         [showCrossIcon]="true"
                         [isDestinationDisabled]="true"
@@ -101,7 +101,7 @@
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
                         [label]="'Customize the Purpose field in ' + brandingConfig.brandName "
-                        [subLabel]="'You can choose from a list of available datapoints to populate the \'Purpose\' field in ' + brandingConfig.brandName + ' based on your requirement.'"
+                        [subLabel]="'You can choose from a list of available datapoints to populate the \'purpose\' field in ' + brandingConfig.brandName + ' based on your requirement.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
@@ -117,8 +117,8 @@
             </div>
         </div>
         <div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!advancedSettingsForm.valid"
                 (navigateToPreviousStep)="navigateBack()"

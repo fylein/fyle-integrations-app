@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
         [headerText]="'Field Mapping'"
         [contentText]="'In this section, choose appropriate representation of your Customers & Classes on ' + brandingConfig.brandName + '.'"
         [redirectLink]="redirectLink"></app-configuration-step-header>
@@ -16,7 +16,7 @@
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
                         [label]="'How to map CUSTOMER: JOB in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Customers\' field in QuickBooks Desktops'"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'customers\' field in QuickBooks Desktops'"
                         [options]="mappingFieldFormOptionsFunction('classType', 'itemType')"
                         [iconPath]="'user-two'"
                         [placeholder]="'Select representation'"
@@ -26,7 +26,7 @@
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
                         [label]="'How to map CLASS in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Class\' field in QuickBooks Desktops'"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'class\' field in QuickBooks Desktops'"
                         [options]="mappingFieldFormOptionsFunction('customerType', 'itemType')"
                         [iconPath]="'list'"
                         [placeholder]="'Select representation'"
@@ -36,13 +36,13 @@
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
                         [label]="'How to map ITEMS in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Items\' field in QuickBooks Desktops'"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'items\' field in QuickBooks Desktops'"
                         [options]="mappingFieldFormOptionsFunction('customerType', 'classType')"
                         [iconPath]="'list'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'itemType'"></app-configuration-select-field>
                     </div>
-                </div> 
+                </div>
             </div>
             <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
         </form>
