@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { XeroConnectorService } from "../services/xero/xero-configuration/xero-connector.service";
-import { Observable, forkJoin, map, catchError, throwError, switchMap, of } from "rxjs";
+import { Observable, forkJoin, map, catchError, throwError } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
 import { AppUrl, ToastSeverity, XeroOnboardingState } from "../models/enum/enum.model";
@@ -32,24 +32,23 @@ export class XeroTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-        return this.xeroConnectorService.getXeroTokenHealth(workspaceId).pipe(
-            switchMap(credentials =>
-                this.xeroConnectorService.getXeroCredentials(workspaceId).pipe(
-                  map(preferences => !!preferences)
-                )
-              ),
-              catchError(error => {
-                if (error.status === 400) {
-                  globalCacheBusterNotifier.next();
+      return forkJoin(
+        [
+          this.xeroConnectorService.getXeroCredentials(workspaceId),
+          this.xeroConnectorService.getXeroTokenHealth(workspaceId)
+        ]
+      ).pipe(
+        map(response => !!response),
+        catchError(error => {
+          if (error.status === 400) {
+            globalCacheBusterNotifier.next();
+            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Xero connection expired, please connect again');
 
-                  if (error.error.message === "Xero connection expired"){
-                    return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
-                  }
-                    return this.router.navigateByUrl('integrations/xero/onboarding/landing');
+            return this.router.navigateByUrl('integrations/xero/onboarding/landing');
+          }
 
-                }
-                return throwError(error);
-            })
+          return throwError(error);
+        })
       );
   }
 
