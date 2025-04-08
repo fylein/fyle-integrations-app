@@ -1,7 +1,3 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
-    <app-loader></app-loader>
-</div>
-
 <div *ngIf="!isLoading" class="tw-p-40-px tw-border tw-shadow-sm">
     <div class="tw-flex tw-justify-center tw-pb-24-px">
         <img *ngIf="illustrationsAllowed" src="assets/illustrations/login.svg" />
@@ -9,12 +5,14 @@
     <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary">
         Connection Expired
     </p>
-    <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+    <p *ngIf="!isLoading" class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
         your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account.
     </p>
+    <p *ngIf="isLoading" class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        We are syncing your data between your Fyle - {{appName}} account and this may take a few seconds.
+    </p>
     
-    <div class="tw-flex tw-justify-center tw-items-center">
-
+    <div *ngIf="!isLoading" class="tw-flex tw-justify-center tw-items-center">
     <div *ngIf="appName === AppName.QBO" class="tw-cursor-pointer">
         <img
         [src]="qboConnectButtonSource"
