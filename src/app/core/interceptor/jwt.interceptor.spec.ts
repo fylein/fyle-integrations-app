@@ -132,7 +132,7 @@ xdescribe('JwtInterceptor', () => {
   });
 
   it('should allow API calls to be made for live token', () => {
-    const dummyAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    const dummyAccessToken = 'ey.ey.ey';
 
     spyOn(authService, 'getAccessToken').and.returnValue(dummyAccessToken);
     spyOn((interceptor as any), 'isTokenExpiring').and.returnValue(false);
