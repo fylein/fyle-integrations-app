@@ -476,15 +476,15 @@ describe('IntacctExportSettingsComponent', () => {
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Last Spend Date',
+          label: 'Last spend date',
           value: ExportDateType.LAST_SPENT_AT
         },
         {
-          label: 'Approved Date',
+          label: 'Approved date',
           value: ExportDateType.APPROVAL_DATE
         },
         {
-          label: 'Card Transaction Post date',
+          label: 'Card transaction post date',
           value: ExportDateType.POSTED_AT
         }
       ]);

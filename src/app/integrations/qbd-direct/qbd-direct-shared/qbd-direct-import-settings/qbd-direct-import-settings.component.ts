@@ -94,14 +94,14 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
+        subLabel: 'Example: 4567 meals and entertainment'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
-        subLabel: 'Example: Meals & Entertainment'
+        subLabel: 'Example: meals and entertainment'
       }
     ]
   };
@@ -291,7 +291,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
       this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);

@@ -106,11 +106,11 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
         id: NetsuiteDefaultLevelOptions.ALL
       },
       {
-        name: 'Transaction Line',
+        name: 'Transaction line',
         id: NetsuiteDefaultLevelOptions.TRANSACTION_LINE
       },
       {
-        name: 'Transaction Body',
+        name: 'Transaction body',
         id: NetsuiteDefaultLevelOptions.TRANSACTION_BODY
       }
     ];

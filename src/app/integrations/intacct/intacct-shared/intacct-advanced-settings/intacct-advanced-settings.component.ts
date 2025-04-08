@@ -101,11 +101,11 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       value: null
     },
     {
-      label: 'Export ' + brandingConfig.brandName + ' ACH Payments to Sage Intacct',
+      label: 'Export ' + brandingConfig.brandName + ' ACH payments to Sage Intacct',
       value: PaymentSyncDirection.FYLE_TO_INTACCT
     },
     {
-      label: 'Import Sage Intacct Payments into ' + brandingConfig.brandName + '',
+      label: 'Import Sage Intacct payments into ' + brandingConfig.brandName + '',
       value: PaymentSyncDirection.INTACCT_TO_FYLE
     }
   ];

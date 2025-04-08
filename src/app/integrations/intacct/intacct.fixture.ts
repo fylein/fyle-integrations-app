@@ -867,7 +867,7 @@ export const sageIntacctFieldsSortedByPriorityForC1 = [
   },
   {
     attribute_type: 'GENERAL_LEDGER_ACCOUNT',
-    display_name: 'General Ledger Account',
+    display_name: 'General ledger account',
     source_placeholder: '',
     is_dependent: false
   }

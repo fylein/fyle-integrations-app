@@ -29,9 +29,9 @@ export const importSettingsResponse: Sage300ImportSettingGet = {
         }
     ],
     "dependent_field_settings": {
-        "cost_code_field_name": "Sage Cost COde",
+        "cost_code_field_name": "Sage cost code",
         "cost_code_placeholder": "null",
-        "cost_category_field_name": "Sage Cost Type",
+        "cost_category_field_name": "Sage cost type",
         "cost_category_placeholder": "null",
         "is_import_enabled": true
     },
@@ -41,7 +41,7 @@ export const importSettingsResponse: Sage300ImportSettingGet = {
 export const fyleFieldsResponse: FyleField[] = [
     {
         "attribute_type": "COST_CENTER",
-        "display_name": "Cost Center",
+        "display_name": "Cost center",
         "is_dependent": false
     },
     {
@@ -59,7 +59,7 @@ export const sage300FieldsResponse: IntegrationField[] =
 [
     {
         "attribute_type": "COST_CENTER",
-        "display_name": "Cost Center"
+        "display_name": "Cost center"
     },
     {
         "attribute_type": "PROJECT",
@@ -91,7 +91,7 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
 
 export const adminEmails: EmailOption[] = [
 	{
-		"name": "Nilesh Pant",
+		"name": "Nilesh pant",
 		"email": "nilesh.p@fyle.in"
     }
 ];
@@ -162,17 +162,17 @@ export const expenseFilterCondition: ConditionField[] = [
         "is_custom": true
     },
     {
-        "field_name": "Fyle Categories",
+        "field_name": "Fyle categories",
         "type": "SELECT",
         "is_custom": true
     },
     {
-        "field_name": "Operating System",
+        "field_name": "Operating system",
         "type": "SELECT",
         "is_custom": true
     },
     {
-        "field_name": "User Dimension",
+        "field_name": "User dimension",
         "type": "SELECT",
         "is_custom": true
     },
@@ -182,7 +182,7 @@ export const expenseFilterCondition: ConditionField[] = [
         "is_custom": true
     },
     {
-        "field_name": "Nilesh Custom Field",
+        "field_name": "Nilesh custom field",
         "type": "SELECT",
         "is_custom": true
     }
@@ -192,7 +192,7 @@ export const destinationAttributes: Sage300DestinationAttributes[] = [
     {
         "id": 214726,
         "attribute_type": "CHARGE_CARD_NUMBER",
-        "display_name": "Charge Card Account",
+        "display_name": "Charge card account",
         "value": "1234",
         "destination_id": "1234",
         "auto_created": false,
@@ -206,7 +206,7 @@ export const destinationAttributes: Sage300DestinationAttributes[] = [
         "id": 214731,
         "attribute_type": "VENDOR",
         "display_name": "vendor",
-        "value": "A-1 Electric Company",
+        "value": "A-1 electric company",
         "destination_id": "V100",
         "auto_created": false,
         "active": true,

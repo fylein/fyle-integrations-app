@@ -67,22 +67,22 @@ export class AccountingExportModel {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
       {
-        dateRange: 'This Week',
+        dateRange: 'This week',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Last Week',
+        dateRange: 'Last week',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
         endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
       },
       {
-        dateRange: 'This Month',
+        dateRange: 'This month',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Last Month',
+        dateRange: 'Last month',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
         endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
       }
@@ -185,7 +185,7 @@ export class AccountingExportModel {
       exportId = expenseGroup.response_logs.Bill.Id;
     } else if ('JournalEntry' in expenseGroup.response_logs && expenseGroup.response_logs.JournalEntry) {
       exportRedirection = 'journal';
-      exportType = 'Journal Entry';
+      exportType = 'Journal entry';
       exportId = expenseGroup.response_logs.JournalEntry.Id;
     } else if ('Purchase' in expenseGroup.response_logs && expenseGroup.response_logs.Purchase) {
       exportId = expenseGroup.response_logs.Purchase.Id;
@@ -195,12 +195,12 @@ export class AccountingExportModel {
       } else {
         exportRedirection = 'expense';
         if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Purchase';
+          exportType = 'Credit card purchase';
         } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Credit';
+          exportType = 'Credit card credit';
           exportRedirection = 'creditcardcredit';
         } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
-          exportType = 'Debit Card Expense';
+          exportType = 'Debit card expense';
           exportRedirection = 'expense';
         } else {
           exportType = 'expense';
@@ -237,7 +237,7 @@ export class AccountingExportModel {
           exportRedirection = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=${exportId}`;
         }
       } else if ('BankTransactions' in expenseGroup.response_logs && expenseGroup.response_logs.BankTransactions) {
-        exportType = 'Bank Transaction';
+        exportType = 'Bank transaction';
         exportId = expenseGroup.response_logs.BankTransactions[0].BankTransactionID;
         accountId = expenseGroup.response_logs.BankTransactions[0].BankAccount.AccountID;
         if (AccountingExportModel.xeroShortCode) {

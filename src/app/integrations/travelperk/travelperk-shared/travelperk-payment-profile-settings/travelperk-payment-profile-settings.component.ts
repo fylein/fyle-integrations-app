@@ -83,7 +83,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Payment Profile settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Payment profile settings saved successfully');
       this.trackingService.trackTimeSpent(TrackingApp.TRAVELPERK, Page.PAYMENT_PROFILE_SETTINGS_TRAVELPERK, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.TRAVELPERK, TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS, 2, paymentProfileMappingPayload);

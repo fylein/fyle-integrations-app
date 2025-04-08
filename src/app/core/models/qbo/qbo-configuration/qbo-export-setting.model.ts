@@ -53,7 +53,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
           value: QBOReimbursableExpensesObject.EXPENSE
         },
         {
-          label: 'Journal Entry',
+          label: 'Journal entry',
           value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
         }
       ],
@@ -67,7 +67,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
           value: QBOReimbursableExpensesObject.EXPENSE
         },
         {
-          label: 'Journal Entry',
+          label: 'Journal entry',
           value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
         }
       ]
@@ -92,7 +92,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
 
     if (brandingConfig.brandId !== 'co') {
       creditCardExportTypes.push({
-        label: 'Debit Card Expense',
+        label: 'Debit card expense',
         value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
       });
     }
@@ -142,11 +142,11 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getNameInJournalOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Merchant Name',
+        label: 'Merchant name',
         value: NameInJournalEntry.MERCHANT
       },
       {
-        label: 'Employee Name',
+        label: 'Employee name',
         value: NameInJournalEntry.EMPLOYEE
       }
     ];
@@ -171,7 +171,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last Spend date',
+        label: 'Last spend date',
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
@@ -180,7 +180,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Card Transaction Post Date',
+        label: 'Card transaction post date',
         value: ExportDateType.POSTED_AT
       },
       {

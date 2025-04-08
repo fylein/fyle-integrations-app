@@ -70,7 +70,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   costCategoryOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
 
   isDialogVisible: boolean = false;
 
@@ -82,13 +82,13 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   readonly dependentImportFields: IntacctDependentImportFields[] = [
     {
-      source_field: 'Cost Code',
+      source_field: 'Cost code',
       options: this.costCodeFieldOption,
       formController: 'costCodes',
       isDisabled: false
     },
     {
-      source_field: 'Cost Type',
+      source_field: 'Cost type',
       options: this.costCategoryOption,
       formController: 'costTypes',
       isDisabled: false
@@ -206,7 +206,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   private dependentCostFieldsWatchers(formControllerName: string): void {
     this.importSettingsForm.controls[formControllerName].valueChanges.subscribe((value) => {
       if (value?.attribute_type === 'custom_field') {
-        // Show a dialog when the "Create a Custom Field" button is clicked
+        // Show a dialog when the "Create a custom field" button is clicked
         this.addCustomField();
         this.customFieldType = formControllerName;
         this.customFieldControl = this.importSettingsForm.controls[formControllerName];
@@ -383,7 +383,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       source_placeholder: null
     }));
 
-    this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: 'General Ledger Account', source_placeholder: '', is_dependent: false });
+    this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: 'General ledger account', source_placeholder: '', is_dependent: false });
     this.fyleFields.pop();
     this.fyleFields.push({ attribute_type: FyleField.CATEGORY, display_name: 'Category', source_placeholder: '', is_dependent: false });
     this.fyleFields.push(this.customFieldOption[0]);

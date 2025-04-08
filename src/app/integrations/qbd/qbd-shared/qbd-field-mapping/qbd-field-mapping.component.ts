@@ -36,7 +36,7 @@ export class QbdFieldMappingComponent implements OnInit {
       value: QBDFyleField.PROJECT
     },
     {
-      label: 'Cost Center',
+      label: 'Cost center',
       value: QBDFyleField.COST_CENTER
     }
   ];

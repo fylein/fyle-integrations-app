@@ -50,7 +50,7 @@ export class QbdExportSettingComponent implements OnInit {
 
   reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
     {
-      label: 'Spend Date',
+      label: 'Spend date',
       value: QBDExportDateType.SPENT_AT
     },
     {
@@ -63,11 +63,11 @@ export class QbdExportSettingComponent implements OnInit {
 
   creditCardExportTypes: QBDExportSettingFormOption[] = [
     {
-      label: 'Credit Card Purchase',
+      label: 'Credit card purchase',
       value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
     },
     {
-      label: 'Journal Entry',
+      label: 'Journal entry',
       value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
     }
   ];
@@ -78,7 +78,7 @@ export class QbdExportSettingComponent implements OnInit {
       value: QBDReimbursableExpensesObject.BILL
     },
     {
-      label: 'Journal Entry',
+      label: 'Journal entry',
       value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
     }
   ];
@@ -140,17 +140,17 @@ export class QbdExportSettingComponent implements OnInit {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
       this.cccExpenseGroupingDateOptions = [
         {
-          label: 'Card Transaction Post date',
+          label: 'Card transaction post date',
           value: QBDExportDateType.POSTED_AT
         },
         {
-          label: 'Spend Date',
+          label: 'Spend date',
           value: QBDExportDateType.SPENT_AT
         }
       ];
     } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
-        label: 'Card Transaction Post date',
+        label: 'Card transaction post date',
         value: QBDExportDateType.POSTED_AT
       }]);
     } else {
@@ -163,7 +163,7 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   accountName(): string {
-    const name = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
+    const name = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'accounts payable' : 'bank';
     this.customMessage = 'Please enter ' + name + ' name';
     return name;
   }
@@ -277,7 +277,7 @@ export class QbdExportSettingComponent implements OnInit {
 
     this.expenseStateOptions = [
       {
-        label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+        label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment processing',
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {

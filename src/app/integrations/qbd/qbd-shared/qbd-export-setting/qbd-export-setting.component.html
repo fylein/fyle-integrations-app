@@ -40,7 +40,7 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'accounts payable' : 'bank'}} name" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>

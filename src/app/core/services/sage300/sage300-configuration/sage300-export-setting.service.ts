@@ -54,7 +54,7 @@ export class Sage300ExportSettingService {
         value: ExpenseGroupingFieldOption.EXPENSE
       },
       {
-        label: 'Expense Report',
+        label: 'Expense report',
         value: ExpenseGroupingFieldOption.REPORT
       }
     ];
@@ -63,11 +63,11 @@ export class Sage300ExportSettingService {
   getCCCExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Card Transaction Post date',
+        label: 'Card transaction post date',
         value: Sage300ExpenseDate.POSTED_AT
       },
       {
-        label: 'Last Spent Date',
+        label: 'Last spent date',
         value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
@@ -80,11 +80,11 @@ export class Sage300ExportSettingService {
         value: Sage300ExpenseDate.CURRENT_DATE
       },
       {
-        label: 'Spent Date',
+        label: 'Spent date',
         value: Sage300ExpenseDate.SPENT_AT
       },
       {
-        label: 'Last Spent Date',
+        label: 'Last spent date',
         value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
@@ -93,11 +93,11 @@ export class Sage300ExportSettingService {
   getExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Accounts Payable Invoice',
+        label: 'Accounts payable invoice',
         value: Sage300ExportType.PURCHASE_INVOICE
       },
       {
-        label: 'Direct Cost',
+        label: 'Direct cost',
         value: Sage300ExportType.DIRECT_COST
       }
     ];

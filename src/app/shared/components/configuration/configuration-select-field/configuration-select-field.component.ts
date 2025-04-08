@@ -135,7 +135,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportTable() {
-    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Preview' : 'Export Module';
+    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Preview' : 'Export module';
     this.exportTypeIconPath = this.exportConfigurationIconPath;
     this.isPreviewDialogVisible = true;
   }
