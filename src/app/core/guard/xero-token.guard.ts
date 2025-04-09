@@ -45,7 +45,7 @@ export class XeroTokenGuard  {
                   if (error.error.message === "Xero connection expired"){
                     return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
                   }
-                  //  return this.router.navigateByUrl('integrations/xero/onboarding/landing');  // this line will be removed (ignore while PR)
+                  //  Return this.router.navigateByUrl('integrations/xero/onboarding/landing');  // this line will be removed (ignore while PR)
                   return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
                 }
                 return throwError(error);
