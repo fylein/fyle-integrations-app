@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, switchMap, throwError } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
@@ -29,27 +29,27 @@ export class QboTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-      return forkJoin(
-        [
-          this.qboConnectorService.getQBOCredentials(),
-          this.qboConnectorService.getPreferences()
-        ]
-      ).pipe(
-        map(response => !!response),
+      return this.qboConnectorService.getQBOCredentials().pipe(
+        switchMap(credentials =>
+          this.qboConnectorService.getPreferences().pipe(
+            map(preferences => !!preferences)
+          )
+        ),
         catchError(error => {
           if (error.status === 400) {
             globalCacheBusterNotifier.next();
-            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your QuickBooks Online connection expired, please connect again');
 
             const onboardingState: QBOOnboardingState = this.workspaceService.getOnboardingState();
-
             if (onboardingState !== QBOOnboardingState.COMPLETE) {
               return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
             }
 
-            return this.router.navigateByUrl('integrations/qbo/onboarding/landing');
-          }
+            if (error.error.is_expired === true || error.error.message === "Invalid token or Quickbooks Online connection expired"){
+              return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
+            }
+              return this.router.navigateByUrl('integrations/qbo/onboarding/landing');
 
+          }
           return throwError(error);
         })
       );
