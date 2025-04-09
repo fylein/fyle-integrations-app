@@ -6,18 +6,19 @@
     </div>
 
     @if (!isConnectionInProgress) {
+      @if (!isIntegrationDisconnected) {
         <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection expired </p>
 
         <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        Your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account. </p>
-    }
+          Your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account. </p>
 
-    @if (isConnectionInProgress) {
+      } @else {
+        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection disconnected </p>
+
         <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. </p>
-    }
+          The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. </p>
+      }
 
-    @if (!isConnectionInProgress) {
         <div class="tw-flex tw-justify-center tw-items-center">
           
           @if (appName === AppName.QBO) {
@@ -42,6 +43,9 @@
     }
 
     @if (isConnectionInProgress) {
+      <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+      We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. </p>
+
       <div class="tw-flex tw-justify-center tw-items-center">
         <app-loader></app-loader>
       </div>

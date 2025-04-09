@@ -33,6 +33,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isIntegrationConnected: boolean;
 
+  isIntegrationDisconnected: boolean;
+
   private destroy$ = new Subject<void>();
 
   constructor(private qboAuthService: QboAuthService, private xeroAuthService: XeroAuthService, private apiService: ApiService, private router: Router){
@@ -58,6 +60,11 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   }
 
   setupPage(): void{
+
+    if (this.router.url.includes("/disconnect/")){
+      this.isIntegrationDisconnected = true;
+    }
+
     if (this.appName === AppName.QBO){
     this.apiService.setBaseApiURL(environment.qbo_api_url);
 
