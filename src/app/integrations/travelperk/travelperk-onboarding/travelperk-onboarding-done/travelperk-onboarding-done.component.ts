@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class TravelperkOnboardingDoneComponent implements OnInit {
 
-  headerText: string = 'Congratulations! <p class="tw-pt-10-px">Your Configuration Setup is now Complete.</p>';
+  headerText: string = 'Congratulations! <p class="tw-pt-10-px">Your configuration setup is now complete. </p>';
 
   constructor(
     private router: Router

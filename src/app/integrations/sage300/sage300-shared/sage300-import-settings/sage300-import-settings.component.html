@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'Import Settings'"
+        <app-configuration-step-header [headerText]="'Import settings'"
             [contentText]="'In this section, you can choose the fields required to be imported from Sage 300 CRE to ' + brandingConfig.brandName + '. '"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
@@ -15,12 +15,11 @@
                 <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                            Import / Map Sage 300 CRE Dimensions
+                            Import / map Sage 300 CRE dimensions
                         </h4>
                         <p class="tw-text-14-px tw-text-text-muted">
                             The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference,
-                            or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values
-                            available as a dropdown in the expense form for your employees to choose from.<a
+                            or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values available as a dropdown in the expense form for your employees to choose from. <a
                                 class="tw-text-link-primary tw-pl-4-px tw-w-fit tw-cursor-pointer"
                                 (click)="showPreviewDialog(true)">Click here</a> to preview.
                         </p>
@@ -32,15 +31,15 @@
                     </div>
                 </div>
                 <div>
-                    <app-configuration-import-field 
-                        [form]="importSettingForm" 
-                        [appName]="appName" 
-                        [defaultImportFields]="defaultImportFields" 
-                        [costCategoryOption]="costCategoryOption" 
-                        [costCodeFieldOption]="costCodeFieldOption" 
-                        [accountingFieldOptions]="sage300Fields" 
-                        [fyleFieldOptions]="fyleFields" 
-                        [dependentImportFields]="dependentImportFields" 
+                    <app-configuration-import-field
+                        [form]="importSettingForm"
+                        [appName]="appName"
+                        [defaultImportFields]="defaultImportFields"
+                        [costCategoryOption]="costCategoryOption"
+                        [costCodeFieldOption]="costCodeFieldOption"
+                        [accountingFieldOptions]="sage300Fields"
+                        [fyleFieldOptions]="fyleFields"
+                        [dependentImportFields]="dependentImportFields"
                         [redirectLink]="supportArticleLink"
                         [dependantFieldSupportArticleLink]="dependantFieldSupportArticleLink"
                         [commitmentFieldSupportArticleLink]="commitmentFieldSupportArticleLink"
@@ -50,8 +49,8 @@
                     </app-configuration-import-field>
                 </div>
             </div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!importSettingForm.valid"
                 (navigateToPreviousStep)="navigateBack()"
@@ -60,25 +59,25 @@
         </form>
     </div>
     <div>
-        <app-configuration-custom-field-creation-dialog 
+        <app-configuration-custom-field-creation-dialog
             [customFieldForm]="customFieldForm"
-            [showCustomFieldCreationDialog]="showCustomFieldDialog" 
+            [showCustomFieldCreationDialog]="showCustomFieldDialog"
             (saveCustomFieldFn)="saveCustomField()"
             (closeModelFn)="closeModel()">
         </app-configuration-custom-field-creation-dialog>
     </div>
 </div>
 <div>
-    <app-configuration-confirmation-dialog 
+    <app-configuration-confirmation-dialog
         (warningAccepted)="acceptDependentFieldWarning($event)"
-        [isWarningVisible]="showDependentFieldWarning" 
+        [isWarningVisible]="showDependentFieldWarning"
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes and Cost Types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported cost codes and cost types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>
 </div>
 <div *ngIf="isPreviewDialogVisible">
-    <app-preview-dialog 
+    <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
         [header]="'Preview'">

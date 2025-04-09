@@ -11,7 +11,7 @@ import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configurat
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
-import { TitleCasePipe } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { Configuration } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
@@ -101,11 +101,11 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       value: null
     },
     {
-      label: 'Export ' + brandingConfig.brandName + ' ACH Payments to Sage Intacct',
+      label: 'Export ' + brandingConfig.brandName + ' ACH payments to Sage Intacct',
       value: PaymentSyncDirection.FYLE_TO_INTACCT
     },
     {
-      label: 'Import Sage Intacct Payments into ' + brandingConfig.brandName + '',
+      label: 'Import Sage Intacct payments into ' + brandingConfig.brandName + '',
       value: PaymentSyncDirection.INTACCT_TO_FYLE
     }
   ];
@@ -151,7 +151,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   }
 
   getEmployeeField() {
-    return new TitleCasePipe().transform(this.employeeFieldMapping);
+    return new LowerCasePipe().transform(this.employeeFieldMapping);
   }
 
   removeFilter(formField: AbstractControl) {

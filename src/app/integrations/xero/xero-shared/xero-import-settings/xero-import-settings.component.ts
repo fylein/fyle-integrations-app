@@ -283,7 +283,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+      this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
 

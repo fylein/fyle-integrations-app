@@ -30,7 +30,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             useMerchantInJournalLine: false,
             splitExpenseGrouping: false,
             isEmployeeMappingFixed: true,
-            transformContentToSentenceCase: true,
             isReimbursableExpensesAllowed: false
         },
         importSettings: {

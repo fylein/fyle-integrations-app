@@ -12,23 +12,23 @@
                     Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for more details.</span>
                 </h5>
                 <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> here</a> for Preview</span></h5>
-                <h5 *ngIf="formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >Select the type of Sage Intacct transaction to export your expenses.<span class="tw-pl-4-px">Learn<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> more</a> about exporting.</span></h5>
+                <h5 *ngIf="formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >Select the type of Sage Intacct transaction to export your expenses. <span class="tw-pl-4-px">Learn<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> more</a> about exporting.</span></h5>
             </div>
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px" 
-                    [formControlName]="formControllerName" 
-                    [placeholder]="placeholder" 
+                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
+                    [formControlName]="formControllerName"
+                    [placeholder]="placeholder"
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused,
-                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused)}" 
+                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused)}"
                     [filter]="true"
                     (onFilter)="searchOptions($event)"
-                    (onHide)="clearSearch()" 
+                    (onHide)="clearSearch()"
                     [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
                     [resetFilterOnHide]="true"
-                    [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
+                    [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'"
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                     <ng-template let-options pTemplate="item">
                         <div #textElement
@@ -44,7 +44,7 @@
                         <div *ngIf="value">
                             <p>
                                 <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}: </span>
-                                {{ value[optionLabel] }} 
+                                {{ value[optionLabel] }}
                             </p>
                         </div>
                         <div *ngIf="!value" class="tw-text-placeholder">
@@ -71,7 +71,7 @@
                         'filterDropdown': !form.controls[formControllerName].value,
                         'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
                     }" [disabled]="isDisabled">
-                    
+
                     <ng-template let-option pTemplate="item">
                         <div #textElement
                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
@@ -81,7 +81,7 @@
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
-                    
+
                     <ng-template pTemplate="selectedItem" let-item>
                         <div class="selected-item-container">
                             <span class="selected-item-text">
@@ -89,18 +89,18 @@
                             </span>
                             <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                         </div>
-                    </ng-template>                    
-                </p-dropdown>                
+                    </ng-template>
+                </p-dropdown>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
                         <span> in {{uiExposedAppName}}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span *ngIf="(appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value === 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup') || (appName !== AppName.QBD_DIRECT)">Auto-selected based on your export module</span>
-                        <span *ngIf="(formControllerName === 'reimbursableExportGroup' && form.controls.reimbursableExportType.value !== 'BILL' && appName === AppName.QBD_DIRECT) || (appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup')"> Auto-selected when your default credit account is set to an Accounts Payable account</span>
+                        <span *ngIf="(formControllerName === 'reimbursableExportGroup' && form.controls.reimbursableExportType.value !== 'BILL' && appName === AppName.QBD_DIRECT) || (appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup')"> Auto-selected when your default credit account is set to an accounts payable account</span>
                     </div>
                     <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
-                        <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
+                        <span>Using the spend date may lead to multiple single line<br>item entries.</span>
                     </div>
                 </div>
                 <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">Time</p>
-                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" placeholder="Select Time for export" ></p-dropdown>
+                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" placeholder="Select time for export" ></p-dropdown>
                     </div>
                     <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p-dropdown appendTo="body" [options]="meridiemOption" formControlName="meridiem" placeholder="Select meridiem of time" ></p-dropdown>
@@ -180,7 +180,7 @@
                         <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
-            </div>  
+            </div>
         </div>
     </div>
 </div>

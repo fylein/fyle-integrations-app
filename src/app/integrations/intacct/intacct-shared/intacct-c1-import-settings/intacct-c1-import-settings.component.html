@@ -50,7 +50,7 @@
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [isWarningVisible]="showDependentFieldWarning"
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes' + (importSettings?.dependent_field_settings?.cost_type_field_name ? ' and cost types' : '') + ' from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported cost codes' + (importSettings?.dependent_field_settings?.cost_type_field_name ? ' And cost types' : '') + ' from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>
 </div>

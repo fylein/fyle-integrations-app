@@ -91,12 +91,12 @@ export class QboImportSettingsComponent implements OnInit {
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 4567 Meals & Entertainment'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Meals & Entertainment'
       }
@@ -286,7 +286,7 @@ export class QboImportSettingsComponent implements OnInit {
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);

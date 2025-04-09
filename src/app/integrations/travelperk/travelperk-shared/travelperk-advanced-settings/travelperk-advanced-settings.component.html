@@ -3,9 +3,9 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
-            [headerText]="'Advanced Settings'"
-            [contentText]="'In this section, you can customize the data you want to include in your ' + brandingConfig.brandName + ' Expenses created from your TravelPerk Invoices. '"
+        <app-configuration-step-header
+            [headerText]="'Advanced settings'"
+            [contentText]="'In this section, you can customize the data you want to include in your ' + brandingConfig.brandName + ' expenses created from your TravelPerk invoices. '"
             [redirectLink]="supportArticleLink"
             [appName]="appName">
         </app-configuration-step-header>
@@ -15,12 +15,12 @@
             <div class="tw-mb-16-px">
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="'Category Mapping'"
+                        [label]="'Category mapping'"
                         [subLabel]="'Expense entries from TravelPerk invoices in '+ brandingConfig.brandName +' are categorized according to the booking type. Map the listed booking types to your desired categories in '+ brandingConfig.brandName +' for accurate expense coding.'">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="">
-                    <app-configuration-mapping-fields 
+                    <app-configuration-mapping-fields
                         [appName]="appName"
                         [showCrossIcon]="true"
                         [isDestinationDisabled]="true"
@@ -28,9 +28,9 @@
                         [destinationFieldOptions]="destinationFieldOptions"
                         [form]="advancedSettingsForm"
                         [sourceFieldText]="'Category in '+ brandingConfig.brandName"
-                        [destinationFieldText]="'Booking Type in TravelPerk'"
-                        [sourceFieldPlaceholderText]="'Select a Category'"
-                        [destinationPlaceholderFieldText]="'Select a Category'"
+                        [destinationFieldText]="'Booking type in TravelPerk'"
+                        [sourceFieldPlaceholderText]="'Select a category'"
+                        [destinationPlaceholderFieldText]="'Select a category'"
                         [totalAvailableRows]="4"
                         [destinationAttributeNames]="destinationAttributeNames"
                         [sourceAttributeNames]="sourceAttributeNames"
@@ -42,7 +42,7 @@
             <div class="tw-mb-16-px">
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="'Default Values'"
+                        [label]="'Default values'"
                         [subLabel]="'Default values below will act as substitutes for missing TravelPerk data points. For instance, if a user or category is inactive, the values below will be used instead of the unavailable user/category.'">
                     </app-configuration-step-sub-header>
                 </div>
@@ -50,8 +50,8 @@
                     <app-configuration-select-field
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="false"
-                        [label]="'Default Employee'"
-                        [subLabel]="'Depending on your Payment Profile settings, the integration will create expenses on behalf of the respective employee. If the employee is not found in ' + brandingConfig.brandName + ', the expenses will be created on behalf of the admin who set up the integration.'"
+                        [label]="'Default employee'"
+                        [subLabel]="'Depending on your payment profile settings, the integration will create expenses on behalf of the respective employee. If the employee is not found in ' + brandingConfig.brandName + ', the expenses will be created on behalf of the admin who set up the integration.'"
                         [simpleOptions]="[advancedSettingsForm.controls.defaultEmployee.value]"
                         [iconPath]="'user-two'"
                         [formControllerName]="'defaultEmployee'"
@@ -62,13 +62,13 @@
                     <app-configuration-select-field
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
-                        [label]="'Default Category'"
+                        [label]="'Default category'"
                         [subLabel]="'If an invoice includes multiple booking types or if any of the mapped categories are disabled in ' + brandingConfig.brandName + ', the category configured here will be used.'"
                         [destinationAttributes]="defaultCategories"
                         [iconPath]="'user-two'"
                         [formControllerName]="'defaultCategory'"
                         [placeholder]="'Set up default category'"
-                        [customErrorMessage]="'Select a Category'"
+                        [customErrorMessage]="'Select a category'"
                         [isDisabled]="false">
                     </app-configuration-select-field>
                 </div>
@@ -84,7 +84,7 @@
                     <app-configuration-select-field
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
-                        [customErrorMessage]="'how invoice line items should be created'"
+                        [customErrorMessage]="'How invoice line items should be created'"
                         [label]="'How invoice line items should be created?'"
                         [subLabel]="'Configure whether the invoice line items should be created as single expenses or multiple expenses.'"
                         [options]="lineItems"
@@ -100,15 +100,15 @@
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
-                        [label]="'Customize the Purpose field in ' + brandingConfig.brandName "
-                        [subLabel]="'You can choose from a list of available datapoints to populate the \'Purpose\' field in ' + brandingConfig.brandName + ' based on your requirement.'"
+                        [label]="'Customize the purpose field in ' + brandingConfig.brandName "
+                        [subLabel]="'You can choose from a list of available datapoints to populate the \'purpose\' field in ' + brandingConfig.brandName + ' based on your requirement.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
                         [formControllerName]="'descriptionStructure'">
                     </app-configuration-multi-select>
                     <div class="preview-text">
-                        <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                        <h4 class="tw-mb-12-px">Preview of the description field</h4>
                         <div class="preview-box">
                             {{memoPreviewText}}
                         </div>
@@ -117,8 +117,8 @@
             </div>
         </div>
         <div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!advancedSettingsForm.valid"
                 (navigateToPreviousStep)="navigateBack()"

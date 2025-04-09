@@ -19,7 +19,7 @@
                     <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
-                            [label]="'Export Reimbursable Expenses'"
+                            [label]="'Export reimbursable expenses'"
                             [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to NetSuite.'"
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
@@ -56,13 +56,13 @@
                                 [mandatoryErrorListName]="'Employee Payables Account'"
                                 [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                                 [subLabel]="'Post all your reimbursable expenses to a default employee payables account.'"
-                                [placeholder]="'Select a Employee Payables Account'"
+                                [placeholder]="'Select a employee payables account'"
                                 [formControllerName]="'bankAccount'"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)">
                                 </app-configuration-select-field>
                             </div>
-    
+
                             <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
                                 <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -75,7 +75,7 @@
                                 [mandatoryErrorListName]="'Vendor Payables Account'"
                                 [label]="brandingContent.corporateCard.accountsPayableLabel"
                                 [subLabel]="'Post all your reimbursable expenses to a default vendor payables account.'"
-                                [placeholder]="'Select Vendor Payable Account'"
+                                [placeholder]="'Select vendor payable account'"
                                 [formControllerName]="'accountsPayable'"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)">
@@ -91,7 +91,7 @@
                                 [isFieldMandatory]="false"
                                 [showClearIcon]="true"
                                 [mandatoryErrorListName]="'employee mapping'"
-                                [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) + ' in NetSuite?'"
+                                [label]="'How should employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) + ' in NetSuite?'"
                                 [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in NetSuite based on a unique parameter.'"
                                 [options]="autoMapEmployeeOptions"
                                 [iconPath]="'question-square-outline'"
@@ -107,7 +107,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'expense state'"
                                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                                [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'"
+                                [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (processing) or when the payment has been settled (closed).'"
                                 [options]="expenseStateOptions"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select export state'"
@@ -122,7 +122,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'how expenses to be grouped'"
                                 [label]="'How should the expenses be grouped?'"
-                                [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                                [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
                                 [options]="expenseGroupByOptions"
                                 [iconPath]="'question-square-outline'"
                                 [placeholder]="'Select expense grouping'"
@@ -202,7 +202,7 @@
                             [mandatoryErrorListName]="'Vendor Payables Account'"
                             [label]="brandingContent.corporateCard.accountsPayableLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
-                            [placeholder]="helperService.sentenseCaseConversion('Select Vendor Payable Account')"
+                            [placeholder]="helperService.sentenseCaseConversion('Select vendor payable account')"
                             [formControllerName]="'accountsPayable'"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)">
@@ -221,7 +221,7 @@
                             [mandatoryErrorListName]="'Employee Payables Account'"
                             [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
-                            [placeholder]="helperService.sentenseCaseConversion('Select a Employee Payables Account')"
+                            [placeholder]="helperService.sentenseCaseConversion('Select a employee payables account')"
                             [formControllerName]="'bankAccount'"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)">
@@ -338,7 +338,7 @@
             (navigateToPreviousStep)="navigateToPreviousStep()">
         </app-configuration-step-footer>
 
-        
+
         </form>
     </div>
 </div>
@@ -346,7 +346,7 @@
 <app-configuration-confirmation-dialog
     (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'Change in Configuration'"
+    [headerText]="'Change in configuration'"
     [contextText]="warningDialogText"
     [confirmBtnText]="'Continue'"
     [showSecondaryCTA]="false">
@@ -360,7 +360,7 @@
             [form]="exportSettingForm"
             [isFieldMandatory]="true"
             [mandatoryErrorListName]="'employee field'"
-            [label]="'How are your Employees represented in NetSuite?'"
+            [label]="'How are your employees represented in NetSuite?'"
             [subLabel]="'Select how your employees are represented in NetSuite. This would help to export the expenses to the correct record in NetSuite'"
             [options]="employeeFieldOptions"
             [iconPath]="'user-two'"
@@ -374,12 +374,12 @@
                         <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                     </div>
                     <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in NetSuite?<app-mandatory-field></app-mandatory-field></h4>
+                        <h4 class="!tw-text-14-px !tw-font-500">How are your employees represented in NetSuite?<app-mandatory-field></app-mandatory-field></h4>
                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in NetSuite. This would help to export the expenses to the correct record in NetSuite</h5>
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value)}}</div>
+                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
                     <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">Auto-selected based on your export module</span>
                 </div>
             </div>

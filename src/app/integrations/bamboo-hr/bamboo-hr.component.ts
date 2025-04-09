@@ -86,11 +86,11 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnected = true;
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
-      this.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Bamboo HR Successfully');
+      this.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Bamboo HR successfully');
       this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.BAMBOO_HR_LANDING, this.sessionStartTime);
       this.sessionStartTime = new Date();
     }, () => {
-      this.displayToastMessage(ToastSeverity.ERROR, 'Connecting Bamboo HR Failed', 5000);
+      this.displayToastMessage(ToastSeverity.ERROR, 'Connecting Bamboo HR failed', 5000);
       this.isBambooConnectionInProgress = false;
     });
   }
@@ -114,7 +114,7 @@ export class BambooHrComponent implements OnInit {
   syncEmployees(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
     this.hideRefreshIcon = true;
-    this.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing Employees Started');
+    this.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing employees started');
     this.bambooHrService.syncEmployees().subscribe(() => {
       this.hideRefreshIcon = false;
     });
@@ -124,7 +124,7 @@ export class BambooHrComponent implements OnInit {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.DISCONNECT_BAMBOO_HR);
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
-      this.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR Successfully');
+      this.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR successfully');
       this.isBambooConnected = false;
       this.isLoading = false;
     });
@@ -165,7 +165,7 @@ export class BambooHrComponent implements OnInit {
         this.bambooHrData = bambooHrData;
       } else if (this.isBambooConnected) {
         this.isBambooConnected = false;
-        this.displayToastMessage(ToastSeverity.ERROR, 'Token expired on BambooHR, Please connect again to continue..!', 6000);
+        this.displayToastMessage(ToastSeverity.ERROR, 'Token expired on BambooHR, please connect again to continue..!', 6000);
       }
 
     }, () => {

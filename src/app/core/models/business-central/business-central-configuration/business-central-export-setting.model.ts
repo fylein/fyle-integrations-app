@@ -47,7 +47,7 @@ export class BusinessCentralExportSettingModel {
             value: ExpenseGroupedBy.EXPENSE
           },
           {
-            label: 'Expense Report',
+            label: 'Expense report',
             value: ExpenseGroupedBy.REPORT
           }
         ];
@@ -56,7 +56,7 @@ export class BusinessCentralExportSettingModel {
     static getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Card Transaction Post date',
+          label: 'Card transaction post date',
           value: ExportDateType.POSTED_AT
         },
         {
@@ -64,11 +64,11 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Last Spent Date',
+          label: 'Last spent date',
           value: ExportDateType.LAST_SPENT_AT
         },
         {
-          label: 'Spent Date',
+          label: 'Spent date',
           value: ExportDateType.SPENT_AT
         }
       ];
@@ -81,11 +81,11 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Spent Date',
+          label: 'Spent date',
           value: ExportDateType.SPENT_AT
         },
         {
-          label: 'Last Spent Date',
+          label: 'Last spent date',
           value: ExportDateType.LAST_SPENT_AT
         }
       ];
@@ -94,11 +94,11 @@ export class BusinessCentralExportSettingModel {
     static getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
         return [
           {
-            label: 'Purchase Invoice',
+            label: 'Purchase invoice',
             value: BusinessCentralExportType.PURCHASE_INVOICE
           },
           {
-            label: 'Journal Entry',
+            label: 'Journal entry',
             value: BusinessCentralExportType.JOURNAL_ENTRY
           }
         ];
@@ -107,7 +107,7 @@ export class BusinessCentralExportSettingModel {
     static getCCCExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
         return [
           {
-            label: 'Journal Entry',
+            label: 'Journal entry',
             value: BusinessCentralExportType.JOURNAL_ENTRY
           }
         ];
@@ -167,8 +167,8 @@ export class BusinessCentralExportSettingModel {
 
     static getEmployeeMappingOptions(): BusinessCentralExportSettingFormOption[] {
         return [
-            { label: 'Based on Employee E-mail ID', value: AutoMapEmployeeOptions.EMAIL },
-            { label: 'Based on Employee Name', value: AutoMapEmployeeOptions.NAME }
+            { label: 'Based on employee e-mail ID', value: AutoMapEmployeeOptions.EMAIL },
+            { label: 'Based on employee name', value: AutoMapEmployeeOptions.NAME }
         ];
     }
 

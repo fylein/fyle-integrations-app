@@ -195,8 +195,8 @@ describe('QbdExportSettingComponent', () => {
   it('accountName function check', () => {
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(QBDReimbursableExpensesObject.JOURNAL_ENTRY);
     fixture.detectChanges();
-    expect(component.accountName()).toBe('Bank');
-    expect(component.namePreference()).toContain('Journal Entry');
+    expect(component.accountName()).toBe('bank');
+    expect(component.namePreference()).toContain('Journal entry');
   });
 
   it('getsettingsAndsetupForm fuunction check', () => {

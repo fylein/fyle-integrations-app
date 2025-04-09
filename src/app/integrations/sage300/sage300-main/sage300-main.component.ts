@@ -16,7 +16,7 @@ export class Sage300MainComponent implements OnInit {
 
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/sage300/main/dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/sage300/main/export_log'},
+    {label: 'Export log', routerLink: '/integrations/sage300/main/export_log'},
     {label: 'Mapping', routerLink: '/integrations/sage300/main/mapping'},
     {label: 'Configuration', routerLink: '/integrations/sage300/main/configuration'}
   ];

@@ -185,7 +185,7 @@ export class QboExportSettingsComponent implements OnInit {
         value: QBOReimbursableExpensesObject.EXPENSE
       },
       {
-        label: 'Journal Entry',
+        label: 'Journal entry',
         value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
       }
     ];
@@ -204,7 +204,7 @@ export class QboExportSettingsComponent implements OnInit {
       ).subscribe({
         complete: () => {
           this.isSaveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export Settings saved successfully');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
           if (this.isOnboarding) {
             this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
             this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);

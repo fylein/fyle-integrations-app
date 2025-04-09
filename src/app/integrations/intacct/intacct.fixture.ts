@@ -779,11 +779,11 @@ export const fyleFields = [
 export const sageIntacctFields = [
   {
     attribute_type: 'CUSTOMER',
-    display_name: 'customer'
+    display_name: 'Customer'
   },
   {
     attribute_type: 'ITEM',
-    display_name: 'item'
+    display_name: 'Item'
   },
   {
     attribute_type: 'PROJECT',
@@ -866,7 +866,7 @@ export const sageIntacctFieldsSortedByPriorityForC1 = [
   },
   {
     attribute_type: 'GENERAL_LEDGER_ACCOUNT',
-    display_name: 'General Ledger Account',
+    display_name: 'General ledger account',
     source_placeholder: '',
     is_dependent: false
   }

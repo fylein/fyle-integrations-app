@@ -99,7 +99,7 @@ export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSea
                 reimbursable_expense_group_fields: reimbursableExpenseGroupFields,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
                 corporate_credit_card_expense_group_fields: corporateCreditCardExpenseGroupFields,
-                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate')),
+                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate')),
                 split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
             },
             configurations: {
@@ -140,7 +140,7 @@ export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSea
             value: ExportDateType.APPROVAL_DATE
           },
           {
-            label: 'Last Spend date',
+            label: 'Last spend date',
             value: ExportDateType.LAST_SPENT_AT
           }
         ];

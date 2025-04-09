@@ -10,8 +10,8 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class TravelperkConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Payment Profile Settings', routerLink: '/integrations/travelperk/main/configuration/payment_profile_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/travelperk/main/configuration/advanced_settings'}
+    {label: 'Payment profile settings', routerLink: '/integrations/travelperk/main/configuration/payment_profile_settings'},
+    {label: 'Advanced settings', routerLink: '/integrations/travelperk/main/configuration/advanced_settings'}
   ];
 
   activeModule: MenuItem = this.modules[0];

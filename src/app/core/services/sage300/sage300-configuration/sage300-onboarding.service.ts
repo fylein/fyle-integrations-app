@@ -29,7 +29,7 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Export Settings',
+      step: 'Export settings',
       icon: 'arrow-tail-up-medium',
       route: '/integrations/sage300/onboarding/export_settings',
       styleClasses: ['step-name-export--text', 'step-name-export--icon']
@@ -37,7 +37,7 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Import Settings',
+      step: 'Import settings',
       icon: 'arrow-tail-down-medium',
       route: '/integrations/sage300/onboarding/import_settings',
       styleClasses: ['step-name-import--text', 'step-name-import--icon']
@@ -45,7 +45,7 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Advanced Settings',
+      step: 'Advanced settings',
       icon: 'gear-medium',
       route: '/integrations/sage300/onboarding/advanced_settings',
       styleClasses: ['step-name-advanced--text', 'step-name-advanced--icon']
