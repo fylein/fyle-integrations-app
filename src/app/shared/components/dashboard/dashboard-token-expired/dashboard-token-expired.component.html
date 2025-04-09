@@ -5,19 +5,19 @@
         }
     </div>
 
-    @if (!isLoading) {
-        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection Expired </p>
+    @if (!isConnectionInProgress) {
+        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection expired </p>
 
         <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account. </p>
+        Your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account. </p>
     }
 
-    @if (isLoading) {
+    @if (isConnectionInProgress) {
         <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        We are syncing your data between your Fyle - {{appName}} account and this may take a few seconds. </p>
+        We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. </p>
     }
 
-    @if (!isLoading) {
+    @if (!isConnectionInProgress) {
         <div class="tw-flex tw-justify-center tw-items-center">
           
           @if (appName === AppName.QBO) {
@@ -40,18 +40,18 @@
       
         </div>
     }
-      
-    @if (isLoading) {
-    <div class="tw-flex tw-justify-center tw-items-center">
-    <app-loader></app-loader>
-    </div> 
+
+    @if (isConnectionInProgress) {
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <app-loader></app-loader>
+      </div>
     }
 </div>
 
-@if (isIncorrectConnectedDialogVisible) {
+@if (isIncorrectAccountSelected) {
 <app-configuration-confirmation-dialog
     (warningAccepted)="acceptWarning($event)"
-    [isWarningVisible]="isIncorrectConnectedDialogVisible"
+    [isWarningVisible]="isIncorrectAccountSelected"
     [headerText]="'Incorrect account selected'"
     [contextText]="'You had previously set up the integration with a different ' + appName + ' account. Please choose the same to restore the settings'"
     [confirmBtnText]="'Re connect'"

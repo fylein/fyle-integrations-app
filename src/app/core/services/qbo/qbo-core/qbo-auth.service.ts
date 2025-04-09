@@ -23,7 +23,7 @@ export class QboAuthService {
 
   private isIncorrectQBOConnectedDialogVisibleSubject = new BehaviorSubject<boolean>(false);
 
-  isIncorrectQBOConnectedDialogVisible$ = this.isIncorrectQBOConnectedDialogVisibleSubject.asObservable();
+  isIncorrectAccountSelected$ = this.isIncorrectQBOConnectedDialogVisibleSubject.asObservable();
 
   constructor(
     private apiService: ApiService,
