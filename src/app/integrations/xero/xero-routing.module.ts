@@ -20,6 +20,10 @@ const routes: Routes = [
       {
         path: 'token_expired',
         loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
+      },
+      {
+        path: 'disconnect',
+        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
       }
     ]
   }

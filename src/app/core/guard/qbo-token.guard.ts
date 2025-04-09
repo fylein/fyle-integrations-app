@@ -47,7 +47,8 @@ export class QboTokenGuard  {
             if (error.error.is_expired === true || error.error.message === "Invalid token or Quickbooks Online connection expired"){
               return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
             }
-              return this.router.navigateByUrl('integrations/qbo/onboarding/landing');
+            //  return this.router.navigateByUrl('integrations/qbo/onboarding/landing'); // this line will be removed (ignore while PR)
+            return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
 
           }
           return throwError(error);
