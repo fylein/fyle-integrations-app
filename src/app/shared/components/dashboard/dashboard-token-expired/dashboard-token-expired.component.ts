@@ -61,10 +61,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   setupPage(): void{
 
-    if(this.router.url.includes("/disconnect/")){
+    if (this.router.url.includes("/disconnect/")){
       this.isIntegrationDisconnected = true;
     }
-    
+
     if (this.appName === AppName.QBO){
     this.apiService.setBaseApiURL(environment.qbo_api_url);
 
