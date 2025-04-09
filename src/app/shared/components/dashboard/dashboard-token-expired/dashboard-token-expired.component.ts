@@ -23,11 +23,13 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
 
+  readonly brandingConfig = brandingConfig;
+
   @Input() appName: string;
 
-  isIncorrectConnectedDialogVisible: boolean;
+  isIncorrectAccountSelected: boolean;
 
-  isLoading: boolean = false;
+  isConnectionInProgress: boolean = false;
 
   isIntegrationConnected: boolean;
 
@@ -37,7 +39,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   }
 
   acceptWarning(data: ConfigurationWarningOut): void {
-    this.isIncorrectConnectedDialogVisible = false;
+    this.isIncorrectAccountSelected = false;
     if (data.hasAccepted) {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([this.router.url]);
@@ -45,9 +47,6 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
-    this.setupPage();
-  }
 
   initiateOAuth(): void{
     if (this.appName === AppName.QBO){
@@ -62,16 +61,16 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     if (this.appName === AppName.QBO){
     this.apiService.setBaseApiURL(environment.qbo_api_url);
 
-    this.qboAuthService.isIncorrectQBOConnectedDialogVisible$
+    this.qboAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
     .subscribe((status: boolean) => {
-     this.isIncorrectConnectedDialogVisible = status;
+     this.isIncorrectAccountSelected = status;
      });
 
      this.qboAuthService.qboConnectionInProgress$
      .pipe(takeUntil(this.destroy$))
      .subscribe((status: boolean) => {
-      this.isLoading = status;
+      this.isConnectionInProgress = status;
      });
 
     }
@@ -79,16 +78,16 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     if (this.appName === AppName.XERO){
     this.apiService.setBaseApiURL(environment.xero_api_url);
 
-    this.xeroAuthService.isIncorrectXeroConnectedDialogVisible$
+    this.xeroAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
     .subscribe((status: boolean) => {
-     this.isIncorrectConnectedDialogVisible = status;
+     this.isIncorrectAccountSelected = status;
     });
 
     this.xeroAuthService.xeroConnectionInProgress$
     .pipe(takeUntil(this.destroy$))
     .subscribe((status: boolean) => {
-     this.isLoading = status;
+     this.isConnectionInProgress = status;
      });
 
      this.xeroAuthService.isIntegrationConnected$
@@ -97,6 +96,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.isIntegrationConnected = status;
      });
     }
+  }
+
+  ngOnInit(): void {
+    this.setupPage();
   }
 
   ngOnDestroy(): void {

@@ -54,7 +54,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
       this.qboConnectionInProgress = status;
     });
 
-    this.qboAuthService.isIncorrectQBOConnectedDialogVisible$
+    this.qboAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
     .subscribe((visible: boolean) => {
       this.isIncorrectQBOConnectedDialogVisible = visible;

@@ -26,7 +26,7 @@ export class XeroAuthService implements OnDestroy {
 
   private isIncorrectXeroConnectedDialogVisibleSubject = new BehaviorSubject<boolean>(false);
 
-  isIncorrectXeroConnectedDialogVisible$ = this.isIncorrectXeroConnectedDialogVisibleSubject.asObservable();
+  isIncorrectAccountSelected$ = this.isIncorrectXeroConnectedDialogVisibleSubject.asObservable();
 
   private oauthCallbackSubscription: Subscription;
 

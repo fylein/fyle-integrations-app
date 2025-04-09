@@ -98,7 +98,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
       this.xeroConnectionInProgress = status;
     });
 
-    this.xeroAuthService.isIncorrectXeroConnectedDialogVisible$
+    this.xeroAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
     .subscribe((status: boolean) => {
       this.isIncorrectXeroConnectedDialogVisible = status;
