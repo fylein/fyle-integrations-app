@@ -179,7 +179,7 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setupPage();
 
-    if (this.router.url.includes("/token_expired/")){
+    if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isTokenExpired = true;
     }
 
