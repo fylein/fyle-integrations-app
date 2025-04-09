@@ -1,40 +1,60 @@
-<div *ngIf="!isLoading" class="tw-p-40-px tw-border tw-shadow-sm">
+<div class="tw-p-40-px tw-border tw-shadow-sm">
     <div class="tw-flex tw-justify-center tw-pb-24-px">
-        <img *ngIf="illustrationsAllowed" src="assets/illustrations/login.svg" />
-    </div>
-    <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary">
-        Connection Expired
-    </p>
-    <p *ngIf="!isLoading" class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account.
-    </p>
-    <p *ngIf="isLoading" class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
-        We are syncing your data between your Fyle - {{appName}} account and this may take a few seconds.
-    </p>
-    
-    <div *ngIf="!isLoading" class="tw-flex tw-justify-center tw-items-center">
-    <div *ngIf="appName === AppName.QBO" class="tw-cursor-pointer">
-        <img
-        [src]="qboConnectButtonSource"
-            (click)="initiateOAuth()"
-            (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
-            (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
+        @if (illustrationsAllowed) {
+        <img src="assets/illustrations/login.svg" />
+        }
     </div>
 
-    <div *ngIf="appName === AppName.XERO" class="tw-cursor-pointer">
-        <img
-            [src]="xeroConnectButtonSource"
-            (click)="initiateOAuth()">
-    </div>
-    </div>
+    @if (!isLoading) {
+        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection Expired </p>
 
+        <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        your connection to {{appName}} has been expired, To continue using the integration seamlessly, please reconnect your account. </p>
+    }
+
+    @if (isLoading) {
+        <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        We are syncing your data between your Fyle - {{appName}} account and this may take a few seconds. </p>
+    }
+
+    @if (!isLoading) {
+        <div class="tw-flex tw-justify-center tw-items-center">
+          
+          @if (appName === AppName.QBO) {
+            <div class="tw-cursor-pointer">
+              <img
+                [src]="qboConnectButtonSource"
+                (click)="initiateOAuth()"
+                (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
+                (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
+            </div>
+          }
+      
+          @if (appName === AppName.XERO) {
+            <div class="tw-cursor-pointer">
+              <img
+                [src]="xeroConnectButtonSource"
+                (click)="initiateOAuth()">
+            </div>
+          }
+      
+        </div>
+    }
+      
+    @if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center">
+    <app-loader></app-loader>
+    </div> 
+    }
 </div>
 
-<app-configuration-confirmation-dialog *ngIf="isIncorrectConnectedDialogVisible"
+@if (isIncorrectConnectedDialogVisible) {
+<app-configuration-confirmation-dialog
     (warningAccepted)="acceptWarning($event)"
     [isWarningVisible]="isIncorrectConnectedDialogVisible"
     [headerText]="'Incorrect account selected'"
-    [contextText]="'You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings'"
+    [contextText]="'You had previously set up the integration with a different ' + appName + ' account. Please choose the same to restore the settings'"
     [confirmBtnText]="'Re connect'"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
+}
