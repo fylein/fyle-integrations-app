@@ -1,4 +1,4 @@
-import { TitleCasePipe } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -195,7 +195,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       employeeFieldMappingLabel = reimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ? FyleField.EMPLOYEE : FyleField.VENDOR;
     }
 
-    return new TitleCasePipe().transform(employeeFieldMappingLabel);
+    return new LowerCasePipe().transform(employeeFieldMappingLabel);
   }
 
   constructPayloadAndSave(data: ConfigurationWarningOut): void {

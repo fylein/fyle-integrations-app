@@ -50,11 +50,11 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   customField: any;
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
-  costCategoryOption:ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCategoryOption:ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
 
   customFieldForDependentField: boolean = false;
 
@@ -79,13 +79,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   readonly dependentImportFields: Sage300DependentImportFields[] = [
     {
-      source_field: 'Cost Codes',
+      source_field: 'Cost codes',
       options: this.costCodeFieldOption,
       formController: 'costCodes',
       isDisabled: false
     },
     {
-      source_field: 'Cost Category',
+      source_field: 'Cost category',
       options: this.costCategoryOption,
       formController: 'costCategory',
       isDisabled: false
@@ -476,7 +476,7 @@ updateImportCodeFieldConfig() {
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
       this.sage300ImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
       this.setupFormWatchers();
       this.updateImportCodeFieldConfig();
       this.dependentFieldFormCreation();

@@ -58,15 +58,15 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
     static getAutoMapEmplyeeOptions(): SelectFormOption[] {
       return  [
         {
-          label: 'Based on Employee E-mail ID',
+          label: 'Based on employee e-mail ID',
           value: 'EMAIL'
         },
         {
-          label: 'Based on Employee Name',
+          label: 'Based on employee name',
           value: 'NAME'
         },
         {
-          label: 'Based on Employee Code',
+          label: 'Based on employee code',
           value: 'EMPLOYEE_CODE'
         }
       ];
@@ -79,11 +79,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           value: NetSuiteCorporateCreditCardExpensesObject.BILL
         },
         {
-          label: 'Journal Entry',
+          label: 'Journal entry',
           value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
         },
         {
-            label: 'Expense Report',
+            label: 'Expense report',
             value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
         }
       ];
@@ -97,15 +97,15 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           value: NetSuiteCorporateCreditCardExpensesObject.BILL
         },
         {
-          label: 'Credit Card Charge',
+          label: 'Credit card charge',
           value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
         },
         {
-          label: 'Journal Entry',
+          label: 'Journal entry',
           value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
         },
         {
-          label: 'Expense Report',
+          label: 'Expense report',
           value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
         }
       ];
@@ -148,7 +148,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             value: ExpenseGroupingFieldOption.EXPENSE_ID
           },
           {
-            label: 'Expense Report',
+            label: 'Expense report',
             value: ExpenseGroupingFieldOption.CLAIM_NUMBER
           }
         ];
@@ -157,11 +157,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getNameInJournalOptions(): SelectFormOption[] {
         return [
           {
-            label: 'Merchant Name',
+            label: 'Merchant name',
             value: NameInJournalEntry.MERCHANT
           },
           {
-            label: 'Employee Name',
+            label: 'Employee name',
             value: NameInJournalEntry.EMPLOYEE
           }
         ];
@@ -174,19 +174,19 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             value: ExportDateType.CURRENT_DATE
           },
           {
-            label: 'Verification Date',
+            label: 'Verification date',
             value: ExportDateType.VERIFIED_AT
           },
           {
-            label: 'Spend Date',
+            label: 'Spend date',
             value: ExportDateType.SPENT_AT
           },
           {
-            label: 'Approval Date',
+            label: 'Approval date',
             value: ExportDateType.APPROVED_AT
           },
           {
-            label: 'Last Spend Date',
+            label: 'Last spend date',
             value: ExportDateType.LAST_SPENT_AT
           }
         ];
@@ -195,11 +195,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
         return [
           {
-            label: 'Card Transaction Post date',
+            label: 'Card transaction post date',
             value: ExportDateType.POSTED_AT
           },
           {
-            label: 'Spend Date',
+            label: 'Spend date',
             value: ExportDateType.SPENT_AT
           }
         ];

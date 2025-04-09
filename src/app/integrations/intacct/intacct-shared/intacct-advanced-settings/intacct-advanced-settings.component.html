@@ -62,7 +62,7 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'payment account'"
                     [label]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
-                    [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
+                    [subLabel]="'Select a payment account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                     [destinationAttributes]="sageIntacctPaymentAccount"
                     [iconPath]="'list'"
                     [placeholder]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
@@ -112,7 +112,7 @@
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.memoStructureSubLabel"
                 [options]="defaultMemoFields"
                 [iconPath]="'list'"
-                [placeholder]="'Select Description'"
+                [placeholder]="'Select description'"
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
                     <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
@@ -124,7 +124,7 @@
             <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
-                [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
+                [label]="'Skip selective expenses from being exported to Sage Intacct'" 
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
                 [redirectLink]="intacctLink"
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
@@ -158,7 +158,7 @@
                     </p-dropdown>
                     <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in Sage Intacct</label>
+                        <label class="tw-pl-8-px" for="checkbox">Use employee's location in Sage Intacct</label>
                     </span>
                 </div>  
               </div>
@@ -188,7 +188,7 @@
                     </p-dropdown>
                     <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Sage Intacct</label>
+                        <label class="tw-pl-8-px" for="checkbox">Use employee's department in Sage Intacct</label>
                     </span>
                 </div>  
               </div> 

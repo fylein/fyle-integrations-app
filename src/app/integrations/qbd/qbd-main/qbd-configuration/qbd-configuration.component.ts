@@ -13,9 +13,9 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 export class QbdConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/qbd/main/configuration/export_settings'},
-    {label: 'Field Mapping', routerLink: '/integrations/qbd/main/configuration/field_mapping'},
-    {label: 'Advanced Settings', routerLink: '/integrations/qbd/main/configuration/advanced_settings'}
+    {label: 'Export settings', routerLink: '/integrations/qbd/main/configuration/export_settings'},
+    {label: 'Field mapping', routerLink: '/integrations/qbd/main/configuration/field_mapping'},
+    {label: 'Advanced settings', routerLink: '/integrations/qbd/main/configuration/advanced_settings'}
   ];
 
   activeModule: MenuItem;

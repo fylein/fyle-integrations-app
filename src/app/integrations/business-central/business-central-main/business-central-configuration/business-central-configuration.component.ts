@@ -9,9 +9,9 @@ import { MenuItem } from 'primeng/api';
 export class BusinessCentralConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/business_central/main/configuration/export_settings'},
-    {label: 'Import Settings', routerLink: '/integrations/business_central/main/configuration/import_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
+    {label: 'Export settings', routerLink: '/integrations/business_central/main/configuration/export_settings'},
+    {label: 'Import settings', routerLink: '/integrations/business_central/main/configuration/import_settings'},
+    {label: 'Advanced settings', routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
   ];
 
   activeModule: MenuItem = this.modules[0];

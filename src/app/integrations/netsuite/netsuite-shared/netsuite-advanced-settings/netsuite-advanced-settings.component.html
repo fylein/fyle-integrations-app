@@ -52,7 +52,7 @@
                         [options]="paymentSyncOptions"
                         [iconPath]="'arrow-rotate'"
                         [label]="brandingContent.paymentSyncLabel"
-                        [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in NetSuite will be automatically be updated to Paid and vice versa.'"
+                        [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in NetSuite will be automatically be updated to paid and vice versa.'"
                         [placeholder]="'Select how payments should be synced for reimbursable expenses'"
                         [formControllerName]="'paymentSync'">
                     </app-configuration-select-field>
@@ -65,8 +65,8 @@
                         [optionLabel]="'name'"
                         [iconPath]="'arrow-rotate'"
                         [label]="brandingContent.defaultPaymentAccount"
-                        [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
-                        [placeholder]="'Select Payment Account'"
+                        [subLabel]="'Select a payment account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
+                        [placeholder]="'Select payment account'"
                         [formControllerName]="'paymentAccount'">
                     </app-configuration-select-field>
                 </div>
@@ -171,8 +171,8 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteLocations"
-                        [label]="helper.sentenseCaseConversion('Default Location') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Location')"
+                        [label]="helper.sentenseCaseConversion('Default location') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose default NetSuite location')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
@@ -188,8 +188,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteLocationLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Location Level') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Location Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite location level') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite location level')"
                         [formControllerName]="'netsuiteLocationLevel'">
                     </app-configuration-select-field>
                 </div>
@@ -199,8 +199,8 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteDepartments"
-                        [label]="helper.sentenseCaseConversion('Default Department') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Department')"
+                        [label]="helper.sentenseCaseConversion('Default department') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose default NetSuite department')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
@@ -216,8 +216,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteDepartmentLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Department Level') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Department Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite department level') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite department level')"
                         [formControllerName]="'netsuiteDepartmentLevel'">
                     </app-configuration-select-field>
                 </div>
@@ -227,8 +227,8 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteClasses"
-                        [label]="helper.sentenseCaseConversion('Default Class') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Class')"
+                        [label]="helper.sentenseCaseConversion('Default class') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose default NetSuite class')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
@@ -244,8 +244,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteClassLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Class Level') + isOptional()"
-                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Class Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite class level') + isOptional()"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite class level')"
                         [formControllerName]="'netsuiteClassLevel'">
                     </app-configuration-select-field>
                 </div>

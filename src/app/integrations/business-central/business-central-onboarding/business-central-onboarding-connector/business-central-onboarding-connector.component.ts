@@ -167,7 +167,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.getCompanyDetails();
     }, (error) => {
-      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
+      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamics 365 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectBusinessCentralConnectedDialogVisible = true;
       } else {
@@ -204,7 +204,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
         this.mapping.importBusinessCentralAttributes(true).subscribe(() => {
           this.saveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics company saved successfully');
           this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
           this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
         });

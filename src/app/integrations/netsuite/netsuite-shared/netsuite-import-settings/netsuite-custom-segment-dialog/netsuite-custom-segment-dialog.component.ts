@@ -1,12 +1,9 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
-import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
-import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-netsuite-custom-segment-dialog',

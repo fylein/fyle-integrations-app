@@ -105,7 +105,7 @@
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and' + (uiExposedAppName === AppName.INTACCT ? '/or' : '') + ' Cost Type from ')}} {{uiExposedAppName}} as dependent fields.
                         <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
-                            Read More
+                            Read more
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
@@ -129,7 +129,7 @@
                             </div>
                             <div>
                                 <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{brandingConfig.brandName}} field <app-mandatory-field></app-mandatory-field> </p>
-                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select expense field')" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                             <div class="tw-ml-0 tw-mr-6-px ">
@@ -148,10 +148,10 @@
                         }
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
-                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
+                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-export commitment based on the cost code and cost category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
-                                Read More
+                                Read more
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                     class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                                 </app-svg-icon>

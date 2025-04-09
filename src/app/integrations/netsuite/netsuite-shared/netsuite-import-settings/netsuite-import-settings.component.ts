@@ -236,9 +236,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   getCategoryLabel(): string {
     if (this.isExpenseCategoryEnabled) {
-      return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import expense categories';
+      return brandingConfig.brandId !== 'co' ? 'Import the expense categories' : 'Import expense categories';
     }
-    return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import accounts';
+    return  brandingConfig.brandId !== 'co' ? 'Import the accounts' : 'Import accounts';
   }
 
   getCategorySubLabel(): string {
@@ -298,7 +298,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.taxCodes = destinationAttribute.results;
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

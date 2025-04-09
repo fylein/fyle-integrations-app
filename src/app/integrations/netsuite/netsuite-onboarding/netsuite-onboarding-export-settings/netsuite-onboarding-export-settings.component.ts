@@ -10,7 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class NetsuiteOnboardingExportSettingsComponent implements OnInit {
 
-  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Export Settings', this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Export settings', this.workspaceService.getOnboardingState());
 
   constructor(
     private workspaceService: WorkspaceService

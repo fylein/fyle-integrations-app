@@ -3,17 +3,17 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
-        [headerText]="'Advanced Settings'"
+        <app-configuration-step-header
+        [headerText]="'Advanced settings'"
         [contentText]="'This section contains settings to automate and customize your expense export.'"></app-configuration-step-header>
     </div>
     <div>
         <form [formGroup]="advancedSettingsForm">
             <div class="tw-p-24-px">
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="'Schedule automatic export'" 
+                        [label]="'Schedule automatic export'"
                         [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
@@ -30,7 +30,7 @@
                         [iconPath]="'arrow-rotate'"
                         [placeholder]="'Select frequency'"
                         [formControllerName]="'frequency'"></app-configuration-select-field>
-    
+
                         <div *ngIf="advancedSettingsForm.get('frequency')?.value">
                             <div class="tw-pl-22-px">
                                 <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.DAILY" >
@@ -51,7 +51,7 @@
                                     [label]="'Select the time of the week for the IIF file to be generated'"
                                     [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
                                     [options]="weeklyOptions"
-                                    [placeholder]="'Select Weekly frequency'"
+                                    [placeholder]="'Select weekly frequency'"
                                     [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
                                 </div>
                                 <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.MONTHLY" >
@@ -62,8 +62,8 @@
                                     [label]="'Select the time of the month for the IIF file to be generated'"
                                     [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
                                     [options]="frequencyIntervals"
-                                    [placeholder]="'Select Monthly frequency'"
-                                    [formControllerName]="'dayOfMonth'"></app-configuration-select-field> 
+                                    [placeholder]="'Select monthly frequency'"
+                                    [formControllerName]="'dayOfMonth'"></app-configuration-select-field>
                                 </div>
                             </div>
                         </div>
@@ -86,13 +86,13 @@
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-select-field
                     [form]="advancedSettingsForm"
-                    [label]="'Select the Top level MEMO field data for QuickBooks Desktop'"
-                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>Top-level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [label]="'Select the top level memo field data for QuickBooks Desktop'"
+                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'list'"
-                    [placeholder]="'Select Top Memo Type'"
+                    [placeholder]="'Select top memo type'"
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -100,14 +100,14 @@
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
                     [customErrorMessage]="'Please select atleast one memo type from the list'"
-                    [label]="'Set the Line-Item level MEMO field data for QuickBooks Desktop.*'"
-                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [label]="'Set the line-item level memo field data for QuickBooks Desktop. *'"
+                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
-                    [placeholder]="'Select Memo Types'"
+                    [placeholder]="'Select memo types'"
                     [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop Memo field</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop memo field</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                             <span>{{ memoPreviewText }}</span>
                         </div>

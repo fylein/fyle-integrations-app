@@ -23,11 +23,11 @@ export class ExportSettingModel {
     static getSplitExpenseGroupingOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Single Line Item',
+          label: 'Single line item',
           value: SplitExpenseGrouping.SINGLE_LINE_ITEM
         },
         {
-          label: 'Multiple Line Item',
+          label: 'Multiple line item',
           value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
         }
       ];
@@ -58,26 +58,26 @@ export class ExportSettingModel {
                   value: IntacctReimbursableExpensesObject.BILL
                 },
                 {
-                  label: 'Expense Report',
+                  label: 'Expense report',
                   value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
                 },
                 {
-                  label: 'Journal Entry',
+                  label: 'Journal entry',
                   value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
                 },
                 {
-                  label: 'Charge Card Transaction',
+                  label: 'Charge card transaction',
                   value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
                 }
               ];
         }
             return [
                 {
-                  label: 'Charge Card Transaction',
+                  label: 'Charge card transaction',
                   value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
                 },
                 {
-                  label: 'Journal Entry',
+                  label: 'Journal entry',
                   value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
                 },
                 {

@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="tw-pl-34-px">
-        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder" 
-        [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']" 
+        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder"
+        [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']"
         [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
         (onChange)="onMultiSelectChange()">
             <ng-template let-value pTemplate="selectedItems" >
@@ -23,7 +23,7 @@
             </ng-template>
             <ng-template let-memo let-index="index" pTemplate="item">
                 <!-- <div pDraggable="gens" pDroppable="gens" dragHandle=".barsHandle" (onDragStart)="onDragStart(index)" (onDrop)="onDrop(index)" >
-                    <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | titlecase | snakeCaseToSpaceCase }}</p>
+                    <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | sentenceCase | snakeCaseToSpaceCase }}</p>
                 </div> -->
                 <div>
                     <p class="tw-text-14-px">{{ getMemo(memo) }}</p>

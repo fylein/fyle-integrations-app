@@ -31,7 +31,7 @@ export class TravelperkPaymentProfileSettingModel {
                 value: TravelPerkUserRole.BOOKER
             },
             {
-                label: 'Card Holder',
+                label: 'Card holder',
                 value: TravelPerkUserRole.CARD_HOLDER
             },
             {

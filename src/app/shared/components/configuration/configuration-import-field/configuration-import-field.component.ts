@@ -64,36 +64,36 @@ export class ConfigurationImportFieldComponent implements OnInit {
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 4567: Meals & Entertainment'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Meals & Entertainment'
       }
     ],
     "VENDOR": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 24: Joanna'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Joanna'
       }
     ],
     "JOB": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 12-00-201: PCL Construction'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: PCL Construction'
       }

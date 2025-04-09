@@ -76,7 +76,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
                 value: QbdDirectCCCExportDateType.CURRENT_DATE
             },
             {
-                label: 'Card Transaction Post date',
+                label: 'Card transaction post date',
                 value: QbdDirectCCCExportDateType.POSTED_AT
             }
         ];
@@ -85,11 +85,11 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static creditCardExportTypes(): QBDExportSettingFormOption[] {
         return [
             {
-                label: 'Credit Card Purchase',
+                label: 'Credit card purchase',
                 value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
             },
             {
-                label: 'Journal Entry',
+                label: 'Journal entry',
                 value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
             }
         ];
@@ -102,7 +102,7 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
                 value: QbdDirectReimbursableExpensesObject.BILL
             },
             {
-                label: 'Journal Entry',
+                label: 'Journal entry',
                 value: QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY
             }
             // {
@@ -141,12 +141,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
         if (cccExportGroup === QbdDirectExpenseGroupBy.REPORT) {
           return this.creditCardExpenseGroupingDateOptions().concat([{
-            label: 'Last spend Date',
+            label: 'Last spend date',
             value: QbdDirectCCCExportDateType.LAST_SPEND_AT
         }]);
         }
         return this.creditCardExpenseGroupingDateOptions().concat([{
-            label: 'Spend Date',
+            label: 'Spend date',
             value: QbdDirectCCCExportDateType.SPENT_AT
         }]);
     }
@@ -154,12 +154,12 @@ export class QbdDirectExportSettingModel extends ExportSettingModel {
     static setReimbursableExpenseGroupingDateOptions(reimbursableExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
         if (reimbursableExportGroup === QbdDirectExpenseGroupBy.REPORT) {
           return this.reimbursableExpenseGroupingDateOptions().concat([{
-            label: 'Last spend Date',
+            label: 'Last spend date',
             value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
         }]);
         }
         return this.reimbursableExpenseGroupingDateOptions().concat([{
-            label: 'Spend Date',
+            label: 'Spend date',
             value: QbdDirectReimbursableExportDateType.SPENT_AT
         }]);
     }

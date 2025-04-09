@@ -3,10 +3,10 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
-            [headerText]="'Payment Profile Settings'"
-            [contentText]="'Each invoice in TravelPerk is linked to multiple user roles such as Booker, Traveler and Card Holder. You can create expenses for all your TravelPerk invoices in '+ brandingConfig.brandName +' based on the User Role you configure for each Payment Profile. '"
-            [redirectLink]="supportArticleLink" 
+        <app-configuration-step-header
+            [headerText]="'Payment profile settings'"
+            [contentText]="'Each invoice in TravelPerk is linked to multiple user roles such as booker, traveler and card holder. You can create expenses for all your TravelPerk invoices in '+ brandingConfig.brandName +' based on the user role you configure for each payment profile. '"
+            [redirectLink]="supportArticleLink"
             [appName]="appName">
         </app-configuration-step-header>
     </div>
@@ -15,20 +15,20 @@
             <div class="tw-p-24-px">
                 <div class="tw-pb-24-px">
                     <app-configuration-step-sub-header
-                        [label]="'Assign User Role for Required Payment Profiles'"
-                        [subLabel]="'Assign User Role for TravelPerk Payment Profiles requiring automated expense creation in '+ brandingConfig.brandName +'. Expenses will be created on behalf of the User Roles configured below.'"
+                        [label]="'Assign user role for required payment profiles'"
+                        [subLabel]="'Assign user role for TravelPerk payment profiles requiring automated expense creation in '+ brandingConfig.brandName +'. Expenses will be created on behalf of the user roles configured below.'"
                         [showPreview]="true"
                         (isPreviewClick)="showPreviewDialog(true)">
                     </app-configuration-step-sub-header>
                 </div>
                 <div>
                     <app-configuration-info-label
-                        [infoText]="'For Payment Profiles with cards added in ' + brandingConfig.brandName + ', select the \'Card Holder\' user role for accurate reconciliation.'">
+                        [infoText]="'For payment profiles with cards added in ' + brandingConfig.brandName + ', select the \'card holder\' user role for accurate reconciliation.'">
                     </app-configuration-info-label>
                 </div>
             </div>
             <div class="tw-px-24-px">
-                <app-configuration-mapping-fields 
+                <app-configuration-mapping-fields
                     [appName]="appName"
                     [showCrossIcon]="true"
                     [isDestinationDisabled]="true"
@@ -36,7 +36,7 @@
                     [destinationFieldOptions]="paymentProfileSettings.results"
                     [form]="paymentProfileMappingForm"
                     [sourceFieldText]="'User Role'"
-                    [destinationFieldText]="'Payment Profile'"
+                    [destinationFieldText]="'Payment profile'"
                     [sourceFieldPlaceholderText]="'Select a User Role'"
                     [totalAvailableRows]="paymentProfileSettings.count"
                     [destinationAttributeNames]="destinationAttributeNames"
@@ -46,8 +46,8 @@
                 </app-configuration-mapping-fields>
             </div>
             <div>
-                <app-configuration-step-footer 
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                <app-configuration-step-footer
+                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                     [showBackButton] = "isOnboarding"
                     [isButtonDisabled]="!paymentProfileMappingForm.valid"
                     (navigateToPreviousStep)="navigateBack()"
@@ -57,7 +57,7 @@
         </form>
     </div>
     <div *ngIf="isPreviewDialogVisible">
-        <app-preview-dialog 
+        <app-preview-dialog
             [isPreviewDialogVisible]="true"
             [iconPath]="'assets/pngs/preview-screens/travelperk-pps.png'" (closeDialog)="closeDialog()"
             [header]="'Preview'">

@@ -22,7 +22,7 @@
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td class="tw-text-text-secondary" *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
+            <td class="tw-text-text-secondary" *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | sentenceCase}}</td>
             <td class="tw-text-text-secondary tw-underline tw-cursor-pointer" (click)="openUrl(rowData.fyleUrl)">{{rowData.claim_number}}</td>
         </tr>
     </ng-template>
