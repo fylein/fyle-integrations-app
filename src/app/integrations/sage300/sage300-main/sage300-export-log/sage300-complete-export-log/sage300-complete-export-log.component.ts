@@ -1,19 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AccountingExportStatus, AccountingExportType, AppName, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { environment } from 'src/environments/environment';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
-import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { TitleCasePipe } from '@angular/common';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 import { debounceTime } from 'rxjs/operators';

@@ -73,13 +73,13 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
   private isCostCodeFieldSelected: boolean = false;
 
-  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
 
   dependentFieldSettings: DependentFieldSetting | null;
 
@@ -104,36 +104,36 @@ export class IntacctImportSettingsComponent implements OnInit {
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 4567: Meals & Entertainment'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Meals & Entertainment'
       }
     ],
     "DEPARTMENT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 24: Finance'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Finance'
       }
     ],
     "PROJECT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 12-00-201: PCL Construction'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: PCL Construction'
       }
@@ -226,12 +226,6 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
     return (formGroup as FormGroup).controls[controlName].valid;
-  }
-
-  toTitleCase(str: string) {
-    return str.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
   }
 
   showOrHideAddButton() {
@@ -352,7 +346,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
       this.isCostCodeFieldSelected = true;
       if (value?.attribute_type === 'custom_field') {
-        // Show a dialog when the "Create a Custom Field" button is clicked
+        // Show a dialog when the "Create a custom field" button is clicked
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costCodes;
@@ -376,7 +370,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     this.importSettingsForm.controls.costTypes.valueChanges.subscribe((value) => {
       this.isCostCodeFieldSelected = false;
       if (value?.attribute_type === 'custom_field') {
-        // Show a dialog when the "Create a Custom Field" button is clicked
+        // Show a dialog when the "Create a custom field" button is clicked
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costTypes;
@@ -608,7 +602,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
-            display_name: this.toTitleCase(field.display_name)
+            display_name: field.display_name
           };
         });
         this.fyleFields = fyleFields;

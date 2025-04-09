@@ -125,7 +125,7 @@ export class QbdGenericMappingComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop Credit Card Account';
+    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop credit card account';
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type),

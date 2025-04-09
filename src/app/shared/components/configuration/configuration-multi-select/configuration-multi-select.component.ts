@@ -1,7 +1,7 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
@@ -54,7 +54,7 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? 'Expense/Report Id' : new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(memo));
+    return memo === 'expense_key' ? 'Expense/Report ID' : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe().transform(memo));
   }
 
 //   DragStart(memo: string) {

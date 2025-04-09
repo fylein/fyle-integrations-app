@@ -30,7 +30,7 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Export Settings',
+      step: 'Export settings',
       icon: 'arrow-tail-up-medium',
       route: '/integrations/business_central/onboarding/export_settings',
       styleClasses: ['step-name-export--text']
@@ -38,7 +38,7 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Import Settings',
+      step: 'Import settings',
       icon: 'arrow-tail-down-medium',
       route: '/integrations/business_central/onboarding/import_settings',
       styleClasses: ['step-name-import--text']
@@ -46,7 +46,7 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Advanced Settings',
+      step: 'Advanced settings',
       icon: 'gear-medium',
       route: '/integrations/business_central/onboarding/advanced_settings',
       styleClasses: ['step-name-advanced--text']

@@ -1,4 +1,4 @@
-import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
@@ -9,11 +9,10 @@ import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage3
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 import { StorageService } from './storage.service';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
-import { TitleCasePipe } from '@angular/common';
 import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
 import { Observable, interval, take } from 'rxjs';
+import { LowerCasePipe } from '@angular/common';
 
 type PollDimensionsSyncStatusParams = {
   onPollingComplete: () => void
@@ -121,7 +120,7 @@ export class HelperService {
   }
 
   getExportType(exportType: string | null): string {
-    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
+    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new LowerCasePipe().transform(exportType)): 'expense';
   }
 
   setOrClearValidators(selectedValue: string, value: string[], form: FormGroup): void {
@@ -260,7 +259,7 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     content = new SnakeCaseToSpaceCasePipe().transform(content);
-    return brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(content) : content;
+    return new SentenceCasePipe().transform(content);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -115,14 +115,14 @@ export class IntacctExportSettingsComponent implements OnInit {
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
-    { label: 'Based on Employee Name', value: 'NAME' },
-    { label: 'Based on Employee Code', value: 'EMPLOYEE_CODE' }
+    { label: 'Based on employee e-mail ID', value: 'EMAIL' },
+    { label: 'Based on employee name', value: 'NAME' },
+    { label: 'Based on employee code', value: 'EMPLOYEE_CODE' }
   ];
 
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
-      label: 'Expense Report',
+      label: 'Expense report',
       value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
     },
     {
@@ -130,7 +130,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       value: IntacctReimbursableExpensesObject.BILL
     },
     {
-      label: 'Journal Entry',
+      label: 'Journal entry',
       value: IntacctReimbursableExpensesObject.JOURNAL_ENTRY
     }
   ];
@@ -185,7 +185,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         employeeFieldMappingLabel = reimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT ? FyleField.EMPLOYEE : FyleField.VENDOR;
       }
 
-      return new TitleCasePipe().transform(employeeFieldMappingLabel);
+      return new LowerCasePipe().transform(employeeFieldMappingLabel);
     }
 
     getExportType(exportType: IntacctReimbursableExpensesObject | IntacctCorporateCreditCardExpensesObject | null): string {
@@ -211,7 +211,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       this.expenseStateOptions = [
         {
-          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment processing',
           value: ExpenseState.PAYMENT_PROCESSING
         },
         {
@@ -225,11 +225,11 @@ export class IntacctExportSettingsComponent implements OnInit {
     if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
       this.cccExpenseGroupingDateOptions = [
         {
-          label: 'Card Transaction Post date',
+          label: 'Card transaction post date',
           value: ExportDateType.POSTED_AT
         },
         {
-          label: 'Spend Date',
+          label: 'Spend date',
           value: ExportDateType.SPENT_AT
         }
       ];
@@ -361,11 +361,11 @@ export class IntacctExportSettingsComponent implements OnInit {
             value: ExportDateType.CURRENT_DATE
           },
           {
-            label: 'Last Spend Date',
+            label: 'Last spend date',
             value: ExportDateType.LAST_SPENT_AT
           },
           {
-            label: 'Approved Date',
+            label: 'Approved date',
             value: ExportDateType.APPROVAL_DATE
           }
         );
@@ -376,7 +376,7 @@ export class IntacctExportSettingsComponent implements OnInit {
             value: ExportDateType.CURRENT_DATE
           },
           {
-            label: 'Spend Date',
+            label: 'Spend date',
             value: ExportDateType.SPENT_AT
           }
         );
@@ -385,7 +385,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       if (this.exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
         options.push(
           {
-            label: 'Card Transaction Post date',
+            label: 'Card transaction post date',
             value: ExportDateType.POSTED_AT
           }
         );

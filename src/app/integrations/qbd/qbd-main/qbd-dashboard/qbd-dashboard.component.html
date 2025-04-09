@@ -77,8 +77,8 @@
                                 <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
                                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "hh:mm a"}}</span>
                             </td>
-                            <td>{{getTypeString(exports.type)| titlecase }}</td>
-                            <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
+                            <td>{{getTypeString(exports.type)| sentenceCase }}</td>
+                            <td>{{getExpenseType(exports.fund_source)| sentenceCase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
                                     <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>

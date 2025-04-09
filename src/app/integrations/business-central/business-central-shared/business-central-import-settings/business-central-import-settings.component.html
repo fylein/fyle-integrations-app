@@ -34,7 +34,7 @@
                                 <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select chart of accounts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                     <ng-template let-value pTemplate="selectedItems">
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
-                                            <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
+                                            <div>{{ option | sentenceCase }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
                                         <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select chart of accounts')}}</div>
                                     </ng-template>

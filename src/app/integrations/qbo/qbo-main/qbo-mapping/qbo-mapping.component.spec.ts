@@ -11,7 +11,6 @@ import { mockMappingSettings } from '../../qbo.fixture';
 import { MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
-import { TitleCasePipe } from '@angular/common';
 
 describe('QboMappingComponent', () => {
   let component: QboMappingComponent;
@@ -28,9 +27,6 @@ describe('QboMappingComponent', () => {
         QboMappingComponent,
         SnakeCaseToSpaceCasePipe,
         SentenceCasePipe
-      ],
-      imports: [
-        TitleCasePipe
       ],
       providers: [
         { provide: MappingService, useValue: mappingServiceSpy },

@@ -174,7 +174,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
     }, () => {
       this.exportInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export Failed, try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export failed, try again later');
     });
   }
 
