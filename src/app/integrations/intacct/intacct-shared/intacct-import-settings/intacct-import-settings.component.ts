@@ -106,36 +106,36 @@ export class IntacctImportSettingsComponent implements OnInit {
       {
         label: 'Import codes + names',
         value: true,
-        subLabel: 'Example: 4567: meals and entertainment'
+        subLabel: 'Example: 4567: Meals & Entertainment'
       },
       {
         label: 'Import names only',
         value: false,
-        subLabel: 'Example: meals and entertainment'
+        subLabel: 'Example: Meals & Entertainment'
       }
     ],
     "DEPARTMENT": [
       {
         label: 'Import codes + names',
         value: true,
-        subLabel: 'Example: 24: finance'
+        subLabel: 'Example: 24: Finance'
       },
       {
         label: 'Import names only',
         value: false,
-        subLabel: 'Example: finance'
+        subLabel: 'Example: Finance'
       }
     ],
     "PROJECT": [
       {
         label: 'Import codes + names',
         value: true,
-        subLabel: 'Example: 12-00-201: PCL construction'
+        subLabel: 'Example: 12-00-201: PCL Construction'
       },
       {
         label: 'Import names only',
         value: false,
-        subLabel: 'Example: PCL construction'
+        subLabel: 'Example: PCL Construction'
       }
     ]
   };
