@@ -133,7 +133,6 @@ export const mockExportSettings = {
     "workspace_general_settings": {
         "reimbursable_expenses_object": QBOReimbursableExpensesObject.BILL,
         "corporate_credit_card_expenses_object": QBOCorporateCreditCardExpensesObject.BILL,
-        "is_simplify_report_closure_enabled": true,
         "name_in_journal_entry": NameInJournalEntry.EMPLOYEE
     },
     "expense_group_settings": {
@@ -362,14 +361,11 @@ export const mockWorkspaceGeneralSettings = {
   auto_create_merchants_as_vendors: false,
   sync_fyle_to_qbo_payments: false,
   sync_qbo_to_fyle_payments: true,
-  is_simplify_report_closure_enabled: true,
   category_sync_version: 'v2',
   je_single_credit_line: false,
   map_fyle_cards_qbo_account: false,
-  skip_cards_mapping: false,
   import_vendors_as_merchants: false,
   is_multi_currency_allowed: false,
-  is_tax_override_enabled: true,
   name_in_journal_entry: NameInJournalEntry.EMPLOYEE,
   created_at: new Date('2024-08-22T08:50:29.978051Z'),
   updated_at: new Date('2024-09-02T17:28:32.233045Z'),
@@ -566,7 +562,6 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
     workspace_general_settings: {
       reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL,
       corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.BILL,
-      is_simplify_report_closure_enabled: true,
       name_in_journal_entry: NameInJournalEntry.EMPLOYEE
     },
     expense_group_settings: {
@@ -622,7 +617,6 @@ export const mockCreditCardAccounts: PaginatedDestinationAttribute = {
     "workspace_general_settings": {
         "reimbursable_expenses_object": "BILL",
         "corporate_credit_card_expenses_object": "BILL",
-        "is_simplify_report_closure_enabled": true,
         "name_in_journal_entry": "EMPLOYEE"
     },
     "expense_group_settings": {
@@ -845,14 +839,11 @@ export const mockGeneralSettings = {
   auto_create_merchants_as_vendors: false,
   sync_fyle_to_qbo_payments: false,
   sync_qbo_to_fyle_payments: false,
-  is_simplify_report_closure_enabled: true,
   category_sync_version: "v2",
   je_single_credit_line: false,
   map_fyle_cards_qbo_account: true,
-  skip_cards_mapping: false,
   import_vendors_as_merchants: true,
   is_multi_currency_allowed: false,
-  is_tax_override_enabled: true,
   name_in_journal_entry: "EMPLOYEE",
   import_code_fields: [],
   created_at: "2024-09-04T16:23:13.895369Z",
@@ -1095,14 +1086,11 @@ export const mockSettingsGeneral = {
   "auto_create_merchants_as_vendors": false,
   "sync_fyle_to_qbo_payments": false,
   "sync_qbo_to_fyle_payments": false,
-  "is_simplify_report_closure_enabled": true,
   "category_sync_version": "v2",
   "je_single_credit_line": false,
   "map_fyle_cards_qbo_account": true,
-  "skip_cards_mapping": false,
   "import_vendors_as_merchants": true,
   "is_multi_currency_allowed": false,
-  "is_tax_override_enabled": true,
   "name_in_journal_entry": "EMPLOYEE",
   "import_code_fields": [],
   "created_at": "2024-09-04T16:23:13.895369Z",
@@ -1273,7 +1261,6 @@ export const mockExportSettingsforDashboard = {
     "configuration": {
         "reimbursable_expenses_object": "EXPENSE REPORT",
         "corporate_credit_card_expenses_object": null,
-        "is_simplify_report_closure_enabled": true,
         "name_in_journal_entry": "MERCHANT",
         "employee_field_mapping": "EMPLOYEE",
         "auto_map_employees": "EMAIL"
@@ -2272,14 +2259,11 @@ export const mockGeneralSettingsForMapping = {
   "auto_create_merchants_as_vendors": false,
   "sync_fyle_to_qbo_payments": false,
   "sync_qbo_to_fyle_payments": true,
-  "is_simplify_report_closure_enabled": true,
   "category_sync_version": "v2",
   "je_single_credit_line": false,
   "map_fyle_cards_qbo_account": false,
-  "skip_cards_mapping": false,
   "import_vendors_as_merchants": false,
   "is_multi_currency_allowed": false,
-  "is_tax_override_enabled": true,
   "name_in_journal_entry": "EMPLOYEE",
   "import_code_fields": [],
   "created_at": "2024-08-22T08:50:29.978051Z",
