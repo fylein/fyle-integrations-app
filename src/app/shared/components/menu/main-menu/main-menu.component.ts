@@ -165,7 +165,7 @@ export class MainMenuComponent implements OnInit {
       this.toolTipText = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
     }
 
-    if (this.router.url.includes("/token_expired/")){
+    if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isMenuDisabled = true;
       this.modules = this.modules.map(item => ({
         ...item,
