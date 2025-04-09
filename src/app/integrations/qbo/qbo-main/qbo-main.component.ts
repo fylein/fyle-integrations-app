@@ -18,6 +18,7 @@ export class QboMainComponent implements OnInit {
 
   readonly brandingContent = brandingContent.common;
 
+
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
     {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log'},
