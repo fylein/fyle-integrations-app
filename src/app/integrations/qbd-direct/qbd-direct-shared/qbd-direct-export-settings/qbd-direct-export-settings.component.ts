@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -16,7 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
@@ -38,7 +38,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   exportSettingsForm: FormGroup;
 
-  cccExpenseGroupingDateOptions: QBDExportSettingFormOption[];
+  cccExpenseGroupingDateOptions: SelectFormOption[] = QbdDirectExportSettingModel.creditCardExpenseGroupingDateOptions();
 
   cccExpenseStateOptions: QBDExportSettingFormOption[];
 
@@ -48,7 +48,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.expenseGroupingFieldOptions();
 
-  reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.reimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = QbdDirectExportSettingModel.reimbursableExpenseGroupingDateOptions();
 
   creditCardExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.creditCardExportTypes();
 
@@ -273,13 +273,17 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
-      this.reimbursableExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExportGroupValue);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
     });
   }
 
   cccExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroupValue) => {
-      this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(creditCardExportGroupValue);
+      if (this.exportSettingsForm.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
+      } else {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
+      }
     });
   }
 
@@ -360,16 +364,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimburesmentExpenseGroupingWatcher();
   }
 
-  private setupCCCExpenseGroupingDateOptions(): void {
-    const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
-    this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setCreditCardExpenseGroupingDateOptions(creditCardExpenseExportGroup);
-  }
-
-  private setupReimbursableExpenseGroupingDateOptions(): void {
-    const reimbursableExpenseExportGroup = this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by : QbdDirectExpenseGroupBy.EXPENSE;
-    this.cccExpenseGroupingDateOptions = QbdDirectExportSettingModel.setReimbursableExpenseGroupingDateOptions(reimbursableExpenseExportGroup);
-  }
-
   private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
     this.exportSettings = exportSettingResponse;
 
@@ -377,9 +371,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.expenseStateOptions = QbdDirectExportSettingModel.expenseStateOptions();
 
     this.destinationAccounts = accounts as QbdDirectDestinationAttribute[];
-
-    this.setupReimbursableExpenseGroupingDateOptions();
-    this.setupCCCExpenseGroupingDateOptions();
 
     this.exportSettingsForm = QbdDirectExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
 
