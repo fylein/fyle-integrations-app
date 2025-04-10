@@ -121,11 +121,11 @@ export class ExportSettingModel {
     static constructExportDateOptions(isCoreCCCModule: boolean, expenseGrouping: ExpenseGroupingFieldOption, exportDateType: ExportDateType): SelectFormOption[] {
 
       // Determine the excluded date based on expenseGrouping
-      const excludedSpendDateOption = expenseGrouping === ExpenseGroupingFieldOption.EXPENSE_ID
+      const excludedSpendDateOption = [ExpenseGroupingFieldOption.EXPENSE_ID, ExpenseGroupingFieldOption.EXPENSE].includes(expenseGrouping)
         ? ExportDateType.LAST_SPENT_AT
         : ExportDateType.SPENT_AT;
 
-      // Determine the excluded date based on customer choose
+      // Deprecate APPROVED_AT and VERIFIED_AT - if the user has already selected one of them, show only that option
       const excludedApprovedOrVerifiedOption = exportDateType === ExportDateType.APPROVED_AT ? [ExportDateType.VERIFIED_AT] : (exportDateType === ExportDateType.VERIFIED_AT ? [ExportDateType.APPROVED_AT] : [ExportDateType.APPROVED_AT, ExportDateType.VERIFIED_AT]);
 
       // Determine the excluded date based on export Type
