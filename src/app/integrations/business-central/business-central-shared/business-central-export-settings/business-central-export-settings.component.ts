@@ -138,13 +138,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: SelectFormOption[], formControllerName: string): SelectFormOption[]{
-    if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
-      return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
-    }
-    return options.filter(option => (option.value !== ExportDateType.SPENT_AT && option.value !== ExportDateType.POSTED_AT));
-  }
-
   refreshDimensions(isRefresh: boolean): void{
     this.businessCentralHelperService.importAttributes(isRefresh);
   }
@@ -161,11 +154,27 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        false,
+        reimbursableExportGroup,
+        this.exportSettingForm.controls.reimbursableExportDate.value
+      );
+
+      // If the current selected date option is not in the new options, clear the field
+      const newValues = this.reimbursableExpenseGroupingDateOptions.map((option) => option.value);
+      if (!newValues.includes(this.exportSettingForm.controls.reimbursableExportDate.value)) {
+        this.exportSettingForm.controls.reimbursableExportDate.setValue(null);
+      }
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
+
+      // If the current selected date option is not in the new options, clear the field
+      const newValues = this.cccExpenseGroupingDateOptions.map((option) => option.value);
+      if (!newValues.includes(this.exportSettingForm.controls.cccExportDate.value)) {
+        this.exportSettingForm.controls.cccExportDate.setValue(null);
+      }
     });
 
     this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());

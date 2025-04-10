@@ -138,7 +138,7 @@
                             [label]="'Set the date of the transaction as?'"
                             [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
                             [placeholder]="'Select date type'"
-                            [options]="getExportDate(reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup')"
+                            [options]="reimbursableExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
@@ -268,7 +268,7 @@
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
                             [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
-                            [options]="getExportDate(cccExpenseGroupingDateOptions, 'cccExportGroup')"
+                            [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
                             [placeholder]="'Select date'"
                             [formControllerName]="'cccExportDate'">
