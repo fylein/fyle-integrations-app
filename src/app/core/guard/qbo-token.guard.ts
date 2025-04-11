@@ -29,7 +29,7 @@ export class QboTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-      return this.qboConnectorService.getQBOCredentials().pipe(
+      return this.qboConnectorService.getQboTokenHealth().pipe(
         switchMap(credentials =>
           this.qboConnectorService.getPreferences().pipe(
             map(preferences => !!preferences)
@@ -44,11 +44,15 @@ export class QboTokenGuard  {
               return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
             }
 
-            if (error.error.is_expired === true || error.error.message === "Invalid token or Quickbooks Online connection expired"){
+            if (error.error.message === "Quickbooks Online connection expired"){
               return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
             }
-            //  Return this.router.navigateByUrl('integrations/qbo/onboarding/landing'); // this line will be removed (ignore while PR)
-            return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
+            
+            if (error.error.message === "Quickbooks Online disconnected"){
+              return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
+            }
+            
+            return this.router.navigateByUrl('integrations/qbo/onboarding/landing');
 
           }
           return throwError(error);
