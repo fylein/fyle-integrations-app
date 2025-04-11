@@ -1,0 +1,14 @@
+
+
+1. Token Expired 
+    Onboarding - XeroGuard Preferences call will fail and we redirect user to onboarding connector.
+    PostOnboarding
+
+2. Disconnected
+    Onboarding - not possible during onboarding
+    PostOnboarding
+
+3. Token Healty
+    Onboarding - nothing
+    PostOnboarding 
+

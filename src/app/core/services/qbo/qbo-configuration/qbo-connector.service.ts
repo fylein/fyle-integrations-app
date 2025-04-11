@@ -38,6 +38,11 @@ export class QboConnectorService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
 
+  @Cacheable()
+  getQboTokenHealth(): Observable<{}> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/token_health/`, {});
+  }
+
   @Cacheable({
     cacheBusterObserver: qboCredentialsCache$
   })
