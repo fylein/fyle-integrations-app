@@ -23,7 +23,7 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
-  isTokenExpired: boolean = false;
+  isXeroTokenNotValid: boolean = false;
 
   AppUrl = AppUrl;
 
@@ -148,7 +148,7 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
   private setupPage(): void {
 
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
-      this.isTokenExpired = true;
+      this.isXeroTokenNotValid = true;
     }
 
     forkJoin([

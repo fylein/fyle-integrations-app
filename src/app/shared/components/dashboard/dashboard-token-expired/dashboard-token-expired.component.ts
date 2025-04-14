@@ -31,8 +31,6 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isConnectionInProgress: boolean = false;
 
-  isIntegrationConnected: boolean;
-
   isIntegrationDisconnected: boolean;
 
   private destroy$ = new Subject<void>();
@@ -41,11 +39,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   }
 
   acceptWarning(data: ConfigurationWarningOut): void {
-    this.isIncorrectAccountSelected = false;
     if (data.hasAccepted) {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate([this.router.url]);
-    });
+      this.isIncorrectAccountSelected = false;
     }
   }
 
@@ -79,7 +74,6 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
      .subscribe((status: boolean) => {
       this.isConnectionInProgress = status;
      });
-
     }
 
     if (this.appName === AppName.XERO){
@@ -95,12 +89,6 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe((status: boolean) => {
      this.isConnectionInProgress = status;
-     });
-
-     this.xeroAuthService.isIntegrationConnected$
-     .pipe(takeUntil(this.destroy$))
-     .subscribe((status: boolean) => {
-      this.isIntegrationConnected = status;
      });
     }
   }

@@ -5,7 +5,7 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading && !isTokenExpired">
+<div *ngIf="!isLoading && !isXeroTokenNotValid">
     <app-dashboard-export-section
         (export)="export()"
         [appName]="appName"
@@ -46,7 +46,7 @@
     </app-dashboard-error-section>
 </div>
 
-<div *ngIf="!isLoading && isTokenExpired">
+<div *ngIf="!isLoading && isXeroTokenNotValid">
     <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
         <app-dashboard-token-expired
         [appName]="appName"
