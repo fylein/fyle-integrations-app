@@ -273,7 +273,6 @@ export const mockConfiguration = {
   ],
   "auto_create_destination_entity": true,
   "is_journal_credit_billable": true,
-  "is_simplify_report_closure_enabled": true,
   "change_accounting_period": true,
   "import_vendors_as_merchants": true,
   "use_merchant_in_journal_line": false,
@@ -780,11 +779,11 @@ export const fyleFields = [
 export const sageIntacctFields = [
   {
     attribute_type: 'CUSTOMER',
-    display_name: 'customer'
+    display_name: 'Customer'
   },
   {
     attribute_type: 'ITEM',
-    display_name: 'item'
+    display_name: 'Item'
   },
   {
     attribute_type: 'PROJECT',
@@ -867,7 +866,7 @@ export const sageIntacctFieldsSortedByPriorityForC1 = [
   },
   {
     attribute_type: 'GENERAL_LEDGER_ACCOUNT',
-    display_name: 'General Ledger Account',
+    display_name: 'General ledger account',
     source_placeholder: '',
     is_dependent: false
   }

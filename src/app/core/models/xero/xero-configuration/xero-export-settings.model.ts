@@ -24,10 +24,6 @@ export type XeroExportSettingWorkspaceGeneralSettingPost = {
   auto_map_employees: AutoMapEmployeeOptions | null,
 }
 
-export interface XeroExportSettingWorkspaceGeneralSetting extends XeroExportSettingWorkspaceGeneralSettingPost {
-  is_simplify_report_closure_enabled: boolean
-}
-
 export type XeroExportSettingGeneralMapping = {
   bank_account: DefaultDestinationAttribute
 }
@@ -40,7 +36,7 @@ export type XeroExportSettingPost = {
 
 export type XeroExportSettingGet = {
   expense_group_settings: XeroExpenseGroupSettingGet,
-  workspace_general_settings: XeroExportSettingWorkspaceGeneralSetting,
+  workspace_general_settings: XeroExportSettingWorkspaceGeneralSettingPost,
   general_mappings: XeroExportSettingGeneralMapping,
   workspace_id: number
 }
@@ -54,7 +50,7 @@ export class XeroExportSettingModel {
   static getReimbursableExportTypes() {
     return [
       {
-        label: 'Purchase Bill',
+        label: 'Purchase bill',
         value: XeroReimbursableExpensesObject.PURCHASE_BILL
       }
     ];
@@ -63,7 +59,7 @@ export class XeroExportSettingModel {
   static getCreditCardExportTypes() {
     return [
       {
-        label: 'Bank Transactions',
+        label: 'Bank transactions',
         value: XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION
       }
     ];
@@ -111,19 +107,19 @@ export class XeroExportSettingModel {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification Date',
+        label: 'Verification date',
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend Date',
+        label: 'Spend date',
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval Date',
+        label: 'Approval date',
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last Spend Date',
+        label: 'Last spend date',
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
@@ -132,11 +128,11 @@ export class XeroExportSettingModel {
   static getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
      {
-       label: 'Spend Date',
+       label: 'Spend date',
        value: ExportDateType.SPENT_AT
      },
      {
-       label: 'Card Transaction Post date',
+       label: 'Card transaction post date',
        value: ExportDateType.POSTED_AT
      }
    ];
@@ -171,11 +167,11 @@ export class XeroExportSettingModel {
   static getSplitExpenseGroupingOptions() {
     return [
       {
-        label: 'Single Line Item',
+        label: 'Single line item',
         value: SplitExpenseGrouping.SINGLE_LINE_ITEM
       },
       {
-        label: 'Multiple Line Item',
+        label: 'Multiple line item',
         value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       }
     ];

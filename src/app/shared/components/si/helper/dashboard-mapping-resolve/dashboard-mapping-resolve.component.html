@@ -12,13 +12,13 @@
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [options]="getCategoryMappingOptions()" 
-                    optionLabel="value" 
-                    placeholder="Select an Option" 
+                    [options]="getCategoryMappingOptions()"
+                    optionLabel="value"
+                    placeholder="Select an option"
                     (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
-                    </p-dropdown> 
+                    </p-dropdown>
                 </td>
             </tr>
             <ng-container *ngTemplateOutlet="shimmers"></ng-container>
@@ -29,8 +29,8 @@
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
             <tr>
-            <th>Employee Email</th>
-            <th>Sage Intacct {{getEmployeeAttributeType() | titlecase}}</th>
+            <th>Employee email</th>
+            <th>Sage Intacct {{getEmployeeAttributeType() | lowercase}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error>
@@ -38,13 +38,13 @@
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [options]="fyleEmployeeOptions" 
-                    optionLabel="value" 
-                    placeholder="Select an Option" 
+                    [options]="fyleEmployeeOptions"
+                    optionLabel="value"
+                    placeholder="Select an option"
                     (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
-                    </p-dropdown>                
+                    </p-dropdown>
                 </td>
             </tr>
             <ng-container *ngTemplateOutlet="shimmers"></ng-container>

@@ -65,11 +65,11 @@ export class XeroAdvancedSettingModel extends HelperUtility{
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Export ' + brandingConfig.brandName + ' ACH Payments to Xero',
+        label: 'Export ' + brandingConfig.brandName + ' ACH payments to Xero',
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
       {
-        label: 'Import Xero Payments into ' + brandingConfig.brandName,
+        label: 'Import Xero payments into ' + brandingConfig.brandName,
         value: PaymentSyncDirection.XERO_TO_FYLE
       }
     ];

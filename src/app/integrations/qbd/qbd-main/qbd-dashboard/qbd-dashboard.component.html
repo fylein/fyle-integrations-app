@@ -65,10 +65,10 @@
                 <p-table [value]="accountingExports.results">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Date and Time of Export</th>
+                            <th>Date and time of export</th>
                             <th>Exported as</th>
-                            <th>Expense Type</th>
-                            <th>Download IIF File</th>
+                            <th>Expense type</th>
+                            <th>Download IIF file</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-exports let-i="rowIndex">
@@ -77,15 +77,15 @@
                                 <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
                                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "hh:mm a"}}</span>
                             </td>
-                            <td>{{getTypeString(exports.type)| titlecase }}</td>
-                            <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
+                            <td>{{getTypeString(exports.type)| sentenceCase }}</td>
+                            <td>{{getExpenseType(exports.fund_source)| sentenceCase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
                                     <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
-                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">downloading...</p>
+                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">Downloading...</p>
                                 </div>
                             </td>
                         </tr>

@@ -10,9 +10,9 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class Sage300ConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Export Settings', routerLink: '/integrations/sage300/main/configuration/export_settings'},
-    {label: 'Import Settings', routerLink: '/integrations/sage300/main/configuration/import_settings'},
-    {label: 'Advanced Settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
+    {label: 'Export settings', routerLink: '/integrations/sage300/main/configuration/export_settings'},
+    {label: 'Import settings', routerLink: '/integrations/sage300/main/configuration/import_settings'},
+    {label: 'Advanced settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
   ];
 
   activeModule: MenuItem = this.modules[0];

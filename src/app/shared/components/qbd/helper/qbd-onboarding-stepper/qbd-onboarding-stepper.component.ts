@@ -23,14 +23,14 @@ export class QbdOnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      step: 'Export Settings',
+      step: 'Export settings',
       icon: 'arrow-tail-up-medium',
       route: 'export_settings'
     },
     {
       active: false,
       completed: false,
-      step: 'Field Mapping',
+      step: 'Field mapping',
       icon: 'mapping-medium',
       route: 'field_mappings'
     },

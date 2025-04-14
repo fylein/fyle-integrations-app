@@ -41,7 +41,7 @@ export class BusinessCentralTokenGuard  {
         catchError(error => {
           if (error.status === 400) {
             globalCacheBusterNotifier.next();
-            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Dynamic 365 Business Central connection expired, please connect again');
+            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Dynamics 365 Business Central connection expired, please connect again');
 
             const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
 

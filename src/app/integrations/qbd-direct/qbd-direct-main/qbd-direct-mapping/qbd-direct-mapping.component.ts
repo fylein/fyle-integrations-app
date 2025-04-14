@@ -1,4 +1,4 @@
-import { CommonModule, TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -46,7 +46,7 @@ export class QbdDirectMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: brandingFeatureConfig.featureFlags.exportSettings.transformContentToSentenceCase ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
+              label: new SentenceCasePipe().transform(mappingPage),
               routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

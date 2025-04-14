@@ -15,16 +15,27 @@ export class OnboardingSteppersComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Input() disableConnectionStepsIfCompleted: boolean;
+
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router
   ) { }
 
-  navigate(canNavigate: boolean, route: string): void {
-    if (canNavigate) {
-      this.router.navigate([route]);
+  navigate(index: number, canNavigate: boolean, route: string): void {
+    if (!canNavigate) {
+      return;
     }
+
+  if (!this.disableConnectionStepsIfCompleted) {
+      this.router.navigate([route]);
+      return;
+  }
+
+  if (index > 1) {
+      this.router.navigate([route]);
+  }
   }
 
   ngOnInit(): void {

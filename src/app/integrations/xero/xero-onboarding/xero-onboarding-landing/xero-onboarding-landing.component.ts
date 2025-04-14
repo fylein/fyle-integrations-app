@@ -63,7 +63,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
       this.xeroConnectionInProgress = false;
       this.checkProgressAndRedirect();
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero tenant. Please try again';
       if (errorMessage === 'Please choose the correct Xero account') {
         this.isIntegrationConnected = false;
         this.xeroConnectionInProgress = false;

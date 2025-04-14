@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header 
-            [headerText]="'Advanced Settings'"
+            [headerText]="'Advanced settings'"
             [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
@@ -38,7 +38,7 @@
                             [label]="'Set up export frequency'"
                             [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage 300 CRE'"
                             [options]="hours"
-                            [placeholder]="'Set Schedule'"
+                            [placeholder]="'Set schedule'"
                             [formControllerName]="'scheduleAutoExportFrequency'">
                         </app-configuration-schedule-export>
                     </div>
@@ -55,7 +55,7 @@
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'Item level description'"
-                    [label]="'Set the line item-level Description Field in Sage 300 CRE'"
+                    [label]="'Set the line item-level description field in Sage 300 CRE'"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Sage 300 CRE.'"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
@@ -63,7 +63,7 @@
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
                 <div class="preview-text">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the description field</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>

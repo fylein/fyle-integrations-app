@@ -73,13 +73,13 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
   private isCostCodeFieldSelected: boolean = false;
 
-  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
 
   dependentFieldSettings: DependentFieldSetting | null;
 
@@ -104,36 +104,36 @@ export class IntacctImportSettingsComponent implements OnInit {
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 4567: Meals & Entertainment'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Meals & Entertainment'
       }
     ],
     "DEPARTMENT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 24: Finance'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: Finance'
       }
     ],
     "PROJECT": [
       {
-        label: 'Import Codes + Names',
+        label: 'Import codes + names',
         value: true,
         subLabel: 'Example: 12-00-201: PCL Construction'
       },
       {
-        label: 'Import Names only',
+        label: 'Import names only',
         value: false,
         subLabel: 'Example: PCL Construction'
       }
@@ -226,12 +226,6 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
     return (formGroup as FormGroup).controls[controlName].valid;
-  }
-
-  toTitleCase(str: string) {
-    return str.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
   }
 
   showOrHideAddButton() {
@@ -328,6 +322,12 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (this.importSettingsForm.get('costCodes')?.value) {
       this.costCodeFieldOption = [this.importSettingsForm.get('costCodes')?.value];
       this.importSettingsForm.controls.costCodes.disable();
+      this.importSettingsForm.get('costCodesImportToggle')?.disable();
+    } else {
+      // Cost types cannot be edited without first mapping cost codes
+      this.importSettingsForm.get('costTypes')?.disable();
+      this.importSettingsForm.get('costTypesImportToggle')?.disable();
+      this.importSettingsForm.get('costTypesImportToggle')?.setValue(false);
     }
 
     if (this.importSettingsForm.get('costTypes')?.value) {
@@ -335,28 +335,18 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.importSettingsForm.controls.costTypes.disable();
     }
 
-    if (this.importSettingsForm.get('isDependentImportEnabled')?.value) {
-      this.importSettingsForm.controls.costCodes.disable();
-      this.importSettingsForm.controls.costTypes.disable();
-    }
-
     this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
       if (isDependentImportEnabled) {
-        this.importSettingsForm.controls.costCodes.enable();
-        this.importSettingsForm.controls.costTypes.enable();
         this.importSettingsForm.controls.costCodes.setValidators(Validators.required);
-        this.importSettingsForm.controls.costTypes.setValidators(Validators.required);
       } else {
-        this.importSettingsForm.controls.costCodes.disable();
-        this.importSettingsForm.controls.costTypes.disable();
         this.importSettingsForm.controls.costCodes.clearValidators();
-        this.importSettingsForm.controls.costTypes.clearValidators();
       }
     });
 
     this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
       this.isCostCodeFieldSelected = true;
       if (value?.attribute_type === 'custom_field') {
+        // Show a dialog when the "Create a custom field" button is clicked
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costCodes;
@@ -365,12 +355,22 @@ export class IntacctImportSettingsComponent implements OnInit {
               source_field: null
             });
         }
-        }
+      } else if (value?.attribute_type) {
+        // Once the dialog is submitted and the field value is set,
+        // 1. disable cost codes
+        // 2. enable cost types
+        this.importSettingsForm.get('costCodesImportToggle')?.setValue(true);
+        this.importSettingsForm.get('costCodesImportToggle')?.disable();
+
+        this.importSettingsForm.get('costTypes')?.enable();
+        this.importSettingsForm.get('costTypesImportToggle')?.enable();
+      }
     });
 
     this.importSettingsForm.controls.costTypes.valueChanges.subscribe((value) => {
       this.isCostCodeFieldSelected = false;
       if (value?.attribute_type === 'custom_field') {
+        // Show a dialog when the "Create a custom field" button is clicked
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costTypes;
@@ -379,7 +379,7 @@ export class IntacctImportSettingsComponent implements OnInit {
               source_field: null
             });
         }
-        }
+      }
     });
   }
 
@@ -535,9 +535,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       importCategories: [importSettings.configurations.import_categories || null],
       importTaxCodes: [importSettings.configurations.import_tax_codes || null],
       costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
-      dependentFieldImportToggle: [true],
+      costCodesImportToggle: [true],
+      costTypesImportToggle: [!!importSettings.dependent_field_settings?.is_cost_type_import_enabled],
       workspaceId: this.storageService.get('workspaceId'),
-      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
+      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder!) : null],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
@@ -601,7 +602,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
-            display_name: this.toTitleCase(field.display_name)
+            display_name: field.display_name
           };
         });
         this.fyleFields = fyleFields;
@@ -672,7 +673,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costTypeFieldOption[0].attribute_type !== 'custom_field') {
+    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showDependentFieldWarning = true;
     }
     if (formGroup.value.source_field) {

@@ -70,7 +70,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
         this.checkProgressAndRedirect();
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamics 365 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectBCConnectedDialogVisible = true;
       } else {

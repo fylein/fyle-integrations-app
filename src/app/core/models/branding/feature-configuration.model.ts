@@ -24,7 +24,6 @@ export type FeatureConfiguration = {
                 useMerchantInJournalLine: boolean;
                 splitExpenseGrouping: boolean;
                 isEmployeeMappingFixed: boolean;
-                transformContentToSentenceCase: boolean;
             },
             importSettings: {
                 tax: boolean;

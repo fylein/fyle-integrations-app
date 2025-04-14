@@ -50,15 +50,15 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
   static getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Custom List',
+        label: 'Custom list',
         value: NetsuiteCustomSegmentOption.CUSTOM_LIST
       },
       {
-        label: 'Custom Record',
+        label: 'Custom record',
         value: NetsuiteCustomSegmentOption.CUSTOM_RECORD
       },
       {
-        label: 'Custom Segment',
+        label: 'Custom segment',
         value: NetsuiteCustomSegmentOption.CUSTOM_SEGMENT
       }
     ];

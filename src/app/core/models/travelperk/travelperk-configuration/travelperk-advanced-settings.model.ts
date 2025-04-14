@@ -65,11 +65,11 @@ export class TravelperkAdvancedSettingModel {
     static getExpenseGroup(): SelectFormOption[] {
         return [
             {
-                label: 'Single Expense',
+                label: 'Single expense',
                 value: TravelPerkExpenseGroup.SINGLE
             },
             {
-                label: 'Multiple Expenses',
+                label: 'Multiple expenses',
                 value: TravelPerkExpenseGroup.MULTIPLE
             }
         ];

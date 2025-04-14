@@ -30,7 +30,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             useMerchantInJournalLine: true,
             splitExpenseGrouping: true,
             isEmployeeMappingFixed: false,
-            transformContentToSentenceCase: false,
             isReimbursableExpensesAllowed: true
         },
         importSettings: {
@@ -141,7 +140,7 @@ export const fyleKbArticles: KbArticle[string] = {
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_1366df4107`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_b3850646c0`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
-            HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`
         }
     }
 };

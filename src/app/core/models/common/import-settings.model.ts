@@ -49,7 +49,7 @@ export type ImportCodeFieldConfigType = {
 export class ImportSettingsModel {
 
   static getCustomFieldOption(): ExpenseField[] {
-    return [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+    return [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
   }
 
   static createFormGroup(data: ImportSettingMappingRow): FormGroup {
