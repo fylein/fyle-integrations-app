@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, forkJoin, map, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';

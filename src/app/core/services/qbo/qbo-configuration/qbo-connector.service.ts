@@ -50,9 +50,5 @@ export class QboConnectorService {
     globalCacheBusterNotifier.next();
     return this.apiService.patch(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
-
-  @Cacheable()
-  getPreferences(): Observable<{}> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbo/preferences/`, {});
-  }
+  
 }
