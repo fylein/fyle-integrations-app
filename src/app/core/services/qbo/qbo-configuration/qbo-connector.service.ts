@@ -50,5 +50,5 @@ export class QboConnectorService {
     globalCacheBusterNotifier.next();
     return this.apiService.patch(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
-  
+
 }

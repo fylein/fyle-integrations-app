@@ -25,13 +25,13 @@ describe('QboOnboardingLandingComponent', () => {
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,HttpClientModule],
+      imports: [RouterTestingModule, HttpClientModule],
       declarations: [QboOnboardingLandingComponent],
       providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: QboConnectorService, useValue: qboConnectorSpy },
         { provide: IntegrationsToastService, useValue: toastSpy },
-        { provide: WorkspaceService, useValue: workspaceSpy },
+        { provide: WorkspaceService, useValue: workspaceSpy }
       ]
     }).compileComponents();
 

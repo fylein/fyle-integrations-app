@@ -50,7 +50,7 @@ export class QboAuthService implements OnDestroy {
     if (this.oauthCallbackSubscription) {
       this.oauthCallbackSubscription.unsubscribe();
     }
-      
+
     this.qboConnectionInProgressSubject.next(true);
     const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
 

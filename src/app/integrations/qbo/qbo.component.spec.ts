@@ -66,7 +66,7 @@ describe('QboComponent', () => {
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        MessageService,
+        MessageService
     ]
 }).compileComponents();
 
