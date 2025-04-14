@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { HelperService } from '../../common/helper.service';
@@ -15,7 +15,7 @@ import { IntegrationsToastService } from '../../common/integrations-toast.servic
 @Injectable({
   providedIn: 'root'
 })
-export class QboAuthService {
+export class QboAuthService implements OnDestroy {
 
   private qboConnectionInProgressSubject = new BehaviorSubject<boolean>(false);
 
@@ -24,6 +24,8 @@ export class QboAuthService {
   private isIncorrectQBOConnectedDialogVisibleSubject = new BehaviorSubject<boolean>(false);
 
   isIncorrectAccountSelected$ = this.isIncorrectQBOConnectedDialogVisibleSubject.asObservable();
+
+  private oauthCallbackSubscription: Subscription;
 
   constructor(
     private apiService: ApiService,
@@ -44,6 +46,11 @@ export class QboAuthService {
   }
 
   connectQbo(): void {
+
+    if (this.oauthCallbackSubscription) {
+      this.oauthCallbackSubscription.unsubscribe();
+    }
+      
     this.qboConnectionInProgressSubject.next(true);
     const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
 
@@ -94,4 +101,11 @@ export class QboAuthService {
       this.postQboCredentials(code, realmId);
     }
   }
+
+  ngOnDestroy(): void {
+    if (this.oauthCallbackSubscription) {
+      this.oauthCallbackSubscription.unsubscribe();
+    }
+  }
+
 }
