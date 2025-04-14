@@ -43,7 +43,7 @@ export class XeroConnectorService {
   }
 
   @Cacheable()
-  getXeroTokenHealth(workspaceId: string): Observable<{}> {
+  checkXeroTokenHealth(workspaceId: string): Observable<{}> {
     return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
   }
 
