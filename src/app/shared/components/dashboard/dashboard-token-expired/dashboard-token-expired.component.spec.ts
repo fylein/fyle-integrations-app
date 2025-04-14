@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardTokenExpiredComponent } from './dashboard-token-expired.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 describe('DashboardTokenExpiredComponent', () => {
   let component: DashboardTokenExpiredComponent;
@@ -8,7 +10,9 @@ describe('DashboardTokenExpiredComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardTokenExpiredComponent]
+      declarations: [DashboardTokenExpiredComponent],
+      imports: [HttpClientModule],
+      providers: [MessageService]
     })
     .compileComponents();
 

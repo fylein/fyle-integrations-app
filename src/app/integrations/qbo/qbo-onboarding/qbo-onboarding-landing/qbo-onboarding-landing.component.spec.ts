@@ -6,6 +6,7 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EventEmitter } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('QboOnboardingLandingComponent', () => {
   let component: QboOnboardingLandingComponent;
@@ -24,13 +25,13 @@ describe('QboOnboardingLandingComponent', () => {
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule,HttpClientModule],
       declarations: [QboOnboardingLandingComponent],
       providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: QboConnectorService, useValue: qboConnectorSpy },
         { provide: IntegrationsToastService, useValue: toastSpy },
-        { provide: WorkspaceService, useValue: workspaceSpy }
+        { provide: WorkspaceService, useValue: workspaceSpy },
       ]
     }).compileComponents();
 

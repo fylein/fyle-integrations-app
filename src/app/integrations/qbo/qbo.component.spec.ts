@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { MessageService } from 'primeng/api';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -64,7 +65,8 @@ describe('QboComponent', () => {
         { provide: AuthService, useValue: authSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        MessageService,
     ]
 }).compileComponents();
 
