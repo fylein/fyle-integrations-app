@@ -39,7 +39,7 @@ export class QboConnectorService {
   }
 
   @Cacheable()
-  getQboTokenHealth(): Observable<{}> {
+  checkQBOTokenHealth(): Observable<{}> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/token_health/`, {});
   }
 

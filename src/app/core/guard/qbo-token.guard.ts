@@ -29,35 +29,31 @@ export class QboTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-      return this.qboConnectorService.getQboTokenHealth().pipe(
-        switchMap(credentials =>
-          this.qboConnectorService.getPreferences().pipe(
-            map(preferences => !!preferences)
-          )
-        ),
+      return this.qboConnectorService.checkQBOTokenHealth().pipe(
+        map(() => true),
         catchError(error => {
           if (error.status === 400) {
             globalCacheBusterNotifier.next();
-
+      
             const onboardingState: QBOOnboardingState = this.workspaceService.getOnboardingState();
             if (onboardingState !== QBOOnboardingState.COMPLETE) {
+              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your QuickBooks Online connection expired, please connect again');
               return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
             }
-
-            if (error.error.message === "Quickbooks Online connection expired"){
+      
+            if (error.error.message === "Quickbooks Online connection expired") {
               return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
             }
-            
-            if (error.error.message === "Quickbooks Online disconnected"){
+      
+            if (error.error.message === "Quickbooks Online disconnected") {
               return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
             }
-            
-            return this.router.navigateByUrl('integrations/qbo/onboarding/landing');
-
           }
+      
           return throwError(error);
         })
       );
+      
   }
 
 }

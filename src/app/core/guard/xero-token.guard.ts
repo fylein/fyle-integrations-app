@@ -32,27 +32,28 @@ export class XeroTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-        return this.xeroConnectorService.getXeroTokenHealth(workspaceId).pipe(
-            switchMap(credentials =>
-                this.xeroConnectorService.getXeroCredentials(workspaceId).pipe(
-                  map(preferences => !!preferences)
-                )
-              ),
-              catchError(error => {
-                if (error.status === 400) {
-                  globalCacheBusterNotifier.next();
+        return this.xeroConnectorService.checkXeroTokenHealth(workspaceId).pipe(
+            map(() => true),
+            catchError(error => {
+            if (error.status === 400) {
+            globalCacheBusterNotifier.next();
 
-                  if (error.error.message === "Xero connection expired"){
-                    return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
-                  }
+            const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
+            if (onboardingState !== XeroOnboardingState.COMPLETE) {
+              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your xero connection expired, please connect again');
+              return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
+            }
 
-                  if (error.error.message === "Xero disconnected"){
-                    return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
-                  }
+            if (error.error.message === "Xero connection expired"){
+              return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
+            }
 
-                  return this.router.navigateByUrl('integrations/xero/onboarding/landing');
-                }
-                return throwError(error);
+            if (error.error.message === "Xero disconnected"){
+              return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
+            }
+
+            }
+              return throwError(error);
             })
       );
   }
