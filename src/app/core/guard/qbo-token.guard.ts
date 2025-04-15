@@ -5,7 +5,8 @@ import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { IntegrationsToastService } from '../services/common/integrations-toast.service';
-import { QBOOnboardingState, ToastSeverity } from '../models/enum/enum.model';
+import { AppUrl, QBOOnboardingState, ToastSeverity } from '../models/enum/enum.model';
+import { HelperService } from '../services/common/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class QboTokenGuard  {
     private qboConnectorService: QboConnectorService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
   ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
+      this.helperService.setBaseApiURL(AppUrl.QBO);
       const workspaceId = this.workspaceService.getWorkspaceId();
 
       if (!workspaceId) {
