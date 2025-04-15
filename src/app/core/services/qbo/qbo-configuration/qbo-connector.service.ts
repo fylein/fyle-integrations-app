@@ -38,6 +38,11 @@ export class QboConnectorService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
 
+  @Cacheable()
+  checkQBOTokenHealth(): Observable<{}> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/token_health/`, {});
+  }
+
   @Cacheable({
     cacheBusterObserver: qboCredentialsCache$
   })
@@ -46,8 +51,4 @@ export class QboConnectorService {
     return this.apiService.patch(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
 
-  @Cacheable()
-  getPreferences(): Observable<{}> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbo/preferences/`, {});
-  }
 }
