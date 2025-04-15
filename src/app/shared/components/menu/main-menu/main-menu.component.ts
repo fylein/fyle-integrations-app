@@ -167,6 +167,7 @@ export class MainMenuComponent implements OnInit {
 
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isMenuDisabled = true;
+      this.isDisconnectRequired = false;
       this.modules = this.modules.map(item => ({
         ...item,
         disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
