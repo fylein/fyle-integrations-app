@@ -6,7 +6,7 @@
 
     @if (!isConnectionInProgress) {
       <div class="tw-flex tw-flex-col tw-items-center tw-gap-[4px]">
-        <p class="tw-text-[18px] tw-font-medium tw-leading-[140%] tw-text-text-primary"> {{isIntegrationDisconnected ? 'Connection expired' : 'Integration disconnected' }} </p>
+        <p class="tw-text-[18px] tw-font-medium tw-leading-[140%] tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' : 'Connection expired' }} </p>
       @if (!isIntegrationDisconnected) {
         <p class="tw-text-center tw-text-[var(--font-size-font-14,14px)] tw-font-normal tw-leading-[140%] tw-text-slightly-normal-text-color tw-w-[750px] tw-break-words tw-whitespace-normal">
           Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. </p>
