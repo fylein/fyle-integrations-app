@@ -1,26 +1,21 @@
-<div class="tw-p-40-px tw-border tw-shadow-sm">
-    <div class="tw-flex tw-justify-center tw-pb-24-px">
+<div class="tw-p-spacing-32 tw-gap-[32px] tw-border tw-rounded-[10px] tw-shadow-sm tw-flex tw-flex-col tw-justify-center tw-items-center">
+
         @if (illustrationsAllowed) {
         <img src="assets/illustrations/login.svg" />
         }
-    </div>
 
     @if (!isConnectionInProgress) {
+      <div class="tw-flex tw-flex-col tw-items-center tw-gap-[4px]">
+        <p class="tw-text-[18px] tw-font-medium tw-leading-[140%] tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' : 'Connection expired' }} </p>
       @if (!isIntegrationDisconnected) {
-        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Connection expired </p>
-
-        <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        <p class="tw-text-center tw-text-[var(--font-size-font-14,14px)] tw-font-normal tw-leading-[140%] tw-text-slightly-normal-text-color tw-w-[750px] tw-break-words tw-whitespace-normal">
           Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. </p>
-
       } @else {
-        <p class="tw-flex tw-justify-center tw-pb-8-px tw-text-20-px tw-font-500 tw-text-text-primary"> Integration disconnected </p>
-
-        <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+        <p class="tw-text-center tw-text-[var(--font-size-font-14,14px)] tw-font-normal tw-leading-[140%] tw-text-slightly-normal-text-color tw-w-[750px] tw-break-words tw-whitespace-normal">
           The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. </p>
       }
+      </div>
 
-        <div class="tw-flex tw-justify-center tw-items-center">
-          
           @if (appName === AppName.QBO) {
             <div class="tw-cursor-pointer">
               <img
@@ -38,12 +33,10 @@
                 (click)="initiateOAuth()">
             </div>
           }
-      
-        </div>
     }
 
     @if (isConnectionInProgress) {
-      <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px tw-w-[600px] tw-break-words tw-whitespace-normal">
+      <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-break-words tw-whitespace-normal">
       We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. </p>
 
       <div class="tw-flex tw-justify-center tw-items-center">
