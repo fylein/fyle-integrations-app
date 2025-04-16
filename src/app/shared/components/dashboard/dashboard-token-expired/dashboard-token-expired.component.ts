@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { ApiService } from 'src/app/core/services/common/api.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
@@ -61,7 +61,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.QBO){
-    this.apiService.setBaseApiURL(environment.qbo_api_url);
+    this.apiService.setBaseApiURL(AppUrl.QBO);
 
     this.qboAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
@@ -77,7 +77,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.XERO){
-    this.apiService.setBaseApiURL(environment.xero_api_url);
+    this.apiService.setBaseApiURL(AppUrl.XERO);
 
     this.xeroAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
