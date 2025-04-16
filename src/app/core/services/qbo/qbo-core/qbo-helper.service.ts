@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
-import { Cacheable } from 'ts-cacheable';
+import { Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,7 @@ export class QboHelperService {
   }
 
   disconnect(): Observable<{}> {
+    globalCacheBusterNotifier.next();
     return this.apiService.patch(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
   }
 }
