@@ -41,10 +41,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
     private router: Router,
-    private xeroAuthService: XeroAuthService,
-  ) {
-    helperService.setBaseApiURL(AppUrl.QBO);
-  }
+    private xeroAuthService: XeroAuthService
+  ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
     if (data.hasAccepted) {
