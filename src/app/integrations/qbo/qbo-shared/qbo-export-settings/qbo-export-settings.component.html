@@ -241,7 +241,7 @@
                         <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')">
                             <app-configuration-select-field
                               [form]="exportSettingForm"
-                              [destinationAttributes]="bankAccounts"
+                              [destinationAttributes]="expenseAccounts"
                               [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                               [isOptionSearchInProgress]="isOptionSearchInProgress"
                               [isAdvanceSearchEnabled]="true"
@@ -249,9 +249,9 @@
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'debit card account'"
+                              [mandatoryErrorListName]="'debit and credit card account'"
                               [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
-                              [subLabel]="'Post all your company debit card transactions to a default debit card account.'"
+                              [subLabel]="'Post all your company card transactions to a default payment account.'"
                               [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'defaultDebitCardAccount'">

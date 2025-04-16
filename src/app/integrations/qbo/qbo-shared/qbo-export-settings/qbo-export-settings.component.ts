@@ -505,9 +505,7 @@ return of(null);
       this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.vendors = vendors.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
-
       this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
-
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
