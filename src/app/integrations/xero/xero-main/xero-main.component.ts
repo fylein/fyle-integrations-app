@@ -45,7 +45,7 @@ export class XeroMainComponent implements OnInit {
       this.xeroHelperService.disconnect().subscribe(() => {
         this.isConnectionInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Xero company successfully');
-        this.router.navigate(['/integrations/xero/onboarding/landing']);
+        this.router.navigate(['/integrations/xero/disconnect/dashboard']);
       });
     }
     this.isConnectionInProgress = true;
