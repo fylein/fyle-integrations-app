@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { AppName, AppUrl } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { ApiService } from 'src/app/core/services/common/api.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
-import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-dashboard-token-expired',
@@ -35,8 +36,13 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private qboAuthService: QboAuthService, private xeroAuthService: XeroAuthService, private apiService: ApiService, private router: Router){
-  }
+  constructor(
+    private apiService: ApiService,
+    private helperService: HelperService,
+    private qboAuthService: QboAuthService,
+    private router: Router,
+    private xeroAuthService: XeroAuthService
+  ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
     if (data.hasAccepted) {
@@ -61,7 +67,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.QBO){
-    this.apiService.setBaseApiURL(AppUrl.QBO);
+    this.helperService.setBaseApiURL(AppUrl.QBO);
 
     this.qboAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
@@ -77,7 +83,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.XERO){
-    this.apiService.setBaseApiURL(AppUrl.XERO);
+    this.helperService.setBaseApiURL(AppUrl.XERO);
 
     this.xeroAuthService.isIncorrectAccountSelected$
     .pipe(takeUntil(this.destroy$))
