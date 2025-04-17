@@ -6,7 +6,7 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { AccountingDisplayName, AppName, AppUrl, MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, AppName, AppUrl, MappingState, QboExportSettingDestinationOptionKey } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
@@ -170,8 +170,8 @@ export class MappingService {
 
   getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
-      limit: 100,
+    const params: {limit: number, offset: number, attribute_type?: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
+      limit: 1,
       offset: 0,
       attribute_type: attributeType,
       active: true

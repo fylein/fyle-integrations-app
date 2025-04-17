@@ -15,6 +15,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -152,6 +153,9 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   simpleSearch(query: string) {
+    console.log(this.destinationAttributes);
+    console.log(this.optionsCopy);
+
     this.destinationAttributes = this.optionsCopy.filter(attribute => attribute.name?.toLowerCase().includes(query.toLowerCase()) || attribute.value?.toLowerCase().includes(query.toLowerCase()));
   }
 
@@ -164,11 +168,20 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log('ngOnInitConfigField');
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.isOnboarding = this.router.url.includes('onboarding');
     if (this.destinationAttributes) {
       this.optionsCopy = this.destinationAttributes.slice();
     }
+
+    if(this.destinationOptionKey as QboExportSettingDestinationOptionKey === "BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT"){
+    interval(5000).subscribe(() => {
+      console.log('------- debug menu ----');
+      console.log(this.destinationAttributes);
+      console.log(this.optionsCopy);
+    }); }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
