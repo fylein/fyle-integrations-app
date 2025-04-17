@@ -410,8 +410,6 @@ export class QboExportSettingsComponent implements OnInit {
     ]).subscribe(([bankAccounts, cccAccounts]) => {
       const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
       if(event.destinationOptionKey as QboExportSettingDestinationOptionKey === QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT){
-        window.alert('works');
-        console.log(expenseAccounts);
         this.updateOptions(QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT, expenseAccounts, existingOptions);
       } else {
         this.updateOptions(QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT, expenseAccounts, existingOptions);
@@ -435,9 +433,6 @@ export class QboExportSettingsComponent implements OnInit {
     const updatedOptions = this.mergeOptions(existingOptions, newOptions);
     this.setUpdatedOptions(destinationOptionKey as QboExportSettingDestinationOptionKey, updatedOptions);
     this.isOptionSearchInProgress = false;
-    console.log(destinationOptionKey);
-    console.log(newOptions);
-    console.log(updatedOptions);
   }
 
   private mergeOptions(existingOptions: DefaultDestinationAttribute[], newOptions: DefaultDestinationAttribute[]): DefaultDestinationAttribute[] {

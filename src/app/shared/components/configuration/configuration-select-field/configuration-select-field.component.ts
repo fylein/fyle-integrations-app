@@ -153,9 +153,6 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   simpleSearch(query: string) {
-    console.log(this.destinationAttributes);
-    console.log(this.optionsCopy);
-
     this.destinationAttributes = this.optionsCopy.filter(attribute => attribute.name?.toLowerCase().includes(query.toLowerCase()) || attribute.value?.toLowerCase().includes(query.toLowerCase()));
   }
 
@@ -164,24 +161,18 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
+    const searchTerm = (event.filter as string).trim();
+    if (!searchTerm) { return; }
+
+    this.searchOptionsDropdown.emit({ searchTerm: searchTerm, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
   }
 
   ngOnInit(): void {
-    console.log('ngOnInitConfigField');
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.isOnboarding = this.router.url.includes('onboarding');
     if (this.destinationAttributes) {
       this.optionsCopy = this.destinationAttributes.slice();
     }
-
-    if(this.destinationOptionKey as QboExportSettingDestinationOptionKey === "BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT"){
-    interval(5000).subscribe(() => {
-      console.log('------- debug menu ----');
-      console.log(this.destinationAttributes);
-      console.log(this.optionsCopy);
-    }); }
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -189,6 +180,11 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
       this.form.get(this.formControllerName)?.disable();
     } else if (!changes.isDisabled?.currentValue) {
       this.form.get(this.formControllerName)?.enable();
+    }
+
+    if(this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */
+    this.optionsCopy = this.destinationAttributes; 
+    this.destinationAttributes = [...this.optionsCopy];
     }
   }
 }
