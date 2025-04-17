@@ -162,7 +162,9 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   searchOptions(event: any) {
     const searchTerm = (event.filter as string).trim();
-    if (!searchTerm) { return; }
+    if (!searchTerm) {
+ return;
+}
 
     this.searchOptionsDropdown.emit({ searchTerm: searchTerm, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
   }
@@ -182,8 +184,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
       this.form.get(this.formControllerName)?.enable();
     }
 
-    if(this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */
-    this.optionsCopy = this.destinationAttributes; 
+    if (this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */
+    this.optionsCopy = this.destinationAttributes;
     this.destinationAttributes = [...this.optionsCopy];
     }
   }
