@@ -168,14 +168,19 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
+    const params: {limit: number, offset: number, attribute_type?: string | string[], attribute_type__in?: string[], active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
       active: true
     };
+
+    if (attributeType && Array.isArray(attributeType)) {
+      params.attribute_type__in = attributeType;
+      delete params.attribute_type;
+    }
 
     if (value) {
       if (appName && ([AppName.SAGE300, AppName.QBO, AppName.INTACCT] as string[]).includes(appName)) {
