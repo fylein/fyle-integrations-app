@@ -6,7 +6,6 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingDisplayName, AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -85,8 +84,14 @@ export class QboBaseMappingComponent implements OnInit {
       this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
       this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
-
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
+
+      let destinationAttribute;
+      if (this.destinationField === QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT && this.cccExpenseObject === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
+      destinationAttribute = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
+      } else {
+        destinationAttribute = this.destinationField;
+      }
 
       this.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
 
@@ -96,7 +101,7 @@ export class QboBaseMappingComponent implements OnInit {
         this.displayName = undefined;
       }
 
-      this.mappingService.getPaginatedDestinationAttributes([this.destinationField, QboExportSettingDestinationOptionKey.BANK_ACCOUNT], undefined, this.displayName).subscribe((responses) => {
+      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute, undefined, this.displayName).subscribe((responses) => {
         this.destinationOptions = responses.results;
         this.isLoading = false;
       });

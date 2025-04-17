@@ -7,7 +7,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -51,6 +51,8 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() isMultiLineOption: boolean = false;
 
   @Input() detailAccountType: string[] | undefined;
+
+  @Input() isCCmappingPage?: boolean;
 
   private searchSubject = new Subject<string>();
 
@@ -142,7 +144,14 @@ export class GenericMappingTableComponent implements OnInit {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
+      let destinationAttribute;
+      if (this.destinationField === 'CREDIT_CARD_ACCOUNT' && this.isCCmappingPage){
+        destinationAttribute = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
+      } else {
+        destinationAttribute = this.destinationField;
+      }
+
+      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {

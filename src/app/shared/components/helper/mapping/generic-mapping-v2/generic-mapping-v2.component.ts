@@ -46,6 +46,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() detailAccountType: string[] | undefined;
 
+  @Input() isCCmappingPage?: boolean;
+
   isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;
