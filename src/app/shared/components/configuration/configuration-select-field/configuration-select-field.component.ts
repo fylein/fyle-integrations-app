@@ -15,6 +15,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -160,7 +161,12 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
+    const searchTerm = (event.filter as string).trim();
+    if (!searchTerm) {
+ return;
+}
+
+    this.searchOptionsDropdown.emit({ searchTerm: searchTerm, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey, formControllerName: this.formControllerName});
   }
 
   ngOnInit(): void {
@@ -176,6 +182,11 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
       this.form.get(this.formControllerName)?.disable();
     } else if (!changes.isDisabled?.currentValue) {
       this.form.get(this.formControllerName)?.enable();
+    }
+
+    if (this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */
+    this.optionsCopy = this.destinationAttributes;
+    this.destinationAttributes = [...this.optionsCopy];
     }
   }
 }
