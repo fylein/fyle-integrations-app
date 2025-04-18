@@ -409,11 +409,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.getPaginatedAttributes(QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, event.searchTerm)
     ]).subscribe(([bankAccounts, cccAccounts]) => {
       const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
-      if (event.destinationOptionKey as QboExportSettingDestinationOptionKey === QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT){
-        this.updateOptions(QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT, expenseAccounts, existingOptions);
-      } else {
-        this.updateOptions(QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT, expenseAccounts, existingOptions);
-      }
+      this.updateOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey, expenseAccounts, existingOptions);
     });
   }
 
