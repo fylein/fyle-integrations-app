@@ -6,7 +6,7 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { AccountingDisplayName, AppName, AppUrl, MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, AppName, AppUrl, MappingState, QboExportSettingDestinationOptionKey } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
