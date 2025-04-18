@@ -44,6 +44,8 @@ export class QboBaseMappingComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
+  destinationAttribute: string | string[];
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -86,11 +88,10 @@ export class QboBaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      let destinationAttribute;
       if (this.destinationField === QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT && this.cccExpenseObject === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
-      destinationAttribute = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
+        this.destinationAttribute = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
       } else {
-        destinationAttribute = this.destinationField;
+        this.destinationAttribute = this.destinationField;
       }
 
       this.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
@@ -101,7 +102,7 @@ export class QboBaseMappingComponent implements OnInit {
         this.displayName = undefined;
       }
 
-      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute, undefined, this.displayName).subscribe((responses) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttribute, undefined, this.displayName).subscribe((responses) => {
         this.destinationOptions = responses.results;
         this.isLoading = false;
       });

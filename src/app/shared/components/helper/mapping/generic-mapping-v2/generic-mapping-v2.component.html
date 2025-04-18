@@ -13,7 +13,7 @@
             </div>
             <div *ngIf="!isLoading">
                 <div *ngIf="filteredMappingCount">
-                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isCCmappingPage]="isCCmappingPage" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [destinationFieldDisplayName]="destinationFieldDisplayName" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [sourceFieldDisplayName]="sourceFieldDisplayName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>
+                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [destinationAttribute]="destinationAttribute" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [destinationFieldDisplayName]="destinationFieldDisplayName" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [sourceFieldDisplayName]="sourceFieldDisplayName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>
                 </div>
                 <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount && !isLoading" >
                     <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>

@@ -52,7 +52,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() detailAccountType: string[] | undefined;
 
-  @Input() isCCmappingPage?: boolean;
+  @Input() destinationAttribute?: string | string[];
 
   private searchSubject = new Subject<string>();
 
@@ -143,15 +143,9 @@ export class GenericMappingTableComponent implements OnInit {
       ).subscribe((event: any) => {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
+      this.destinationAttribute ||= this.destinationField;
 
-      let destinationAttribute;
-      if (this.destinationField === 'CREDIT_CARD_ACCOUNT' && this.isCCmappingPage){
-        destinationAttribute = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
-      } else {
-        destinationAttribute = this.destinationField;
-      }
-
-      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttribute, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {
