@@ -52,7 +52,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() detailAccountType: string[] | undefined;
 
-  @Input() destinationAttribute?: string | string[];
+  @Input() destinationAttributes?: string | string[];
 
   private searchSubject = new Subject<string>();
 
@@ -143,9 +143,9 @@ export class GenericMappingTableComponent implements OnInit {
       ).subscribe((event: any) => {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
-      this.destinationAttribute ||= this.destinationField;
+      this.destinationAttributes ||= this.destinationField;
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttribute, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {
