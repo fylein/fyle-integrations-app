@@ -65,7 +65,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'accounts payable'"
                                 [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
-                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ', while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select accounts payable'"
                                 [isMultiLineOption]="true"
