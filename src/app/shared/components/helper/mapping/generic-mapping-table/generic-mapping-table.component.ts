@@ -7,7 +7,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -51,6 +51,8 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() isMultiLineOption: boolean = false;
 
   @Input() detailAccountType: string[] | undefined;
+
+  @Input() destinationAttributes?: string | string[];
 
   private searchSubject = new Subject<string>();
 
@@ -141,8 +143,9 @@ export class GenericMappingTableComponent implements OnInit {
       ).subscribe((event: any) => {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
+      this.destinationAttributes ||= this.destinationField;
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {
@@ -222,7 +225,7 @@ export class GenericMappingTableComponent implements OnInit {
         this.displayErrorToast();
       });
     } else {
-      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: this.destinationField});
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: event.value.attribute_type, app_name: this.appName});
 
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
