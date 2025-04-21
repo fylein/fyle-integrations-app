@@ -225,7 +225,7 @@ export class GenericMappingTableComponent implements OnInit {
         this.displayErrorToast();
       });
     } else {
-      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: event.value.attribute_type, app_name: AppName.QBO});
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: event.value.attribute_type, app_name: this.appName});
 
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
