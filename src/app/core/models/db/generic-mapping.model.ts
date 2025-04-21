@@ -1,5 +1,5 @@
 
-import { FyleField } from "../enum/enum.model";
+import { AppName, FyleField } from "../enum/enum.model";
 import { CategoryMappingPost } from "./category-mapping.model";
 import { DestinationAttribute } from "./destination-attribute.model";
 import { EmployeeMappingPost } from "./employee-mapping.model";
@@ -12,6 +12,7 @@ export type GenericMappingPost = {
     destination_type: string;
     destination_id: string;
     destination_value: string;
+    app_name?: string;
 };
 
 export interface GenericMapping {
@@ -28,6 +29,7 @@ export interface GenericMapping {
 export type MinimalMappingSetting = {
   source_field: string;
   destination_field: string;
+  app_name?: string;
 };
 
 export class MappingClass {
@@ -77,7 +79,8 @@ export class MappingClass {
       source_value: selectedRow.value,
       destination_type: mappingSetting.destination_field,
       destination_id: event.value.destination_id,
-      destination_value: event.value.value
+      destination_value: event.value.value,
+      ...(mappingSetting.app_name && { app_name: mappingSetting.app_name })
     };
 
     return genericMappingPayload;
