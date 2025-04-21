@@ -205,7 +205,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'a default credit account'"
                                 [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
-                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' ,while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ', while debit lines will reflect the category chosen by the employee for each respective expense'"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select default account'"
                                 [isMultiLineOption]="true"
