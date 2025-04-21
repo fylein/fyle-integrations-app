@@ -46,6 +46,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() detailAccountType: string[] | undefined;
 
+  @Input() destinationAttributes?: string | string[];
+
   isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;
