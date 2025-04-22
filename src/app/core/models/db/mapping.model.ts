@@ -28,4 +28,5 @@ export type GenericMappingApiParams = {
     mapping_source_alphabets?: string
     source_type: string;
     value?: string
+    app_name?: string;
 };
