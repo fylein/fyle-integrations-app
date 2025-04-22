@@ -362,7 +362,7 @@ export const fyleContents = {
                 exportSubLabel: '',
                 defaultCCCAccountLabel: 'Set default credit card account as',
                 defaultCCCAccountPlaceholder: 'Select default credit card account',
-                defaultDebitCardAccountLabel: 'Set default payment account as',
+                defaultDebitCardAccountLabel: 'Set default debit card account as',
                 defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                 defaultCCCVendorLabel: 'Set default corporate card vendor as',
                 defaultCCCVendorSubLabel: 'This selected vendor will be applied on all corporate card transactions exported to QuickBooks Online.',

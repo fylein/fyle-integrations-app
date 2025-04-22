@@ -377,7 +377,7 @@ export class QboExportSettingsComponent implements OnInit {
   private handleOptionSearch(event: ExportSettingOptionSearch): void {
     const existingOptions = this.getExistingOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey);
 
-    if (event.destinationOptionKey === QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT || event.destinationOptionKey === QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT) {
+    if (event.destinationOptionKey === QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT) {
       this.handleExpenseAccountSearch(event, existingOptions);
     } else {
       this.handleGeneralOptionSearch(event, existingOptions);
@@ -396,8 +396,6 @@ export class QboExportSettingsComponent implements OnInit {
         return this.vendors;
       case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
         return this.expenseAccounts;
-      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT:
-        return this.expenseAccounts;
       default:
         return [];
     }
@@ -409,7 +407,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.getPaginatedAttributes(QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, event.searchTerm)
     ]).subscribe(([bankAccounts, cccAccounts]) => {
       const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
-      this.updateOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey, expenseAccounts, existingOptions);
+      this.updateOptions(QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT, expenseAccounts, existingOptions);
     });
   }
 
@@ -427,7 +425,7 @@ export class QboExportSettingsComponent implements OnInit {
   private updateOptions(destinationOptionKey: QboExportSettingDestinationOptionKey, newResults: any[], existingOptions: DefaultDestinationAttribute[]): void {
     const newOptions = newResults.map(QBOExportSettingModel.formatGeneralMappingPayload);
     const updatedOptions = this.mergeOptions(existingOptions, newOptions);
-    this.setUpdatedOptions(destinationOptionKey as QboExportSettingDestinationOptionKey, updatedOptions);
+    this.setUpdatedOptions(destinationOptionKey, updatedOptions);
     this.isOptionSearchInProgress = false;
   }
 
@@ -457,9 +455,6 @@ export class QboExportSettingsComponent implements OnInit {
       case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
         this.expenseAccounts = updatedOptions;
         break;
-      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT:
-        this.expenseAccounts = updatedOptions;
-        break;
     }
   }
 
@@ -478,7 +473,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
 
       this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
-      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
       this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
     }
   }
@@ -510,7 +505,9 @@ return of(null);
       this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.vendors = vendors.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
+
       this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
+
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
