@@ -106,7 +106,8 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery).subscribe((mappingResponse: GenericMappingResponse) => {
+    const shouldSendAppName = this.appName === AppName.QBO ? [this.appName] : [];
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...shouldSendAppName).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
@@ -160,8 +161,9 @@ export class GenericMappingV2Component implements OnInit {
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
+    const shouldSendAppName = this.appName === AppName.QBO ? [this.appName] : [];
     forkJoin([
-      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null),
+      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...shouldSendAppName),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {
