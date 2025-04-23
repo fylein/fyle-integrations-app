@@ -190,10 +190,10 @@ export class QBOExportSettingModel extends ExportSettingModel {
     ];
   }
 
-  static getMandatoryField(form: FormGroup, controllerName: string): boolean {
+  static getMandatoryField(form: FormGroup, employeeMappingValue: EmployeeFieldMapping, controllerName: string): boolean {
     switch (controllerName) {
       case 'bankAccount':
-        return form.controls.employeeMapping.value === EmployeeFieldMapping.EMPLOYEE && form.controls.reimbursableExportType.value && form.controls.reimbursableExportType.value !== QBOReimbursableExpensesObject.EXPENSE;
+        return employeeMappingValue === EmployeeFieldMapping.EMPLOYEE && form.controls.reimbursableExportType.value && form.controls.reimbursableExportType.value !== QBOReimbursableExpensesObject.EXPENSE;
       case 'accountsPayable':
         return (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (form.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && form.controls.employeeMapping.value === EmployeeFieldMapping.VENDOR)) || (form.controls.creditCardExportType.value === QBOCorporateCreditCardExpensesObject.BILL);
       case 'defaultCCCAccount':
