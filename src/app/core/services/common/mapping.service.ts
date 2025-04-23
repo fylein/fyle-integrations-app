@@ -6,7 +6,7 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { AccountingDisplayName, AppName, AppUrl, MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, AppName, AppUrl, MappingState, QboExportSettingDestinationOptionKey } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
@@ -120,7 +120,7 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null, appName?: string): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
@@ -128,7 +128,8 @@ export class MappingService {
       offset: pageOffset,
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
       destination_type: destinationType,
-      source_type: sourceType
+      source_type: sourceType,
+      ...(appName && { app_name: appName })
     };
 
     if (searchQuery) {
@@ -168,14 +169,19 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
+    const params: {limit: number, offset: number, attribute_type?: string | string[], attribute_type__in?: string[], active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
       active: true
     };
+
+    if (attributeType && Array.isArray(attributeType)) {
+      params.attribute_type__in = attributeType;
+      delete params.attribute_type;
+    }
 
     if (value) {
       if (appName && ([AppName.SAGE300, AppName.QBO, AppName.INTACCT] as string[]).includes(appName)) {

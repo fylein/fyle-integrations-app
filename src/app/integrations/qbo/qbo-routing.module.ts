@@ -16,6 +16,14 @@ const routes: Routes = [
         path: 'main',
         loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule),
         canActivate: [QboTokenGuard]
+      },
+      {
+        path: 'token_expired',
+        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
+      },
+      {
+        path: 'disconnect',
+        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
       }
     ]
   }

@@ -1,0 +1,55 @@
+<div
+  class="tw-bg-white tw-p-spacing-32 tw-gap-[32px] tw-border tw-rounded-[10px] tw-shadow-sm tw-flex tw-flex-col tw-justify-center tw-items-center">
+
+  @if (illustrationsAllowed) {
+  <img src="assets/illustrations/login.svg" />
+  }
+
+  @if (!isConnectionInProgress) {
+  <div class="tw-flex tw-flex-col tw-items-center tw-gap-[4px]">
+    <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' :
+      'Connection expired' }} </p>
+    @if (!isIntegrationDisconnected) {
+    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
+      Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect
+      your account. </p>
+    } @else {
+    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
+      The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please
+      reconnect your account. </p>
+    }
+  </div>
+
+  @if (appName === AppName.QBO) {
+  <div class="tw-cursor-pointer">
+    <img [src]="qboConnectButtonSource" (click)="initiateOAuth()"
+      (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
+      (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
+  </div>
+  }
+
+  @if (appName === AppName.XERO) {
+  <div class="tw-cursor-pointer">
+    <img [src]="xeroConnectButtonSource" (click)="initiateOAuth()">
+  </div>
+  }
+  }
+
+  @if (isConnectionInProgress) {
+  <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-break-words tw-whitespace-normal">
+    We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few
+    seconds. </p>
+
+  <div class="tw-flex tw-justify-center tw-items-center">
+    <app-loader></app-loader>
+  </div>
+  }
+</div>
+
+@if (isIncorrectAccountSelected) {
+<app-configuration-confirmation-dialog (warningAccepted)="acceptWarning($event)"
+  [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'Incorrect account selected'"
+  [contextText]="'You had previously set up the integration with a different ' + appName + ' account. Please choose the same to restore the settings'"
+  [confirmBtnText]="'Re connect'" [showSecondaryCTA]="false">
+</app-configuration-confirmation-dialog>
+}
