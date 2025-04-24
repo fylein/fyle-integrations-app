@@ -47,7 +47,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'bank account'"
                                     [label]="'To which bank account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                                    [subLabel]="'All the offset entry in the journal will be posted to the selected bank account.'"
+                                    [subLabel]="'The expenses exported will be posted to the selected bank account.'"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -340,7 +340,7 @@
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 
-                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
                         exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
