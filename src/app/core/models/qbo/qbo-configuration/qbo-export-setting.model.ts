@@ -92,7 +92,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
 
     if (brandingConfig.brandId !== 'co') {
       creditCardExportTypes.push({
-        label: 'Debit card expense',
+        label: 'Debit & credit card expense',
         value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
       });
     }
