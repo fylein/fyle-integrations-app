@@ -483,15 +483,18 @@ export class QboCloneSettingsComponent implements OnInit {
 
         this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
+        const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
+
         if (cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object) {
-          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object);
+          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[0], cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object);
         }
 
         if (cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object) {
-          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object);
+          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[1], cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object);
         }
 
-        this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+        this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, this.employeeSettingForm.get('employeeMapping'));
 
         this.setupCustomWatchers();
 
