@@ -47,7 +47,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'bank account'"
                                     [label]="'To which bank account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                                    [subLabel]="'The expenses exported will be posted to the selected bank account.'"
+                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'All the offset entry in the journal' : 'The expenses exported') + ' will be posted to the selected bank account.'"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
