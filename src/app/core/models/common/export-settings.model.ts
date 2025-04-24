@@ -119,7 +119,12 @@ export class ExportSettingModel {
     ];
   }
 
-  static constructExportDateOptions(isCoreCCCModule: boolean, expenseGrouping: ExpenseGroupingFieldOption, exportDateType: ExportDateType): SelectFormOption[] {
+  static constructExportDateOptions(
+    isCoreCCCModule: boolean,
+    expenseGrouping: ExpenseGroupingFieldOption,
+    exportDateType: ExportDateType,
+    { allowPostedAt }: {allowPostedAt?: boolean} = {}
+  ): SelectFormOption[] {
 
     // Determine the excluded date based on expenseGrouping
     const excludedSpendDateOption = [ExpenseGroupingFieldOption.EXPENSE_ID, ExpenseGroupingFieldOption.EXPENSE].includes(expenseGrouping)
@@ -130,7 +135,12 @@ export class ExportSettingModel {
     const excludedApprovedOrVerifiedOption = exportDateType === ExportDateType.APPROVED_AT ? [ExportDateType.VERIFIED_AT] : (exportDateType === ExportDateType.VERIFIED_AT ? [ExportDateType.APPROVED_AT] : [ExportDateType.APPROVED_AT, ExportDateType.VERIFIED_AT]);
 
     // Determine the excluded date based on export Type
-    const excludedPostedAtOption = !isCoreCCCModule ? ExportDateType.POSTED_AT : null;
+    let excludedPostedAtOption = !isCoreCCCModule ? ExportDateType.POSTED_AT : null;
+
+    // Exceptions for users who have already selected posted_at
+    if (allowPostedAt) {
+      excludedPostedAtOption = null;
+    }
 
     // Array of unwanted dates
     const dateOptionsToBeExcluded = [excludedSpendDateOption, excludedPostedAtOption].concat(excludedApprovedOrVerifiedOption);
