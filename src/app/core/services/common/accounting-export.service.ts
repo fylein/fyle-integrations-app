@@ -24,9 +24,7 @@ export class AccountingExportService {
 
   getAccountingExportSummary(version?: string | 'v1'): Observable<AccountingExportSummary> {
     if (version === 'v1') {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, {'start_date': today.toISOString()});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, {});
     } else if (version === AppName.QBD_DIRECT) {
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, {});
     }
