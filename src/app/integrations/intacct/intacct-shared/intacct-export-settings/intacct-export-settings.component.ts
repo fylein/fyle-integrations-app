@@ -219,14 +219,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       ];
     }
 
-    private setCCExpenseDateOptions(cccExportType: IntacctCorporateCreditCardExpensesObject) : void {
-    if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-      this.exportSettingsForm?.controls.cccExportDate.patchValue(ExportDateType.SPENT_AT);
-    } else {
-      this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions;
-    }
-  }
-
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/intacct/onboarding/connector`]);
   }
@@ -355,15 +347,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.cccWatcher();
     }
 
-    private setupCCCExpenseGroupingDateOptions(): void {
-      if (this.exportSettings?.configurations?.corporate_credit_card_expenses_object) {
-        const creditCardExpenseExportGroup = this.exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields ? this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields : ExpenseGroupedBy.EXPENSE;
-        this.setCCExpenseDateOptions(this.exportSettings?.configurations?.corporate_credit_card_expenses_object);
-      } else {
-        this.setCCExpenseDateOptions(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-      }
-    }
-
     private exportSelectionValidator(): ValidatorFn {
       return (control: AbstractControl): {[key: string]: object} | null => {
         let forbidden = true;
@@ -459,14 +442,23 @@ export class IntacctExportSettingsComponent implements OnInit {
   private setupCustomWatchers(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingsForm.controls.reimbursableExportDate.value);
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
-      if (this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value);
-      } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value);
-      }
+      const isCoreCCCModule = this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION;
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        isCoreCCCModule, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value
+      );
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('cccExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
   }
 
@@ -478,7 +470,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.addMissingOptions();
 
       this.setUpExpenseStates();
-      this.setupCCCExpenseGroupingDateOptions();
       this.initializeExportSettingsFormWithData();
       this.isLoading = false;
     });

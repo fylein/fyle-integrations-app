@@ -274,16 +274,26 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
       this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
   }
 
   cccExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroupValue) => {
-      if (this.exportSettingsForm.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
-      } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
-      }
+      const isCoreCCCModule = this.exportSettingsForm.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
+
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        isCoreCCCModule, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value
+      );
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('creditCardExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
   }
 
