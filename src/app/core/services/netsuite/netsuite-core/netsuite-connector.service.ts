@@ -48,6 +48,11 @@ export class NetsuiteConnectorService {
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);
   }
 
+  @Cacheable()
+  checkNetsuiteTokenHealth(workspaceId: string): Observable<{}> {
+    return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
+  }
+
   getSubsidiaryMapping(): Observable<SubsidiaryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/subsidiaries/`, {});
