@@ -138,13 +138,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: SelectFormOption[], formControllerName: string): SelectFormOption[]{
-    if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
-      return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
-    }
-    return options.filter(option => (option.value !== ExportDateType.SPENT_AT && option.value !== ExportDateType.POSTED_AT));
-  }
-
   refreshDimensions(isRefresh: boolean): void{
     this.businessCentralHelperService.importAttributes(isRefresh);
   }
@@ -161,19 +154,25 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        false,
+        reimbursableExportGroup,
+        this.exportSettingForm.controls.reimbursableExportDate.value
+      );
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-      this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
 
-      // If the selected value is not valid after the export group change, reset the field
-      const visibleValues = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup').map(option => option.value);
-      if (!visibleValues.includes(this.exportSettingForm.get('cccExportDate')?.value)) {
-        this.exportSettingForm.get('cccExportDate')?.reset();
-      }
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('cccExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());

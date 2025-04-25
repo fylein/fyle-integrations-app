@@ -332,24 +332,6 @@ describe('IntacctExportSettingsComponent', () => {
           value: ExportDateType.SPENT_AT
         });
       }));
-
-      it('should update CCC expense grouping date options when group changes', fakeAsync(() => {
-        spyOn<IntacctExportSettingsComponent, any>(component, 'setCCExpenseDateOptions').and.callThrough();
-        spyOn(IntacctExportSettingModel, 'getExpenseGroupingDateOptions').and.callThrough();
-        spyOn(ExportSettingModel, 'constructGroupingDateOptions').and.callThrough();
-
-        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-        component.exportSettingsForm.get('cccExportGroup')?.setValue(ExpenseGroupingFieldOption.CLAIM_NUMBER);
-
-        tick();
-
-        expect(IntacctExportSettingModel.getExpenseGroupingDateOptions).toHaveBeenCalledWith();
-        expect(ExportSettingModel.constructGroupingDateOptions).toHaveBeenCalledWith(
-          ExpenseGroupingFieldOption.CLAIM_NUMBER,
-          IntacctExportSettingModel.getExpenseGroupingDateOptions()
-        );
-        expect(component['setCCExpenseDateOptions']).toHaveBeenCalled();
-      }));
     });
 
     describe('Export Selection Validator', () => {
@@ -445,43 +427,19 @@ describe('IntacctExportSettingsComponent', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should set the correct CCC expense grouping date options when CCC expense object is unset', () => {
-      component.exportSettings = {
-        configurations: {
-          corporate_credit_card_expenses_object: null
-        }
-      } as ExportSettingGet;
-      spyOn<any>(component, 'setCCExpenseDateOptions');
-
-      component['setupCCCExpenseGroupingDateOptions']();
-      expect(component['setCCExpenseDateOptions']).toHaveBeenCalledOnceWith(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-    });
-
-    it('should default CCC expense grouping date options to reimbursable grouping date options for non-charge card transactions', () => {
-      fixture.detectChanges();
-
-      component['setCCExpenseDateOptions'](IntacctCorporateCreditCardExpensesObject.BILL);
-      expect(component.cccExpenseGroupingDateOptions).toEqual(component.reimbursableExpenseGroupingDateOptions);
-    });
-
     it('should set the correct CCC expense grouping date options when grouping by report', () => {
       fixture.detectChanges();
 
       component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-      component['updateCCCGroupingDateOptions'](ExpenseGroupingFieldOption.CLAIM_NUMBER);
 
       expect(component.cccExpenseGroupingDateOptions).toEqual([
         {
-          label: brandingContent.common.currentDate,
+          label: 'Export date',
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Last spend date',
-          value: ExportDateType.LAST_SPENT_AT
-        },
-        {
-          label: 'Approved date',
-          value: ExportDateType.APPROVAL_DATE
+          label: 'Spend date',
+          value: ExportDateType.SPENT_AT
         },
         {
           label: 'Card transaction post date',
