@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WorkspaceService } from '../../common/workspace.service';
 import { ApiService } from '../../common/api.service';
-import { Cacheable } from 'ts-cacheable';
+import { Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,7 @@ export class XeroHelperService {
   }
 
   disconnect() {
+    globalCacheBusterNotifier.next();
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/connection/xero/revoke/`, {});
   }
 }

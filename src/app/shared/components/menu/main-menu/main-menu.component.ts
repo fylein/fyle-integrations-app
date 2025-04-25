@@ -43,6 +43,8 @@ export class MainMenuComponent implements OnInit {
 
   private pDropdown = viewChild(Dropdown);
 
+  isMenuDisabled: boolean = false;
+
   dropdownOptions: MainMenuDropdownGroup[];
 
   isDisabled: boolean = false;
@@ -161,6 +163,16 @@ export class MainMenuComponent implements OnInit {
 
     if (!this.toolTipText) {
       this.toolTipText = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
+    }
+
+    if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
+      this.isMenuDisabled = true;
+      this.isDisconnectRequired = false;
+      this.modules = this.modules.map(item => ({
+        ...item,
+        disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
+      }));
+
     }
   }
 }

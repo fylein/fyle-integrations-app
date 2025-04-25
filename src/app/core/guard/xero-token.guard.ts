@@ -1,7 +1,7 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { XeroConnectorService } from "../services/xero/xero-configuration/xero-connector.service";
-import { Observable, forkJoin, map, catchError, throwError } from "rxjs";
+import { Observable, map, catchError, throwError } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
 import { AppUrl, ToastSeverity, XeroOnboardingState } from "../models/enum/enum.model";
@@ -32,21 +32,27 @@ export class XeroTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
-      return forkJoin(
-        [
-          this.xeroConnectorService.getXeroCredentials(workspaceId),
-          this.xeroConnectorService.getXeroTokenHealth(workspaceId)
-        ]
-      ).pipe(
-        map(response => !!response),
+      return this.xeroConnectorService.checkXeroTokenHealth(workspaceId).pipe(
+        map(() => true),
         catchError(error => {
           if (error.status === 400) {
-            globalCacheBusterNotifier.next();
-            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Xero connection expired, please connect again');
+          globalCacheBusterNotifier.next();
 
-            return this.router.navigateByUrl('integrations/xero/onboarding/landing');
+          const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
+          if (onboardingState !== XeroOnboardingState.COMPLETE) {
+            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your xero connection expired, please connect again');
+            return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
           }
 
+          if (error.error.message === "Xero connection expired"){
+            return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
+          }
+
+          if (error.error.message === "Xero disconnected"){
+            return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
+          }
+
+          }
           return throwError(error);
         })
       );
