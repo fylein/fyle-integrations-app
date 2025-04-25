@@ -280,6 +280,17 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     selectedValue: NetSuiteCorporateCreditCardExpensesObject,
     { updateExpenseGroup = true } : {updateExpenseGroup?: boolean} = {}
   ): void {
+
+    // As an exception, show posted_at to orgs that have already selected it outside the core CCC module
+    let cccModuleWithPostedAtDateSelected;
+    if (this.exportSettings.expense_group_settings.ccc_export_date_type === ExportDateType.POSTED_AT) {
+      cccModuleWithPostedAtDateSelected = this.exportSettings.configuration?.corporate_credit_card_expenses_object;
+    }
+
+    const currentCCCModule = this.exportSettingForm.get('creditCardExportType')?.value;
+
+    const allowPostedAt = cccModuleWithPostedAtDateSelected === currentCCCModule;
+
     if (selectedValue === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
       if (updateExpenseGroup) {
         this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
@@ -288,13 +299,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
         true,
         this.exportSettingForm.controls.creditCardExportGroup.value,
-        this.exportSettingForm.controls.creditCardExportDate.value
+        this.exportSettingForm.controls.creditCardExportDate.value,
+        { allowPostedAt }
       );
     } else {
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
         false,
         this.exportSettingForm.controls.creditCardExportGroup.value,
-        this.exportSettingForm.controls.creditCardExportDate.value
+        this.exportSettingForm.controls.creditCardExportDate.value,
+        { allowPostedAt }
       );
     }
 
