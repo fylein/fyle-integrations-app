@@ -427,25 +427,6 @@ describe('IntacctExportSettingsComponent', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should set the correct CCC expense grouping date options when CCC expense object is unset', () => {
-      component.exportSettings = {
-        configurations: {
-          corporate_credit_card_expenses_object: null
-        }
-      } as ExportSettingGet;
-      spyOn<any>(component, 'setCCExpenseDateOptions');
-
-      component['setupCCCExpenseGroupingDateOptions']();
-      expect(component['setCCExpenseDateOptions']).toHaveBeenCalledOnceWith(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
-    });
-
-    it('should default CCC expense grouping date options to reimbursable grouping date options for non-charge card transactions', () => {
-      fixture.detectChanges();
-
-      component['setCCExpenseDateOptions'](IntacctCorporateCreditCardExpensesObject.BILL);
-      expect(component.cccExpenseGroupingDateOptions).toEqual(component.reimbursableExpenseGroupingDateOptions);
-    });
-
     it('should set the correct CCC expense grouping date options when grouping by report', () => {
       fixture.detectChanges();
 

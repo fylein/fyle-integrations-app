@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -274,16 +274,39 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
       this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
   }
 
   cccExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroupValue) => {
-      if (this.exportSettingsForm.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
-      } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroupValue, this.exportSettingsForm.controls.creditCardExportDate.value);
+      const isCoreCCCModule = this.exportSettingsForm.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
+
+      // As an exception, show posted_at to orgs that have already selected it outside the core CCC module
+      let cccModuleWithPostedAtDateSelected;
+      if (this.exportSettings?.credit_card_expense_date === QbdDirectCCCExportDateType.POSTED_AT) {
+        cccModuleWithPostedAtDateSelected = this.exportSettings?.credit_card_expense_export_type;
       }
+
+      const currentCCCModule = this.exportSettingsForm.get('creditCardExportType')?.value;
+
+      const allowPostedAt = cccModuleWithPostedAtDateSelected === currentCCCModule;
+
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        isCoreCCCModule,
+        creditCardExportGroupValue,
+        this.exportSettingsForm.controls.creditCardExportDate.value,
+        { allowPostedAt }
+      );
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsForm.get('creditCardExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
   }
 

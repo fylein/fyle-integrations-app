@@ -8,7 +8,7 @@ import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/mode
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -132,10 +132,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   refreshDimensions() {
     this.netsuiteHelperServie.refreshNetsuiteDimensions().subscribe();
-  }
-
-  reimbursableExpenseGroupingDate(reimbursableExportGroup: ExpenseGroupingFieldOption, ExpenseGroupingDateOptions: SelectFormOption[]): SelectFormOption[] {
-      return ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, ExpenseGroupingDateOptions);
   }
 
   private reimbursableExportTypeWatcher(): void {
@@ -280,14 +276,45 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
   }
 
-  private updateCCCExpenseGroupingDateOptions(selectedValue: NetSuiteCorporateCreditCardExpensesObject): void {
-    if (selectedValue === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
-      this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
-      this.exportSettingForm.controls.creditCardExportGroup.disable();
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
-    } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+  private updateCCCExpenseGroupingDateOptions(
+    selectedValue: NetSuiteCorporateCreditCardExpensesObject,
+    { updateExpenseGroup = true } : {updateExpenseGroup?: boolean} = {}
+  ): void {
+
+    // As an exception, show posted_at to orgs that have already selected it outside the core CCC module
+    let cccModuleWithPostedAtDateSelected;
+    if (this.exportSettings.expense_group_settings.ccc_export_date_type === ExportDateType.POSTED_AT) {
+      cccModuleWithPostedAtDateSelected = this.exportSettings.configuration?.corporate_credit_card_expenses_object;
     }
+
+    const currentCCCModule = this.exportSettingForm.get('creditCardExportType')?.value;
+
+    const allowPostedAt = cccModuleWithPostedAtDateSelected === currentCCCModule;
+
+    if (selectedValue === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      if (updateExpenseGroup) {
+        this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
+        this.exportSettingForm.controls.creditCardExportGroup.disable();
+      }
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        true,
+        this.exportSettingForm.controls.creditCardExportGroup.value,
+        this.exportSettingForm.controls.creditCardExportDate.value,
+        { allowPostedAt }
+      );
+    } else {
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        false,
+        this.exportSettingForm.controls.creditCardExportGroup.value,
+        this.exportSettingForm.controls.creditCardExportDate.value,
+        { allowPostedAt }
+      );
+    }
+
+    ExportSettingModel.clearInvalidDateOption(
+      this.exportSettingForm.get('creditCardExportDate'),
+      this.cccExpenseGroupingDateOptions
+    );
   }
 
   private setupCustomWatchers(): void {
@@ -308,18 +335,22 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+
+        ExportSettingModel.clearInvalidDateOption(
+          this.exportSettingForm.get('reimbursableExportDate'),
+          this.reimbursableExpenseGroupingDateOptions
+        );
     });
 
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
       this.updateCCCExpenseGroupingDateOptions(creditCardExportType);
     });
 
-    this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
-      } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
-      }
+    this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe(() => {
+      this.updateCCCExpenseGroupingDateOptions(
+        this.exportSettingForm.get('creditCardExportType')?.value,
+        { updateExpenseGroup: false }
+      );
     });
   }
 
