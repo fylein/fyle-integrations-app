@@ -8,7 +8,6 @@ jobs:
   staging_deploy:
     if: (github.event_name != 'pull_request') || (github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'c1_staging_deploy')
     runs-on: ubuntu-latest
-    environment: QA
     steps:
       - uses: actions/checkout@v2
       - name: push to dockerhub

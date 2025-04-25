@@ -160,21 +160,19 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         this.exportSettingForm.controls.reimbursableExportDate.value
       );
 
-      // If the current selected date option is not in the new options, clear the field
-      const newValues = this.reimbursableExpenseGroupingDateOptions.map((option) => option.value);
-      if (!newValues.includes(this.exportSettingForm.controls.reimbursableExportDate.value)) {
-        this.exportSettingForm.controls.reimbursableExportDate.setValue(null);
-      }
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
 
-      // If the current selected date option is not in the new options, clear the field
-      const newValues = this.cccExpenseGroupingDateOptions.map((option) => option.value);
-      if (!newValues.includes(this.exportSettingForm.controls.cccExportDate.value)) {
-        this.exportSettingForm.controls.cccExportDate.setValue(null);
-      }
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('cccExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());

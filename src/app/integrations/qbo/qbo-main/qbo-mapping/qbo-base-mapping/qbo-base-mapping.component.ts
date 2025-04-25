@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -43,6 +43,8 @@ export class QboBaseMappingComponent implements OnInit {
   isMultiLineOption: boolean;
 
   brandingConfig = brandingConfig;
+
+  destinationAttributes: string | string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -84,8 +86,13 @@ export class QboBaseMappingComponent implements OnInit {
       this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
       this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
       this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
-
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
+
+      if (this.destinationField === QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT && this.cccExpenseObject === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
+        this.destinationAttributes = [QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT, QboExportSettingDestinationOptionKey.BANK_ACCOUNT];
+      } else {
+        this.destinationAttributes = this.destinationField;
+      }
 
       this.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
 
@@ -95,7 +102,7 @@ export class QboBaseMappingComponent implements OnInit {
         this.displayName = undefined;
       }
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, undefined, this.displayName).subscribe((responses) => {
         this.destinationOptions = responses.results;
         this.isLoading = false;
       });

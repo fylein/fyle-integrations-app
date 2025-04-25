@@ -123,11 +123,23 @@ export class Sage300ExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
       this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+
+      const validOptions = this.getExportDate(this.reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup');
+      CommonExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('reimbursableExportDate'),
+        validOptions
+      );
     });
 
     this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
       this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+
+      const validOptions = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup');
+      CommonExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('cccExportDate'),
+        validOptions
+      );
     });
   }
 

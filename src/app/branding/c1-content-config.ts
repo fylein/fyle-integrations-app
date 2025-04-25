@@ -362,7 +362,7 @@ export const c1Content = {
                 exportSubLabel: '',
                 defaultCCCAccountLabel: 'Set default credit card account as',
                 defaultCCCAccountPlaceholder: 'Select default credit card account',
-                defaultDebitCardAccountLabel: 'Set default debit card account as',
+                defaultDebitCardAccountLabel: 'Set default payment account as',
                 defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                 defaultCCCVendorLabel: 'Set default corporate card vendor as',
                 defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
