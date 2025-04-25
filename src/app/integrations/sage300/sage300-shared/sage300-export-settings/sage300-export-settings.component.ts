@@ -121,11 +121,25 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+      this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+      this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+
+      const validOptions = this.getExportDate(this.reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup');
+      CommonExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('reimbursableExportDate'),
+        validOptions
+      );
     });
 
     this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
-      this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
+      this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
+      this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+
+      const validOptions = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup');
+      CommonExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('cccExportDate'),
+        validOptions
+      );
     });
   }
 

@@ -339,14 +339,30 @@ export class QboExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('reimbursableExportDate'),
+        this.reimbursableExpenseGroupingDateOptions
+      );
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.get('creditCardExportType')?.value !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
-      } else {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value);
-      }
+
+      // In QBO, credit card purchase and 'debit & credit card expense' are core modules
+      // (Card transaction post date is available for these modules)
+      const isCoreCCCModule = [
+        QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
+        QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
+      ].includes(this.exportSettingForm.get('creditCardExportType')?.value);
+
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+        isCoreCCCModule, creditCardExportGroup, this.exportSettingForm.controls.creditCardExportDate.value
+      );
+
+      ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingForm.get('creditCardExportDate'),
+        this.cccExpenseGroupingDateOptions
+      );
     });
   }
 
