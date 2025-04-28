@@ -217,7 +217,7 @@ export class AccountingExportModel {
   }
 
   static constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
-    return [` https://www.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
+    return [`https://www.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
   }
 
   static constructXeroExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
