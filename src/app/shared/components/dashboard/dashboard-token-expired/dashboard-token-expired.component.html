@@ -1,22 +1,37 @@
 <div
-  class="tw-bg-white tw-p-spacing-32 tw-gap-[32px] tw-border tw-rounded-[10px] tw-shadow-sm tw-flex tw-flex-col tw-justify-center tw-items-center">
+  class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-[32px] tw-p-spacing-32 tw-self-stretch tw-shadow-sm tw-border tw-rounded-10-px tw-bg-white">
 
   @if (illustrationsAllowed) {
   <img src="assets/illustrations/login.svg" />
   }
 
   @if (!isConnectionInProgress) {
-  <div class="tw-flex tw-flex-col tw-items-center tw-gap-[4px]">
+  <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="appName === AppName.NETSUITE ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
+    
     <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' :
-      'Connection expired' }} </p>
-    @if (!isIntegrationDisconnected) {
+      (appName === AppName.NETSUITE
+          ? 'Connection token expired'
+          : 'Connection expired') }} </p>
+    @if (!isIntegrationDisconnected && appName !== AppName.NETSUITE) {
     <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
       Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect
       your account. </p>
+    } @else if (appName === AppName.NETSUITE) {
+      <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
+        <span> The integration is disconnected because the credentials used to connect to {{appName}} have expired. </span>
+
+        <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
+          Step 1: <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> Generate new credentials from {{appName}} by following these steps
+             <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+           </span>
+        </span>
+
+        <span> Step 2: Once generated, click the button below to reconnect. </span> 
+      </p>
     } @else {
-    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
-      The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please
-      reconnect your account. </p>
+      <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
+        The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please
+        reconnect your account. </p>
     }
   </div>
 
@@ -29,11 +44,17 @@
   }
 
   @if (appName === AppName.XERO) {
-  <div class="tw-cursor-pointer">
-    <img [src]="xeroConnectButtonSource" (click)="initiateOAuth()">
-  </div>
+    <div class="tw-cursor-pointer">
+      <img [src]="xeroConnectButtonSource" (click)="initiateOAuth()">
+    </div>
   }
+
+  @if (appName === AppName.NETSUITE) {
+      <div class="tw-cursor-pointer">
+        <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect Integration</button>
+      </div>
   }
+}
 
   @if (isConnectionInProgress) {
   <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-break-words tw-whitespace-normal">

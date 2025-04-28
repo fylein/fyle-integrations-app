@@ -5,7 +5,7 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && !isNetSuiteTokenNotValid">
     <app-dashboard-export-section
         (export)="export()"
         [appName]="appName"
@@ -45,4 +45,13 @@
         [exportableExpenseGroupIds]="exportableAccountingExportIds"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-error-section>
+</div>
+
+<div *ngIf="!isLoading && isNetSuiteTokenNotValid">
+    <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
+        <app-dashboard-token-expired
+        [appName]="appName"
+        >
+        </app-dashboard-token-expired>
+    </div>
 </div>
