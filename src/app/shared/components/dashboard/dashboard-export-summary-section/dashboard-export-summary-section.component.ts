@@ -109,7 +109,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
         } else {
           lastExportedAt = this.accountingExportSummary.last_exported_at;
         }
-      } else if (status === AccountingExportStatus.FAILED) {
+      } else if (status === AccountingExportStatus.FAILED && this.appName === AppName.XERO) {
         lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
       }
 
