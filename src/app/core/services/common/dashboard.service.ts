@@ -51,7 +51,7 @@ export class DashboardService {
       offset: offset
     };
     if (status.length) {
-      const statusKey = 'status__in';
+      const statusKey = appName === AppName.INTACCT ? 'status' : 'status__in';
       apiParams[statusKey] = status;
     }
 
