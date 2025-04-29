@@ -56,12 +56,12 @@ export class DashboardService {
     }
 
     if (expenseGroupIds.length) {
-      const expenseKey = appName === AppName.INTACCT ? 'expense_group_ids' : appName === AppName.QBD_DIRECT ? 'id__in' : 'expense_group_id__in';
+      const expenseKey = appName === AppName.QBD_DIRECT ? 'id__in' : 'expense_group_id__in';
       apiParams[expenseKey] = expenseGroupIds;
     }
 
     if (taskType) {
-      const typeKey = appName === AppName.INTACCT ? 'task_type' : 'type__in';
+      const typeKey = 'type__in';
       apiParams[typeKey] = taskType;
     }
 
