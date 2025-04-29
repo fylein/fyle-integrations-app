@@ -167,11 +167,11 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setupPage();
-
     if (this.router.url.includes("/token_expired/")){
       this.isNetSuiteTokenNotValid = true;
     }
+
+    this.setupPage();
   }
 
   ngOnDestroy(): void {

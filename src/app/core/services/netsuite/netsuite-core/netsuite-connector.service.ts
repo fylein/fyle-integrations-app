@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
 import { StorageService } from '../../common/storage.service';
-import { NetsuiteCredential } from 'src/app/core/models/netsuite/db/netsuite-credentials.model';
 import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
-import { Observable, Subject } from 'rxjs';
-import { NetsuiteConnectorGet, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { catchError, EMPTY, Observable, Subject, tap } from 'rxjs';
+import { NetsuiteConnectorGet, NetsuiteConnectorModel, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { WorkspaceService } from '../../common/workspace.service';
+import { FormGroup } from '@angular/forms';
+import { NetsuiteMappingsService } from './netsuite-mappings.service';
+import { IntegrationsToastService } from '../../common/integrations-toast.service';
+import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 
 const netsuiteCredentialCache = new Subject<void>();
@@ -19,10 +22,26 @@ export class NetsuiteConnectorService {
 
   workspaceId: number;
 
+  netsuiteCredential: NetsuiteConnectorGet | null = null;
+
+  private connectNetsuiteFormSubject = new Subject<FormGroup>();
+
+  connectNetsuiteForm$ = this.connectNetsuiteFormSubject.asObservable();
+
+  private setupConnectionStatusSubject = new Subject<boolean>();
+
+  setupConnectionStatus$ = this.setupConnectionStatusSubject.asObservable();
+
+  private isLoadingSubject = new Subject<boolean>();
+
+  isLoading$ = this.isLoadingSubject.asObservable();
+
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private mappingsService: NetsuiteMappingsService,
+    private toastService: IntegrationsToastService
   ) { }
 
   @Cacheable({
@@ -36,10 +55,55 @@ export class NetsuiteConnectorService {
   @CacheBuster({
     cacheBusterNotifier: netsuiteCredentialCache
   })
-  connectNetsuite(data: NetsuiteConnectorPost): Observable<NetsuiteConnectorGet> {
+  postCredentials(data: NetsuiteConnectorPost): Observable<NetsuiteConnectorGet> {
     this.workspaceId = this.storageService.get('workspaceId');
     globalCacheBusterNotifier.next();
     return this.apiService.post(`/workspaces/${this.workspaceId}/credentials/netsuite/`, data);
+  }
+
+  connectionSuccess(){
+    this.isLoadingSubject.next(false);
+    this.setupConnectionStatusSubject.next(true);
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Netsuite successfully.', 6000);
+  }
+
+  connectNetsuite(connectNetsuiteForm: FormGroup, isReconnecting?: boolean){
+    this.isLoadingSubject.next(true);
+    this.workspaceId = this.storageService.get('workspaceId');
+    const connectorPayload = NetsuiteConnectorModel.constructPayload(connectNetsuiteForm);
+    this.postCredentials(connectorPayload).subscribe((response) => {
+      if (isReconnecting){
+        this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
+          this.connectionSuccess();
+        });
+      } else {
+        this.connectionSuccess();
+      }
+    }, () => {
+      this.setupConnectionStatusSubject.next(false);
+      this.isLoadingSubject.next(false);
+      this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteCredential));
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
+    });
+  }
+
+  getNetsuiteFormGroup(): void {
+    this.isLoadingSubject.next(true);
+    this.getNetsuiteCredentials().pipe(
+      tap((netsuiteCredential) => {
+        this.netsuiteCredential = netsuiteCredential;
+        this.setupConnectionStatusSubject.next(true);
+        this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential));
+        this.isLoadingSubject.next(false);
+      }),
+      catchError(() => {
+        this.netsuiteCredential = null;
+        this.setupConnectionStatusSubject.next(false);
+        this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(null));
+        this.isLoadingSubject.next(false);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   postSubsdiaryMapping(subsdiaryMappingPayload: NetsuiteSubsidiaryMappingPost): Observable<SubsidiaryMapping> {

@@ -94,6 +94,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
 import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
+import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsuite-shared/netsuite-connection-form/netsuite-connection-form.component';
 
 
 @NgModule({
@@ -170,7 +171,8 @@ import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard
     SearchComponent,
     OptionalFieldComponent,
     SentenceCasePipe,
-    BadgeComponent
+    BadgeComponent,
+    NetsuiteConnectionFormComponent
   ],
   imports: [
     CommonModule,
@@ -272,7 +274,8 @@ import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard
     OptionalFieldComponent,
     SentenceCasePipe,
     BadgeComponent,
-    CheckboxButtonComponent
+    CheckboxButtonComponent,
+    NetsuiteConnectionFormComponent
   ]
 })
 export class SharedModule { }

@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -6,6 +7,7 @@ import { AppName, AppUrl } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
@@ -38,12 +40,15 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  integrationSetupForm: FormGroup;
+
   constructor(
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
     private router: Router,
     private xeroAuthService: XeroAuthService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private netsuiteConnector: NetsuiteConnectorService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -71,10 +76,34 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
   }
 
+  reconnectToIntegration(): void{
+    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm);
+    this.isIntegrationReconnectDialogVisible = false;
+  }
+
   setupPage(): void{
 
     if (this.router.url.includes("/disconnect/")){
       this.isIntegrationDisconnected = true;
+    }
+
+    if (this.appName === AppName.NETSUITE){
+      this.helperService.setBaseApiURL(AppUrl.NETSUITE);
+      this.netsuiteConnector.getNetsuiteFormGroup();
+
+      this.netsuiteConnector.connectNetsuiteForm$.subscribe((netsuiteSetupForm) => {
+        this.integrationSetupForm = netsuiteSetupForm;
+      });
+
+      this.netsuiteConnector.setupConnectionStatus$.subscribe((isNetsuiteConnected) => {
+        if (isNetsuiteConnected){
+          this.router.navigate(['integrations/netsuite/main/dashboard']);
+        }
+      });
+
+      this.netsuiteConnector.isLoading$.subscribe((isConnectionInProgress) => {
+        this.isConnectionInProgress = isConnectionInProgress;
+      });
     }
 
     if (this.appName === AppName.QBO){
