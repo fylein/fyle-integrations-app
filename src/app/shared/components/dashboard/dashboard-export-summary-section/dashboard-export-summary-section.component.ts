@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
@@ -48,6 +48,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
@@ -63,12 +65,22 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     this.accountingExports = [...this.filteredAccountingExports];
   }
 
-  private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null): void {
-    const dateFilter:SelectedDateFilter = {
-      startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
+  private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null, lastUpdatedAt?: string | null): void {
+    let startDate = null;
+
+    if (lastExportedAt) {
+      startDate = new Date(lastExportedAt);
+    } else if (lastUpdatedAt) {
+      startDate = new Date(lastUpdatedAt);
+    } else {
+      startDate = new Date();
+    }
+
+    const dateFilter: SelectedDateFilter = {
+      startDate: startDate,
       endDate: new Date()
     };
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt || lastUpdatedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
@@ -87,9 +99,22 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   private setupAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
     if (this.accountingExportSummary) {
-      const lastExportedAt = status === AccountingExportStatus.COMPLETE ? this.accountingExportSummary.last_exported_at : null;
+      let lastExportedAt = null;
+      let lastUpdatedAt = null;
+
+      if (status === AccountingExportStatus.COMPLETE) {
+        // Temporary hack to enable repurposed export summary only for xero
+        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && this.appName === AppName.XERO) {
+          lastExportedAt = this.accountingExportSummary.repurposed_last_exported_at;
+        } else {
+          lastExportedAt = this.accountingExportSummary.last_exported_at;
+        }
+      } else if (status === AccountingExportStatus.FAILED) {
+        lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
+      }
+
       if (this.exportLogVersion === 'v1') {
-        this.getExpenseGroups(limit, offset, status, lastExportedAt);
+        this.getExpenseGroups(limit, offset, status, lastExportedAt, lastUpdatedAt);
       } else {
         this.getAccountingExports(limit, offset, status, lastExportedAt);
       }
