@@ -52,7 +52,7 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
     [AccountingErrorType.CATEGORY_MAPPING]: null
   };
-  
+
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
