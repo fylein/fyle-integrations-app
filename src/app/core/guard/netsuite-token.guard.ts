@@ -34,12 +34,11 @@ export class NetsuiteTokenGuard  {
         map(() => true),
         catchError(error => {
           if (error.status === 400) {
-          globalCacheBusterNotifier.next();
+            globalCacheBusterNotifier.next();
 
-          if (error.error.message === "Netsuite connection expired"){
-            return this.router.navigateByUrl('integrations/netsuite/token_expired/dashboard');
-          }
-
+            if (error.error.message === "Netsuite connection expired"){
+              return this.router.navigateByUrl('integrations/netsuite/token_expired/dashboard');
+            }
           }
           return throwError(error);
         })
