@@ -103,13 +103,14 @@ export class DashboardExportSummarySectionComponent implements OnInit {
       let lastUpdatedAt = null;
 
       if (status === AccountingExportStatus.COMPLETE) {
-        // Temporary hack to enable repurposed export summary only for xero
+        // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
         if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && this.appName === AppName.XERO) {
           lastExportedAt = this.accountingExportSummary.repurposed_last_exported_at;
         } else {
           lastExportedAt = this.accountingExportSummary.last_exported_at;
         }
       } else if (status === AccountingExportStatus.FAILED && this.appName === AppName.XERO) {
+        // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
         lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
       }
 

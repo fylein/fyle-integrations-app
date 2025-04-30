@@ -25,7 +25,7 @@ export class AccountingExportService {
   getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: string): Observable<AccountingExportSummary> {
     if (version === 'v1') {
       const apiParams: { start_date?: string } = {};
-      // Temporary hack to enable repurposed export summary only for xero
+      // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
       if (useRepurposedExportSummary && appName === AppName.XERO) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

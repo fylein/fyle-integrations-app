@@ -83,6 +83,7 @@ export class ExportLogService {
         params.exported_at__gte = dateRange.start;
         params.exported_at__lte = dateRange.end;
       } else if (appName === AppName.XERO) {
+        // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
         params.updated_at__gte = dateRange.start;
         params.updated_at__lte = dateRange.end;
       }

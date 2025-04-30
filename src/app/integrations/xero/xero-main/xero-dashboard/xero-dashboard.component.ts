@@ -70,6 +70,7 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
+  // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations - will remove appName.XERO once all apps are updated
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.XERO);
 
   accountingExportType: XeroTaskLogType[] = [XeroTaskLogType.FETCHING_EXPENSE, XeroTaskLogType.CREATING_BILL, XeroTaskLogType.CREATING_BANK_TRANSACTION];
@@ -87,8 +88,6 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
   readonly brandingContent = brandingContent.dashboard;
 
   private destroy$ = new Subject<void>();
-
-  readonly AppName = AppName;
 
   constructor(
     private dashboardService: DashboardService,
