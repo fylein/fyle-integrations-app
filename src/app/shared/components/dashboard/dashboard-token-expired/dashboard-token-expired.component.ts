@@ -77,7 +77,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   }
 
   reconnectToIntegration(): void{
-    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm);
+    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true);
     this.isIntegrationReconnectDialogVisible = false;
   }
 
@@ -89,7 +89,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
     if (this.appName === AppName.NETSUITE){
       this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-      this.netsuiteConnector.getNetsuiteFormGroup();
+      this.netsuiteConnector.getNetsuiteFormGroup(true);
 
       this.netsuiteConnector.connectNetsuiteForm$.subscribe((netsuiteSetupForm) => {
         this.integrationSetupForm = netsuiteSetupForm;

@@ -72,7 +72,7 @@ export class NetsuiteConnectorService {
     this.workspaceId = this.storageService.get('workspaceId');
     const connectorPayload = NetsuiteConnectorModel.constructPayload(connectNetsuiteForm);
     this.postCredentials(connectorPayload).subscribe((response) => {
-      if (isReconnecting){
+      if (!isReconnecting){
         this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
           this.connectionSuccess();
         });
@@ -87,20 +87,26 @@ export class NetsuiteConnectorService {
     });
   }
 
-  getNetsuiteFormGroup(): void {
-    this.isLoadingSubject.next(true);
+  getNetsuiteFormGroup(isReconnecting?: boolean): void {
+    if(!isReconnecting){ 
+      this.isLoadingSubject.next(true);
+    }
     this.getNetsuiteCredentials().pipe(
       tap((netsuiteCredential) => {
         this.netsuiteCredential = netsuiteCredential;
-        this.setupConnectionStatusSubject.next(true);
         this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential));
-        this.isLoadingSubject.next(false);
+        if(!isReconnecting){
+          this.setupConnectionStatusSubject.next(true);
+          this.isLoadingSubject.next(false);
+        }
       }),
       catchError(() => {
         this.netsuiteCredential = null;
-        this.setupConnectionStatusSubject.next(false);
         this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(null));
-        this.isLoadingSubject.next(false);
+        if(!isReconnecting){
+          this.setupConnectionStatusSubject.next(false);
+          this.isLoadingSubject.next(false);
+        }
         return EMPTY;
       })
     ).subscribe();
