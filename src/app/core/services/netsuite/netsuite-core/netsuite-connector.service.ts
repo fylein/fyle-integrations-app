@@ -88,14 +88,14 @@ export class NetsuiteConnectorService {
   }
 
   getNetsuiteFormGroup(isReconnecting?: boolean): void {
-    if(!isReconnecting){ 
+    if (!isReconnecting){
       this.isLoadingSubject.next(true);
     }
     this.getNetsuiteCredentials().pipe(
       tap((netsuiteCredential) => {
         this.netsuiteCredential = netsuiteCredential;
         this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential));
-        if(!isReconnecting){
+        if (!isReconnecting){
           this.setupConnectionStatusSubject.next(true);
           this.isLoadingSubject.next(false);
         }
@@ -103,7 +103,7 @@ export class NetsuiteConnectorService {
       catchError(() => {
         this.netsuiteCredential = null;
         this.connectNetsuiteFormSubject.next(NetsuiteConnectorModel.mapAPIResponseToFormGroup(null));
-        if(!isReconnecting){
+        if (!isReconnecting){
           this.setupConnectionStatusSubject.next(false);
           this.isLoadingSubject.next(false);
         }
