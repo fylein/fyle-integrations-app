@@ -36,6 +36,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isIntegrationReconnectDialogVisible: boolean;
 
+  requiresCredentialGeneration: boolean;
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -75,6 +77,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
     if (this.router.url.includes("/disconnect/")){
       this.isIntegrationDisconnected = true;
+    }
+
+    if (this.appName === AppName.NETSUITE){
+      this.requiresCredentialGeneration = true;
     }
 
     if (this.appName === AppName.QBO){
