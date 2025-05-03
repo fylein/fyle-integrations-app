@@ -38,6 +38,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isIntegrationReconnectDialogVisible: boolean;
 
+  requiresCredentialGeneration: boolean;
+
   private destroy$ = new Subject<void>();
 
   integrationSetupForm: FormGroup;
@@ -88,6 +90,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.NETSUITE){
+      
+      this.requiresCredentialGeneration = true;
       this.helperService.setBaseApiURL(AppUrl.NETSUITE);
       this.netsuiteConnector.getNetsuiteFormGroup(true);
 
