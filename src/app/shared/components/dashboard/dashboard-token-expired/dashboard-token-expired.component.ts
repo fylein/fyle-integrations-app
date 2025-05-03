@@ -90,7 +90,6 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.NETSUITE){
-      
       this.requiresCredentialGeneration = true;
       this.helperService.setBaseApiURL(AppUrl.NETSUITE);
       this.netsuiteConnector.getNetsuiteFormGroup(true);
