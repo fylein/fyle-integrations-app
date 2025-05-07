@@ -11,6 +11,7 @@ import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-c
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 
 @Component({
   selector: 'app-netsuite',
@@ -38,12 +39,13 @@ export class NetsuiteComponent implements OnInit {
     private windowService: WindowService,
     private nsAuthService: NetsuiteAuthService,
     private authService: AuthService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private netsuiteConnector: NetsuiteConnectorService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
 
-  private navigate(): void {
+  private navigate(isNetSuiteTokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/netsuite') {
       const onboardingStateComponentMap = {
@@ -54,8 +56,16 @@ export class NetsuiteComponent implements OnInit {
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',
         [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
       };
-      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+
+      this.router.navigateByUrl(isNetSuiteTokenValid === false ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private routeBasedOnTokenStatus(): void {
+    this.netsuiteConnector.getNetsuiteTokenHealthStatus()
+    .then(isNetsuiteCredentialsValid => {
+      this.navigate(isNetsuiteCredentialsValid);
+    });
   }
 
   private storeWorkspaceAndNavigate(workspace: NetsuiteWorkspace): void {
@@ -65,7 +75,7 @@ export class NetsuiteComponent implements OnInit {
     this.netsuiteHelperService.syncFyleDimensions().subscribe();
     this.netsuiteHelperService.syncNetsuiteDimensions().subscribe();
     this.isLoading = false;
-    this.navigate();
+    this.routeBasedOnTokenStatus();
   }
 
 

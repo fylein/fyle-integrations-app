@@ -36,6 +36,8 @@ export class NetsuiteConnectorService {
 
   isLoading$ = this.isLoadingSubject.asObservable();
 
+  isNetsuiteCredentialsValid: boolean;
+
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
@@ -72,6 +74,7 @@ export class NetsuiteConnectorService {
     this.workspaceId = this.storageService.get('workspaceId');
     const connectorPayload = NetsuiteConnectorModel.constructPayload(connectNetsuiteForm);
     this.postCredentials(connectorPayload).subscribe((response) => {
+      this.isNetsuiteCredentialsValid = true;
       if (!isReconnecting){
         this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
           this.connectionSuccess();
@@ -116,6 +119,26 @@ export class NetsuiteConnectorService {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);
+  }
+
+  getNetsuiteTokenHealthStatus(): Promise<boolean> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    if (this.isNetsuiteCredentialsValid === undefined){
+    return new Promise((resolve) => {
+      this.checkNetsuiteTokenHealth(workspaceId)
+        .subscribe({
+          next: () => {
+            this.isNetsuiteCredentialsValid = true;
+            resolve(true);
+          },
+          error: (error) => {
+              this.isNetsuiteCredentialsValid = false;
+              resolve(false);
+          }
+        });
+    });
+    }
+      return Promise.resolve(this.isNetsuiteCredentialsValid);
   }
 
   @Cacheable()
