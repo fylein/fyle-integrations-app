@@ -130,7 +130,9 @@ export class MainMenuComponent implements OnInit {
       options[0].items.unshift({
         label: integrationName,
         handler: () => {
-          this.integrationsService.navigateToIntegration(integrationName);
+          if (!this.isCurrentIntegration(integrationName)) {
+            this.integrationsService.navigateToIntegration(integrationName);
+          }
         }
       });
     }
