@@ -12,7 +12,7 @@ concurrency:
 jobs:
   call-eol-scan:
     if: ${{ github.event.pull_request.draft == false }}
-    uses: fylein/workflows/.github/workflows/eol-outdated-js-scan.yml@master
+    uses: fylein/workflows/.github/workflows/eol-outdated-js-scan.yml@v1
     with:
       npm-run-cmd: 'npm ci'
       suppression: 'suppression.xml'
