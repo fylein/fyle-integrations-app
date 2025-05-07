@@ -300,6 +300,18 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
 
     private createCreditCardExpenseWatcher(): void {
+
+      // If reimbursable expenses are not allowed
+      // -> only credit card expenses are allowed
+      // -> `creditCardExpense` switch is not shown (they're allowed by default)
+      // -> all fields related to credit card expenses are required
+      if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+        this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
+      }
+
       this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
         if (isCreditCardExpenseSelected) {
           this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
