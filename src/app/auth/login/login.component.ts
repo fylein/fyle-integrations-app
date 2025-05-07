@@ -144,6 +144,7 @@ export class LoginComponent implements OnInit {
       "NETSUITE", "INTACCT", "QBO", "XERO"
     ];
 
+    this.authService.clearTokens();
     let deferRedirect = false;
 
     for (const appKey of connectedAppKeys) {
