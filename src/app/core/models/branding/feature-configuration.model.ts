@@ -57,6 +57,7 @@ export type FeatureConfiguration = {
             },
             dashboard: {
                 disconnectButton: boolean;
+                useRepurposedExportSummary: boolean;
             }
         }
     }

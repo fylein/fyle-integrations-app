@@ -35,6 +35,8 @@ export type ExpenseGroupParam = {
   status__in?: string | string[];
   exported_at__gte?: string;
   exported_at__lte?: string;
+  updated_at__gte?: string;
+  updated_at__lte?: string;
   state?: string;
   exported_at?: string;
   start_date?: string;

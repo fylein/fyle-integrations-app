@@ -139,7 +139,10 @@ export const mockExportDetails: AccountingExportSummary = {
   "workspace": 309,
   total_accounting_export_count: 0,
   successful_accounting_export_count: 0,
-  failed_accounting_export_count: 0
+  failed_accounting_export_count: 0,
+  repurposed_last_exported_at: "2024-08-28T17:11:21.098195Z",
+  repurposed_successful_count: 0,
+  repurposed_failed_count: 29
 };
 
 export const mockTasks = {
@@ -295,7 +298,10 @@ export const mockAccountingExportSummary = {
   "failed_expense_groups_count": 29,
   "created_at": "2023-07-17T20:56:55.442251Z",
   "updated_at": "2024-09-11T10:08:20.636603Z",
-  "workspace": 240
+  "workspace": 240,
+  "repurposed_last_exported_at": "2024-08-28T17:11:21.098195Z",
+  "repurposed_successful_count": 0,
+  "repurposed_failed_count": 29
 };
 
 

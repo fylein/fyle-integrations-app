@@ -63,7 +63,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             employeeMapping: false
         },
         dashboard: {
-            disconnectButton: false
+            disconnectButton: false,
+            useRepurposedExportSummary: false
         }
     }
 };

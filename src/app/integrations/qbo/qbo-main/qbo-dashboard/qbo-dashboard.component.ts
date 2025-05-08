@@ -44,6 +44,10 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   destinationFieldMap : DestinationFieldMap;
 
+  readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
+
   groupedErrorStat: AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
     [AccountingErrorType.CATEGORY_MAPPING]: null
@@ -68,10 +72,6 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
   AppUrl = AppUrl;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
-
-  readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.dashboard;
 
   importCodeFields: any;
 
