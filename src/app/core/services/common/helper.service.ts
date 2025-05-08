@@ -13,6 +13,7 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
 import { Observable, interval, take } from 'rxjs';
 import { LowerCasePipe } from '@angular/common';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 type PollDimensionsSyncStatusParams = {
   onPollingComplete: () => void
@@ -142,12 +143,24 @@ export class HelperService {
   }
 
   setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | SkipExportValidatorRule, form: FormGroup) {
-    const keys = Object.keys(validatorRule);
-    Object.values(validatorRule).forEach((value, index) => {
-      form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        this.setOrClearValidators(selectedValue, value, form);
+    // If reimbursable expenses are not allowed
+    // -> only ccc expenses are allowed
+    // -> no switches (reimbursableExpense or creditCardExpense) are shown
+    // -> ccc fields should be required by default (instead of watching valueChanges of creditCardExpense)
+
+    if (!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && 'creditCardExpense' in validatorRule) {
+      const values = validatorRule.creditCardExpense;
+      values?.forEach((value) => {
+        this.markControllerAsRequired(form, value);
       });
-    });
+    } else {
+      const keys = Object.keys(validatorRule);
+      Object.values(validatorRule).forEach((value, index) => {
+        form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
+          this.setOrClearValidators(selectedValue, value, form);
+        });
+      });
+    }
   }
 
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup, commonFormFields: string[] | void): void {
