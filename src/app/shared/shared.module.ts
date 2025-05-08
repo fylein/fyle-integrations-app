@@ -94,6 +94,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
 import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
+import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 
 
 @NgModule({
@@ -170,7 +171,8 @@ import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard
     SearchComponent,
     OptionalFieldComponent,
     SentenceCasePipe,
-    BadgeComponent
+    BadgeComponent,
+    SkippedExportLogComponent
   ],
   imports: [
     CommonModule,
@@ -272,7 +274,8 @@ import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard
     OptionalFieldComponent,
     SentenceCasePipe,
     BadgeComponent,
-    CheckboxButtonComponent
+    CheckboxButtonComponent,
+    SkippedExportLogComponent
   ]
 })
 export class SharedModule { }

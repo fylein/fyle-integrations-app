@@ -1,27 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subject, debounceTime } from 'rxjs';
+import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-
-import { debounceTime } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-  selector: 'app-qbo-skipped-export-log',
-  templateUrl: './qbo-skipped-export-log.component.html',
-  styleUrls: ['./qbo-skipped-export-log.component.scss']
+  selector: 'app-skipped-export-log',
+  templateUrl: './skipped-export-log.component.html',
+  styleUrls: ['./skipped-export-log.component.scss']
 })
-export class QboSkippedExportLogComponent implements OnInit {
-
+export class SkippedExportLogComponent implements OnInit {
   isLoading: boolean = true;
 
   totalCount: number = 0;
@@ -159,5 +156,4 @@ export class QboSkippedExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
   }
-
 }

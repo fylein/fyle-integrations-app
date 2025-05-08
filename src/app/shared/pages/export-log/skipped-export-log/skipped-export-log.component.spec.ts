@@ -3,7 +3,7 @@
 import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { QboSkippedExportLogComponent } from './qbo-skipped-export-log.component';
+import { SkippedExportLogComponent } from './skipped-export-log.component';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -12,9 +12,9 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { mockSkippedExpenseGroup, mockSkippedExpenseGroupWithDateRange, mockPaginator, mockUserProfile } from 'src/app/integrations/qbo/qbo.fixture';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
-describe('QboSkippedExportLogComponent', () => {
-  let component: QboSkippedExportLogComponent;
-  let fixture: ComponentFixture<QboSkippedExportLogComponent>;
+describe('SkippedExportLogComponent', () => {
+  let component: SkippedExportLogComponent;
+  let fixture: ComponentFixture<SkippedExportLogComponent>;
   let exportLogService: jasmine.SpyObj<ExportLogService>;
   let userService: jasmine.SpyObj<UserService>;
   let paginatorService: jasmine.SpyObj<PaginatorService>;
@@ -25,7 +25,7 @@ describe('QboSkippedExportLogComponent', () => {
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboSkippedExportLogComponent ],
+      declarations: [ SkippedExportLogComponent ],
       imports: [ ReactiveFormsModule ],
       providers: [
         FormBuilder,
@@ -43,7 +43,7 @@ describe('QboSkippedExportLogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QboSkippedExportLogComponent);
+    fixture = TestBed.createComponent(SkippedExportLogComponent);
     component = fixture.componentInstance;
     userService.getUserProfile.and.returnValue(mockUserProfile);
     paginatorService.getPageSize.and.returnValue(mockPaginator);
