@@ -41,9 +41,12 @@
                             </div>
                         </ng-template>
                     </p-dropdown>
-                    <div class="tw-ml-16-px tw-border tw-border-input-read-only-border tw-rounded-4-px">
-                        <input type="text" class="tw-border-none !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="form.get(formControllerName)?.value > 1 ? 'Hours' : 'Hour'">
-                    </div>
+                    <!-- Temporary hack to enable real-time export only for xero - #q2_real_time_exports_integrations -->
+                    @if (appName !== AppName.XERO) {
+                        <div class="tw-ml-16-px tw-border tw-border-input-read-only-border tw-rounded-4-px">
+                            <input type="text" class="tw-border-none !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="form.get(formControllerName)?.value > 1 ? 'Hours' : 'Hour'">
+                        </div>
+                    }
                 </div>
             </div>
             <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
