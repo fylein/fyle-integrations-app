@@ -161,7 +161,7 @@ export class GenericMappingV2Component implements OnInit {
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
-    const shouldSendAppName = this.appName === AppName.QBO ? [this.appName] : [];
+    const shouldSendAppName = [AppName.QBO, AppName.SAGE300].includes(this.appName) ? [this.appName] : [];
     forkJoin([
       this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...shouldSendAppName),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
