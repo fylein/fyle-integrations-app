@@ -105,7 +105,7 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  private getEndpoint(mappingPage: string, isCategoryMappingGeneric?: boolean) {
+  private getEndpoint(mappingPage: string, isCategoryMappingGeneric?: boolean): string {
     if (isCategoryMappingGeneric) {
       return 'expense_attributes';
     }
@@ -122,23 +122,14 @@ export class MappingService {
 
   getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null, appName?: string): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const endpoint = this.getEndpoint(sourceType, isCategoryMappingGeneric);
-
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
-
-    // For Sage 300, send app_name only for expense_attributes
-    let isAppNameAllowed = !!appName;
-    if (appName === AppName.SAGE300 && endpoint !== 'expense_attributes') {
-      isAppNameAllowed = false;
-    }
-
     const params: GenericMappingApiParams = {
       limit: pageLimit,
       offset: pageOffset,
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
       destination_type: destinationType,
       source_type: sourceType,
-      ...(isAppNameAllowed && { app_name: appName })
+      ...(appName && { app_name: appName })
     };
 
     if (searchQuery) {
@@ -148,6 +139,8 @@ export class MappingService {
     if (alphabetsFilter && alphabetsFilter !== 'All') {
       params.mapping_source_alphabets = alphabetsFilter;
     }
+
+    const endpoint = this.getEndpoint(sourceType, isCategoryMappingGeneric);
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/${endpoint}/`, params);
   }
