@@ -80,3 +80,6 @@ documentation.json
 commits.csv
 dependency-check-report.csv
 dependency-check-report.html
+
+# JSCPD report
+/report
