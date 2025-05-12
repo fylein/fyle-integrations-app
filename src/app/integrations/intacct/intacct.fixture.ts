@@ -277,6 +277,7 @@ export const mockConfiguration = {
   "import_vendors_as_merchants": true,
   "use_merchant_in_journal_line": false,
   "auto_create_merchants_as_vendors": false,
+  "je_single_credit_line": false,
   "import_code_fields": [
       "_EXPENSE_TYPE",
       "_ACCOUNT"
@@ -979,7 +980,8 @@ export const advancedSettings =  {
     auto_create_destination_entity: true,
     change_accounting_period: true,
     memo_structure: ['employee_email', 'merchant', 'purpose'],
-    auto_create_merchants_as_vendors: false
+    auto_create_merchants_as_vendors: false,
+    je_single_credit_line: false
   },
   general_mappings: {
     default_location: { id: 'LOC1' },

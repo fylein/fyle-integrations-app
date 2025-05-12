@@ -220,6 +220,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     return paymentSync;
   }
 
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return this.reimbursableExpense === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+  }
+
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     this.advancedSettingsForm = this.formBuilder.group({
@@ -243,7 +247,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null],
       searchOption: [''],
-      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false)
+      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false),
+      singleCreditLineJE: [this.advancedSettings.configurations.je_single_credit_line],
     });
     this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();
