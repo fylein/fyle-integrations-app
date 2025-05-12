@@ -248,7 +248,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null],
       searchOption: [''],
       autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false),
-      singleCreditLineJE: [this.advancedSettings.configurations.je_single_credit_line],
+      singleCreditLineJE: [this.advancedSettings.configurations.je_single_credit_line]
     });
     this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();

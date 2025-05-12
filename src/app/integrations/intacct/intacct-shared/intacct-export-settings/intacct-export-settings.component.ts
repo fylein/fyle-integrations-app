@@ -531,10 +531,11 @@ export class IntacctExportSettingsComponent implements OnInit {
             this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
           } else if (this.isAdvancedSettingAffected()) {
             this.router.navigate(['/integrations/intacct/main/configuration/advanced_settings']);
-        } }, () => {
+          }
+        }, () => {
           this.saveInProgress = false;
           this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
-          });
+        });
     }
   }
 
