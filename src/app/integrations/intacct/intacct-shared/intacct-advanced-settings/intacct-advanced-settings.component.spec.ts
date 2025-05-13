@@ -71,7 +71,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     advancedSettingsService.getExpenseFilter.and.returnValue(of(expenseFilter as ExpenseFilterResponse));
     mappingService.getGroupedDestinationAttributes.and.returnValue(of(groupedAttributes));
     mappingService.getConfiguration.and.returnValue(of(configurationForAdvancedSettings));
-    exportSettingService.getExportSettings.and.returnValue(of(mockExportSettingGet))
+    exportSettingService.getExportSettings.and.returnValue(of(mockExportSettingGet));
 
     fixture = TestBed.createComponent(IntacctAdvancedSettingsComponent);
     component = fixture.componentInstance;
