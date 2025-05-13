@@ -106,7 +106,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    const shouldSendAppName = this.appName === AppName.QBO ? [this.appName] : [];
+    const shouldSendAppName = [AppName.QBO, AppName.SAGE300].includes(this.appName) ? [this.appName] : [];
     this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...shouldSendAppName).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
