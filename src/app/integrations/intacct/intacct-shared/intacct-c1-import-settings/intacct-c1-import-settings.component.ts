@@ -46,7 +46,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  importSettings: ImportSettingGet;
+  importSettings?: ImportSettingGet;
 
   sageIntacctFields: ExpenseField[];
 
@@ -349,7 +349,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
     // First loop to populate mappedFieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
-      const mappingSetting = this.importSettings.mapping_settings.find(
+      const mappingSetting = this.importSettings?.mapping_settings.find(
         (setting) => setting.destination_field === sageIntacctField.attribute_type
       );
 
@@ -493,7 +493,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   save(): void {
     this.saveInProgress = true;
-    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings.dependent_field_settings);
+    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings!.dependent_field_settings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
