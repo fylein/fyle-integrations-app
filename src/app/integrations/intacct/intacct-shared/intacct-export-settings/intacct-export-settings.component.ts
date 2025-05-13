@@ -234,7 +234,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string | undefined | null, exportType: string): string {
     const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
-    which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
+    which would impact a few configurations in the <b>advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
     features that could help customize and automate your integration workflows.`;
 
     let content = '';
