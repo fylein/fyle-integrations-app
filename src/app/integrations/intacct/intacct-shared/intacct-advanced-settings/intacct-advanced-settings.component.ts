@@ -324,7 +324,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
         const reimbursableGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
         const cccGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
-        
+
         this.reimbursableExportGroup = reimbursableGroup ? reimbursableGroup as ExpenseGroupingFieldOption : undefined;
         this.cccExportGroup = cccGroup ? cccGroup as ExpenseGroupingFieldOption : undefined;
         this.importVendorsAsMerchants = configuration.import_vendors_as_merchants;
