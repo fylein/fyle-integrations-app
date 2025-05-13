@@ -63,7 +63,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             employeeMapping: true
         },
         dashboard: {
-            disconnectButton: true
+            disconnectButton: true,
+            useRepurposedExportSummary: true
         }
     }
 };
