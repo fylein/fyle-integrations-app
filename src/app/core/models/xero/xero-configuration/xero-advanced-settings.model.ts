@@ -98,7 +98,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
@@ -109,7 +109,8 @@ export class XeroAdvancedSettingModel extends HelperUtility{
 
     let frequency;
 
-    if (advancedSettings.workspace_schedules?.is_real_time_export_enabled) {
+    // Set frequency to 0 if real time export is enabled or onboarding is true
+    if (advancedSettings.workspace_schedules?.is_real_time_export_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
       frequency = 0;
     } else if (advancedSettings.workspace_schedules?.enabled) {
       frequency = advancedSettings.workspace_schedules.interval_hours;
@@ -122,7 +123,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
       billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id) : null),
       changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings.workspace_general_settings.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
-      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? true : false),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
       exportScheduleFrequency: new FormControl(frequency),
       autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
       memoStructure: new FormControl(advancedSettings.workspace_general_settings.memo_structure),
