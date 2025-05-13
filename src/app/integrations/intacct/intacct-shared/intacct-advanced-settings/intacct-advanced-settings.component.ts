@@ -228,7 +228,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   }
 
   isSingleCreditLineJEFieldVisible(): boolean {
-    return (this.reimbursableExpense === IntacctReimbursableExpensesObject.JOURNAL_ENTRY && this.reimbursableExportGroup == ExpenseGroupingFieldOption.CLAIM_NUMBER) || (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.cccExportGroup == ExpenseGroupingFieldOption.CLAIM_NUMBER);
+    return (this.reimbursableExpense === IntacctReimbursableExpensesObject.JOURNAL_ENTRY && this.reimbursableExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER) || (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.cccExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER);
   }
 
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
