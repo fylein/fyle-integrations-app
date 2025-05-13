@@ -97,7 +97,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   org: Org = this.orgService.getCachedOrg();
 
   scheduleIntervalHours: SelectFormOption[] = [
-    { label: 'Real-time', value: 0 },
+    ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
     ...[...Array(24).keys()].map(hour => ({
       label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
       value: hour + 1

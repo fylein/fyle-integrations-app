@@ -5,7 +5,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
 import { ExportSettingModel } from "../../common/export-settings.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -111,8 +111,10 @@ export class XeroAdvancedSettingModel extends HelperUtility{
 
     if (advancedSettings.workspace_schedules?.is_real_time_export_enabled) {
       frequency = 0;
+    } else if (advancedSettings.workspace_schedules?.enabled) {
+      frequency = advancedSettings.workspace_schedules.interval_hours;
     } else {
-      frequency = advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : 0;
+      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
     }
 
     return new FormGroup({
