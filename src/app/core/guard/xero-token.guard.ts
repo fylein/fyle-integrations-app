@@ -41,7 +41,7 @@ export class XeroTokenGuard  {
           const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
           if (onboardingState !== XeroOnboardingState.COMPLETE) {
             this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your xero connection expired, please connect again');
-            return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
+            return this.router.navigateByUrl('integrations/xero/onboarding/connector');
           }
 
           if (error.error.message === "Xero connection expired"){
