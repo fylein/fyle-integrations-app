@@ -322,7 +322,8 @@ export enum FyleField {
   VENDOR = 'VENDOR',
   CATEGORY = 'CATEGORY',
   PROJECT = 'PROJECT',
-  COST_CENTER = 'COST_CENTER'
+  COST_CENTER = 'COST_CENTER',
+  CORPORATE_CARD = 'CORPORATE_CARD'
 }
 
 export enum NetsuiteCustomSegmentOption {
@@ -531,7 +532,8 @@ export enum SageIntacctField {
   CUSTOMER = 'CUSTOMER',
   DEPARTMENT = 'DEPARTMENT',
   CLASS = 'CLASS',
-  TAX_CODE = 'TAX_CODE'
+  TAX_CODE = 'TAX_CODE',
+  VENDOR = 'VENDOR'
 }
 
 export enum MappingSourceField {
