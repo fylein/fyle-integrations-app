@@ -10,12 +10,13 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
-import { adminEmails, advancedSettings, configurationForAdvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes } from '../../intacct.fixture';
+import { adminEmails, advancedSettings, configurationForAdvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes, mockExportSettingGet } from '../../intacct.fixture';
 import { Configuration, ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 
 describe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
@@ -26,7 +27,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
-
+  let exportSettingService: jasmine.SpyObj<SiExportSettingService>;
 
   beforeEach(async () => {
     const advancedSettingsServiceSpy = jasmine.createSpyObj('SiAdvancedSettingService', [
@@ -40,6 +41,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
     const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
+    const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
     await TestBed.configureTestingModule({
       declarations: [IntacctAdvancedSettingsComponent, SkipExportComponent],
       imports: [SharedModule, ReactiveFormsModule],
@@ -50,6 +52,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: SiMappingsService, useValue: mappingServiceSpy },
+        { provide: SiExportSettingService, useValue: exportSettingServiceSpy },
         provideRouter([])
       ]
     }).compileComponents();
@@ -59,6 +62,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
+    exportSettingService = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
@@ -67,6 +71,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     advancedSettingsService.getExpenseFilter.and.returnValue(of(expenseFilter as ExpenseFilterResponse));
     mappingService.getGroupedDestinationAttributes.and.returnValue(of(groupedAttributes));
     mappingService.getConfiguration.and.returnValue(of(configurationForAdvancedSettings));
+    exportSettingService.getExportSettings.and.returnValue(of(mockExportSettingGet));
 
     fixture = TestBed.createComponent(IntacctAdvancedSettingsComponent);
     component = fixture.componentInstance;

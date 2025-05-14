@@ -76,28 +76,44 @@
                 [label]="brandingContent.intacct.configuration.advancedSettings.customPreferencesLabel"
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.customPreferencesSubLabel">
             </app-configuration-step-sub-header>
-            <div *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div  class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
-                [form]="advancedSettingsForm"
-                [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()" 
-                [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
-                [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
-            </div>
-            <div *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-            <app-configuration-toggle-field
-                [form]="advancedSettingsForm"
-                [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
-                [subLabel]="'While exporting credit card expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in Sage Intacct already.'"
-                [formControllerName]="'autoCreateMerchants'">
-            </app-configuration-toggle-field>
-            </div>
-            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    class="tw-pt-0"
+                    [form]="advancedSettingsForm"
+                    [iconPath]="'calendar'"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod" 
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.accountingPeriodSubLabel" 
+                    [formControllerName]="'postEntriesCurrentPeriod'">
+                </app-configuration-toggle-field>
                 <app-configuration-toggle-field 
-                [form]="advancedSettingsForm"
-                [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod" 
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.accountingPeriodSubLabel" 
-                [formControllerName]="'postEntriesCurrentPeriod'"></app-configuration-toggle-field>
+                    *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" 
+                    [form]="advancedSettingsForm"
+                    [iconPath]="'user-plus'"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()" 
+                    [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
+                    [formControllerName]="'autoCreateEmployeeVendor'">
+                </app-configuration-toggle-field>
+                
+                <app-configuration-toggle-field
+                    class="tw-pt-0"
+                    *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
+                    [form]="advancedSettingsForm"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
+                    [subLabel]="'While exporting credit card expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in Sage Intacct already.'"
+                    [formControllerName]="'autoCreateMerchants'">
+                </app-configuration-toggle-field>
+                <app-configuration-toggle-field 
+                    class="tw-pt-0" 
+                    *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
+                    [form]="advancedSettingsForm"
+                    [iconPath]="'list'"
+                    [label]="brandingContent.configuration.advancedSettings.singleCreditLineJELabel"
+                    [subLabel]="brandingContent.configuration.advancedSettings.singleCreditLineJESubLabel"
+                    [formControllerName]="'singleCreditLineJE'">
+                </app-configuration-toggle-field>
+
             </div>
+
         </div>
 
         <div class="tw-mb-16-px">
