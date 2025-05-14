@@ -5,7 +5,7 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, MappingSourceField, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctField, IntacctReimbursableExpensesObject, MappingSourceField, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -101,6 +101,10 @@ export class IntacctBaseMappingComponent implements OnInit {
         attributeType: this.destinationField,
         sourceType: 'ACCOUNTING'
       });
+
+      if (this.sourceField === FyleField.CORPORATE_CARD && this.destinationField === SageIntacctField.VENDOR) {
+        this.destinationFieldDisplayName = 'Credit card vendor';
+      }
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined).subscribe((response: any) => {
         this.destinationOptions = response.results;
