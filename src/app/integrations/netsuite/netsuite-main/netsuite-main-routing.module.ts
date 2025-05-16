@@ -8,6 +8,11 @@ const routes: Routes = [
     component: NetsuiteMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./netsuite-dashboard/netsuite-dashboard.module').then(m => m.NetsuiteDashboardModule)
       },

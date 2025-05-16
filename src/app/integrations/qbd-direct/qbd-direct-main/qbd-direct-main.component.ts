@@ -14,7 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './qbd-direct-main.component.html',
   styleUrl: './qbd-direct-main.component.scss'
 })
-export class QbdDirectMainComponent implements OnInit {
+export class QbdDirectMainComponent {
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -27,26 +27,13 @@ export class QbdDirectMainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/qbd_direct/main/configuration'}
   ];
 
-  activeModule: MenuItem;
-
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private qbdDirectHelperService: QbdDirectHelperService,
-    private router: Router
+    private qbdDirectHelperService: QbdDirectHelperService
   ) { }
-
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
 
   refreshDimensions() {
     this.qbdDirectHelperService.importAttributes(true);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
   }
 }

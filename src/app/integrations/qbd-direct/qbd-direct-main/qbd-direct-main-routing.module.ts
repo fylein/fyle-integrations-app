@@ -11,6 +11,11 @@ const routes: Routes = [
     component: QbdDirectMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./qbd-direct-dashboard/qbd-direct-dashboard.module').then(m => m.QbdDirectDashboardModule)
       },

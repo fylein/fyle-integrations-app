@@ -12,7 +12,7 @@ import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-hel
   templateUrl: './xero-main.component.html',
   styleUrls: ['./xero-main.component.scss']
 })
-export class XeroMainComponent implements OnInit {
+export class XeroMainComponent {
 
   appName: AppName = AppName.XERO;
 
@@ -26,8 +26,6 @@ export class XeroMainComponent implements OnInit {
     {label: 'Mapping', routerLink: '/integrations/xero/main/mapping'},
     {label: 'Configuration', routerLink: '/integrations/xero/main/configuration'}
   ];
-
-  activeModule: MenuItem;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -55,14 +53,5 @@ export class XeroMainComponent implements OnInit {
     this.xeroHelperService.refreshXeroDimensions().subscribe();
     this.xeroHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
-  }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
   }
 }

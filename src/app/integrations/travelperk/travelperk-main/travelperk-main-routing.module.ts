@@ -8,6 +8,11 @@ const routes: Routes = [
     component: TravelperkMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'configuration',
+        pathMatch: 'full'
+      },
+      {
         path: 'configuration',
         loadChildren: () => import('./travelperk-configuration/travelperk-configuration.module').then(m => m.TravelperkConfigurationModule)
       }

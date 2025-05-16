@@ -9,6 +9,11 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./intacct-dashboard/intacct-dashboard.module').then(m => m.IntacctDashboardModule)
       },

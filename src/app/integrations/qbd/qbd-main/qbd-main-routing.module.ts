@@ -8,6 +8,11 @@ const routes: Routes = [
     component: QbdMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'configuration',
         loadChildren: () => import('./qbd-configuration/qbd-configuration.module').then(m => m.QbdConfigurationModule)
       },

@@ -8,6 +8,11 @@ const routes: Routes = [
     component: QboMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./qbo-dashboard/qbo-dashboard.module').then(m => m.QboDashboardModule)
       },
