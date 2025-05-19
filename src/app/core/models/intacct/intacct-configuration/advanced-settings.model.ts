@@ -76,6 +76,7 @@ export interface Configuration {
     auto_create_merchant_destination_entity: boolean;
     memo_structure: string[];
     auto_create_merchants_as_vendors: boolean;
+    je_single_credit_line: boolean;
   }
 
   export interface AdvancedSettingGeneralMapping {
@@ -127,7 +128,8 @@ export type AdvancedSettingsPost = {
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
           change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
           memo_structure: getFormValue('setDescriptionField'),
-          auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false
+          auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false,
+          je_single_credit_line: getFormValue('singleCreditLineJE') ? getFormValue('singleCreditLineJE') : false
         },
         general_mappings: {
           payment_account: mapAttribute('defaultPaymentAccount', 'destination_id', 'value'),
