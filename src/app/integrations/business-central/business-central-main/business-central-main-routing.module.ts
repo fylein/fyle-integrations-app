@@ -8,6 +8,11 @@ const routes: Routes = [
     component: BusinessCentralMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./business-central-dashboard/business-central-dashboard.module').then(m => m.BusinessCentralDashboardModule)
       },
