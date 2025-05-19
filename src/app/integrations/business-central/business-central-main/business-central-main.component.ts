@@ -10,7 +10,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
   templateUrl: './business-central-main.component.html',
   styleUrls: ['./business-central-main.component.scss']
 })
-export class BusinessCentralMainComponent implements OnInit {
+export class BusinessCentralMainComponent {
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
@@ -21,11 +21,8 @@ export class BusinessCentralMainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/business_central/main/configuration/export_settings'}
   ];
 
-  activeModule: MenuItem;
-
   constructor(
     private accountingExportService: AccountingExportService,
-    private router: Router,
     private helperService: BusinessCentralHelperService
   ) { }
 
@@ -33,14 +30,4 @@ export class BusinessCentralMainComponent implements OnInit {
     this.helperService.importAttributes(isRefresh);
     this.accountingExportService.importExpensesFromFyle().subscribe();
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
 }

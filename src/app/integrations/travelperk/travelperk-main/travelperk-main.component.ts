@@ -10,15 +10,13 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
   templateUrl: './travelperk-main.component.html',
   styleUrls: ['./travelperk-main.component.scss']
 })
-export class TravelperkMainComponent implements OnInit {
+export class TravelperkMainComponent {
 
   appName: AppName = AppName.TRAVELPERK;
 
   modules: MenuItem[] = [
     {label: 'Configuration', routerLink: '/integrations/travelperk/main/configuration'}
   ];
-
-  activeModule: MenuItem;
 
   isConnectionInProgress: boolean = false;
 
@@ -42,14 +40,4 @@ export class TravelperkMainComponent implements OnInit {
     this.travelperkService.syncPaymentProfile().subscribe;
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from TravelPerk');
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
 }

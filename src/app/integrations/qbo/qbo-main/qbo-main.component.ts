@@ -12,7 +12,7 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
   templateUrl: './qbo-main.component.html',
   styleUrls: ['./qbo-main.component.scss']
 })
-export class QboMainComponent implements OnInit {
+export class QboMainComponent {
 
   appName: AppName = AppName.QBO;
 
@@ -25,8 +25,6 @@ export class QboMainComponent implements OnInit {
     {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
     {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
   ];
-
-  activeModule: MenuItem;
 
   isConnectionInProgress: boolean;
 
@@ -58,14 +56,4 @@ export class QboMainComponent implements OnInit {
     }
     this.isConnectionInProgress = true;
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
 }
