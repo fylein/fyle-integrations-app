@@ -10,7 +10,7 @@ import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-help
   templateUrl: './sage300-main.component.html',
   styleUrls: ['./sage300-main.component.scss']
 })
-export class Sage300MainComponent implements OnInit {
+export class Sage300MainComponent {
 
   appName: AppName = AppName.SAGE300;
 
@@ -21,11 +21,8 @@ export class Sage300MainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/sage300/main/configuration'}
   ];
 
-  activeModule: MenuItem;
-
   constructor(
     private accountingExportService: AccountingExportService,
-    private router: Router,
     private helperService: Sage300HelperService
   ) { }
 
@@ -33,14 +30,4 @@ export class Sage300MainComponent implements OnInit {
     this.helperService.importAttributes(isRefresh);
     this.accountingExportService.importExpensesFromFyle().subscribe();
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
 }
