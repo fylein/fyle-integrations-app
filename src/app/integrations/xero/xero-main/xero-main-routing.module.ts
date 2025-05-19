@@ -8,6 +8,11 @@ const routes: Routes = [
     component: XeroMainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./xero-dashboard/xero-dashboard.module').then(m => m.XeroDashboardModule)
       },
