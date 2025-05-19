@@ -1,0 +1,53 @@
+<app-outlined-icon-button  [buttonText]="'Request assisted setup'"  [svgSource]="'arrow-tail-right-medium'"  (buttonClick)="toggleAssistedSetupDialog()"></app-outlined-icon-button>
+
+<p-dialog 
+  [visible]="isAssistedSetupDialogVisible"
+  [showHeader]="false"
+  [modal]="true"
+  [style]="{ width: '515px', borderRadius: '8px' }"
+  styleClass="tw-overflow-hidden tw-border-b tw-border-gray-300"
+>
+
+  <!-- Header -->
+  <div class="tw-flex tw-p-24-px tw-border-b-1-px tw-border-b-box-color tw-h-[76px] tw-justify-between tw-items-center tw-self-stretch">
+    <div class="tw-flex tw-justify-between tw-items-center tw-flex-[1_0_0]"> 
+
+        <div class="tw-flex tw-items-center tw-gap-10-px"> 
+        <app-svg-icon [svgSource]="'check-medium'" [width]="'32px'" [height]="'32px'"></app-svg-icon>
+        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">QuickBooks Desktop integration support</p>
+        </div>
+
+        <div class="tw-flex tw-justify-end tw-cursor-pointer">
+        <app-svg-icon [styleClasses]="'tw-transform tw-scale-[1.6]'" (click)="toggleAssistedSetupDialog()" [svgSource]="'cross-medium'" [width]="'15px'" [height]="'15px'"></app-svg-icon>
+        </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="tw-min-w-full tw-p-6 tw-flex tw-flex-col tw-self-stretch tw-gap-4 tw-text-text-primary tw-text-14-px">
+    <div class="tw-flex tw-flex-col tw-items-start tw-font-normal tw-gap-4 tw-self-stretch">
+      Schedule a quick call with our onboarding specialist at your convenience, we will guide you step-by-step through the entire process and ensure a smooth setup experience
+    </div>
+
+    <div class="tw-flex tw-flex-col tw-flex-1 tw-items-start tw-justify-center tw-rounded-lg tw-border tw-p-3 tw-gap-2 tw-font-500">
+      Learn how to connect QuickBooks Desktop with Fyle
+  
+    <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-relative">
+      <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
+        <img class="shrink-0 w-4 h-4 relative overflow-visible" src="../../../../../assets/fyle/favicon.png"/> 
+        <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1"> View article
+          <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+        </span>
+      </span>
+    </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
+    <button type="button" (click)="onRequestAssistedSetup()" class="submit-btn" pButton>
+      Book a slot
+    </button>
+  </div>
+
+</p-dialog>
