@@ -72,8 +72,21 @@ export class ExportLogService {
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-        params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-        params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+
+      const dateFormat = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+      const dateRange = {
+        start: `${dateFormat}T00:00:00`,
+        end: `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`
+      };
+
+      if (state === TaskLogState.COMPLETE) {
+        params.exported_at__gte = dateRange.start;
+        params.exported_at__lte = dateRange.end;
+      } else if (appName === AppName.XERO) {
+        // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
+        params.updated_at__gte = dateRange.start;
+        params.updated_at__lte = dateRange.end;
+      }
     }
 
     if (exportedAt) {
