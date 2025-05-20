@@ -43,12 +43,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   appName: AppName = AppName.NETSUITE;
 
-  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   advancedSetting: NetsuiteAdvancedSettingGet;
 
@@ -295,7 +290,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = NetsuiteAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at));
+      this.advancedSettingForm = NetsuiteAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.isLoading = false;
       this.setupFormWatchers();
