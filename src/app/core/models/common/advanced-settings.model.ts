@@ -6,6 +6,7 @@ import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting
 import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
 import { IntacctConfiguration } from "../db/configuration.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { SelectFormOption } from "./select-form-option.model";
 export type EmailOption = {
     email: string;
     name: string;
@@ -74,6 +75,16 @@ export type AdvancedSettingValidatorRule = {
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
+  }
+
+  static getHoursOptions(): SelectFormOption[] {
+    return [
+      ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
+      ...[...Array(24).keys()].map(hour => ({
+        label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
+        value: hour + 1
+      }))
+    ];
   }
 
   static getMemoOptions(exportSettings: IntacctConfiguration | ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
