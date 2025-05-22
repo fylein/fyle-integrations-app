@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import {  Observable, Subject } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
@@ -9,7 +9,7 @@ import { Workspace } from 'src/app/core/models/db/workspaces.model';
 })
 export class QbdDirectAssistedSetupService {
 
-  private isSlotBookedSubject = new BehaviorSubject<boolean>(false);
+  private isSlotBookedSubject = new Subject<boolean>();
 
   isSlotBooked$: Observable<boolean> = this.isSlotBookedSubject.asObservable();
 
