@@ -61,7 +61,7 @@ export interface XeroAdvancedSettingFormOption extends SelectFormOption {
   value: PaymentSyncDirection | number | 'None';
 }
 
-export class XeroAdvancedSettingModel extends HelperUtility{
+export class XeroAdvancedSettingModel extends AdvancedSettingsModel {
 
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
@@ -90,9 +90,9 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
         if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) || (keys[index] !== 'paymentSync'))) {
-          this.markControllerAsRequired(form, value);
+          HelperUtility.markControllerAsRequired(form, value);
         } else {
-          this.clearValidatorAndResetValue(form, value);
+          HelperUtility.clearValidatorAndResetValue(form, value);
         }
       });
     });
@@ -107,24 +107,13 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     }
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
 
-    let frequency;
-
-    // Set frequency to 0 if real time export is enabled or onboarding is true
-    if (advancedSettings.workspace_schedules?.is_real_time_export_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
-      frequency = 0;
-    } else if (advancedSettings.workspace_schedules?.enabled) {
-      frequency = advancedSettings.workspace_schedules.interval_hours;
-    } else {
-      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
-    }
-
     return new FormGroup({
       paymentSync: new FormControl(paymentSync),
       billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id) : null),
       changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings.workspace_general_settings.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(frequency),
+      exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
       autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
       memoStructure: new FormControl(advancedSettings.workspace_general_settings.memo_structure),
       search: new FormControl(),
