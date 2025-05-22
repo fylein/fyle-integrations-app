@@ -14,6 +14,7 @@ export interface IntacctConfiguration {
     import_tax_codes?: boolean;
     memo_structure: string[];
     auto_create_destination_entity: boolean;
+    je_single_credit_line: boolean;
     change_accounting_period: boolean;
     import_vendors_as_merchants: boolean;
     created_at: Date;

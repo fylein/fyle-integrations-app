@@ -96,12 +96,13 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  scheduleIntervalHours: SelectFormOption[] = [
+    ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
+    ...[...Array(24).keys()].map(hour => ({
+      label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
+      value: hour + 1
+    }))
+  ];
 
   advancedSettingForm: FormGroup<any>;
 
@@ -375,7 +376,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       }
 
       this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
+      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
       this.setupAdvancedSettingFormWatcher();
 
       // Convert field values from destination attributes to *default* destination attributes

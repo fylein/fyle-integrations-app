@@ -16,6 +16,7 @@ export type Configuration = {
   auto_create_destination_entity: boolean;
   change_accounting_period: boolean;
   import_vendors_as_merchants: boolean;
+  je_single_credit_line: boolean;
   created_at: Date;
   updated_at: Date;
 };

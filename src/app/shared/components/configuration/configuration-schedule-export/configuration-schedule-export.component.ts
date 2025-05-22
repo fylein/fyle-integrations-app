@@ -41,6 +41,8 @@ export class ConfigurationScheduleExportComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly AppName = AppName;
+
   constructor() { }
 
   removeFilter(formField: AbstractControl) {

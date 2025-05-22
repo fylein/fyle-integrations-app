@@ -1,7 +1,8 @@
 <div [ngClass]="brandingStyle.common.mainComponentPadding">
     <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-                <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">Your last export</h4>
+            <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
+            <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">{{ brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO ? "Today's export overview" : 'Your last export'}}</h4>
         </div>
         <div class="tw-border-border-tertiary tw-border-t-1-px">
             <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
@@ -10,27 +11,47 @@
                         <div class="tw-flex tw-items-center">
                                 <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-success tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                                 <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportSuccessText}}</p>
-                                <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
-                                    {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
-                                </span>
-                            <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+
+                                <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
+                                @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO) {
+                                    <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
+                                        {{ accountingExportSummary?.repurposed_successful_count ? accountingExportSummary?.repurposed_successful_count : 0 }}
+                                    </span>
+                                    <a *ngIf="accountingExportSummary?.repurposed_successful_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                                } @else {
+                                    <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
+                                        {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
+                                    </span>
+                                    <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                                }
                         </div>
-                        <div class="tw-flex tw-flex-col">
-                            <span class="tw-w-260-px tw-text-right">
-                                <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.lastExportedAtText}} </span>
-                                <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
-                                {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : '' }}</span>
-                            </span>                
-                        </div>
+                        @if (!brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary || appName !== AppName.XERO) {
+                            <div class="tw-flex tw-flex-col">
+                                <span class="tw-w-260-px tw-text-right">
+                                    <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.lastExportedAtText}} </span>
+                                    <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
+                                    {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : '' }}</span>
+                                </span>                
+                            </div>
+                        }
                     </div>
                     <div class="tw-flex tw-items-center tw-justify-between" [ngClass]="{'tw-py-10-px': !accountingExportSummary?.failed_accounting_export_count}">
                         <div class="tw-flex tw-items-center">
                             <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-danger tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                             <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportFailedText}}</p>
-                            <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
-                                {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
-                            </span>
-                            <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+
+                            <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
+                            @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO) {
+                                <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
+                                    {{ accountingExportSummary?.repurposed_failed_count ? accountingExportSummary?.repurposed_failed_count : 0 }}
+                                </span>
+                                <a *ngIf="accountingExportSummary?.repurposed_failed_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                            } @else {
+                                <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
+                                    {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
+                                </span>
+                                <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
+                            }
                         </div>
                         <div class="tw-flex tw-flex-col">
                             <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
