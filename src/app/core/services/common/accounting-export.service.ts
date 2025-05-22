@@ -22,11 +22,11 @@ export class AccountingExportService {
     helper.setBaseApiURL();
   }
 
-  getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: string): Observable<AccountingExportSummary> {
+  getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: AppName): Observable<AccountingExportSummary> {
     if (version === 'v1') {
       const apiParams: { start_date?: string } = {};
-      // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
-      if (useRepurposedExportSummary && appName === AppName.XERO) {
+      // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
+      if (useRepurposedExportSummary && appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE].includes(appName)) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         apiParams.start_date = today.toISOString();

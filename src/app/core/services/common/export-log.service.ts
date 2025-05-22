@@ -50,7 +50,7 @@ export class ExportLogService {
 
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset
@@ -82,8 +82,8 @@ export class ExportLogService {
       if (state === TaskLogState.COMPLETE) {
         params.exported_at__gte = dateRange.start;
         params.exported_at__lte = dateRange.end;
-      } else if (appName === AppName.XERO) {
-        // Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations
+      } else if (appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE].includes(appName)) {
+        // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         params.updated_at__gte = dateRange.start;
         params.updated_at__lte = dateRange.end;
       }
