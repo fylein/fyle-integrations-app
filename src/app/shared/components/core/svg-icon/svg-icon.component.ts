@@ -36,6 +36,7 @@ const ICON_MAPPING = {
   'eye-slash': 'grv-show-hide',
   'eye': 'grv-show',
   'flash-on': 'grv-flash-on',
+  'headset': 'grv-agent',
   'gear-medium': 'grv-settings-medium',
   'gear': 'grv-settings',
   'info-circle-fill-medium': 'c1-info-medium',

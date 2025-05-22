@@ -10,6 +10,8 @@ export class OutlinedIconButtonComponent {
 
   @Input() svgSource: string;
 
+  @Input() disabled: boolean;
+
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
   onClick(): void {

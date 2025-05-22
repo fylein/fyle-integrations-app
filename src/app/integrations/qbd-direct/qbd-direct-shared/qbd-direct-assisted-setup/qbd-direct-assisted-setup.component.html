@@ -1,53 +1,85 @@
-<app-outlined-icon-button  [buttonText]="'Request assisted setup'"  [svgSource]="'arrow-tail-right-medium'"  (buttonClick)="toggleAssistedSetupDialog()"></app-outlined-icon-button>
+<app-outlined-icon-button 
+  [buttonText]="interactionType === 'BOOK_SLOT' ? 'Request assisted setup' : 'Need help with setup'" 
+  [svgSource]="'headset'" 
+  (buttonClick)="toggleAssistedSetupDialog()"
+  [pTooltip]="isSlotBooked ? 'Your request has been&#10;received.' : ''"
+  tooltipPosition="bottom"
+  tooltipStyleClass="assisted-setup-tooltip"
+  [disabled]="isSlotBooked">
+</app-outlined-icon-button>
 
 <p-dialog 
   [visible]="isAssistedSetupDialogVisible"
   [showHeader]="false"
   [modal]="true"
   [style]="{ width: '515px', borderRadius: '8px' }"
-  styleClass="tw-overflow-hidden tw-border-b tw-border-gray-300"
->
+  [dismissableMask]="true"
+  [draggable]="false">
+  <div class="tw-flex tw-flex-col">
+    <!-- Header -->
+    <div class="tw-flex tw-h-[76px] tw-p-24-px tw-border-b tw-border-b-box-color tw-items-center tw-justify-between">
+      <div class="tw-flex tw-items-center tw-gap-10-px">
+        @if (interactionType === 'BOOK_SLOT') {
+          <div class="tw-h-8 tw-w-8 tw-bg-bg-success-light tw-rounded tw-flex tw-justify-center tw-items-center">
+            <app-svg-icon [svgSource]="'check'" [styleClasses]="'tw-text-bg-success'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
+          </div>
+        }
+        <p class="tw-text-20-px tw-font-medium tw-text-text-primary tw-leading-6">
+          {{ interactionType === 'BOOK_SLOT' ? 'QuickBooks Desktop integration support' : 'How can we help?' }}
+        </p>
+      </div>
+      <div class="tw-cursor-pointer">
+        <app-svg-icon (click)="toggleAssistedSetupDialog()" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
+      </div>
+    </div>
 
-  <!-- Header -->
-  <div class="tw-flex tw-p-24-px tw-border-b-1-px tw-border-b-box-color tw-h-[76px] tw-justify-between tw-items-center tw-self-stretch">
-    <div class="tw-flex tw-justify-between tw-items-center tw-flex-[1_0_0]"> 
+    <!-- Body -->
+    <div class="tw-p-6 tw-flex tw-flex-col tw-gap-4">
+      @if (interactionType === 'BOOK_SLOT') {
+        <div class="tw-flex tw-flex-col tw-gap-4 tw-text-text-primary tw-text-14-px">
+          <div class="tw-flex tw-flex-col tw-gap-4 tw-font-400">
+            Schedule a quick call with our onboarding specialist at your convenience, we will guide you step-by-step through the entire process and ensure a smooth setup experience
+          </div>
 
-        <div class="tw-flex tw-items-center tw-gap-10-px"> 
-        <app-svg-icon [svgSource]="'check-medium'" [width]="'32px'" [height]="'32px'"></app-svg-icon>
-        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">QuickBooks Desktop integration support</p>
+          <div class="tw-flex tw-flex-col tw-rounded-lg tw-border tw-border-box-color tw-p-3 tw-gap-2">
+            <div class="tw-font-500">
+              Learn how to connect QuickBooks Desktop with Fyle
+            </div>
+            
+            <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center">
+              <span class="tw-flex tw-items-center tw-gap-1 tw-cursor-pointer">
+                <img class="tw-w-4 tw-h-4" src="../../../../../assets/fyle/favicon.png"/> 
+                <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1">
+                  View article
+                  <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
+      } @else { 
+        <div class="tw-flex tw-flex-col tw-mb-2">
+            <div class="tw-flex tw-items-center tw-mb-2">
+              <span class="tw-text-text-label tw-text-14-px tw-font-400">Describe the issue you're facing</span>
+              <span class="tw-text-mandatory-field-color tw-text-14-px tw-font-500 tw-ml-1">*</span>
+            </div>
+              <textarea 
+                class="tw-w-full tw-h-16 tw-bg-white tw-border tw-border-border-secondary tw-rounded-4 tw-flex tw-py-2 tw-px-3 tw-flex-col tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-leading-6 focus:tw-border-border-secondary focus:tw-outline-none" 
+                placeholder="Explain the issue in detail. Share the step you are stuck on, what didn't work, and any error codes or messages you saw."
+                [(ngModel)]="issueDescription"></textarea>
+          </div>
+      }
+    </div>
 
-        <div class="tw-flex tw-justify-end tw-cursor-pointer">
-        <app-svg-icon [styleClasses]="'tw-transform tw-scale-[1.6]'" (click)="toggleAssistedSetupDialog()" [svgSource]="'cross-medium'" [width]="'15px'" [height]="'15px'"></app-svg-icon>
-        </div>
+    <!-- Footer -->
+    <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-4">
+        <button type="button" (click)="toggleAssistedSetupDialog()" class="cancel-btn">
+          Cancel
+        </button>
+
+        <button type="button" pButton (click)="onRequestAssistedSetup()" class="submit-btn" [ngClass]="interactionType === 'BOOK_SLOT' ? 'tw-max-w-[104px]' : 'tw-max-w-[143px]'">
+         {{ interactionType === 'BOOK_SLOT' ? 'Book a slot' : 'Submit a request' }}
+        </button>
     </div>
   </div>
-
-  <!-- Body -->
-  <div class="tw-min-w-full tw-p-6 tw-flex tw-flex-col tw-self-stretch tw-gap-4 tw-text-text-primary tw-text-14-px">
-    <div class="tw-flex tw-flex-col tw-items-start tw-font-normal tw-gap-4 tw-self-stretch">
-      Schedule a quick call with our onboarding specialist at your convenience, we will guide you step-by-step through the entire process and ensure a smooth setup experience
-    </div>
-
-    <div class="tw-flex tw-flex-col tw-flex-1 tw-items-start tw-justify-center tw-rounded-lg tw-border tw-p-3 tw-gap-2 tw-font-500">
-      Learn how to connect QuickBooks Desktop with Fyle
-  
-    <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-relative">
-      <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
-        <img class="shrink-0 w-4 h-4 relative overflow-visible" src="../../../../../assets/fyle/favicon.png"/> 
-        <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1"> View article
-          <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
-        </span>
-      </span>
-    </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
-    <button type="button" (click)="onRequestAssistedSetup()" class="submit-btn" pButton>
-      Book a slot
-    </button>
-  </div>
-
 </p-dialog>

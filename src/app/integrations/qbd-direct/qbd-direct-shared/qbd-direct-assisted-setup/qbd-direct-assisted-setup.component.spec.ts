@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { QbdDirectAssistedSetupComponent } from './qbd-direct-assisted-setup.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 describe('QbdDirectAssistedSetupComponent', () => {
   let component: QbdDirectAssistedSetupComponent;
@@ -9,7 +10,8 @@ describe('QbdDirectAssistedSetupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ QbdDirectAssistedSetupComponent ],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule],
+      providers: [MessageService]
     })
     .compileComponents();
   });

@@ -1,3 +1,12 @@
 .submit-btn {
-    @apply tw-text-white tw-max-w-[103px] tw-h-40-px tw-rounded-4-px #{!important};
+    @apply tw-text-white tw-h-40-px tw-py-2.5 tw-flex tw-justify-center tw-items-center tw-text-size-14 tw-font-500 tw-rounded-4-px #{!important};
+}
+
+.cancel-btn {
+    @apply tw-flex tw-justify-center tw-items-center tw-text-size-14 tw-font-500 tw-bg-white tw-px-4 tw-py-2.5 tw-rounded-4-px tw-border tw-border-gray-300 tw-text-text-secondary;
+}
+
+.assisted-setup-tooltip {
+    max-width: 150px !important;
+    width: 150px !important;
 }
