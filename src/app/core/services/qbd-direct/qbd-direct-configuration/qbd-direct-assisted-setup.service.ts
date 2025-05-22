@@ -10,6 +10,7 @@ import { Workspace } from 'src/app/core/models/db/workspaces.model';
 export class QbdDirectAssistedSetupService {
 
   private isSlotBookedSubject = new BehaviorSubject<boolean>(false);
+
   isSlotBooked$: Observable<boolean> = this.isSlotBookedSubject.asObservable();
 
   constructor(
