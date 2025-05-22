@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { take } from 'rxjs';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
@@ -11,18 +10,18 @@ import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/
   encapsulation: ViewEncapsulation.None
 })
 
-export class QbdDirectAssistedSetupComponent implements OnInit {
+export class QbdDirectAssistedSetupComponent {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   @Input() interactionType: string;
 
-  isSlotBooked: boolean = false;
+  @Input() isAssistedSetupSlotBooked?: boolean = false;
 
   isAssistedSetupDialogVisible: boolean;
 
   issueDescription: string = '';
 
-  constructor(
+constructor(
     private assistedSetupService: QbdDirectAssistedSetupService,
     private messageService: MessageService
   ) {}
@@ -71,7 +70,7 @@ export class QbdDirectAssistedSetupComponent implements OnInit {
     this.assistedSetupService.bookSlot().subscribe({
       next: () => {
         this.toggleAssistedSetupDialog();
-        this.isSlotBooked = true;
+        this.isAssistedSetupSlotBooked = true;
       },
       error: () => {
         this.messageService.add({
@@ -79,14 +78,6 @@ export class QbdDirectAssistedSetupComponent implements OnInit {
           summary: 'Something went wrong, please try again.'
         });
       }
-    });
-  }
-
-  ngOnInit(): void {
-    this.assistedSetupService.isSlotBooked$
-    .pipe(take(1))
-    .subscribe((isSlotBooked) => {
-      this.isSlotBooked = isSlotBooked;
     });
   }
 

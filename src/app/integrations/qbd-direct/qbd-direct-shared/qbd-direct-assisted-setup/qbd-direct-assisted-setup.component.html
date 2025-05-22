@@ -2,10 +2,10 @@
   [buttonText]="interactionType === 'BOOK_SLOT' ? 'Request assisted setup' : 'Need help with setup'" 
   [svgSource]="'headset'" 
   (buttonClick)="toggleAssistedSetupDialog()"
-  [pTooltip]="isSlotBooked ? 'Your request has been&#10;received.' : ''"
+  [pTooltip]="isAssistedSetupSlotBooked ? 'Your request has been&#10;received.' : ''"
   tooltipPosition="bottom"
   tooltipStyleClass="assisted-setup-tooltip"
-  [disabled]="isSlotBooked">
+  [disabled]="isAssistedSetupSlotBooked">
 </app-outlined-icon-button>
 
 <p-dialog 

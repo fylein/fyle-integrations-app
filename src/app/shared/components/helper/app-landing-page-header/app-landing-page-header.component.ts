@@ -61,6 +61,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() uiExposedAppName: string;
 
+  @Input() isAssistedSetupSlotBooked?: boolean;
+
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 
   xeroConnectButtonSource: string = 'assets/buttons/connect-to-xero.svg';

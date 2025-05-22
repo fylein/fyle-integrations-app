@@ -6,7 +6,6 @@ import { AppName, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -28,13 +27,14 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
 
   isQbdConnectionInProgress = false;
 
+  isAssistedSetupSlotBooked: boolean;
+
   readonly brandingContent = brandingContent.qbd_direct.landing;
 
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
-    private userService: UserService,
-    private assistedSetupService: QbdDirectAssistedSetupService
+    private userService: UserService
   ) { }
 
   connectQbdDirect() {
@@ -52,7 +52,9 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {
         this.router.navigate([`/integrations/qbd_direct`]);
       } else {
-        this.assistedSetupService.setSlotBookingStatus(workspaces[0]);
+        if (workspaces[0].assisted_setup_requested_at){
+          this.isAssistedSetupSlotBooked = true;
+        }
       }
     });
   }
