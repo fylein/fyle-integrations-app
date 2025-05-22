@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { take } from 'rxjs';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
@@ -10,7 +11,7 @@ import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/
   encapsulation: ViewEncapsulation.None
 })
 
-export class QbdDirectAssistedSetupComponent implements OnInit{
+export class QbdDirectAssistedSetupComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   @Input() interactionType: string;
@@ -82,8 +83,11 @@ export class QbdDirectAssistedSetupComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.assistedSetupService.getSlotBookingStatus().subscribe((isSlotBooked) => {
+    this.assistedSetupService.isSlotBooked$
+    .pipe(take(1))
+    .subscribe((isSlotBooked) => {
       this.isSlotBooked = isSlotBooked;
     });
   }
+
 }

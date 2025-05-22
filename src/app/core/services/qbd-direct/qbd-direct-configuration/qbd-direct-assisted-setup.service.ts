@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
@@ -9,7 +9,8 @@ import { Workspace } from 'src/app/core/models/db/workspaces.model';
 })
 export class QbdDirectAssistedSetupService {
 
-  isSlotBooked: boolean = false;
+  private isSlotBookedSubject = new BehaviorSubject<boolean>(false);
+  isSlotBooked$: Observable<boolean> = this.isSlotBookedSubject.asObservable();
 
   constructor(
     private apiService: ApiService,
@@ -28,14 +29,9 @@ export class QbdDirectAssistedSetupService {
 
   setSlotBookingStatus(workspace: Workspace): void {
     if (workspace.assisted_setup_requested_at){
-      this.isSlotBooked = true;
-      window.alert('debug -> isSlotBooked true');
+      this.isSlotBookedSubject.next(true);
+    } else {
+      this.isSlotBookedSubject.next(false);
     }
-
-    window.alert('debug -> isSlotBooked ' +  this.isSlotBooked);
-  }
-
-  getSlotBookingStatus(): Observable<boolean>{
-    return of(this.isSlotBooked);
   }
 }
