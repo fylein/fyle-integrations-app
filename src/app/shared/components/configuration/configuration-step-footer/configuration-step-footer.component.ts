@@ -19,6 +19,8 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   @Input() AppName: string;
 
+  @Input() shouldShowQDBAssistedSetup?: boolean;
+
   @Output() resetCloneSetting = new EventEmitter();
 
   @Output() save = new EventEmitter();
