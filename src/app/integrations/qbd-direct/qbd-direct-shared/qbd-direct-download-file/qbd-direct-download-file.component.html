@@ -67,6 +67,6 @@
         </div>
     </div>
     <div *ngIf="!isStepCompleted">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" (save)="continueToNextStep()"></app-configuration-step-footer>
+        <app-configuration-step-footer [shouldShowQDBAssistedSetup]="true" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" (save)="continueToNextStep()"></app-configuration-step-footer>
     </div>
 </div>

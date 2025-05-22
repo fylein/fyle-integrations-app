@@ -46,7 +46,6 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       id: 1,
       label: 'Install QuickBooks Web Connector',
       caption: `<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target="_blank" class=" tw-underline !tw-underline-offset-1" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.`,
-      externalLink: 'https://qbd.com',
       iconName: 'download-medium',
       state: QBDPreRequisiteState.INCOMPLETE
     },
@@ -54,8 +53,15 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       id: 2,
       label: 'Keep your Quickbooks company file open',
       caption: 'Make sure the QuickBooks company you want to connect to ' + brandingConfig.brandName + ' is open during the integration setup.',
-      externalLink: 'https://qbd.com',
       iconName: 'expand',
+      state: QBDPreRequisiteState.INCOMPLETE
+    },
+    {
+      id: 3,
+      label: 'Log in to QuickBooks Desktop as admin in single-user mode',
+      caption: `Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode.`,
+      externalLink: 'https://www.fylehq.com/help/en/articles/10259583-quickbooks-desktop-integration#h_e6a035bc3c',
+      iconName: 'user-one',
       state: QBDPreRequisiteState.INCOMPLETE
     }
   ];
@@ -74,7 +80,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   updateConnectorStatus(status: CheckBoxUpdate): void {
     this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
-    if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE) {
+    if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[2].state === QBDPreRequisiteState.COMPLETE) {
       this.isContinueDisabled = false;
     }
   }

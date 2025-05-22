@@ -13,6 +13,13 @@
             </button>
         </div>
     </div>
+
+    @if(shouldShowQDBAssistedSetup){
+    <div class="tw-flex tw-w-full tw-self-start">
+        <app-qbd-direct-assisted-setup [interactionType]="'QUERY'"></app-qbd-direct-assisted-setup>
+    </div>
+    }
+    
     <div>
         <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
             <span>
