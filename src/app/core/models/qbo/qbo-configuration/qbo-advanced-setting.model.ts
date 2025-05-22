@@ -26,6 +26,7 @@ export type QBOAdvancedSettingWorkspaceSchedule = {
   enabled: boolean,
   interval_hours: number,
   emails_selected: string[] | null,
+  is_real_time_export_enabled: boolean,
   additional_email_options: EmailOption[]
 }
 
@@ -92,7 +93,19 @@ export class QBOAdvancedSettingModel extends HelperUtility {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: QBOAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: QBOAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
+
+    let frequency;
+
+    // Set frequency to 0 if real time export is enabled or onboarding is true
+    if (advancedSettings.workspace_schedules?.is_real_time_export_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
+      frequency = 0;
+    } else if (advancedSettings.workspace_schedules?.enabled) {
+      frequency = advancedSettings.workspace_schedules.interval_hours;
+    } else {
+      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
+    }
+
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.workspace_general_settings.sync_fyle_to_qbo_payments ? QBOPaymentSyncDirection.FYLE_TO_QBO : advancedSettings?.workspace_general_settings.sync_qbo_to_fyle_payments ? QBOPaymentSyncDirection.QBO_TO_FYLE : null),
       billPaymentAccount: new FormControl(advancedSettings?.general_mappings.bill_payment_account?.id ? advancedSettings?.general_mappings.bill_payment_account : null),
@@ -100,8 +113,8 @@ export class QBOAdvancedSettingModel extends HelperUtility {
       singleCreditLineJE: new FormControl(advancedSettings?.workspace_general_settings.je_single_credit_line),
       autoCreateVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_destination_entity),
       autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_merchants_as_vendors),
-      exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
-      exportScheduleFrequency: new FormControl(advancedSettings?.workspace_schedules?.enabled ? advancedSettings?.workspace_schedules.interval_hours : 1),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportScheduleFrequency: new FormControl(frequency),
       memoStructure: new FormControl(advancedSettings?.workspace_general_settings.memo_structure),
       skipExport: new FormControl(isSkipExportEnabled),
       searchOption: new FormControl(),
@@ -128,7 +141,8 @@ export class QBOAdvancedSettingModel extends HelperUtility {
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
-        interval_hours: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
+        interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
+        is_real_time_export_enabled: advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
         emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
         additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
       }

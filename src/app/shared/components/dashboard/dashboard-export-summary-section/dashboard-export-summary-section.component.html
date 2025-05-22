@@ -1,8 +1,8 @@
 <div [ngClass]="brandingStyle.common.mainComponentPadding">
     <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-            <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
-            <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">{{ brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO ? "Today's export overview" : 'Your last export'}}</h4>
+            <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
+            <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">{{ brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO].includes(appName) ? "Today's export overview" : 'Your last export'}}</h4>
         </div>
         <div class="tw-border-border-tertiary tw-border-t-1-px">
             <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
@@ -12,8 +12,8 @@
                                 <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-success tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                                 <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportSuccessText}}</p>
 
-                                <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
-                                @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO) {
+                                <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
+                                @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO].includes(appName)) {
                                     <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
                                         {{ accountingExportSummary?.repurposed_successful_count ? accountingExportSummary?.repurposed_successful_count : 0 }}
                                     </span>
@@ -25,7 +25,7 @@
                                     <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-py-10-px btn-text-primary">View</a>
                                 }
                         </div>
-                        @if (!brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary || appName !== AppName.XERO) {
+                        @if (!brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary || ![AppName.XERO, AppName.QBO].includes(appName)) {
                             <div class="tw-flex tw-flex-col">
                                 <span class="tw-w-260-px tw-text-right">
                                     <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.lastExportedAtText}} </span>
@@ -40,8 +40,8 @@
                             <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-danger tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                             <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportFailedText}}</p>
 
-                            <!-- Temporary hack to enable repurposed export summary only for xero - #q2_real_time_exports_integrations -->
-                            @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && appName === AppName.XERO) {
+                            <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
+                            @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO].includes(appName)) {
                                 <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
                                     {{ accountingExportSummary?.repurposed_failed_count ? accountingExportSummary?.repurposed_failed_count : 0 }}
                                 </span>

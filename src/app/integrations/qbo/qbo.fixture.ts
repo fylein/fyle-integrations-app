@@ -1015,7 +1015,8 @@ export const mockQboAdvancedSettings = {
       "emails_selected": [
           "admin1@fylefororion.fyle.in",
           "owner@fylefororion.fyle.in"
-      ]
+      ],
+      "is_real_time_export_enabled": true
   },
   "workspace_id": 525
 };
