@@ -96,7 +96,6 @@ import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
 import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
 import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
-import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 
 
