@@ -29,7 +29,10 @@ export class QbdDirectAssistedSetupService {
   setSlotBookingStatus(workspace: Workspace): void {
     if (workspace.assisted_setup_requested_at){
       this.isSlotBooked = true;
+      window.alert('debug -> isSlotBooked true');
     }
+
+    window.alert('debug -> isSlotBooked ' +  this.isSlotBooked);
   }
 
   getSlotBookingStatus(): Observable<boolean>{
