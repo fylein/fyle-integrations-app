@@ -21,16 +21,24 @@ export class QbdDirectAssistedSetupComponent {
 
   issueDescription: string = '';
 
+  isQuerySubmitted: boolean;
+
 constructor(
     private assistedSetupService: QbdDirectAssistedSetupService,
     private messageService: MessageService
   ) {}
 
   toggleAssistedSetupDialog(): void{
+    this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
   }
 
   onRequestAssistedSetup(): void {
+    if (this.isQuerySubmitted){
+      this.toggleAssistedSetupDialog();
+      return;
+    }
+
     if (this.interactionType === "BOOK_SLOT"){
       this.bookSlot();
     }
@@ -51,11 +59,8 @@ constructor(
 
       this.assistedSetupService.submitRequest(this.issueDescription).subscribe({
         next: () => {
-          this.toggleAssistedSetupDialog();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Request submitted successfully!'
-          });
+          this.isQuerySubmitted = true;
+          this.issueDescription = '';
         },
         error: () => {
           this.messageService.add({
