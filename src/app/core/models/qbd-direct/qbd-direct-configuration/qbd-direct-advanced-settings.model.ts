@@ -60,7 +60,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
             skipExport: new FormControl(isSkipExportEnabled),
-            searchOption: new FormControl(''),
+            searchOption: new FormControl('')
         });
     }
 
