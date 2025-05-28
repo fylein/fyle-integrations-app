@@ -79,7 +79,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
             emails_selected: advancedSettingForm.get('exportSchedule')?.value ? selectedEmailsEmails : [],
             interval_hours: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
-            is_real_time_export_enabled: advancedSettingForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
+            is_real_time_export_enabled: advancedSettingForm.get('exportSchedule')?.value && advancedSettingForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
             auto_create_reimbursable_entity: advancedSettingForm.get('autoCreateReimbursableEnitity')?.value ? advancedSettingForm.get('autoCreateReimbursableEnitity')?.value : false,
             auto_create_merchant_as_vendor: advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value ? advancedSettingForm.get('autoCreateMerchantsAsVendors')?.value : false,
             emails_added: advancedSettingForm.get('exportSchedule')?.value ? additionalEmails : []
