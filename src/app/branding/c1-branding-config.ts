@@ -24,6 +24,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         useCustomIcon: true,
         displayAppLogoInDashboard: true,
         contentVersion: 'v2',
+        useLandingV2: false,
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,
