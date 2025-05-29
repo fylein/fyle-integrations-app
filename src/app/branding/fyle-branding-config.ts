@@ -24,6 +24,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         useCustomIcon: false,
         displayAppLogoInDashboard: false,
         contentVersion: 'v1',
+        useLandingV2: true,
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,

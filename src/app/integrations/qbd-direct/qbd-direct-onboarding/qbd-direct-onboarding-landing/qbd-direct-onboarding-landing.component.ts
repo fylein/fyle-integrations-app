@@ -52,7 +52,7 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {
         this.router.navigate([`/integrations/qbd_direct`]);
       } else {
-        if (workspaces[0].assisted_setup_requested_at){
+        if (workspaces.length && workspaces[0].assisted_setup_requested_at){
           this.isAssistedSetupSlotBooked = true;
         }
       }

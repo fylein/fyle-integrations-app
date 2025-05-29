@@ -1,6 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
 @Component({
@@ -25,8 +26,12 @@ export class QbdDirectAssistedSetupComponent {
 
 constructor(
     private assistedSetupService: QbdDirectAssistedSetupService,
-    private messageService: MessageService
+    private toastService: IntegrationsToastService
   ) {}
+
+  get nativeWindow(): Window {
+    return window;
+  }
 
   toggleAssistedSetupDialog(): void{
     this.isQuerySubmitted = false;
@@ -50,10 +55,7 @@ constructor(
 
   onSubmitQuery(): void {
       if (!this.issueDescription.trim()) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Please describe the issue you are facing'
-        });
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Please describe the issue you are facing');
         return;
       }
 
@@ -63,12 +65,13 @@ constructor(
           this.issueDescription = '';
         },
         error: () => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Failed to submit request. Please try again.'
-          });
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to submit request. Please try again.');
         }
       });
+  }
+
+  openQBDArticle(): void {
+    this.nativeWindow.open('https://www.fylehq.com/help/en/articles/10259583-quickbooks-desktop-integration', '_blank');
   }
 
   bookSlot(): void {
@@ -78,10 +81,7 @@ constructor(
         this.isAssistedSetupSlotBooked = true;
       },
       error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Something went wrong, please try again.'
-        });
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
       }
     });
   }
