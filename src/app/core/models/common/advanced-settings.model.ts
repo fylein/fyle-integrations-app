@@ -77,6 +77,10 @@ export class AdvancedSettingsModel {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
   }
 
+  static getDefaultTopMemoOptions(): string[] {
+    return ['employee_email', 'employee_name', 'report_number'];
+  }
+
   static getHoursOptions(): SelectFormOption[] {
     return [
       ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),

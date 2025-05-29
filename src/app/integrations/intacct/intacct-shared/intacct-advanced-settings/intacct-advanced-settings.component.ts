@@ -54,6 +54,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   memoPreviewText: string;
 
+  topMemoPreviewText: string;
+
   adminEmails: QBDEmailOptions[] = [];
 
   hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
@@ -100,6 +102,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private sessionStartTime = new Date();
 
   defaultMemoFields: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
+
+  defaultTopMemoFields: string[] = AdvancedSettingsModel.getDefaultTopMemoOptions();
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
@@ -182,6 +186,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     this.memoPreviewText = '';
+    this.topMemoPreviewText = '';
     const memo: string[] = [];
     this.memoStructure.forEach((field, index) => {
       if (field in previewValues) {
@@ -244,6 +249,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
       postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? true : false],
       setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
+      setTopMemoField: [this.advancedSettings.configurations.top_level_memo_structure ? this.advancedSettings.configurations.top_level_memo_structure : this.defaultTopMemoFields],
       skipSelectiveExpenses: [isSkippedExpense],
       defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],
       defaultDepartment: [findObjectByDestinationId(this.sageIntacctDepartments, this.advancedSettings.general_mappings.default_department.id)],
