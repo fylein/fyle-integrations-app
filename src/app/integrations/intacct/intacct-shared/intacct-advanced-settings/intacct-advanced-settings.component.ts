@@ -170,38 +170,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     event?.stopPropagation();
   }
 
-  private formatMemoPreview(): void {
-    const time = Date.now();
-    const today = new Date(time);
-
-    const previewValues: { [key: string]: string } = {
-      employee_email: 'john.doe@acme.com',
-      employee_name: 'John Doe',
-      card_number: '**** 3456',
-      category: 'Meals and Entertainment',
-      purpose: 'Client Meeting',
-      merchant: 'Pizza Hut',
-      report_number: 'C/2021/12/R/1',
-      spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
-    };
-    this.memoPreviewText = '';
-    this.topMemoPreviewText = '';
-    const memo: string[] = [];
-    this.memoStructure.forEach((field, index) => {
-      if (field in previewValues) {
-        const defaultIndex = this.defaultMemoFields.indexOf(this.memoStructure[index]);
-        memo[defaultIndex] = previewValues[field];
-      }
-    });
-    memo.forEach((field, index) => {
-      this.memoPreviewText += field;
-      if (index + 1 !== memo.length) {
-        this.memoPreviewText = this.memoPreviewText + ' - ';
-      }
-    });
-  }
-
   private createAutoSyncPaymentsWatcher(): void {
     this.advancedSettingsForm.controls.autoSyncPayments.valueChanges.subscribe((paymentChanges) => {
       if (paymentChanges === PaymentSyncDirection.FYLE_TO_INTACCT) {
@@ -212,12 +180,25 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     });
   }
 
-  private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSettingsForm.get('setDescriptionField')?.value;
-    this.formatMemoPreview();
+  private createMemoStructureWatchers(): void {
+    // For the line item-level memo fields selector
+    const selectedMemoFields = this.advancedSettingsForm.get('setDescriptionField')?.value;
+    const [memoPreviewText] = AdvancedSettingsModel.formatMemoPreview(selectedMemoFields, this.defaultMemoFields);
+    this.memoPreviewText = memoPreviewText;
+
     this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
-      this.memoStructure = memoChanges;
-      this.formatMemoPreview();
+      const [memoPreviewText] = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoFields);
+      this.memoPreviewText = memoPreviewText;
+    });
+
+    // For the top-level memo fields selector
+    const selectedTopMemoFields = this.advancedSettingsForm.get('setTopMemoField')?.value;
+    const [topMemoPreviewText] = AdvancedSettingsModel.formatMemoPreview(selectedTopMemoFields, this.defaultTopMemoFields);
+    this.topMemoPreviewText = topMemoPreviewText;
+
+    this.advancedSettingsForm.controls.setTopMemoField?.valueChanges.subscribe((topMemoChanges) => {
+      const [topMemoPreviewText] = AdvancedSettingsModel.formatMemoPreview(topMemoChanges, this.defaultTopMemoFields);
+      this.topMemoPreviewText = topMemoPreviewText;
     });
   }
 
@@ -264,7 +245,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       singleCreditLineJE: [this.advancedSettings.configurations.je_single_credit_line]
     });
     this.createAutoSyncPaymentsWatcher();
-    this.createMemoStructureWatcher();
+    this.createMemoStructureWatchers();
   }
 
   compareObjects(selectedOption: any, listedOption: any): boolean {
