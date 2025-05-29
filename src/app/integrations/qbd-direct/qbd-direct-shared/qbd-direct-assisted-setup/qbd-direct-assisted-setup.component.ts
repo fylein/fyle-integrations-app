@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
