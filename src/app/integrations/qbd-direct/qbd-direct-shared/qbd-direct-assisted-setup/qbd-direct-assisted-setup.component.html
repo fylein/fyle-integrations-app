@@ -43,13 +43,13 @@
             {{ isQuerySubmitted ? 'We have successfully received your request. Our team will get in touch with you shortly to help you with your issue.' : 'Schedule a quick call with our onboarding specialist at your convenience, we will guide you step-by-step through the entire process and ensure a smooth setup experience'}}
           </div>
 
-          <div class="tw-flex tw-flex-col tw-rounded-lg tw-border tw-border-box-color tw-p-3 tw-gap-2">
+          <div class="tw-flex tw-flex-col tw-rounded-lg tw-border tw-border-box-color tw-p-3 tw-gap-2 tw-cursor-pointer" (click)="openQBDArticle()">
             <div class="tw-font-500">
               Learn how to connect QuickBooks Desktop with Fyle
             </div>
             
             <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center">
-              <span class="tw-flex tw-items-center tw-gap-1 tw-cursor-pointer">
+              <span class="tw-flex tw-items-center tw-gap-1">
                 <img class="tw-w-4 tw-h-4" src="../../../../../assets/fyle/favicon.png"/> 
                 <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1">
                   View article
