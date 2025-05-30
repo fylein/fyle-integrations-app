@@ -13,7 +13,7 @@
                                 <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportSuccessText}}</p>
 
                                 <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-                                @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT].includes(appName)) {
+                                @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
                                     <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
                                         {{ accountingExportSummary?.repurposed_successful_count ? accountingExportSummary?.repurposed_successful_count : 0 }}
                                     </span>
