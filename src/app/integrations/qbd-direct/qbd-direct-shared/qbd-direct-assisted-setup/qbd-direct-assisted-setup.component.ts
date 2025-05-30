@@ -79,6 +79,7 @@ constructor(
       next: () => {
         this.toggleAssistedSetupDialog();
         this.isAssistedSetupSlotBooked = true;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your request has been received.');
       },
       error: () => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
