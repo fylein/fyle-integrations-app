@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [interactionType]="QBDDirectInteractionType.QUERY" [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING" [AppName]="appName" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
+            <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [QBDDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING" [AppName]="appName" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
         </div>
     </div>
 </div>
