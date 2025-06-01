@@ -18,7 +18,7 @@ export class QbdDirectAssistedSetupComponent {
 
   readonly brandingKbArticles = brandingKbArticles;
 
-  @Input() interactionType: QBDDirectInteractionType;
+  @Input() interactionType: QBDDirectInteractionType | undefined;
 
   @Input() isAssistedSetupSlotBooked?: boolean = false;
 
