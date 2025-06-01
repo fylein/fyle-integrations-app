@@ -94,6 +94,6 @@
         </div>
     </div>
     <div *ngIf="!isStepCompleted && showSection && !isStepCompleted">
-        <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
+        <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [QBDDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
     </div>
 </div>
