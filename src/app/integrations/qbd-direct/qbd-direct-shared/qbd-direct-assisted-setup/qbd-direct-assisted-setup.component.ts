@@ -62,11 +62,6 @@ constructor(
   }
 
   onSubmitQuery(): void {
-      if (!this.issueDescription.trim()) {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Please describe the issue you are facing');
-        return;
-      }
-
       this.assistedSetupService.submitRequest(this.issueDescription).subscribe({
         next: () => {
           this.isQuerySubmitted = true;
