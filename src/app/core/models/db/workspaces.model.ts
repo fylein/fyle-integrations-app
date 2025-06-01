@@ -6,7 +6,7 @@ export type Workspace = {
   currency: string;
   created_at: Date;
   updated_at: Date;
-  assisted_setup_requested_at?: Date;
+  assisted_setup_requested_at: Date;
 }
 
 export type WorkspaceOnboardingState = {

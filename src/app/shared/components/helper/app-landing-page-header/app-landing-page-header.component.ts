@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, QBDDirectInteractionType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
@@ -14,6 +14,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 export class AppLandingPageHeaderComponent implements OnInit {
 
   AppName = AppName;
+
+  QBDDirectInteractionType = QBDDirectInteractionType;
 
   @Output() connectIntegration = new EventEmitter<void>();
 

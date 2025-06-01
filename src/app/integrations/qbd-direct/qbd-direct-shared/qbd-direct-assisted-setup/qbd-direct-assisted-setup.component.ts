@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ToastSeverity, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
@@ -14,7 +14,11 @@ import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/
 export class QbdDirectAssistedSetupComponent {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  @Input() interactionType: string;
+  readonly brandingConfig = brandingConfig;
+
+  readonly brandingKbArticles = brandingKbArticles;
+
+  @Input() interactionType: QBDDirectInteractionType;
 
   @Input() isAssistedSetupSlotBooked?: boolean = false;
 
@@ -33,6 +37,10 @@ constructor(
     return window;
   }
 
+  get isButtonDisabled(): boolean {
+    return this.interactionType === QBDDirectInteractionType.QUERY && !this.issueDescription.trim() && !this.isQuerySubmitted;
+  }
+
   toggleAssistedSetupDialog(): void{
     this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
@@ -44,11 +52,11 @@ constructor(
       return;
     }
 
-    if (this.interactionType === "BOOK_SLOT"){
+    if (this.interactionType === QBDDirectInteractionType.BOOK_SLOT){
       this.bookSlot();
     }
 
-    if (this.interactionType === "QUERY"){
+    if (this.interactionType === QBDDirectInteractionType.QUERY){
       this.onSubmitQuery();
     }
   }
@@ -71,7 +79,7 @@ constructor(
   }
 
   openQBDArticle(): void {
-    this.nativeWindow.open('https://www.fylehq.com/help/en/articles/10259583-quickbooks-desktop-integration', '_blank');
+    this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR, '_blank');
   }
 
   bookSlot(): void {

@@ -1275,9 +1275,12 @@ module.exports = {
         '250-px': '250px',
         '300-px': '300px',
         ...dimensions
-      },
+      }, 
       maxWidth: {
         '20-px': '20px',
+        '66-px': '66px',
+        '104-px': '104px',
+        '144-px': '144px',
         '296-px': '296px',
         '300-px': '300px',
         '600-px': '600px',
