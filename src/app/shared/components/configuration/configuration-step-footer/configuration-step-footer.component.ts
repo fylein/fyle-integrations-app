@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-configuration-step-footer',
@@ -20,6 +20,8 @@ export class ConfigurationStepFooterComponent implements OnInit {
   @Input() AppName: string;
 
   @Input() shouldShowQBDAssistedSetup?: boolean;
+
+  @Input() QBDDirectInteractionType?: QBDDirectInteractionType;
 
   @Output() resetCloneSetting = new EventEmitter();
 

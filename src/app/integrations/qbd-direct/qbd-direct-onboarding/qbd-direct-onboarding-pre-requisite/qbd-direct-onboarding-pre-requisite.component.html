@@ -9,7 +9,7 @@
                 <app-configuration-step-header
                     [headerText]="brandingContent.configurationHeaderText"
                     [contentText]="brandingContent.configurationSubHeaderText"
-                    [redirectLink]="redirectLink">
+                    [redirectLink]="QBDconnectorArticleLink">
                 </app-configuration-step-header>
             </div>
             <div class="tw-px-24-px tw-py-10-px">
@@ -28,7 +28,7 @@
                                         <a
                                             [href]="step.externalLink"
                                             target="_blank"
-                                            class="tw-cursor-pointer tw-ml-1 tw-inline-flex tw-items-center"
+                                            class="tw-cursor-pointer tw-ml-4-px tw-inline-flex tw-items-center"
                                             [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-hyperlink-color'"
                                         >
                                             Learn more
@@ -36,7 +36,7 @@
                                                 [svgSource]="'open-in-new-tab'"
                                                 [width]="'16px'"
                                                 [height]="'16px'"
-                                                class="tw-ml-0.5"
+                                                class="tw-ml-2-px"
                                             ></app-svg-icon>
                                         </a>
                                     }
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING" [AppName]="appName" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
+            <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [interactionType]="QBDDirectInteractionType.QUERY" [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING" [AppName]="appName" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
         </div>
     </div>
 </div>

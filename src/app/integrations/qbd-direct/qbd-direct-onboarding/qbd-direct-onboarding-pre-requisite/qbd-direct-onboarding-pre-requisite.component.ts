@@ -5,7 +5,7 @@ import { brandingContent, brandingKbArticles, brandingStyle } from 'src/app/bran
 import { brandingConfig } from 'src/app/branding/c1-content-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
-import { AppName, ConfigurationCta, Page, ProgressPhase, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, Page, ProgressPhase, QBDDirectInteractionType, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
@@ -29,7 +29,11 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   isLoading: boolean;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
+  brandingKbArticles = brandingKbArticles;
+
+  QBDDirectInteractionType = QBDDirectInteractionType;
+
+  QBDconnectorArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
@@ -60,7 +64,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
       id: 3,
       label: 'Log in to QuickBooks Desktop as admin in single-user mode',
       caption: `Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode.`,
-      externalLink: 'https://www.fylehq.com/help/en/articles/10259583-quickbooks-desktop-integration#h_e6a035bc3c',
+      externalLink: this.QBDconnectorArticleLink,
       iconName: 'user-one',
       state: QBDPreRequisiteState.INCOMPLETE
     }
