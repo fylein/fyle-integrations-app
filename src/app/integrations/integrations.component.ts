@@ -8,6 +8,7 @@ import { TrackingService } from '../core/services/integration/tracking.service';
 import { UserService } from '../core/services/misc/user.service';
 import { OrgService } from '../core/services/org/org.service';
 import { EventsService } from '../core/services/common/events.service';
+import { brandingFeatureConfig } from '../branding/branding-config';
 
 @Component({
   selector: 'app-integrations',
@@ -40,7 +41,11 @@ export class IntegrationsComponent implements OnInit {
     const pathName = this.windowReference.location.pathname;
     this.isLoading = false;
     if (pathName === '/integrations') {
-      this.router.navigate(['/integrations/landing']);
+      if (brandingFeatureConfig.featureFlags.useLandingV2) {
+        this.router.navigate(['/integrations/landing_v2']);
+      } else {
+        this.router.navigate(['/integrations/landing']);
+      }
     }
   }
 
