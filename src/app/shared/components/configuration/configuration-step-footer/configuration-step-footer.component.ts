@@ -21,7 +21,7 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   @Input() shouldShowQBDAssistedSetup?: boolean;
 
-  @Input() QBDDirectInteractionType?: QBDDirectInteractionType;
+  @Input() qbdDirectInteractionType?: QBDDirectInteractionType;
 
   @Output() resetCloneSetting = new EventEmitter();
 
