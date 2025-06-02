@@ -104,12 +104,12 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
       if (status === AccountingExportStatus.COMPLETE) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
-        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT].includes(this.appName)) {
+        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(this.appName)) {
           lastExportedAt = this.accountingExportSummary.repurposed_last_exported_at;
         } else {
           lastExportedAt = this.accountingExportSummary.last_exported_at;
         }
-      } else if (status === AccountingExportStatus.FAILED && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT].includes(this.appName)) {
+      } else if (status === AccountingExportStatus.FAILED && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(this.appName)) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
       }
