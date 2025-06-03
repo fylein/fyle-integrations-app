@@ -44,6 +44,9 @@ constructor(
   toggleAssistedSetupDialog(): void{
     this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
+    if(!this.isAssistedSetupDialogVisible){
+      this.issueDescription = '';
+    }
   }
 
   onRequestAssistedSetup(): void {
@@ -65,7 +68,6 @@ constructor(
       this.assistedSetupService.submitRequest(this.issueDescription).subscribe({
         next: () => {
           this.isQuerySubmitted = true;
-          this.issueDescription = '';
         },
         error: () => {
           this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to submit request. Please try again.');
