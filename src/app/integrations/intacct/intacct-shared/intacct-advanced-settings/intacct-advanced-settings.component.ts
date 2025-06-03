@@ -103,7 +103,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   defaultMemoFields: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
 
-  defaultTopMemoFields: string[] = AdvancedSettingsModel.getDefaultTopMemoOptions();
+  defaultTopMemoFields: string[];
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
@@ -322,6 +322,14 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
           this.adminEmails = this.adminEmails.concat(this.advancedSettings.workspace_schedules?.additional_email_options);
         }
         this.defaultMemoFields = AdvancedSettingsModel.getMemoOptions(configuration, AppName.INTACCT);
+
+        const isReimbursableEnabled = exportSettings.configurations.reimbursable_expenses_object;
+        const isCCCEnabled = exportSettings.configurations.corporate_credit_card_expenses_object;
+
+        this.defaultTopMemoFields = AdvancedSettingsModel.getTopLevelMemoOptions(
+          isReimbursableEnabled ? this.reimbursableExportGroup : undefined,
+          isCCCEnabled ? this.cccExportGroup : undefined
+        );
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
