@@ -44,7 +44,7 @@ constructor(
   toggleAssistedSetupDialog(): void{
     this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
-    if(!this.isAssistedSetupDialogVisible){
+    if (!this.isAssistedSetupDialogVisible){
       this.issueDescription = '';
     }
   }
