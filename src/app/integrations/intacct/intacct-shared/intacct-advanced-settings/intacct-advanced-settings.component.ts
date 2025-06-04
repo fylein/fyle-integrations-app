@@ -65,8 +65,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     };
   });
 
-  memoStructure: string[] = [];
-
   sageIntacctLocations: IntacctDestinationAttribute[];
 
   sageIntacctDepartments: IntacctDestinationAttribute[];
