@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { AppName, JoinOption, Operator } from "../enum/enum.model";
+import { AppName, ExpenseGroupingFieldOption, JoinOption, Operator } from "../enum/enum.model";
 import { environment } from "src/environments/environment";
 import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
 import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
@@ -114,6 +114,41 @@ export class AdvancedSettingsModel {
 
   }
 
+  /**
+   * Returns the top level memo options based on whether expenses are grouped by report
+   * @returns string[]
+   */
+  static getTopLevelMemoOptions(reimbursableGroupedBy?: ExpenseGroupingFieldOption, cccGroupedBy?: ExpenseGroupingFieldOption): string[] {
+    let options = this.getDefaultTopMemoOptions();
+    // Exclude employee name from the top level memo options if the feature flag is enabled
+    if (brandingFeatureConfig.featureFlags.advancedSettings.excludeCardNumberAndEmployeeNameInMemo) {
+      options = options.filter(option => option !== 'employee_name');
+    }
+
+    let finalOption;
+    if (reimbursableGroupedBy === cccGroupedBy) {
+      // If reimbursable and ccc are grouped by the same field, then the top level memo option is the field name
+      // ('Expense number' or 'Report number')
+      if (reimbursableGroupedBy === ExpenseGroupingFieldOption.EXPENSE_ID) {
+        finalOption = 'expense_number';
+      } else {
+        finalOption = 'report_number';
+      }
+    } else if (reimbursableGroupedBy === undefined) {
+      // If reimbursable is not grouped, then the top level memo option is the ccc field name
+      finalOption = cccGroupedBy === ExpenseGroupingFieldOption.EXPENSE_ID ? 'expense_number' : 'report_number';
+    } else if (cccGroupedBy === undefined) {
+      // If ccc is not grouped, then the top level memo option is the reimbursable field name
+      finalOption = reimbursableGroupedBy === ExpenseGroupingFieldOption.EXPENSE_ID ? 'expense_number' : 'report_number';
+    } else {
+      // If reimbursable and ccc are grouped by different fields, then default the top level memo option to report number
+      finalOption = 'report_number';
+    }
+
+    options[options.length - 1] = finalOption;
+    return options;
+  }
+
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
     const time = Date.now();
     const today = new Date(time);
@@ -128,6 +163,7 @@ export class AdvancedSettingsModel {
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
       expense_key: 'E/2024/02/T/11',
+      expense_number: 'E/2024/02/T/11',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     let memoPreviewText = '';
