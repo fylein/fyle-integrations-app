@@ -322,6 +322,8 @@ export const fyleContents = {
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
                 postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                 setDescriptionField: 'Set the description field in Sage Intacct',
+                setTopMemoField: 'Customize the top-level description field',
+                topMemoStructureSubLabel: 'Select the datapoints you\'d like to export to Sage Intacct’s top-level description field when exporting expenses from Fyle',
                 dfvLabel: 'Default field values',
                 dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Sage Intacct.',
                 location: 'location',

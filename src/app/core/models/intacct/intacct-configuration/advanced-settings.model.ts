@@ -75,6 +75,7 @@ export interface Configuration {
     auto_create_destination_entity: boolean;
     auto_create_merchant_destination_entity: boolean;
     memo_structure: string[];
+    top_level_memo_structure: string[];
     auto_create_merchants_as_vendors: boolean;
     je_single_credit_line: boolean;
   }
@@ -129,6 +130,7 @@ export type AdvancedSettingsPost = {
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
           change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
           memo_structure: getFormValue('setDescriptionField'),
+          top_level_memo_structure: getFormValue('setTopMemoField'),
           auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false,
           je_single_credit_line: getFormValue('singleCreditLineJE') ? getFormValue('singleCreditLineJE') : false
         },
