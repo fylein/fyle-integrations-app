@@ -55,7 +55,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             autoCreateContacts: false,
             useEmployeeAttributes: true,
             autoCreateMerchants: true,
-            excludeCardNumberAndEmployeeNameInMemo: true
+            excludeCardNumberAndEmployeeNameInMemo: true,
+            showTopLevelMemoFieldInIntacct: false
         },
         exportLog: {
             expenseType: false

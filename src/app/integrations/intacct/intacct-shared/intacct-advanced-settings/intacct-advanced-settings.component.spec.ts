@@ -145,7 +145,6 @@ describe('IntacctAdvancedSettingsComponent', () => {
       component.advancedSettingsForm.get('setDescriptionField')?.setValue(newMemoStructure);
       tick();
 
-      expect(component.memoStructure).toEqual(newMemoStructure);
       expect(component.memoPreviewText).toBe('Client Meeting - Meals and Entertainment - ' + new Date(Date.now()).toLocaleDateString());
     }));
 

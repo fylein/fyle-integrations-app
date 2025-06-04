@@ -60,8 +60,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
-  memoStructure: string[] = [];
-
   sageIntacctLocations: IntacctDestinationAttribute[];
 
   sageIntacctDepartments: IntacctDestinationAttribute[];
@@ -225,7 +223,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
       postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? true : false],
       setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
-      setTopMemoField: [this.advancedSettings.configurations.top_level_memo_structure ? this.advancedSettings.configurations.top_level_memo_structure : this.defaultTopMemoFields],
+      setTopMemoField: [this.advancedSettings.configurations.top_level_memo_structure ? this.advancedSettings.configurations.top_level_memo_structure : []],
       skipSelectiveExpenses: [isSkippedExpense],
       defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],
       defaultDepartment: [findObjectByDestinationId(this.sageIntacctDepartments, this.advancedSettings.general_mappings.default_department.id)],

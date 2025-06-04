@@ -49,6 +49,7 @@ export type FeatureConfiguration = {
                 useEmployeeAttributes: boolean;
                 autoCreateMerchants: boolean;
                 excludeCardNumberAndEmployeeNameInMemo: boolean;
+                showTopLevelMemoFieldInIntacct: boolean;
             },
             exportLog: {
                 expenseType: boolean;
