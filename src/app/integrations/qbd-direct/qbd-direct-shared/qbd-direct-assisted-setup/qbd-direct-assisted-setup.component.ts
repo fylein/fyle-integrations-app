@@ -85,6 +85,7 @@ constructor(
         this.toggleAssistedSetupDialog();
         this.isAssistedSetupSlotBooked = true;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your request has been received.');
+        this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.GCAL_LINK, '_blank');
       },
       error: () => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
