@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, QBDDirectInteractionType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
@@ -14,6 +14,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 export class AppLandingPageHeaderComponent implements OnInit {
 
   AppName = AppName;
+
+  QBDDirectInteractionType = QBDDirectInteractionType;
 
   @Output() connectIntegration = new EventEmitter<void>();
 
@@ -59,7 +61,9 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px';
 
-  uiExposedAppName: string;
+  @Input() uiExposedAppName: string;
+
+  @Input() isAssistedSetupSlotBooked?: boolean;
 
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 
@@ -106,7 +110,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
+    this.uiExposedAppName ||= this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
   }
 
 }

@@ -53,6 +53,7 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
 import { DashboardErrorSectionComponent } from './components/dashboard/dashboard-error-section/dashboard-error-section.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
+import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
@@ -93,7 +94,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
-import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
+import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
+import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 
 
@@ -172,6 +174,8 @@ import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log
     OptionalFieldComponent,
     SentenceCasePipe,
     BadgeComponent,
+    OutlinedIconButtonComponent,
+    QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
   ],
   imports: [
@@ -275,6 +279,8 @@ import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log
     SentenceCasePipe,
     BadgeComponent,
     CheckboxButtonComponent,
+    OutlinedIconButtonComponent,
+    QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
   ]
 })

@@ -26,6 +26,7 @@ export const workspaceResponse: IntacctWorkspace[] = [{
     "onboarding_state": IntacctOnboardingState.CONNECTION,
     "created_at": new Date("2023-06-23T05:37:56.907997Z"),
     "updated_at": new Date("2023-06-23T05:37:56.907997Z"),
+    "assisted_setup_requested_at": new Date("2023-06-23T05:37:56.907997Z"),
     "user": [1],
     "last_synced_at": new Date("2023-06-23T05:37:56.907997Z"),
     "source_synced_at": new Date("2023-06-23T05:37:56.907997Z"),

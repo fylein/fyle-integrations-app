@@ -948,3 +948,8 @@ export enum IframeOrigin {
   ADMIN_DASHBOARD = 'ADMIN_DASHBOARD',
   NATIVE_APPS = 'NATIVE_APPS'
 }
+
+export enum QBDDirectInteractionType {
+  BOOK_SLOT = 'BOOK_SLOT',
+  QUERY = 'QUERY'
+}
