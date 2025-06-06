@@ -1,11 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
+import { QbdDirectImportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
+import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
@@ -35,6 +38,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   isOnboarding: any;
 
   exportSettings: QbdDirectExportSettingGet | null;
+
+  isImportItemsEnabled: boolean;
 
   exportSettingsForm: FormGroup;
 
@@ -72,6 +77,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   isSaveInProgress: boolean;
 
+  isConfirmationDialogVisible: boolean;
+
+  warningDialogText: string;
+
   ConfigurationCtaText = ConfigurationCta;
 
   destinationAccounts: QbdDirectDestinationAttribute[];
@@ -92,6 +101,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
+    private importSettingService: QbdDirectImportSettingsService,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -223,6 +233,23 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   save() {
+    if (this.isAdvancedSettingAffected()) {
+      this.warningDialogText = this.constructWarningMessage();
+      this.isConfirmationDialogVisible = true;
+      return;
+    }
+
+    this.constructPayloadAndSave();
+  }
+
+  constructPayloadAndSave(data?: ConfigurationWarningOut): void {
+    this.isConfirmationDialogVisible = false;
+    
+    // If data is provided (from warning dialog), check if user accepted
+    if (data && !data.hasAccepted) {
+      return; // Don't proceed if user clicked X or Cancel
+    }
+    
     this.isSaveInProgress = true;
       const exportSettingPayload = QbdDirectExportSettingModel.constructPayload(this.exportSettingsForm);
       this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QbdDirectExportSettingGet) => {
@@ -440,6 +467,73 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return null;
   }
 
+  private convertEnumToHumanReadable(enumValue: string): string {
+    if (!enumValue) return enumValue;
+    
+    // Convert snake_case/UPPER_CASE to human readable text
+    return enumValue
+      .replace(/_/g, ' ')  // Replace underscores with spaces
+      .toLowerCase()       // Convert to lowercase
+      .replace(/^\w/, (c: string) => c.toUpperCase()); // Capitalize first letter
+  }
+
+  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
+    const updatedConfigHumanReadable = this.convertEnumToHumanReadable(updatedConfiguration);
+    const existingConfigHumanReadable = this.convertEnumToHumanReadable(existingConfiguration);
+    
+    const newConfiguration = `You have <b>selected a new export type</b> for the ${exportType} expense`;
+    const configurationUpdate = `You have changed the export type of ${exportType} expense from <b>${existingConfigHumanReadable}</b> to <b>${updatedConfigHumanReadable}</b>,`;
+    let content: string = '';
+
+    if (existingConfiguration && existingConfiguration !== 'None') {
+      content = configurationUpdate;
+    } else {
+      content = newConfiguration.replace('$exportType', exportType);
+    }
+
+    // Add Journal Entry warning for items
+    if ((updatedConfiguration === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || updatedConfiguration === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY) && this.isImportItemsEnabled) {
+      return `${content} <br><br>Also, Products/services previously imported as categories in ${brandingConfig.brandName} will be disabled.`;
+    }
+    
+    return content;
+  }
+
+  private constructWarningMessage(): string {
+    let content: string = '';
+    const existingReimbursableExportType = this.exportSettings?.reimbursable_expense_export_type || 'None';
+    const existingCorporateCardExportType = this.exportSettings?.credit_card_expense_export_type || 'None';
+    const updatedReimbursableExportType = this.exportSettingsForm.get('reimbursableExportType')?.value || 'None';
+    const updatedCorporateCardExportType = this.exportSettingsForm.get('creditCardExportType')?.value || 'None';
+
+    if (this.isJournalEntryAffected()) {
+      if (updatedReimbursableExportType !== existingReimbursableExportType) {
+        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+      } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
+        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+      }
+    }
+
+    return content;
+  }
+
+  private isExportSettingsUpdated(): boolean {
+    return this.exportSettings?.reimbursable_expense_export_type !== null || this.exportSettings?.credit_card_expense_export_type !== null;
+  }
+
+  private isJournalEntryAffected(): boolean {
+    return (this.exportSettings?.reimbursable_expense_export_type !== QBDReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY) || 
+           (this.exportSettings?.credit_card_expense_export_type !== QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+  }
+
+  private isAdvancedSettingAffected(): boolean {
+    if (this.isExportSettingsUpdated() && this.isJournalEntryAffected() && this.isImportItemsEnabled) {
+      return true;
+    }
+
+    return false;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -460,8 +554,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
     forkJoin([
       this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
+      this.importSettingService.getImportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
-    ]).subscribe(([exportSettingResponse, ...paginatedAccounts]) => {
+    ]).subscribe(([exportSettingResponse, importSettingsResponse, ...paginatedAccounts]) => {
+
+      // Extract items status
+      this.isImportItemsEnabled = importSettingsResponse?.import_settings?.import_item_as_category || false;
 
       let accounts: DestinationAttribute[] = [];
       for (const response of paginatedAccounts) {
