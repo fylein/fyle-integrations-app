@@ -81,7 +81,7 @@
           </button>
         }
 
-        <button type="button" pButton (click)="onRequestAssistedSetup()" class="submit-btn" [disabled]="isButtonDisabled" [ngClass]="interactionType === 'BOOK_SLOT' && isAssistedSetupSlotBooked ? 'tw-max-w-66-px' : (interactionType === 'BOOK_SLOT' ? 'tw-max-w-104-px' : 'tw-max-w-144-px')">
+        <button type="button" pButton (click)="onRequestAssistedSetup()" class="submit-btn" [disabled]="isButtonDisabled" [ngClass]="interactionType === 'BOOK_SLOT' && isAssistedSetupSlotBooked || isQuerySubmitted ? 'tw-max-w-66-px' : (interactionType === 'BOOK_SLOT' ? 'tw-max-w-104-px' : 'tw-max-w-144-px')">
           {{ 
             isQuerySubmitted ? 'Okay' : (interactionType === 'BOOK_SLOT' ? 'Book a slot' : 'Submit a request') 
           }}
