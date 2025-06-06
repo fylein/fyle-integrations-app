@@ -70,13 +70,11 @@ export class ExportLogService {
     }
 
     if (selectedDateFilter) {
-      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-
-      const dateFormat = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+      const {startDate, endDate} = selectedDateFilter;
+      endDate.setHours(23, 59, 59);
       const dateRange = {
-        start: `${dateFormat}T00:00:00`,
-        end: `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`
+        start: `${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()}T${startDate.getUTCHours()}:${startDate.getUTCMinutes()}:${startDate.getUTCSeconds()}`,
+        end: `${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}T${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`
       };
 
       if (state === TaskLogState.COMPLETE) {
