@@ -44,6 +44,9 @@ constructor(
   toggleAssistedSetupDialog(): void{
     this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
+    if (!this.isAssistedSetupDialogVisible){
+      this.issueDescription = '';
+    }
   }
 
   onRequestAssistedSetup(): void {
@@ -65,7 +68,6 @@ constructor(
       this.assistedSetupService.submitRequest(this.issueDescription).subscribe({
         next: () => {
           this.isQuerySubmitted = true;
-          this.issueDescription = '';
         },
         error: () => {
           this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to submit request. Please try again.');
@@ -83,6 +85,7 @@ constructor(
         this.toggleAssistedSetupDialog();
         this.isAssistedSetupSlotBooked = true;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your request has been received.');
+        this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.GCAL_LINK, '_blank');
       },
       error: () => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');

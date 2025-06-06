@@ -2,6 +2,7 @@
 
 # Compiled output
 .cursorrules
+.cursor/
 /dist
 /tmp
 /out-tsc

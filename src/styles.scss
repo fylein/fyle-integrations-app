@@ -229,7 +229,13 @@ p {
     @apply tw-border-t-tooltip-bg #{!important};
 }
 
+.p-tooltip.p-tooltip-bottom {
+    margin-top: 4px;
+}
+
 .p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
+    border: 2px solid transparent !important;
+    margin-top: -2px !important;
     @apply tw-border-b-tooltip-bg #{!important};
 }
 

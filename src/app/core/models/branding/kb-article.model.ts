@@ -19,6 +19,7 @@ export type KbArticle = {
                 ADVANCED_SETTING: string;
                 CONNECTOR: string;
                 HELPER_ARTICLE: string;
+                GCAL_LINK: string;
             },
             INTACCT: {
                 IMPORT_SETTING: string;
