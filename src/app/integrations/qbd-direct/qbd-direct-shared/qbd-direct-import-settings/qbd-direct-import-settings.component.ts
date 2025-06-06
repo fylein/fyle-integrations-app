@@ -12,12 +12,14 @@ import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState, ProgressPhase, QbdDirectUpdateEvent, TrackingApp, Page } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectImportSettingGet, QbdDirectImportSettingModel, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
+import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -62,6 +64,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   isPreviewDialogVisible: boolean;
 
   importSettings: QbdDirectImportSettingGet | null;
+
+  exportSettings: QbdDirectExportSettingGet;
 
   customFieldType: string;
 
@@ -118,6 +122,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
+    private exportSettingService: QbdDirectExportSettingsService,
     private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService,
     private trackingService: TrackingService
@@ -282,10 +287,12 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields(),
       this.importSettingService.getQbdDirectFields(),
       this.importSettingService.getImportCodeFieldConfig(),
-      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null)))
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse]) => {
+      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null))),
+      this.exportSettingService.getQbdExportSettings()
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse, exportSettingsResponse]) => {
       this.QbdDirectFields = QbdDirectFields;
       this.importSettings = importSettingsResponse;
+      this.exportSettings = exportSettingsResponse;
 
       this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;

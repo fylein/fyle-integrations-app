@@ -61,6 +61,19 @@
                     </div>
                 </div>
 
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" 
+                     *ngIf="brandingFeatureConfig.featureFlags.importSettings.importItems && 
+                            exportSettings.reimbursable_expense_export_type !== QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY && 
+                            exportSettings.credit_card_expense_export_type !== QbdDirectCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importItemsLabel"
+                        [subLabel]="brandingContent.importItemsSubLabel"
+                        [formControllerName]="'importItems'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
