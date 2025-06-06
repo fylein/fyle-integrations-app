@@ -244,12 +244,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   constructPayloadAndSave(data?: ConfigurationWarningOut): void {
     this.isConfirmationDialogVisible = false;
-    
+
     // If data is provided (from warning dialog), check if user accepted
     if (data && !data.hasAccepted) {
       return; // Don't proceed if user clicked X or Cancel
     }
-    
+
     this.isSaveInProgress = true;
       const exportSettingPayload = QbdDirectExportSettingModel.constructPayload(this.exportSettingsForm);
       this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QbdDirectExportSettingGet) => {
@@ -468,9 +468,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   private convertEnumToHumanReadable(enumValue: string): string {
-    if (!enumValue) return enumValue;
-    
-    // Convert snake_case/UPPER_CASE to human readable text
+    if (!enumValue) {
+      return enumValue;
+    }
+
+    // Convert snake_case/UPPER_CASE to human readable tex
     return enumValue
       .replace(/_/g, ' ')  // Replace underscores with spaces
       .toLowerCase()       // Convert to lowercase
@@ -480,7 +482,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
     const updatedConfigHumanReadable = this.convertEnumToHumanReadable(updatedConfiguration);
     const existingConfigHumanReadable = this.convertEnumToHumanReadable(existingConfiguration);
-    
+
     const newConfiguration = `You have <b>selected a new export type</b> for the ${exportType} expense`;
     const configurationUpdate = `You have changed the export type of ${exportType} expense from <b>${existingConfigHumanReadable}</b> to <b>${updatedConfigHumanReadable}</b>,`;
     let content: string = '';
@@ -495,7 +497,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     if ((updatedConfiguration === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || updatedConfiguration === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY) && this.isImportItemsEnabled) {
       return `${content} <br><br>Also, Products/services previously imported as categories in ${brandingConfig.brandName} will be disabled.`;
     }
-    
+
     return content;
   }
 
@@ -522,7 +524,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   private isJournalEntryAffected(): boolean {
-    return (this.exportSettings?.reimbursable_expense_export_type !== QBDReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY) || 
+    return (this.exportSettings?.reimbursable_expense_export_type !== QBDReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY) ||
            (this.exportSettings?.credit_card_expense_export_type !== QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
   }
 
