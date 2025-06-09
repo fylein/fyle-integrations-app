@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CardModule } from 'primeng/card';
-import { AppName, ConfigurationCta, QBDConnectionStatus } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDConnectionStatus, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { MessageService } from 'primeng/api';
@@ -43,6 +43,8 @@ export class QbdDirectSetupConnectionComponent {
   appName = AppName;
 
   readonly brandingConfig = brandingConfig;
+
+  QBDDirectInteractionType = QBDDirectInteractionType;
 
   constructor(private messageService: MessageService) {}
 

@@ -7,6 +7,7 @@ import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/net
 import { IntacctConfiguration } from "../db/configuration.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SelectFormOption } from "./select-form-option.model";
+
 export type EmailOption = {
     email: string;
     name: string;
@@ -159,6 +160,21 @@ export class AdvancedSettingsModel {
 
   static formatSelectedEmails(emails: EmailOption[]): string[] {
     return emails.map((option: EmailOption) => option.email);
+  }
+
+  static getExportFrequency(isRealTimeExportEnabled: boolean, isOnboarding: boolean, autoImportExportEnabled: boolean, intervalHours: number): number {
+    let frequency;
+
+    // Set frequency to 0 if real time export is enabled or onboarding is true
+    if (isRealTimeExportEnabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
+      frequency = 0;
+    } else if (autoImportExportEnabled) {
+      frequency = intervalHours;
+    } else {
+      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
+    }
+
+    return frequency;
   }
 }
 
