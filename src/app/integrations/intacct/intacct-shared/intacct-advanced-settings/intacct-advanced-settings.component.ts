@@ -3,13 +3,15 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
-import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, QBDAccountingExportsState } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 
 import { LowerCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
@@ -54,12 +56,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   adminEmails: QBDEmailOptions[] = [];
 
-  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   memoStructure: string[] = [];
 
@@ -80,6 +77,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   reimbursableExpense?: IntacctReimbursableExpensesObject;
 
   corporateCreditCardExpense?: IntacctCorporateCreditCardExpensesObject;
+
+  reimbursableExportGroup?: ExpenseGroupingFieldOption;
+
+  cccExportGroup?: ExpenseGroupingFieldOption;
 
   importVendorsAsMerchants: boolean;
 
@@ -129,7 +130,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
-    private mappingService: SiMappingsService
+    private mappingService: SiMappingsService,
+    private exportSettingService : SiExportSettingService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -220,11 +222,15 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     return paymentSync;
   }
 
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return (this.reimbursableExpense === IntacctReimbursableExpensesObject.JOURNAL_ENTRY && this.reimbursableExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER) || (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.cccExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER);
+  }
+
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     this.advancedSettingsForm = this.formBuilder.group({
-      exportSchedule: [this.advancedSettings?.workspace_schedules?.enabled ? true : false],
-      exportScheduleFrequency: [this.advancedSettings?.workspace_schedules?.enabled ? this.advancedSettings?.workspace_schedules.interval_hours : 1],
+      exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportScheduleFrequency: new FormControl(AdvancedSettingsModel.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
@@ -243,7 +249,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null],
       searchOption: [''],
-      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false)
+      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false),
+      singleCreditLineJE: [this.advancedSettings.configurations.je_single_credit_line]
     });
     this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();
@@ -291,14 +298,16 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
+    const exportSettings$ = this.exportSettingService.getExportSettings();
 
     forkJoin({
       advancedSettings: advancedSettings$,
       groupedAttributes: groupedAttributes$,
       expenseFilter: expenseFilters$,
-      configuration: config$
+      configuration: config$,
+      exportSettings: exportSettings$
     }).subscribe(
-      ({ advancedSettings, groupedAttributes, expenseFilter, configuration }) => {
+      ({ advancedSettings, groupedAttributes, expenseFilter, configuration, exportSettings }) => {
         this.advancedSettings = advancedSettings;
         this.sageIntacctLocations = groupedAttributes.LOCATION;
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
@@ -308,6 +317,11 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
+        const reimbursableGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
+        const cccGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
+
+        this.reimbursableExportGroup = reimbursableGroup ? reimbursableGroup as ExpenseGroupingFieldOption : undefined;
+        this.cccExportGroup = cccGroup ? cccGroup as ExpenseGroupingFieldOption : undefined;
         this.importVendorsAsMerchants = configuration.import_vendors_as_merchants;
         this.useMerchantInJournalLine = configuration.use_merchant_in_journal_line;
         this.employeeFieldMapping = configuration.employee_field_mapping;

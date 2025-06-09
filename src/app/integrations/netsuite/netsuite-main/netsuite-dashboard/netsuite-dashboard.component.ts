@@ -51,7 +51,7 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.NETSUITE);
 
   accountingExportType: NetsuiteTaskLogType[] = [NetsuiteTaskLogType.CREATING_BILL, NetsuiteTaskLogType.CREATING_EXPENSE_REPORT, NetsuiteTaskLogType.CREATING_CREDIT_CARD_CHARGE, NetsuiteTaskLogType.CREATING_CREDIT_CARD_REFUND, NetsuiteTaskLogType.CREATING_JOURNAL_ENTRY];
 

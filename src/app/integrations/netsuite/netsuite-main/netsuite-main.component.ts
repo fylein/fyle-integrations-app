@@ -12,7 +12,7 @@ import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-c
   templateUrl: './netsuite-main.component.html',
   styleUrls: ['./netsuite-main.component.scss']
 })
-export class NetsuiteMainComponent implements OnInit {
+export class NetsuiteMainComponent {
 
   appName: AppName = AppName.NETSUITE;
 
@@ -25,14 +25,11 @@ export class NetsuiteMainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/netsuite/main/configuration'}
   ];
 
-  activeModule: MenuItem;
-
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private accountingExportService: AccountingExportService,
     private netsuiteHelperService: NetsuiteHelperService,
-    private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 
@@ -42,15 +39,4 @@ export class NetsuiteMainComponent implements OnInit {
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from NetSuite');
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
-
 }

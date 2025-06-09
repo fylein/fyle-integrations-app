@@ -39,6 +39,10 @@ export class AuthService {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token: refreshToken });
   }
 
+  clearTokens() {
+    this.storageService.set('integration-tokens', {});
+  }
+
   storeTokens(appKey: IntegrationAppKey, tokens: Tokens) {
     let integrationTokens: IntegrationTokensMap | undefined = this.storageService.get('integration-tokens');
     if (integrationTokens) {

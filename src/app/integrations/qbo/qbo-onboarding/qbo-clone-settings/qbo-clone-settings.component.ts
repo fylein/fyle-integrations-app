@@ -157,12 +157,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   DefaultImportFields = DefaultImportFields;
 
@@ -522,7 +517,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
 
         this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
+        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
 
         this.setupAdvancedSettingFormWatcher();
 

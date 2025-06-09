@@ -17,6 +17,7 @@ export type FeatureConfiguration = {
             useCustomIcon: boolean;
             displayAppLogoInDashboard: boolean;
             contentVersion: string;
+            useLandingV2: boolean;
             exportSettings: {
                 isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;
@@ -57,6 +58,7 @@ export type FeatureConfiguration = {
             },
             dashboard: {
                 disconnectButton: boolean;
+                useRepurposedExportSummary: boolean;
             }
         }
     }
