@@ -56,12 +56,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   adminEmails: QBDEmailOptions[] = [];
 
-  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   memoStructure: string[] = [];
 
@@ -234,8 +229,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     this.advancedSettingsForm = this.formBuilder.group({
-      exportSchedule: [this.advancedSettings?.workspace_schedules?.enabled ? true : false],
-      exportScheduleFrequency: [this.advancedSettings?.workspace_schedules?.enabled ? this.advancedSettings?.workspace_schedules.interval_hours : 1],
+      exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportScheduleFrequency: new FormControl(AdvancedSettingsModel.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
