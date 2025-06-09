@@ -56,12 +56,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   ConfigurationCtaText = ConfigurationCta;
 
@@ -172,7 +167,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
+      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.setupFormWatchers();
       this.createMemoStructureWatcher();
       this.isLoading = false;

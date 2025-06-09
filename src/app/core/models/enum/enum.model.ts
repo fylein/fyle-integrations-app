@@ -322,7 +322,8 @@ export enum FyleField {
   VENDOR = 'VENDOR',
   CATEGORY = 'CATEGORY',
   PROJECT = 'PROJECT',
-  COST_CENTER = 'COST_CENTER'
+  COST_CENTER = 'COST_CENTER',
+  CORPORATE_CARD = 'CORPORATE_CARD'
 }
 
 export enum NetsuiteCustomSegmentOption {
@@ -531,7 +532,8 @@ export enum SageIntacctField {
   CUSTOMER = 'CUSTOMER',
   DEPARTMENT = 'DEPARTMENT',
   CLASS = 'CLASS',
-  TAX_CODE = 'TAX_CODE'
+  TAX_CODE = 'TAX_CODE',
+  VENDOR = 'VENDOR'
 }
 
 export enum MappingSourceField {
@@ -863,7 +865,8 @@ export enum ConfigurationWarningEvent {
   QBO_EXPORT_SETTINGS = 'QBO_EXPORT_SETTINGS',
   NETSUITE_EXPORT_SETTINGS = 'NETSUITE_EXPORT_SETTINGS',
   XERO_EXPORT_SETTINGS = 'XERO_EXPORT_SETTINGS',
-  RESET_CONFIGURATION = 'RESET_CONFIGURATION'
+  RESET_CONFIGURATION = 'RESET_CONFIGURATION',
+  INTACCT_EXPORT_SETTINGS = 'INTACCT_EXPORT_SETTINGS'
 }
 
 export enum InputType {
@@ -944,4 +947,9 @@ export enum QBDConnectionStatus {
 export enum IframeOrigin {
   ADMIN_DASHBOARD = 'ADMIN_DASHBOARD',
   NATIVE_APPS = 'NATIVE_APPS'
+}
+
+export enum QBDDirectInteractionType {
+  BOOK_SLOT = 'BOOK_SLOT',
+  QUERY = 'QUERY'
 }

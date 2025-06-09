@@ -76,6 +76,7 @@ export interface Configuration {
     auto_create_merchant_destination_entity: boolean;
     memo_structure: string[];
     auto_create_merchants_as_vendors: boolean;
+    je_single_credit_line: boolean;
   }
 
   export interface AdvancedSettingGeneralMapping {
@@ -95,6 +96,7 @@ export interface Configuration {
     interval_hours: number;
     emails_selected: string[] | [];
     additional_email_options: EmailOption[];
+    is_real_time_export_enabled: boolean;
   }
 
 export type AdvancedSettingsGet = {
@@ -127,7 +129,8 @@ export type AdvancedSettingsPost = {
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
           change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
           memo_structure: getFormValue('setDescriptionField'),
-          auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false
+          auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false,
+          je_single_credit_line: getFormValue('singleCreditLineJE') ? getFormValue('singleCreditLineJE') : false
         },
         general_mappings: {
           payment_account: mapAttribute('defaultPaymentAccount', 'destination_id', 'value'),
@@ -143,6 +146,7 @@ export type AdvancedSettingsPost = {
           start_datetime: '',
           enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
           interval_hours: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
+          is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
           emails_selected: advancedSettingsForm.get('email')?.value ? this.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
           additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
         }

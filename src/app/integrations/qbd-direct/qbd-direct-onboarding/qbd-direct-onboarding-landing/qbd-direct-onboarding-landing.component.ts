@@ -27,6 +27,8 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
 
   isQbdConnectionInProgress = false;
 
+  isAssistedSetupSlotBooked: boolean;
+
   readonly brandingContent = brandingContent.qbd_direct.landing;
 
   constructor(
@@ -49,6 +51,10 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
     this.workspaceService.getWorkspace(user.org_id).subscribe((workspaces: QbdDirectWorkspace[]) => {
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {
         this.router.navigate([`/integrations/qbd_direct`]);
+      } else {
+        if (workspaces.length && workspaces[0].assisted_setup_requested_at){
+          this.isAssistedSetupSlotBooked = true;
+        }
       }
     });
   }

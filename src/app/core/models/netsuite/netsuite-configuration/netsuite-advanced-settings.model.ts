@@ -36,6 +36,7 @@ export type NetsuiteAdvancedSettingWorkspaceSchedule = {
   enabled: boolean,
   interval_hours: number,
   emails_selected: string[] | null,
+  is_real_time_export_enabled: boolean,
   additional_email_options: EmailOption[]
 }
 
@@ -66,12 +67,12 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
   selectedEmails: string[];
 }
 
-export class NetsuiteAdvancedSettingModel extends HelperUtility {
-  static getDefaultMemoOptions(): string[] {
+export class NetsuiteAdvancedSettingModel extends AdvancedSettingsModel {
+  static override getDefaultMemoOptions(): string[] {
     return AdvancedSettingsModel.getDefaultMemoOptions();
   }
 
-  static getMemoOptions(exportSettings: NetSuiteExportSettingGet, appName: AppName): string[] {
+  static override getMemoOptions(exportSettings: NetSuiteExportSettingGet, appName: AppName): string[] {
     const defaultOptions = this.getDefaultMemoOptions();
     const cccExportType = exportSettings.configuration.corporate_credit_card_expenses_object;
 
@@ -130,17 +131,18 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
         if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE) || (keys[index] !== 'paymentSync'))) {
-          this.markControllerAsRequired(form, value);
+          HelperUtility.markControllerAsRequired(form, value);
         } else {
-          this.clearValidatorAndResetValue(form, value);
+          HelperUtility.clearValidatorAndResetValue(form, value);
         }
       });
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
     const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
     const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
+
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.configuration.sync_fyle_to_netsuite_payments ? NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE : advancedSettings?.configuration.sync_netsuite_to_fyle_payments ? NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE : null),
       paymentAccount: new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
@@ -156,8 +158,8 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
       singleCreditLineJE: new FormControl(advancedSettings?.configuration.je_single_credit_line),
-      exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
-      exportScheduleFrequency: new FormControl(advancedSettings?.workspace_schedules?.enabled ? advancedSettings?.workspace_schedules.interval_hours : 1),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
       memoStructure: new FormControl(advancedSettings?.configuration.memo_structure),
       autoCreateMerchants: new FormControl(advancedSettings?.configuration?.auto_create_merchants ? advancedSettings.configuration.auto_create_merchants : false),
       skipExport: new FormControl(isSkipExportEnabled),
@@ -195,7 +197,8 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
-        interval_hours: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
+        interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
+        is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
         emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
         additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
       }

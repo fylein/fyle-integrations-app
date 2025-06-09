@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -96,12 +97,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1).toString(),
-      value: day + 1
-    };
-  });
+  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
 
   advancedSettingForm: FormGroup<any>;
 
@@ -375,7 +371,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       }
 
       this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at));
+      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
       this.setupAdvancedSettingFormWatcher();
 
       // Convert field values from destination attributes to *default* destination attributes

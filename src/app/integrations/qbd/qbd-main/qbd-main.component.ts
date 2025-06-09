@@ -21,12 +21,9 @@ export class QbdMainComponent implements OnInit {
 
   activeModules: MenuItem[];
 
-  activeModule: MenuItem;
-
   appName: AppName = AppName.QBD;
 
   constructor(
-    private router: Router,
     private mappingService: QbdMappingService,
     private qbdservice: QbdExportSettingService
   ) {
@@ -47,8 +44,6 @@ export class QbdMainComponent implements OnInit {
       } else {
         this.mappingService.getMappingPagesForSideNavBar.emit(false);
       }
-      this.activeModule = this.activeModules[0];
-      this.router.navigateByUrl(this.activeModules[0].routerLink);
     });
   }
 

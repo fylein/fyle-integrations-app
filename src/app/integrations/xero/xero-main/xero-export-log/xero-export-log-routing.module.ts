@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { XeroSkippedExportLogComponent } from './xero-skipped-export-log/xero-skipped-export-log.component';
 import { XeroCompleteExportLogComponent } from './xero-complete-export-log/xero-complete-export-log.component';
 import { XeroExportLogComponent } from './xero-export-log.component';
 
