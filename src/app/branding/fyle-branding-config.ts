@@ -55,7 +55,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             autoCreateContacts: true,
             useEmployeeAttributes: true,
             autoCreateMerchants: true,
-            excludeCardNumberAndEmployeeNameInMemo: false
+            excludeCardNumberAndEmployeeNameInMemo: false,
+            showTopLevelMemoFieldInIntacct: true
         },
         exportLog: {
             expenseType: true
