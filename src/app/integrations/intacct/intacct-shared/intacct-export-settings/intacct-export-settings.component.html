@@ -285,6 +285,15 @@
     </form>
 </div>
 
+<app-configuration-confirmation-dialog
+    (warningAccepted)="constructPayloadAndSave($event)"
+    [isWarningVisible]="isConfirmationDialogVisible"
+    [headerText]="'Change in configuration'"
+    [contextText]="warningDialogText"
+    [confirmBtnText]="'Continue'"
+    [showSecondaryCTA]="false">
+</app-configuration-confirmation-dialog>
+
 <ng-template #employeeFieldMapping>
     <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingsForm">
         <app-configuration-select-field

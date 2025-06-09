@@ -26,6 +26,7 @@ export const workspaceResponse: IntacctWorkspace[] = [{
     "onboarding_state": IntacctOnboardingState.CONNECTION,
     "created_at": new Date("2023-06-23T05:37:56.907997Z"),
     "updated_at": new Date("2023-06-23T05:37:56.907997Z"),
+    "assisted_setup_requested_at": new Date("2023-06-23T05:37:56.907997Z"),
     "user": [1],
     "last_synced_at": new Date("2023-06-23T05:37:56.907997Z"),
     "source_synced_at": new Date("2023-06-23T05:37:56.907997Z"),
@@ -139,7 +140,10 @@ export const mockExportDetails: AccountingExportSummary = {
   "workspace": 309,
   total_accounting_export_count: 0,
   successful_accounting_export_count: 0,
-  failed_accounting_export_count: 0
+  failed_accounting_export_count: 0,
+  repurposed_last_exported_at: "2024-08-28T17:11:21.098195Z",
+  repurposed_successful_count: 0,
+  repurposed_failed_count: 29
 };
 
 export const mockTasks = {
@@ -277,6 +281,7 @@ export const mockConfiguration = {
   "import_vendors_as_merchants": true,
   "use_merchant_in_journal_line": false,
   "auto_create_merchants_as_vendors": false,
+  "je_single_credit_line": false,
   "import_code_fields": [
       "_EXPENSE_TYPE",
       "_ACCOUNT"
@@ -295,7 +300,10 @@ export const mockAccountingExportSummary = {
   "failed_expense_groups_count": 29,
   "created_at": "2023-07-17T20:56:55.442251Z",
   "updated_at": "2024-09-11T10:08:20.636603Z",
-  "workspace": 240
+  "workspace": 240,
+  "repurposed_last_exported_at": "2024-08-28T17:11:21.098195Z",
+  "repurposed_successful_count": 0,
+  "repurposed_failed_count": 29
 };
 
 
@@ -979,7 +987,8 @@ export const advancedSettings =  {
     auto_create_destination_entity: true,
     change_accounting_period: true,
     memo_structure: ['employee_email', 'merchant', 'purpose'],
-    auto_create_merchants_as_vendors: false
+    auto_create_merchants_as_vendors: false,
+    je_single_credit_line: false
   },
   general_mappings: {
     default_location: { id: 'LOC1' },

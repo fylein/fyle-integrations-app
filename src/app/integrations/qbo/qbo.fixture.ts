@@ -1015,7 +1015,8 @@ export const mockQboAdvancedSettings = {
       "emails_selected": [
           "admin1@fylefororion.fyle.in",
           "owner@fylefororion.fyle.in"
-      ]
+      ],
+      "is_real_time_export_enabled": true
   },
   "workspace_id": 525
 };
@@ -1692,7 +1693,10 @@ export const mockAccountingExportSummary = {
   failed_accounting_export_count: 2,
   created_at: '2023-01-01T00:00:00Z',
   updated_at: '2023-01-01T00:00:00Z',
-  workspace: 1
+  workspace: 1,
+  repurposed_last_exported_at: '2023-01-01T00:00:00Z',
+  repurposed_successful_count: 8,
+  repurposed_failed_count: 2
 };
 
 export const mockExportDetails = {

@@ -24,6 +24,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         useCustomIcon: false,
         displayAppLogoInDashboard: false,
         contentVersion: 'v1',
+        useLandingV2: true,
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
@@ -63,7 +64,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             employeeMapping: true
         },
         dashboard: {
-            disconnectButton: true
+            disconnectButton: true,
+            useRepurposedExportSummary: true
         }
     }
 };
@@ -140,7 +142,8 @@ export const fyleKbArticles: KbArticle[string] = {
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_1366df4107`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_b3850646c0`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
-            HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`
+            HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`,
+            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
         }
     }
 };

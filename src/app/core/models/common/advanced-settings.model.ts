@@ -6,6 +6,8 @@ import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting
 import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
 import { IntacctConfiguration } from "../db/configuration.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { SelectFormOption } from "./select-form-option.model";
+
 export type EmailOption = {
     email: string;
     name: string;
@@ -76,6 +78,16 @@ export class AdvancedSettingsModel {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
   }
 
+  static getHoursOptions(): SelectFormOption[] {
+    return [
+      ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
+      ...[...Array(24).keys()].map(hour => ({
+        label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
+        value: hour + 1
+      }))
+    ];
+  }
+
   static getMemoOptions(exportSettings: IntacctConfiguration | ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
     const defaultOptions = this.getDefaultMemoOptions();
     let cccExportType: string | undefined;
@@ -144,6 +156,21 @@ export class AdvancedSettingsModel {
 
   static formatSelectedEmails(emails: EmailOption[]): string[] {
     return emails.map((option: EmailOption) => option.email);
+  }
+
+  static getExportFrequency(isRealTimeExportEnabled: boolean, isOnboarding: boolean, autoImportExportEnabled: boolean, intervalHours: number): number {
+    let frequency;
+
+    // Set frequency to 0 if real time export is enabled or onboarding is true
+    if (isRealTimeExportEnabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
+      frequency = 0;
+    } else if (autoImportExportEnabled) {
+      frequency = intervalHours;
+    } else {
+      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
+    }
+
+    return frequency;
   }
 }
 
