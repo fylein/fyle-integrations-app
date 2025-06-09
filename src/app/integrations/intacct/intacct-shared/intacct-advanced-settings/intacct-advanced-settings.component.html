@@ -121,6 +121,24 @@
                 [label]="'Customization'"
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.customizeSectionSubLabel">
             </app-configuration-step-sub-header>
+            @if (brandingFeatureConfig.featureFlags.advancedSettings.showTopLevelMemoFieldInIntacct) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <app-configuration-multi-select
+                    [form]="advancedSettingsForm"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.setTopMemoField"
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.topMemoStructureSubLabel"
+                    [options]="defaultTopMemoFields"
+                    [iconPath]="'list'"
+                    [placeholder]="'Select top memo'"
+                    [formControllerName]="'setTopMemoField'"></app-configuration-multi-select>
+                    <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
+                        <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
+                        <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
+                            <span>{{ topMemoPreviewText }}</span>
+                        </div>
+                    </div>
+                </div>
+            }
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
@@ -132,24 +150,8 @@
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
                     <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
-                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted">
+                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                         <span>{{ memoPreviewText }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                <app-configuration-multi-select
-                [form]="advancedSettingsForm"
-                [label]="brandingContent.intacct.configuration.advancedSettings.setTopMemoField"
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.topMemoStructureSubLabel"
-                [options]="defaultTopMemoFields"
-                [iconPath]="'list'"
-                [placeholder]="'Select top memo'"
-                [formControllerName]="'setTopMemoField'"></app-configuration-multi-select>
-                <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
-                    <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
-                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted">
-                        <span>{{ topMemoPreviewText }}</span>
                     </div>
                 </div>
             </div>
