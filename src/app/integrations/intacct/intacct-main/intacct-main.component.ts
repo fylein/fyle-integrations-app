@@ -12,7 +12,7 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
   templateUrl: './intacct-main.component.html',
   styleUrls: ['./intacct-main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
 
   readonly brandingContent = brandingContent.common;
 
@@ -23,14 +23,11 @@ export class MainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/intacct/main/configuration'}
   ];
 
-  activeModule: MenuItem;
-
   appName: AppName = AppName.INTACCT;
 
   constructor(
     private dashboardService: DashboardService,
     private mappingsService: SiMappingsService,
-    private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 
@@ -40,14 +37,4 @@ export class MainComponent implements OnInit {
     this.dashboardService.syncExpensesFromFyle().subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct...');
   }
-
-  private setupPage() {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
-  }
-
-  ngOnInit(): void {
-    this.setupPage();
-  }
-
 }
