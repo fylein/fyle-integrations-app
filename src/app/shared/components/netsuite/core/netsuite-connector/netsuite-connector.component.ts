@@ -45,23 +45,22 @@ export class NetsuiteConnectorComponent implements OnInit {
   ) { }
 
   save() {
-    this.connectorService.connectNetsuite(this.connectNetsuiteForm);
+    this.isLoading = true;
+    this.connectorService.connectNetsuite(this.connectNetsuiteForm, true)
+    .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
+      this.connectNetsuiteForm = netsuiteSetupForm;
+      this.isLoading = false;
+      this.setupConnectionStatus.emit(isNetsuiteConnected);
+    });
   }
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.connectorService.getNetsuiteFormGroup();
 
-    this.connectorService.connectNetsuiteForm$.subscribe((netSuiteSetupForm) => {
-      this.connectNetsuiteForm = netSuiteSetupForm;
-    });
-
-    this.connectorService.setupConnectionStatus$.subscribe((isNetSuiteConnected) => {
-      this.setupConnectionStatus.emit(isNetSuiteConnected);
-    });
-
-    this.connectorService.isLoading$.subscribe((isConnectionInProgress) => {
-      this.isLoading = isConnectionInProgress;
+    this.isLoading = true;
+    this.connectorService.getNetsuiteFormGroup().subscribe(({ netsuiteSetupForm }) => {
+      this.connectNetsuiteForm = netsuiteSetupForm;
+      this.isLoading = false;
     });
   }
 
