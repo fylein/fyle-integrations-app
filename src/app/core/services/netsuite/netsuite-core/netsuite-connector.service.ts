@@ -23,7 +23,9 @@ export class NetsuiteConnectorService {
   workspaceId: number;
 
   netsuiteCredential: NetsuiteConnectorGet | null = null;
-  
+
+  isNetsuiteCredentialsValid: boolean;
+
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
