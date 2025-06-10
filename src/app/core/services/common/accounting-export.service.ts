@@ -23,8 +23,8 @@ export class AccountingExportService {
   }
 
   getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: AppName): Observable<AccountingExportSummary> {
+    const apiParams: { start_date?: string } = {};
     if (version === 'v1') {
-      const apiParams: { start_date?: string } = {};
       // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
       if (useRepurposedExportSummary && appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
         const today = new Date();
