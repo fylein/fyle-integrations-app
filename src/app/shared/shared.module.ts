@@ -95,7 +95,9 @@ import { BadgeComponent } from './components/core/badge/badge.component';
 import { CheckboxButtonComponent } from './components/input/checkbox-button/checkbox-button.component';
 import { DashboardTokenExpiredComponent } from './components/dashboard/dashboard-token-expired/dashboard-token-expired.component';
 import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsuite-shared/netsuite-connection-form/netsuite-connection-form.component';
-
+import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
+import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
+import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +174,10 @@ import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsui
     OptionalFieldComponent,
     SentenceCasePipe,
     BadgeComponent,
-    NetsuiteConnectionFormComponent
+    NetsuiteConnectionFormComponent,
+    OutlinedIconButtonComponent,
+    QbdDirectAssistedSetupComponent,
+    SkippedExportLogComponent
   ],
   imports: [
     CommonModule,
@@ -275,7 +280,10 @@ import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsui
     SentenceCasePipe,
     BadgeComponent,
     CheckboxButtonComponent,
-    NetsuiteConnectionFormComponent
+    NetsuiteConnectionFormComponent,
+    OutlinedIconButtonComponent,
+    QbdDirectAssistedSetupComponent,
+    SkippedExportLogComponent
   ]
 })
 export class SharedModule { }

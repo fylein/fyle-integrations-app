@@ -1,6 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
+.cursorrules
+.cursor/
 /dist
 /tmp
 /out-tsc
@@ -80,3 +82,6 @@ documentation.json
 commits.csv
 dependency-check-report.csv
 dependency-check-report.html
+
+# JSCPD report
+/report

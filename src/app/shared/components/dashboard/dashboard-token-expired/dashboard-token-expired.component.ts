@@ -38,7 +38,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isIntegrationReconnectDialogVisible: boolean;
 
-  requiresCredentialGeneration: boolean;
+  isTokenBasedAuthApp: boolean;
 
   private destroy$ = new Subject<void>();
 
@@ -79,8 +79,16 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   }
 
   reconnectToIntegration(): void{
-    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true);
     this.isIntegrationReconnectDialogVisible = false;
+    this.isConnectionInProgress = true;
+    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true)
+    .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
+      this.integrationSetupForm = netsuiteSetupForm;
+      this.isConnectionInProgress = false;
+      if (isNetsuiteConnected === true){
+        this.router.navigate(['integrations/netsuite/main/dashboard']);
+      }
+    });
   }
 
   setupPage(): void{
@@ -90,22 +98,11 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.NETSUITE){
-      this.requiresCredentialGeneration = true;
+      this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-      this.netsuiteConnector.getNetsuiteFormGroup(true);
 
-      this.netsuiteConnector.connectNetsuiteForm$.subscribe((netsuiteSetupForm) => {
+      this.netsuiteConnector.getNetsuiteFormGroup().subscribe(({ netsuiteSetupForm }) => {
         this.integrationSetupForm = netsuiteSetupForm;
-      });
-
-      this.netsuiteConnector.setupConnectionStatus$.subscribe((isNetsuiteConnected) => {
-        if (isNetsuiteConnected){
-          this.router.navigate(['integrations/netsuite/main/dashboard']);
-        }
-      });
-
-      this.netsuiteConnector.isLoading$.subscribe((isConnectionInProgress) => {
-        this.isConnectionInProgress = isConnectionInProgress;
       });
     }
 

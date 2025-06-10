@@ -50,7 +50,7 @@ export class ExportLogService {
 
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset
@@ -72,8 +72,21 @@ export class ExportLogService {
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-        params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-        params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+
+      const dateFormat = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+      const dateRange = {
+        start: `${dateFormat}T00:00:00`,
+        end: `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`
+      };
+
+      if (state === TaskLogState.COMPLETE) {
+        params.exported_at__gte = dateRange.start;
+        params.exported_at__lte = dateRange.end;
+      } else if (appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
+        // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
+        params.updated_at__gte = dateRange.start;
+        params.updated_at__lte = dateRange.end;
+      }
     }
 
     if (exportedAt) {
