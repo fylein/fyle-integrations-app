@@ -33,7 +33,7 @@ export class AccountingExportService {
       }
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, apiParams);
     } else if (version === AppName.QBD_DIRECT) {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, {});
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, apiParams);
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`, {});
