@@ -39,7 +39,7 @@ export class Sage300AdvancedSettingModel {
       schedule_is_enabled: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleEnabled')?.value : false,
       interval_hours: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
       auto_create_vendor: advancedSettingsForm.get('autoCreateVendor')?.value ? advancedSettingsForm.get('autoCreateVendor')?.value : false,
-      is_real_time_export_enabled: advancedSettingsForm.get('scheduleEnabled')?.value && advancedSettingsForm.get('scheduleAutoExportFrequency')?.value === 0 ? true : false,
+      is_real_time_export_enabled: advancedSettingsForm.get('scheduleEnabled')?.value && advancedSettingsForm.get('scheduleAutoExportFrequency')?.value === 0 ? true : false
     };
   }
 }
