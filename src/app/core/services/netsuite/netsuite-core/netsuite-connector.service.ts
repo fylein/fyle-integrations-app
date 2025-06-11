@@ -63,7 +63,7 @@ export class NetsuiteConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Netsuite successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to NetSuite successfully.', 6000);
           return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(response), isNetsuiteConnected: true });
 
       }),
@@ -106,6 +106,7 @@ export class NetsuiteConnectorService {
             resolve(true);
           },
           error: (error) => {
+              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Your NetSuite connection has expired, please reconnect to continue using your account seamlessly.');
               this.isNetsuiteCredentialsValid = false;
               resolve(false);
           }
