@@ -24,7 +24,7 @@ export class AccountingExportService {
 
   getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: AppName): Observable<AccountingExportSummary> {
     const apiParams: { start_date?: string } = {};
-    if (useRepurposedExportSummary && appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
+    if (useRepurposedExportSummary && appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300, AppName.SAGE300].includes(appName)) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       apiParams.start_date = today.toISOString();
@@ -36,7 +36,7 @@ export class AccountingExportService {
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, apiParams);
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`, apiParams);
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {

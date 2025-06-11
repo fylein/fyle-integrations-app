@@ -82,7 +82,7 @@ export class ExportLogService {
       if (state === TaskLogState.COMPLETE) {
         params.exported_at__gte = dateRange.start;
         params.exported_at__lte = dateRange.end;
-      } else if (appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
+      } else if (appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         params.updated_at__gte = dateRange.start;
         params.updated_at__lte = dateRange.end;
