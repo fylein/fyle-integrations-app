@@ -106,7 +106,6 @@ export class NetsuiteConnectorService {
             resolve(true);
           },
           error: (error) => {
-              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Your NetSuite connection has expired, please reconnect to continue using your account seamlessly.');
               this.isNetsuiteCredentialsValid = false;
               resolve(false);
           }
