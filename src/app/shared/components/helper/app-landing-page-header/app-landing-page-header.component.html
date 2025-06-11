@@ -43,7 +43,7 @@
 
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
                     @if (appName.includes('QuickBooks Desktop ')) {
-                        <app-qbd-direct-assisted-setup [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
+                        <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
                         <app-outlined-icon-button [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
                     
