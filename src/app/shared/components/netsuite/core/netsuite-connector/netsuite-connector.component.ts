@@ -27,8 +27,6 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
-  isNetsuiteCredentialsInvalid: boolean;
-
   windowReference: Window;
 
   @Output() setupConnectionStatus = new EventEmitter<boolean>();

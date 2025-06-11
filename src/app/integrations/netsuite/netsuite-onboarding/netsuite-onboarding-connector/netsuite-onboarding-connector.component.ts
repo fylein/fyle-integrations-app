@@ -15,7 +15,7 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
 
   isNetsuiteConnected: boolean = false;
 
-  isNetsuiteCredentialsInvalid: boolean;
+  isNetsuiteCredentialsValid: boolean;
 
   onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Connect to NetSuite', this.workspaceService.getOnboardingState());
 
@@ -26,15 +26,15 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
 
   setupConnectionStatus(eventData: boolean) {
     this.netsuiteConnector.getNetsuiteTokenHealthStatus()
-    .then(isNetsuiteCredentialsValid => {
+    .subscribe(isNetsuiteCredentialsValid => {
       this.isNetsuiteConnected = isNetsuiteCredentialsValid && eventData ? eventData : false;
     });
   }
 
   ngOnInit(): void {
     this.netsuiteConnector.getNetsuiteTokenHealthStatus()
-    .then(isNetsuiteCredentialsValid => {
-      this.isNetsuiteCredentialsInvalid = isNetsuiteCredentialsValid;
+    .subscribe(isNetsuiteCredentialsValid => {
+      this.isNetsuiteCredentialsValid = isNetsuiteCredentialsValid;
     });
   }
 }

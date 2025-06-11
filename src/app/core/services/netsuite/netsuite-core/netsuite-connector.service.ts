@@ -24,8 +24,6 @@ export class NetsuiteConnectorService {
 
   netsuiteCredential: NetsuiteConnectorGet | null = null;
 
-  isNetsuiteCredentialsValid: boolean;
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
@@ -95,24 +93,17 @@ export class NetsuiteConnectorService {
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);
   }
 
-  getNetsuiteTokenHealthStatus(): Promise<boolean> {
+  getNetsuiteTokenHealthStatus(): Observable<boolean> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    if (this.isNetsuiteCredentialsValid === undefined){
-    return new Promise((resolve) => {
-      this.checkNetsuiteTokenHealth(workspaceId)
-        .subscribe({
-          next: () => {
-            this.isNetsuiteCredentialsValid = true;
-            resolve(true);
-          },
-          error: (error) => {
-              this.isNetsuiteCredentialsValid = false;
-              resolve(false);
-          }
-        });
-    });
-    }
-      return Promise.resolve(this.isNetsuiteCredentialsValid);
+
+    return this.checkNetsuiteTokenHealth(workspaceId).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError(() => {
+        return of(false);
+      })
+    );
   }
 
   @Cacheable()

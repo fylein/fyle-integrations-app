@@ -63,7 +63,7 @@ export class NetsuiteComponent implements OnInit {
 
   private routeBasedOnTokenStatus(): void {
     this.netsuiteConnector.getNetsuiteTokenHealthStatus()
-    .then(isNetsuiteCredentialsValid => {
+    .subscribe(isNetsuiteCredentialsValid => {
       this.navigate(isNetsuiteCredentialsValid);
     });
   }
