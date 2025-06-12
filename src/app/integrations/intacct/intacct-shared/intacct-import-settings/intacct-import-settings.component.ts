@@ -20,6 +20,8 @@ import { SiImportSettingService } from 'src/app/core/services/si/si-configuratio
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-intacct-import-settings',
@@ -62,6 +64,8 @@ export class IntacctImportSettingsComponent implements OnInit {
   toggleSwitchTrue: boolean = true;
 
   intacctCategoryDestination: IntacctCategoryDestination;
+
+  intacctCategoryDestinationLabel: string;
 
   showDialog: boolean;
 
@@ -642,6 +646,11 @@ export class IntacctImportSettingsComponent implements OnInit {
         } else {
           this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
         }
+
+        let label = new SnakeCaseToSpaceCasePipe().transform(this.intacctCategoryDestination);
+        label = new SentenceCasePipe().transform(label);
+        label = label.replace('Gl ', 'GL ');
+        this.intacctCategoryDestinationLabel = label;
 
         this.initializeForm(importSettings);
       }
