@@ -25,6 +25,10 @@ export class OnboardingSteppersComponent implements OnInit {
     private router: Router
   ) { }
 
+  shouldDisableConfigurationSteps(index: number): boolean {
+    return ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) || ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted);
+  }
+
   navigate(index: number, canNavigate: boolean, route: string): void {
     if (!canNavigate) {
       return;
