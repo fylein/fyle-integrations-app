@@ -61,7 +61,7 @@ export class NetsuiteConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Netsuite successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to NetSuite successfully.', 6000);
           return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(response), isNetsuiteConnected: true });
 
       }),
