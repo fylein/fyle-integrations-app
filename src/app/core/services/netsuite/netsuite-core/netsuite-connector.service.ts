@@ -93,6 +93,22 @@ export class NetsuiteConnectorService {
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);
   }
 
+  getNetsuiteTokenHealthStatus(shouldShowTokenExpiredMessage?: boolean): Observable<boolean> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.checkNetsuiteTokenHealth(workspaceId).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError((error) => {
+        if (error.error.message !== "Netsuite credentials not found" && shouldShowTokenExpiredMessage){
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your NetSuite connection expired, please connect again', 6000);
+        }
+        return of(false);
+      })
+    );
+  }
+
   @Cacheable()
   checkNetsuiteTokenHealth(workspaceId: string): Observable<{}> {
     return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
