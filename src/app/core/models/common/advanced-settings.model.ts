@@ -198,7 +198,7 @@ export class AdvancedSettingsModel {
     return emails.map((option: EmailOption) => option.email);
   }
 
-  static getExportFrequency(isRealTimeExportEnabled: boolean, isOnboarding: boolean, autoImportExportEnabled: boolean, intervalHours: number): number {
+  static getExportFrequency(isRealTimeExportEnabled: boolean | undefined, isOnboarding: boolean, autoImportExportEnabled: boolean | undefined, intervalHours: number | undefined): number | undefined {
     let frequency;
 
     // Set frequency to 0 if real time export is enabled or onboarding is true

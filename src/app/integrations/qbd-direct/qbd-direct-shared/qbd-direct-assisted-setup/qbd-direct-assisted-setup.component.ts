@@ -76,7 +76,7 @@ constructor(
   }
 
   openQBDArticle(): void {
-    this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR, '_blank');
+    this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.ASSISTED_SETUP_ARTICLE_LINK, '_blank');
   }
 
   bookSlot(): void {
