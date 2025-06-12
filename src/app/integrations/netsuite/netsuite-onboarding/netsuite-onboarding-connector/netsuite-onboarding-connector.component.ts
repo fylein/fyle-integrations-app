@@ -33,12 +33,9 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.netsuiteConnector.getNetsuiteTokenHealthStatus()
+    this.netsuiteConnector.getNetsuiteTokenHealthStatus(true)
     .subscribe(isNetsuiteCredentialsValid => {
       this.isNetsuiteCredentialsValid = isNetsuiteCredentialsValid;
-      if (!this.isNetsuiteCredentialsValid){
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your NetSuite connection expired, please connect again', 6000);
-      }
     });
   }
 }

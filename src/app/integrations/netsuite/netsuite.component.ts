@@ -57,7 +57,7 @@ export class NetsuiteComponent implements OnInit {
         [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
       };
 
-      this.router.navigateByUrl(isNetSuiteTokenValid === false && this.workspace.onboarding_state !== NetsuiteOnboardingState.COMPLETE ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(isNetSuiteTokenValid === false && ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
 
