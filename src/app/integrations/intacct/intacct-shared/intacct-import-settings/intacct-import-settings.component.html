@@ -34,7 +34,7 @@
         </div>
         <div class="tw-flex tw-pt-18-px">
             <div class="tw-pl-48-px">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{(intacctCategoryDestination | snakeCaseToSpaceCase | sentenceCase).replace('Gl ', 'GL ')}}" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="intacctCategoryDestinationLabel" disabled>
             </div>
             <div class="tw-pt-16-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
@@ -43,7 +43,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
+                <p-inputSwitch formControlName="importCategories" [attr.aria-label]="'Import ' + intacctCategoryDestinationLabel + 's as categories'" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
@@ -57,7 +57,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Merchant" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
+                <p-inputSwitch formControlName="importVendorAsMerchant" aria-label="Import vendor as merchant"></p-inputSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px" *ngIf="isImportTaxVisible">
@@ -71,7 +71,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax group" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importTaxCodes"></p-inputSwitch>
+                <p-inputSwitch formControlName="importTaxCodes" aria-label="Import tax codes"></p-inputSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible">
@@ -162,7 +162,7 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" aria-label="Import cost codes"></p-inputSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
@@ -180,7 +180,7 @@
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" aria-label="Import cost types"></p-inputSwitch>
                         </div>
                     </div>
                 </div>
