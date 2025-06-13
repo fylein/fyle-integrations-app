@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-    <app-configuration-step-header 
+    <app-configuration-step-header
     [headerText]="brandingContent.intacct.configuration.advancedSettings.stepName"
     [contentText]="brandingContent.intacct.configuration.advancedSettings.contentText"
     [redirectLink]="redirectLink"
@@ -23,7 +23,7 @@
                     <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                         <app-configuration-toggle-field
                             [form]="advancedSettingsForm"
-                            [label]="'Schedule automatic export'" 
+                            [label]="'Schedule automatic export'"
                             [subLabel]="brandingContent.intacct.configuration.advancedSettings.scheduleSubLabel"
                             [formControllerName]="'exportSchedule'"
                             [iconPath]="'calendar'">
@@ -77,23 +77,23 @@
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.customPreferencesSubLabel">
             </app-configuration-step-sub-header>
             <div  class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                <app-configuration-toggle-field 
+                <app-configuration-toggle-field
                     class="tw-pt-0"
                     [form]="advancedSettingsForm"
                     [iconPath]="'calendar'"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod" 
-                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.accountingPeriodSubLabel" 
+                    [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod"
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.accountingPeriodSubLabel"
                     [formControllerName]="'postEntriesCurrentPeriod'">
                 </app-configuration-toggle-field>
-                <app-configuration-toggle-field 
-                    *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" 
+                <app-configuration-toggle-field
+                    *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
                     [form]="advancedSettingsForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()" 
+                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()"
                     [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
                     [formControllerName]="'autoCreateEmployeeVendor'">
                 </app-configuration-toggle-field>
-                
+
                 <app-configuration-toggle-field
                     class="tw-pt-0"
                     *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
@@ -102,8 +102,8 @@
                     [subLabel]="'While exporting credit card expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in Sage Intacct already.'"
                     [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
-                <app-configuration-toggle-field 
-                    class="tw-pt-0" 
+                <app-configuration-toggle-field
+                    class="tw-pt-0"
                     *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
                     [form]="advancedSettingsForm"
                     [iconPath]="'list'"
@@ -121,6 +121,24 @@
                 [label]="'Customization'"
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.customizeSectionSubLabel">
             </app-configuration-step-sub-header>
+            @if (brandingFeatureConfig.featureFlags.advancedSettings.showTopLevelMemoFieldInIntacct) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <app-configuration-multi-select
+                    [form]="advancedSettingsForm"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.setTopMemoField"
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.topMemoStructureSubLabel"
+                    [options]="defaultTopMemoFields"
+                    [iconPath]="'list'"
+                    [placeholder]="'Select top memo'"
+                    [formControllerName]="'setTopMemoField'"></app-configuration-multi-select>
+                    <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
+                        <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
+                        <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
+                            <span>{{ topMemoPreviewText }}</span>
+                        </div>
+                    </div>
+                </div>
+            }
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
@@ -132,26 +150,26 @@
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
                     <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">Preview {{brandingContent.intacct.common.descriptionText}}</p>
-                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted">
+                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                         <span>{{ memoPreviewText }}</span>
                     </div>
                 </div>
             </div>
             <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                <app-configuration-toggle-field 
+                <app-configuration-toggle-field
                 [form]="advancedSettingsForm"
-                [label]="'Skip selective expenses from being exported to Sage Intacct'" 
-                [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
+                [label]="'Skip selective expenses from being exported to Sage Intacct'"
+                [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'"
                 [redirectLink]="intacctLink"
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
                 <div *ngIf="advancedSettingsForm.get('skipSelectiveExpenses')?.value">
                     <app-skip-export
                     #skipExportChild
-                    [enableSkipExport]="advancedSettingsForm.get('skipSelectiveExpenses')?.value" 
-                    [skipExportForm]="skipExportForm" 
+                    [enableSkipExport]="advancedSettingsForm.get('skipSelectiveExpenses')?.value"
+                    [skipExportForm]="skipExportForm"
                     (skipExportFormChange)="updateForm($event)"
                     (invalidSkipExportForm)="invalidSkipExportForm($event)">
-                  </app-skip-export>                  
+                  </app-skip-export>
                 </div>
             </div>
         </div>
@@ -163,7 +181,7 @@
             <div class="tw-pt-28-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.location}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                    <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value" 
+                    <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
                     formControlName="defaultLocation" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.location}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <p>
@@ -176,7 +194,7 @@
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use employee's location in Sage Intacct</label>
                     </span>
-                </div>  
+                </div>
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
@@ -187,7 +205,7 @@
                         <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
                             <p>
                                 <span *ngIf="value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
-                                {{ value?.value }} 
+                                {{ value?.value }}
                             </p>
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
@@ -206,8 +224,8 @@
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use employee's department in Sage Intacct</label>
                     </span>
-                </div>  
-              </div> 
+                </div>
+              </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.project}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
@@ -221,8 +239,8 @@
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
-                </div>  
-              </div> 
+                </div>
+              </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.class}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
@@ -236,8 +254,8 @@
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
-                </div>  
-              </div> 
+                </div>
+              </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.item}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
@@ -251,7 +269,7 @@
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
-                </div>  
+                </div>
               </div>
         </div>
     </div>

@@ -331,6 +331,8 @@ export type ContentConfiguration = {
                     accountingPeriodSubLabel: string;
                     memoStructureSubLabel: string;
                     customizeSectionSubLabel: string;
+                    setTopMemoField: string;
+                    topMemoStructureSubLabel: string;
                 },
                 done: {
                     ctaText: string;

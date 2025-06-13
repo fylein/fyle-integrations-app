@@ -42,7 +42,7 @@
                         </ng-template>
                     </p-dropdown>
                     <!-- Temporary hack to enable real-time export only for allowed apps - #q2_real_time_exports_integrations -->
-                    @if (![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(appName)) {
+                    @if (![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
                         <div class="tw-ml-16-px tw-border tw-border-input-read-only-border tw-rounded-4-px">
                             <input type="text" class="tw-border-none !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="form.get(formControllerName)?.value > 1 ? 'Hours' : 'Hour'">
                         </div>

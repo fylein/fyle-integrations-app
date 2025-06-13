@@ -321,6 +321,8 @@ export const c1Content = {
                 autoCreateMerchantsAsVendorsLabel: 'Auto-create ' + brandingConfig.brandName + ' merchants as vendors on Sage Intacct',
                 postEntriesCurrentPeriod: 'Post entries in the current open accounting period',
                 setDescriptionField: 'Set the line-item description field in Sage Intacct',
+                setTopMemoField: 'Set the top memo field in Sage Intacct',
+                topMemoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the top memo field in Sage Intacct.',
                 dfvLabel: 'Default field values',
                 dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                 location: 'location',
