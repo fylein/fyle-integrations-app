@@ -86,7 +86,8 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
     update_at: new Date(),
     workspace: 1,
     auto_create_vendor: false,
-    interval_hours: 1
+    interval_hours: 1,
+    is_real_time_export_enabled: false
 };
 
 export const adminEmails: EmailOption[] = [
