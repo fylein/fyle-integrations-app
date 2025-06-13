@@ -4,6 +4,7 @@ import { IntegrationField } from "../../db/mapping.model";
 
 export type QdbDirectImportSetting = {
     import_account_as_category: boolean,
+    import_item_as_category: boolean,
     import_vendor_as_merchant: boolean,
     chart_of_accounts: string[],
     import_code_fields: string[]
@@ -32,6 +33,7 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
       const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings?.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
       return new FormGroup({
         importCategories: new FormControl(importSettings?.import_settings?.import_account_as_category ?? false),
+        importItems: new FormControl(importSettings?.import_settings?.import_item_as_category ?? false),
         expenseFields: new FormArray(expenseFieldsArray),
         chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : ['Expense']),
         importVendorsAsMerchants: new FormControl(importSettings?.import_settings?.import_vendor_as_merchant ?? false),
@@ -51,6 +53,7 @@ export class QbdDirectImportSettingModel extends ImportSettingsModel {
       return {
         import_settings: {
           import_account_as_category: importSettingsForm.get('importCategories')?.value,
+          import_item_as_category: importSettingsForm.get('importItems')?.value,
           chart_of_accounts: coaArray,
           import_vendor_as_merchant: importSettingsForm.get('importVendorsAsMerchants')?.value,
           import_code_fields: importSettingsForm.get('importCodeFields')?.value
