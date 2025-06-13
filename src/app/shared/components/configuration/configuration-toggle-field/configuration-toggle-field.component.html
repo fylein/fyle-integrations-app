@@ -18,10 +18,17 @@
               class="tw-text-link-primary tw-pl-2-px tw-w-fit">
             </app-svg-icon>
           </a>
-        </h5>        
+        </h5>
       </div>
     </div>
     <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
-      <p-inputSwitch [formControlName]="formControllerName" [tooltipPosition]="'top'" [pTooltip]="disabled && appName === AppName.XERO ? brandingXeroContent : ''"></p-inputSwitch>
+      <p-inputSwitch
+        [formControlName]="formControllerName"
+        [tooltipPosition]="'top'"
+        [pTooltip]="disabled && appName === AppName.XERO ? brandingXeroContent : ''"
+        [attr.aria-label]="label"
+        role="switch"
+        [attr.aria-checked]="form.get(formControllerName)?.value"
+      ></p-inputSwitch>
     </div>
   </div>

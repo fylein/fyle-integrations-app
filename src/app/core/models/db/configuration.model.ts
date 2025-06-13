@@ -13,6 +13,7 @@ export interface IntacctConfiguration {
     auto_map_employees: AutoMapEmployeeOptions | null;
     import_tax_codes?: boolean;
     memo_structure: string[];
+    top_level_memo_structure: string[];
     auto_create_destination_entity: boolean;
     je_single_credit_line: boolean;
     change_accounting_period: boolean;
