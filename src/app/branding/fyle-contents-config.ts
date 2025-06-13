@@ -323,7 +323,7 @@ export const fyleContents = {
                 postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                 setDescriptionField: 'Customize the line-item level memo field',
                 setTopMemoField: 'Customize the top-level description field',
-                topMemoStructureSubLabel: 'Select the datapoints you\'d like to export to Sage Intacct’s top-level description field when exporting expenses from Fyle',
+                topMemoStructureSubLabel: "Select the datapoints you'd like to export to Sage Intacct's top-level description field when exporting expenses from " + brandingConfig.brandName + '.',
                 dfvLabel: 'Default field values',
                 dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Sage Intacct.',
                 location: 'location',
@@ -337,7 +337,7 @@ export const fyleContents = {
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
-                memoStructureSubLabel: "Select the datapoints you'd like to export to Sage Intacct's line-item level memo field when exporting expenses from Fyle.",
+                memoStructureSubLabel: "Select the datapoints you'd like to export to Sage Intacct's line-item level memo field when exporting expenses from " + brandingConfig.brandName + '.',
                 customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage Intacct. You can choose what data points need to be exported and what shouldn\'t be.'
             },
             done: {
