@@ -16,6 +16,7 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
@@ -43,6 +44,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
   exportProgressPercentage: number = 0;
 
   accountingExportSummary: AccountingExportSummary | null;
+
+  isRealTimeExportEnabled: boolean = false;
 
   processedCount: number = 0;
 
@@ -91,7 +94,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
     private QbdDirectExportSettingsService: QbdDirectExportSettingsService,
     private trackingService: TrackingService,
     private importSettingService: QbdDirectImportSettingsService,
-    private refinerService: RefinerService
+    private refinerService: RefinerService,
+    private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService
   ) { }
 
   export() {
@@ -151,7 +155,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
       this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.ERROR), undefined, [], AppName.QBD_DIRECT),
       this.dashboardService.getExportableAccountingExportIds('v2'),
       this.QbdDirectExportSettingsService.getQbdExportSettings(),
-      this.importSettingService.getImportSettings()
+      this.importSettingService.getImportSettings(),
+      this.qbdDirectAdvancedSettingsService.getQbdAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -176,6 +181,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
       this.reimbursableImportState = responses[4]?.reimbursable_expense_export_type && responses[4].reimbursable_expense_state ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
       this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
+
+      this.isRealTimeExportEnabled = responses[6]?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

@@ -54,7 +54,7 @@
                             }
                         </div>
                         <div class="tw-flex tw-flex-col">
-                            <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
+                            <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at && !isRealTimeExportEnabled">
                                 <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.nextExportAtText}} </span>
                                 <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
                                 {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'MMM dd yyyy') : '' }}</span>
