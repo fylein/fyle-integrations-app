@@ -213,8 +213,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
 
-    const topLevelMemoFieldValue = this.advancedSettings.configurations.top_level_memo_structure;
-    if (topLevelMemoFieldValue) {
+    let topLevelMemoFieldValue = this.advancedSettings.configurations.top_level_memo_structure;
+    if (topLevelMemoFieldValue && topLevelMemoFieldValue.length > 0) {
       for (let i = 0; i < topLevelMemoFieldValue.length; i++) {
         const currentOption = topLevelMemoFieldValue[i];
         const expenseOrReportNumberOptions = ['expense_number', 'report_number'];
@@ -224,6 +224,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
           topLevelMemoFieldValue[i] = currentOption === 'expense_number' ? 'report_number' : 'expense_number';
         }
       }
+    } else if (this.isOnboarding) {
+      topLevelMemoFieldValue = this.defaultTopMemoFields;
     }
 
     this.advancedSettingsForm = this.formBuilder.group({
