@@ -272,3 +272,12 @@
         </form>
     </div>
 </div>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="constructPayloadAndSave($event)"
+    [isWarningVisible]="isConfirmationDialogVisible"
+    [headerText]="'Change in configuration'"
+    [contextText]="warningDialogText"
+    [confirmBtnText]="'Continue'"
+    [showSecondaryCTA]="false">
+</app-configuration-confirmation-dialog>
