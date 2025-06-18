@@ -68,8 +68,8 @@ export const c1Content = {
                 contentText: 'Choose the required import fields from QuickBooks Desktop to ' + brandingConfig.brandName + '.',
                 importCategoriesLabel: 'Import the chart of accounts as categories',
                 importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
-                importItemsLabel: 'Import products/services from QuickBooks Desktop',
-                importItemsSubLabel: 'Products/services from QuickBooks Desktop will be imported as categories in ' + brandingConfig.brandName + '.',
+                importItemsLabel: 'Import items from QuickBooks Desktop',
+                importItemsSubLabel: 'Items from QuickBooks Desktop will be imported as categories in ' + brandingConfig.brandName + '.',
                 importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Desktop',
                 chartOfAccountTypes: 'Select accounts from QuickBooks Desktop to import as categories.',
                 chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the dropdown.'
