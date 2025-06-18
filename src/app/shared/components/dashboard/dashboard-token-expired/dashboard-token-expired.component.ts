@@ -63,6 +63,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     if (this.appName === AppName.NETSUITE){
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR);
     }
+
+    if (this.appName === AppName.INTACCT){
+      this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR);
+    }
   }
 
   toggleIntegrationReconnectDialog(){
