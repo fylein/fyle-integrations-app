@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { IntacctTokenGuard } from './intacct-token.guard';
 
-xdescribe('NetsuiteTokenGuard', () => {
+xdescribe('IntacctTokenGuard', () => {
   let guard: IntacctTokenGuard;
 
   beforeEach(() => {
