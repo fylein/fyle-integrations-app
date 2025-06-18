@@ -30,7 +30,8 @@
         [appName]="appName"
         [exportLogVersion]="'v1'"
         [accountingExportType]="accountingExportType"
-        [accountingExportSummary]="accountingExportSummary">
+        [accountingExportSummary]="accountingExportSummary"
+        [isRealTimeExportEnabled]="isRealTimeExportEnabled">
     </app-dashboard-export-summary-section>
 
     <app-dashboard-error-section *ngIf="(errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) && exportableAccountingExportIds.length"

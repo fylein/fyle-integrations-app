@@ -24,6 +24,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   @Input() exportLogVersion: 'v1' | 'v2' = 'v2';
 
+  @Input() isRealTimeExportEnabled: boolean;
+
   filteredAccountingExports: AccountingExportList[] = [];
 
   accountingExports: AccountingExportList[];

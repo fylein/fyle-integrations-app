@@ -15,6 +15,7 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -40,6 +41,8 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   exportProgressPercentage: number = 0;
 
   accountingExportSummary: AccountingExportSummary | null;
+
+  isRealTimeExportEnabled: boolean = false;
 
   processedCount: number = 0;
 
@@ -116,10 +119,10 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private dashboardService: DashboardService,
     private accountingExportService: AccountingExportService,
-    private exportLogService: ExportLogService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private intacctExportSettingService: SiExportSettingService
+    private intacctExportSettingService: SiExportSettingService,
+    private intacctAdvancedSettingsService: SiAdvancedSettingService
   ) { }
 
   export() {
@@ -185,7 +188,8 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, AppName.INTACCT),
       this.workspaceService.getConfiguration(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
-      this.intacctExportSettingService.getExportSettings()
+      this.intacctExportSettingService.getExportSettings(),
+      this.intacctAdvancedSettingsService.getAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.reimbursableImportState = responses[5].configurations?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
@@ -208,6 +212,8 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
       this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
+
+      this.isRealTimeExportEnabled = responses[6].workspace_schedules?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
