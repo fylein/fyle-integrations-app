@@ -106,6 +106,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       });
     }
 
+    if (this.appName === AppName.INTACCT){
+      this.isTokenBasedAuthApp = true;
+    }
+
     if (this.appName === AppName.QBO){
     this.helperService.setBaseApiURL(AppUrl.QBO);
 

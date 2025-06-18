@@ -6,7 +6,7 @@
   }
 
   @if (!isConnectionInProgress) {
-  <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="appName === AppName.NETSUITE ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
+  <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
     
     <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' : 'Connection expired' }} </p>
     @if (!isIntegrationDisconnected) {
@@ -47,7 +47,7 @@
     </div>
   }
 
-  @if (appName === AppName.NETSUITE) {
+  @if (appName === AppName.NETSUITE || AppName.INTACCT) {
       <div class="tw-cursor-pointer">
         <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect integration</button>
       </div>
