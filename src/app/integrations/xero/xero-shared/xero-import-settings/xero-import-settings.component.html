@@ -28,7 +28,7 @@
                             [options]="chartOfAccountTypesList"
                             [formControllerName]="'chartOfAccountTypes'"
                             [label]="brandingContent.chartOfAccountsLabel"
-                            [placeholder]="'Select chart of accounts'"
+                            [placeholder]="'xeroImportSettings.selectChartOfAccountsPlaceholder' | transloco"
                             [subLabel]="brandingContent.chartOfAccountsSubLabel">
                         </app-configuration-multi-select>
                     </div>
@@ -78,7 +78,7 @@
                     <app-configuration-toggle-field
                       [form]="importSettingsForm"
                       [label]="brandingContent.taxCodeLabel"
-                      [subLabel]="brandingContent.taxCodeSubLabel + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
+                      [subLabel]="brandingContent.taxCodeSubLabel + brandingConfig.brandName + ('xeroImportSettings.selectableFieldNote' | transloco)"
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'"
                       [hasDependentFields]="true">
@@ -87,12 +87,12 @@
                     <app-configuration-select-field *ngIf="importSettingsForm.get('taxCode')?.value"
                         [form]="importSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'tax code'"
+                        [mandatoryErrorListName]="'xeroImportSettings.taxCode' | transloco"
                         [label]="brandingContent.defaultTaxCodeLabel"
-                        [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
+                        [subLabel]="'xeroImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [destinationAttributes]="taxCodes"
                         [optionLabel]="'value'"
-                        [placeholder]="'Select tax code'"
+                        [placeholder]="'xeroImportSettings.selectTaxCodePlaceholder' | transloco"
                         [formControllerName]="'defaultTaxCode'">
                     </app-configuration-select-field>
                 </div>
@@ -119,6 +119,6 @@
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'xeroImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard-export-section',
@@ -48,7 +49,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   AppName = AppName;
 
-  constructor() { }
+  constructor(private translocoService: TranslocoService) { }
 
   triggerExport() {
     this.export.emit(true);
@@ -70,7 +71,7 @@ export class DashboardExportSectionComponent implements OnInit {
       this.importStates = ReimbursableImportState.PAID;
     } else {
       if (this.reimbursableImportState && this.cccImportState) {
-        this.importStates = this.reimbursableImportState + ' or ' + this.cccImportState;
+        this.importStates = this.reimbursableImportState + this.translocoService.translate('dashboardExportSection.orSeparator') + this.cccImportState;
       } else if (this.reimbursableImportState) {
         this.importStates = this.reimbursableImportState;
       } else if (this.cccImportState) {

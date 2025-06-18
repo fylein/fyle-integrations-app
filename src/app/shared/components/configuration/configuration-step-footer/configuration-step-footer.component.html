@@ -3,13 +3,13 @@
         <div>
             <button type="button" class="p-button outline-sm" (click)="navigate()">
                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-left-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pr-10-px tw-text-12-px tw-text-btn-cta'"></app-svg-icon>
-                Back
+                {{ 'configurationStepFooter.back' | transloco }}
             </button>
         </div>
 
         <div class="tw-ml-16-px">
             <button *ngIf="showResetButton" type="button" class="p-button outline-sm" (click)="resetConfiguration()">
-                Reset configuration
+                {{ 'configurationStepFooter.resetConfiguration' | transloco }}
             </button>
         </div>
     </div>

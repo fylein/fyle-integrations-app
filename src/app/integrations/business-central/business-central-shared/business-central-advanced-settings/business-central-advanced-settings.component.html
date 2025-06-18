@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header 
-            [headerText]="'Advanced settings'"
-            [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
+            [headerText]="'businessCentralAdvancedSettings.headerText' | transloco"
+            [contentText]="'businessCentralAdvancedSettings.contentText' | transloco"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -17,16 +17,16 @@
             <div class="tw-p-24-px">
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="'Automation'"
-                        [subLabel]="'You can automate the export and sync of your data in this section.'">
+                        [label]="'businessCentralAdvancedSettings.automationLabel' | transloco"
+                        [subLabel]="'businessCentralAdvancedSettings.automationSubLabel' | transloco">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-mb-16-px">
                     <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
                         <app-configuration-toggle-field 
                             [form]="advancedSettingForm"
-                            [label]="'Schedule automatic export'" 
-                            [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'" 
+                            [label]="'businessCentralAdvancedSettings.scheduleExportLabel' | transloco" 
+                            [subLabel]="'businessCentralAdvancedSettings.scheduleExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
                             [formControllerName]="'scheduleEnabled'"
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
@@ -35,11 +35,11 @@
                                 [form]="advancedSettingForm"
                                 [appName]="appName"
                                 [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'automatic export method'"
-                                [label]="'Set up export frequency'"
-                                [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Dynamics 365 Business Central'"
+                                [mandatoryErrorListName]="'businessCentralAdvancedSettings.automaticExportMethod' | transloco"
+                                [label]="'businessCentralAdvancedSettings.exportFrequencyLabel' | transloco"
+                                [subLabel]="'businessCentralAdvancedSettings.exportFrequencySubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                                 [options]="hours"
-                                [placeholder]="'Set schedule'"
+                                [placeholder]="'businessCentralAdvancedSettings.setSchedulePlaceholder' | transloco"
                                 [formControllerName]="'scheduleAutoExportFrequency'">
                             </app-configuration-schedule-export>
                         </div>
@@ -47,25 +47,25 @@
                 </div>
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="'Customization'"
-                        [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central. You can choose what data points need to be exported and what shouldn\'t be.'">
+                        [label]="'businessCentralAdvancedSettings.customizationLabel' | transloco"
+                        [subLabel]="'businessCentralAdvancedSettings.customizationSubLabel' | transloco:{ brandName: brandingConfig.brandName }">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-multi-select
                         [form]="advancedSettingForm"
                         [isFieldMandatory]="false"
-                        [mandatoryErrorListName]="'Item level description'"
-                        [label]="'Set the line item-level description field in Dynamics 365 Business Central'"
-                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Dynamics 365 Business Central.'"
+                        [mandatoryErrorListName]="'businessCentralAdvancedSettings.itemLevelDescription' | transloco"
+                        [label]="'businessCentralAdvancedSettings.lineItemDescriptionLabel' | transloco"
+                        [subLabel]="'businessCentralAdvancedSettings.lineItemDescriptionSubLabel' | transloco"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
-                        [placeholder]="'Set description'"
+                        [placeholder]="'businessCentralAdvancedSettings.setDescriptionPlaceholder' | transloco"
                         [formControllerName]="'memoStructure'"
                         (changeInMultiSelect)="onMultiSelectChange()">
                     </app-configuration-multi-select>
                     <div class="preview-text">
-                        <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the description field</h4>
+                        <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'businessCentralAdvancedSettings.descriptionPreviewHeader' | transloco }}</h4>
                         <div class="preview-box">
                             {{memoPreviewText}}
                         </div>
@@ -74,8 +74,8 @@
                 <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-toggle-field 
                         [form]="advancedSettingForm"
-                        [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central'" 
-                        [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central by setting up a conditional rule. '" 
+                        [label]="'businessCentralAdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }" 
+                        [subLabel]="'businessCentralAdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'"
                         [redirectLink]="skipExportRedirectLink">

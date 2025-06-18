@@ -18,8 +18,8 @@
                     <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
-                            [label]="'Export reimbursable expenses'"
-                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.'"
+                            [label]="'qboExportSettings.exportReimbursableExpensesLabel' | transloco"
+                            [subLabel]="'qboExportSettings.exportReimbursableExpensesSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
@@ -29,12 +29,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'export module'"
-                                [label]="'How should the expenses be exported?'"
-                                [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
+                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
+                                [label]="'qboExportSettings.exportTypeLabel' | transloco"
+                                [subLabel]="'qboExportSettings.exportTypeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                 [options]="getAllReimbursableExportTypeOptions()"
                                 [iconPath]="'list'"
-                                [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
+                                [placeholder]="'qboExportSettings.exportTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
                                 [showExportPreview]="true"
@@ -45,9 +45,9 @@
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'bank account'"
-                                    [label]="'To which bank account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'All the offset entry in the journal' : 'The expenses exported') + ' will be posted to the selected bank account.'"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
+                                    [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'qboExportSettings.bankAccountJournalSubLabel' : 'qboExportSettings.bankAccountExportedSubLabel') | transloco"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -56,7 +56,7 @@
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
                                     [isMultiLineOption]="isMultilineOption"
-                                    [placeholder]="'Select bank account'"
+                                    [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
                                     [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -65,9 +65,9 @@
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'expense account'"
-                                    [label]="'To which expense account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                                    [subLabel]="'The expenses exported will be added to the selected expense payment account.'"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseAccount' | transloco"
+                                    [label]="'qboExportSettings.expenseAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                                    [subLabel]="'qboExportSettings.expenseAccountSubLabel' | transloco"
                                     [destinationAttributes]="expenseAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -76,7 +76,7 @@
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
                                     [isMultiLineOption]="isMultilineOption"
-                                    [placeholder]="'Select expense account'"
+                                    [placeholder]="'qboExportSettings.expenseAccountPlaceholder' | transloco"
                                     [formControllerName]="'qboExpenseAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -91,11 +91,11 @@
                                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                     [optionLabel]="'name'"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'accounts payable'"
-                                    [label]="'To which accounts payable account should the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' to the selected accounts payable account.'"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
+                                    [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                                    [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                                     [iconPath]="'list'"
-                                    [placeholder]="'Select accounts payable'"
+                                    [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
                                     [isMultiLineOption]="isMultilineOption"
                                     [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
@@ -107,24 +107,24 @@
                                 <app-configuration-select-field
                                     [form]="employeeSettingForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'option'"
-                                    [label]="'How are your employees represented in QuickBooks Online?'"
-                                    [subLabel]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
+                                    [label]="'qboExportSettings.employeeRepresentationLabel' | transloco"
+                                    [subLabel]="'qboExportSettings.employeeRepresentationSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                     [options]="employeeMappingOptions"
                                     [iconPath]="'user-two'"
-                                    [placeholder]="'Select representation'"
+                                    [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
                                     [formControllerName]="'employeeMapping'"
                                     [isDisabled]="isEmployeeMappingDisabled()">
                                 </app-configuration-select-field>
                                 <app-configuration-select-field
                                     [form]="employeeSettingForm"
                                     [isFieldMandatory]="false"
-                                    [mandatoryErrorListName]="'option'"
-                                    [label]="'How should employees in ' + brandingConfig.brandName + ' be matched to employees/vendors in QuickBooks Online?'"
-                                    [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
+                                    [label]="'qboExportSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
+                                    [subLabel]="'qboExportSettings.employeeMatchingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                     [options]="autoMapEmployeeOptions"
                                     [iconPath]="'question-square-outline'"
-                                    [placeholder]="'Select representation'"
+                                    [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
                                     [formControllerName]="'autoMapEmployee'">
                                 </app-configuration-select-field>
                               </form>
@@ -134,12 +134,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'expense state'"
-                                [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                                [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (processing) or when the payment has been settled (closed).'"
+                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
+                                [label]="'qboExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                                [subLabel]="'qboExportSettings.expenseStateSubLabel' | transloco"
                                 [options]="expenseStateOptions"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select export state'"
+                                [placeholder]="'qboExportSettings.expenseStatePlaceholder' | transloco"
                                 [formControllerName]="'expenseState'">
                             </app-configuration-select-field>
                         </div>
@@ -149,12 +149,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'how expenses to be grouped'"
-                                [label]="'How should the expenses be grouped?'"
-                                [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
+                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
+                                [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
+                                [subLabel]="'qboExportSettings.expenseGroupingSubLabel' | transloco"
                                 [options]="expenseGroupByOptions"
                                 [iconPath]="'question-square-outline'"
-                                [placeholder]="'Select expense grouping'"
+                                [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportGroup'">
                             </app-configuration-select-field>
                         </div>
@@ -164,11 +164,11 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'export date'"
-                                [label]="'Set the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
-                                [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
+                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
+                                [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                                [subLabel]="'qboExportSettings.exportDateReimbursableSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [placeholder]="'Select the date of the ' + (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
+                                [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
@@ -192,12 +192,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
+                            [label]="'qboExportSettings.exportTypeLabel' | transloco"
                             [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export type'"
+                            [placeholder]="'qboExportSettings.cccExportTypePlaceholder' | transloco"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
                             [showExportPreview]="true"
@@ -208,12 +208,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorNameInJournal' | transloco"
                                 [label]="brandingContent.corporateCard.journalOptionLabel"
                                 [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
                                 [options]="nameInJournalOptions"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select a name'"
+                                [placeholder]="'qboExportSettings.nameInJournalPlaceholder' | transloco"
                                 [formControllerName]="'nameInJournalEntry'">
                             </app-configuration-select-field>
                         </div>
@@ -229,9 +229,9 @@
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'credit card account'"
+                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCreditCardAccount' | transloco"
                               [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
-                              [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
+                              [subLabel]="'qboExportSettings.cccDefaultAccountSubLabel' | transloco"
                               [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'defaultCCCAccount'">
@@ -249,9 +249,9 @@
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'debit and credit card account'"
+                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorDebitCardAccount' | transloco"
                               [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
-                              [subLabel]="'Post all your company card transactions to a default payment account.'"
+                              [subLabel]="'qboExportSettings.debitCardDefaultAccountSubLabel' | transloco"
                               [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'defaultDebitCardAccount'">
@@ -269,10 +269,10 @@
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'corporate card vendor'"
+                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCCCVendor' | transloco"
                               [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
                               [subLabel]="brandingContent.corporateCard.defaultCCCVendorSubLabel"
-                              [placeholder]="'Select default corporate card vendor'"
+                              [placeholder]="'qboExportSettings.cccDefaultVendorPlaceholder' | transloco"
                               [formControllerName]="'defaultCreditCardVendor'">
                             </app-configuration-select-field>
                         </div>
@@ -288,10 +288,10 @@
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'accounts payable'"
-                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
-                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + brandingContent.corporateCard.accountsPayableSubLabel"
-                              [placeholder]="'Select accounts payable'"
+                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
+                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ('qboExportSettings.toBePostedTo' | transloco)"
+                              [subLabel]="('qboExportSettings.offsetCreditEntryPrefix' | transloco) + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + brandingContent.corporateCard.accountsPayableSubLabel"
+                              [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
                               [isMultiLineOption]="isMultilineOption"
                               [formControllerName]="'accountsPayable'">
                             </app-configuration-select-field>
@@ -302,7 +302,7 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
                             [label]="brandingContent.corporateCard.creditCardExpenseLabel"
                             [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                             [options]="cccExpenseStateOptions"
@@ -316,12 +316,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
-                            [label]="'How should the expenses be grouped?'"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
+                            [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
                             [subLabel]="brandingContent.corporateCard.creditCardExportGroupSubLabel"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'"
+                            [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
                             [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
@@ -331,12 +331,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)  + ' date as'"
-                            [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
+                            [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                            [subLabel]="'qboExportSettings.exportDateCorporateCardSubLabel' | transloco"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
+                            [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 
@@ -345,12 +345,12 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
-                        [mandatoryErrorListName]="'split expense grouping'"
-                        [label]="'How should the split expenses be grouped?'"
-                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorSplitExpenseGrouping' | transloco"
+                        [label]="'qboExportSettings.splitExpenseGroupingLabel' | transloco"
+                        [subLabel]="'qboExportSettings.splitExpenseGroupingSubLabel' | transloco"
                         [options]="splitExpenseGroupingOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select split expense grouping'"
+                        [placeholder]="'qboExportSettings.splitExpenseGroupingPlaceholder' | transloco"
                         [formControllerName]="'splitExpenseGrouping'">
                     </app-configuration-select-field>
                     </div>
@@ -370,8 +370,9 @@
 <app-configuration-confirmation-dialog
     (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'Change in configuration'"
+    [headerText]="'qboExportSettings.confirmationDialogHeader' | transloco"
     [contextText]="warningDialogText"
-    [confirmBtnText]="'Continue'"
+    [confirmBtnText]="'qboExportSettings.confirmationDialogButton' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
+

@@ -1,8 +1,8 @@
 <div>
     <div>
-        <app-landing-page-header [iconPath]="'assets/logos/qbo.png'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected" [postConnectionRoute]="'qbd/onboarding/export_settings'" [buttonText]="'Start'" [logoStyleClasses]="'tw-p-16-px'"></app-landing-page-header>
+        <app-landing-page-header [iconPath]="'assets/logos/qbo.png'" [appName]="'qbdLanding.appName' | transloco" [appDescription]="'qbdLanding.appDescription' | transloco:{ brandName: brandingConfig.brandName }" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected" [postConnectionRoute]="'qbd/onboarding/export_settings'" [buttonText]="'qbdLanding.buttonText' | transloco" [logoStyleClasses]="'tw-p-16-px'"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headerText]="'Configure the integration to generate custom IIF file to export expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'" [svgPath]="'assets/flow-charts/qbd-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.QBD" [appName]="appName"></app-landing-page-body>
+        <app-landing-page-body [headerText]="'qbdLanding.headerText' | transloco:{ brandName: brandingConfig.brandName }" [svgPath]="'assets/flow-charts/qbd-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.QBD" [appName]="appName"></app-landing-page-body>
     </div>
 </div>

@@ -29,6 +29,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -161,20 +162,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   DefaultImportFields = DefaultImportFields;
 
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
-    "ACCOUNT": [
-      {
-        label: 'Import codes + names',
-        value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
-      },
-      {
-        label: 'Import names only',
-        value: false,
-        subLabel: 'Example: Meals & Entertainment'
-      }
-    ]
-  };
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
 
   readonly AppName = AppName;
 
@@ -200,13 +188,14 @@ export class QboCloneSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private translocoService: TranslocoService
   ) { }
 
   resetCloneSetting(): void {
-    this.warningHeaderText = 'Are you sure?';
-    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.`;
-    this.primaryButtonText = 'Yes';
+    this.warningHeaderText = this.translocoService.translate('qboCloneSettings.areYouSureWarning');
+    this.warningContextText = this.translocoService.translate('qboCloneSettings.resetConfigurationWarning');
+    this.primaryButtonText = this.translocoService.translate('qboCloneSettings.yesButtonText');
     this.warningEvent = ConfigurationWarningEvent.RESET_CONFIGURATION;
 
     this.isWarningDialogVisible = true;
@@ -268,11 +257,11 @@ export class QboCloneSettingsComponent implements OnInit {
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Cloned settings successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.clonedSettingsSuccess'));
       this.router.navigate([`/integrations/qbo/onboarding/done`]);
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to clone settings');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.failedToCloneSettings'));
     });
 
   }
@@ -294,12 +283,12 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new QBOOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = new QBOOnboardingModel().getOnboardingSteps(this.translocoService.translate('qboCloneSettings.cloneSettingsStep'), this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
       completed: false,
-      step: 'Clone settings',
+      step: this.translocoService.translate('qboCloneSettings.cloneSettingsStep'),
       icon: 'gear-medium',
       route: '/integrations/qbo/onboarding/clone_settings',
       styleClasses: ['step-name-export--text']
@@ -506,7 +495,7 @@ export class QboCloneSettingsComponent implements OnInit {
         this.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
         this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, this.cloneQboImportCodeFieldCodeConfig);
         this.fyleFields = fyleFieldsResponse;
-        this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+        this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboCloneSettings.createCustomField'), is_dependent: false });
         this.setupImportSettingFormWatcher();
         this.initializeCustomFieldForm(false);
 
@@ -529,6 +518,20 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.importCodeSelectorOptions = {
+      "ACCOUNT": [
+        {
+          label: this.translocoService.translate('qboCloneSettings.importCodesAndNamesLabel'),
+          value: true,
+          subLabel: this.translocoService.translate('qboCloneSettings.importCodesAndNamesSubLabel')
+        },
+        {
+          label: this.translocoService.translate('qboCloneSettings.importNamesOnlyLabel'),
+          value: false,
+          subLabel: this.translocoService.translate('qboCloneSettings.importNamesOnlySubLabel')
+        }
+      ]
+    };
     this.setupPage();
   }
 

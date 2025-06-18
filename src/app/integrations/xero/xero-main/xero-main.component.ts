@@ -6,6 +6,7 @@ import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-main',
@@ -20,12 +21,7 @@ export class XeroMainComponent {
 
   readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
 
-  modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/xero/main/dashboard'},
-    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log'},
-    {label: 'Mapping', routerLink: '/integrations/xero/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/xero/main/configuration'}
-  ];
+  modules: MenuItem[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -35,14 +31,22 @@ export class XeroMainComponent {
     private accountingExportService: AccountingExportService,
     private xeroHelperService: XeroHelperService,
     private router: Router,
-    private toastService: IntegrationsToastService
-  ) { }
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
+  ) { 
+    this.modules = [
+      {label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard'},
+      {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log'},
+      {label: this.translocoService.translate('xeroMain.mapping'), routerLink: '/integrations/xero/main/mapping'},
+      {label: this.translocoService.translate('xeroMain.configuration'), routerLink: '/integrations/xero/main/configuration'}
+    ];
+  }
 
   disconnect(): void {
     if (!this.isConnectionInProgress) {
       this.xeroHelperService.disconnect().subscribe(() => {
         this.isConnectionInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Xero company successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroMain.disconnectSuccess'));
         this.router.navigate(['/integrations/xero/disconnect/dashboard']);
       });
     }

@@ -29,6 +29,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -153,13 +154,14 @@ export class XeroCloneSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private translocoService: TranslocoService
   ) { }
 
   resetCloneSetting(): void {
-    this.warningHeaderText = 'Are you sure?';
-    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.`;
-    this.primaryButtonText = 'Yes';
+    this.warningHeaderText = this.translocoService.translate('xeroCloneSettings.areYouSure');
+    this.warningContextText = this.translocoService.translate('xeroCloneSettings.resetConfigurationWarning');
+    this.primaryButtonText = this.translocoService.translate('xeroCloneSettings.yes');
     this.warningEvent = ConfigurationWarningEvent.RESET_CONFIGURATION;
 
     this.isWarningDialogVisible = true;
@@ -221,22 +223,22 @@ export class XeroCloneSettingsComponent implements OnInit {
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Cloned settings successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroCloneSettings.clonedSettingsSuccess'));
       this.router.navigate([`/integrations/xero/onboarding/done`]);
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to clone settings');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroCloneSettings.clonedSettingsError'));
     });
 
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps(this.translocoService.translate('xeroCloneSettings.cloneSettingsStep'), this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
       completed: false,
-      step: 'Clone settings',
+      step: this.translocoService.translate('xeroCloneSettings.cloneSettingsStep'),
       icon: 'gear-medium',
       route: '/integrations/xero/onboarding/clone_settings',
       styleClasses: ['step-name-export--text']
@@ -360,7 +362,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroCloneSettings.createCustomField'), is_dependent: false });
       this.setupImportSettingFormWatcher();
       this.initializeCustomFieldForm(false);
 

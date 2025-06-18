@@ -1,12 +1,12 @@
-<p-dialog header="Expenses" [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog [header]="'exportLogChildTableDialog.dialogHeader' | transloco" [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-bg-white">
         <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Expense ID</th>
-                    <th>Merchant</th>
-                    <th>Category</th>
-                    <th>Amount</th>
+                    <th>{{ 'exportLogChildTableDialog.expenseIdHeader' | transloco }}</th>
+                    <th>{{ 'exportLogChildTableDialog.merchantHeader' | transloco }}</th>
+                    <th>{{ 'exportLogChildTableDialog.categoryHeader' | transloco }}</th>
+                    <th>{{ 'exportLogChildTableDialog.amountHeader' | transloco }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-expense>

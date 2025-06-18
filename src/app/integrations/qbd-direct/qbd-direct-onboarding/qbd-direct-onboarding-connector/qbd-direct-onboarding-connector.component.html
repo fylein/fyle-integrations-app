@@ -53,9 +53,9 @@
     <app-configuration-confirmation-dialog
         (warningAccepted)="closeDialog($event)"
         [isWarningVisible]="isDialogVisible"
-        [headerText]="'Connection failed'"
+        [headerText]="'qbdDirectOnboardingConnector.connectionFailed' | transloco"
         [contextText]="warningDialogText"
-        [confirmBtnText]="'Got it'"
+        [confirmBtnText]="'qbdDirectOnboardingConnector.gotIt' | transloco"
         [appName]="appName"
         [showSecondaryCTA]="false">
     </app-configuration-confirmation-dialog>

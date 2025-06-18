@@ -6,11 +6,12 @@ import { AppName, ConfigurationCta, QBDConnectionStatus, QBDDirectInteractionTyp
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { MessageService } from 'primeng/api';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-setup-connection',
   standalone: true,
-  imports: [CommonModule, SharedModule, CardModule],
+  imports: [CommonModule, SharedModule, CardModule, TranslocoModule],
   templateUrl: './qbd-direct-setup-connection.component.html',
   styleUrl: './qbd-direct-setup-connection.component.scss'
 })
@@ -46,7 +47,7 @@ export class QbdDirectSetupConnectionComponent {
 
   QBDDirectInteractionType = QBDDirectInteractionType;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private translocoService: TranslocoService) {}
 
   onDoneClick(event: CheckBoxUpdate) {
     this.doneClick.emit(event);
@@ -66,7 +67,7 @@ export class QbdDirectSetupConnectionComponent {
 
     this.messageService.add({
       severity: 'success',
-      summary: 'Password copied to clipboard'
+      summary: this.translocoService.translate('qbdDirectSetupConnection.passwordCopied')
     });
 
     document.body.removeChild(selBox);

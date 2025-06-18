@@ -20,6 +20,7 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -133,6 +134,7 @@ export class QboExportSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
+    private translocoService: TranslocoService,
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
     private qboHelperService: QboHelperService,
@@ -173,19 +175,19 @@ export class QboExportSettingsComponent implements OnInit {
   getAllReimbursableExportTypeOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Check',
+        label: this.translocoService.translate('qboExportSettings.reimbursableExportTypeCheck'),
         value: QBOReimbursableExpensesObject.CHECK
       },
       {
-        label: 'Bill',
+        label: this.translocoService.translate('qboExportSettings.reimbursableExportTypeBill'),
         value: QBOReimbursableExpensesObject.BILL
       },
       {
-        label: 'Expense',
+        label: this.translocoService.translate('qboExportSettings.reimbursableExportTypeExpense'),
         value: QBOReimbursableExpensesObject.EXPENSE
       },
       {
-        label: 'Journal entry',
+        label: this.translocoService.translate('qboExportSettings.reimbursableExportTypeJournalEntry'),
         value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
       }
     ];
@@ -204,7 +206,7 @@ export class QboExportSettingsComponent implements OnInit {
       ).subscribe({
         complete: () => {
           this.isSaveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboExportSettings.exportSettingsSuccess'));
           if (this.isOnboarding) {
             this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
             this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
@@ -214,7 +216,7 @@ export class QboExportSettingsComponent implements OnInit {
         },
         error: () => {
           this.isSaveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboExportSettings.exportSettingsError'));
         }
       });
     }
@@ -246,25 +248,22 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
-    const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
-    which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
-    features that could help customize and automate your integration workflows.`;
+    const translatedExportType = this.translocoService.translate(`qboExportSettings.${exportType.replace(' ', '')}ExpenseType`);
+    const configurationUpdate = this.translocoService.translate('qboExportSettings.configurationUpdateWarning', { exportType: translatedExportType, existingExportType: existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()), updatedExportType: updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()) });
 
-    const newConfiguration = `You have <b>selected a new export type</b> for the $exportType expense, which would impact a few configurations
-      in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and
-      automate your integration workflows.`;
+    const newConfiguration = this.translocoService.translate('qboExportSettings.newConfigurationWarning', { exportType: translatedExportType });
 
     let content = '';
     // If both are not none and it is an update case else for the new addition case
     if (updatedConfiguration !== 'None' && existingConfiguration !== 'None') {
-      content = configurationUpdate.replace('$exportType', exportType).replace('$existingExportType', existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).replace('$updatedExportType', updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()));
+      content = configurationUpdate;
     } else {
-      content = newConfiguration.replace('$exportType', exportType);
+      content = newConfiguration;
     }
 
     // If any export-type has been changed to journal entry and has import_items set to true, then add the below content and return
     if ((updatedConfiguration === QBOReimbursableExpensesObject.JOURNAL_ENTRY) && this.isImportItemsEnabled) {
-      return `${content} <br><br>Also, Products/services previously imported as categories in ${brandingConfig.brandName} will be disabled.`;
+      return `${content} ${this.translocoService.translate('qboExportSettings.productsServicesWarning', { brandName: brandingConfig.brandName })}`;
     }
     // If any export-type is not journal entry or import_items is set to false, simply return the normal constructed content
     return content;
@@ -279,14 +278,14 @@ export class QboExportSettingsComponent implements OnInit {
 
     if (this.isSingleItemizedJournalEntryAffected()) {
       if (updatedReimbursableExportType !== existingReimbursableExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, this.translocoService.translate('qboExportSettings.reimbursableExpenseType'));
       } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, this.translocoService.translate('qboExportSettings.creditCardExpenseType'));
       }
     }
 
     if (!this.isSingleItemizedJournalEntryAffected() && this.isPaymentsSyncAffected()) {
-      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, this.translocoService.translate('qboExportSettings.reimbursableExpenseType'));
     }
 
     return content;

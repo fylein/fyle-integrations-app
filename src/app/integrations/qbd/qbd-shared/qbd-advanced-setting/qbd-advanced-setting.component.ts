@@ -11,6 +11,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-advanced-setting',
@@ -32,20 +33,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   QBDScheduleFrequency = QBDScheduleFrequency;
 
-  frequencyOption: QBDExportSettingFormOption[] = [
-    {
-      value: QBDScheduleFrequency.DAILY,
-      label: 'Daily'
-    },
-    {
-      value: QBDScheduleFrequency.WEEKLY,
-      label: 'Weekly'
-    },
-    {
-      value: QBDScheduleFrequency.MONTHLY,
-      label: 'Monthly'
-    }
-  ];
+  frequencyOption: QBDExportSettingFormOption[];
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
@@ -55,12 +43,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
-  frequencyIntervals:QBDExportSettingFormOption[] = [...Array(30).keys()].map(day => {
-    return {
-      label: this.setFrequencyInterval(day+1) + ' of every month',
-      value: (day + 1).toString()
-    };
-  });
+  frequencyIntervals:QBDExportSettingFormOption[];
 
   memoPreviewText: string;
 
@@ -81,7 +64,8 @@ export class QbdAdvancedSettingComponent implements OnInit {
     private workspaceService: QbdWorkspaceService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   private formatMemoPreview(): void {
@@ -115,15 +99,18 @@ export class QbdAdvancedSettingComponent implements OnInit {
     });
   }
 
-  private setFrequencyInterval(day: number): string {
+  private getDayOfMonthLabel(day: number): string {
+    let key: string;
     if (day === 1) {
-      return day + ' st';
+      key = 'qbdAdvancedSetting.dayOfMonthFirst';
     } else if (day === 2) {
-      return day + ' nd';
+      key = 'qbdAdvancedSetting.dayOfMonthSecond';
     } else if (day === 3) {
-      return day + ' rd';
+      key = 'qbdAdvancedSetting.dayOfMonthThird';
+    } else {
+      key = 'qbdAdvancedSetting.dayOfMonthNth';
     }
-    return day + ' th';
+    return this.translocoService.translate(key, { day: day });
   }
 
   private initialTime(): string[] {
@@ -183,6 +170,26 @@ export class QbdAdvancedSettingComponent implements OnInit {
     this.isLoading= true;
     this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOptions[]) => {
       this.adminEmails = emailResponse;
+      this.frequencyOption = [
+        {
+          value: QBDScheduleFrequency.DAILY,
+          label: this.translocoService.translate('qbdAdvancedSetting.daily')
+        },
+        {
+          value: QBDScheduleFrequency.WEEKLY,
+          label: this.translocoService.translate('qbdAdvancedSetting.weekly')
+        },
+        {
+          value: QBDScheduleFrequency.MONTHLY,
+          label: this.translocoService.translate('qbdAdvancedSetting.monthly')
+        }
+      ];
+      this.frequencyIntervals = [...Array(30).keys()].map(day => {
+        return {
+          label: this.getDayOfMonthLabel(day + 1),
+          value: (day + 1).toString()
+        };
+      });
       this.getSettingsAndSetupForm();
     });
   }
@@ -242,7 +249,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
     const advancedSettingPayload = QBDAdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSavedSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
@@ -264,7 +271,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSaveError'));
       });
   }
 

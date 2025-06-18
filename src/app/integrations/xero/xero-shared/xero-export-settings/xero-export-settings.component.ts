@@ -15,6 +15,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-export-settings',
@@ -99,7 +100,8 @@ export class XeroExportSettingsComponent implements OnInit {
     private xeroHelperService: XeroHelperService,
     private router : Router,
     private workspaceService: WorkspaceService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
@@ -132,7 +134,7 @@ export class XeroExportSettingsComponent implements OnInit {
       const exportSettingPayload = XeroExportSettingModel.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.exportSettingsSuccess'));
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);
@@ -140,7 +142,7 @@ export class XeroExportSettingsComponent implements OnInit {
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.exportSettingsError'));
       });
     }
   }

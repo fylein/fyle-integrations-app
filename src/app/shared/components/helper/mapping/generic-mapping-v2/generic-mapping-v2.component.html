@@ -22,10 +22,10 @@
                     <app-zero-state-with-illustration
                     [mainText]="brandingConfig.brandId === 'fyle' ?
                         brandingContent.mappingSearchZeroStateHeaderText :
-                        brandingContent.mappingSearchZeroStateHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ' mappings.'
+                        brandingContent.mappingSearchZeroStateHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffixWithPeriod' | transloco)
                     "
                     [subText]="brandingConfig.brandId === 'fyle' ?
-                        brandingContent.mappingSearchZeroStateSubHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ' mappings' :
+                        brandingContent.mappingSearchZeroStateSubHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffix' | transloco) :
                         brandingContent.mappingSearchZeroStateSubHeaderText
                     ">
                   </app-zero-state-with-illustration>

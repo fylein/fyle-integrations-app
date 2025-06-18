@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-export-log',
@@ -10,9 +11,7 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 })
 export class XeroExportLogComponent implements OnInit {
 
-  modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/xero/main/export_log/complete'}
-  ];
+  modules: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -25,10 +24,14 @@ export class XeroExportLogComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('xeroExportLog.completedTab'), routerLink: '/integrations/xero/main/export_log/complete'}
+    ];
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
   }

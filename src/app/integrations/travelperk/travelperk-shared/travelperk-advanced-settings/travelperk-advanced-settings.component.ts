@@ -12,6 +12,7 @@ import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } fr
 import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -70,7 +71,8 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   private formatMemoPreview(): void {
@@ -115,7 +117,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     const advancedSettingsPayload = TravelperkAdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingsForm);
     this.travelperkService.postTravelperkAdvancedSettings(advancedSettingsPayload).subscribe((travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.TRAVELPERK, Page.ADVANCED_SETTINGS_TRAVELPERK, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.TRAVELPERK, TravelPerkOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingsPayload);
@@ -139,7 +141,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsError'));
     });
   }
 

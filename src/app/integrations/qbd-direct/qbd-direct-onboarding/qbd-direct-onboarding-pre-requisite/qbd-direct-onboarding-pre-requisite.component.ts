@@ -13,11 +13,12 @@ import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-dir
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-pre-requisite',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-onboarding-pre-requisite.component.html',
   styleUrl: './qbd-direct-onboarding-pre-requisite.component.scss'
 })
@@ -45,30 +46,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   appName = AppName.QBD_DIRECT;
 
-  preRequisitesteps: QBDPrerequisiteObject[] = [
-    {
-      id: 1,
-      label: 'Install QuickBooks Web Connector',
-      caption: `<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target="_blank" class=" tw-underline !tw-underline-offset-1" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.`,
-      iconName: 'download-medium',
-      state: QBDPreRequisiteState.INCOMPLETE
-    },
-    {
-      id: 2,
-      label: 'Keep your Quickbooks company file open',
-      caption: 'Make sure the QuickBooks company you want to connect to ' + brandingConfig.brandName + ' is open during the integration setup.',
-      iconName: 'expand',
-      state: QBDPreRequisiteState.INCOMPLETE
-    },
-    {
-      id: 3,
-      label: 'Log in to QuickBooks Desktop as admin in single-user mode',
-      caption: `Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode.`,
-      externalLink: this.QBDconnectorArticleLink,
-      iconName: 'user-one',
-      state: QBDPreRequisiteState.INCOMPLETE
-    }
-  ];
+  preRequisitesteps: QBDPrerequisiteObject[];
 
   qbdPreRequisiteState = QBDPreRequisiteState;
 
@@ -79,8 +57,34 @@ export class QbdDirectOnboardingPreRequisiteComponent {
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
+  ) { 
+    this.preRequisitesteps = [
+      {
+        id: 1,
+        label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.installWebConnectorLabel'),
+        caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.installWebConnectorCaption'),
+        iconName: 'download-medium',
+        state: QBDPreRequisiteState.INCOMPLETE
+      },
+      {
+        id: 2,
+        label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenLabel'),
+        caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenCaption', { brandName: brandingConfig.brandName }),
+        iconName: 'expand',
+        state: QBDPreRequisiteState.INCOMPLETE
+      },
+      {
+        id: 3,
+        label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminLabel'),
+        caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminCaption'),
+        externalLink: this.QBDconnectorArticleLink,
+        iconName: 'user-one',
+        state: QBDPreRequisiteState.INCOMPLETE
+      }
+    ];
+  }
 
   updateConnectorStatus(status: CheckBoxUpdate): void {
     this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;

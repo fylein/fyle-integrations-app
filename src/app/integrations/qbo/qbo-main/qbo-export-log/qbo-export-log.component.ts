@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-export-log',
@@ -10,10 +11,7 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 })
 export class QboExportLogComponent implements OnInit {
 
-  modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/qbo/main/export_log/complete'},
-    {label: 'Skipped', routerLink: '/integrations/qbo/main/export_log/skipped'}
-  ];
+  modules: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -26,11 +24,16 @@ export class QboExportLogComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('qboExportLog.completed'), routerLink: '/integrations/qbo/main/export_log/complete'},
+      {label: this.translocoService.translate('qboExportLog.skipped'), routerLink: '/integrations/qbo/main/export_log/skipped'}
+    ];
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
   }

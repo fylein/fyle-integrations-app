@@ -19,11 +19,12 @@ import { QbdDirectTaskResponse } from 'src/app/core/models/qbd-direct/db/qbd-dir
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-connector',
   standalone: true,
-  imports: [QbdDirectSharedModule, SharedModule, CommonModule],
+  imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
   templateUrl: './qbd-direct-onboarding-connector.component.html',
   styleUrl: './qbd-direct-onboarding-connector.component.scss'
 })
@@ -87,7 +88,8 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     private storageService: StorageService,
     private qbdDirectConnectorService: QbdDirectConnectorService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   triggerDownload(filePath: string) {
@@ -174,13 +176,13 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     if (onboardingState === QbdDirectOnboardingState.INCORRECT_COMPANY_PATH) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.INCORRECT_COMPANY_PATH;
-      this.warningDialogText = 'Incorrect company file path detected. Please check and try again.';
+      this.warningDialogText = this.translocoService.translate('qbdDirectOnboardingConnector.incorrectCompanyPathMessage');
       this.isDialogVisible = true;
       this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.IN_CORRECT_PASSWORD;
-      this.warningDialogText = 'Incorrect password detected. Please check and try again.';
+      this.warningDialogText = this.translocoService.translate('qbdDirectOnboardingConnector.incorrectPasswordMessage');
       this.isDialogVisible = true;
       this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
@@ -276,7 +278,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'QuickBooks Desktop connection successful');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'));
     });
   }
 

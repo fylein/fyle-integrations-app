@@ -8,6 +8,7 @@ import { ExpenseAttribute } from 'src/app/core/models/intacct/db/expense-attribu
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard-mapping-resolve',
@@ -39,7 +40,8 @@ export class DashboardMappingResolveComponent implements OnInit {
   constructor(
     private mappingService: SiMappingsService,
     private workspaceService: SiWorkspaceService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   tableDropdownWidth() {
@@ -66,9 +68,9 @@ export class DashboardMappingResolveComponent implements OnInit {
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee mapping saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('dashboardMappingResolve.employeeMappingSuccess'));
     }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('dashboardMappingResolve.somethingWentWrong'));
     });
   }
 
@@ -105,9 +107,9 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
 
     this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category mapping saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('dashboardMappingResolve.categoryMappingSuccess'));
     }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('dashboardMappingResolve.somethingWentWrong'));
     });
   }
 

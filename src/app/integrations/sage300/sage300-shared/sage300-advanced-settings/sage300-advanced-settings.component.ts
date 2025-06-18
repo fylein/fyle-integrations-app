@@ -16,6 +16,7 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { environment } from 'src/environments/environment';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -80,7 +81,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -208,7 +210,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300AdvancedSettings.advancedSettingsSavedSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
@@ -232,7 +234,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300AdvancedSettings.errorSavingAdvancedSettings'));
       });
   }
 

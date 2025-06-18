@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { QbdDirectImportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -23,12 +23,13 @@ import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/mode
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
   templateUrl: './qbd-direct-export-settings.component.html',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   styleUrl: './qbd-direct-export-settings.component.scss'
 })
 export class QbdDirectExportSettingsComponent implements OnInit{
@@ -107,7 +108,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private trackingService: TrackingService,
     public helperService: HelperService,
     private mappingService: MappingService,
-    private qbdDirectHelperService: QbdDirectHelperService
+    private qbdDirectHelperService: QbdDirectHelperService,
+    private translocoService: TranslocoService
   ) { }
 
   isEmployeeMappingDisabled(): boolean {
@@ -269,7 +271,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         }
 
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'));
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);
@@ -277,7 +279,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSaveError'));
       });
   }
 
@@ -479,23 +481,23 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       .replace(/^\w/, (c: string) => c.toUpperCase()); // Capitalize first letter
   }
 
-  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
+  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: string): string {
     const updatedConfigHumanReadable = this.convertEnumToHumanReadable(updatedConfiguration);
     const existingConfigHumanReadable = this.convertEnumToHumanReadable(existingConfiguration);
 
-    const newConfiguration = `You have <b>selected a new export type</b> for the ${exportType} expense`;
-    const configurationUpdate = `You have changed the export type of ${exportType} expense from <b>${existingConfigHumanReadable}</b> to <b>${updatedConfigHumanReadable}</b>,`;
+    const newConfiguration = this.translocoService.translate('qbdDirectExportSettings.newExportTypeSelected', { exportType: exportType });
+    const configurationUpdate = this.translocoService.translate('qbdDirectExportSettings.exportTypeChanged', { exportType: exportType, existingConfig: existingConfigHumanReadable, updatedConfig: updatedConfigHumanReadable });
     let content: string = '';
 
     if (existingConfiguration && existingConfiguration !== 'None') {
       content = configurationUpdate;
     } else {
-      content = newConfiguration.replace('$exportType', exportType);
+      content = newConfiguration;
     }
 
     // Add Journal Entry warning for items
     if ((updatedConfiguration === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || updatedConfiguration === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY) && this.isImportItemsEnabled) {
-      return `${content} <br><br>Also, Products/services previously imported as categories in ${brandingConfig.brandName} will be disabled.`;
+      return this.translocoService.translate('qbdDirectExportSettings.itemsDisabledWarning', { content: content, brandName: brandingConfig.brandName });
     }
 
     return content;
@@ -510,9 +512,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
     if (this.isJournalEntryAffected()) {
       if (updatedReimbursableExportType !== existingReimbursableExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, this.translocoService.translate('qbdDirectExportSettings.reimbursable'));
       } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, this.translocoService.translate('qbdDirectExportSettings.creditCard'));
       }
     }
 

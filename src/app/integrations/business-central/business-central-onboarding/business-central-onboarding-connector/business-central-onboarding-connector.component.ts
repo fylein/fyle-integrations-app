@@ -24,6 +24,7 @@ import { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/co
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',
@@ -36,7 +37,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   redirectLink = brandingKbArticles.topLevelArticles.BUSINESS_CENTRAL;
 
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics \n 365 Business Central');
+  onboardingSteps: OnboardingStepper[];
 
   connectBusinessCentralForm: FormGroup;
 
@@ -86,8 +87,11 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private businessCentralHelperService: BusinessCentralHelperService,
     private helperService: HelperService,
     private mappingService: MappingService,
-    private mapping: BusinessCentralMappingService
-  ) { }
+    private mapping: BusinessCentralMappingService,
+    private translocoService: TranslocoService
+  ) { 
+    this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('businessCentralOnboardingConnector.connectToBusinessCentral'));
+  }
 
   disconnectBusinessCentral(): void {
     this.isLoading = true;
@@ -167,7 +171,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.getCompanyDetails();
     }, (error) => {
-      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamics 365 Business Central. Please try again';
+      const errorMessage = 'message' in error ? error.message : this.translocoService.translate('businessCentralOnboardingConnector.connectionFailedError');
       if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectBusinessCentralConnectedDialogVisible = true;
       } else {
@@ -204,7 +208,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
         this.mapping.importBusinessCentralAttributes(true).subscribe(() => {
           this.saveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics company saved successfully');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralOnboardingConnector.companySavedSuccess'));
           this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
           this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
         });

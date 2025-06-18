@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
@@ -86,7 +87,8 @@ export class GenericMappingTableComponent implements OnInit {
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    public helper: HelperService
+    public helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   clearSearch($event: Event) {
@@ -256,7 +258,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   displayErrorToast(): void {
-    this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+    this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('genericMappingTable.somethingWentWrong'));
   }
 
   ngOnInit(): void {

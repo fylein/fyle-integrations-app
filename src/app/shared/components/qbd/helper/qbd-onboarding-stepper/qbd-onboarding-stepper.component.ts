@@ -4,6 +4,7 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-onboarding-stepper',
@@ -14,34 +15,13 @@ export class QbdOnboardingStepperComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private workspaceService: QbdWorkspaceService
+    private workspaceService: QbdWorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   @Input() currentStep: string;
 
-  onboardingSteps: OnboardingStepper[] = [
-    {
-      active: false,
-      completed: false,
-      step: 'Export settings',
-      icon: 'arrow-tail-up-medium',
-      route: 'export_settings'
-    },
-    {
-      active: false,
-      completed: false,
-      step: 'Field mapping',
-      icon: 'mapping-medium',
-      route: 'field_mappings'
-    },
-    {
-      active: false,
-      completed: false,
-      step: 'Advanced',
-      icon: 'gear-medium',
-      route: 'advanced_settings'
-    }
-  ];
+  onboardingSteps: OnboardingStepper[];
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -71,6 +51,29 @@ export class QbdOnboardingStepperComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = [
+    {
+      active: false,
+      completed: false,
+      step: this.translocoService.translate('qbdOnboardingStepper.exportSettings'),
+      icon: 'arrow-tail-up-medium',
+      route: 'export_settings'
+    },
+    {
+      active: false,
+      completed: false,
+      step: this.translocoService.translate('qbdOnboardingStepper.fieldMapping'),
+      icon: 'mapping-medium',
+      route: 'field_mappings'
+    },
+    {
+      active: false,
+      completed: false,
+      step: this.translocoService.translate('qbdOnboardingStepper.advanced'),
+      icon: 'gear-medium',
+      route: 'advanced_settings'
+    }
+  ];
     this.updateActiveAndCompletedSteps();
   }
 

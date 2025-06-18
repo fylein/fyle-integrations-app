@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -16,10 +17,7 @@ export class BusinessCentralMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/business_central/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/business_central/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -31,8 +29,14 @@ export class BusinessCentralMappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private mappingService: MappingService
-  ) { }
+    private mappingService: MappingService,
+    private translocoService: TranslocoService
+  ) { 
+    this.mappingPages = [
+      {label: this.translocoService.translate('businessCentralMapping.employeeMapping'), routerLink: '/integrations/business_central/main/mapping/employee'},
+      {label: this.translocoService.translate('businessCentralMapping.categoryMapping'), routerLink: '/integrations/business_central/main/mapping/category'}
+    ];
+  }
 
   private setupPage(): void {
     this.isLoading = true;
