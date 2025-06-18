@@ -68,8 +68,8 @@ export const fyleContents = {
                 contentText: 'In this section, you can choose the fields required to be imported from QuickBooks Desktop to ' + brandingConfig.brandName + '. ',
                 importCategoriesLabel: 'Import chart of accounts as categories in ' + brandingConfig.brandName,
                 importCategoriesSubLabel: 'Chart of accounts in QuickBooks will be imported as categories in ' + brandingConfig.brandName + ', available in a dropdown for employees to select when coding expenses.',
-                importItemsLabel: 'Import products/services from QuickBooks Desktop',
-                importItemsSubLabel: 'Products/services from QuickBooks Desktop will be imported as categories in ' + brandingConfig.brandName + '.',
+                importItemsLabel: 'Import items from QuickBooks Desktop',
+                importItemsSubLabel: 'Items from QuickBooks Desktop will be imported as categories in ' + brandingConfig.brandName + '.',
                 importVendorsAsMerchantsLabel: 'Import vendors as merchants in ' + brandingConfig.brandName,
                 chartOfAccountTypes: 'Choose the type of accounts to be imported',
                 chartOfAccountTypesSubLabel: 'By default \'expense\' type accounts will be imported. Open the dropdown to add or modify selections based on your needs.'
