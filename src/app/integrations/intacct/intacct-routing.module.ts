@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IntacctComponent } from './intacct.component';
+import { IntacctTokenGuard } from 'src/app/core/guard/intacct-token.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
       },
       {
         path: 'main',
+        loadChildren: () => import('./intacct-main/main.module').then(m => m.MainModule),
+        canActivate: [IntacctTokenGuard]
+      },
+      {
+        path: 'token_expired',
         loadChildren: () => import('./intacct-main/main.module').then(m => m.MainModule)
       }
     ]

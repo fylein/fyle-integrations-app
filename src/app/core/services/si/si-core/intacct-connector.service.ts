@@ -42,6 +42,11 @@ export class IntacctConnectorService {
     return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', data);
   }
 
+  @Cacheable()
+  checkIntacctTokenHealth(workspaceId: string): Observable<{}> {
+    return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
+  }
+
   postLocationEntityMapping(locationEntityMappingPayload: LocationEntityMapping): Observable<LocationEntityMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
