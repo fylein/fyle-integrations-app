@@ -656,7 +656,9 @@
     "areYouSureWarning": "Are you sure?",
     "resetConfigurationWarning": "By resetting the configuration, you will be configuring each setting individually from the beginning.",
     "yesButtonText": "Yes",
-    "createCustomField": "Create a custom field"
+    "createCustomField": "Create a custom field",
+    "clonedSettingsSuccess": "Cloned settings successfully",
+    "failedToCloneSettings": "Failed to clone settings"
   },
   "qboImportSettings": {
     "importCodesAndNames": "Import codes + names",
@@ -1039,7 +1041,6 @@
     "configuration": "Configuration"
   },
   "businessCentralOnboardingConnector": {
-    "connectToBusinessCentral": "Connect to Dynamics \n 365 Business Central",
     "connectionFailedError": "Failed to connect to Dynamics 365 Business Central. Please try again",
     "companySavedSuccess": "MS Dynamics company saved successfully",
     "headerText": "Connect to your Dynamics 365 Business Central account",
@@ -1051,9 +1052,6 @@
     "dialogHeaderText": "Incorrect account selected",
     "dialogContextText": "You had previously set up the integration with a different Dynamics 365 Business Central account. Please choose the same to restore the settings",
     "reconnectButtonText": "Re connect"
-  },
-  "businessCentralOnboardingExportSettings": {
-    "stepName": "Export Settings"
   },
   "businessCentralOnboardingLanding": {
     "appName": "Dynamics 365 Business Central",
@@ -1138,7 +1136,9 @@
     "continueButton": "Continue",
     "createCustomField": "Create a custom field",
     "costCodes": "Cost codes",
-    "costCategory": "Cost category"
+    "costCategory": "Cost category",
+    "importSettingsSuccess": "Import settings saved successfully",
+    "importSettingsError": "Error saving import settings, please try again later"
   },
   "sage300AdvancedSettings": {
     "advancedSettingsSavedSuccess": "Advanced settings saved successfully",
@@ -1262,7 +1262,9 @@
     "selectTaxCodePlaceholder": "Select tax code",
     "previewHeader": "Preview",
     "createCustomField": "Create a custom field",
-    "project": "Project"
+    "project": "Project",
+    "importSettingsSuccess":  "Import settings saved successfully",
+    "importSettingsError": "Error saving import settings, please try again later"
   },
   "xeroExportSettings": {
     "exportReimbursableExpensesLabel": "Export reimbursable expenses",
@@ -1296,7 +1298,9 @@
     "splitExpenseGroupingSubLabel": "Choose how expenses should be grouped for split expenses",
     "selectSplitExpenseGroupingTypePlaceholder": "Select the split expense grouping type",
     "changeInConfiguration": "Change in configuration",
-    "continue": "Continue"
+    "continue": "Continue",
+    "exportSettingsSuccess": "Export settings saved successfully",
+    "exportSettingsError": "Error saving export settings, please try again later"
   },
   "xeroExportLog": {
     "completedTab": "Completed"
@@ -1782,26 +1786,9 @@
     "autoMappingInProgress": "Auto mapping of employees may take few minutes",
     "autoMappingError": "Something went wrong, please try again"
   },
-  "netsuiteConfiguration": {
-    "exportSettingStepName": "Export Settings",
-    "importSettingStepName": "Import Settings",
-    "advancedSettingsStepName": "Advanced Settings"
-  },
   "netsuiteMapping": {
     "employee": "Employee",
     "category": "Category"
-  },
-  "netsuiteOnboardingImportSettings": {
-    "importSettingsTitle": "Import settings"
-  },
-  "netsuiteOnboardingConnector": {
-    "connectorTitle": "Connect to NetSuite"
-  },
-  "netsuiteOnboardingExportSettings": {
-    "exportSettingsStepTitle": "Export settings"
-  },
-  "netsuiteOnboardingAdvancedSettings": {
-    "headerText": "Advanced settings"
   },
   "netsuiteOnboardingLanding": {
     "appName": "NetSuite",
@@ -1877,7 +1864,7 @@
     "useEmployeeClass": "Use Employee's Class in Netsuite",
     "netsuiteClassLevel": "NetSuite class level",
     "chooseNetsuiteClassLevel": "Choose NetSuite class level",
-    "optional": " (optional)",
+    "optional": " \\(optional\\)",
     "saveSuccess": "Advanced settings saved successfully",
     "saveError": "Error saving advanced settings, please try again later"
   },

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { TranslocoService } from '@jsverse/transloco';
+import { brandingContent, brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-netsuite-configuration',
@@ -10,9 +9,15 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class NetsuiteConfigurationComponent implements OnInit {
 
-  modules: MenuItem[];
+  readonly brandingContent = brandingContent.netsuite.configuration;
 
-  activeModule: MenuItem;
+  modules: MenuItem[] = [
+    {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/export_settings'},
+    {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/netsuite/main/configuration/import_settings'},
+    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/netsuite/main/configuration/advanced_settings'}
+  ];
+
+  activeModule: MenuItem = this.modules[0];
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -20,17 +25,9 @@ export class NetsuiteConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(
-    private translocoService: TranslocoService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.modules = [
-      {label: this.translocoService.translate('netsuiteConfiguration.exportSettingStepName'), routerLink: '/integrations/netsuite/main/configuration/export_settings'},
-      {label: this.translocoService.translate('netsuiteConfiguration.importSettingStepName'), routerLink: '/integrations/netsuite/main/configuration/import_settings'},
-      {label: this.translocoService.translate('netsuiteConfiguration.advancedSettingsStepName'), routerLink: '/integrations/netsuite/main/configuration/advanced_settings'}
-    ];
-    this.activeModule = this.modules[0];
     // If (brandingConfig.brandId !== 'co') {
     //   This.modules.push({label: 'Connection', routerLink: '/integrations/netsuite/main/configuration/connector'});
     // }

@@ -37,7 +37,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   redirectLink = brandingKbArticles.topLevelArticles.BUSINESS_CENTRAL;
 
-  onboardingSteps: OnboardingStepper[];
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics \n 365 Business Central');
 
   connectBusinessCentralForm: FormGroup;
 
@@ -90,7 +90,6 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private mapping: BusinessCentralMappingService,
     private translocoService: TranslocoService
   ) { 
-    this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('businessCentralOnboardingConnector.connectToBusinessCentral'));
   }
 
   disconnectBusinessCentral(): void {

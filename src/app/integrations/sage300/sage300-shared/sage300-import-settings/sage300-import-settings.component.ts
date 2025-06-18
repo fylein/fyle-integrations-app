@@ -437,7 +437,7 @@ updateImportCodeFieldConfig() {
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
       this.updateImportCodeFieldConfig();
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ImportSettings.importSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
@@ -461,7 +461,7 @@ updateImportCodeFieldConfig() {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.importSettingsError'));
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300ImportSettings.importSettingsError'));
       });
   }
 

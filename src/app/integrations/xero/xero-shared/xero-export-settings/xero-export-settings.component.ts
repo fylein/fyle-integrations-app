@@ -134,7 +134,7 @@ export class XeroExportSettingsComponent implements OnInit {
       const exportSettingPayload = XeroExportSettingModel.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.exportSettingsSuccess'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'));
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);
@@ -142,7 +142,7 @@ export class XeroExportSettingsComponent implements OnInit {
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.exportSettingsError'));
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroExportSettings.exportSettingsError'));
       });
     }
   }

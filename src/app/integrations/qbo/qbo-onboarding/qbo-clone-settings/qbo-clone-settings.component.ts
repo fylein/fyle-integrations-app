@@ -257,11 +257,11 @@ export class QboCloneSettingsComponent implements OnInit {
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.clonedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboCloneSettings.clonedSettingsSuccess'));
       this.router.navigate([`/integrations/qbo/onboarding/done`]);
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.failedToCloneSettings'));
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboCloneSettings.failedToCloneSettings'));
     });
 
   }

@@ -199,7 +199,7 @@ export class XeroImportSettingsComponent implements OnInit {
     const importSettingPayload = XeroImportSettingModel.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.integrationsToast.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);
@@ -207,7 +207,7 @@ export class XeroImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.integrationsToast.importSettingsError'));
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroImportSettings.importSettingsError'));
     });
   }
 
