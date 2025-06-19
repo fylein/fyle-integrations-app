@@ -48,7 +48,8 @@ describe('IntacctC1ImportSettingsComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let helperService: jasmine.SpyObj<HelperService>;
-  
+  let translocoService: jasmine.SpyObj<TranslocoService>;
+
   beforeEach(async () => {
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', [
       'getSageIntacctFields',
@@ -103,7 +104,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     helperService = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
-
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     spyOn(router, 'navigate');
     spyOnProperty(router, 'url').and.returnValue('/onboarding');
     mappingService.getSageIntacctFields.and.returnValue(of(sageIntacctFields));
@@ -121,6 +122,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
   describe('Initialization', () => {
 
     it('should initialize component with correct data', () => {
+      translocoService.translate.and.returnValue('General ledger account');
       component.ngOnInit();
       expect(component.isLoading).toBeFalse();
       expect(component.sageIntacctFields).toEqual(sageIntacctFieldsSortedByPriorityForC1);
@@ -187,6 +189,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     });
 
     it('should handle post onboarding state', () => {
+      translocoService.translate.and.returnValue('Import settings saved successfully');
       component.ngOnInit();
 
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
@@ -224,6 +227,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     });
 
     it('should handle save error', () => {
+      translocoService.translate.and.returnValue('Error saving import settings, please try again later');
       component.ngOnInit();
 
       importSettingService.postImportSettings.and.returnValue(throwError(() => new Error('Error')));
@@ -338,6 +342,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     it('refreshDimensions should call refresh methods and display toast', () => {
       mappingService.refreshSageIntacctDimensions.and.returnValue(of({}));
       mappingService.refreshFyleDimensions.and.returnValue(of({}));
+      translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
 
       component.refreshDimensions();
 

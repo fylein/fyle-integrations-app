@@ -58,6 +58,7 @@ describe('QboExportSettingsComponent', () => {
   let windowServiceSpy: jasmine.SpyObj<WindowService>;
   let integrationsToastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let routerSpy: jasmine.SpyObj<Router>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers', 'postExportSettings'], {
@@ -117,6 +118,7 @@ describe('QboExportSettingsComponent', () => {
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     windowServiceSpy = TestBed.inject(WindowService) as jasmine.SpyObj<WindowService>;
     integrationsToastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
@@ -584,6 +586,13 @@ describe('QboExportSettingsComponent', () => {
     });
 
     it('should construct warning message for reimbursable expenses when single itemized journal entry is affected', () => {
+      translocoService.translate.and.callFake(<T = string>(key: string): T => {
+        const translations: Record<string, string> = {
+          'qboExportSettings.reimbursableExpenseType': 'reimbursable',
+          'qboExportSettings.configurationUpdateWarning': 'You have changed the export type of reimbursable expense from <b>Expense</b> to <b>Bill</b>, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows'
+        };
+        return translations[key] as T;
+      })
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(true);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
       spyOn<any>(component, 'replaceContentBasedOnConfiguration').and.callThrough();
@@ -595,6 +604,14 @@ describe('QboExportSettingsComponent', () => {
     });
 
     it('should construct warning message for credit card expenses when single itemized journal entry is affected', () => {
+    
+      translocoService.translate.and.callFake(<T = string>(key: string): T => {
+        const translations: Record<string, string> = {
+          'qboExportSettings.creditCardExpenseType': 'credit card',
+          'qboExportSettings.configurationUpdateWarning': 'You have changed the export type of credit card expense from <b>Credit_card_purchase</b> to <b>Journal_entry</b>, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows'
+        };
+        return translations[key] as T;
+      })
       component.exportSettingForm.patchValue({ reimbursableExportType: 'EXPENSE' });
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(true);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(false);
@@ -603,6 +620,13 @@ describe('QboExportSettingsComponent', () => {
     });
 
     it('should construct warning message when payments sync is affected', () => {
+      translocoService.translate.and.callFake(<T = string>(key: string): T => {
+        const translations: Record<string, string> = {
+          'qboExportSettings.reimbursableExpenseType': 'reimbursable',
+          'qboExportSettings.configurationUpdateWarning': 'You have changed the export type of reimbursable expense from <b>Expense</b> to <b>Bill</b>, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows'
+        };
+        return translations[key] as T;
+      })
       spyOn<any>(component, 'isSingleItemizedJournalEntryAffected').and.returnValue(false);
       spyOn<any>(component, 'isPaymentsSyncAffected').and.returnValue(true);
       const result = component['constructWarningMessage']();
@@ -619,16 +643,19 @@ describe('QboExportSettingsComponent', () => {
 
   describe('replaceContentBasedOnConfiguration', () => {
     it('should return correct content for configuration update', () => {
+      translocoService.translate.and.returnValue('You have changed the export type of reimbursable expense from <b>Expense</b> to <b>Bill</b>, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows');
       const result = component['replaceContentBasedOnConfiguration']('BILL', 'EXPENSE', 'reimbursable');
       expect(result).toContain('You have changed the export type of reimbursable expense from <b>Expense</b> to <b>Bill</b>');
     });
 
     it('should return correct content for new configuration', () => {
+      translocoService.translate.and.returnValue('You have <b>selected a new export type</b> for the credit card expense, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows.');
       const result = component['replaceContentBasedOnConfiguration']('BILL', 'None', 'credit card');
       expect(result).toContain('You have <b>selected a new export type</b> for the credit card expense');
     });
 
     it('should include additional content when updated to JOURNAL_ENTRY and isImportItemsEnabled is true', () => {
+      translocoService.translate.and.returnValue('<br><br>Also, Products/services previously imported as categories in Fyle will be disabled');
       component.isImportItemsEnabled = true;
       const result = component['replaceContentBasedOnConfiguration'](QBOReimbursableExpensesObject.JOURNAL_ENTRY, 'EXPENSE', 'reimbursable');
       expect(result).toContain('Products/services previously imported as categories');

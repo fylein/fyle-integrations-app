@@ -22,7 +22,12 @@ describe('QboMappingComponent', () => {
   beforeEach(async () => {
     mappingServiceSpy = jasmine.createSpyObj('MappingService', ['getMappingSettings']);
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en')
+    });
     await TestBed.configureTestingModule({
       declarations: [
         QboMappingComponent,
@@ -82,6 +87,7 @@ describe('QboMappingComponent', () => {
     const originalFeatureFlag = brandingFeatureConfig.featureFlags.mapEmployees;
     brandingFeatureConfig.featureFlags.mapEmployees = false;
 
+    translocoService.translate.and.returnValue('Category');
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettings as unknown as MappingSettingResponse));
 
     component.ngOnInit();

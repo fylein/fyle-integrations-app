@@ -36,6 +36,7 @@ describe('QboAdvancedSettingsComponent', () => {
   let workspaceService: jasmine.SpyObj<WorkspaceService>;
   let router: jasmine.SpyObj<Router>;
   let orgService: jasmine.SpyObj<OrgService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings']);
@@ -87,6 +88,7 @@ describe('QboAdvancedSettingsComponent', () => {
     workspaceService = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     orgService = TestBed.inject(OrgService) as jasmine.SpyObj<OrgService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     component.advancedSettingForm = new FormBuilder().group({
       paymentSync: [null],
@@ -176,6 +178,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should save advanced settings and skip export fields successfully', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilterResponse));
+      translocoService.translate.and.returnValue('Advanced settings saved successfully');
       component.isOnboarding = true;
 
       // Set skipExport to true to trigger the skip export save
@@ -210,6 +213,7 @@ describe('QboAdvancedSettingsComponent', () => {
     }));
 
     it('should handle error when saving advanced settings', fakeAsync(() => {
+      translocoService.translate.and.returnValue('Error saving advanced settings, please try again later');
       advancedSettingsService.postAdvancedSettings.and.returnValue(throwError('Error'));
       component.isOnboarding = true;
 

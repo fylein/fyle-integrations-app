@@ -3,13 +3,20 @@ import { QbdDirectAssistedSetupComponent } from './qbd-direct-assisted-setup.com
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { of } from 'rxjs';
 
 describe('QbdDirectAssistedSetupComponent', () => {
   let component: QbdDirectAssistedSetupComponent;
   let fixture: ComponentFixture<QbdDirectAssistedSetupComponent>;
 
   beforeEach(async () => {
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       declarations: [ QbdDirectAssistedSetupComponent ],

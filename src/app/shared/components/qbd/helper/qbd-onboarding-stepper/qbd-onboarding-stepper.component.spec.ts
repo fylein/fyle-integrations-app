@@ -8,7 +8,8 @@ import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { QbdOnboardingStepperComponent } from './qbd-onboarding-stepper.component';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { of } from 'rxjs';
 
 describe('QbdOnboardingStepperComponent', () => {
   let component: QbdOnboardingStepperComponent;
@@ -16,16 +17,23 @@ describe('QbdOnboardingStepperComponent', () => {
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/onboarding' };
   let router: Router;
   let service2: any;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
     service2 = {
       getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS
     };
     localStorage.setItem('QBDOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({
     declarations: [QbdOnboardingStepperComponent],
-    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule],
+    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule, TranslocoModule],
     providers: [
         { provide: Router, useValue: routerSpy },
         { provide: QbdWorkspaceService, useValue: service2 },
@@ -34,6 +42,8 @@ describe('QbdOnboardingStepperComponent', () => {
     ]
 })
     .compileComponents();
+
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     fixture = TestBed.createComponent(QbdOnboardingStepperComponent);
     component = fixture.componentInstance;

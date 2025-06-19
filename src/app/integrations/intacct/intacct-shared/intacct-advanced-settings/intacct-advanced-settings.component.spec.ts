@@ -29,6 +29,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
   let exportSettingService: jasmine.SpyObj<SiExportSettingService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const advancedSettingsServiceSpy = jasmine.createSpyObj('SiAdvancedSettingService', [
@@ -43,7 +44,13 @@ describe('IntacctAdvancedSettingsComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
     const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       declarations: [IntacctAdvancedSettingsComponent, SkipExportComponent],
@@ -67,6 +74,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
     exportSettingService = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
@@ -175,7 +183,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       const mockResponse = { ...advancedSettings };
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockResponse));
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.ADVANCED_CONFIGURATION);
-
+      translocoService.translate.and.returnValue('Advanced settings saved successfully');
       component.skipExportChild = { saveSkipExportFields: jasmine.createSpy('saveSkipExportFields') } as any;
       component.advancedSettingsForm.get('skipSelectiveExpenses')?.setValue(true);
       component.isOnboarding = true;
@@ -197,7 +205,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockResponse));
       advancedSettingsService.deleteExpenseFilter.and.returnValue(of({} as SkipExport));
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.ADVANCED_CONFIGURATION);
-
+      translocoService.translate.and.returnValue('Advanced settings saved successfully');
       component.advancedSettingsForm.get('skipSelectiveExpenses')?.setValue(false);
 
       component.save();
@@ -214,7 +222,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       const mockResponse = { ...advancedSettings };
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockResponse));
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
-
+      translocoService.translate.and.returnValue('Advanced settings saved successfully');
       component.isOnboarding = false;
       component.save();
       tick();
@@ -227,7 +235,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     it('should handle error when saving advanced settings', fakeAsync(() => {
       const getError = () => new Error('Error');
       advancedSettingsService.postAdvancedSettings.and.returnValue(throwError(getError));
-
+      translocoService.translate.and.returnValue('Error saving advanced settings, please try again later');
       component.save();
       tick();
 
@@ -263,7 +271,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       it('should call refreshSageIntacctDimensions and refreshFyleDimensions', () => {
         mappingService.refreshSageIntacctDimensions.and.returnValue(of({}));
         mappingService.refreshFyleDimensions.and.returnValue(of({}));
-
+        translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
         component.refreshDimensions(true);
 
         expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();

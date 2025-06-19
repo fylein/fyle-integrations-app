@@ -23,6 +23,7 @@ describe('QbdFieldMappingComponent', () => {
   let formbuilder: FormBuilder;
   let qbdFieldMappingService: QbdFieldMappingService;
   let qbdWorkspaceService: QbdWorkspaceService;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -41,7 +42,13 @@ describe('QbdFieldMappingComponent', () => {
       displayToastMessage: () => undefined
     };
 
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
     declarations: [QbdFieldMappingComponent],
@@ -57,6 +64,7 @@ describe('QbdFieldMappingComponent', () => {
 })
     .compileComponents();
 
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     fixture = TestBed.createComponent(QbdFieldMappingComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);

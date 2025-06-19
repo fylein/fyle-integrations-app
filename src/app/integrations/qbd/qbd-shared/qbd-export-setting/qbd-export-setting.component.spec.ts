@@ -29,7 +29,7 @@ describe('QbdExportSettingComponent', () => {
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
-  let translocoServiceSpy: jasmine.SpyObj<TranslocoService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
 
@@ -38,38 +38,12 @@ describe('QbdExportSettingComponent', () => {
       postQbdExportSettings: () => of(QBDExportSettingResponse)
     };
 
-    translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
         reRenderOnLangChange: true
       },
-      getActiveLang: () => 'en',
-      setActiveLang: () => {},
-      load: () => Promise.resolve(),
-      selectTranslate: () => of('test'),
-      selectTranslateObject: () => of({}),
-      getTranslation: () => ({}),
-      setTranslation: () => {},
-      addTranslation: () => {},
-      updateTranslation: () => {},
-      setTranslationKey: () => {},
-      removeTranslation: () => {},
-      getAvailableLangs: () => [],
-      isLang: () => true,
-      getLangName: () => 'English',
-      getLangDirection: () => 'ltr',
-      events: of({}),
       langChanges$: of('en'),
-      loadings$: of({}),
-      errors$: of({}),
-      loader: {} as any,
-      parser: {} as any,
-      missingHandler: {} as any,
-      interceptor: {} as any,
-      scope: '',
-      defaultLang: 'en',
-      fallbackLang: 'en',
-      availableLangs: [],
-      reRenderLang: () => {}
+      _loadDependencies: () => Promise.resolve()
     });
 
     service2 = {
@@ -101,6 +75,8 @@ describe('QbdExportSettingComponent', () => {
 })
     .compileComponents();
 
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
+
     fixture = TestBed.createComponent(QbdExportSettingComponent);
     component = fixture.componentInstance;
     component.exportSettings = QBDExportSettingResponse;
@@ -123,6 +99,15 @@ describe('QbdExportSettingComponent', () => {
       cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
       reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
       cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+    });
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'qbdExportSetting.creditCardPurchase': 'Credit card purchase',
+        'qbdExportSetting.journalEntry': 'Journal entry',
+        'qbdExportSetting.bank': 'bank'
+      };
+    
+      return translations[key] as T;
     });
     fixture.detectChanges();
   });
@@ -243,14 +228,7 @@ describe('QbdExportSettingComponent', () => {
   });
 
   it('reimbursableExpenseGroupingDateOptionsFn function check', () => {
-    // Set up the mock to return the correct translation
-    translocoServiceSpy.translate.and.callFake((key: string) => {
-      if (key === 'qbdExportSetting.dateOfExport') {
-        return 'Date of export' as any;
-      }
-      return 'test' as any;
-    });
-    
+    translocoService.translate.and.returnValue('Date of export');
     // Call ngOnInit to initialize the options
     component.ngOnInit();
     fixture.detectChanges();

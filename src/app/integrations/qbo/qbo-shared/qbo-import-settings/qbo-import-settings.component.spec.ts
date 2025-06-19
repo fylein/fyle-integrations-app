@@ -38,7 +38,7 @@ describe('QboImportSettingsComponent', () => {
   let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
-
+  let translocoService: jasmine.SpyObj<TranslocoService>;
   beforeEach(async () => {
     const qboHelperServiceSpyObj = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const helperServiceSpyObj = jasmine.createSpyObj('HelperService', ['markControllerAsRequired']);
@@ -75,6 +75,7 @@ describe('QboImportSettingsComponent', () => {
     toastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   beforeEach(() => {
@@ -153,6 +154,7 @@ describe('QboImportSettingsComponent', () => {
 
     it('should save import settings successfully', () => {
       importSettingServiceSpy.postImportSettings.and.returnValue(of({} as any));
+      translocoService.translate.and.returnValue('Import settings saved successfully');
       component.isOnboarding = true;
       component.save();
       expect(component.isSaveInProgress).toBeFalse();
@@ -162,6 +164,7 @@ describe('QboImportSettingsComponent', () => {
     });
 
     it('should handle error when saving import settings', () => {
+      translocoService.translate.and.returnValue('Error saving import settings, please try again later');
       importSettingServiceSpy.postImportSettings.and.returnValue(throwError('Error'));
       component.save();
       expect(component.isSaveInProgress).toBeFalse();

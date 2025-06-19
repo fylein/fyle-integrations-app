@@ -40,7 +40,13 @@ describe('IntacctExportSettingsComponent', () => {
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
 
-    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
     
     await TestBed.configureTestingModule({
       declarations: [ IntacctExportSettingsComponent ],
@@ -52,7 +58,7 @@ describe('IntacctExportSettingsComponent', () => {
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
-        { provide: TranslocoService, useValue: translocoService },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([])
       ]
     }).compileComponents();
@@ -62,6 +68,7 @@ describe('IntacctExportSettingsComponent', () => {
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
@@ -142,6 +149,7 @@ describe('IntacctExportSettingsComponent', () => {
     it('should save export settings successfully during onboarding', fakeAsync(() => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.EXPORT_SETTINGS);
       exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      translocoService.translate.and.returnValue('Export settings saved successfully');
       spyOnProperty(router, 'url').and.returnValue('/integrations/intacct/onboarding/export_settings');
 
       fixture.detectChanges();
@@ -158,7 +166,7 @@ describe('IntacctExportSettingsComponent', () => {
     it('should save export settings successfully post onboarding', () => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
       exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
-
+      translocoService.translate.and.returnValue('Export settings saved successfully');
       fixture.detectChanges();
       component.save();
 
@@ -170,7 +178,7 @@ describe('IntacctExportSettingsComponent', () => {
 
     it('should handle save failure', () => {
       exportSettingService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
-
+      translocoService.translate.and.returnValue('Error saving export settings, please try again later');
       fixture.detectChanges();
       component.save();
 
@@ -181,9 +189,11 @@ describe('IntacctExportSettingsComponent', () => {
 
   describe('Utility Functions', () => {
     it('should handle refresh dimensions', () => {
+      translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
       component.refreshDimensions(true);
       expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
       expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
+      translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
     });
 

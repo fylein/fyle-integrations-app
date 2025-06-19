@@ -48,7 +48,12 @@ describe('IntacctImportSettingsComponent', () => {
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
     const siWorkspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en')
+    });
     
     await TestBed.configureTestingModule({
     declarations: [IntacctImportSettingsComponent],
@@ -433,6 +438,7 @@ describe('IntacctImportSettingsComponent', () => {
     });
 
     it('refreshDimensions should call refresh services and show toast', fakeAsync(() => {
+      translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
       tick();
 
       component.refreshDimensions(true);

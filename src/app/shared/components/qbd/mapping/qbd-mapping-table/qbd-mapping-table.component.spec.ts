@@ -64,6 +64,13 @@ describe('QbdMappingTableComponent', () => {
   });
 
   it('getToolTipText function check', () => {
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'qbdMappingTable.save': 'Save',
+        'qbdMappingTable.returnKey': 'return'
+      };
+      return translations[key] as T;
+    });
     const result1 = `
             <div style="padding:0px 6px 4px;text-align: center;>
               <p style="font-size:12px;padding-top:0">Save</p>

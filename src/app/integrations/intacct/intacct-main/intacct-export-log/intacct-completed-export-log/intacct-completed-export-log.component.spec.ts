@@ -19,13 +19,20 @@ describe('IntacctCompletedExportLogComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let paginatorService: jasmine.SpyObj<PaginatorService>;
   let userService: jasmine.SpyObj<UserService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups']);
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['onDateFilter']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       declarations: [ IntacctCompletedExportLogComponent ],
@@ -44,6 +51,7 @@ describe('IntacctCompletedExportLogComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     userService.getUserProfile.and.returnValue({ org_id: 'ORG123' } as MinimalUser);
     paginatorService.getPageSize.and.returnValue(mockPaginator);

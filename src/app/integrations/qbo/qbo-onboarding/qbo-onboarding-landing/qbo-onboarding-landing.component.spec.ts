@@ -8,6 +8,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { EventEmitter } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { of } from 'rxjs';
 
 describe('QboOnboardingLandingComponent', () => {
   let component: QboOnboardingLandingComponent;
@@ -16,6 +17,7 @@ describe('QboOnboardingLandingComponent', () => {
   let qboConnectorServiceSpy: jasmine.SpyObj<QboConnectorService>;
   let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const helperSpy = jasmine.createSpyObj('HelperService', ['oauthHandler'], {
@@ -24,7 +26,13 @@ describe('QboOnboardingLandingComponent', () => {
     const qboConnectorSpy = jasmine.createSpyObj('QboConnectorService', ['connectQBO']);
     const toastSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, TranslocoModule],
@@ -42,6 +50,7 @@ describe('QboOnboardingLandingComponent', () => {
     qboConnectorServiceSpy = TestBed.inject(QboConnectorService) as jasmine.SpyObj<QboConnectorService>;
     toastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   beforeEach(() => {

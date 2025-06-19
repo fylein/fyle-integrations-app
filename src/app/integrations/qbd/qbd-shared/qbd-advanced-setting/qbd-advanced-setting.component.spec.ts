@@ -27,7 +27,7 @@ describe('QbdAdvancedSettingComponent', () => {
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   let qbdWorkspaceService: QbdWorkspaceService;
-  let translocoService: any;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
@@ -50,7 +50,13 @@ describe('QbdAdvancedSettingComponent', () => {
       displayToastMessage: () => undefined
     };
 
-    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
     
     await TestBed.configureTestingModule({
     declarations: [QbdAdvancedSettingComponent],
@@ -62,11 +68,13 @@ describe('QbdAdvancedSettingComponent', () => {
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: OrgService, useValue: service3 },
         { provide: IntegrationsToastService, useValue: service4 },
-        { provide: TranslocoService, useValue: translocoService },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi())
     ]
 })
     .compileComponents();
+
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     fixture = TestBed.createComponent(QbdAdvancedSettingComponent);
     component = fixture.componentInstance;

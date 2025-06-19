@@ -24,7 +24,11 @@ describe('IntacctMappingComponent', () => {
   beforeEach(async () => {
     mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getMappingSettings']);
     commonResourcesServiceSpy = jasmine.createSpyObj('CommonResourcesService', ['getDimensionDetails']);
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      }
+    });
     
     await TestBed.configureTestingModule({
       imports: [SharedModule, RouterModule.forRoot([])],
@@ -67,9 +71,15 @@ describe('IntacctMappingComponent', () => {
   });
 
   it('should fetch and set display names for source and destination fields', () => {
-    translocoService.translate.and.returnValue('Employee');
-    translocoService.translate.and.returnValue('Category');
-    translocoService.translate.and.returnValue('Project Display Name');
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'intacctMapping.employeeLabel': 'Employee',
+        'intacctMapping.categoryLabel': 'Category',
+      };
+    
+      return translations[key] as T;
+    });
+
     fixture.detectChanges();
 
     expect(commonResourcesServiceSpy.getDimensionDetails).toHaveBeenCalledWith({sourceType: 'FYLE', attributeTypes: ['EMPLOYEE', 'CATEGORY', 'PROJECT']});

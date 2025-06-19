@@ -9,9 +9,16 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 describe('QbdMappingHeaderSectionComponent', () => {
   let component: QbdMappingHeaderSectionComponent;
   let fixture: ComponentFixture<QbdMappingHeaderSectionComponent>;
-
+  let translocoService: jasmine.SpyObj<TranslocoService>;
+  
   beforeEach(async () => {
-    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
     const service1 = {
       mappingStat: () => of()
     };
@@ -25,6 +32,8 @@ describe('QbdMappingHeaderSectionComponent', () => {
       ]
     })
     .compileComponents();
+
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     fixture = TestBed.createComponent(QbdMappingHeaderSectionComponent);
     component = fixture.componentInstance;
