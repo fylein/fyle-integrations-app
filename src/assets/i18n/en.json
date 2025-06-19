@@ -85,7 +85,7 @@
     "selectMeridiemPlaceholder": "Select meridiem of time"
   },
   "configurationCustomFieldCreationDialog": {
-    "existingFieldError": "Oops! It looks like another field with the same name already exists in your {brandName} account. Would you please give the field a different name?",
+    "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
     "fieldTypePlaceholder": "Enter field type",
     "invalidTypeMessage": "Enter a valid type",
     "fieldNamePlaceholder": "Enter field name",
@@ -169,7 +169,7 @@
     "brandNameFieldLabel": "{{brandName}} field",
     "selectExpenseFieldPlaceholder": "Select expense field",
     "autoExportCommitmentInfo": "Auto-export commitment based on the cost code and cost category.",
-    "uniqueFieldsError": "*{brandName} and {{appName}} Fields should be unique.",
+    "uniqueFieldsError": "*{{brandName}} and {{appName}} Fields should be unique.",
     "addMoreFields": "Add more fields",
     "configureImportMethodTitle": "Configure import method",
     "configureImportMethodInfo": "You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.",
