@@ -29,7 +29,7 @@ describe('IntacctMappingComponent', () => {
         reRenderOnLangChange: true
       }
     });
-    
+
     await TestBed.configureTestingModule({
       imports: [SharedModule, RouterModule.forRoot([])],
       declarations: [ IntacctMappingComponent ],
@@ -74,9 +74,9 @@ describe('IntacctMappingComponent', () => {
     translocoService.translate.and.callFake(<T = string>(key: string): T => {
       const translations: Record<string, string> = {
         'intacctMapping.employeeLabel': 'Employee',
-        'intacctMapping.categoryLabel': 'Category',
+        'intacctMapping.categoryLabel': 'Category'
       };
-    
+
       return translations[key] as T;
     });
 

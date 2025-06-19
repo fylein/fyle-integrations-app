@@ -10,7 +10,7 @@ describe('QbdMappingHeaderSectionComponent', () => {
   let component: QbdMappingHeaderSectionComponent;
   let fixture: ComponentFixture<QbdMappingHeaderSectionComponent>;
   let translocoService: jasmine.SpyObj<TranslocoService>;
-  
+
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {

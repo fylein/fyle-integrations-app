@@ -106,7 +106,7 @@ describe('QbdExportSettingComponent', () => {
         'qbdExportSetting.journalEntry': 'Journal entry',
         'qbdExportSetting.bank': 'bank'
       };
-    
+
       return translations[key] as T;
     });
     fixture.detectChanges();
@@ -232,7 +232,7 @@ describe('QbdExportSettingComponent', () => {
     // Call ngOnInit to initialize the options
     component.ngOnInit();
     fixture.detectChanges();
-    
+
     const reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
       {
         label: 'Date of export',

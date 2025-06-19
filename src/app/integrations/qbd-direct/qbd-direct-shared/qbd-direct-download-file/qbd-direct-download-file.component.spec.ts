@@ -10,7 +10,7 @@ describe('QbdDirectDownloadFileComponent', () => {
   let component: QbdDirectDownloadFileComponent;
   let fixture: ComponentFixture<QbdDirectDownloadFileComponent>;
   let translocoService: jasmine.SpyObj<TranslocoService>;
-  
+
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {

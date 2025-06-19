@@ -47,7 +47,7 @@ describe('IntacctExportSettingsComponent', () => {
       langChanges$: of('en'),
       _loadDependencies: () => Promise.resolve()
     });
-    
+
     await TestBed.configureTestingModule({
       declarations: [ IntacctExportSettingsComponent ],
       imports: [ SharedModule, ReactiveFormsModule, RouterModule.forRoot([]) ],

@@ -46,7 +46,7 @@ describe('IntacctDashboardComponent', () => {
       langChanges$: of('en'),
       _loadDependencies: () => Promise.resolve()
     });
-    
+
     await TestBed.configureTestingModule({
     declarations: [IntacctDashboardComponent],
     imports: [SharedModule],
@@ -72,7 +72,7 @@ describe('IntacctDashboardComponent', () => {
     intacctAdvancedSettingsServiceSpy = TestBed.inject(SiAdvancedSettingService) as jasmine.SpyObj<SiAdvancedSettingService>;
     exportLogServiceSpy = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
-    
+
     userServiceSpy.getUserProfile.and.returnValue({ full_name: 'John Doe' } as MinimalUser);
     dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
     accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary as unknown as  AccountingExportSummary));

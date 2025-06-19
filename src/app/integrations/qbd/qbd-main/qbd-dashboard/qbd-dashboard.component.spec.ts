@@ -19,7 +19,7 @@ describe('QbdDashboardComponent', () => {
   let iifLogsService: QbdIifLogsService;
   let formbuilder: FormBuilder;
   let translocoService: jasmine.SpyObj<TranslocoService>;
-  
+
   beforeEach(async () => {
 
     service1 = {
@@ -43,7 +43,7 @@ describe('QbdDashboardComponent', () => {
       langChanges$: of('en'),
       _loadDependencies: () => Promise.resolve()
     });
-    
+
     await TestBed.configureTestingModule({
     declarations: [QbdDashboardComponent],
     imports: [RouterTestingModule, TranslocoModule],

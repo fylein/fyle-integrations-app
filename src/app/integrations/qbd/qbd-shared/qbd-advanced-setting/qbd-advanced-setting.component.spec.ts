@@ -57,7 +57,7 @@ describe('QbdAdvancedSettingComponent', () => {
       langChanges$: of('en'),
       _loadDependencies: () => Promise.resolve()
     });
-    
+
     await TestBed.configureTestingModule({
     declarations: [QbdAdvancedSettingComponent],
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],

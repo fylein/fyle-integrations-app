@@ -54,7 +54,7 @@ describe('IntacctImportSettingsComponent', () => {
       },
       langChanges$: of('en')
     });
-    
+
     await TestBed.configureTestingModule({
     declarations: [IntacctImportSettingsComponent],
     imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([])],

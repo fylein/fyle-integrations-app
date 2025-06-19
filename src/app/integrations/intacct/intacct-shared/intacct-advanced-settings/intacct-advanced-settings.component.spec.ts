@@ -64,7 +64,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
         { provide: SiMappingsService, useValue: mappingServiceSpy },
         { provide: SiExportSettingService, useValue: exportSettingServiceSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideRouter([]),
+        provideRouter([])
       ]
     }).compileComponents();
 

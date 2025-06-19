@@ -13,7 +13,7 @@ describe('QbdMappingTableComponent', () => {
 
   beforeEach(async () => {
     translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
-    
+
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([])],
       declarations: [ QbdMappingTableComponent ],

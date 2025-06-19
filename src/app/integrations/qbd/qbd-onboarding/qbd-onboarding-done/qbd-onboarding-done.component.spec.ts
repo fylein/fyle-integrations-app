@@ -11,7 +11,7 @@ describe('QbdOnboardingDoneComponent', () => {
   let router: Router;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let translocoService: jasmine.SpyObj<TranslocoService>;
-  
+
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
