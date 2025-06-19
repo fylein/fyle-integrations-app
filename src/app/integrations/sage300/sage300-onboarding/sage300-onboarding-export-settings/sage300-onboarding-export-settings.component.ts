@@ -13,7 +13,7 @@ export class Sage300OnboardingExportSettingsComponent implements OnInit {
   onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(Sage300OnboardingState.EXPORT_SETTINGS.replace('_', ' '));
 
   constructor(
-    private onboardingService: Sage300OnboardingService,
+    private onboardingService: Sage300OnboardingService
   ) { }
 
   ngOnInit(): void {

@@ -15,7 +15,6 @@ import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-confi
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { Router } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
 @Component({
   selector: 'app-xero-dashboard',
   templateUrl: './xero-dashboard.component.html',

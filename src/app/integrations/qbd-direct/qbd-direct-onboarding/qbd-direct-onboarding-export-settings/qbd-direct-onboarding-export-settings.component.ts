@@ -17,7 +17,7 @@ import { brandingContent } from 'src/app/branding/branding-config';
 })
 export class QbdDirectOnboardingExportSettingsComponent implements OnInit {
 
-  readonly brandingContent = brandingContent.qbd_direct.configuration.exportSetting;
+  brandingContent = brandingContent.configuration.exportSetting;
 
   onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 

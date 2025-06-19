@@ -10,8 +10,8 @@ import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-
 })
 export class Sage300OnboardingImportSettingsComponent implements OnInit {
 
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(Sage300OnboardingState.IMPORT_SETTINGS.replace('_', ' '))
-
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(Sage300OnboardingState.IMPORT_SETTINGS.replace('_', ' '));
+  
   constructor(
     private onboardingService: Sage300OnboardingService
   ) { }

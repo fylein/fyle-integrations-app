@@ -332,6 +332,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupImportCodeSelectorOptions();
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     if (this.form.controls?.dependentFieldImportToggle?.value) {
       this.form.controls?.dependentFieldImportToggle.disable();
@@ -339,7 +340,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
     if (this.appName !== AppName.SAGE300) {
       this.disableDestinationFields();
     } else {
-      this.setupImportCodeSelectorOptions();
       this.setupImportCodeCounter();
     }
   }
