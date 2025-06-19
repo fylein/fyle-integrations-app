@@ -8,6 +8,7 @@ import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { QbdOnboardingStepperComponent } from './qbd-onboarding-stepper.component';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdOnboardingStepperComponent', () => {
   let component: QbdOnboardingStepperComponent;
@@ -17,6 +18,7 @@ describe('QbdOnboardingStepperComponent', () => {
   let service2: any;
 
   beforeEach(async () => {
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
     service2 = {
       getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS
     };
@@ -27,7 +29,8 @@ describe('QbdOnboardingStepperComponent', () => {
     providers: [
         { provide: Router, useValue: routerSpy },
         { provide: QbdWorkspaceService, useValue: service2 },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        { provide: TranslocoService, useValue: translocoServiceSpy }
     ]
 })
     .compileComponents();

@@ -21,7 +21,7 @@ export class BusinessCentralMainComponent {
     private accountingExportService: AccountingExportService,
     private helperService: BusinessCentralHelperService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('businessCentralMain.dashboard'), routerLink: '/integrations/business_central/main/dashboard'},
       {label: this.translocoService.translate('businessCentralMain.exportLog'), routerLink: '/integrations/business_central/main/export_log'},

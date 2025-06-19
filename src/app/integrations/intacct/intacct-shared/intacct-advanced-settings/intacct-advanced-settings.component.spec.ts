@@ -17,6 +17,7 @@ import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
@@ -42,6 +43,8 @@ describe('IntacctAdvancedSettingsComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
     const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     await TestBed.configureTestingModule({
       declarations: [IntacctAdvancedSettingsComponent, SkipExportComponent],
       imports: [SharedModule, ReactiveFormsModule],
@@ -53,7 +56,8 @@ describe('IntacctAdvancedSettingsComponent', () => {
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: SiMappingsService, useValue: mappingServiceSpy },
         { provide: SiExportSettingService, useValue: exportSettingServiceSpy },
-        provideRouter([])
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+        provideRouter([]),
       ]
     }).compileComponents();
 

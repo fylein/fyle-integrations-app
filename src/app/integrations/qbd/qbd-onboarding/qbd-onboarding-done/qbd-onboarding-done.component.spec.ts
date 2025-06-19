@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 import { QbdOnboardingDoneComponent } from './qbd-onboarding-done.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 describe('QbdOnboardingDoneComponent', () => {
   let component: QbdOnboardingDoneComponent;
@@ -11,6 +12,7 @@ describe('QbdOnboardingDoneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [TranslocoModule],
       declarations: [ QbdOnboardingDoneComponent ],
       providers: [
         { provide: Router, useValue: routerSpy }

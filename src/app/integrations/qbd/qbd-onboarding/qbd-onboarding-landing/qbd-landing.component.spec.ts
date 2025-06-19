@@ -1,14 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdLandingComponent } from './qbd-landing.component';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 describe('QbdLandingComponent', () => {
   let component: QbdLandingComponent;
   let fixture: ComponentFixture<QbdLandingComponent>;
 
   beforeEach(async () => {
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     await TestBed.configureTestingModule({
-      declarations: [ QbdLandingComponent ]
+      imports: [TranslocoModule],
+      declarations: [ QbdLandingComponent ],
+      providers: [
+        { provide: TranslocoService, useValue: translocoServiceSpy }
+      ]
     })
     .compileComponents();
 

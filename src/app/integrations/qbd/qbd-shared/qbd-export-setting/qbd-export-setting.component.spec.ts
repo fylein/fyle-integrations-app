@@ -15,6 +15,7 @@ import { QbdExportSettingComponent } from './qbd-export-setting.component';
 import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './qbd-export-setting.fixture';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdExportSettingComponent', () => {
   let component: QbdExportSettingComponent;
@@ -28,6 +29,7 @@ describe('QbdExportSettingComponent', () => {
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
+  let translocoServiceSpy: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
 
@@ -35,6 +37,40 @@ describe('QbdExportSettingComponent', () => {
       getQbdExportSettings: () => of(QBDExportSettingResponse),
       postQbdExportSettings: () => of(QBDExportSettingResponse)
     };
+
+    translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      getActiveLang: () => 'en',
+      setActiveLang: () => {},
+      load: () => Promise.resolve(),
+      selectTranslate: () => of('test'),
+      selectTranslateObject: () => of({}),
+      getTranslation: () => ({}),
+      setTranslation: () => {},
+      addTranslation: () => {},
+      updateTranslation: () => {},
+      setTranslationKey: () => {},
+      removeTranslation: () => {},
+      getAvailableLangs: () => [],
+      isLang: () => true,
+      getLangName: () => 'English',
+      getLangDirection: () => 'ltr',
+      events: of({}),
+      langChanges$: of('en'),
+      loadings$: of({}),
+      errors$: of({}),
+      loader: {} as any,
+      parser: {} as any,
+      missingHandler: {} as any,
+      interceptor: {} as any,
+      scope: '',
+      defaultLang: 'en',
+      fallbackLang: 'en',
+      availableLangs: [],
+      reRenderLang: () => {}
+    });
 
     service2 = {
       getOnboardingState: () => QBDOnboardingState.EXPORT_SETTINGS,
@@ -54,6 +90,7 @@ describe('QbdExportSettingComponent', () => {
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
     providers: [
         FormBuilder,
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
@@ -206,6 +243,18 @@ describe('QbdExportSettingComponent', () => {
   });
 
   it('reimbursableExpenseGroupingDateOptionsFn function check', () => {
+    // Set up the mock to return the correct translation
+    translocoServiceSpy.translate.and.callFake((key: string) => {
+      if (key === 'qbdExportSetting.dateOfExport') {
+        return 'Date of export' as any;
+      }
+      return 'test' as any;
+    });
+    
+    // Call ngOnInit to initialize the options
+    component.ngOnInit();
+    fixture.detectChanges();
+    
     const reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
       {
         label: 'Date of export',

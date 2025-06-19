@@ -8,6 +8,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QbdDashboardComponent } from './qbd-dashboard.component';
 import { errorResponse, getQbdAccountingExports, getQbdAccountingExports2, postQbdAccountingExports, postQbdTriggerExportResponse, postQbdTriggerExportResponse2, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './qbd-dashboard.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdDashboardComponent', () => {
   let component: QbdDashboardComponent;
@@ -17,7 +18,8 @@ describe('QbdDashboardComponent', () => {
   let service3: any;
   let iifLogsService: QbdIifLogsService;
   let formbuilder: FormBuilder;
-
+  let translocoService: any;
+  
   beforeEach(async () => {
 
     service1 = {
@@ -34,14 +36,18 @@ describe('QbdDashboardComponent', () => {
       displayToastMessage: () => undefined
     };
 
-
+    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+    
     await TestBed.configureTestingModule({
     declarations: [QbdDashboardComponent],
     imports: [RouterTestingModule],
     providers: [FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
         { provide: QbdAdvancedSettingService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi())]
+        { provide: IntegrationsToastService, useValue: service3 },
+        { provide: TranslocoService, useValue: translocoService },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
     .compileComponents();
 

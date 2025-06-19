@@ -10,6 +10,7 @@ import { mockSkipExportLogResponse, mockPaginator } from '../../../intacct.fixtu
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctSkipExportLogComponent', () => {
   let component: IntacctSkipExportLogComponent;
@@ -24,6 +25,7 @@ describe('IntacctSkipExportLogComponent', () => {
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['onDateFilter']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
       imports: [ ReactiveFormsModule, SharedModule ],
@@ -33,7 +35,8 @@ describe('IntacctSkipExportLogComponent', () => {
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 

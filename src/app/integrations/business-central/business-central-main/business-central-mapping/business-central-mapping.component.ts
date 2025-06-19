@@ -31,7 +31,7 @@ export class BusinessCentralMappingComponent implements OnInit {
     private router: Router,
     private mappingService: MappingService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.mappingPages = [
       {label: this.translocoService.translate('businessCentralMapping.employeeMapping'), routerLink: '/integrations/business_central/main/mapping/employee'},
       {label: this.translocoService.translate('businessCentralMapping.categoryMapping'), routerLink: '/integrations/business_central/main/mapping/category'}

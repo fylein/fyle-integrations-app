@@ -11,6 +11,7 @@ import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 import { PaginatedDimensionDetails } from 'src/app/core/models/db/dimension-details.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctMappingComponent', () => {
   let component: IntacctMappingComponent;
@@ -18,18 +19,21 @@ describe('IntacctMappingComponent', () => {
   let fixture: ComponentFixture<IntacctMappingComponent>;
   let mappingServiceSpy: jasmine.SpyObj<SiMappingsService>;
   let commonResourcesServiceSpy: jasmine.SpyObj<CommonResourcesService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getMappingSettings']);
     commonResourcesServiceSpy = jasmine.createSpyObj('CommonResourcesService', ['getDimensionDetails']);
-
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    
     await TestBed.configureTestingModule({
       imports: [SharedModule, RouterModule.forRoot([])],
       declarations: [ IntacctMappingComponent ],
       providers: [
         provideRouter([]),
         { provide: SiMappingsService, useValue: mappingServiceSpy },
-        { provide: CommonResourcesService, useValue: commonResourcesServiceSpy }
+        { provide: CommonResourcesService, useValue: commonResourcesServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -46,6 +50,7 @@ describe('IntacctMappingComponent', () => {
 
     fixture = TestBed.createComponent(IntacctMappingComponent);
     component = fixture.componentInstance;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   it('should create', () => {
@@ -62,6 +67,9 @@ describe('IntacctMappingComponent', () => {
   });
 
   it('should fetch and set display names for source and destination fields', () => {
+    translocoService.translate.and.returnValue('Employee');
+    translocoService.translate.and.returnValue('Category');
+    translocoService.translate.and.returnValue('Project Display Name');
     fixture.detectChanges();
 
     expect(commonResourcesServiceSpy.getDimensionDetails).toHaveBeenCalledWith({sourceType: 'FYLE', attributeTypes: ['EMPLOYEE', 'CATEGORY', 'PROJECT']});

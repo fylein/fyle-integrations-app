@@ -20,6 +20,7 @@ import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -48,6 +49,7 @@ describe('QboAdvancedSettingsComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     orgServiceSpy.getCachedOrg.and.returnValue(orgMockData);
     helperServiceSpy.shouldAutoEnableAccountingPeriod.and.returnValue(false);
@@ -67,7 +69,8 @@ describe('QboAdvancedSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: OrgService, useValue: orgServiceSpy }
+        { provide: OrgService, useValue: orgServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 

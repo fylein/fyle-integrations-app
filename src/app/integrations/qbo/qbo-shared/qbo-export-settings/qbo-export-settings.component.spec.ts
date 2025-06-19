@@ -45,6 +45,7 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FeatureConfiguration } from 'src/app/core/models/branding/feature-configuration.model';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -79,10 +80,11 @@ describe('QboExportSettingsComponent', () => {
     };
     const integrationsToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const router = jasmine.createSpyObj('Router', ['navigate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
     declarations: [QboExportSettingsComponent],
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, TranslocoModule],
     providers: [
         FormBuilder,
         { provide: QboExportSettingsService, useValue: exportSettingsService },
@@ -103,7 +105,8 @@ describe('QboExportSettingsComponent', () => {
             ])
         },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        { provide: TranslocoService, useValue: translocoServiceSpy }
     ]
 }).compileComponents();
 

@@ -7,6 +7,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EventEmitter } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 describe('QboOnboardingLandingComponent', () => {
   let component: QboOnboardingLandingComponent;
@@ -23,15 +24,17 @@ describe('QboOnboardingLandingComponent', () => {
     const qboConnectorSpy = jasmine.createSpyObj('QboConnectorService', ['connectQBO']);
     const toastSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientModule, TranslocoModule],
       declarations: [QboOnboardingLandingComponent],
       providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: QboConnectorService, useValue: qboConnectorSpy },
         { provide: IntegrationsToastService, useValue: toastSpy },
-        { provide: WorkspaceService, useValue: workspaceSpy }
+        { provide: WorkspaceService, useValue: workspaceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 

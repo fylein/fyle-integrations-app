@@ -21,7 +21,7 @@ export class Sage300MainComponent {
     private accountingExportService: AccountingExportService,
     private helperService: Sage300HelperService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('sage300Main.dashboard'), routerLink: '/integrations/sage300/main/dashboard'},
       {label: this.translocoService.translate('sage300Main.exportLog'), routerLink: '/integrations/sage300/main/export_log'},

@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { QbdAdvancedSettingComponent } from './qbd-advanced-setting.component';
 import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './qbd-advanced-setting.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdAdvancedSettingComponent', () => {
   let component: QbdAdvancedSettingComponent;
@@ -26,6 +27,8 @@ describe('QbdAdvancedSettingComponent', () => {
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   let qbdWorkspaceService: QbdWorkspaceService;
+  let translocoService: any;
+
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -47,6 +50,8 @@ describe('QbdAdvancedSettingComponent', () => {
       displayToastMessage: () => undefined
     };
 
+    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+    
     await TestBed.configureTestingModule({
     declarations: [QbdAdvancedSettingComponent],
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
@@ -57,6 +62,7 @@ describe('QbdAdvancedSettingComponent', () => {
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: OrgService, useValue: service3 },
         { provide: IntegrationsToastService, useValue: service4 },
+        { provide: TranslocoService, useValue: translocoService },
         provideHttpClient(withInterceptorsFromDi())
     ]
 })

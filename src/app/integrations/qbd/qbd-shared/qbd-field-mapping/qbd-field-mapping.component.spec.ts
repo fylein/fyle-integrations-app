@@ -12,6 +12,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdFieldMappingComponent } from './qbd-field-mapping.component';
 import { errorResponse, QBDFieldMappingResponse, QBDFieldMappingResponse2 } from './qbd-field-mapping.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdFieldMappingComponent', () => {
   let component: QbdFieldMappingComponent;
@@ -40,6 +41,8 @@ describe('QbdFieldMappingComponent', () => {
       displayToastMessage: () => undefined
     };
 
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     await TestBed.configureTestingModule({
     declarations: [QbdFieldMappingComponent],
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
@@ -47,7 +50,10 @@ describe('QbdFieldMappingComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi())]
+        { provide: IntegrationsToastService, useValue: service3 },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
     .compileComponents();
 

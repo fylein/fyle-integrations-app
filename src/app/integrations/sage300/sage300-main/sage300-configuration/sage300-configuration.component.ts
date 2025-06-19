@@ -26,7 +26,7 @@ export class Sage300ConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('sage300Configuration.importSettings'), routerLink: '/integrations/sage300/main/configuration/import_settings'},
       {label: this.translocoService.translate('sage300Configuration.advancedSettings'), routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
     ];
-  
+
     this.activeModule = this.modules[0];
   }
 

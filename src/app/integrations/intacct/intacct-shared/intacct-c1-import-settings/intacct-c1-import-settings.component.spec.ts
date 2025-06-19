@@ -34,6 +34,7 @@ import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctC1ImportSettingsComponent', () => {
   let component: IntacctC1ImportSettingsComponent;
@@ -47,7 +48,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let helperService: jasmine.SpyObj<HelperService>;
-
+  
   beforeEach(async () => {
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', [
       'getSageIntacctFields',
@@ -68,6 +69,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
       'markControllerAsRequired',
       'clearValidatorAndResetValue'
     ]);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
     declarations: [IntacctC1ImportSettingsComponent],
@@ -82,6 +84,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: HelperService, useValue: helperServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

@@ -24,7 +24,7 @@ export class BusinessCentralConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('businessCentralConfiguration.importSettings'), routerLink: '/integrations/business_central/main/configuration/import_settings'},
       {label: this.translocoService.translate('businessCentralConfiguration.advancedSettings'), routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
     ];
-  
+
     this.activeModule = this.modules[0];
   }
 

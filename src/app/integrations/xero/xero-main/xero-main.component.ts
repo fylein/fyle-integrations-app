@@ -33,7 +33,7 @@ export class XeroMainComponent {
     private router: Router,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard'},
       {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log'},

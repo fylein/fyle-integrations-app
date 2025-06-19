@@ -19,6 +19,7 @@ import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } fro
 import { LowerCasePipe } from '@angular/common';
 import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 describe('IntacctExportSettingsComponent', () => {
@@ -30,6 +31,7 @@ describe('IntacctExportSettingsComponent', () => {
   let toastService: jasmine.SpyObj<IntegrationsToastService>;
   let trackingService: jasmine.SpyObj<TrackingService>;
   let router: Router;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings', 'postExportSettings']);
@@ -38,6 +40,8 @@ describe('IntacctExportSettingsComponent', () => {
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
 
+    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+    
     await TestBed.configureTestingModule({
       declarations: [ IntacctExportSettingsComponent ],
       imports: [ SharedModule, ReactiveFormsModule, RouterModule.forRoot([]) ],
@@ -48,6 +52,7 @@ describe('IntacctExportSettingsComponent', () => {
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
+        { provide: TranslocoService, useValue: translocoService },
         provideRouter([])
       ]
     }).compileComponents();

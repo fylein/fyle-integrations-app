@@ -12,6 +12,7 @@ import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-s
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 describe('IntacctBaseMappingComponent', () => {
@@ -22,6 +23,7 @@ describe('IntacctBaseMappingComponent', () => {
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
   let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let commonResourcesServiceSpy: jasmine.SpyObj<CommonResourcesService>;
+  let translocoServiceSpy: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     routeSpy = jasmine.createSpyObj('ActivatedRoute', [], {
@@ -32,6 +34,7 @@ describe('IntacctBaseMappingComponent', () => {
     workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getConfiguration']);
     toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     commonResourcesServiceSpy = jasmine.createSpyObj('CommonResourcesService', ['getCachedDisplayName']);
+    translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
       declarations: [IntacctBaseMappingComponent],
@@ -40,7 +43,8 @@ describe('IntacctBaseMappingComponent', () => {
         { provide: MappingService, useValue: mappingServiceSpy },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
-        { provide: CommonResourcesService, useValue: commonResourcesServiceSpy }
+        { provide: CommonResourcesService, useValue: commonResourcesServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -88,6 +92,7 @@ describe('IntacctBaseMappingComponent', () => {
   it('should trigger auto map employees', () => {
     mappingServiceSpy.triggerAutoMapEmployees.and.returnValue(of(null));
     component.triggerAutoMapEmployees();
+    translocoServiceSpy.translate.and.returnValue('Auto mapping of employees may take few minutes');
 
     expect(component.isLoading).toBeFalse();
     expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
@@ -96,6 +101,7 @@ describe('IntacctBaseMappingComponent', () => {
   it('should handle error when triggering auto map employees', () => {
     mappingServiceSpy.triggerAutoMapEmployees.and.returnValue(throwError(() => new Error('Error')));
     component.triggerAutoMapEmployees();
+    translocoServiceSpy.translate.and.returnValue('Something went wrong, please try again');
 
     expect(component.isLoading).toBeFalse();
     expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Something went wrong, please try again');
