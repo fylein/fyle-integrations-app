@@ -9,6 +9,7 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdMainComponent', () => {
   let component: QbdMainComponent;
@@ -17,6 +18,8 @@ describe('QbdMainComponent', () => {
   let export_settings_service: QbdExportSettingService;
 
   beforeEach(async () => {
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     const service1 = {
       getQbdExportSettings: () => of(QBDExportSettingResponse),
       postQbdExportSettings: () => of(QBDExportSettingResponse)
@@ -32,6 +35,7 @@ describe('QbdMainComponent', () => {
     providers: [
         { provide: QbdExportSettingService, useValue: service1 },
         { provide: Router, useValue: routerSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
     ]

@@ -59,7 +59,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private workspaceService: WorkspaceService,
     private trackingService: TrackingService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.preRequisitesteps = [
       {
         id: 1,

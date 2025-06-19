@@ -19,7 +19,7 @@ export class IntacctOnboardingLandingComponent implements OnInit {
 
   brandingContent = brandingContent;
 
-  constructor() { } 
+  constructor() { }
 
   ngOnInit(): void {
   }

@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, Router } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctExportLogComponent', () => {
   let component: IntacctExportLogComponent;
@@ -12,10 +13,12 @@ describe('IntacctExportLogComponent', () => {
   let router: Router;
 
   beforeEach(async () => {
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     await TestBed.configureTestingModule({
     declarations: [IntacctExportLogComponent],
     imports: [],
-    providers: [FormBuilder, provideRouter([]), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [FormBuilder, provideRouter([]), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(), { provide: TranslocoService, useValue: translocoServiceSpy }]
 })
     .compileComponents();
 

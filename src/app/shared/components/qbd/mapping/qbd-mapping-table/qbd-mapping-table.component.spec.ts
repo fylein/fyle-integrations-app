@@ -4,15 +4,22 @@ import { QbdMappingTableComponent } from './qbd-mapping-table.component';
 import { postMappingResponse } from 'src/app/integrations/qbd/qbd-main/qbd-mapping/qbd-generic-mapping/qbd-generic-mapping.fixture';
 import { OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { RouterModule } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdMappingTableComponent', () => {
   let component: QbdMappingTableComponent;
   let fixture: ComponentFixture<QbdMappingTableComponent>;
+  let translocoService: any;
 
   beforeEach(async () => {
+    translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
+
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([])],
-      declarations: [ QbdMappingTableComponent ]
+      declarations: [ QbdMappingTableComponent ],
+      providers: [
+        { provide: TranslocoService, useValue: translocoService }
+      ]
     })
     .compileComponents();
 
@@ -57,6 +64,13 @@ describe('QbdMappingTableComponent', () => {
   });
 
   it('getToolTipText function check', () => {
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'qbdMappingTable.save': 'Save',
+        'qbdMappingTable.returnKey': 'return'
+      };
+      return translations[key] as T;
+    });
     const result1 = `
             <div style="padding:0px 6px 4px;text-align: center;>
               <p style="font-size:12px;padding-top:0">Save</p>

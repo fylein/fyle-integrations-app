@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { QbdAdvancedSettingComponent } from './qbd-advanced-setting.component';
 import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './qbd-advanced-setting.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdAdvancedSettingComponent', () => {
   let component: QbdAdvancedSettingComponent;
@@ -26,6 +27,8 @@ describe('QbdAdvancedSettingComponent', () => {
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   let qbdWorkspaceService: QbdWorkspaceService;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
+
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -47,6 +50,14 @@ describe('QbdAdvancedSettingComponent', () => {
       displayToastMessage: () => undefined
     };
 
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
+
     await TestBed.configureTestingModule({
     declarations: [QbdAdvancedSettingComponent],
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
@@ -57,10 +68,13 @@ describe('QbdAdvancedSettingComponent', () => {
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: OrgService, useValue: service3 },
         { provide: IntegrationsToastService, useValue: service4 },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi())
     ]
 })
     .compileComponents();
+
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     fixture = TestBed.createComponent(QbdAdvancedSettingComponent);
     component = fixture.componentInstance;

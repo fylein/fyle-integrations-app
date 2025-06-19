@@ -17,7 +17,7 @@ export class NetsuiteOnboardingAdvancedSettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
   }
 
 }

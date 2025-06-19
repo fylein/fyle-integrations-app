@@ -143,7 +143,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     memo.forEach((field, index) => {
       this.memoPreviewText += field;
       if (index + 1 !== memo.length) {
-        this.memoPreviewText = this.memoPreviewText + ' - '
+        this.memoPreviewText = this.memoPreviewText + ' - ';
       }
     });
   }

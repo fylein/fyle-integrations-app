@@ -250,7 +250,6 @@ export class QboExportSettingsComponent implements OnInit {
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
     const translatedExportType = this.translocoService.translate(`qboExportSettings.${exportType.replace(' ', '')}ExpenseType`);
     const configurationUpdate = this.translocoService.translate('qboExportSettings.configurationUpdateWarning', { exportType: translatedExportType, existingExportType: existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()), updatedExportType: updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()) });
-
     const newConfiguration = this.translocoService.translate('qboExportSettings.newConfigurationWarning', { exportType: translatedExportType });
 
     let content = '';

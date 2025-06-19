@@ -15,6 +15,7 @@ import { QbdExportSettingComponent } from './qbd-export-setting.component';
 import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './qbd-export-setting.fixture';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdExportSettingComponent', () => {
   let component: QbdExportSettingComponent;
@@ -28,6 +29,7 @@ describe('QbdExportSettingComponent', () => {
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
 
@@ -35,6 +37,14 @@ describe('QbdExportSettingComponent', () => {
       getQbdExportSettings: () => of(QBDExportSettingResponse),
       postQbdExportSettings: () => of(QBDExportSettingResponse)
     };
+
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     service2 = {
       getOnboardingState: () => QBDOnboardingState.EXPORT_SETTINGS,
@@ -54,6 +64,7 @@ describe('QbdExportSettingComponent', () => {
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
     providers: [
         FormBuilder,
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
@@ -63,6 +74,8 @@ describe('QbdExportSettingComponent', () => {
     ]
 })
     .compileComponents();
+
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     fixture = TestBed.createComponent(QbdExportSettingComponent);
     component = fixture.componentInstance;
@@ -86,6 +99,15 @@ describe('QbdExportSettingComponent', () => {
       cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
       reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
       cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+    });
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'qbdExportSetting.creditCardPurchase': 'Credit card purchase',
+        'qbdExportSetting.journalEntry': 'Journal entry',
+        'qbdExportSetting.bank': 'bank'
+      };
+
+      return translations[key] as T;
     });
     fixture.detectChanges();
   });
@@ -206,6 +228,11 @@ describe('QbdExportSettingComponent', () => {
   });
 
   it('reimbursableExpenseGroupingDateOptionsFn function check', () => {
+    translocoService.translate.and.returnValue('Date of export');
+    // Call ngOnInit to initialize the options
+    component.ngOnInit();
+    fixture.detectChanges();
+
     const reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
       {
         label: 'Date of export',

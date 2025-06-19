@@ -28,7 +28,7 @@ export class NetsuiteMainComponent {
     private netsuiteHelperService: NetsuiteHelperService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('netsuiteMain.dashboardTab'), routerLink: '/integrations/netsuite/main/dashboard'},
       {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/netsuite/main/export_log'},

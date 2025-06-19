@@ -137,7 +137,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService
-    ) { 
+    ) {
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('intacctExportSettings.expense'),
