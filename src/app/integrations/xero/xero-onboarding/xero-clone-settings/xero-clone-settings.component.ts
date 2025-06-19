@@ -233,7 +233,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps(this.translocoService.translate('xeroCloneSettings.cloneSettingsStep'), this.workspaceService.getOnboardingState());
+    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,

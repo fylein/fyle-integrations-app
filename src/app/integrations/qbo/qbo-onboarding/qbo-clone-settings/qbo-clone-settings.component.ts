@@ -283,7 +283,7 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new QBOOnboardingModel().getOnboardingSteps(this.translocoService.translate('qboCloneSettings.cloneSettingsStep'), this.workspaceService.getOnboardingState());
+    const onboardingSteps = new QBOOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
