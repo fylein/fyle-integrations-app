@@ -63,6 +63,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     if (this.appName === AppName.NETSUITE){
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR);
     }
+
+    if (this.appName === AppName.INTACCT){
+      this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR);
+    }
   }
 
   toggleIntegrationReconnectDialog(){
@@ -104,6 +108,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.netsuiteConnector.getNetsuiteFormGroup().subscribe(({ netsuiteSetupForm }) => {
         this.integrationSetupForm = netsuiteSetupForm;
       });
+    }
+
+    if (this.appName === AppName.INTACCT){
+      this.isTokenBasedAuthApp = true;
     }
 
     if (this.appName === AppName.QBO){
