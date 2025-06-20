@@ -1262,7 +1262,7 @@
     "previewHeader": "Preview",
     "createCustomField": "Create a custom field",
     "project": "Project",
-    "importSettingsSuccess":  "Import settings saved successfully",
+    "importSettingsSuccess": "Import settings saved successfully",
     "importSettingsError": "Error saving import settings, please try again later"
   },
   "xeroExportSettings": {
@@ -2056,6 +2056,59 @@
     "continueConfirmation": "Are you sure you want to continue?",
     "continueButton": "Continue",
     "previewHeader": "Preview"
+  },
+  "services": {
+    "travelperkOnboarding": {
+      "connectToTravelperk": "Connect to TravelPerk",
+      "paymentProfileSettings": "Payment profile settings",
+      "advancedSettings": "Advanced settings"
+    },
+    "qboAuth": {
+      "failedToConnect": "Failed to connect to QuickBooks Online. Please try again",
+      "somethingWentWrong": "Something went wrong, please try again."
+    },
+    "businessCentralOnboarding": {
+      "connectToBusinessCentral": "Connect to Dynamics \n 365 Business Central",
+      "exportSettings": "Export settings",
+      "importSettings": "Import settings",
+      "advancedSettings": "Advanced settings"
+    },
+    "businessCentralHelper": {
+      "syncingDataDimensions": "Syncing data dimensions from Dynamics 365 Business Central"
+    },
+    "sage300ExportSetting": {
+      "expense": "Expense",
+      "expenseReport": "Expense report",
+      "cardTransactionPostDate": "Card transaction post date",
+      "lastSpentDate": "Last spent date",
+      "spentDate": "Spent date",
+      "accountsPayableInvoice": "Accounts payable invoice",
+      "directCost": "Direct cost",
+      "processing": "Processing",
+      "closed": "Closed",
+      "approved": "Approved"
+    },
+    "sage300Helper": {
+      "syncDataDimensionsToast": "Syncing data dimensions from Sage 300 CRE"
+    },
+    "sage300Onboarding": {
+      "connectToSage": "Connect to Sage 300 CRE",
+      "exportSettings": "Export settings",
+      "importSettings": "Import settings",
+      "advancedSettings": "Advanced settings"
+    },
+    "xeroAuth": {
+      "failedToConnectTenant": "Failed to connect to Xero Tenant. Please try again",
+      "chooseCorrectAccount": "Please choose the correct Xero account"
+    },
+    "helper": {
+      "expense": "expense"
+    },
+    "siMappings": {
+      "all": "All"
+    },
+    "qbdDirectHelper": {
+      "syncDataDimensionsToast": "Syncing data dimensions from Quickbooks Desktop"
+    }
   }
-
 }
