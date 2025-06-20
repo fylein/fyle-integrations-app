@@ -69,6 +69,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     if (this.appName === AppName.INTACCT){
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR);
     }
+
+    if (this.appName === AppName.SAGE300){
+      this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.SAGE300.LANDING);
+    }
   }
 
   toggleIntegrationReconnectDialog(){
@@ -133,6 +137,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.intacctConnector.getIntacctFormGroup().subscribe(({ intacctSetupForm }) => {
         this.integrationSetupForm = intacctSetupForm;
       });
+    }
+
+    if (this.appName === AppName.SAGE300){
+      this.isTokenBasedAuthApp = true;
     }
 
     if (this.appName === AppName.QBO){
