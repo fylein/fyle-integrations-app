@@ -15,6 +15,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-netsuite-subsidiary-mapping',
@@ -70,7 +71,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
 
@@ -113,7 +115,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     }
     this.isLoading = false;
     this.saveInProgress = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary selected successfully.');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'));
   }
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
@@ -154,4 +156,3 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.setupPage();
   }
 }
-

@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-            [headerText]="'Export settings'"
-            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamics 365 Business Central. '"
+            [headerText]="'businessCentralExportSettings.headerText' | transloco"
+            [contentText]="'businessCentralExportSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -18,8 +18,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export reimbursable expenses'"
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamics 365 Business Central.'"
+                        [label]="'businessCentralExportSettings.reimbursableExpenseLabel' | transloco"
+                        [subLabel]="'businessCentralExportSettings.reimbursableExpenseSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -29,11 +29,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.exportModuleError' | transloco"
+                            [label]="'businessCentralExportSettings.exportTypeLabel' | transloco"
                             [options]="reimbursableExpensesExportTypeOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export module'"
+                            [placeholder]="'businessCentralExportSettings.exportTypePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
                             [exportTypeIconPathArray]="previewImagePaths"
@@ -46,11 +46,11 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your employees represented in Dynamics 365 Business Central?'"
-                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                                [label]="'businessCentralExportSettings.employeeRepresentationLabel' | transloco"
+                                [subLabel]="'businessCentralExportSettings.employeeRepresentationSubLabel' | transloco"
                                 [options]="employeeFieldMappingOptions"
-                                [placeholder]="'Select representation'"
+                                [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                                 [iconPath]="'user-two'"
                                 [formControllerName]="'reimbursableEmployeeMapping'"
                                 [isDisabled]="true">
@@ -60,11 +60,11 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your employees represented in Dynamics 365 Business Central?'"
-                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                                [label]="'businessCentralExportSettings.employeeRepresentationLabel' | transloco"
+                                [subLabel]="'businessCentralExportSettings.employeeRepresentationSubLabel' | transloco"
                                 [options]="employeeFieldMappingOptions"
-                                [placeholder]="'Select representation'"
+                                [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                                 [iconPath]="'user-two'"
                                 [formControllerName]="'reimbursableEmployeeMapping'">
                             </app-configuration-select-field>
@@ -73,9 +73,9 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="false"
-                            [label]="'How should employees in  ' + brandingConfig.brandName + ' be mapped to vendors in Dynamics 365 Business Central?'"
-                            [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
-                            [placeholder]="'Select representation'"
+                            [label]="'businessCentralExportSettings.employeeMappingLabel' | transloco: { brandName: brandingConfig.brandName }"
+                            [subLabel]="'businessCentralExportSettings.employeeMappingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                            [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                             [options]="employeeMapOptions"
                             [iconPath]="'question-square-outline'"
                             [formControllerName]="'autoMapEmployee'"
@@ -88,16 +88,16 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Bank Account Name'"
-                            [label]="'Set the default bank account as?'"
-                            [subLabel]="'The integration will assign the expenses that is exported as journal entry to the bank account selected here.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.defaultBankAccountError' | transloco"
+                            [label]="'businessCentralExportSettings.defaultBankAccountLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.defaultBankAccountSubLabel' | transloco"
                             [destinationAttributes]="bankAccountOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default bank account'"
+                            [placeholder]="'businessCentralExportSettings.defaultBankAccountPlaceholder' | transloco"
                             [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
                         </div>
@@ -106,12 +106,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
-                            [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.expenseGroupingError' | transloco"
+                            [label]="'businessCentralExportSettings.expenseGroupingLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.expenseGroupingSubLabel' | transloco"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'"
+                            [placeholder]="'businessCentralExportSettings.expenseGroupingPlaceholder' | transloco"
                             [formControllerName]="'reimbursableExportGroup'"
                             [appName]="appName"
                             [isDisabled]="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
@@ -121,12 +121,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (payment processing) or when the payment has been settled (closed).'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.expenseStateError' | transloco"
+                            [label]="'businessCentralExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                            [subLabel]="'businessCentralExportSettings.reimbursableExpenseStateSubLabel' | transloco"
                             [options]="reimbursableExpenseState"
                             [iconPath]="'list'"
-                            [placeholder]="'Select export state'"
+                            [placeholder]="'businessCentralExportSettings.exportStatePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -134,10 +134,10 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
-                            [placeholder]="'Select date type'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.exportDateError' | transloco"
+                            [label]="'businessCentralExportSettings.exportDateLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.reimbursableExportDateSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                            [placeholder]="'businessCentralExportSettings.exportDatePlaceholder' | transloco"
                             [options]="reimbursableExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
                             [formControllerName]="'reimbursableExportDate'">
@@ -150,8 +150,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export corporate card expenses'"
-                        [subLabel]="'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Dynamics 365 Business Central.'"
+                        [label]="'businessCentralExportSettings.creditCardExpenseLabel' | transloco"
+                        [subLabel]="'businessCentralExportSettings.creditCardExpenseSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -161,11 +161,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.exportModuleError' | transloco"
+                            [label]="'businessCentralExportSettings.exportTypeLabel' | transloco"
                             [options]="cccExpensesExportTypeOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export module'"
+                            [placeholder]="'businessCentralExportSettings.exportTypePlaceholder' | transloco"
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
@@ -177,16 +177,16 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Bank Account Name'"
-                            [label]="'Set the default bank account as?'"
-                            [subLabel]="'The integration will assign the expenses that is exported as journal entry to the bank account selected here.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.defaultBankAccountError' | transloco"
+                            [label]="'businessCentralExportSettings.defaultBankAccountLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.defaultBankAccountSubLabel' | transloco"
                             [destinationAttributes]="bankAccountOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default bank account'"
+                            [placeholder]="'businessCentralExportSettings.defaultBankAccountPlaceholder' | transloco"
                             [formControllerName]="'cccDefaultBankName'">
                         </app-configuration-select-field>
                     </div>
@@ -194,16 +194,16 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Vendor Name'"
-                            [label]="'Set the default vendor as?'"
-                            [subLabel]="'The integration will assign the corporate card expenses that is exported as journal entry to the vendor selected here.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.defaultVendorError' | transloco"
+                            [label]="'businessCentralExportSettings.defaultVendorLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.defaultVendorSubLabel' | transloco"
                             [destinationAttributes]="vendorOptions"
                             [destinationOptionKey]="BCExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
-                            [placeholder]="'Select default vendor'"
+                            [placeholder]="'businessCentralExportSettings.defaultVendorPlaceholder' | transloco"
                             [formControllerName]="'defaultVendorName'">
                         </app-configuration-select-field>
                     </div>
@@ -211,12 +211,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
-                            [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.expenseGroupingError' | transloco"
+                            [label]="'businessCentralExportSettings.expenseGroupingLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.expenseGroupingSubLabel' | transloco"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'"
+                            [placeholder]="'businessCentralExportSettings.expenseGroupingPlaceholder' | transloco"
                             [formControllerName]="'cccExportGroup'"
                             [appName]="appName"
                             [isDisabled]="exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
@@ -226,11 +226,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'How are your employees represented in Dynamics 365 Business Central?'"
-                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                            [label]="'businessCentralExportSettings.employeeRepresentationLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.employeeRepresentationSubLabel' | transloco"
                             [options]="employeeFieldMappingOptions"
-                            [placeholder]="'Select representation'"
+                            [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                             [iconPath]="'user-two'"
                             [formControllerName]="'reimbursableEmployeeMapping'">
                         </app-configuration-select-field>
@@ -239,11 +239,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'Employees name in journal entry?'"
-                            [subLabel]="'Select what should be the employee name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                            [label]="'businessCentralExportSettings.cccEmployeeNameInJournalEntryLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.cccEmployeeNameInJournalEntrySubLabel' | transloco"
                             [options]="nameReferenceInCCC"
-                            [placeholder]="'Select representation'"
+                            [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                             [iconPath]="'user-two'"
                             [formControllerName]="'journalEntryNamePreference'">
                         </app-configuration-select-field>
@@ -252,12 +252,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (approved) or when the payment has been settled (closed).'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.expenseStateError' | transloco"
+                            [label]="'businessCentralExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                            [subLabel]="'businessCentralExportSettings.cccExpenseStateSubLabel' | transloco"
                             [options]="cccExpenseState"
                             [iconPath]="'list'"
-                            [placeholder]="'Select export state'"
+                            [placeholder]="'businessCentralExportSettings.exportStatePlaceholder' | transloco"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -265,12 +265,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'"
+                            [mandatoryErrorListName]="'businessCentralExportSettings.exportDateError' | transloco"
+                            [label]="'businessCentralExportSettings.exportDateLabel' | transloco"
+                            [subLabel]="'businessCentralExportSettings.cccExportDateSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select date'"
+                            [placeholder]="'businessCentralExportSettings.cccExportDatePlaceholder' | transloco"
                             [formControllerName]="'cccExportDate'">
                         </app-configuration-select-field>
                     </div>

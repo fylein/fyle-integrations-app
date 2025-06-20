@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-configuration',
@@ -9,19 +10,24 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 })
 export class Sage300ConfigurationComponent implements OnInit {
 
-  modules: MenuItem[] = [
-    {label: 'Export settings', routerLink: '/integrations/sage300/main/configuration/export_settings'},
-    {label: 'Import settings', routerLink: '/integrations/sage300/main/configuration/import_settings'},
-    {label: 'Advanced settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
-  ];
+  modules: MenuItem[];
 
-  activeModule: MenuItem = this.modules[0];
+  activeModule: MenuItem;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
-  constructor() { }
+  constructor(
+    private translocoService: TranslocoService
+  ) { }
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('sage300Configuration.exportSettings'), routerLink: '/integrations/sage300/main/configuration/export_settings'},
+      {label: this.translocoService.translate('sage300Configuration.importSettings'), routerLink: '/integrations/sage300/main/configuration/import_settings'},
+      {label: this.translocoService.translate('sage300Configuration.advancedSettings'), routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
+    ];
+  
+    this.activeModule = this.modules[0];
   }
 
 }

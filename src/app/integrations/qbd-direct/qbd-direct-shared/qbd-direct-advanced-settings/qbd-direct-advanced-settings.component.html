@@ -35,7 +35,7 @@
                             [form]="advancedSettingsForm"
                             [appName]="appName.QBD_DIRECT"
                             [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'automatic export method'"
+                            [mandatoryErrorListName]="'qbdDirectAdvancedSettings.automaticExportMethod' | transloco"
                             [label]="brandingContent.autoExportfrequencyLabel"
                             [subLabel]="brandingContent.autoExportfrequencySubLabel"
                             [options]="hours"
@@ -56,9 +56,9 @@
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.autoCreateReimbursableEnitityLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + 's in QuickBooks Desktop'" 
+                        [label]="brandingContent.autoCreateReimbursableEnitityLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)" 
                         [iconPath]="'user-plus'"
-                        [subLabel]="brandingContent.autoCreateReimbursableEnititySubLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ' record for them, ensuring expenses are posted to this new record.'"
+                        [subLabel]="brandingContent.autoCreateReimbursableEnititySubLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)"
                         [formControllerName]="'autoCreateReimbursableEnitity'">
                     </app-configuration-toggle-field>
 
@@ -83,10 +83,10 @@
                         [label]="brandingContent.topLevelMemoStructureLabel"
                         [subLabel]="brandingContent.topLevelMemoStructureSubLabel"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'top level memo'"
+                        [mandatoryErrorListName]="'qbdDirectAdvancedSettings.topLevelMemo' | transloco"
                         [options]="defaultTopMemoOptions"
                         [iconPath]="'list'"
-                        [placeholder]="'Select top memo type'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectTopMemoTypePlaceholder' | transloco"
                         [formControllerName]="'topMemoStructure'">
                     </app-configuration-multi-select>
                     <div class="tw-p-24-px">
@@ -99,12 +99,12 @@
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
-                        [customErrorMessage]="'Please select atleast one memo type from the list'"
+                        [customErrorMessage]="'qbdDirectAdvancedSettings.selectAtleastOneMemoError' | transloco"
                         [label]="brandingContent.memoStructureLabel"
                         [subLabel]="brandingContent.memoStructureSubLabel"
                         [options]="defaultMemoFields"
                         [iconPath]="'list'"
-                        [placeholder]="'Select memo types'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"
                         [formControllerName]="'expenseMemoStructure'">
                     </app-configuration-multi-select>
                     <div class="tw-p-24-px">

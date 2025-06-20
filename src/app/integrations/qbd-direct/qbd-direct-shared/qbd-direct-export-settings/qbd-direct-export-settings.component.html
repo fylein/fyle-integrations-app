@@ -26,12 +26,12 @@
                         <div
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'export module'"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.exportModule' | transloco"
                                 [label]="brandingContent.reimbursable.reimbursableExpenseTypeLabel"
                                 [subLabel]="brandingContent.reimbursable.reimbursableExpenseTypeSubLabel"
                                 [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select an export type'"
+                                [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
                                 [showExportPreview]="false">
@@ -43,12 +43,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'option'"
+                            [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
                             [label]="brandingContent.reimbursable.employeeMappingLabel"
                             [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
                             [options]="employeeMappingOptions"
                             [iconPath]="'user-two'"
-                            [placeholder]="'Select representation'"
+                            [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
                             [formControllerName]="'employeeMapping'"
                             [isDisabled]="isEmployeeMappingDisabled()">
                         </app-configuration-select-field>
@@ -63,11 +63,11 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'accounts payable'"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.accountsPayable' | transloco"
                                 [label]="brandingContent.reimbursable.defaultReimbursableAccountPayableLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
-                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ', while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [subLabel]="brandingContent.reimbursable.defaultReimbursableAccountPayableSubLabel + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.debitLinesReflectCategory' | transloco)"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select accounts payable'"
+                                [placeholder]="'qbdDirectExportSettings.selectAccountsPayablePlaceholder' | transloco"
                                 [isMultiLineOption]="true"
                                 [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
                             </app-configuration-select-field>
@@ -77,12 +77,12 @@
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
+                            [mandatoryErrorListName]="'qbdDirectExportSettings.expenseState' | transloco"
                             [label]="brandingContent.reimbursable.reimbursableExpenseStateLabel"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseStateSubLabel"
                             [options]="expenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select export state'"
+                            [placeholder]="'qbdDirectExportSettings.selectExportStatePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -90,12 +90,12 @@
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
+                            [mandatoryErrorListName]="'qbdDirectExportSettings.howExpensesToBeGrouped' | transloco"
                             [label]="brandingContent.reimbursable.reimbursableExpenseGroupLabel"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseGroupSubLabel"
                             [options]="reimbursableExpenseGroupingFieldOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'"
+                            [placeholder]="'qbdDirectExportSettings.selectExpenseGroupingPlaceholder' | transloco"
                             [appName]="appName"
                             [isDisableTextRequired]="isReimbursableExportGroupDisabled()"
                             [isDisabled]="isReimbursableExportGroupDisabled()"
@@ -106,11 +106,11 @@
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="brandingContent.reimbursable.reimbursableExpenseDateLabel + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ' date as'"
+                            [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
+                            [label]="brandingContent.reimbursable.reimbursableExpenseDateLabel + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
                             [subLabel]="brandingContent.reimbursable.reimbursableExpenseDateSubLabel"
                             [options]="reimbursableExpenseGroupingDateOptions" [iconPath]="'calendar'"
-                            [placeholder]="'Select date'"
+                            [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
                     </div>
@@ -132,12 +132,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
+                            [mandatoryErrorListName]="'qbdDirectExportSettings.exportModule' | transloco"
                             [label]="brandingContent.corporateCard.creditCardExpenseTypeLabel"
                             [subLabel]="brandingContent.corporateCard.creditCardExpenseTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
-                            [placeholder]="'Select an export type'"
+                            [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
                             [showExportPreview]="false">
@@ -147,12 +147,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'option'"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
                                 [label]="brandingContent.reimbursable.employeeMappingLabel"
                                 [subLabel]="brandingContent.reimbursable.employeeMappingSubLabel"
                                 [options]="employeeMappingOptions"
                                 [iconPath]="'user-two'"
-                                [placeholder]="'Select representation'"
+                                [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
                                 [formControllerName]="'employeeMapping'"
                                 [isDisabled]="isEmployeeMappingDisabled()">
                             </app-configuration-select-field>
@@ -163,12 +163,12 @@
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
                                 [showClearIcon]="true"
-                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.nameInJournalEntryToExport' | transloco"
                                 [label]="brandingContent.corporateCard.creditCardExpenseNameinJELabel"
                                 [subLabel]="brandingContent.corporateCard.creditCardExpenseNameinJESubLabel"
                                 [options]="nameInJEOptions"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select a name'"
+                                [placeholder]="'qbdDirectExportSettings.selectNamePlaceholder' | transloco"
                                 [formControllerName]="'nameInJE'">
                             </app-configuration-select-field>
                         </div>
@@ -184,10 +184,10 @@
                               [optionLabel]="'value'"
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'credit card account'"
+                              [mandatoryErrorListName]="'qbdDirectExportSettings.creditCardAccount' | transloco"
                               [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
                               [subLabel]="brandingContent.corporateCard.defaultCCCAccountSubLabel"
-                              [placeholder]="'Select default credit card account'"
+                              [placeholder]="'qbdDirectExportSettings.selectDefaultCreditCardAccountPlaceholder' | transloco"
                               [isMultiLineOption]="true"
                               [formControllerName]="'defaultCreditCardAccountName'">
                             </app-configuration-select-field>
@@ -203,11 +203,11 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                 [optionLabel]="'value'"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'a default credit account'"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.aDefaultCreditAccount' | transloco"
                                 [label]="brandingContent.corporateCard.defaultCCCAccountPayableLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
-                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ', while debit lines will reflect the category chosen by the employee for each respective expense'"
+                                [subLabel]="brandingContent.corporateCard.defaultCCCAccountPayableSubLabel + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.debitLinesReflectCategory' | transloco)"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select default account'"
+                                [placeholder]="'qbdDirectExportSettings.selectDefaultAccountPlaceholder' | transloco"
                                 [isMultiLineOption]="true"
                                 [formControllerName]="'defaultCCCAccountsPayableAccountName'">
                             </app-configuration-select-field>
@@ -220,12 +220,12 @@
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'expense state'"
+                        [mandatoryErrorListName]="'qbdDirectExportSettings.expenseState' | transloco"
                         [label]="brandingContent.corporateCard.creditCardExpenseStateLabel"
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseStateSubLabel"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'list'"
-                        [placeholder]="'Select export state'"
+                        [placeholder]="'qbdDirectExportSettings.selectExportStatePlaceholder' | transloco"
                         [formControllerName]="'creditCardExpenseState'">
                     </app-configuration-select-field>
                 </div>
@@ -234,12 +234,12 @@
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'how expenses to be grouped'"
+                        [mandatoryErrorListName]="'qbdDirectExportSettings.howExpensesToBeGrouped' | transloco"
                         [label]="brandingContent.corporateCard.creditCardExpenseGroupLabel"
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseGroupSubLabel"
                         [options]="creditCardExpenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select expense grouping'"
+                        [placeholder]="'qbdDirectExportSettings.selectExpenseGroupingPlaceholder' | transloco"
                         [isDisableTextRequired]="true"
                         [appName]="appName"
                         [isDisabled]="isCccExportGroupDisabled()"
@@ -251,12 +251,12 @@
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ' date as'"
+                        [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
+                        [label]=" brandingContent.corporateCard.creditCardExpenseDateLabel + (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
                         [subLabel]="brandingContent.corporateCard.creditCardExpenseDateSubLabel"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
+                        [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"
                         [formControllerName]="'creditCardExportDate'">
                     </app-configuration-select-field>
                 </div>
@@ -276,8 +276,8 @@
 <app-configuration-confirmation-dialog
     (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'Change in configuration'"
+    [headerText]="'qbdDirectExportSettings.changeInConfigurationTitle' | transloco"
     [contextText]="warningDialogText"
-    [confirmBtnText]="'Continue'"
+    [confirmBtnText]="'qbdDirectExportSettings.continueButtonLabel' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>

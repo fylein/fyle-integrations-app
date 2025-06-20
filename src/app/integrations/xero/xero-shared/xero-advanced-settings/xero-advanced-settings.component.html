@@ -16,7 +16,7 @@
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Automation'"
+                    [label]="'xeroAdvancedSettings.automationLabel' | transloco"
                     [subLabel]="brandingContent.automationSubLabel">
                 </app-configuration-step-sub-header>
             </div>
@@ -24,7 +24,7 @@
                 <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
-                        [label]="'Schedule automatic export'" 
+                        [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco" 
                         [subLabel]="brandingContent.scheduleSubLabel"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
@@ -35,8 +35,8 @@
                             [form]="advancedSettingForm"
                             [appName]="appName"
                             [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'automatic export method'"
-                            [label]="'Set up export frequency'"
+                            [mandatoryErrorListName]="'xeroAdvancedSettings.automaticExportMethodError' | transloco"
+                            [label]="'xeroAdvancedSettings.exportFrequencyLabel' | transloco"
                             [subLabel]="brandingContent.frequencySubLabel"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
@@ -76,8 +76,8 @@
                     [iconPath]="'arrow-rotate'"
                     [showClearIcon]="true"
                     [label]="brandingContent.paymentSyncLabel"
-                    [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to paid and vice versa.'"
-                    [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                    [subLabel]="'xeroAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [placeholder]="'xeroAdvancedSettings.paymentSyncPlaceholder' | transloco"
                     [formControllerName]="'paymentSync'">
                 </app-configuration-select-field>
 
@@ -86,23 +86,23 @@
                     [destinationAttributes]="billPaymentAccounts"
                     [optionLabel]="'value'"
                     [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'payment account'"
+                    [mandatoryErrorListName]="'xeroAdvancedSettings.paymentAccountError' | transloco"
                     [label]="brandingContent.billPaymentAccountLabel"
-                    [subLabel]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + brandingContent.billPaymentAccountSubLabel + 'Xero.'"
-                    [placeholder]="'Select a payment account'"
+                    [subLabel]="'xeroAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: brandingContent.billPaymentAccountSubLabel }"
+                    [placeholder]="'xeroAdvancedSettings.billPaymentAccountPlaceholder' | transloco"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
                 <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
-                    [subLabel]="'While exporting corporate card expenses from ' + brandingConfig.brandName + ', the integration will auto-create a contact in Xero if a merchant added in ' + brandingConfig.brandName + ' does not exist in Xero.'"
+                    [subLabel]="'xeroAdvancedSettings.autoCreateMerchantSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
             </div>
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Customization'"
+                    [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
                     [subLabel]="brandingContent.customizeSectionSubLabel">
                 </app-configuration-step-sub-header>
             </div>
@@ -110,17 +110,17 @@
                 <app-configuration-multi-select
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Item level description'"
+                    [mandatoryErrorListName]="'xeroAdvancedSettings.itemLevelDescriptionError' | transloco"
                     [label]="brandingContent.memoStructureLabel"
                     [subLabel]="brandingContent.memoStructureSubLabel"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
-                    [placeholder]="'Set description'"
+                    [placeholder]="'xeroAdvancedSettings.setDescriptionPlaceholder' | transloco"
                     [formControllerName]="'memoStructure'"
                     (changeInMultiSelect)="onMultiSelectChange()">
                 </app-configuration-multi-select>
                 <div class="preview-text">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the description field</h4>
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'xeroAdvancedSettings.previewLabel' | transloco }}</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>

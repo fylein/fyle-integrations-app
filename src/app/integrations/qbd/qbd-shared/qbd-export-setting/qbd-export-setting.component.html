@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-        [headerText]="'Export settings'"
-        [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop.'"
+        [headerText]="'qbdExportSetting.headerText' | transloco"
+        [contentText]="'qbdExportSetting.contentText' | transloco:{ brandName: brandingConfig.brandName }"
         [redirectLink]="redirectLink"></app-configuration-step-header>
     </div>
     <div>
@@ -15,8 +15,8 @@
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export reimbursable expenses'"
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'"
+                        [label]="'qbdExportSetting.exportReimbursableExpensesLabel' | transloco"
+                        [subLabel]="'qbdExportSetting.exportReimbursableExpensesSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
@@ -25,9 +25,9 @@
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be exported'"
-                            [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
+                            [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExport' | transloco"
+                            [label]="'qbdExportSetting.howExpensesExportedLabel' | transloco"
+                            [subLabel]="'qbdExportSetting.howExpensesExportedSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                             [options]="reimbursableExportTypes"
                             [iconPath]="'list'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
@@ -35,12 +35,12 @@
                             <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.get('reimbursableExportType')?.value, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
+                                        <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.accountPostingQuestion' | transloco: { accountName: accountName(), exportType: exportType(exportSettingsForm.get('reimbursableExportType')?.value, reimbursableExportTypes) } }}<app-mandatory-field></app-mandatory-field></h4>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.accountNameHelpText' | transloco: { accountName: accountName(), brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'accounts payable' : 'bank'}} name" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" [placeholder]="(exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.enterAccountsPayableName' : 'qbdExportSetting.enterBankName') | transloco" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -48,12 +48,12 @@
                             <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">To which account should the mileage expenses be posted to?</h4>
-                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from {{ brandingConfig.brandName }} will be posted.</h5>
+                                        <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.mileageExpensePostingQuestion' | transloco }}</h4>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.mileageAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" placeholder="Enter mileage account name">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco">
                                     </div>
                                 </div>
                             </div>
@@ -62,9 +62,9 @@
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
-                            [label]="'How would you like to group your expenses?'"
-                            [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
+                            [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameGroup' | transloco"
+                            [label]="'qbdExportSetting.groupExpensesLabel' | transloco"
+                            [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                             [options]="expenseGroupingFieldOptions"
                             [iconPath]="'tabs'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
@@ -73,25 +73,25 @@
                             <div *ngIf="exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[0].value">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [label]="'Set the transaction date'"
-                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
+                                [label]="'qbdExportSetting.setTransactionDateLabel' | transloco"
+                                [subLabel]="'qbdExportSetting.setTransactionDateSubLabel' | transloco"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'transaction date'"
+                                [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameTransactionDate' | transloco"
                                 [options]="reimbursableExpenseGroupingDateOptionsFn()"
                                 [iconPath]="'calendar'"
-                                [placeholder]="'Select date type'"
+                                [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                             </div>
                             <div *ngIf="exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[1].value">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [label]="'Set the transaction date'"
-                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
+                                [label]="'qbdExportSetting.setTransactionDateLabel' | transloco"
+                                [subLabel]="'qbdExportSetting.setTransactionDateSubLabel' | transloco"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'transaction date'"
+                                [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameTransactionDate' | transloco"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
-                                [placeholder]="'Select date type'"
+                                [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                             </div>
                         </div>
@@ -99,12 +99,12 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.'"
+                            [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExportState' | transloco"
+                            [label]="'qbdExportSetting.expenseExportStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                            [subLabel]="'qbdExportSetting.expenseExportStateSubLabel' | transloco"
                             [options]="expenseStateOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense state '"
+                            [placeholder]="'qbdExportSetting.selectExpenseStatePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                         </div>
                     </div>
@@ -113,8 +113,8 @@
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
-                        [label]="'Export corporate card expenses'"
-                        [subLabel]="'Enable the export of <b>credit card</b> expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
+                        [label]="'qbdExportSetting.exportCCCExpensesLabel' | transloco"
+                        [subLabel]="'qbdExportSetting.exportCCCExpensesSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
@@ -123,9 +123,9 @@
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expenses to be exported'"
-                            [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
+                            [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExport' | transloco"
+                            [label]="'qbdExportSetting.howExpensesExportedLabel' | transloco"
+                            [subLabel]="'qbdExportSetting.howExpensesExportedSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
@@ -133,13 +133,13 @@
                             <div *ngIf="exportSettingsForm.get('cccExportType')?.value">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                                        <h4 class="!tw-text-14-px !tw-font-500">Enter the credit card account name<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
+                                        <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.enterCCCAccountNameLabel' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.cccAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter credit card account name" [required]="exportSettingsForm.get('creditCardExpense')?.value">
-                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a credit card account name'"></app-mandatory-error-message>
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco" [required]="exportSettingsForm.get('creditCardExpense')?.value">
+                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'qbdExportSetting.cccAccountNameError' | transloco"></app-mandatory-error-message>
                                     </div>
                                 </div>
 
@@ -151,8 +151,8 @@
                                             </div>
                                         </div>
                                         <div class="tw-text-14-px tw-text-400 tw-text-text-muted">
-                                            <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the integration dashboard after launching the integration.</span>
-                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the <a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">mapping section</a>.</span>
+                                            <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoOnboarding' | transloco }}</span>
+                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoPostOnboardingPart1' | transloco }}<a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">{{ 'qbdExportSetting.mappingSectionLink' | transloco }}</a>.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -161,11 +161,11 @@
                                     <app-configuration-select-field
                                         [form]="exportSettingsForm"
                                         [isFieldMandatory]="true"
-                                        [mandatoryErrorListName]="'entity name'"
-                                        [label]="'Set the \'purchased from\' field to'"
-                                        [subLabel]="'Select how the vendor or employee should be represented as payee for the credit card purchase.'"
+                                        [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameEntity' | transloco"
+                                        [label]="'qbdExportSetting.setPurchasedFromLabel' | transloco"
+                                        [subLabel]="'qbdExportSetting.setPurchasedFromSubLabel' | transloco"
                                         [options]="cccEntityNameOptions"
-                                        [placeholder]="'Select credit card entity name preference'"
+                                        [placeholder]="'qbdExportSetting.selectCCCEntityPlaceholder' | transloco"
                                         [formControllerName]="'cccEntityName'"></app-configuration-select-field>
                                 </div>
                             </div>
@@ -173,8 +173,8 @@
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <div *ngIf="exportSettingsForm.get('cccExportType')?.value === creditCardExportTypes[0].value">
                                 <app-configuration-label
-                                [label]="'How would you like to group your expenses?'"
-                                [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
+                                [label]="'qbdExportSetting.groupExpensesLabel' | transloco"
+                                [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                                 [labelValue]="expenseGroupingFieldOptions[1]"
                                 [iconPath]="'tabs'"></app-configuration-label>
                             </div>
@@ -182,9 +182,9 @@
                                 <app-configuration-radio-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'expense to be grouped'"
-                                [label]="'How would you like to group your expenses?'"
-                                [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
+                                [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExpenseGrouped' | transloco"
+                                [label]="'qbdExportSetting.groupExpensesLabel' | transloco"
+                                [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                                 [options]="expenseGroupingFieldOptions"
                                 [iconPath]="'tabs'"
                                 [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
@@ -194,12 +194,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'transaction date'"
-                                [label]="'Set the transaction date'"
-                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
+                                [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameTransactionDate' | transloco"
+                                [label]="'qbdExportSetting.setTransactionDateLabel' | transloco"
+                                [subLabel]="'qbdExportSetting.setTransactionDateSubLabel' | transloco"
                                 [options]="cccExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
-                                [placeholder]="'Select date type'"
+                                [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
                                 [formControllerName]="'cccExportDate'">
                             </app-configuration-select-field>
                         </div>
@@ -207,12 +207,12 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.'"
+                            [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExportState' | transloco"
+                            [label]="'qbdExportSetting.expenseExportStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                            [subLabel]="'qbdExportSetting.expenseExportStateSubLabel' | transloco"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense state '"
+                            [placeholder]="'qbdExportSetting.selectExpenseStatePlaceholder' | transloco"
                             [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                         </div>
                     </div>

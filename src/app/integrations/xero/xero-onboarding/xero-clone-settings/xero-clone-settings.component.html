@@ -6,17 +6,17 @@
 <div class=" tw-pb-48-px">
     <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
 
-        <app-clone-setting-header [headerText]="'Export settings'" [subHeaderText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Xero.'"></app-clone-setting-header>
+        <app-clone-setting-header [headerText]="'xeroCloneSettings.exportSettings' | transloco" [subHeaderText]="'xeroCloneSettings.exportSettingsDescription' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
         <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
             <div class="clone-setting--field">
                 <div class="reimbursableExpense">
                     <app-clone-setting-field
                         [additionalClasses]="'!tw-text-16-px !tw-text-text-primary'"
-                        [label]="'Export reimbursable expenses'"
+                        [label]="'xeroCloneSettings.exportReimbursableExpensesLabel' | transloco"
                         [form]="exportSettingForm"
                         [formControllerName]="'reimbursableExpense'"
                         [inputType]="InputType.TOGGLE"
-                        [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to Xero'">
+                        [tooltipText]="'xeroCloneSettings.exportReimbursableExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -24,72 +24,72 @@
             <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value" class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'list'"
-                    [label]="'How should the expenses be exported?'"
+                    [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
                     [options]="reimbursableExportTypes"
-                    [placeholder]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'"
+                    [placeholder]="'xeroCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="false"
                     [isDisabled]="true"
                     [formControllerName]="'reimbursableExportType'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'">
+                    [tooltipText]="'xeroCloneSettings.chooseTransactionTypeTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'question-square-outline'"
-                    [label]="'How should employees in ' + brandingConfig.brandName + ' be matched to employees/vendors in Xero?'"
+                    [label]="'xeroCloneSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [options]="autoMapEmployeeTypes"
-                    [placeholder]="'Select representation'"
+                    [placeholder]="'xeroCloneSettings.selectRepresentationPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="false"
                     [formControllerName]="'autoMapEmployees'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Xero based on a unique parameter.'">
+                    [tooltipText]="'xeroCloneSettings.employeeMatchingTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'question-square-outline'"
-                    [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                    [label]="'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [options]="expenseStateOptions"
-                    [placeholder]="'Select export state'"
+                    [placeholder]="'xeroCloneSettings.selectExportStatePlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [formControllerName]="'expenseState'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'You can export expenses either when they\'re awaiting payment after approval (processing) or when the payment has been settled (closed).'">
+                    [tooltipText]="'xeroCloneSettings.expenseExportStateTooltip' | transloco">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'question-square-outline'"
-                    [label]="'How should the expenses be grouped?'"
+                    [label]="'xeroCloneSettings.expenseGroupingLabel' | transloco"
                     [options]="reimbursableExpenseGroupByOptions"
-                    [placeholder]="'Select expense grouping'"
+                    [placeholder]="'xeroCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [formControllerName]="'reimbursableExportGroup'"
                     [isDisabled]="true"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'">
+                    [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
+                    [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) }"
                     [options]="reimbursableExpenseGroupingDateOptions"
-                    [placeholder]="'Select export date'"
+                    [placeholder]="'xeroCloneSettings.selectExportDatePlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [formControllerName]="'reimbursableExportDate'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Xero.'">
+                    [tooltipText]="'xeroCloneSettings.exportDateTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
             </div>
         </div>
@@ -98,11 +98,11 @@
             <div class="clone-setting--field">
                 <div class="creditCardExpense">
                     <app-clone-setting-field
-                        [label]="'Export corporate credit card expenses'"
+                        [label]="'xeroCloneSettings.exportCccExpensesLabel' | transloco"
                         [form]="exportSettingForm"
                         [formControllerName]="'creditCardExpense'"
                         [inputType]="InputType.TOGGLE"
-                        [tooltipText]="'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to Xero'">
+                        [tooltipText]="'xeroCloneSettings.exportCccExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -111,27 +111,27 @@
                 <div class="clone-setting--field">
                     <app-clone-setting-field
                         [iconSource]="'list'"
-                        [label]="'How should the expenses be exported?'"
+                        [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
                         [options]="creditCardExportTypes"
-                        [placeholder]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'"
+                        [placeholder]="'xeroCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="false"
                         [isDisabled]="true"
                         [formControllerName]="'creditCardExportType'"
                         [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'Select expense export type'">
+                        [tooltipText]="'xeroCloneSettings.selectExpenseExportTypeTooltip' | transloco">
                     </app-clone-setting-field>
 
                     <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                         <app-clone-setting-field
-                            [label]="'To which bank account should the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) + ' be posted to?'"
+                            [label]="'xeroCloneSettings.postToBankAccountLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) }"
                             [options]="bankAccounts"
-                            [placeholder]="'Select bank account'"
+                            [placeholder]="'xeroCloneSettings.selectBankAccountPlaceholder' | transloco"
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [formControllerName]="'bankAccount'"
                             [dropdownDisplayKey]="'name'"
-                            [tooltipText]="'All the offset entry in the journal will be posted to the selected bank account'">
+                            [tooltipText]="'xeroCloneSettings.postToBankAccountTooltip' | transloco">
                         </app-clone-setting-field>
                     </div>
                 </div>
@@ -139,43 +139,43 @@
                 <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
-                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                        [label]="'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [options]="cccExpenseStateOptions"
-                        [placeholder]="'Select CCC expense state'"
+                        [placeholder]="'xeroCloneSettings.selectCccExpenseStatePlaceholder' | transloco"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'cccExpenseState'"
                         [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out'">
+                        [tooltipText]="'xeroCloneSettings.cccExpenseStateTooltip' | transloco">
                     </app-clone-setting-field>
                 </div>
 
                 <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
-                        [label]="'How should the expenses be grouped?'"
+                        [label]="'xeroCloneSettings.expenseGroupingLabel' | transloco"
                         [options]="cccExpenseGroupByOptions"
-                        [placeholder]="'Select expense grouping'"
+                        [placeholder]="'xeroCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [isDisabled]="true"
                         [formControllerName]="'creditCardExportGroup'"
                         [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)'">
+                        [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco">
                     </app-clone-setting-field>
                 </div>
 
                 <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
-                        [label]="'Set the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) + ' date as'"
+                        [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) }"
                         [options]="cccExpenseGroupingDateOptions"
-                        [placeholder]="'Select export date'"
+                        [placeholder]="'xeroCloneSettings.selectExportDatePlaceholder' | transloco"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'creditCardExportDate'"
                         [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'The selected date will reflect in the corporate card expenses exported to Xero.'">
+                        [tooltipText]="'xeroCloneSettings.cccExportDateTooltip' | transloco">
                     </app-clone-setting-field>
                 </div>
 
@@ -183,43 +183,43 @@
                     exportSettingForm.controls.creditCardExportType.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
-                        [label]="'How should the split expenses be grouped?'"
+                        [label]="'xeroCloneSettings.splitExpenseGroupingLabel' | transloco"
                         [options]="splitExpenseGroupingOptions"
-                        [placeholder]="'Select split expense grouping'"
+                        [placeholder]="'xeroCloneSettings.selectSplitExpenseGroupingPlaceholder' | transloco"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'splitExpenseGrouping'"
                         [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'The selected option will dictate how split expenses will be exported to Xero.'">
+                        [tooltipText]="'xeroCloneSettings.splitExpenseGroupingTooltip' | transloco">
                     </app-clone-setting-field>
                 </div>
             </div>
         </div>
 
-        <app-clone-setting-header [headerText]="'Import settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from Xero should be mapped in ' + brandingConfig.brandName"></app-clone-setting-header>
+        <app-clone-setting-header [headerText]="'xeroCloneSettings.importSettings' | transloco" [subHeaderText]="'xeroCloneSettings.importSettingsDescription' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
 
         <div class="clone-setting--field-section">
             <div class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
-                    [label]="'Import charts of accounts from Xero'"
+                    [label]="'xeroCloneSettings.importCoaLabel' | transloco"
                     [form]="importSettingForm"
                     [formControllerName]="'importCategories'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'Imported account will be available as categories in ' + brandingConfig.brandName">
+                    [tooltipText]="'xeroCloneSettings.importCoaTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
 
                 <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('importCategories')?.value">
                     <app-clone-setting-field
-                        [label]="'Select the accounts from Xero to import as categories'"
+                        [label]="'xeroCloneSettings.selectAccountsToImportLabel' | transloco"
                         [options]="chartOfAccountTypesList"
-                        [placeholder]="'Select chart of accounts'"
+                        [placeholder]="'xeroCloneSettings.selectCoaPlaceholder' | transloco"
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'chartOfAccountTypes'"
-                        [disabledOption]="'Expense'"
+                        [disabledOption]="'xeroCloneSettings.expenseOption' | transloco"
                         [inputType]="InputType.MULTI_SELECT"
-                        [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
+                        [tooltipText]="'xeroCloneSettings.selectAccountsToImportTooltip' | transloco">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -250,23 +250,23 @@
             <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
-                    [label]="'Import tax from Xero'"
+                    [label]="'xeroCloneSettings.importTaxLabel' | transloco"
                     [form]="importSettingForm"
                     [formControllerName]="'taxCode'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'The imported tax codes from Xero will be set as tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'">
+                    [tooltipText]="'xeroCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
 
                 <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('taxCode')?.value">
                     <app-clone-setting-field *ngIf="importSettingForm.get('taxCode')?.value"
-                        [label]="'Select default tax code'"
+                        [label]="'xeroCloneSettings.selectDefaultTaxCodeLabel' | transloco"
                         [options]="taxCodes"
-                        [placeholder]="'Select tax code'"
+                        [placeholder]="'xeroCloneSettings.selectTaxCodePlaceholder' | transloco"
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'defaultTaxCode'"
                         [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'">
+                        [tooltipText]="'xeroCloneSettings.defaultTaxCodeTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -282,21 +282,21 @@
             </app-configuration-import-field>
         </div>
 
-        <app-clone-setting-header [headerText]="'Advanced settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>
+        <app-clone-setting-header [headerText]="'xeroCloneSettings.advancedSettings' | transloco" [subHeaderText]="'xeroCloneSettings.advancedSettingsDescription' | transloco"></app-clone-setting-header>
         <div class="clone-setting--field-section">
             <div class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Schedule automatic export'"
+                    [label]="'xeroCloneSettings.scheduleAutomaticExportLabel' | transloco"
                     [form]="advancedSettingForm"
                     [formControllerName]="'exportSchedule'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero'">
+                    [tooltipText]="'xeroCloneSettings.scheduleAutomaticExportTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
 
                 <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <app-clone-setting-field class="tw-flex-auto"
-                        [label]="'Set up export frequency'"
+                        [label]="'xeroCloneSettings.setupExportFrequencyLabel' | transloco"
                         [isFieldMandatory]="true"
                         [options]="scheduleIntervalHours"
                         [form]="advancedSettingForm"
@@ -304,28 +304,28 @@
                         [formControllerName]="'exportScheduleFrequency'"
                         [dropdownDisplayKey]="'label'"
                         [additionalClasses]="'dropdown-size-schedule'"
-                        [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Xero'">
+                        [tooltipText]="'xeroCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'Hours' : 'Hour'">
+                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="(advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'xeroCloneSettings.hours' : 'xeroCloneSettings.hour') | transloco">
                     </div>
                 </div>
 
                 <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
                     <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
-                        Send error notification to
-                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
+                        {{ 'xeroCloneSettings.sendErrorNotificationTo' | transloco }}
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'xeroCloneSettings.errorNotificationTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>
                     <app-email-multi-select-field
                         [form]="advancedSettingForm"
                         [appName]="appName"
-                        [label]="'Send error notification to'"
+                        [label]="'xeroCloneSettings.sendErrorNotificationToLabel' | transloco"
                         [isFieldMandatory]="false"
-                        [mandatoryErrorListName]="'email for error notification'"
-                        [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
+                        [mandatoryErrorListName]="'xeroCloneSettings.emailForErrorNotificationError' | transloco"
+                        [subLabel]="'xeroCloneSettings.errorNotificationTooltip' | transloco"
                         [options]="adminEmails"
                         [iconPath]="'list'"
-                        [placeholder]="'Select email address'"
+                        [placeholder]="'xeroCloneSettings.selectEmailAddressPlaceholder' | transloco"
                         [formControllerName]="'email'"
                         [isCloneSettingView]="true">
                     </app-email-multi-select-field>
@@ -339,43 +339,43 @@
                     [form]="advancedSettingForm"
                     [formControllerName]="'changeAccountingPeriod'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.'">
+                    [tooltipText]="'xeroCloneSettings.postEntriesCurrentPeriodTooltip' | transloco">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'user-plus'"
-                    [label]="'Auto create contacts'"
+                    [label]="'xeroCloneSettings.autoCreateContactsLabel' | transloco"
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateVendors'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a contact if a match for an employee in ' + brandingConfig.brandName + ' does not exist in Xero already.'">
+                    [tooltipText]="'xeroCloneSettings.autoCreateContactsTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'arrow-rotate'"
-                    [label]="'Auto sync payment status for reimbursable expenses'"
+                    [label]="'xeroCloneSettings.autoSyncPaymentStatusLabel' | transloco"
                     [form]="advancedSettingForm"
                     [formControllerName]="'paymentSync'"
                     [options]="paymentSyncOptions"
-                    [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                    [placeholder]="'xeroCloneSettings.selectPaymentSyncPlaceholder' | transloco"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to paid and vice versa.'">
+                    [tooltipText]="'xeroCloneSettings.autoSyncPaymentStatusTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
 
                 <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero'">
                     <app-clone-setting-field
-                        [label]="'To which payment account should the payment entries be posted?'"
+                        [label]="'xeroCloneSettings.postPaymentEntriesToAccountLabel' | transloco"
                         [options]="billPaymentAccounts"
-                        [placeholder]="'Select a payment account'"
+                        [placeholder]="'xeroCloneSettings.selectPaymentAccountPlaceholder' | transloco"
                         [form]="advancedSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'billPaymentAccount'"
                         [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + ', the payment entries will be posted to the selected payment account in Xero.'">
+                        [tooltipText]="'xeroCloneSettings.postPaymentEntriesToAccountTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                 </div>
             </div>
@@ -387,11 +387,11 @@
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'While exporting corporate card expenses from ' + brandingConfig.brandName + ', the integration will auto-create a contact in Xero if a merchant added in ' + brandingConfig.brandName + ' does not exist in Xero.'">
+                    [tooltipText]="'xeroCloneSettings.autoCreateMerchantsTooltip' | transloco: { brandName: brandingConfig.brandName }">
                 </app-clone-setting-field>
             </div>
         </div>
-        <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
+        <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? ('xeroCloneSettings.saveAndContinue' | transloco) : ('xeroCloneSettings.saving' | transloco)" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
         <app-configuration-confirmation-dialog
             (warningAccepted)="acceptWarning($event)"
             [isWarningVisible]="isWarningDialogVisible"
@@ -412,7 +412,7 @@
         <app-preview-dialog *ngIf="isPreviewDialogVisible"
             [isPreviewDialogVisible]="true"
             [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-            [header]="'Preview'">
+            [header]="'xeroCloneSettings.previewHeader' | transloco">
         </app-preview-dialog>
 
     </div>

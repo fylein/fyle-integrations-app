@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
@@ -24,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @Component({
   selector: 'app-qbd-direct-advanced-settings',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-advanced-settings.component.html',
   styleUrl: './qbd-direct-advanced-settings.component.scss'
 })
@@ -103,7 +104,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private qbdDirectHelperService: QbdDirectHelperService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   private saveSkipExportFields(): void {
@@ -173,7 +175,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       }
 
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectAdvancedSettings.advancedSettingsSavedSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
@@ -181,7 +183,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectAdvancedSettings.errorSavingAdvancedSettings'));
     });
   }
 

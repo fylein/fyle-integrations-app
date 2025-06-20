@@ -9,21 +9,21 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header 
-                [headerText]="'Connect to your Sage 300 CRE account'"
-                [contentText]="'To connect your Sage 300 CRE database to your ' + brandingConfig.brandName + ' account, you need to set up the HH2 sync. Click here for details or contact your ' + brandingConfig.brandName + ' implementation specialist for help with the setup.'"
+                [headerText]="'sage300OnboardingConnector.headerText' | transloco"
+                [contentText]="'sage300OnboardingConnector.contentText' | transloco:{ brandName: brandingConfig.brandName }"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
                 <div class="tw-flex tw-justify-center tw-items-center">
                     <form [formGroup]="connectSage300Form">
                         <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Please enter a valid identifier.'" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'Identifier'" [placeholder]="'Enter identifier'"></app-configuration-text-field>
+                            <app-configuration-text-field [customErrorMessage]="'sage300OnboardingConnector.identifierError' | transloco" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'sage300OnboardingConnector.identifierLabel' | transloco" [placeholder]="'sage300OnboardingConnector.identifierPlaceholder' | transloco"></app-configuration-text-field>
                         </div>
                         <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Please enter valid user ID.'" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'User ID'" [placeholder]="'Enter user ID'"></app-configuration-text-field>
+                            <app-configuration-text-field [customErrorMessage]="'sage300OnboardingConnector.userIdError' | transloco" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'sage300OnboardingConnector.userIdLabel' | transloco" [placeholder]="'sage300OnboardingConnector.userIdPlaceholder' | transloco"></app-configuration-text-field>
                         </div>
                         <div>
-                            <app-configuration-text-field [customErrorMessage]="'Incorrect password. Please enter correct password'" [form]="connectSage300Form" [formControllerName]="'userPassword'" [isFieldMandatory]="true" [label]="'User password'" [placeholder]="'Enter user password'" [type]="'password'"></app-configuration-text-field>
+                            <app-configuration-text-field [customErrorMessage]="'sage300OnboardingConnector.passwordError' | transloco" [form]="connectSage300Form" [formControllerName]="'userPassword'" [isFieldMandatory]="true" [label]="'sage300OnboardingConnector.passwordLabel' | transloco" [placeholder]="'sage300OnboardingConnector.passwordPlaceholder' | transloco" [type]="'password'"></app-configuration-text-field>
                         </div>
                     </form>
                 </div>

@@ -12,6 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-dashboard',
@@ -82,7 +83,8 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     private advancedSettingService: QbdAdvancedSettingService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translocoService: TranslocoService
   ) { }
 
   showCalendar(event: Event) {
@@ -174,7 +176,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
     }, () => {
       this.exportInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export failed, try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDashboard.exportFailedMessage'));
     });
   }
 

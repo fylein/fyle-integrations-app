@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ToastSeverity, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -30,7 +31,8 @@ export class QbdDirectAssistedSetupComponent {
 
 constructor(
     private assistedSetupService: QbdDirectAssistedSetupService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) {}
 
   get nativeWindow(): Window {
@@ -70,7 +72,7 @@ constructor(
           this.isQuerySubmitted = true;
         },
         error: () => {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to submit request. Please try again.');
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectAssistedSetup.failedToSubmitRequest'));
         }
       });
   }
@@ -84,11 +86,11 @@ constructor(
       next: () => {
         this.toggleAssistedSetupDialog();
         this.isAssistedSetupSlotBooked = true;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your request has been received.');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectAssistedSetup.requestReceived'));
         this.nativeWindow.open(brandingKbArticles.onboardingArticles.QBD_DIRECT.GCAL_LINK, '_blank');
       },
       error: () => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectAssistedSetup.somethingWentWrong'));
       }
     });
   }

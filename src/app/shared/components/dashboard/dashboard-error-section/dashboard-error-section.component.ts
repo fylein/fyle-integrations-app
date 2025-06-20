@@ -13,6 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -87,7 +88,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   selectedMappingFilter: MappingState = MappingState.ALL;
 
-  alphabetFilter: string = 'All';
+  alphabetFilter: string;
 
   readonly brandingConfig = brandingConfig;
 
@@ -116,7 +117,8 @@ export class DashboardErrorSectionComponent implements OnInit {
     private mappingService: MappingService,
     private trackingService: TrackingService,
     public helper: HelperService,
-    public windowService: WindowService
+    public windowService: WindowService,
+    private translocoService: TranslocoService
   ) { }
 
   get shouldShowErrorSection(): boolean {
@@ -268,6 +270,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   ngOnInit(): void {
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.employeeFieldMapping = this.destinationFieldMap.EMPLOYEE as unknown as FyleField;
+    this.alphabetFilter = this.translocoService.translate('dashboardErrorSection.allFilter');
   }
 
 }

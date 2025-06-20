@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -21,6 +21,11 @@ import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/
 
 import * as Sentry from "@sentry/angular";
 import { Router } from '@angular/router';
+import { provideTransloco, TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
+import { TranslocoHttpLoader } from './transloco-http-loader';
+import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
+
 
 @NgModule({ declarations: [
         AppComponent
@@ -34,6 +39,27 @@ import { Router } from '@angular/router';
         IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
         Sage300ConfigurationModule], providers: [
         MessageService,
+        provideTransloco({
+            config: {
+                availableLangs: ['en'],
+                defaultLang: 'en',
+                reRenderOnLangChange: true,
+                prodMode: !isDevMode()
+            },
+            loader: TranslocoHttpLoader
+        }),
+        provideTranslocoMessageformat(),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (transloco: TranslocoService) => {
+                return () =>
+                firstValueFrom(transloco.load('en')).then(() => {
+                    transloco.setActiveLang('en');
+                });
+            },
+            deps: [TranslocoService],
+            multi: true
+        },
         {
             provide: JWT_OPTIONS,
             useValue: JWT_OPTIONS

@@ -5,7 +5,7 @@
     <div>
     <app-configuration-step-header
     [headerText]="brandingContent.intacct.configuration.exportSetting.stepName"
-    [contentText]="'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Sage Intacct.'"
+    [contentText]="'intacctExportSettings.configureExportDescription' | transloco:{ brandName: brandingConfig.brandName }"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
     [appName]="appName"
@@ -17,8 +17,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                     [form]="exportSettingsForm"
-                    [label]="'Export reimbursable expenses'"
-                    [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct.'"
+                    [label]="'intacctExportSettings.exportReimbursableExpenses' | transloco"
+                    [subLabel]="'intacctExportSettings.exportReimbursableSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -27,11 +27,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
+                            [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
+                            [label]="'intacctExportSettings.howToExport' | transloco"
                             [options]="reimbursableExportTypes"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export module'"
+                            [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
@@ -42,14 +42,14 @@
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'GL Account'"
-                                [label]="'To which GL account should the expenses be credited to?'"
-                                [subLabel]="'The integration will credit the account selected here for reimbursable expenses exported as journal entries.'"
+                                [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
+                                [label]="'intacctExportSettings.creditToGlAccount' | transloco"
+                                [subLabel]="'intacctExportSettings.creditToGlAccountSubLabel' | transloco"
                                 [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select GL account'"
+                                [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
                                 [formControllerName]="'glAccount'"
                                 [isAdvanceSearchEnabled]="true"
                                 [isMultiLineOption]="isMultiLineOption"
@@ -59,14 +59,14 @@
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'expense payment type'"
-                                [label]="'Set the default expense payment type as?'"
-                                [subLabel]="'The selected expense payment type will be added to the reimbursable expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                                [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
+                                [label]="'intacctExportSettings.defaultExpensePaymentType' | transloco"
+                                [subLabel]="'intacctExportSettings.defaultExpensePaymentTypeSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                                 [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select expense payment type'"
+                                [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExpensePaymentType'"
                                 [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -79,12 +79,12 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="false"
                             [showClearIcon]="true"
-                            [mandatoryErrorListName]="'employee mapping'"
-                            [label]="'How should employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) + ' in Sage Intacct?'"
-                            [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Sage Intacct based on a unique parameter.'"
+                            [mandatoryErrorListName]="'intacctExportSettings.employeeMappingError' | transloco"
+                            [label]="'intacctExportSettings.employeeMappingLabel' | transloco:{ brandName: brandingConfig.brandName, employeeField: getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) }"
+                            [subLabel]="'intacctExportSettings.employeeMappingSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                             [options]="autoMapEmployeeOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select mapping method'"
+                            [placeholder]="'intacctExportSettings.selectMappingMethodPlaceholder' | transloco"
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
                     </div>
@@ -92,36 +92,36 @@
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'expense state'"
-                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (processing) or when the payment has been settled (closed).'"
+                        [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
+                        [label]="'intacctExportSettings.reimbursableExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'intacctExportSettings.reimbursableExpenseStateSubLabel' | transloco"
                         [options]="expenseStateOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select export state'"
+                        [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'how expenses to be grouped'"
-                        [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)'"
+                        [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
+                        [label]="'intacctExportSettings.groupingLabel' | transloco"
+                        [subLabel]="'intacctExportSettings.reimbursableGroupingSubLabel' | transloco"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select expense grouping'"
+                        [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                        [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
+                        [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : IntacctReimbursableExpensesObject.EXPENSE_REPORT) }"
+                        [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
+                        [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                 </div>
@@ -140,11 +140,11 @@
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export module'"
-                        [label]="'How should the expenses be exported?'"
+                        [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
+                        [label]="'intacctExportSettings.howToExport' | transloco"
                         [options]="creditCardExportTypes"
                         [iconPath]="'list'"
-                        [placeholder]="'Select expense export module'"
+                        [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
                         [formControllerName]="'cccExportType'"
                         [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
                         [showExportPreview]="true"
@@ -154,14 +154,14 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense payment type'"
+                            [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
                             [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType"
                             [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel"
                             [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense payment type'"
+                            [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
                             [formControllerName]="'cccExpensePaymentType'"
                             [isAdvanceSearchEnabled]="true"
                             [isMultiLineOption]="isMultiLineOption"
@@ -171,14 +171,14 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'credit card vendor'"
+                            [mandatoryErrorListName]="'intacctExportSettings.creditCardVendorError' | transloco"
                             [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendor"
                             [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel"
                             [destinationAttributes]="this.destinationOptions['VENDOR']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'list'"
-                            [placeholder]="'Select credit card vendor'"
+                            [placeholder]="'intacctExportSettings.selectCreditCardVendorPlaceholder' | transloco"
                             [formControllerName]="'creditCardVendor'"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -187,14 +187,14 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'GL account'"
+                            [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
                             [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCard"
                             [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardSubLabel"
                             [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'list'"
-                            [placeholder]="'Select GL account'"
+                            [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
                             [formControllerName]="'creditCard'"
                             [isAdvanceSearchEnabled]="true"
                             [isMultiLineOption]="isMultiLineOption"
@@ -204,15 +204,15 @@
                             <app-configuration-toggle-field
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"
-                            [label]="'Export merchant data to the vendor field'"
-                            [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry vendor field'"
+                            [label]="'intacctExportSettings.exportMerchantToVendor' | transloco"
+                            [subLabel]="'intacctExportSettings.exportMerchantToVendorSubLabel' | transloco"
                             [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
                         <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'charge card'"
+                            [mandatoryErrorListName]="'intacctExportSettings.chargeCardError' | transloco"
                             [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCard"
                             [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCardSublabel"
                             [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
@@ -232,24 +232,24 @@
                         <app-configuration-select-field *ngIf="exportSettingsForm.get('cccExportType')?.value"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'expense state'"
-                        [label]="'How should expenses be labeled  before exporting from ' + brandingConfig.brandName + '?'"
+                        [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
+                        [label]="'intacctExportSettings.cccExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpenseState"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select export state'"
+                        [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'how expenses to be grouped'"
-                        [label]="'How should the expenses be grouped?'"
+                        [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
+                        [label]="'intacctExportSettings.groupingLabel' | transloco"
                         [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExportGroup"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select expense grouping'"
+                        [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
                         [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                     </div>
@@ -257,12 +257,12 @@
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.get('cccExportType')?.value) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                        [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
+                        [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('cccExportType')?.value) }"
+                        [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
+                        [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
 
                         <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
@@ -270,12 +270,12 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
-                        [mandatoryErrorListName]="'split expense grouping'"
-                        [label]="'How should the split expenses be grouped?'"
-                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [mandatoryErrorListName]="'intacctExportSettings.splitGroupingError' | transloco"
+                        [label]="'intacctExportSettings.splitGroupingLabel' | transloco"
+                        [subLabel]="'intacctExportSettings.splitGroupingSubLabel' | transloco"
                         [options]="splitExpenseGroupingOptions"
                         [iconPath]="'question-square-outline'"
-                        [placeholder]="'Select split expense grouping'"
+                        [placeholder]="'intacctExportSettings.selectSplitGroupingPlaceholder' | transloco"
                         [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
                     </div>
                 </div>
@@ -288,9 +288,9 @@
 <app-configuration-confirmation-dialog
     (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'Change in configuration'"
+    [headerText]="'intacctExportSettings.configChangeHeader' | transloco"
     [contextText]="warningDialogText"
-    [confirmBtnText]="'Continue'"
+    [confirmBtnText]="'intacctExportSettings.continueButton' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 
@@ -300,12 +300,12 @@
             *ngIf="!exportSettingsForm.controls.employeeFieldMapping.disabled"
             [form]="exportSettingsForm"
             [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'employee field'"
+            [mandatoryErrorListName]="'intacctExportSettings.employeeFieldError' | transloco"
             [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping"
-            [subLabel]="'Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct'"
+            [subLabel]="'intacctExportSettings.employeeRepresentationSubLabel' | transloco"
             [options]="employeeFieldOptions"
             [iconPath]="'user-two'"
-            [placeholder]="'Select representation'"
+            [placeholder]="'intacctExportSettings.selectRepresentationPlaceholder' | transloco"
             [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
 
         <div *ngIf="exportSettingsForm.controls.employeeFieldMapping.disabled">
@@ -316,12 +316,12 @@
                     </div>
                     <div class="tw-pl-16-px">
                         <h4 class="!tw-text-14-px !tw-font-500">{{brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping}}<app-mandatory-field></app-mandatory-field></h4>
-                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
+                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'intacctExportSettings.employeeRepresentationSubLabel' | transloco }}</h5>
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
                     <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
-                    <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">Auto-selected based on your export module</span>
+                    <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">{{ 'intacctExportSettings.autoSelectedEmployeeField' | transloco }}</span>
                 </div>
             </div>
         </div>

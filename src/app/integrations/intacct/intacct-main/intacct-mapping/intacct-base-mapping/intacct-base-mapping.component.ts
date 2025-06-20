@@ -11,6 +11,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-base-mapping',
@@ -52,17 +53,18 @@ export class IntacctBaseMappingComponent implements OnInit {
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private commonResourcesService: CommonResourcesService
+    private commonResourcesService: CommonResourcesService,
+    private translocoService: TranslocoService
   ) { }
 
   triggerAutoMapEmployees(): void {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('intacctBaseMapping.autoMappingInfo'));
     }, () => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctBaseMapping.somethingWentWrong'));
     });
   }
 
@@ -103,7 +105,7 @@ export class IntacctBaseMappingComponent implements OnInit {
       });
 
       if (this.sourceField === FyleField.CORPORATE_CARD && this.destinationField === SageIntacctField.VENDOR) {
-        this.destinationFieldDisplayName = 'Credit card vendor';
+        this.destinationFieldDisplayName = this.translocoService.translate('intacctBaseMapping.creditCardVendor');
       }
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined).subscribe((response: any) => {

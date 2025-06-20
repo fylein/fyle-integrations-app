@@ -15,6 +15,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -96,7 +97,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    public helper: HelperService
+    public helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   private constructPayloadAndSave(): void {
@@ -104,7 +106,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     const exportSettingPayload = BusinessCentralExportSettingModel.createExportSettingPayload(this.exportSettingForm);
     this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: BusinessCentralExportSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralExportSettings.saveSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.EXPORT_SETTING_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
@@ -128,7 +130,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralExportSettings.saveError'));
       });
   }
 

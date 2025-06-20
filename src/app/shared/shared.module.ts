@@ -97,7 +97,7 @@ import { CheckboxButtonComponent } from './components/input/checkbox-button/chec
 import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
 import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
-
+import { TranslocoModule } from '@jsverse/transloco';
 
 @NgModule({
   declarations: [
@@ -202,7 +202,8 @@ import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log
     IconFieldModule,
     InputIconModule,
     CheckboxButtonComponent,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+    TranslocoModule
   ],
   exports: [
     LoaderComponent,
@@ -281,7 +282,8 @@ import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log
     CheckboxButtonComponent,
     OutlinedIconButtonComponent,
     QbdDirectAssistedSetupComponent,
-    SkippedExportLogComponent
+    SkippedExportLogComponent,
+    TranslocoModule
   ]
 })
 export class SharedModule { }

@@ -23,11 +23,12 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-import-settings',
   standalone: true,
-  imports: [CommonModule, SharedModule, MultiSelectModule],
+  imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
   templateUrl: './qbd-direct-import-settings.component.html',
   styleUrl: './qbd-direct-import-settings.component.scss'
 })
@@ -95,20 +96,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.qbd_direct.configuration.importSetting;
 
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
-    "ACCOUNT": [
-      {
-        label: 'Import codes + names',
-        value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
-      },
-      {
-        label: 'Import names only',
-        value: false,
-        subLabel: 'Example: Meals & Entertainment'
-      }
-    ]
-  };
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
 
   sessionStartTime: Date = new Date();
 
@@ -125,7 +113,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private exportSettingService: QbdDirectExportSettingsService,
     private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   closeModel() {
@@ -268,7 +257,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
 
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'));
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
@@ -276,7 +265,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectImportSettings.saveError'));
     });
   }
 
@@ -298,7 +287,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
       this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qbdDirectImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
@@ -308,6 +297,20 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.importCodeSelectorOptions = {
+      "ACCOUNT": [
+        {
+          label: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNames'),
+          value: true,
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNamesSubLabel')
+        },
+        {
+          label: this.translocoService.translate('qbdDirectImportSettings.importNamesOnly'),
+          value: false,
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importNamesOnlySubLabel')
+        }
+      ]
+    };
     this.setupPage();
   }
 

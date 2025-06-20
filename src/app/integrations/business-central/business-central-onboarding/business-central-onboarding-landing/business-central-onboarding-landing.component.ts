@@ -11,6 +11,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-onboarding-landing',
@@ -41,7 +42,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     private router: Router,
     private toastService: IntegrationsToastService,
     private businessCentralHelperService: BusinessCentralHelperService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -70,7 +72,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
         this.checkProgressAndRedirect();
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamics 365 Business Central. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('businessCentralOnboardingLanding.connectionFailedToast');
       if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectBCConnectedDialogVisible = true;
       } else {

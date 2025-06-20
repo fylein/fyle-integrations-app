@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -68,7 +69,8 @@ export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
     private refinerService: RefinerService,
     private dashboardService: DashboardService,
     private accountingExportService: AccountingExportService,
-    private exportService: BusinessCentralExportSettingsService
+    private exportService: BusinessCentralExportSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
@@ -136,7 +138,7 @@ export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
 
       this.destinationFieldMap = {
         'EMPLOYEE': responses[4].employee_field_mapping,
-        'CATEGORY': 'ACCOUNT'
+        'CATEGORY': this.translocoService.translate('businessCentralDashboard.destinationFieldAccount')
       };
 
       this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;

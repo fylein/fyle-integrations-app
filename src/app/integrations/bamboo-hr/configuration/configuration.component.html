@@ -1,9 +1,9 @@
 <div [formGroup]="cofigurationForm" class="tw-pt-70-px tw-flex tw-justify-center tw-items-center tw-flex-col">
     <div class="tw-w-75-vw tw-rounded-12-px tw-border-1-px tw-border-separator tw-shadow-app-card">
         <div class="tw-p-24-px">
-            <p class="tw-text-18-px">Configuration</p>
+            <p class="tw-text-18-px">{{ 'configuration.header' | transloco }}</p>
             <p class="tw-pt-8-px tw-text-14-px tw-text-sub-text-color">
-                Setup your {{ brandingConfig.brandName}} Bamboo HR integration to sync employee details from Bamboo HR to {{ brandingConfig.brandName}} and notify admins when the import fails
+                {{ 'configuration.description' | transloco: { brandName: brandingConfig.brandName} }}
             </p>
         </div>
         <div class="tw-p-24-px tw-border-y tw-border-separator">
@@ -11,13 +11,13 @@
                 <app-email-multi-select-field
                     [form]="cofigurationForm"
                     [appName]="appName"
-                    [label]="'Send email notification to'"
+                    [label]="'configuration.emailNotificationLabel' | transloco"
                     [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'email for error notification'"
-                    [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
+                    [mandatoryErrorListName]="'configuration.mandatoryErrorListName' | transloco"
+                    [subLabel]="'configuration.emailSubLabel' | transloco"
                     [options]="emails"
                     [iconPath]="'list'"
-                    [placeholder]="'Select email address'"
+                    [placeholder]="'configuration.emailPlaceholder' | transloco"
                     [formControllerName]="'email'">
                 </app-email-multi-select-field> 
             </div>
@@ -25,7 +25,7 @@
         <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
                 <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()" [disabled]="isConfigurationSaveInProgress">
-                    {{ isConfigurationSaveInProgress ? 'Saving': 'Save' }}
+                    {{ (isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco }}
                     <app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>
             </div>

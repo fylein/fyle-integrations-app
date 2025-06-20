@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'Import settings'"
-            [contentText]="'In this section, you can choose the fields required to be imported from Sage 300 CRE to ' + brandingConfig.brandName + '. '"
+        <app-configuration-step-header [headerText]="'sage300ImportSettings.headerText' | transloco"
+            [contentText]="'sage300ImportSettings.contentText' | transloco:{ brandName: brandingConfig.brandName }"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
         </app-configuration-step-header>
@@ -15,18 +15,17 @@
                 <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                            Import / map Sage 300 CRE dimensions
+                            {{ 'sage300ImportSettings.importDimensionsTitle' | transloco }}
                         </h4>
                         <p class="tw-text-14-px tw-text-text-muted">
-                            The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference,
-                            or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values available as a dropdown in the expense form for your employees to choose from. <a
+                            {{ 'sage300ImportSettings.importDimensionsDescription' | transloco:{ brandName: brandingConfig.brandName } }}<a
                                 class="tw-text-link-primary tw-pl-4-px tw-w-fit tw-cursor-pointer"
-                                (click)="showPreviewDialog(true)">Click here</a> to preview.
+                                (click)="showPreviewDialog(true)">{{ 'sage300ImportSettings.clickHere' | transloco }}</a>{{ 'sage300ImportSettings.toPreview' | transloco }}
                         </p>
                     </div>
                     <div class="tw-pt-16-px">
                         <app-configuration-info-label
-                            [infoText]="'If you\'d like to use only selective data from Sage 300 CRE, map a Sage 300 CRE dimension to a field in ' + brandingConfig.brandName + ' and turn off the import, as importing the data will sync in all the active values in Sage 300 CRE. You can add the required values in ' + brandingConfig.brandName + ' and map them later in the integration mapping section.'">
+                            [infoText]="'sage300ImportSettings.infoText' | transloco:{ brandName: brandingConfig.brandName }">
                         </app-configuration-info-label>
                     </div>
                 </div>
@@ -71,15 +70,15 @@
     <app-configuration-confirmation-dialog
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [isWarningVisible]="showDependentFieldWarning"
-        [headerText]="'Warning'"
-        [contextText]="'You have imported cost codes and cost types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
-        [confirmBtnText]="'Continue'">
+        [headerText]="'sage300ImportSettings.warningHeaderText' | transloco"
+        [contextText]="'sage300ImportSettings.warningContextText' | transloco:{ brandName: brandingConfig.brandName }"
+        [confirmBtnText]="'sage300ImportSettings.continueButton' | transloco">
     </app-configuration-confirmation-dialog>
 </div>
 <div *ngIf="isPreviewDialogVisible">
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'sage300ImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>

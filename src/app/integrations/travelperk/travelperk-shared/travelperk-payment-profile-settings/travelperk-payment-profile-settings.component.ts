@@ -11,6 +11,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -63,7 +64,8 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     private helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   navigateBack(): void {
@@ -83,7 +85,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Payment profile settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkPaymentProfileSettings.paymentProfileSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.TRAVELPERK, Page.PAYMENT_PROFILE_SETTINGS_TRAVELPERK, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.TRAVELPERK, TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS, 2, paymentProfileMappingPayload);
@@ -107,7 +109,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving payment profile settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('travelperkPaymentProfileSettings.paymentProfileSettingsError'));
     });
   }
 

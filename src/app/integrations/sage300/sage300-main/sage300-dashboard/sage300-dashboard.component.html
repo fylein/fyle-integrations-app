@@ -24,8 +24,8 @@
     <app-zero-state 
         *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length" 
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="'Looks like you have'"
-        [subHeaderText]="'0 expenses to export right now'">
+        [headerText]="'sage300Dashboard.zeroStateHeaderText' | transloco"
+        [subHeaderText]="'sage300Dashboard.zeroStateSubHeaderText' | transloco">
     </app-zero-state>
     
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"

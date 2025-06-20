@@ -15,7 +15,7 @@
                 <span>
                     {{ item[displayKey] }}
                 </span>
-                <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ item['subLabel'] }}o</p>
+                <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ item['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}</p>
             </div>
         </ng-template>
 

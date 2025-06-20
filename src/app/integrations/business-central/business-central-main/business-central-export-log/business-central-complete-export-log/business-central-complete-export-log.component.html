@@ -30,15 +30,15 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="'Sorry, no results found!'"
-            [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
+            [mainText]="'businessCentralCompleteExportLog.noResultsFound' | transloco"
+            [subText]="'businessCentralCompleteExportLog.noResultsSubtext' | transloco">
         </app-zero-state-with-illustration>
 
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-    [mainText]="'No records to show yet!'"
-    [subText]="'All your successful exports and their details will be stored here.'">
+    [mainText]="'businessCentralCompleteExportLog.noRecordsMainText' | transloco"
+    [subText]="'businessCentralCompleteExportLog.noRecordsSubtext' | transloco">
     </app-zero-state-with-illustration>
 
 </div>

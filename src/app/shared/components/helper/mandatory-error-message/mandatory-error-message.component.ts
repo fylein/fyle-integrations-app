@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-mandatory-error-message',
@@ -16,7 +17,7 @@ export class MandatoryErrorMessageComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor() { }
+  constructor(private translocoService: TranslocoService) { }
 
   ngOnInit(): void {
     if (this.listName) {
@@ -24,9 +25,9 @@ export class MandatoryErrorMessageComponent implements OnInit {
       if (this.listName.search('how') !== -1) {
         this.listName = this.listName;
       } else if (vowels.indexOf(this.listName[0].toLowerCase()) === -1) {
-        this.listName = `a ${this.listName}`;
+        this.listName = `${this.translocoService.translate('mandatoryErrorMessage.articleA')}${this.listName}`;
       } else {
-        this.listName = `an ${this.listName}`;
+        this.listName = `${this.translocoService.translate('mandatoryErrorMessage.articleAn')}${this.listName}`;
       }
     }
   }

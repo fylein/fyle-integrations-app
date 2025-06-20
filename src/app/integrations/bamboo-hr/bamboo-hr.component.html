@@ -15,8 +15,8 @@
 
 <app-landing-page-header 
     [iconPath]="'assets/logos/bamboo-hr-logo.svg'" 
-    [appName]="'BambooHR'" 
-    [appDescription]="'Auto sync employee details between Bamboo HR and ' + brandingConfig.brandName + '.'" 
+    [appName]="'bambooHr.appName' | transloco" 
+    [appDescription]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" 
     [isLoading]="isLoading" 
     [hideRefreshIcon]="hideRefreshIcon" 
     [showErrorScreen]="showErrorScreen" 
@@ -27,7 +27,7 @@
     (syncEmployees)="syncEmployees()"
 ></app-landing-page-header>
 
-<app-landing-page-body *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and ' + brandingConfig.brandName + '.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR" [appName]="appName"></app-landing-page-body>
+<app-landing-page-body *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR" [appName]="appName"></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>
 
@@ -41,32 +41,32 @@
         </div>
 
         <div class="tw-pt-34-px tw-px-40-px" [formGroup]="bambooConnectionForm">
-            <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Connect to BambooHR</p>
-            <p class="tw-pt-10-px tw-text-text-muted tw-text-12-px">Please enter your credentials to connect your BambooHR account</p>
+            <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">{{ 'bambooHr.dialogHeader' | transloco }}</p>
+            <p class="tw-pt-10-px tw-text-text-muted tw-text-12-px">{{ 'bambooHr.dialogSubHeader' | transloco }}</p>
 
             <div class="tw-pt-32-px">
                 <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                    API Token <span class="tw-text-mandatory-field-color">*</span>
+                    {{ 'bambooHr.apiTokenLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
                 </p>
-                <p-password formControlName="apiToken" inputStyleClass="tw-w-388-px tw-h-48-px" [feedback]="false" [toggleMask]="true" placeholder="Enter API token"></p-password>
+                <p-password formControlName="apiToken" inputStyleClass="tw-w-388-px tw-h-48-px" [feedback]="false" [toggleMask]="true" [placeholder]="'bambooHr.apiTokenPlaceholder' | transloco"></p-password>
 
                 <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
-                    Sub-domain <span class="tw-text-mandatory-field-color">*</span>
+                    {{ 'bambooHr.subDomainLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
                 </p>
 
                 <div class="tw-flex">
                     <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
-                        https://
+                        {{ 'bambooHr.subDomainPrefix' | transloco }}
                     </div>
-                    <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0" pInputText placeholder="Enter sub-domain" />
+                    <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0" pInputText [placeholder]="'bambooHr.subDomainPlaceholder' | transloco" />
                     <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
-                        .bamboohr.com
+                        {{ 'bambooHr.subDomainSuffix' | transloco }}
                     </div>
                 </div>
 
                 <div class="tw-flex tw-items-center tw-pt-24-px tw-pb-40-px">
                     <button pButton type="button" class="p-button-raised" [disabled]="!bambooConnectionForm.valid" (click)="connectBambooHR()">
-                        Connect
+                        {{ 'bambooHr.connectButtonText' | transloco }}
                     </button>
                 </div>
             </div>

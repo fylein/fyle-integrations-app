@@ -946,7 +946,8 @@ const componentVariables = {
 module.exports = {
   prefix: 'tw-',
   content: [
-    "./src/**/*.{html,ts}"
+    "./src/**/*.{html,ts}",
+    "./src/assets/i18n/**/*.json"
   ],
   theme: {
     textColor: {

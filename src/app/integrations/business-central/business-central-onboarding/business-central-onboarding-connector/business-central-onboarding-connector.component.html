@@ -9,15 +9,15 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
-                [headerText]="'Connect to your Dynamics 365 Business Central account'"
-                [contentText]="'Expenses will be posted to the Dynamics 365 Business Central location entity selected here.'"
+                [headerText]="'businessCentralOnboardingConnector.headerText' | transloco"
+                [contentText]="'businessCentralOnboardingConnector.contentText' | transloco"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div class="tw-px-24-px tw-pb-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'Dynamics 365 Business Central'"
-                    [subLabel]="'Please select a company from Dynamics 365 Business Central to proceed further.'"
-                    [placeholder]="'Select company'"
+                    [accountingAppTitle]="'businessCentralOnboardingConnector.accountingAppTitle' | transloco"
+                    [subLabel]="'businessCentralOnboardingConnector.subLabel' | transloco"
+                    [placeholder]="'businessCentralOnboardingConnector.placeholder' | transloco"
                     [appName]="appName"
                     [accountingCompanyName]="businessCentralCompanyName"
                     [accountingCompanyList] = "businessCentralCompanyOptions"
@@ -26,16 +26,16 @@
                     [isAccountingCompanyConnected]="isBusinessCentralConnected"
                     [showDisconnect]="showDisconnectBusinessCentral"
                     [accountingCompanyConnectionInProgress]="saveInProgress"
-                    [switchLinkText]="'Switch entity'"
+                    [switchLinkText]="'businessCentralOnboardingConnector.switchLinkText' | transloco"
                     (connectCompany)="connectBusinessCentralCompany($event)"
                     (switchCompany)="disconnectBusinessCentral()">
                 </app-configuration-connector>
                 <app-configuration-confirmation-dialog
                     (warningAccepted)="acceptWarning($event)"
                     [isWarningVisible]="isIncorrectBusinessCentralConnectedDialogVisible"
-                    [headerText]="'Incorrect account selected'"
-                    [contextText]="'You had previously set up the integration with a different Dynamics 365 Business Central account. Please choose the same to restore the settings'"
-                    [confirmBtnText]="'Re connect'"
+                    [headerText]="'businessCentralOnboardingConnector.dialogHeaderText' | transloco"
+                    [contextText]="'businessCentralOnboardingConnector.dialogContextText' | transloco"
+                    [confirmBtnText]="'businessCentralOnboardingConnector.reconnectButtonText' | transloco"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
             </div>

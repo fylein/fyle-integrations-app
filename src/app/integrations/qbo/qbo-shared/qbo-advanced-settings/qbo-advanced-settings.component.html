@@ -16,7 +16,7 @@
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Automation'"
+                    [label]="'qboAdvancedSettings.automation' | transloco"
                     [subLabel]="brandingContent.automationSubLabel">
                 </app-configuration-step-sub-header>
             </div>
@@ -24,7 +24,7 @@
                 <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
-                        [label]="'Schedule automatic export'"
+                        [label]="'qboAdvancedSettings.scheduleAutomaticExport' | transloco"
                         [subLabel]="brandingContent.scheduleSubLabel"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
@@ -35,8 +35,8 @@
                             [form]="advancedSettingForm"
                             [appName]="appName"
                             [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'automatic export method'"
-                            [label]="'Set up export frequency'"
+                            [mandatoryErrorListName]="'qboAdvancedSettings.automaticExportMethod' | transloco"
+                            [label]="'qboAdvancedSettings.setupExportFrequency' | transloco"
                             [subLabel]="brandingContent.frequencySubLabel"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
@@ -66,7 +66,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateVendorsLabel"
-                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.'"
+                    [subLabel]="'qboAdvancedSettings.autoCreateVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
@@ -75,8 +75,8 @@
                     [options]="paymentSyncOptions"
                     [iconPath]="'arrow-rotate'"
                     [label]="brandingContent.paymentSyncLabel"
-                    [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in QuickBooks Online will be automatically be updated to paid and vice versa.'"
-                    [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                    [subLabel]="'qboAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [placeholder]="'qboAdvancedSettings.paymentSyncPlaceholder' | transloco"
                     [formControllerName]="'paymentSync'"
                     [showClearIcon]="true">
                 </app-configuration-select-field>
@@ -86,10 +86,10 @@
                     [destinationAttributes]="billPaymentAccounts"
                     [optionLabel]="'name'"
                     [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'payment account'"
+                    [mandatoryErrorListName]="'qboAdvancedSettings.paymentAccountError' | transloco"
                     [label]="brandingContent.billPaymentAccountLabel"
-                    [subLabel]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + brandingContent.billPaymentAccountSubLabel + 'QuickBooks Online.'"
-                    [placeholder]="'Select a payment account'"
+                    [subLabel]="'qboAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: brandingContent.billPaymentAccountSubLabel }"
+                    [placeholder]="'qboAdvancedSettings.selectPaymentAccountPlaceholder' | transloco"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
 
@@ -112,7 +112,7 @@
 
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Customization'"
+                    [label]="'qboAdvancedSettings.customization' | transloco"
                     [subLabel]="brandingContent.customizeSectionSubLabel">
                 </app-configuration-step-sub-header>
             </div>
@@ -120,12 +120,12 @@
                 <app-configuration-multi-select
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Item level description'"
+                    [mandatoryErrorListName]="'qboAdvancedSettings.itemLevelDescription' | transloco"
                     [label]="brandingContent.memoStructureLabel"
                     [subLabel]="brandingContent.memoStructureSubLabel"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
-                    [placeholder]="'Set description'"
+                    [placeholder]="'qboAdvancedSettings.setDescriptionPlaceholder' | transloco"
                     [formControllerName]="'memoStructure'"
                     (changeInMultiSelect)="onMultiSelectChange()">
                 </app-configuration-multi-select>
@@ -140,8 +140,8 @@
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'"
-                    [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Online by setting up a conditional rule. '"
+                    [label]="'qboAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [subLabel]="'qboAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">

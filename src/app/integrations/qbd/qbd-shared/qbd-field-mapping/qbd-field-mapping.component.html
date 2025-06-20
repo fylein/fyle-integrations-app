@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-        [headerText]="'Field mapping'"
-        [contentText]="'In this section, choose appropriate representation of your customers and classes on ' + brandingConfig.brandName + '.'"
+        [headerText]="'qbdFieldMapping.headerText' | transloco"
+        [contentText]="'qbdFieldMapping.contentText' | transloco:{ brandName: brandingConfig.brandName }"
         [redirectLink]="redirectLink"></app-configuration-step-header>
     </div>
     <div>
@@ -15,31 +15,31 @@
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
-                        [label]="'How to map customer: job in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'customers\' field in QuickBooks desktops'"
+                        [label]="'qbdFieldMapping.mapCustomerJobLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'qbdFieldMapping.mapCustomerJobSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [options]="mappingFieldFormOptionsFunction('classType', 'itemType')"
                         [iconPath]="'user-two'"
-                        [placeholder]="'Select representation'"
+                        [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
                         [formControllerName]="'customerType'"></app-configuration-select-field>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
-                        [label]="'How to map class in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'class\' field in QuickBooks desktops'"
+                        [label]="'qbdFieldMapping.mapClassLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'qbdFieldMapping.mapClassSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [options]="mappingFieldFormOptionsFunction('customerType', 'itemType')"
                         [iconPath]="'list'"
-                        [placeholder]="'Select representation'"
+                        [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
                         [formControllerName]="'classType'"></app-configuration-select-field>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
-                        [label]="'How to map items in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
-                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'items\' field in QuickBooks desktops'"
+                        [label]="'qbdFieldMapping.mapItemsLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'qbdFieldMapping.mapItemsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [options]="mappingFieldFormOptionsFunction('customerType', 'classType')"
                         [iconPath]="'list'"
-                        [placeholder]="'Select representation'"
+                        [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
                         [formControllerName]="'itemType'"></app-configuration-select-field>
                     </div>
                 </div>

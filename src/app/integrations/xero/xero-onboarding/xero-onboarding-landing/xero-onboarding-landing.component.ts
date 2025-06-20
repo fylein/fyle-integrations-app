@@ -12,6 +12,7 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-onboarding-landing',
@@ -47,7 +48,8 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private router: Router,
     private xeroHelper: XeroHelperService,
     private toastService: IntegrationsToastService,
-    private xeroAuthService: XeroAuthService
+    private xeroAuthService: XeroAuthService,
+    private translocoService: TranslocoService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -63,7 +65,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
       this.xeroConnectionInProgress = false;
       this.checkProgressAndRedirect();
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero tenant. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingLanding.connectionFailedMessage');
       if (errorMessage === 'Please choose the correct Xero account') {
         this.isIntegrationConnected = false;
         this.xeroConnectionInProgress = false;

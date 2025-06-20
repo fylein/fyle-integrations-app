@@ -11,7 +11,7 @@
                     <div class="tw-flex tw-items-center tw-pt-6-px">
                         <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ uiExposedAppName }}</p>
                         <div>
-                            <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'Sync data'" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
+                            <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'appLandingPageHeader.syncDataTooltip' | transloco" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
                         </div>
                     </div>
                     <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-text-14-px tw-font-400 tw-text-pretty">
@@ -27,18 +27,18 @@
                     </p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">We are syncing your data between your {{brandingConfig.brandName}} - {{ uiExposedAppName }} account and this may take a few seconds</p>
+                        <p class="tw-pl-10-px">{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                     </div>
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
                 <button *ngIf="!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button-raised" (click)="connect()" [disabled]="isConnectionInProgress">
-                    {{ isConnectionInProgress ? 'Connecting' : 'Connect' }}
+                    {{ (isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco }}
                     <app-svg-icon *ngIf="!isConnectionInProgress && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                     <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>
                 <button *ngIf="isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button danger-outline" (click)="disconnect()">
-                    {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
+                    {{ (isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco }}
                 </button>
 
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">

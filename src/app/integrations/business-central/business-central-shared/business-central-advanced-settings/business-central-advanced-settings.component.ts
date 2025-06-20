@@ -13,6 +13,7 @@ import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsMode
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, CustomOperatorOption, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -71,7 +72,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -169,7 +171,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = BusinessCentralAdvancedSettingsModel.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralAdvancedSettings.saveSuccessToast'));
       this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
@@ -193,7 +195,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralAdvancedSettings.saveErrorToast'));
       });
   }
 

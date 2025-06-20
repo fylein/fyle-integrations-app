@@ -9,6 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-generic-mapping',
@@ -60,7 +61,8 @@ export class QbdGenericMappingComponent implements OnInit {
     private fieldMappingService: QbdFieldMappingService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
-    private window: WindowService
+    private window: WindowService,
+    private translocoService: TranslocoService
   ) { }
 
   private getFilteredMappings(): void {
@@ -91,10 +93,10 @@ export class QbdGenericMappingComponent implements OnInit {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
       this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type).subscribe((mappingStat: QBDMappingStats) => {
         this.mappingStats = mappingStat;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Changes saved successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdGenericMapping.changesSavedSuccessfully'));
       });
     }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdGenericMapping.errorSavingMappings'));
     });
   }
 
@@ -125,7 +127,7 @@ export class QbdGenericMappingComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop credit card account';
+    this.destinationHeaderName = this.sourceType === 'item' ? this.translocoService.translate('qbdGenericMapping.accountInQBD') : this.translocoService.translate('qbdGenericMapping.qbdCreditCardAccount');
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type),

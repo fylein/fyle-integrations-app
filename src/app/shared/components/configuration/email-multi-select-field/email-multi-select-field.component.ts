@@ -9,6 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -61,7 +62,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   isOverflowing(element: any): boolean {
@@ -97,7 +99,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     }
     this.addEmailForm.reset();
     this.showDialog = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('emailMultiSelectField.emailSavedSuccess'));
   }
 
   private assignSelectedEmail(emails: QBDEmailOptions[]): void {

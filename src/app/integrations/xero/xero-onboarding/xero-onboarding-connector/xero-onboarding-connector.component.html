@@ -14,9 +14,9 @@
             </div>
             <div class="tw-px-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'Xero'"
-                    [subLabel]="'Select a tenant from Xero to continue.'"
-                    [placeholder]="'Select tenant'"
+                    [accountingAppTitle]="'xeroOnboardingConnector.xeroAppName' | transloco"
+                    [subLabel]="'xeroOnboardingConnector.selectTenantSubLabel' | transloco"
+                    [placeholder]="'xeroOnboardingConnector.selectTenantPlaceholder' | transloco"
                     [accountingCompanyName]="xeroCompanyName"
                     [fyleOrgName]="fyleOrgName"
                     [accountingCompanyTokenExpired]="xeroTokenExpired"
@@ -24,7 +24,7 @@
                     [showDisconnect]="showDisconnectXero"
                     [accountingCompanyConnectionInProgress]="xeroConnectionInProgress"
                     [accountingCompanyList]="tenantList"
-                    [switchLinkText]="'Disconnect'"
+                    [switchLinkText]="'xeroOnboardingConnector.disconnectButton' | transloco"
                     [isDisconnectClicked]="isDisconnectClicked"
                     [appName]="appName"
                     (switchCompany)="disconnectXero()"

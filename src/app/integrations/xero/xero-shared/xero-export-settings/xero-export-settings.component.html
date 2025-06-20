@@ -19,8 +19,8 @@
                     <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
-                            [label]="'Export reimbursable expenses'"
-                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Xero.'"
+                            [label]="'xeroExportSettings.exportReimbursableExpensesLabel' | transloco"
+                            [subLabel]="'xeroExportSettings.exportReimbursableExpensesSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
@@ -28,16 +28,16 @@
                         <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
-                                [label]="'How should employees in ' + brandingConfig.brandName + ' be matched to contact in Xero?'"
-                                [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Xero contacts based on a unique parameter.'"
+                                [label]="'xeroExportSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
+                                [subLabel]="'xeroExportSettings.employeeMatchingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                 [options]="autoMapEmployeeTypes"
                                 [iconPath]="'user-two'"
-                                [placeholder]="'Select auto map employee type'"
+                                [placeholder]="'xeroExportSettings.selectAutoMapEmployeePlaceholder' | transloco"
                                 [formControllerName]="'autoMapEmployees'">
                             </app-configuration-select-field>
                             <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
                                 <h5>
-                                    Note: In case the employee records are not auto matched by the integration, you could still manually map the records from the mappings section of the integration.
+                                    {{ 'xeroExportSettings.employeeMappingNote' | transloco }}
                                 </h5>
                             </div>
                         </div>
@@ -45,9 +45,9 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'export module'"
-                                [label]="'How should the expenses be exported?'"
-                                [placeholder]="'Select export module'"
+                                [mandatoryErrorListName]="'xeroExportSettings.exportModule' | transloco"
+                                [label]="'xeroExportSettings.exportTypeLabel' | transloco"
+                                [placeholder]="'xeroExportSettings.selectExportModulePlaceholder' | transloco"
                                 [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -60,12 +60,12 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'expense state'"
-                                [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                                [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (processing) or when the payment has been settled (closed).'"
+                                [mandatoryErrorListName]="'xeroExportSettings.expenseState' | transloco"
+                                [label]="'xeroExportSettings.reimbursableExpenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                                [subLabel]="'xeroExportSettings.reimbursableExpenseStateSubLabel' | transloco"
                                 [options]="expenseStateOptions"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select export state'"
+                                [placeholder]="'xeroExportSettings.selectExportStatePlaceholder' | transloco"
                                 [formControllerName]="'expenseState'">
                             </app-configuration-select-field>
                         </div>
@@ -75,11 +75,11 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isDisabled]="true"
-                                [label]="'How should the expenses be grouped?'"
-                                [subLabel]="'Expense will be exported as single line items (expense)'"
+                                [label]="'xeroExportSettings.expenseGroupingLabel' | transloco"
+                                [subLabel]="'xeroExportSettings.reimbursableExpenseGroupingSubLabel' | transloco"
                                 [options]="reimbursableExpenseGroupByOptions"
                                 [iconPath]="'question-square-outline'"
-                                [placeholder]="'Select expense grouping'"
+                                [placeholder]="'xeroExportSettings.selectExpenseGroupingPlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportGroup'">
                             </app-configuration-select-field>
                         </div>
@@ -89,10 +89,10 @@
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'export date'"
-                                [placeholder]="'Select export date'"
-                                [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value| snakeCaseToSpaceCase | lowercase) + ' date as'"
-                                [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Xero.'"
+                                [mandatoryErrorListName]="'xeroExportSettings.exportDate' | transloco"
+                                [placeholder]="'xeroExportSettings.selectExportDatePlaceholder' | transloco"
+                                [label]="'xeroExportSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value| snakeCaseToSpaceCase | lowercase) }"
+                                [subLabel]="'xeroExportSettings.reimbursableExportDateSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
@@ -117,11 +117,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
+                            [mandatoryErrorListName]="'xeroExportSettings.exportModule' | transloco"
+                            [label]="'xeroExportSettings.exportTypeLabel' | transloco"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense export type'"
+                            [placeholder]="'xeroExportSettings.selectExpenseExportTypePlaceholder' | transloco"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
                             [showExportPreview]="true"
@@ -134,7 +134,7 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'bank account'"
+                            [mandatoryErrorListName]="'xeroExportSettings.bankAccount' | transloco"
                             [subLabel]="brandingContent.corporateCard.cccExpenseBankAccountSubLabel"
                             [label]="brandingContent.corporateCard.cccExpenseBankAccountLabel"
                             [destinationAttributes]="bankAccounts"
@@ -145,7 +145,7 @@
                             [optionLabel]="'value'"
                             [iconPath]="'list'"
                             [isAdvanceSearchEnabled]="true"
-                            [placeholder]="'Select bank account'"
+                            [placeholder]="'xeroExportSettings.selectBankAccountPlaceholder' | transloco"
                             [formControllerName]="'bankAccount'">
                         </app-configuration-select-field>
                     </div>
@@ -154,12 +154,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
+                            [mandatoryErrorListName]="'xeroExportSettings.expenseState' | transloco"
                             [label]="brandingContent.cccExpenseStateLabel"
                             [subLabel]="brandingContent.corporateCard.cccExpenseStateSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select expense state'"
+                            [placeholder]="'xeroExportSettings.selectExportStatePlaceholder' | transloco"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -168,11 +168,11 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isDisabled]="true"
-                            [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expenses can be exported as single line items.'"
+                            [label]="'xeroExportSettings.expenseGroupingLabel' | transloco"
+                            [subLabel]="'xeroExportSettings.cccExpenseGroupingSubLabel' | transloco"
                             [options]="cccExpenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select expense grouping'"
+                            [placeholder]="'xeroExportSettings.selectExpenseGroupingPlaceholder' | transloco"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
                     </div>
@@ -181,12 +181,12 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase)  + ' date as'"
-                            [subLabel]="'The selected date will reflect in the corporate card expenses exported to Xero.'"
+                            [mandatoryErrorListName]="'xeroExportSettings.exportDate' | transloco"
+                            [label]="'xeroExportSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) }"
+                            [subLabel]="'xeroExportSettings.cccExportDateSubLabel' | transloco"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase)"
+                            [placeholder]="'xeroExportSettings.selectDatePlaceholder' | transloco: { exportType: (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) }"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>
@@ -196,12 +196,12 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [showClearIcon]="true"
-                            [mandatoryErrorListName]="'split expense grouping'"
-                            [label]="'How should the split expenses be grouped?'"
-                            [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                            [mandatoryErrorListName]="'xeroExportSettings.splitExpenseGrouping' | transloco"
+                            [label]="'xeroExportSettings.splitExpenseGroupingLabel' | transloco"
+                            [subLabel]="'xeroExportSettings.splitExpenseGroupingSubLabel' | transloco"
                             [options]="splitExpenseGroupingOptions"
                             [iconPath]="'question-square-outline'"
-                            [placeholder]="'Select the split expense grouping type'"
+                            [placeholder]="'xeroExportSettings.selectSplitExpenseGroupingTypePlaceholder' | transloco"
                             [formControllerName]="'splitExpenseGrouping'">
                         </app-configuration-select-field>
                     </div>
@@ -221,9 +221,9 @@
 <app-configuration-confirmation-dialog
     (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'Change in configuration'"
+    [headerText]="'xeroExportSettings.changeInConfiguration' | transloco"
     [contextText]="warningDialogText"
-    [confirmBtnText]="'Continue'"
+    [confirmBtnText]="'xeroExportSettings.continue' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 

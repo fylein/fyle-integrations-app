@@ -3,7 +3,7 @@
         <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border">
         </div>
         <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
-            <p>Total {{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
+            <p>{{ 'qbdMappingHeaderSection.total' | transloco }}{{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
         </div>
         <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
             <p>{{mappingStats.all_attributes_count}}</p>
@@ -14,7 +14,7 @@
         <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border">
         </div>
         <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
-            <p>Unmapped {{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
+            <p>{{ 'qbdMappingHeaderSection.unmapped' | transloco }}{{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
         </div>
         <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
             <p>{{mappingStats.unmapped_attributes_count}}</p>

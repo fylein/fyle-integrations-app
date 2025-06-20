@@ -15,6 +15,7 @@ import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/dest
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { interval, take } from 'rxjs';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -65,7 +66,8 @@ export class IntacctLocationEntityComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   patchFormValue(event: any): void {
@@ -103,7 +105,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       };
     }
     return {
-      location_entity_name: 'Top Level',
+      location_entity_name: this.translocoService.translate('intacctLocationEntity.topLevel'),
       destination_id: 'top_level',
       country_name: null,
       workspace: this.workspaceId
@@ -124,7 +126,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location entity selected successfully.');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'));
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
@@ -148,9 +150,9 @@ export class IntacctLocationEntityComponent implements OnInit {
       const topLevelOption = {
         id: 1,
         attribute_type: 'LOCATION_ENTITY',
-        display_name: 'Location Entity',
+        display_name: this.translocoService.translate('intacctLocationEntity.locationEntity'),
         destination_id: 'top_level',
-        value: 'Top Level',
+        value: this.translocoService.translate('intacctLocationEntity.topLevel'),
         active: true,
         created_at: new Date(),
         updated_at: new Date(),

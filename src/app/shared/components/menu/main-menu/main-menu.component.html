@@ -4,7 +4,7 @@
     <div class="tw-flex tw-items-center">
         <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
             <span class="tw-text-14-px">
-                {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
+                {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
             </span>
         </button>
 
@@ -26,12 +26,12 @@
             </app-svg-icon>
         
             <span class="tw-text-14-px">
-                Sync
+                {{ 'mainMenu.sync' | transloco }}
             </span>
         </button>        
             <div class="tw-mr-22-px">
                 <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
-                    Refresh data
+                    {{ 'mainMenu.refreshData' | transloco }}
                 </span>
             </div>
         </span>
@@ -44,7 +44,7 @@
             appendTo="body"
             class="tw-mr-26-px tw-w-fit"
             [options]="dropdownOptions"
-            [placeholder]="isConnectionInProgress ? 'Disconnecting' : 'More'"
+            [placeholder]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
             [group]="true"
             [disabled]="isDisabled"
         >
@@ -58,7 +58,7 @@
                     <div class="tw-border-t tw-border-separator tw-w-full"></div>
                 } @else {
                     <span [class]="{
-                        'tw-text-text-danger': option.label === 'Disconnect',
+                        'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
                         'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
                     }">
                         {{option.label}}

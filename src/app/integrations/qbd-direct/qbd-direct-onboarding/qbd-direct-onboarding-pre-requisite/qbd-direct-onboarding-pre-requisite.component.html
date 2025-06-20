@@ -31,7 +31,7 @@
                                             class="tw-cursor-pointer tw-ml-4-px tw-inline-flex tw-items-center"
                                             [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-hyperlink-color'"
                                         >
-                                            Learn more
+                                            {{ 'qbdDirectOnboardingPreRequisite.learnMore' | transloco }}
                                             <app-svg-icon
                                                 [svgSource]="'open-in-new-tab'"
                                                 [width]="'16px'"
@@ -45,8 +45,8 @@
                         </div>
                         <div>
                             <app-checkbox-button
-                                [checkedText]="'Done'"
-                                [unCheckedText]="'Mark as done'"
+                                [checkedText]="'qbdDirectOnboardingPreRequisite.done' | transloco"
+                                [unCheckedText]="'qbdDirectOnboardingPreRequisite.markAsDone' | transloco"
                                 [id]="step.id"
                                 (checkBoxUpdated)="updateConnectorStatus($event)">
                             </app-checkbox-button>

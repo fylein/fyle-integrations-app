@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-        [headerText]="'Advanced settings'"
-        [contentText]="'This section contains settings to automate and customize your expense export.'"></app-configuration-step-header>
+        [headerText]="'qbdAdvancedSetting.title' | transloco"
+        [contentText]="'qbdAdvancedSetting.description' | transloco"></app-configuration-step-header>
     </div>
     <div>
         <form [formGroup]="advancedSettingsForm">
@@ -13,8 +13,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="'Schedule automatic export'"
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
+                        [label]="'qbdAdvancedSetting.scheduleExportLabel' | transloco"
+                        [subLabel]="'qbdAdvancedSetting.scheduleExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
                 </div>
@@ -23,12 +23,12 @@
                         <app-configuration-select-field
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'Frequency'"
-                        [label]="'How frequently do you want the IIF file to be generated?'"
-                        [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                        [mandatoryErrorListName]="'qbdAdvancedSetting.frequencyErrorName' | transloco"
+                        [label]="'qbdAdvancedSetting.frequencyLabel' | transloco"
+                        [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                         [options]="frequencyOption"
                         [iconPath]="'arrow-rotate'"
-                        [placeholder]="'Select frequency'"
+                        [placeholder]="'qbdAdvancedSetting.selectFrequencyPlaceholder' | transloco"
                         [formControllerName]="'frequency'"></app-configuration-select-field>
 
                         <div *ngIf="advancedSettingsForm.get('frequency')?.value">
@@ -37,9 +37,9 @@
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'Time'"
-                                    [label]="'Select the time of the day for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [mandatoryErrorListName]="'qbdAdvancedSetting.timeErrorName' | transloco"
+                                    [label]="'qbdAdvancedSetting.timeOfDayLabel' | transloco"
+                                    [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                                     [options]="weeklyOptions"
                                     [formControllerName]="'timeOfDay'"></app-configuration-select-field>
                                 </div>
@@ -47,22 +47,22 @@
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'day'"
-                                    [label]="'Select the time of the week for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [mandatoryErrorListName]="'qbdAdvancedSetting.dayErrorName' | transloco"
+                                    [label]="'qbdAdvancedSetting.dayOfWeekLabel' | transloco"
+                                    [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                                     [options]="weeklyOptions"
-                                    [placeholder]="'Select weekly frequency'"
+                                    [placeholder]="'qbdAdvancedSetting.weeklyFrequencyPlaceholder' | transloco"
                                     [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
                                 </div>
                                 <div *ngIf="advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.MONTHLY" >
                                     <app-configuration-select-field
                                     [form]="advancedSettingsForm"
                                     [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'date'"
-                                    [label]="'Select the time of the month for the IIF file to be generated'"
-                                    [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
+                                    [mandatoryErrorListName]="'qbdAdvancedSetting.dateErrorName' | transloco"
+                                    [label]="'qbdAdvancedSetting.dayOfMonthLabel' | transloco"
+                                    [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                                     [options]="frequencyIntervals"
-                                    [placeholder]="'Select monthly frequency'"
+                                    [placeholder]="'qbdAdvancedSetting.monthlyFrequencyPlaceholder' | transloco"
                                     [formControllerName]="'dayOfMonth'"></app-configuration-select-field>
                                 </div>
                             </div>
@@ -72,13 +72,13 @@
                         <app-email-multi-select-field
                             [form]="advancedSettingsForm"
                             [appName]="AppName.QBD"
-                            [label]="'Select an email address that should receive the IIF file'"
+                            [label]="'qbdAdvancedSetting.emailSelectLabel' | transloco"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'email for export'"
-                            [subLabel]="'You can select the email address from the given list, or add new one to receive the IIF file via email.'"
+                            [mandatoryErrorListName]="'qbdAdvancedSetting.emailErrorName' | transloco"
+                            [subLabel]="'qbdAdvancedSetting.emailSelectSubLabel' | transloco"
                             [options]="adminEmails"
                             [iconPath]="'list'"
-                            [placeholder]="'Select email address'"
+                            [placeholder]="'qbdAdvancedSetting.emailSelectPlaceholder' | transloco"
                             [formControllerName]="'email'">
                         </app-email-multi-select-field>
                     </div>
@@ -86,28 +86,28 @@
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-select-field
                     [form]="advancedSettingsForm"
-                    [label]="'Select the top level memo field data for QuickBooks Desktop'"
-                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>top-level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [label]="'qbdAdvancedSetting.topMemoLabel' | transloco"
+                    [subLabel]="'qbdAdvancedSetting.topMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'top level memo'"
+                    [mandatoryErrorListName]="'qbdAdvancedSetting.topMemoErrorName' | transloco"
                     [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'list'"
-                    [placeholder]="'Select top memo type'"
+                    [placeholder]="'qbdAdvancedSetting.topMemoPlaceholder' | transloco"
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
-                    [customErrorMessage]="'Please select atleast one memo type from the list'"
-                    [label]="'Set the line-item level memo field data for QuickBooks Desktop. *'"
-                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>transaction line-item level memo</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
+                    [customErrorMessage]="'qbdAdvancedSetting.memoErrorMessage' | transloco"
+                    [label]="'qbdAdvancedSetting.lineItemMemoLabel' | transloco"
+                    [subLabel]="'qbdAdvancedSetting.lineItemMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
-                    [placeholder]="'Select memo types'"
+                    [placeholder]="'qbdAdvancedSetting.memoTypesPlaceholder' | transloco"
                     [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop memo field</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{ 'qbdAdvancedSetting.memoPreviewLabel' | transloco }}</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                             <span>{{ memoPreviewText }}</span>
                         </div>

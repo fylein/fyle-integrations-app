@@ -5,6 +5,7 @@ import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/commo
 import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-configuration-skip-export',
@@ -43,51 +44,21 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [{label: 'AND', value: JoinOption.AND}, {label: 'OR', value: JoinOption.OR}];
+  joinByOptions: {label: string; value: JoinOption}[];
 
-  customOperatorOptions = [
-    {
-      label: 'Is',
-      value: CustomOperatorOption.Is
-    },
-    {
-      label: 'Is empty',
-      value: CustomOperatorOption.IsEmpty
-    },
-    {
-      label: 'Is not empty',
-      value: CustomOperatorOption.IsNotEmpty
-    }
-  ];
+  customOperatorOptions: {label: string; value: CustomOperatorOption}[];
 
-  customSelectOperatorOptions = [
-    {
-      label: 'is',
-      value: 'iexact'
-    },
-    {
-      label: 'is not',
-      value: 'not_in'
-    }
-  ];
+  customSelectOperatorOptions: {label: string; value: string}[];
 
-  customCheckBoxValueOptions: { label: string; value: string; }[] = [
-    {
-      label: 'Yes',
-      value: 'true'
-    },
-    {
-      label: 'No',
-      value: 'false'
-    }
-  ];
+  customCheckBoxValueOptions: { label: string; value: string; }[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
   constructor(
-    private helper: HelperService
+    private helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
@@ -257,27 +228,27 @@ export class ConfigurationSkipExportComponent implements OnInit {
     ) {
       operatorList.push({
         value: 'iexact',
-        label: 'is'
+        label: this.translocoService.translate('configurationSkipExport.operatorIexact')
       });
     } else if (conditionField === 'spent_at') {
       operatorList.push({
         value: 'lt',
-        label: 'is before'
+        label: this.translocoService.translate('configurationSkipExport.operatorIsBefore')
       });
       operatorList.push({
         value: 'lte',
-        label: 'is on or before'
+        label: this.translocoService.translate('configurationSkipExport.operatorIsOnOrBefore')
       });
     }
     if (conditionField === 'report_title') {
       operatorList.push({
         value: 'icontains',
-        label: 'contains'
+        label: this.translocoService.translate('configurationSkipExport.operatorContains')
       });
     } else if (conditionField === 'category') {
       operatorList.push({
         value: 'not_in',
-        label: 'is not'
+        label: this.translocoService.translate('configurationSkipExport.operatorNotIn')
       });
     }
     return operatorList;
@@ -287,7 +258,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (type === 'BOOLEAN') {
       const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
         {
-          label: 'Is',
+          label: this.translocoService.translate('configurationSkipExport.operatorIs'),
           value: 'iexact'
         }
       ];
@@ -311,6 +282,47 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
+  private setupComponentOptions(): void {
+    this.joinByOptions = [{label: this.translocoService.translate('configurationSkipExport.joinByAnd'), value: JoinOption.AND}, {label: this.translocoService.translate('configurationSkipExport.joinByOr'), value: JoinOption.OR}];
+
+    this.customOperatorOptions = [
+      {
+        label: this.translocoService.translate('configurationSkipExport.operatorIs'),
+        value: CustomOperatorOption.Is
+      },
+      {
+        label: this.translocoService.translate('configurationSkipExport.operatorIsEmpty'),
+        value: CustomOperatorOption.IsEmpty
+      },
+      {
+        label: this.translocoService.translate('configurationSkipExport.operatorIsNotEmpty'),
+        value: CustomOperatorOption.IsNotEmpty
+      }
+    ];
+
+    this.customSelectOperatorOptions = [
+      {
+        label: this.translocoService.translate('configurationSkipExport.operatorIexact'),
+        value: 'iexact'
+      },
+      {
+        label: this.translocoService.translate('configurationSkipExport.operatorNotIn'),
+        value: 'not_in'
+      }
+    ];
+
+    this.customCheckBoxValueOptions = [
+      {
+        label: this.translocoService.translate('configurationSkipExport.optionYes'),
+        value: 'true'
+      },
+      {
+        label: this.translocoService.translate('configurationSkipExport.optionNo'),
+        value: 'false'
+      }
+    ];
+  }
+
   setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     this.showAddButton = response.count !== 2 ? true : false;
     this.showAdditionalCondition = response.count === 2 ? true : false;
@@ -322,6 +334,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupComponentOptions();
     this.setupSkipExportForm(this.expenseFilter, []);
   }
 }

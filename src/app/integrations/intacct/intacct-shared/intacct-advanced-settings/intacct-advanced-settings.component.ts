@@ -22,6 +22,7 @@ import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-setti
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -98,20 +99,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   defaultTopMemoFields: string[];
 
-  paymentSyncOptions: AdvancedSettingFormOption[] = [
-    {
-      label: 'None',
-      value: null
-    },
-    {
-      label: 'Export ' + brandingConfig.brandName + ' ACH payments to Sage Intacct',
-      value: PaymentSyncDirection.FYLE_TO_INTACCT
-    },
-    {
-      label: 'Import Sage Intacct payments into ' + brandingConfig.brandName + '',
-      value: PaymentSyncDirection.INTACCT_TO_FYLE
-    }
-  ];
+  paymentSyncOptions: AdvancedSettingFormOption[];
 
   readonly brandingConfig = brandingConfig;
 
@@ -133,7 +121,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private exportSettingService : SiExportSettingService
+    private exportSettingService : SiExportSettingService,
+    private translocoService: TranslocoService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -151,7 +140,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   refreshDimensions(isRefresh: boolean) {
     this.mappingService.refreshSageIntacctDimensions().subscribe();
     this.mappingService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.syncingDataDimensions'));
   }
 
   getEmployeeField() {
@@ -339,6 +328,20 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
           isReimbursableEnabled ? this.reimbursableExportGroup : undefined,
           isCCCEnabled ? this.cccExportGroup : undefined
         );
+        this.paymentSyncOptions = [
+          {
+            label: this.translocoService.translate('intacctAdvancedSettings.paymentSyncNone'),
+            value: null
+          },
+          {
+            label: this.translocoService.translate('intacctAdvancedSettings.exportACHPayments', { brandName: brandingConfig.brandName }),
+            value: PaymentSyncDirection.FYLE_TO_INTACCT
+          },
+          {
+            label: this.translocoService.translate('intacctAdvancedSettings.importPayments', { brandName: brandingConfig.brandName }),
+            value: PaymentSyncDirection.INTACCT_TO_FYLE
+          }
+        ];
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
@@ -359,7 +362,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.advancedSettingsService.deleteExpenseFilter(1).subscribe();
         this.advancedSettingsService.deleteExpenseFilter(2).subscribe();
       }
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
@@ -380,7 +383,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsError'));
       });
   }
 

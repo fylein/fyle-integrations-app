@@ -22,6 +22,7 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-netsuite-advanced-settings',
@@ -111,11 +112,12 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
-    private exportSettingsService: NetsuiteExportSettingsService
+    private exportSettingsService: NetsuiteExportSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   isOptional(): string {
-    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? ' \(optional\)' : '';
+    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? this.translocoService.translate('netsuiteAdvancedSettings.optional') : '';
   }
 
   invalidSkipExportForm($event: boolean) {
@@ -177,7 +179,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.COMPLETE);
@@ -185,7 +187,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteAdvancedSettings.saveError'));
     });
   }
 

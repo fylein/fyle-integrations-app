@@ -5,11 +5,12 @@ import { CardModule } from 'primeng/card';
 import { AppName, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-download-file',
   standalone: true,
-  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule],
+  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule],
   templateUrl: './qbd-direct-download-file.component.html',
   styleUrl: './qbd-direct-download-file.component.scss'
 })

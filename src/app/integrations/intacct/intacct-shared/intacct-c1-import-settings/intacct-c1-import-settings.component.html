@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'Import settings'"
-            [contentText]="'Choose the required import fields from Sage Intacct to Expense Management.'"
+        <app-configuration-step-header [headerText]="'intacctC1ImportSettings.header' | transloco"
+            [contentText]="'intacctC1ImportSettings.contentText' | transloco"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -49,15 +49,15 @@
     <app-configuration-confirmation-dialog
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [isWarningVisible]="showDependentFieldWarning"
-        [headerText]="'Warning'"
-        [contextText]="'You have imported cost codes' + (importSettings?.dependent_field_settings?.cost_type_field_name ? ' And cost types' : '') + ' from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
-        [confirmBtnText]="'Continue'">
+        [headerText]="'intacctC1ImportSettings.warningHeader' | transloco"
+        [contextText]="(importSettings?.dependent_field_settings?.cost_type_field_name ? 'intacctC1ImportSettings.warningContextWithCostTypes' : 'intacctC1ImportSettings.warningContext') | transloco: { brandName: brandingConfig.brandName }"
+        [confirmBtnText]="'intacctC1ImportSettings.continue' | transloco">
     </app-configuration-confirmation-dialog>
 </div>
 <div *ngIf="isDialogVisible">
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="showPreviewDialog(false)"
-        [header]="'Preview'">
+        [header]="'intacctC1ImportSettings.preview' | transloco">
     </app-preview-dialog>
 </div>

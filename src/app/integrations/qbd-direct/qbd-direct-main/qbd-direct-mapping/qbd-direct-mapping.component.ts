@@ -9,11 +9,12 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-mapping',
   standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule],
+  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
   templateUrl: './qbd-direct-mapping.component.html',
   styleUrl: './qbd-direct-mapping.component.scss'
 })
@@ -21,10 +22,7 @@ export class QbdDirectMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/qbd_direct/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/qbd_direct/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -36,7 +34,8 @@ export class QbdDirectMappingComponent implements OnInit {
 
   constructor(
     private mappingService: MappingService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   private setupPage(): void {
@@ -61,6 +60,10 @@ export class QbdDirectMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mappingPages = [
+      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee'},
+      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category'}
+    ];
     this.setupPage();
   }
 

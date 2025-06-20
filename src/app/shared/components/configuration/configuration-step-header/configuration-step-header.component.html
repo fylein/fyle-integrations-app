@@ -21,19 +21,19 @@
 
     <div>
       <button *ngIf="showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed"
-        [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
+        [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }"
         (click)="refreshDimensions()" tooltipPosition="bottom"
         class="tw-py-8-px tw-px-12-px tw-h-32-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
         <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'"
           [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
         <span class="tw-text-14-px">
-          Sync
+          {{ 'configurationStepHeader.syncButtonText' | transloco }}
         </span>
       </button>
       <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" tooltipPosition="bottom"
-        [pTooltip]="'If you are unable to find a required value, click the sync button to instantly retrieve the latest values from ' + appName">
+        [pTooltip]="'configurationStepHeader.refreshDataTooltip' | transloco: { appName: appName }">
         <span (click)="refreshDimensions()" class="p-button primary-outline">
-          Refresh data
+          {{ 'configurationStepHeader.refreshDataButtonText' | transloco }}
         </span>
       </div>
     </div>
