@@ -1,16 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-
-const WORDS_TO_PRESERVE_CASE = [
-  'QuickBooks Online',
-  'QuickBooks Desktop'
-];
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Pipe({
   name: 'sentenceCase'
 })
 export class SentenceCasePipe implements PipeTransform {
+  private WORDS_TO_PRESERVE_CASE: string[];
+
+  constructor(private translocoService: TranslocoService) {
+    this.WORDS_TO_PRESERVE_CASE = [
+      this.translocoService.translate('pipes.sentenceCase.quickbooksOnline'),
+      this.translocoService.translate('pipes.sentenceCase.quickbooksDesktop')
+    ];
+  }
   transform(value: string): string {
     // Ensure the input value is not empty
     if (!value) {
@@ -26,7 +29,7 @@ export class SentenceCasePipe implements PipeTransform {
     let result = naiveSentenceCasedValue;
 
     // For all strings in the WORDS_TO_PRESERVE_CASE array, match the case exactly
-    for (const word of WORDS_TO_PRESERVE_CASE) {
+    for (const word of this.WORDS_TO_PRESERVE_CASE) {
       const pattern = new RegExp(word, 'gi');
       result = result.replace(pattern, word);
     }
