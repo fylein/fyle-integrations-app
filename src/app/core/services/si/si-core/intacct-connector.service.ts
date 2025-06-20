@@ -93,6 +93,22 @@ export class IntacctConnectorService {
     return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
   }
 
+  getIntacctTokenHealthStatus(shouldShowTokenExpiredMessage?: boolean): Observable<boolean> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.checkIntacctTokenHealth(workspaceId).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError((error) => {
+        if (error.error.message.includes !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage Intacct connection expired, please connect again', 6000);
+        }
+        return of(false);
+      })
+    );
+  }
+
   postLocationEntityMapping(locationEntityMappingPayload: LocationEntityMapping): Observable<LocationEntityMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
