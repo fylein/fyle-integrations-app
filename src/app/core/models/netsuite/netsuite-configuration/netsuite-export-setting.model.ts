@@ -218,7 +218,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           case 'nameInJournalEntry':
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
           case 'splitExpenseGrouping':
-            return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE;
+            return brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
+              form.controls.creditCardExportType &&
+              form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE;
           default:
             return false;
         }
@@ -229,6 +231,13 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
           creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
         };
+
+
+        const isSplitExpenseGroupingRequired = brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping;
+        const creditCardChargeRequiredFields = ['creditCardAccount', 'defaultCreditCardVendor'];
+        if (isSplitExpenseGroupingRequired) {
+          creditCardChargeRequiredFields.push('splitExpenseGrouping');
+        }
 
         const exportModuleRule: ExportModuleRule[] = [
           {
@@ -242,7 +251,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           {
             formController: 'creditCardExportType',
             requiredValue: {
-              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor', 'splitExpenseGrouping'],
+              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: creditCardChargeRequiredFields,
               [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['accountsPayable', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry'],
               [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['bankAccount', 'creditCardAccount']
