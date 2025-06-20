@@ -101,7 +101,7 @@ export class IntacctConnectorService {
         return true;
       }),
       catchError((error) => {
-        if (error.error.message.includes !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
+        if (error.error.message !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
           this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage Intacct connection expired, please connect again', 6000);
         }
         return of(false);
