@@ -37,4 +37,9 @@ export class Sage300ConnectorService {
     return this.apiService.post(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
   }
 
+  @Cacheable()
+  checkSage300TokenHealth(workspaceId: string): Observable<{}> {
+    return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
+  }
+
 }
