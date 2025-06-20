@@ -3,6 +3,7 @@ import { BusinessCentralOnboardingStepperMap } from 'src/app/core/models/busines
 import { BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from '../../common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -18,48 +19,50 @@ export class BusinessCentralOnboardingService {
     [BusinessCentralOnboardingState.COMPLETE]: 5
   };
 
-  private readonly onboardingSteps: OnboardingStepper[] = [
-    {
-      active: false,
-      completed: false,
-      step: 'Connect to Dynamics \n 365 Business Central',
-      icon: 'link-vertical-medium',
-      route: '/integrations/business_central/onboarding/connector',
-      styleClasses: ['step-name-connector--text tw-pl-12-px tw-whitespace-pre-line']
-    },
-    {
-      active: false,
-      completed: false,
-      step: 'Export settings',
-      icon: 'arrow-tail-up-medium',
-      route: '/integrations/business_central/onboarding/export_settings',
-      styleClasses: ['step-name-export--text']
-    },
-    {
-      active: false,
-      completed: false,
-      step: 'Import settings',
-      icon: 'arrow-tail-down-medium',
-      route: '/integrations/business_central/onboarding/import_settings',
-      styleClasses: ['step-name-import--text']
-    },
-    {
-      active: false,
-      completed: false,
-      step: 'Advanced settings',
-      icon: 'gear-medium',
-      route: '/integrations/business_central/onboarding/advanced_settings',
-      styleClasses: ['step-name-advanced--text']
-    }
-  ];
+  private onboardingSteps: OnboardingStepper[];
 
   private onboardingState: BusinessCentralOnboardingState;
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   getOnboardingSteps(currentStep: string): OnboardingStepper[] {
+    this.onboardingSteps = [
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('services.businessCentralOnboarding.connectToBusinessCentral'),
+        icon: 'link-vertical-medium',
+        route: '/integrations/business_central/onboarding/connector',
+        styleClasses: ['step-name-connector--text tw-pl-12-px tw-whitespace-pre-line']
+      },
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('services.businessCentralOnboarding.exportSettings'),
+        icon: 'arrow-tail-up-medium',
+        route: '/integrations/business_central/onboarding/export_settings',
+        styleClasses: ['step-name-export--text']
+      },
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('services.businessCentralOnboarding.importSettings'),
+        icon: 'arrow-tail-down-medium',
+        route: '/integrations/business_central/onboarding/import_settings',
+        styleClasses: ['step-name-import--text']
+      },
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('services.businessCentralOnboarding.advancedSettings'),
+        icon: 'gear-medium',
+        route: '/integrations/business_central/onboarding/advanced_settings',
+        styleClasses: ['step-name-advanced--text']
+      }
+    ];
     this.onboardingState = this.workspaceService.getOnboardingState();
     this.onboardingSteps.forEach(step => {
       if (step.step.toLowerCase() === currentStep.toLowerCase()) {

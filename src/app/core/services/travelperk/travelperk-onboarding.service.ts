@@ -3,6 +3,7 @@ import { TravelPerkOnboardingState } from '../../models/enum/enum.model';
 import { OnboardingStepper } from '../../models/misc/onboarding-stepper.model';
 import { WorkspaceService } from '../common/workspace.service';
 import { TravelPerkOnboardingStepperMap } from '../../models/travelperk/travelperk-configuration/travelperk-onboarding.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,19 @@ export class TravelperkOnboardingService {
     [TravelPerkOnboardingState.COMPLETE]: 4
   };
 
-  private readonly onboardingSteps: OnboardingStepper[] = [
+  private readonly onboardingSteps: OnboardingStepper[];
+
+  private onboardingState: TravelPerkOnboardingState;
+
+  constructor(
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
+  ) {
+    this.onboardingSteps = [
     {
       active: false,
       completed: false,
-      step: 'Connect to TravelPerk',
+      step: this.translocoService.translate('services.travelperkOnboarding.connectToTravelperk'),
       icon: 'link-vertical-medium',
       route: '/integrations/travelperk/onboarding/landing',
       styleClasses: ['step-name-connector--text']
@@ -28,7 +37,7 @@ export class TravelperkOnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Payment profile settings',
+      step: this.translocoService.translate('services.travelperkOnboarding.paymentProfileSettings'),
       icon: 'arrow-tail-down-medium',
       route: '/integrations/travelperk/onboarding/payment_profile_settings',
       styleClasses: ['step-name-import--text !tw-w-100-px tw-text-pretty tw-text-center']
@@ -36,18 +45,13 @@ export class TravelperkOnboardingService {
     {
       active: false,
       completed: false,
-      step: 'Advanced settings',
+      step: this.translocoService.translate('services.travelperkOnboarding.advancedSettings'),
       icon: 'gear-medium',
       route: '/integrations/travelperk/onboarding/advanced_settings',
       styleClasses: ['step-name-advanced--text']
     }
   ];
-
-  private onboardingState: TravelPerkOnboardingState;
-
-  constructor(
-    private workspaceService: WorkspaceService
-  ) { }
+}
 
   getOnboardingSteps(currentStep: string): OnboardingStepper[] {
     this.onboardingState = this.workspaceService.getOnboardingState();
