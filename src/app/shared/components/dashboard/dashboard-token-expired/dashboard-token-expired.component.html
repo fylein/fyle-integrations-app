@@ -47,7 +47,7 @@
     </div>
   }
 
-  @if (appName === AppName.NETSUITE || appName === AppName.INTACCT) {
+  @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
         <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect integration</button>
       </div>
