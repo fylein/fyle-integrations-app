@@ -2110,5 +2110,14 @@
     "qbdDirectHelper": {
       "syncDataDimensionsToast": "Syncing data dimensions from Quickbooks Desktop"
     }
+  },
+  "pipes": {
+    "search": {
+      "noResultFound": "No result found"
+    },
+    "sentenceCase": {
+      "quickbooksOnline": "QuickBooks Online",
+      "quickbooksDesktop": "QuickBooks Desktop"
+    }
   }
 }
