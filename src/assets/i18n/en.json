@@ -690,7 +690,7 @@
     "paymentSyncSubLabel": "When expense is marked paid in {{brandName}} the transaction in QuickBooks Online will be automatically be updated to paid and vice versa.",
     "paymentSyncPlaceholder": "Select how payments should be synced for reimbursable expenses",
     "paymentAccountError": "payment account",
-    "billPaymentAccountSubLabel": "Once the payment for the reimbursable expense is complete in {{brandName}}{{subLabel}}QuickBooks Online.",
+    "billPaymentAccountSubLabel": "Once the payment for the reimbursable expense is complete in {{brandName}}{{subLabel}} QuickBooks Online.",
     "selectPaymentAccountPlaceholder": "Select a payment account",
     "customization": "Customization",
     "itemLevelDescription": "Item level description",
@@ -960,7 +960,6 @@
     "advancedSettings": "Advanced settings"
   },
   "businessCentralDashboard": {
-    "destinationFieldAccount": "ACCOUNT",
     "zeroStateHeaderText": "Looks like you have",
     "zeroStateSubHeaderText": "0 expenses to export right now"
   },
@@ -1620,15 +1619,9 @@
     "completed": "Completed",
     "skipped": "Skipped"
   },
-  "qbdDirectDashboard": {
-    "account": "ACCOUNT"
-  },
   "qbdDirectMapping": {
     "employee": "Employee",
     "category": "Category"
-  },
-  "qbdDirectShared": {
-    "worksMessage": "qbd-direct-shared works!"
   },
   "qbdDirectDataSync": {
     "stepNumber": "3",
@@ -1642,7 +1635,7 @@
     "markAsDone": "Mark as done",
     "installWebConnectorLabel": "Install QuickBooks Web Connector",
     "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.",
-    "keepCompanyFileOpenLabel": "Keep your Quickbooks company file open",
+    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
     "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
     "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
     "loginAsAdminCaption": "Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode."

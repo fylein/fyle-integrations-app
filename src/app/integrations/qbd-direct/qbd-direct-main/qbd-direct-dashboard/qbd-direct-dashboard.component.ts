@@ -167,7 +167,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
       }
       this.destinationFieldMap = {
         EMPLOYEE: responses[4].employee_field_mapping,
-        CATEGORY: this.translocoService.translate('qbdDirectDashboard.account')
+        CATEGORY: 'ACCOUNT'
       };
 
       this.isLoading = false;

@@ -138,7 +138,7 @@ export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
 
       this.destinationFieldMap = {
         'EMPLOYEE': responses[4].employee_field_mapping,
-        'CATEGORY': this.translocoService.translate('businessCentralDashboard.destinationFieldAccount')
+        'CATEGORY': 'ACCOUNT'
       };
 
       this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
