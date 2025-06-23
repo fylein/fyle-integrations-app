@@ -14,7 +14,7 @@ export class SentenceCasePipe implements PipeTransform {
       this.translocoService.translate('pipes.sentenceCase.quickbooksDesktop')
     ];
   }
-  
+
   transform(value: string): string {
     // Ensure the input value is not empty
     if (!value) {
