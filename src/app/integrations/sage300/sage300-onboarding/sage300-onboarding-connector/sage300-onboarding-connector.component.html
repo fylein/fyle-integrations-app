@@ -1,6 +1,6 @@
 <div class="tw-pb-48-px">
     <div>
-       <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+       <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isSage300CredentialsValid"></app-onboarding-steppers>
     </div>
     <div>
         <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
@@ -15,17 +15,7 @@
             </div>
             <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
                 <div class="tw-flex tw-justify-center tw-items-center">
-                    <form [formGroup]="connectSage300Form">
-                        <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Please enter a valid identifier.'" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'Identifier'" [placeholder]="'Enter identifier'"></app-configuration-text-field>
-                        </div>
-                        <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Please enter valid user ID.'" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'User ID'" [placeholder]="'Enter user ID'"></app-configuration-text-field>
-                        </div>
-                        <div>
-                            <app-configuration-text-field [customErrorMessage]="'Incorrect password. Please enter correct password'" [form]="connectSage300Form" [formControllerName]="'userPassword'" [isFieldMandatory]="true" [label]="'User password'" [placeholder]="'Enter user password'" [type]="'password'"></app-configuration-text-field>
-                        </div>
-                    </form>
+                    <app-sage300-connection-form [connectSage300Form]="connectSage300Form"></app-sage300-connection-form>
                 </div>
             </div>
             <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSage300Form.valid"></app-configuration-step-footer>

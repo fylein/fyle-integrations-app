@@ -10,6 +10,7 @@ import { Sage300ConnectorModel, Sage300ConnectorHelper } from 'src/app/core/mode
 import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { WorkspaceService } from '../../common/workspace.service';
 
 const sage300CredentialCache = new Subject<void>();
 
@@ -28,7 +29,8 @@ export class Sage300ConnectorService {
     private storageService: StorageService,
     helper: HelperService,
     private mappingsService: Sage300MappingService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private workspaceService: WorkspaceService
   ) {
     helper.setBaseApiURL();
   }
@@ -51,6 +53,22 @@ export class Sage300ConnectorService {
   @Cacheable()
   checkSage300TokenHealth(workspaceId: string): Observable<{}> {
     return this.apiService.get(`/workspaces/${workspaceId}/token_health/`, {});
+  }
+
+  getSage300TokenHealthStatus(shouldShowTokenExpiredMessage?: boolean): Observable<boolean> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.checkSage300TokenHealth(workspaceId).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError((error) => {
+        if (error.error.message !== "Sage 300 credentials not found" && shouldShowTokenExpiredMessage) {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage 300 connection expired, please connect again', 6000);
+        }
+        return of(false);
+      })
+    );
   }
 
   getSage300FormGroup(): Observable<Sage300ConnectorModel> {

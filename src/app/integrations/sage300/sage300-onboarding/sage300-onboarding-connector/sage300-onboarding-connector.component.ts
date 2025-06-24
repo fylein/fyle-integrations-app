@@ -18,6 +18,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  isSage300CredentialsValid: boolean = false;
+
   redirectLink = brandingKbArticles.topLevelArticles.SAGE300;
 
   onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Sage 300 CRE');
@@ -71,6 +73,11 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.connectSage300Form = sage300SetupForm;
       this.isSage300Connected = isSage300Connected;
       this.isLoading = false;
+    });
+
+    this.connectorService.getSage300TokenHealthStatus(true)
+    .subscribe(isSage300CredentialsValid => {
+      this.isSage300CredentialsValid = isSage300CredentialsValid;
     });
   }
 
