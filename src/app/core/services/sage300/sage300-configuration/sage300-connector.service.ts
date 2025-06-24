@@ -63,28 +63,22 @@ export class Sage300ConnectorService {
         return true;
       }),
       catchError((error) => {
-        if (error.error.message !== "Sage 300 credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage 300 connection expired, please connect again', 6000);
+        if (error.error.message !== "Sage300 credentials not found" && shouldShowTokenExpiredMessage) {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage300 connection expired, please connect again', 6000);
         }
         return of(false);
       })
     );
   }
 
-  getSage300FormGroup(): Observable<Sage300ConnectorModel> {
+  getSage300FormGroup(): Observable<FormGroup> {
     return this.getSage300Credential().pipe(
       map((sage300Credential: Sage300Credential) => {
         this.sage300Credential = sage300Credential;
-        return {
-          sage300SetupForm: Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential),
-          isSage300Connected: true
-        };
+        return Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential);
       }),
       catchError(() => {
-        return of({
-          sage300SetupForm: Sage300ConnectorHelper.mapAPIResponseToFormGroup(null),
-          isSage300Connected: false
-        });
+        return of(Sage300ConnectorHelper.mapAPIResponseToFormGroup(null));
       })
     );
   }

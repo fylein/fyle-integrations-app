@@ -156,7 +156,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.SAGE300);
 
-      this.sage300Connector.getSage300FormGroup().subscribe(({ sage300SetupForm }) => {
+      this.sage300Connector.getSage300FormGroup().subscribe((sage300SetupForm) => {
         this.integrationSetupForm = sage300SetupForm;
       });
     }

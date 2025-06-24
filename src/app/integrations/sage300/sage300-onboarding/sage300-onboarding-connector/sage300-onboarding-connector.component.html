@@ -18,7 +18,7 @@
                     <app-sage300-connection-form [connectSage300Form]="connectSage300Form"></app-sage300-connection-form>
                 </div>
             </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSage300Form.valid"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="connectSage300()" [isButtonDisabled]="!connectSage300Form.valid"></app-configuration-step-footer>
         </div>
     </div>
 </div>

@@ -32,8 +32,6 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  isSage300Connected: boolean = false;
-
   readonly brandingStyle = brandingStyle;
 
   constructor(
@@ -45,33 +43,21 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private toastService: IntegrationsToastService
   ) { }
 
-  private saveConnection() {
+  connectSage300() {
     this.isLoading = true;
-    this.connectorService.connectSage300(this.connectSage300Form).subscribe({
-      next: (response) => {
+    this.connectorService.connectSage300(this.connectSage300Form).subscribe(({sage300SetupForm, isSage300Connected}) => {
+        this.connectSage300Form = sage300SetupForm;
         this.isLoading = false;
+        if (isSage300Connected === true){
         this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
         this.router.navigate([this.onboardingSteps[1].route]);
-      },
-      error: () => {
-        this.isLoading = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
-      }
-    });
-  }
-
-  save() {
-    if (this.isSage300Connected) {
-      this.router.navigate([this.onboardingSteps[1].route]);
-    } else {
-      this.saveConnection();
-    }
+        }
+      });
   }
 
   private setupPage(): void {
-    this.connectorService.getSage300FormGroup().subscribe(({ sage300SetupForm, isSage300Connected }) => {
+    this.connectorService.getSage300FormGroup().subscribe((sage300SetupForm) => {
       this.connectSage300Form = sage300SetupForm;
-      this.isSage300Connected = isSage300Connected;
       this.isLoading = false;
     });
 
