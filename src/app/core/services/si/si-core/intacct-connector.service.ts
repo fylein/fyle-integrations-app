@@ -61,10 +61,10 @@ export class IntacctConnectorService {
               return { intacctSetupForm: IntacctConnectorModel.mapAPIResponseToFormGroup(response), isIntacctConnected: true };
             })
           );
-        }
+        } else {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage Intacct successfully.', 6000);
           return of({ intacctSetupForm: IntacctConnectorModel.mapAPIResponseToFormGroup(response), isIntacctConnected: true });
-
+        }
       }),
       catchError(() => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.', 6000);
