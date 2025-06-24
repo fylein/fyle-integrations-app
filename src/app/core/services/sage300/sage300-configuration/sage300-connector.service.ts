@@ -91,7 +91,7 @@ export class Sage300ConnectorService {
             })
           );
         } else {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage Intacct successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage 300 successfully.', 6000);
           return of({ sage300SetupForm: Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential), isSage300Connected: true });
         }
       }),
