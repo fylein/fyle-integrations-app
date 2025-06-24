@@ -1,0 +1,26 @@
+:host ::ng-deep .error-box {
+    @apply tw-border-alert-toast #{!important};
+}
+
+:host ::ng-deep .normal-box {
+    @apply tw-border-input-default-border #{!important};
+}
+
+input.custom-focus:focus {
+  outline: none;
+  @apply tw-border-input-focused-border #{!important};
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.incorrect-credential {
+  @apply tw-text-text-danger tw-text-12-px;
+}
+
+::placeholder {
+  @apply tw-text-input-default-placeholder-text tw-text-14-px;
+}

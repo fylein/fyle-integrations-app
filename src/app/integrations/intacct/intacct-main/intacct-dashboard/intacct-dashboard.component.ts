@@ -229,11 +229,12 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setupPage();
 
     if (this.router.url.includes("/token_expired/")){
       this.isIntacctTokenNotValid = true;
     }
+
+    this.setupPage();
   }
 
   ngOnDestroy(): void {
