@@ -89,7 +89,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private mappingService: MappingService,
     private mapping: BusinessCentralMappingService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
   }
 
   disconnectBusinessCentral(): void {

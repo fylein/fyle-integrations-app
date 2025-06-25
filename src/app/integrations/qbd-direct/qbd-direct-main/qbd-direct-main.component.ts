@@ -28,7 +28,7 @@ export class QbdDirectMainComponent {
   constructor(
     private qbdDirectHelperService: QbdDirectHelperService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('qbdDirectMain.dashboard'), routerLink: '/integrations/qbd_direct/main/dashboard'},
       {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbd_direct/main/export_log'},

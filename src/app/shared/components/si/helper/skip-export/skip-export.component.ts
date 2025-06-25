@@ -64,7 +64,7 @@ export class SkipExportComponent implements OnInit {
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.customOperatorOptions = [
       {
         label: this.translocoService.translate('skipExport.isOperator'),
@@ -79,7 +79,7 @@ export class SkipExportComponent implements OnInit {
         value: CustomOperatorOption.IsNotEmpty
       }
     ];
-  
+
     this.customSelectOperatorOptions = [
       {
         label: this.translocoService.translate('skipExport.isOperatorSelect'),

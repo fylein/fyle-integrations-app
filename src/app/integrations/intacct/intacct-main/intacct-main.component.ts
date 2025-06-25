@@ -26,7 +26,7 @@ export class MainComponent {
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService
-  ) { 
+  ) {
     this.modules = [
       {label: this.translocoService.translate('main.dashboardLabel'), routerLink: '/integrations/intacct/main/dashboard'},
       {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/intacct/main/export_log'},

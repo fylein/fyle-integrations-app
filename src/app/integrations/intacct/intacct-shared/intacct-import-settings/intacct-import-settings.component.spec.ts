@@ -22,6 +22,7 @@ import { IntacctSharedModule } from '../intacct-shared.module';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctImportSettingsComponent', () => {
   let component: IntacctImportSettingsComponent;
@@ -36,6 +37,7 @@ describe('IntacctImportSettingsComponent', () => {
   let siWorkspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let router: Router;
   let routerUrlSpy: jasmine.Spy<(this: Router) => string>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const siImportSettingServiceSpy = jasmine.createSpyObj('SiImportSettingService', ['getImportSettings', 'postImportSettings', 'getImportCodeFieldConfig']);
@@ -46,6 +48,12 @@ describe('IntacctImportSettingsComponent', () => {
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
     const siWorkspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en')
+    });
 
     await TestBed.configureTestingModule({
     declarations: [IntacctImportSettingsComponent],
@@ -60,6 +68,7 @@ describe('IntacctImportSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: StorageService, useValue: storageServiceSpy },
         { provide: SiWorkspaceService, useValue: siWorkspaceServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
@@ -76,6 +85,7 @@ describe('IntacctImportSettingsComponent', () => {
     storageService = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
     siWorkspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     router = TestBed.inject(Router);
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     spyOn(router, 'navigate');
     routerUrlSpy = spyOnProperty(router, 'url').and.returnValue('/onboarding');
@@ -214,6 +224,7 @@ describe('IntacctImportSettingsComponent', () => {
       siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);
       routerUrlSpy.and.returnValue('/onboarding');
       siImportSettingService.postImportSettings.and.returnValue(of(importSettings));
+      translocoService.translate.and.returnValue('Import settings saved successfully');
 
       component.ngOnInit();
       tick();
@@ -238,7 +249,7 @@ describe('IntacctImportSettingsComponent', () => {
       siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
       routerUrlSpy.and.returnValue('/settings');
       siImportSettingService.postImportSettings.and.returnValue(of(importSettings));
-
+      translocoService.translate.and.returnValue('Import settings saved successfully');
       component.ngOnInit();
       tick();
 
@@ -261,7 +272,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     it('should handle error when saving import settings', fakeAsync(() => {
       siImportSettingService.postImportSettings.and.returnValue(throwError(() => new Error()));
-
+      translocoService.translate.and.returnValue('Error saving import settings, please try again later');
       component.ngOnInit();
       tick();
 
@@ -280,7 +291,7 @@ describe('IntacctImportSettingsComponent', () => {
       const mockStartTime = new Date();
       component['sessionStartTime'] = mockStartTime;
       siImportSettingService.postImportSettings.and.returnValue(of(importSettings));
-
+      translocoService.translate.and.returnValue('Import settings saved successfully');
       component.ngOnInit();
       tick();
 
@@ -427,6 +438,7 @@ describe('IntacctImportSettingsComponent', () => {
     });
 
     it('refreshDimensions should call refresh services and show toast', fakeAsync(() => {
+      translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
       tick();
 
       component.refreshDimensions(true);

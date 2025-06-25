@@ -12,6 +12,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdFieldMappingComponent } from './qbd-field-mapping.component';
 import { errorResponse, QBDFieldMappingResponse, QBDFieldMappingResponse2 } from './qbd-field-mapping.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdFieldMappingComponent', () => {
   let component: QbdFieldMappingComponent;
@@ -22,6 +23,7 @@ describe('QbdFieldMappingComponent', () => {
   let formbuilder: FormBuilder;
   let qbdFieldMappingService: QbdFieldMappingService;
   let qbdWorkspaceService: QbdWorkspaceService;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -40,6 +42,14 @@ describe('QbdFieldMappingComponent', () => {
       displayToastMessage: () => undefined
     };
 
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
+
     await TestBed.configureTestingModule({
     declarations: [QbdFieldMappingComponent],
     imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
@@ -47,10 +57,14 @@ describe('QbdFieldMappingComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi())]
+        { provide: IntegrationsToastService, useValue: service3 },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
     .compileComponents();
 
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     fixture = TestBed.createComponent(QbdFieldMappingComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
