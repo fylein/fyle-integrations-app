@@ -274,7 +274,7 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     content = new SnakeCaseToSpaceCasePipe().transform(content);
-    return new SentenceCasePipe().transform(content);
+    return new SentenceCasePipe(this.translocoService).transform(content);
   }
 
   /**

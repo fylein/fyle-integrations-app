@@ -655,7 +655,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         }
 
         let label = new SnakeCaseToSpaceCasePipe().transform(this.intacctCategoryDestination);
-        label = new SentenceCasePipe().transform(label);
+        label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
 

@@ -56,7 +56,7 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe().transform(memo));
+    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
   }
 
 //   DragStart(memo: string) {

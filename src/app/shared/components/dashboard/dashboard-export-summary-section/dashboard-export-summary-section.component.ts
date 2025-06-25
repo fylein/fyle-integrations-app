@@ -8,6 +8,7 @@ import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard-export-summary-section',
@@ -55,7 +56,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) { }
 
   handleDialogClose(){
@@ -84,7 +86,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     };
     this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt || lastUpdatedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName, this.translocoService)
       );
       this.setFormattedAccountingExport(accountingExports);
     });
@@ -93,7 +95,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   private getAccountingExports(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null) {
     this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, null, lastExportedAt, null, this.appName).subscribe(accountingExportResponse => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
       );
       this.setFormattedAccountingExport(accountingExports);
     });

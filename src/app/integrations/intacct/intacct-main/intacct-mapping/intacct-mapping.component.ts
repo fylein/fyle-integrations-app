@@ -73,7 +73,7 @@ export class IntacctMappingComponent implements OnInit {
               if (displayName) {
                 label = displayName;
               } else {
-                label = new SentenceCasePipe().transform(mappingPage);
+                label = new SentenceCasePipe(this.translocoService).transform(mappingPage);
               }
 
               this.mappingPages.push({
