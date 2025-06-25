@@ -40,7 +40,7 @@ export class QboMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: new SentenceCasePipe().transform(mappingPage),
+              label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/qbo/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

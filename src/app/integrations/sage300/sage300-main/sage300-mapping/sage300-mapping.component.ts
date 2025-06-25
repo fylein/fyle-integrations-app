@@ -44,7 +44,7 @@ export class Sage300MappingComponent implements OnInit {
         response.results.forEach((item) => {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY' && item.source_field !== 'PROJECT') {
             this.mappingPages.push({
-              label: new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
               routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

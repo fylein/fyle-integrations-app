@@ -110,6 +110,14 @@ describe('IntacctMappingComponent', () => {
   });
 
   it('should handle different branding configurations', () => {
+    translocoService.translate.and.callFake(<T = string>(key: string): T => {
+      const translations: Record<string, string> = {
+        'pipes.sentenceCase.quickbooksOnline': 'QuickBooks Online',
+        'pipes.sentenceCase.quickbooksDesktop': 'QuickBooks Desktop'
+      };
+
+      return translations[key] as T;
+    });
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsWithCustomFieldResponse as MappingSettingResponse));
     brandingConfig.brandId = 'co';
 

@@ -11,6 +11,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { mockExpenseGroupResponse, mockPageSize, mockUser } from 'src/app/integrations/qbo/qbo.fixture';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboCompleteExportLogComponent', () => {
   let component: QboCompleteExportLogComponent;
@@ -19,13 +20,14 @@ describe('QboCompleteExportLogComponent', () => {
   let paginatorService: jasmine.SpyObj<PaginatorService>;
   let windowService: jasmine.SpyObj<WindowService>;
   let userService: jasmine.SpyObj<UserService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['storePageSize', 'getPageSize']);
     const windowServiceSpy = jasmine.createSpyObj('WindowService', ['openInNewTab']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
-
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
     await TestBed.configureTestingModule({
       declarations: [ QboCompleteExportLogComponent ],
       imports: [ ReactiveFormsModule ],
@@ -34,7 +36,8 @@ describe('QboCompleteExportLogComponent', () => {
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
         { provide: WindowService, useValue: windowServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -42,6 +45,7 @@ describe('QboCompleteExportLogComponent', () => {
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
     windowService = TestBed.inject(WindowService) as jasmine.SpyObj<WindowService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   beforeEach(() => {

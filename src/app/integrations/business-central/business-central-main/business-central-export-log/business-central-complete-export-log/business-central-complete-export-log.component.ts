@@ -14,6 +14,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-complete-export-log',
@@ -63,7 +64,8 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
     debounceTime(1000)
@@ -108,7 +110,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
 
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
