@@ -231,8 +231,8 @@
                         <div *ngIf="exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [destinationAttributes]="cccAccounts"
-                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                            [destinationAttributes]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? bankAccounts: cccAccounts"
+                            [destinationOptionKey]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT : NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
