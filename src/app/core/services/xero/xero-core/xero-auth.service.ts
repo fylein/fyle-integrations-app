@@ -10,6 +10,7 @@ import { IntegrationsToastService } from '../../common/integrations-toast.servic
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,8 @@ export class XeroAuthService implements OnDestroy {
     private workspaceService: WorkspaceService,
     private xeroConnectorService: XeroConnectorService,
     private toastService: IntegrationsToastService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   loginWithRefreshToken(refreshToken: string): Observable<Token> {
@@ -54,8 +56,8 @@ export class XeroAuthService implements OnDestroy {
       this.xeroConnectionInProgressSubject.next(false);
       this.checkProgressAndRedirect();
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
-      if (errorMessage === 'Please choose the correct Xero account') {
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('services.xeroAuth.failedToConnectTenant');
+      if (errorMessage === this.translocoService.translate('services.xeroAuth.chooseCorrectAccount')) {
         this.isIntegrationConnectedSubject.next(false);
         this.xeroConnectionInProgressSubject.next(false);
         this.isIncorrectXeroConnectedDialogVisibleSubject.next(true);
