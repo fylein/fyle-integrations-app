@@ -11,6 +11,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 
 @Component({
   selector: 'app-intacct',
@@ -36,12 +37,13 @@ export class IntacctComponent implements OnInit {
     private windowService: WindowService,
     private workspaceService: SiWorkspaceService,
     private siAuthService: SiAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private intacctConnector: IntacctConnectorService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
 
-  private navigate(): void {
+  private navigate(isIntacctTokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
       const onboardingStateComponentMap = {
@@ -52,8 +54,16 @@ export class IntacctComponent implements OnInit {
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
         [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
       };
-      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+
+      this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private routeBasedOnTokenStatus(): void {
+    this.intacctConnector.getIntacctTokenHealthStatus()
+    .subscribe(isIntacctCredentialsValid => {
+      this.navigate(isIntacctCredentialsValid);
+    });
   }
 
   setupWorkspace(workspace:IntacctWorkspace) {
@@ -63,7 +73,7 @@ export class IntacctComponent implements OnInit {
     this.workspaceService.syncFyleDimensions().subscribe();
     this.workspaceService.syncIntacctDimensions().subscribe();
     this.isLoading = false;
-    this.navigate();
+    this.routeBasedOnTokenStatus();
   }
 
   private getOrCreateWorkspace(): void {
