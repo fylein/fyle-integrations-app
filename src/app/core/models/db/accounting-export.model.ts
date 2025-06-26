@@ -6,6 +6,7 @@ import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
 import { ExpenseGroup } from "./expense-group.model";
 import { SentenceCasePipe } from "src/app/shared/pipes/sentence-case.pipe";
+import { TranslocoService } from "@jsverse/transloco";
 
 export interface AccountingExportCount {
     count: number;
@@ -125,12 +126,12 @@ export class AccountingExportModel {
     return referenceType;
   }
 
-  static formatExportType(exportType: string): string {
+  static formatExportType(exportType: string, translocoService: TranslocoService): string {
     if (exportType.startsWith('CREATING_')) {
       exportType = exportType.substring('CREATING_'.length);
     }
     exportType = new SnakeCaseToSpaceCasePipe().transform(exportType);
-    return new SentenceCasePipe().transform(exportType);
+    return new SentenceCasePipe(translocoService).transform(exportType);
   }
 
   static getFyleReferenceNumber(referenceType: string, expense: Expense): string {
@@ -156,7 +157,7 @@ export class AccountingExportModel {
     return `${url}?org_id=${org_id}`;
   }
 
-  static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string): AccountingExportList {
+  static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string, translocoService: TranslocoService): AccountingExportList {
     const referenceType = AccountingExportModel.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport.expenses[0]);
     return {
@@ -164,7 +165,7 @@ export class AccountingExportModel {
       employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],
       expenseType: accountingExport.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
       referenceNumber: referenceNumber,
-      exportedAs: this.formatExportType(accountingExport.type),
+      exportedAs: this.formatExportType(accountingExport.type, translocoService),
       fyleUrl: this.generateFyleUrl(accountingExport.expenses[0], referenceType, org_id),
       integrationUrl: accountingExport.export_url,
       expenses: accountingExport.expenses
@@ -250,14 +251,14 @@ export class AccountingExportModel {
     return [exportRedirection, exportType];
   }
 
-  static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+  static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
     const words: string[] = expenseGroup.response_logs?.type.split(/(?=[A-Z])/);
-    const exportType = new SentenceCasePipe().transform(words?.join(' '));
+    const exportType = new SentenceCasePipe(translocoService).transform(words?.join(' '));
 
     return [expenseGroup.export_url, exportType];
   }
 
-  static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup): [string, string] {
+  static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
     } else if (appName === AppName.INTACCT) {
@@ -265,17 +266,17 @@ export class AccountingExportModel {
     } else if (appName === AppName.XERO) {
       return this.constructXeroExportUrlAndType(expenseGroup);
     } else if (appName === AppName.NETSUITE) {
-      return this.constructNetsuiteExportUrlAndType(expenseGroup);
+      return this.constructNetsuiteExportUrlAndType(expenseGroup, translocoService);
     }
 
     return ['', ''];
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName): AccountingExportList {
+  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName, translocoService: TranslocoService): AccountingExportList {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
-      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);
+      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup, translocoService);
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],

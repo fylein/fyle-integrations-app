@@ -18,10 +18,10 @@
             <div class="tw-text-14-px tw-font-400 tw-pb-14-px tw-text-text-secondary" [innerHTML]="contextText">
             </div>
             <div *ngIf="appName!==AppName.QBD_DIRECT" class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-text-secondary">
-                Are you sure you want to continue?
+                {{ 'configurationConfirmationDialog.areYouSureToContinue' | transloco }}
             </div>
             <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px tw-cursor-pointer" (click)="redirect()">
-                <p class="tw-text-12-px tw-font-500 tw-text-text-primary">Common QuickBooks Web Connector errors and solutions</p>
+                <p class="tw-text-12-px tw-font-500 tw-text-text-primary">{{ 'configurationConfirmationDialog.qbdErrorsAndSolutions' | transloco }}</p>
                 <div class="tw-flex tw-items-center tw-justify-start">
                     <div class="tw-pr-10-px">
                         <img [src]="brandIcon" width="12px" height="12px">
@@ -37,7 +37,7 @@
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
             <div class="tw-mr-16-px">
                 <button *ngIf="showSecondaryCTA" type="button" class="p-button outline-sm" (click)="acceptWarning(false)">
-                    Cancel
+                    {{ 'configurationConfirmationDialog.cancel' | transloco }}
                 </button>
             </div>
             <button type="button" class="p-button-raised" pButton (click)="acceptWarning(true)">

@@ -15,6 +15,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { MessageService } from 'primeng/api';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -27,14 +28,17 @@ describe('QboComponent', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let windowServiceMock: Partial<WindowService>;
   let router: Router;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
+
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const qboHelperSpy = jasmine.createSpyObj('QboHelperService', ['syncFyleDimensions', 'syncQBODimensions']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
     const userSpy = jasmine.createSpyObj('IntegrationsUserService', ['getUserProfile']);
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspace', 'postWorkspace']);
     const authSpy = jasmine.createSpyObj('AuthService', ['updateUserTokens']);
+    const translocoSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     windowServiceMock = {
       get nativeWindow() {
@@ -66,7 +70,8 @@ describe('QboComponent', () => {
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        MessageService
+        MessageService,
+        { provide: TranslocoService, useValue: translocoSpy }
     ]
 }).compileComponents();
 
@@ -76,6 +81,7 @@ describe('QboComponent', () => {
     userServiceSpy = TestBed.inject(IntegrationsUserService) as jasmine.SpyObj<IntegrationsUserService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
 

@@ -18,6 +18,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-advanced-settings',
@@ -77,7 +78,8 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private orgService: OrgService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   navigateToPreviousStep(): void {
@@ -96,7 +98,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.COMPLETE);
@@ -104,7 +106,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsError'));
     });
   }
 
@@ -121,11 +123,11 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     const today = new Date(time);
 
     const previewValues: { [key: string]: string } = {
-      employee_email: 'john.doe@acme.com',
-      category: 'Meals and Entertainment',
-      purpose: 'Client Meeting',
-      merchant: 'Pizza Hut',
-      report_number: 'C/2021/12/R/1',
+      employee_email: this.translocoService.translate('xeroAdvancedSettings.previewEmployeeEmail'),
+      category: this.translocoService.translate('xeroAdvancedSettings.previewCategory'),
+      purpose: this.translocoService.translate('xeroAdvancedSettings.previewPurpose'),
+      merchant: this.translocoService.translate('xeroAdvancedSettings.previewMerchant'),
+      report_number: this.translocoService.translate('xeroAdvancedSettings.previewReportNumber'),
       spent_on: today.toLocaleDateString(),
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };

@@ -18,6 +18,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-import-settings',
@@ -88,20 +89,7 @@ export class QboImportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.importSetting;
 
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
-    "ACCOUNT": [
-      {
-        label: 'Import codes + names',
-        value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
-      },
-      {
-        label: 'Import names only',
-        value: false,
-        subLabel: 'Example: Meals & Entertainment'
-      }
-    ]
-  };
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
 
   readonly brandingStyle = brandingStyle;
 
@@ -114,7 +102,8 @@ export class QboImportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    public helper: HelperService
+    public helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   closeModel() {
@@ -153,7 +142,7 @@ export class QboImportSettingsComponent implements OnInit {
     const importSettingPayload = QBOImportSettingModel.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboImportSettings.importSettingsSuccess'));
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.ADVANCED_CONFIGURATION);
@@ -161,7 +150,7 @@ export class QboImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboImportSettings.importSettingsError'));
     });
   }
 
@@ -264,6 +253,20 @@ export class QboImportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.importCodeSelectorOptions = {
+      "ACCOUNT": [
+        {
+          label: this.translocoService.translate('qboImportSettings.importCodesAndNames'),
+          value: true,
+          subLabel: this.translocoService.translate('qboImportSettings.importCodesAndNamesSubLabel')
+        },
+        {
+          label: this.translocoService.translate('qboImportSettings.importNamesOnly'),
+          value: false,
+          subLabel: this.translocoService.translate('qboImportSettings.importNamesOnlySubLabel')
+        }
+      ]
+    };
     forkJoin([
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleFields('v1'),
@@ -286,7 +289,7 @@ export class QboImportSettingsComponent implements OnInit {
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);

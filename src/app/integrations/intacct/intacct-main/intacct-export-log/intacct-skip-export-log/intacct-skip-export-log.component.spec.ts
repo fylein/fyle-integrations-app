@@ -10,6 +10,7 @@ import { mockSkipExportLogResponse, mockPaginator } from '../../../intacct.fixtu
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctSkipExportLogComponent', () => {
   let component: IntacctSkipExportLogComponent;
@@ -18,12 +19,20 @@ describe('IntacctSkipExportLogComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let paginatorService: jasmine.SpyObj<PaginatorService>;
   let userService: jasmine.SpyObj<UserService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getSkippedExpenses']);
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['onDateFilter']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       imports: [ ReactiveFormsModule, SharedModule ],
@@ -33,7 +42,8 @@ describe('IntacctSkipExportLogComponent', () => {
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -41,6 +51,7 @@ describe('IntacctSkipExportLogComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   beforeEach(() => {

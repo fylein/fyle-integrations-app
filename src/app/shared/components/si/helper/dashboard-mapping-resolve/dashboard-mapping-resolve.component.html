@@ -3,7 +3,7 @@
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
             <tr>
-                <th>Category</th>
+                <th>{{ 'dashboardMappingResolve.categoryHeader' | transloco }}</th>
                 <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase}}</th>
             </tr>
         </ng-template>
@@ -14,7 +14,7 @@
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="getCategoryMappingOptions()"
                     optionLabel="value"
-                    placeholder="Select an option"
+                    [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
                     (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
@@ -29,8 +29,8 @@
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
             <tr>
-            <th>Employee email</th>
-            <th>Sage Intacct {{getEmployeeAttributeType() | lowercase}}</th>
+            <th>{{ 'dashboardMappingResolve.employeeEmailHeader' | transloco }}</th>
+            <th>{{ 'dashboardMappingResolve.sageIntacctHeader' | transloco }}{{getEmployeeAttributeType() | lowercase}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error>
@@ -40,7 +40,7 @@
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="fyleEmployeeOptions"
                     optionLabel="value"
-                    placeholder="Select an option"
+                    [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
                     (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">

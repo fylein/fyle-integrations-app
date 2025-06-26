@@ -13,6 +13,7 @@ import { mockCreditCardAccounts, mockGeneralSettings, mockImportSettings, mockMa
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboBaseMappingComponent', () => {
   let component: QboBaseMappingComponent;
@@ -22,6 +23,7 @@ describe('QboBaseMappingComponent', () => {
   let mockToastService: jasmine.SpyObj<IntegrationsToastService>;
   let mockWorkspaceService: jasmine.SpyObj<WorkspaceService>;
   let mockImportSettingsService: jasmine.SpyObj<QboImportSettingsService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     mockActivatedRoute = {
@@ -30,6 +32,7 @@ describe('QboBaseMappingComponent', () => {
         params: { source_field: 'EMPLOYEE' }
       }
     };
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     mockMappingService = jasmine.createSpyObj('MappingService', ['triggerAutoMapEmployees', 'getMappingSettings', 'getPaginatedDestinationAttributes']);
     mockToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
@@ -43,12 +46,14 @@ describe('QboBaseMappingComponent', () => {
         { provide: MappingService, useValue: mockMappingService },
         { provide: IntegrationsToastService, useValue: mockToastService },
         { provide: WorkspaceService, useValue: mockWorkspaceService },
-        { provide: QboImportSettingsService, useValue: mockImportSettingsService }
+        { provide: QboImportSettingsService, useValue: mockImportSettingsService },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboBaseMappingComponent);
     component = fixture.componentInstance;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   it('should create', () => {
@@ -57,7 +62,7 @@ describe('QboBaseMappingComponent', () => {
 
   it('should trigger auto map employees successfully', () => {
     mockMappingService.triggerAutoMapEmployees.and.returnValue(of(null));
-
+    translocoService.translate.and.returnValue('Auto mapping of employees may take few minutes');
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();
@@ -66,7 +71,7 @@ describe('QboBaseMappingComponent', () => {
 
   it('should handle error when triggering auto map employees', () => {
     mockMappingService.triggerAutoMapEmployees.and.returnValue(throwError('Error'));
-
+    translocoService.translate.and.returnValue('Something went wrong, please try again');
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();

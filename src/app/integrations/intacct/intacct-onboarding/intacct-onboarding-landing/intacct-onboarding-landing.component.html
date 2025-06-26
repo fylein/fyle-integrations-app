@@ -1,8 +1,8 @@
 <div>
     <div>
-        <app-landing-page-header [iconPath]="'assets/logos/sage-intacct-logo.svg'" [appName]="appName" [appDescription]="brandingContent.intacct.landing.contentText" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'intacct/onboarding/connector'"></app-landing-page-header>
+        <app-landing-page-header [iconPath]="'assets/logos/sage-intacct-logo.svg'" [appName]="appName" [appDescription]="brandingContent.intacct.landing.contentText" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'intacctOnboardingLanding.buttonText' | transloco" [postConnectionRoute]="'intacct/onboarding/connector'"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="brandingContent.landing.guideHeaderText" [headerText]="' A quick guide to help you set up your Sage Intacct integration.'" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coIntacctLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId + '-sage-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
+        <app-landing-page-body [headlineText]="brandingContent.landing.guideHeaderText" [headerText]="'intacctOnboardingLanding.headerText' | transloco" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coIntacctLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId + '-sage-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
     </div>
 </div>

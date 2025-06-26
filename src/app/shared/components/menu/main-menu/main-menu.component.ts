@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -60,7 +61,8 @@ export class MainMenuComponent implements OnInit {
     private integrationsService: IntegrationsService,
     private eventsService: EventsService,
     private iframeOriginStorageService: IframeOriginStorageService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) {
     this.showMoreDropdown =
       this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
@@ -103,10 +105,10 @@ export class MainMenuComponent implements OnInit {
   private addDropdownOptions(integrations: Integration[]) {
     const options: MainMenuDropdownGroup[] = [
       {
-        label: 'Integrations',
+        label: this.translocoService.translate('mainMenu.integrations'),
         items: [
           {
-            label: 'Add more integrations',
+            label: this.translocoService.translate('mainMenu.addMoreIntegrations'),
             handler: () => {
               this.router.navigate(['/integrations/landing_v2']);
             }
@@ -145,7 +147,7 @@ export class MainMenuComponent implements OnInit {
           disabled: true
         },
         {
-          label: 'Disconnect',
+          label: this.translocoService.translate('mainMenu.disconnect'),
           handler: () => {
             this.disconnect();
           }
@@ -164,7 +166,7 @@ export class MainMenuComponent implements OnInit {
     }
 
     if (!this.toolTipText) {
-      this.toolTipText = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
+      this.toolTipText = this.translocoService.translate('mainMenu.syncTooltip', { appName: this.appName, brandName: brandingConfig.brandName });
     }
 
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){

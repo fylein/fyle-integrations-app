@@ -17,6 +17,7 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
 import { NetsuiteImportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-import-settings.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-netsuite-import-settings',
@@ -107,7 +108,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteConnectorService: NetsuiteConnectorService,
     private workspaceService: WorkspaceService,
     private router: Router,
-    private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService
+    private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   addCustomSegment() {
@@ -124,7 +126,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     const importSettingPayload = NetsuiteImportSettingModel.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.ADVANCED_CONFIGURATION);
@@ -132,7 +134,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteImportSettings.importSettingsError'));
     });
   }
 
@@ -223,29 +225,29 @@ export class NetsuiteImportSettingsComponent implements OnInit {
           this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
         }
         this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Custom field added successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.customFieldAddSuccess'));
         this.customSegmentForm.reset();
       });
     }, () => {
       this.isCustomSegmentTrigged = false;
       this.isCustomSegmentSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to add custom field');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteImportSettings.customFieldAddError'));
       this.customSegmentForm.reset();
     });
   }
 
   getCategoryLabel(): string {
     if (this.isExpenseCategoryEnabled) {
-      return brandingConfig.brandId !== 'co' ? 'Import the expense categories' : 'Import expense categories';
+      return brandingConfig.brandId !== 'co' ? this.translocoService.translate('netsuiteImportSettings.importTheExpenseCategories') : this.translocoService.translate('netsuiteImportSettings.importExpenseCategories');
     }
-    return  brandingConfig.brandId !== 'co' ? 'Import the accounts' : 'Import accounts';
+    return  brandingConfig.brandId !== 'co' ? this.translocoService.translate('netsuiteImportSettings.importTheAccounts') : this.translocoService.translate('netsuiteImportSettings.importAccounts');
   }
 
   getCategorySubLabel(): string {
     if (this.isExpenseCategoryEnabled) {
-      return 'Imported expense categories';
+      return this.translocoService.translate('netsuiteImportSettings.importedExpenseCategories');
     }
-    return 'Imported accounts';
+    return this.translocoService.translate('netsuiteImportSettings.importedAccounts');
   }
 
 
@@ -298,7 +300,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.taxCodes = destinationAttribute.results;
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('netsuiteImportSettings.createCustomField'), is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
@@ -65,7 +66,8 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -110,7 +112,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.NETSUITE)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.NETSUITE, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];

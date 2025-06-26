@@ -9,11 +9,12 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-mapping',
   standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule],
+  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
   templateUrl: './qbd-direct-mapping.component.html',
   styleUrl: './qbd-direct-mapping.component.scss'
 })
@@ -21,10 +22,7 @@ export class QbdDirectMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/qbd_direct/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/qbd_direct/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -36,7 +34,8 @@ export class QbdDirectMappingComponent implements OnInit {
 
   constructor(
     private mappingService: MappingService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   private setupPage(): void {
@@ -46,7 +45,7 @@ export class QbdDirectMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: new SentenceCasePipe().transform(mappingPage),
+              label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
@@ -61,6 +60,10 @@ export class QbdDirectMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mappingPages = [
+      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee'},
+      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category'}
+    ];
     this.setupPage();
   }
 

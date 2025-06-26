@@ -9,6 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-export-setting',
@@ -35,62 +36,17 @@ export class QbdExportSettingComponent implements OnInit {
 
   redirectLink = brandingKbArticles.topLevelArticles.QBD;
 
-  expenseGroupingFieldOptions: QBDExportSettingFormOption[] = [
-    {
-      label: 'Report',
-      value: QBDExpenseGroupedBy.REPORT
-    },
-    {
-      label: 'Expense',
-      value: QBDExpenseGroupedBy.EXPENSE
-    }
-  ];
+  expenseGroupingFieldOptions: QBDExportSettingFormOption[];
 
-  reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
-    {
-      label: 'Spend date',
-      value: QBDExportDateType.SPENT_AT
-    },
-    {
-      label: 'Date of export',
-      value: QBDExportDateType.LAST_SPENT_AT
-    }
-  ];
+  reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[];
 
   cccExpenseGroupingDateOptions: QBDExportSettingFormOption[];
 
-  creditCardExportTypes: QBDExportSettingFormOption[] = [
-    {
-      label: 'Credit card purchase',
-      value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
-    },
-    {
-      label: 'Journal entry',
-      value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-    }
-  ];
+  creditCardExportTypes: QBDExportSettingFormOption[];
 
-  reimbursableExportTypes: QBDExportSettingFormOption[] = [
-    {
-      label: 'Bill',
-      value: QBDReimbursableExpensesObject.BILL
-    },
-    {
-      label: 'Journal entry',
-      value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
-    }
-  ];
+  reimbursableExportTypes: QBDExportSettingFormOption[];
 
-  cccEntityNameOptions: QBDExportSettingFormOption[] = [
-    {
-      label: 'Employee',
-      value: QBDEntity.EMPLOYEE
-    },
-    {
-      label: 'Vendor',
-      value: QBDEntity.VENDOR
-    }
-  ];
+  cccEntityNameOptions: QBDExportSettingFormOption[];
 
   exportSettings: QBDExportSettingGet;
 
@@ -109,7 +65,8 @@ export class QbdExportSettingComponent implements OnInit {
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private mappingService: QbdMappingService
+    private mappingService: QbdMappingService,
+    private translocoService: TranslocoService
   ) { }
 
   navigateToMapping() {
@@ -138,17 +95,17 @@ export class QbdExportSettingComponent implements OnInit {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
       this.cccExpenseGroupingDateOptions = [
         {
-          label: 'Card transaction post date',
+          label: this.translocoService.translate('qbdExportSetting.cardTransactionPostDate'),
           value: QBDExportDateType.POSTED_AT
         },
         {
-          label: 'Spend date',
+          label: this.translocoService.translate('qbdExportSetting.spendDate'),
           value: QBDExportDateType.SPENT_AT
         }
       ];
     } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
-        label: 'Card transaction post date',
+        label: this.translocoService.translate('qbdExportSetting.cardTransactionPostDate'),
         value: QBDExportDateType.POSTED_AT
       }]);
     } else {
@@ -161,8 +118,9 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   accountName(): string {
-    const name = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'accounts payable' : 'bank';
-    this.customMessage = 'Please enter ' + name + ' name';
+    const nameKey = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.accountsPayable' : 'qbdExportSetting.bank';
+    const name = this.translocoService.translate(nameKey);
+    this.customMessage = this.translocoService.translate('qbdExportSetting.enterNameError', { name: name });
     return name;
   }
 
@@ -264,22 +222,22 @@ export class QbdExportSettingComponent implements OnInit {
   private setUpExpenseStates(): void {
     this.cccExpenseStateOptions = [
       {
-        label: 'Approved',
+        label: this.translocoService.translate('qbdExportSetting.approved'),
         value: CCCExpenseState.APPROVED
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('qbdExportSetting.closed'),
         value: CCCExpenseState.PAID
       }
     ];
 
     this.expenseStateOptions = [
       {
-        label: 'Processing',
+        label: this.translocoService.translate('qbdExportSetting.processing'),
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('qbdExportSetting.closed'),
         value: ExpenseState.PAID
       }
     ];
@@ -355,7 +313,7 @@ export class QbdExportSettingComponent implements OnInit {
     const exportSettingPayload = QBDExportSettingModel.constructPayload(this.exportSettingsForm);
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdExportSetting.exportSettingsSuccess'));
       this.mappingService.refreshMappingPages();
       this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.EXPORT_SETTING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
@@ -380,7 +338,7 @@ export class QbdExportSettingComponent implements OnInit {
 
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdExportSetting.exportSettingsError'));
       });
   }
 
@@ -392,6 +350,61 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.expenseGroupingFieldOptions = [
+      {
+        label: this.translocoService.translate('qbdExportSetting.report'),
+        value: QBDExpenseGroupedBy.REPORT
+      },
+      {
+        label: this.translocoService.translate('qbdExportSetting.expense'),
+        value: QBDExpenseGroupedBy.EXPENSE
+      }
+    ];
+
+    this.reimbursableExpenseGroupingDateOptions = [
+      {
+        label: this.translocoService.translate('qbdExportSetting.spendDate'),
+        value: QBDExportDateType.SPENT_AT
+      },
+      {
+        label: this.translocoService.translate('qbdExportSetting.dateOfExport'),
+        value: QBDExportDateType.LAST_SPENT_AT
+      }
+    ];
+
+    this.creditCardExportTypes = [
+      {
+        label: this.translocoService.translate('qbdExportSetting.creditCardPurchase'),
+        value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      },
+      {
+        label: this.translocoService.translate('qbdExportSetting.journalEntry'),
+        value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+      }
+    ];
+
+    this.reimbursableExportTypes = [
+      {
+        label: this.translocoService.translate('qbdExportSetting.bill'),
+        value: QBDReimbursableExpensesObject.BILL
+      },
+      {
+        label: this.translocoService.translate('qbdExportSetting.journalEntry'),
+        value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
+      }
+    ];
+
+    this.cccEntityNameOptions = [
+      {
+        label: this.translocoService.translate('qbdExportSetting.employee'),
+        value: QBDEntity.EMPLOYEE
+      },
+      {
+        label: this.translocoService.translate('qbdExportSetting.vendor'),
+        value: QBDEntity.VENDOR
+      }
+    ];
+
     this.getSettingsAndSetupForm();
   }
 

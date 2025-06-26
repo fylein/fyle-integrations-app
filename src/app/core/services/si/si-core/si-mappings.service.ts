@@ -13,6 +13,7 @@ import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/intacc
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/intacct/db/expense-attribute.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ApiService } from '../../common/api.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class SiMappingsService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: SiWorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   refreshSageIntacctDimensions(dimensionsToSync: string[] = []) {
@@ -141,7 +143,7 @@ export class SiMappingsService {
       destination_type: sourceType
     };
 
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
+    if (alphabetsFilter && alphabetsFilter !== this.translocoService.translate('services.siMappings.all')) {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 
@@ -165,7 +167,7 @@ export class SiMappingsService {
       destination_type: sourceType
     };
 
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
+    if (alphabetsFilter && alphabetsFilter !== this.translocoService.translate('services.siMappings.all')) {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 
@@ -200,7 +202,7 @@ export class SiMappingsService {
       destination_type: destinationType
     };
 
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
+    if (alphabetsFilter && alphabetsFilter !== this.translocoService.translate('services.siMappings.all')) {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 

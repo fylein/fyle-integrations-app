@@ -8,6 +8,7 @@ import { CommonResourcesService } from 'src/app/core/services/common/common-reso
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-mapping',
@@ -18,10 +19,7 @@ export class IntacctMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -36,7 +34,8 @@ export class IntacctMappingComponent implements OnInit {
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
-    private commonResourcesService: CommonResourcesService
+    private commonResourcesService: CommonResourcesService,
+    private translocoService: TranslocoService
   ) { }
 
   private setupPages(): void {
@@ -74,7 +73,7 @@ export class IntacctMappingComponent implements OnInit {
               if (displayName) {
                 label = displayName;
               } else {
-                label = new SentenceCasePipe().transform(mappingPage);
+                label = new SentenceCasePipe(this.translocoService).transform(mappingPage);
               }
 
               this.mappingPages.push({
@@ -92,6 +91,10 @@ export class IntacctMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mappingPages = [
+      {label: this.translocoService.translate('intacctMapping.employeeLabel'), routerLink: '/integrations/intacct/main/mapping/employee'},
+      {label: this.translocoService.translate('intacctMapping.categoryLabel'), routerLink: '/integrations/intacct/main/mapping/category'}
+    ];
     this.activeModule = this.mappingPages[0];
     this.setupPages();
   }

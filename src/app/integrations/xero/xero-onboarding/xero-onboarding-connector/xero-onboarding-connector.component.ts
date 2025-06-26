@@ -22,6 +22,7 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-onboarding-connector',
@@ -94,16 +95,16 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private cloneSettingService: CloneSettingService,
     private xeroHelperService: XeroHelperService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translocoService: TranslocoService
   ) { }
 
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
       if (response.is_available && brandingFeatureConfig.featureFlags.cloneSettings) {
-        this.warningHeaderText = 'Your settings are pre-filled';
-        this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
-        <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`;
-        this.primaryButtonText = 'Continue';
+        this.warningHeaderText = this.translocoService.translate('xeroOnboardingConnector.warningHeader');
+        this.warningContextText = this.translocoService.translate('xeroOnboardingConnector.warningContext', { workspaceName: response.workspace_name });
+        this.primaryButtonText = this.translocoService.translate('xeroOnboardingConnector.continueButton');
         this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
         this.isWarningDialogVisible = true;
         this.isContinueDisabled = false;
@@ -149,7 +150,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isDisconnectClicked = false;
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero tenant. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingConnector.failedToConnect');
       if (errorMessage === 'Please choose the correct Xero Tenten') {
         this.isXeroConnected = false;
         this.xeroConnectionInProgress = false;

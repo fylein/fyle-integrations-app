@@ -10,6 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-onboarding-connector',
@@ -43,7 +44,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
     private toastService: IntegrationsToastService,
-    private mappingService: Sage300MappingService
+    private mappingService: Sage300MappingService,
+    private translocoService: TranslocoService
   ) { }
 
   private saveConnection() {
@@ -60,13 +62,13 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     }).subscribe((response) => {
       this.mappingService.importSage300Attributes(true).subscribe(() => {
         this.isLoading = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300OnboardingConnector.connectionSuccessToast'));
         this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
         this.router.navigate([this.onboardingSteps[1].route]);
       });
     }, () => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300OnboardingConnector.connectionErrorToast'));
     });
   }
 

@@ -6,9 +6,9 @@
         {{subLabel}}
         <div *ngIf="showPreview" class="tw-inline-flex">
             <a class="tw-text-hyperlink-color tw-pr-4-px tw-w-fit tw-cursor-pointer" (click)="previewClick()">
-                Click here
+                {{ 'configurationStepSubHeader.clickHere' | transloco }}
             </a>
-            to preview.
+            {{ 'configurationStepSubHeader.toPreview' | transloco }}
         </div>
     </h5>
 </div>

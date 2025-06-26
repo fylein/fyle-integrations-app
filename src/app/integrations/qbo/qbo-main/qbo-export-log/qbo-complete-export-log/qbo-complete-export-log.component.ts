@@ -14,6 +14,7 @@ import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-complete-export-log',
@@ -67,7 +68,8 @@ export class QboCompleteExportLogComponent implements OnInit {
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -112,7 +114,7 @@ export class QboCompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.QBO)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.QBO, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];

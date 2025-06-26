@@ -6,8 +6,8 @@
       <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
           <div>
             <app-configuration-step-header 
-              [headerText]="'Connect to NetSuite'"
-              [contentText]="'Connect to your NetSuite account to establish a connection between ' + brandingConfig.brandName + ' and NetSuite.'"
+              [headerText]="'netsuiteSubsidiaryMapping.headerText' | transloco"
+              [contentText]="'netsuiteSubsidiaryMapping.contentText' | transloco:{ brandName: brandingConfig.brandName }"
               [redirectLink]="redirectLink">
             </app-configuration-step-header>
           </div>
@@ -15,8 +15,8 @@
               <app-configuration-connector
                   [accountingAppTitle]="appName"
                   [appName]="appName"
-                  [subLabel]="'Select a subsidiary from NetSuite to proceed further'"
-                  [placeholder]="'Select subsidiary'"
+                  [subLabel]="'netsuiteSubsidiaryMapping.subLabel' | transloco"
+                  [placeholder]="'netsuiteSubsidiaryMapping.placeholder' | transloco"
                   [accountingCompanyName]="netsuiteSubsdiaryName"
                   [accountingCompanyList] = "netsuiteSubsidiaryOptions"
                   [fyleOrgName]="fyleOrgName"
