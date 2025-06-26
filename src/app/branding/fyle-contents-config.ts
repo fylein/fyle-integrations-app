@@ -27,7 +27,7 @@ export const fyleContents = {
                 contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' need to be exported to QuickBooks Desktop.',
                 reimbursable: {
                     reimbursableExpenseLabel: 'Export reimbursable expenses',
-                    reimbursableExpenseSubLabel: 'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Quickbooks Desktop.',
+                    reimbursableExpenseSubLabel: 'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.',
                     reimbursableExpenseTypeLabel: 'How should the expenses be exported?',
                     reimbursableExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     reimbursableExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
@@ -45,7 +45,7 @@ export const fyleContents = {
                 },
                 corporateCard: {
                     creditCardExpenseLabel: 'Export corporate card expenses',
-                    creditCardExpenseSubLabel: 'Enable this to export the corporate credit card expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>non-reimbursable </b> expenses will not be exported to Quickbooks Desktop.',
+                    creditCardExpenseSubLabel: 'Enable this to export the corporate credit card expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>non-reimbursable </b> expenses will not be exported to QuickBooks Desktop.',
                     creditCardExpenseTypeLabel: 'How should the expenses be exported?',
                     creditCardExpenseTypeSubLabel: 'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName +' expenses.',
                     creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',

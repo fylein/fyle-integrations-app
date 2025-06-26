@@ -55,7 +55,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     },
     {
       id: 2,
-      label: 'Keep your Quickbooks company file open',
+      label: 'Keep your QuickBooks Desktop company file open',
       caption: 'Make sure the QuickBooks company you want to connect to ' + brandingConfig.brandName + ' is open during the integration setup.',
       iconName: 'expand',
       state: QBDPreRequisiteState.INCOMPLETE
