@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig, brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDConnectionStatus, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
@@ -30,9 +30,7 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 })
 export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.qbd_direct.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -304,6 +302,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = new QbdDirectOnboardingModel().getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
     this.setupPage();
   }
 }

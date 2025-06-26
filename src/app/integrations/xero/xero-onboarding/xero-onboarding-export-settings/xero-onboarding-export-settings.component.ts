@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-onboarding-export-settings',
@@ -11,15 +11,15 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class XeroOnboardingExportSettingsComponent implements OnInit {
 
-  brandingContent = brandingContent.xero.configuration.exportSetting;
-
-  onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   ngOnInit(): void {
+    this.onboardingSteps = new XeroOnboardingModel().getOnboardingSteps(this.translocoService.translate('xero.configuration.exportSetting.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

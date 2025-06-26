@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
@@ -46,8 +46,6 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.dashboard;
 
   readonly brandingStyle = brandingStyle;
 
@@ -129,8 +127,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   showExportLog(status: AccountingExportStatus) {
     this.filteredAccountingExports = [];
     this.isExportLogFetchInProgress = true;
-    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : brandingContent.dashboard.exportLogHeader;
-    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : brandingContent.dashboard.exportLogSubHeader;
+    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : this.translocoService.translate('dashboard.exportLogHeader');
+    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : this.translocoService.translate('dashboard.exportLogSubHeader');
     this.setupAccountingExports(500, 0, status);
     this.isExportLogVisible = true;
   }

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
@@ -56,8 +56,6 @@ export class XeroCompleteExportLogComponent implements OnInit {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 

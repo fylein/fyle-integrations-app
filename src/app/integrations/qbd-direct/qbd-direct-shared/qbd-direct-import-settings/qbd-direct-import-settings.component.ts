@@ -4,8 +4,7 @@ import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '
 import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingKbArticles, brandingFeatureConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1/content-config';
+import { brandingKbArticles, brandingFeatureConfig, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -93,8 +92,6 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   DefaultImportFields = DefaultImportFields;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  readonly brandingContent = brandingContent.qbd_direct.configuration.importSetting;
 
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
 

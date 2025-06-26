@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -31,9 +31,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.xero.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -269,6 +267,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = new XeroOnboardingModel().getOnboardingSteps(this.translocoService.translate('xero.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
     this.setupPage();
   }
 

@@ -5,8 +5,8 @@
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
         <div>
             <app-configuration-step-header
-                [headerText]="brandingContent.stepName"
-                [contentText]="brandingContent.stepSubLabel"
+                [headerText]="'xero.configuration.exportSetting.stepName' | transloco"
+                [contentText]="'xero.configuration.exportSetting.stepSubLabel' | transloco"
                 [redirectLink]="redirectLink"
                 [appName]="appName"
                 [showSyncButton]="isOnboarding"
@@ -104,8 +104,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="brandingContent.headerText"
-                        [subLabel]="brandingContent.contentText"
+                        [label]="'xero.configuration.exportSetting.headerText' | transloco"
+                        [subLabel]="'xero.configuration.exportSetting.contentText' | transloco"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
@@ -135,8 +135,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'xeroExportSettings.bankAccount' | transloco"
-                            [subLabel]="brandingContent.corporateCard.cccExpenseBankAccountSubLabel"
-                            [label]="brandingContent.corporateCard.cccExpenseBankAccountLabel"
+                            [subLabel]="'xero.configuration.exportSetting.corporateCard.cccExpenseBankAccountSubLabel' | transloco"
+                            [label]="'xero.configuration.exportSetting.corporateCard.cccExpenseBankAccountLabel' | transloco"
                             [destinationAttributes]="bankAccounts"
                             [destinationOptionKey]="XeroExportSettingDestinationOptionKey.BANK_ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -155,8 +155,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'xeroExportSettings.expenseState' | transloco"
-                            [label]="brandingContent.cccExpenseStateLabel"
-                            [subLabel]="brandingContent.corporateCard.cccExpenseStateSubLabel"
+                            [label]="'xero.configuration.exportSetting.cccExpenseStateLabel' | transloco"
+                            [subLabel]="'xero.configuration.exportSetting.corporateCard.cccExpenseStateSubLabel' | transloco"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
                             [placeholder]="'xeroExportSettings.selectExportStatePlaceholder' | transloco"

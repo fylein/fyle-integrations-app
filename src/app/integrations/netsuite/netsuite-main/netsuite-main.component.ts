@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -17,8 +17,6 @@ export class NetsuiteMainComponent {
 
   appName: AppName = AppName.NETSUITE;
 
-  readonly brandingContent = brandingContent.common;
-
   modules: MenuItem[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -31,7 +29,7 @@ export class NetsuiteMainComponent {
   ) {
     this.modules = [
       {label: this.translocoService.translate('netsuiteMain.dashboardTab'), routerLink: '/integrations/netsuite/main/dashboard'},
-      {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/netsuite/main/export_log'},
+      {label: this.translocoService.translate('common.exportLogTab'), routerLink: '/integrations/netsuite/main/export_log'},
       {label: this.translocoService.translate('netsuiteMain.mappingTab'), routerLink: '/integrations/netsuite/main/mapping'},
       {label: this.translocoService.translate('netsuiteMain.configurationTab'), routerLink: '/integrations/netsuite/main/configuration'}
     ];

@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -30,9 +30,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
-  brandingContent = brandingContent.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -244,6 +242,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = new QBOOnboardingModel().getOnboardingSteps(this.translocoService.translate('configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+
     this.setupPage();
   }
 

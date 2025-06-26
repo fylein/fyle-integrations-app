@@ -13,7 +13,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
@@ -69,8 +69,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   redirectLink: string = brandingKbArticles.topLevelArticles.QBD_DIRECT;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.qbd_direct.configuration.exportSetting;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 

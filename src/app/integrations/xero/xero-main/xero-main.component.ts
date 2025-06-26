@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -16,8 +16,6 @@ import { TranslocoService } from '@jsverse/transloco';
 export class XeroMainComponent {
 
   appName: AppName = AppName.XERO;
-
-  readonly brandingContent = brandingContent.common;
 
   readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
 
@@ -36,7 +34,7 @@ export class XeroMainComponent {
   ) {
     this.modules = [
       {label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard'},
-      {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/xero/main/export_log'},
+      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/xero/main/export_log'},
       {label: this.translocoService.translate('xeroMain.mapping'), routerLink: '/integrations/xero/main/mapping'},
       {label: this.translocoService.translate('xeroMain.configuration'), routerLink: '/integrations/xero/main/configuration'}
     ];

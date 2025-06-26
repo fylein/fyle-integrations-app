@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingContent } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -15,12 +15,11 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
 
   isIntacctConnected: boolean = false;
 
-  readonly brandingContent = brandingContent.intacct.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new IntacctOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   setupConnectionStatus(eventData: boolean) {
@@ -28,5 +27,6 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = new IntacctOnboardingModel().getOnboardingSteps(this.translocoService.translate('intacct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
   }
 }

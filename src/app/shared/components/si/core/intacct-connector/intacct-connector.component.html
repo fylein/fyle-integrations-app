@@ -5,7 +5,7 @@
    <div>
       <app-configuration-step-header *ngIf="!isLoading"
         [headerText]="'intacctConnector.headerText' | transloco"
-        [contentText]="brandingContent.intacct.configuration.connector.subLabel"
+        [contentText]="'intacct.configuration.connector.subLabel' | transloco"
         [redirectLink]="redirectLink">
       </app-configuration-step-header>
    </div>
@@ -15,28 +15,28 @@
            <div class="container">
              <div class="tw-mb-4">
                <p for="companyId" class="tw-text-form-label-text-color tw-text-14-px tw-pb-8-px">{{ 'intacctConnector.companyIdLabel' | transloco }}<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-               <input [placeholder]="'intacctConnector.enterCompanyIdPlaceholder' | transloco: { companyId: brandingContent.intacct.common.companyId }" type="text" id="companyId" name="companyId" formControlName="companyID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched ? 'error-box' : 'normal-box']">
+               <input [placeholder]="'intacctConnector.enterCompanyIdPlaceholder' | transloco: { companyId: 'intacct.common.companyId' | transloco }" type="text" id="companyId" name="companyId" formControlName="companyID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched ? 'error-box' : 'normal-box']">
                <div *ngIf="connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched" class="incorrect-credential tw-pt-2-px">
-                 {{ 'intacctConnector.invalidCompanyIdError' | transloco: { companyId: brandingContent.intacct.common.companyId } }}
+                 {{ 'intacctConnector.invalidCompanyIdError' | transloco: { companyId: 'intacct.common.companyId' | transloco } }}
                </div>
              </div>
              <div class="tw-mb-4">
               <p class="tw-text-form-label-text-color tw-text-14-px tw-pb-8-px tw-pt-16-px">{{ 'intacctConnector.userIdLabel' | transloco }}<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-              <input [placeholder]="'intacctConnector.enterUserIdPlaceholder' | transloco: { userId: brandingContent.intacct.common.userId }" type="text" id="userId" name="userId" formControlName="userID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched ? 'error-box' : 'normal-box']">
+              <input [placeholder]="'intacctConnector.enterUserIdPlaceholder' | transloco: { userId: 'intacct.common.userId' | transloco }" type="text" id="userId" name="userId" formControlName="userID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched ? 'error-box' : 'normal-box']">
               <div *ngIf="connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched" class="incorrect-credential tw-pt-2-px">
-                 {{ 'intacctConnector.invalidUserIdError' | transloco: { userId: brandingContent.intacct.common.userId } }}
+                 {{ 'intacctConnector.invalidUserIdError' | transloco: { userId: 'intacct.common.userId' | transloco } }}
               </div>
             </div>
              <div class="tw-mb-4">
-               <p for="userPassword" class="tw-text-form-label-text-color tw-text-14-px tw-pb-8-px tw-pt-16-px">{{brandingContent.intacct.common.userPassword}}<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-               <input [placeholder]="'intacctConnector.enterUserPasswordPlaceholder' | transloco: { userPassword: (brandingContent.intacct.common.userPassword | lowercase) }" type="password" formControlName="userPassword" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched ? 'error-box' : 'normal-box']">
+               <p for="userPassword" class="tw-text-form-label-text-color tw-text-14-px tw-pb-8-px tw-pt-16-px">{{'intacct.common.userPassword' | transloco}}<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
+               <input [placeholder]="'intacctConnector.enterUserPasswordPlaceholder' | transloco: { userPassword: ('intacct.common.userPassword' | transloco | lowercase) }" type="password" formControlName="userPassword" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched ? 'error-box' : 'normal-box']">
                <div *ngIf="connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched" class="incorrect-credential tw-pt-2-px">
-                  {{ 'intacctConnector.incorrectPasswordError' | transloco: { password: brandingContent.intacct.common.password } }}
+                  {{ 'intacctConnector.incorrectPasswordError' | transloco: { password: 'intacct.common.password' | transloco } }}
                 </div>
              </div>
             <div class="tw-w-400-px">
               <app-configuration-info-label
-                [infoText]="brandingContent.intacct.configuration.connector.connectorInfoLabel" [showIcon]="brandingFeatureConfig.featureFlags.contentVersion === 'v2' ? false : true">
+                [infoText]="'intacct.configuration.connector.connectorInfoLabel' | transloco" [showIcon]="brandingFeatureConfig.featureFlags.contentVersion === 'v2' ? false : true">
               </app-configuration-info-label>
             </div>
            </div>

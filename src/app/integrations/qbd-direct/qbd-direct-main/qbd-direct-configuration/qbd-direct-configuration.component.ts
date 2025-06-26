@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-configuration',
@@ -15,13 +15,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 })
 export class QbdDirectConfigurationComponent {
 
-  readonly brandingContent = brandingContent.qbd_direct.configuration;
-
-  modules: MenuItem[] = [
-    {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/qbd_direct/main/configuration/export_settings'},
-    {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/qbd_direct/main/configuration/import_settings'},
-    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings'}
-  ];
+  modules: MenuItem[] = [];
 
   activeModule: MenuItem = this.modules[0];
 
@@ -30,5 +24,13 @@ export class QbdDirectConfigurationComponent {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  constructor(private translocoService: TranslocoService) {
+    this.modules = [
+      {label: this.translocoService.translate('qbd_direct.configuration.exportSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/export_settings'},
+      {label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/import_settings'},
+      {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings'}
+    ];
+  }
 
 }

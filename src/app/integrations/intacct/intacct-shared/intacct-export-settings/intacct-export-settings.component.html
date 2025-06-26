@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
     <app-configuration-step-header
-    [headerText]="brandingContent.intacct.configuration.exportSetting.stepName"
+    [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
     [contentText]="'intacctExportSettings.configureExportDescription' | transloco:{ brandName: brandingConfig.brandName }"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
@@ -130,8 +130,8 @@
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                     [form]="exportSettingsForm"
-                    [label]="brandingContent.configuration.exportSetting.headerText"
-                    [subLabel]="brandingContent.intacct.configuration.exportSetting.contentText"
+                    [label]="'intacct.configuration.exportSetting.headerText' | transloco"
+                    [subLabel]="'intacct.configuration.exportSetting.contentText' | transloco"
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -155,8 +155,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
-                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType"
-                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel"
+                            [label]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel' | transloco"
                             [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -172,8 +172,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.creditCardVendorError' | transloco"
-                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendor"
-                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel"
+                            [label]="'intacct.configuration.exportSetting.corporateCard.creditCardVendor' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel' | transloco"
                             [destinationAttributes]="this.destinationOptions['VENDOR']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -188,8 +188,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
-                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCard"
-                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardSubLabel"
+                            [label]="'intacct.configuration.exportSetting.corporateCard.creditCard' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardSubLabel' | transloco"
                             [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -213,13 +213,13 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.chargeCardError' | transloco"
-                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCard"
-                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCardSublabel"
+                            [label]="'intacct.configuration.exportSetting.corporateCard.chargeCard' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.chargeCardSublabel' | transloco"
                             [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'list'"
-                            [placeholder]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCardPlaceholder"
+                            [placeholder]="'intacct.configuration.exportSetting.corporateCard.chargeCardPlaceholder' | transloco"
                             [formControllerName]="'chargeCard'"
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -234,7 +234,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
                         [label]="'intacctExportSettings.cccExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpenseState"
+                        [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpenseState' | transloco"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
@@ -246,7 +246,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
                         [label]="'intacctExportSettings.groupingLabel' | transloco"
-                        [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExportGroup"
+                        [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExportGroup' | transloco"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
@@ -301,7 +301,7 @@
             [form]="exportSettingsForm"
             [isFieldMandatory]="true"
             [mandatoryErrorListName]="'intacctExportSettings.employeeFieldError' | transloco"
-            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping"
+            [label]="'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco"
             [subLabel]="'intacctExportSettings.employeeRepresentationSubLabel' | transloco"
             [options]="employeeFieldOptions"
             [iconPath]="'user-two'"
@@ -315,7 +315,7 @@
                         <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                     </div>
                     <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px !tw-font-500">{{brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping}}<app-mandatory-field></app-mandatory-field></h4>
+                        <h4 class="!tw-text-14-px !tw-font-500">{{'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco}}<app-mandatory-field></app-mandatory-field></h4>
                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'intacctExportSettings.employeeRepresentationSubLabel' | transloco }}</h5>
                     </div>
                 </div>

@@ -227,23 +227,23 @@
             <div class="clone-setting--field" *ngIf="isCustomerPresent">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
-                    [label]="brandingContent.xero.configuration.importSetting.importCustomersLabel"
+                    [label]="'xero.configuration.importSetting.importCustomersLabel' | transloco"
                     [form]="importSettingForm"
                     [formControllerName]="'importCustomers'"
                     [inputType]="InputType.TOGGLE"
                     [isDisabled]="isProjectMapped"
-                    [tooltipText]="brandingContent.xero.configuration.importSetting.importCustomersSubLabel">
+                    [tooltipText]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco">
                 </app-clone-setting-field>
             </div>
 
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
-                    [label]="brandingContent.xero.configuration.importSetting.importSuppliersAsMerchantsLabel"
+                    [label]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
                     [form]="importSettingForm"
                     [formControllerName]="'importSuppliersAsMerchants'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="brandingContent.xero.configuration.importSetting.importSuppliersAsMerchantsLabel">
+                    [tooltipText]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco">
                 </app-clone-setting-field>
             </div>
 
@@ -335,7 +335,7 @@
             <div class="clone-setting--field">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="brandingContent.netsuite.configuration.advancedSettings.postEntriesCurrentPeriod"
+                    [label]="'netsuite.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
                     [form]="advancedSettingForm"
                     [formControllerName]="'changeAccountingPeriod'"
                     [inputType]="InputType.TOGGLE"
@@ -383,7 +383,7 @@
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'user-plus'"
-                    [label]="brandingContent.xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
+                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'"
                     [inputType]="InputType.TOGGLE"

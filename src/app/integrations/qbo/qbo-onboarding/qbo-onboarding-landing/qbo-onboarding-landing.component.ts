@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
@@ -26,8 +26,6 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   qboConnectionInProgress = false;
 
   private oauthCallbackSubscription: Subscription;
-
-  readonly brandingContent = brandingContent.landing;
 
   private destroy$ = new Subject<void>();
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SkipExportList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
@@ -13,8 +13,6 @@ export class SkippedExportLogTableComponent implements OnInit {
   @Input() filteredExpense: SkipExportList[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   constructor(
     private windowService: WindowService

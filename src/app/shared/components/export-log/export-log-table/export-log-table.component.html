@@ -1,11 +1,11 @@
 <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
     <ng-template pTemplate="header">
         <tr class="tw-text-text-primary">
-            <th class="tw-min-w-120-px" *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.dateTime}}</th>
+            <th class="tw-min-w-120-px" *ngIf="!isDashboardFailed">{{ 'exportLog.tableHeaders.dateTime' | transloco}}</th>
             <th>{{ 'exportLogTable.employee' | transloco }}</th>
-            <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{brandingContent.tableHeaders.expenseType}}</th>
+            <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{ 'exportLog.tableHeaders.expenseType' | transloco}}</th>
             <th>{{ 'exportLogTable.referenceID' | transloco }}</th>
-            <th *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.exportedAs}}</th>
+            <th *ngIf="!isDashboardFailed">{{ 'exportLog.tableHeaders.exportedAs' | transloco}}</th>
             <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL">{{ 'exportLogTable.linkTo' | transloco }} {{appName}}</th>
             <th class="tw-min-w-120-px" *ngIf="isDashboardFailed">{{ 'exportLogTable.linkTo' | transloco }} {{ brandingConfig.brandName }}</th>
         </tr>

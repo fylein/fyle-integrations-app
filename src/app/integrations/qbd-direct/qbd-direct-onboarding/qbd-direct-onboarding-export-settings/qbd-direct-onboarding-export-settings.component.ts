@@ -6,7 +6,6 @@ import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-dir
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { brandingContent } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-export-settings',
@@ -17,15 +16,15 @@ import { brandingContent } from 'src/app/branding/branding-config';
 })
 export class QbdDirectOnboardingExportSettingsComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.exportSetting;
-
-  onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   ngOnInit(): void {
+    this.onboardingSteps = new QbdDirectOnboardingModel().getOnboardingSteps(this.translocoService.translate('configuration.exportSetting.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

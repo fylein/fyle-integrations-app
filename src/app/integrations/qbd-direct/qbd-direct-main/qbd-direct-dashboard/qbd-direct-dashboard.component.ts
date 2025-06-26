@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1/content-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -80,8 +80,6 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.dashboard;
 
   importCodeFields: any;
 

@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
     <app-configuration-step-header
-    [headerText]="brandingContent.intacct.configuration.advancedSettings.stepName"
-    [contentText]="brandingContent.intacct.configuration.advancedSettings.contentText"
+    [headerText]="'intacct.configuration.advancedSettings.stepName' | transloco"
+    [contentText]="'intacct.configuration.advancedSettings.contentText' | transloco"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
     [appName]="appName"
@@ -17,14 +17,14 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'intacctAdvancedSettings.automation' | transloco"
-                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.automationSubLabel">
+                    [subLabel]="'intacct.configuration.advancedSettings.automationSubLabel' | transloco">
                 </app-configuration-step-sub-header>
                 <div class="tw-my-16-px">
                     <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                         <app-configuration-toggle-field
                             [form]="advancedSettingsForm"
                             [label]="'intacctAdvancedSettings.scheduleAutomaticExport' | transloco"
-                            [subLabel]="brandingContent.intacct.configuration.advancedSettings.scheduleSubLabel"
+                            [subLabel]="'intacct.configuration.advancedSettings.scheduleSubLabel' | transloco"
                             [formControllerName]="'exportSchedule'"
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
@@ -36,7 +36,7 @@
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'intacctAdvancedSettings.mandatoryErrorListNameAutomaticExport' | transloco"
                                 [label]="'intacctAdvancedSettings.setupExportFrequency' | transloco"
-                                [subLabel]="brandingContent.intacct.configuration.advancedSettings.frequencySubLabel"
+                                [subLabel]="'intacct.configuration.advancedSettings.frequencySubLabel' | transloco"
                                 [options]="hours"
                                 [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                                 [formControllerName]="'exportScheduleFrequency'"
@@ -50,7 +50,7 @@
                 [form]="advancedSettingsForm"
                 [isFieldMandatory]="false"
                 [mandatoryErrorListName]="'intacctAdvancedSettings.mandatoryErrorListNamePaymentSync' | transloco"
-                [label]="brandingContent.intacct.configuration.advancedSettings.autoSyncPayments"
+                [label]="'intacct.configuration.advancedSettings.autoSyncPayments' | transloco"
                 [subLabel]="'intacctAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                 [options]="paymentSyncOptions"
                 [iconPath]="'arrow-rotate'"
@@ -61,11 +61,11 @@
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'intacctAdvancedSettings.mandatoryErrorListNamePaymentAccount' | transloco"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
+                    [label]="'intacct.configuration.advancedSettings.defaultPaymentAccount' | transloco"
                     [subLabel]="'intacctAdvancedSettings.defaultPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [destinationAttributes]="sageIntacctPaymentAccount"
                     [iconPath]="'list'"
-                    [placeholder]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
+                    [placeholder]="'intacct.configuration.advancedSettings.defaultPaymentAccount' | transloco"
                     [formControllerName]="'defaultPaymentAccount'"></app-configuration-select-field>
                 </div>
             </div>
@@ -73,23 +73,23 @@
 
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
-                [label]="brandingContent.intacct.configuration.advancedSettings.customPreferencesLabel"
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.customPreferencesSubLabel">
+                [label]="'intacct.configuration.advancedSettings.customPreferencesLabel' | transloco"
+                [subLabel]="'intacct.configuration.advancedSettings.customPreferencesSubLabel' | transloco">
             </app-configuration-step-sub-header>
             <div  class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field
                     class="tw-pt-0"
                     [form]="advancedSettingsForm"
                     [iconPath]="'calendar'"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod"
-                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.accountingPeriodSubLabel"
+                    [label]="'intacct.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
+                    [subLabel]="'intacct.configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
                     [formControllerName]="'postEntriesCurrentPeriod'">
                 </app-configuration-toggle-field>
                 <app-configuration-toggle-field
                     *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
                     [form]="advancedSettingsForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()"
+                    [label]="('intacct.configuration.advancedSettings.autoCreateEmployeeVendor' | transloco) + getEmployeeField()"
                     [subLabel]="'intacctAdvancedSettings.autoCreateEmployeeVendorSubLabel' | transloco: { employeeField: getEmployeeField(), brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateEmployeeVendor'">
                 </app-configuration-toggle-field>
@@ -98,7 +98,7 @@
                     class="tw-pt-0"
                     *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingsForm"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
+                    [label]="'intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
                     [subLabel]="'intacctAdvancedSettings.autoCreateMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
@@ -107,8 +107,8 @@
                     *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
                     [form]="advancedSettingsForm"
                     [iconPath]="'list'"
-                    [label]="brandingContent.configuration.advancedSettings.singleCreditLineJELabel"
-                    [subLabel]="brandingContent.configuration.advancedSettings.singleCreditLineJESubLabel"
+                    [label]="'intacct.configuration.advancedSettings.singleCreditLineJELabel' | transloco"
+                    [subLabel]="'intacct.configuration.advancedSettings.singleCreditLineJESubLabel' | transloco"
                     [formControllerName]="'singleCreditLineJE'">
                 </app-configuration-toggle-field>
 
@@ -119,20 +119,20 @@
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
                 [label]="'intacctAdvancedSettings.customization' | transloco"
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.customizeSectionSubLabel">
+                [subLabel]="'intacct.configuration.advancedSettings.customizeSectionSubLabel' | transloco">
             </app-configuration-step-sub-header>
             @if (brandingFeatureConfig.featureFlags.advancedSettings.showTopLevelMemoFieldInIntacct) {
                 <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select
                     [form]="advancedSettingsForm"
-                    [label]="brandingContent.intacct.configuration.advancedSettings.setTopMemoField"
-                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.topMemoStructureSubLabel"
+                    [label]="'intacct.configuration.advancedSettings.setTopMemoField' | transloco"
+                    [subLabel]="'intacct.configuration.advancedSettings.topMemoStructureSubLabel' | transloco"
                     [options]="defaultTopMemoFields"
                     [iconPath]="'list'"
                     [placeholder]="'intacctAdvancedSettings.placeholderTopMemo' | transloco"
                     [formControllerName]="'setTopMemoField'"></app-configuration-multi-select>
                     <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
-                        <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{brandingContent.intacct.common.descriptionText}}</p>
+                        <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{'intacct.common.descriptionText' | transloco}}</p>
                         <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                             <span>{{ topMemoPreviewText }}</span>
                         </div>
@@ -142,14 +142,14 @@
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
-                [label]="brandingContent.intacct.configuration.advancedSettings.setDescriptionField"
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.memoStructureSubLabel"
+                [label]="'intacct.configuration.advancedSettings.setDescriptionField' | transloco"
+                [subLabel]="'intacct.configuration.advancedSettings.memoStructureSubLabel' | transloco"
                 [options]="defaultMemoFields"
                 [iconPath]="'list'"
                 [placeholder]="'intacctAdvancedSettings.placeholderDescription' | transloco"
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
-                    <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{brandingContent.intacct.common.descriptionText}}</p>
+                    <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{'intacct.common.descriptionText' | transloco}}</p>
                     <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                         <span>{{ memoPreviewText }}</span>
                     </div>
@@ -175,14 +175,14 @@
         </div>
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
-                [label]="brandingContent.intacct.configuration.advancedSettings.dfvLabel"
-                [subLabel]="brandingContent.intacct.configuration.advancedSettings.dfvSubLabel">
+                [label]="'intacct.configuration.advancedSettings.dfvLabel' | transloco"
+                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco">
             </app-configuration-step-sub-header>
             <div class="tw-pt-28-px tw-pl-6 field-label">
-                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{brandingContent.intacct.configuration.advancedSettings.location}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.location' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                     <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
-                    formControlName="defaultLocation" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: brandingContent.intacct.configuration.advancedSettings.location }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
+                    formControlName="defaultLocation" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <p>
                                 {{ item.value }}
@@ -198,10 +198,10 @@
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{brandingContent.intacct.configuration.advancedSettings.department}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.department' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
-                  formControlName="defaultDepartment" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: brandingContent.intacct.configuration.advancedSettings.department }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
+                  formControlName="defaultDepartment" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
                             <p>
                                 <span *ngIf="value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
@@ -228,10 +228,10 @@
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{brandingContent.intacct.configuration.advancedSettings.project}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.project' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
-                  formControlName="defaultProject" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: brandingContent.intacct.configuration.advancedSettings.project }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
+                  formControlName="defaultProject" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
                                 {{ item.value }}
@@ -243,10 +243,10 @@
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{brandingContent.intacct.configuration.advancedSettings.class}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.class' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
-                  formControlName="defaultClass" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: brandingContent.intacct.configuration.advancedSettings.class }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
+                  formControlName="defaultClass" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
                                 {{ item.value }}
@@ -258,10 +258,10 @@
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{brandingContent.intacct.configuration.advancedSettings.item}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.item' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
-                  formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: brandingContent.intacct.configuration.advancedSettings.item }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
+                  formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}"></p-dropdown>
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
                                 {{ item.value }}

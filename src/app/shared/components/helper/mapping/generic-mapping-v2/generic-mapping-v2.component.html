@@ -21,12 +21,12 @@
                 <div *ngIf="!filteredMappingCount">
                     <app-zero-state-with-illustration
                     [mainText]="brandingConfig.brandId === 'fyle' ?
-                        brandingContent.mappingSearchZeroStateHeaderText :
-                        brandingContent.mappingSearchZeroStateHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffixWithPeriod' | transloco)
+                        ('mapping.mappingSearchZeroStateHeaderText' | transloco) :
+                        ('mapping.mappingSearchZeroStateHeaderText' | transloco) + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffixWithPeriod' | transloco)
                     "
                     [subText]="brandingConfig.brandId === 'fyle' ?
-                        brandingContent.mappingSearchZeroStateSubHeaderText + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffix' | transloco) :
-                        brandingContent.mappingSearchZeroStateSubHeaderText
+                        ('mapping.mappingSearchZeroStateSubHeaderText' | transloco) + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffix' | transloco) :
+                        ('mapping.mappingSearchZeroStateSubHeaderText' | transloco)
                     ">
                   </app-zero-state-with-illustration>
                 </div>

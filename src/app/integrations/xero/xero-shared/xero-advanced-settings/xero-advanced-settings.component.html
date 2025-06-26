@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-            [headerText]="brandingContent.stepName"
-            [contentText]="brandingContent.contentText"
+            [headerText]="'xero.configuration.advancedSettings.stepName' | transloco"
+            [contentText]="'xero.configuration.advancedSettings.contentText' | transloco"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -17,7 +17,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'xeroAdvancedSettings.automationLabel' | transloco"
-                    [subLabel]="brandingContent.automationSubLabel">
+                    [subLabel]="'xero.configuration.advancedSettings.automationSubLabel' | transloco">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco" 
-                        [subLabel]="brandingContent.scheduleSubLabel"
+                        [subLabel]="'xero.configuration.advancedSettings.scheduleSubLabel' | transloco"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'xeroAdvancedSettings.automaticExportMethodError' | transloco"
                             [label]="'xeroAdvancedSettings.exportFrequencyLabel' | transloco"
-                            [subLabel]="brandingContent.frequencySubLabel"
+                            [subLabel]="'xero.configuration.advancedSettings.frequencySubLabel' | transloco"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -49,24 +49,24 @@
 
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="brandingContent.customPreferencesLabel"
-                    [subLabel]="brandingContent.customPreferencesSubLabel">
+                    [label]="'xero.configuration.advancedSettings.customPreferencesLabel' | transloco"
+                    [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
-                    [label]="brandingContent.postEntriesCurrentPeriod"
-                    [subLabel]="brandingContent.accountingPeriodSubLabel"
+                    [label]="'xero.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
+                    [subLabel]="'xero.configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
                 <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.reimbursable_expenses_object"
                     [form]="advancedSettingForm"
                     [iconPath]="'list'"
-                    [label]="brandingContent.autoCreateVendorsLabel"
-                    [subLabel]="brandingContent.autoCreateVendorsSubLabel"
+                    [label]="'xero.configuration.advancedSettings.autoCreateVendorsLabel' | transloco"
+                    [subLabel]="'xero.configuration.advancedSettings.autoCreateVendorsSubLabel' | transloco"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
@@ -75,7 +75,7 @@
                     [options]="paymentSyncOptions"
                     [iconPath]="'arrow-rotate'"
                     [showClearIcon]="true"
-                    [label]="brandingContent.paymentSyncLabel"
+                    [label]="'xero.configuration.advancedSettings.paymentSyncLabel' | transloco"
                     [subLabel]="'xeroAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [placeholder]="'xeroAdvancedSettings.paymentSyncPlaceholder' | transloco"
                     [formControllerName]="'paymentSync'">
@@ -87,15 +87,15 @@
                     [optionLabel]="'value'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'xeroAdvancedSettings.paymentAccountError' | transloco"
-                    [label]="brandingContent.billPaymentAccountLabel"
-                    [subLabel]="'xeroAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: brandingContent.billPaymentAccountSubLabel }"
+                    [label]="'xero.configuration.advancedSettings.billPaymentAccountLabel' | transloco"
+                    [subLabel]="'xeroAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: 'xero.configuration.advancedSettings.billPaymentAccountSubLabel' | transloco }"
                     [placeholder]="'xeroAdvancedSettings.billPaymentAccountPlaceholder' | transloco"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
                 <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
+                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
                     [subLabel]="'xeroAdvancedSettings.autoCreateMerchantSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
@@ -103,7 +103,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
-                    [subLabel]="brandingContent.customizeSectionSubLabel">
+                    [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -111,8 +111,8 @@
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'xeroAdvancedSettings.itemLevelDescriptionError' | transloco"
-                    [label]="brandingContent.memoStructureLabel"
-                    [subLabel]="brandingContent.memoStructureSubLabel"
+                    [label]="'xero.configuration.advancedSettings.memoStructureLabel' | transloco"
+                    [subLabel]="'xero.configuration.advancedSettings.memoStructureSubLabel' | transloco"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
                     [placeholder]="'xeroAdvancedSettings.setDescriptionPlaceholder' | transloco"

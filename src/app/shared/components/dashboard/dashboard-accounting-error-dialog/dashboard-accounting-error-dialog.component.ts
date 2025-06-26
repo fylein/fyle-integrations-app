@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { Expense, ExpenseModel } from 'src/app/core/models/intacct/db/expense.model';
 
 @Component({
@@ -12,10 +11,6 @@ export class DashboardAccountingErrorDialogComponent implements OnInit {
   @Input() isLoading: boolean;
 
   @Input() errorExpenses: Expense[];
-
-  readonly brandingContent = brandingContent.exportLog.tableHeaders;
-
-  readonly brandingContentCommon = brandingContent.common;
 
   constructor() { }
 

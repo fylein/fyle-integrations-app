@@ -3,7 +3,7 @@
         <p-dialog header="Header" [dismissableMask]="true" [(visible)]="isCustomSegmentDialogVisible" [showHeader]="true" [modal]="true" (onHide)="close()" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [style]="{ width: '800px', height: '900px' }">
             <ng-template pTemplate="header">
                 <div>
-                   <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{brandingContent.customSegmentHeader}}</span>
+                   <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{'netsuite.configuration.importSetting.customSegmentHeader' | transloco}}</span>
                 </div>
             </ng-template>
             <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-5/6">

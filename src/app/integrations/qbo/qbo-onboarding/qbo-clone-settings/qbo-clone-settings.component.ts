@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { ExpenseField, ImportCodeFieldConfigType, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
@@ -168,8 +168,6 @@ export class QboCloneSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
-
   qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
   cloneQboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
@@ -312,7 +310,7 @@ export class QboCloneSettingsComponent implements OnInit {
       this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
       if (selectedValue === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
         this.cccExpenseGroupingDateOptions.push({
-          label: brandingContent.common.currentDate,
+          label: this.translocoService.translate('common.currentDate'),
           value: ExportDateType.CURRENT_DATE
         });
       }

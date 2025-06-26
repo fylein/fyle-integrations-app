@@ -4,9 +4,9 @@ import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdDirectAdvancedSettingsComponent } from "../../qbd-direct-shared/qbd-direct-advanced-settings/qbd-direct-advanced-settings.component";
 import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-advanced-settings',
@@ -17,15 +17,15 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class QbdDirectOnboardingAdvancedSettingsComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.advancedSettings;
-
-  onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   ngOnInit(): void {
+    this.onboardingSteps = new QbdDirectOnboardingModel().getOnboardingSteps(this.translocoService.translate('configuration.advancedSettings.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

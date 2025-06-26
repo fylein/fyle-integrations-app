@@ -1,5 +1,5 @@
 <div [formGroup]="exportLogForm" class="tw-flex tw-items-center" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
-    <app-search class="tw-pt-22-px" *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="brandingContent.searchPlaceholder" [width]="'300-px'" [height]="'40-px'"></app-search>
+    <app-search class="tw-pt-22-px" *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'exportLog.searchPlaceholder' | transloco" [width]="'300-px'" [height]="'40-px'"></app-search>
     <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
     <div *ngIf="!hideCalendar">
         <div *ngIf="isSimpleSearchRequired" class="tw-text-form-label-text-color tw-text-12-px tw-pb-8-px tw-pl-16-px tw-font-nav-link-font-weight">{{ 'exportLogFilter.dateOfExportLabel' | transloco }}</div>
@@ -33,7 +33,7 @@
 
                     <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
                         <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
-                            {{brandingContent.dateRangeLabel}}
+                            {{ 'exportLogFilter.dateRangeLabel' | transloco}}
                         </span>
                     </div>
 

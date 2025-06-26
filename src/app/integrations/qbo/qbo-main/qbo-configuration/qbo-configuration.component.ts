@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-configuration',
@@ -9,13 +10,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle }
 })
 export class QboConfigurationComponent implements OnInit {
 
-  readonly brandingContent = brandingContent.configuration;
-
-  modules: MenuItem[] = [
-    {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/qbo/main/configuration/export_settings'},
-    {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/qbo/main/configuration/import_settings'},
-    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
-  ];
+  modules: MenuItem[] = [];
 
   activeModule: MenuItem = this.modules[0];
 
@@ -25,9 +20,14 @@ export class QboConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor() { }
+  constructor(private translocoService: TranslocoService) { }
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('configuration.exportSetting.stepName'), routerLink: '/integrations/qbo/main/configuration/export_settings'},
+      {label: this.translocoService.translate('configuration.importSetting.stepName'), routerLink: '/integrations/qbo/main/configuration/import_settings'},
+      {label: this.translocoService.translate('configuration.advancedSettings.stepName'), routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
+    ];
   }
 
 }

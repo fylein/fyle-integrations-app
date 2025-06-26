@@ -7,8 +7,8 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
-                    [headerText]="brandingContent.configurationHeaderText"
-                    [contentText]="brandingContent.configurationSubHeaderText"
+                    [headerText]="'qbd_direct.configuration.preRequisite.configurationHeaderText' | transloco"
+                    [contentText]="'qbd_direct.configuration.preRequisite.configurationSubHeaderText' | transloco"
                     [redirectLink]="QBDconnectorArticleLink">
                 </app-configuration-step-header>
             </div>

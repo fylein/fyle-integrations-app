@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -16,9 +16,6 @@ import { TranslocoService } from '@jsverse/transloco';
 export class QboMainComponent implements OnInit {
 
   appName: AppName = AppName.QBO;
-
-  readonly brandingContent = brandingContent.common;
-
 
   modules: MenuItem[];
 
@@ -39,7 +36,7 @@ export class QboMainComponent implements OnInit {
   ngOnInit(): void {
     this.modules = [
       {label: this.translocoService.translate('qboMain.dashboardLabel'), routerLink: '/integrations/qbo/main/dashboard'},
-      {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log'},
+      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/qbo/main/export_log'},
       {label: this.translocoService.translate('qboMain.mappingLabel'), routerLink: '/integrations/qbo/main/mapping'},
       {label: this.translocoService.translate('qboMain.configurationLabel'), routerLink: '/integrations/qbo/main/configuration'}
     ];

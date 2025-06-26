@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { catchError, forkJoin, from, interval, of, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
@@ -68,8 +68,6 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.dashboard;
 
   private destroy$ = new Subject<void>();
 

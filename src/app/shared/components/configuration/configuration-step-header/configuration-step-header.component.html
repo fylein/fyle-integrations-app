@@ -11,7 +11,7 @@
         <a *ngIf="redirectLink"
           class="tw-text-14-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-pl-4-px tw-inline-flex tw-items-center"
           (click)="windowService.openInNewTab(redirectLink)">
-          {{brandingContent.readMoreText}}
+          {{'common.readMoreText' | transloco}}
           <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"
             [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
           </app-svg-icon>

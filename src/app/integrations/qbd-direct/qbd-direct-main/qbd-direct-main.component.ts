@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -19,8 +19,6 @@ export class QbdDirectMainComponent {
 
   appName: AppName = AppName.QBD_DIRECT;
 
-  readonly brandingContent = brandingContent.common;
-
   modules: MenuItem[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -31,7 +29,7 @@ export class QbdDirectMainComponent {
   ) {
     this.modules = [
       {label: this.translocoService.translate('qbdDirectMain.dashboard'), routerLink: '/integrations/qbd_direct/main/dashboard'},
-      {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbd_direct/main/export_log'},
+      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/qbd_direct/main/export_log'},
       {label: this.translocoService.translate('qbdDirectMain.mapping'), routerLink: '/integrations/qbd_direct/main/mapping'},
       {label: this.translocoService.translate('qbdDirectMain.configuration'), routerLink: '/integrations/qbd_direct/main/configuration'}
     ];

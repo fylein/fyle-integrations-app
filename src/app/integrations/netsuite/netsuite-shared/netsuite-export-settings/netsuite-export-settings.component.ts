@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -82,8 +82,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   warningDialogText: string;
 
   appName: AppName = AppName.NETSUITE;
-
-  readonly brandingContent = brandingContent.netsuite.configuration.exportSetting;
 
   NetSuiteCorporateCreditCardExpensesObject = NetSuiteCorporateCreditCardExpensesObject;
 
