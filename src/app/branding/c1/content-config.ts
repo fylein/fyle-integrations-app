@@ -1,5 +1,5 @@
-import { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
-import config from './config.json';
+import { BrandingConfiguration } from "../../core/models/branding/branding-configuration.model";
+import config from '../config.json';
 
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 

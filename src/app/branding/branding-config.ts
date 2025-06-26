@@ -3,13 +3,13 @@ import { ContentConfiguration } from '../core/models/branding/content-configurat
 import { DemoVideo } from '../core/models/branding/demo-video.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
-import { c1Content } from './c1-content-config';
+import { c1Content } from './c1/content-config';
 import config from './config.json';
-import { fyleContents } from './fyle-contents-config';
-import { fyleDemoVideoLinks, fyleFeatureConfig, fyleKbArticles } from './fyle-branding-config';
-import { c1DemoVideoLinks, c1FeatureConfig, c1KbArticles } from './c1-branding-config';
-import { fyleStyles } from './fyle-style-config';
-import { c1Styles } from './c1-style-config';
+import { fyleContents } from './fyle/contents-config';
+import { fyleDemoVideoLinks, fyleFeatureConfig, fyleKbArticles } from './fyle/branding-config';
+import { c1DemoVideoLinks, c1FeatureConfig, c1KbArticles } from './c1/branding-config';
+import { fyleStyles } from './fyle/style-config';
+import { c1Styles } from './c1/style-config';
 
 export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 

@@ -17,7 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { LowerCasePipe } from '@angular/common';
-import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
+import { c1FeatureConfig } from 'src/app/branding/c1/branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 
 

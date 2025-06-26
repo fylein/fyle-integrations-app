@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-content-config';
+import { brandingConfig } from 'src/app/branding/c1/content-config';
 import { AccountingExportModel, AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
