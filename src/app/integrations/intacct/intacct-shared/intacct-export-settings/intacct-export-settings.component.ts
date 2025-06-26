@@ -17,6 +17,7 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -100,16 +101,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  expenseGroupingFieldOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Expense',
-      value: ExpenseGroupingFieldOption.EXPENSE_ID
-    },
-    {
-      label: 'Report',
-      value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-    }
-  ];
+  expenseGroupingFieldOptions: ExportSettingFormOption[];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = IntacctExportSettingModel.getExpenseGroupingDateOptions();
 
@@ -117,37 +109,11 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
-  autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'Based on employee e-mail ID', value: 'EMAIL' },
-    { label: 'Based on employee name', value: 'NAME' },
-    { label: 'Based on employee code', value: 'EMPLOYEE_CODE' }
-  ];
+  autoMapEmployeeOptions: ExportSettingFormOption[];
 
-  reimbursableExportTypes: ExportSettingFormOption[] = [
-    {
-      label: 'Expense report',
-      value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
-    },
-    {
-      label: 'Bill',
-      value: IntacctReimbursableExpensesObject.BILL
-    },
-    {
-      label: 'Journal entry',
-      value: IntacctReimbursableExpensesObject.JOURNAL_ENTRY
-    }
-  ];
+  reimbursableExportTypes: ExportSettingFormOption[];
 
-  employeeFieldOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Employee',
-      value: FyleField.EMPLOYEE
-    },
-    {
-      label: 'Vendor',
-      value: FyleField.VENDOR
-    }
-  ];
+  employeeFieldOptions: ExportSettingFormOption[];
 
   private optionSearchUpdate = new Subject<IntacctExportSettingOptionSearch>();
 
@@ -169,13 +135,57 @@ export class IntacctExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private sanitizer: DomSanitizer
-    ) { }
+    private sanitizer: DomSanitizer,
+    private translocoService: TranslocoService
+    ) {
+    this.expenseGroupingFieldOptions = [
+      {
+        label: this.translocoService.translate('intacctExportSettings.expense'),
+        value: ExpenseGroupingFieldOption.EXPENSE_ID
+      },
+      {
+        label: this.translocoService.translate('intacctExportSettings.report'),
+        value: ExpenseGroupingFieldOption.CLAIM_NUMBER
+      }
+    ];
+
+    this.autoMapEmployeeOptions = [
+      { label: this.translocoService.translate('intacctExportSettings.emailIdMapping'), value: 'EMAIL' },
+      { label: this.translocoService.translate('intacctExportSettings.nameMapping'), value: 'NAME' },
+      { label: this.translocoService.translate('intacctExportSettings.employeeCodeMapping'), value: 'EMPLOYEE_CODE' }
+    ];
+
+    this.reimbursableExportTypes = [
+      {
+        label: this.translocoService.translate('intacctExportSettings.expenseReport'),
+        value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
+      },
+      {
+        label: this.translocoService.translate('intacctExportSettings.bill'),
+        value: IntacctReimbursableExpensesObject.BILL
+      },
+      {
+        label: this.translocoService.translate('intacctExportSettings.journalEntry'),
+        value: IntacctReimbursableExpensesObject.JOURNAL_ENTRY
+      }
+    ];
+
+    this.employeeFieldOptions = [
+      {
+        label: this.translocoService.translate('intacctExportSettings.employee'),
+        value: FyleField.EMPLOYEE
+      },
+      {
+        label: this.translocoService.translate('intacctExportSettings.vendor'),
+        value: FyleField.VENDOR
+      }
+    ];
+  }
 
     refreshDimensions(isRefresh: boolean) {
       this.mappingService.refreshSageIntacctDimensions().subscribe();
       this.mappingService.refreshFyleDimensions().subscribe();
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.syncDataDimensionsToast'));
     }
 
     getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
@@ -203,22 +213,22 @@ export class IntacctExportSettingsComponent implements OnInit {
     private setUpExpenseStates(): void {
       this.cccExpenseStateOptions = [
         {
-          label: 'Approved',
+          label: this.translocoService.translate('intacctExportSettings.approved'),
           value: CCCExpenseState.APPROVED
         },
         {
-          label: 'Closed',
+          label: this.translocoService.translate('intacctExportSettings.closed'),
           value: CCCExpenseState.PAID
         }
       ];
 
       this.expenseStateOptions = [
         {
-          label: 'Processing',
+          label: this.translocoService.translate('intacctExportSettings.processing'),
           value: ExpenseState.PAYMENT_PROCESSING
         },
         {
-          label: 'Closed',
+          label: this.translocoService.translate('intacctExportSettings.closed'),
           value: ExpenseState.PAID
         }
       ];
@@ -233,14 +243,10 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string | undefined | null, exportType: string): string {
-    const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
-    which would impact a few configurations in the <b>advanced settings</b>. <br><br>Please revisit the <b>advanced settings</b> to check and enable the
-    features that could help customize and automate your integration workflows.`;
-
     let content = '';
     // If both are not none and it is an update case else for the new addition case
     if (updatedConfiguration && existingConfiguration) {
-      content = configurationUpdate.replace('$exportType', exportType).replace('$existingExportType', existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).replace('$updatedExportType', updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()));
+      content = this.translocoService.translate('intacctExportSettings.advancedSettingsWarning', { exportType: exportType, existingExportType: existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()), updatedExportType: updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()) });
     }
 
     return content;
@@ -261,11 +267,11 @@ export class IntacctExportSettingsComponent implements OnInit {
     if (existingReimbursableExportType !== updatedReimbursableExportType) {
       updatedExportType = updatedReimbursableExportType.replace(/_/g, ' ');
       existingExportType = existingReimbursableExportType?.replace(/_/g, ' ');
-      exportType = 'reimbursable';
+      exportType = this.translocoService.translate('intacctExportSettings.reimbursable');
     } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
       updatedExportType = updatedCorporateCardExportType.replace(/_/g, ' ');
       existingExportType = existingCorporateCardExportType?.replace(/_/g, ' ');
-      exportType = 'credit card';
+      exportType = this.translocoService.translate('intacctExportSettings.creditCard');
     }
 
     if (this.isAdvancedSettingAffected() && exportType) {
@@ -511,7 +517,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.saveInProgress = true;
         const exportSettingPayload = IntacctExportSettingModel.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);
           if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.EXPORT_SETTINGS) {
             this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
@@ -534,7 +540,7 @@ export class IntacctExportSettingsComponent implements OnInit {
           }
         }, () => {
           this.saveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctExportSettings.exportSettingsError'));
         });
     }
   }

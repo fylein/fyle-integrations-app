@@ -7,6 +7,7 @@ import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-confi
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-connector',
@@ -44,7 +45,8 @@ export class IntacctConnectorComponent implements OnInit {
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   private clearField() {
@@ -66,7 +68,7 @@ export class IntacctConnectorComponent implements OnInit {
       this.connectorService.connectSageIntacct(sageIntacctConnection).subscribe((response) => {
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.setupConnectionStatus.emit(true);
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctConnector.connectionSuccessToast'));
           this.isLoading = false;
           this.saveInProgress = false;
         });
@@ -75,7 +77,7 @@ export class IntacctConnectorComponent implements OnInit {
         this.clearField();
         this.isLoading = false;
         this.saveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctConnector.connectionErrorToast'));
       });
     }
 

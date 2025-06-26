@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-travelperk-onboarding-landing',
@@ -43,7 +44,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   disconnect(): void {
@@ -51,7 +53,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected TravelPerk successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkOnboardingLanding.disconnectSuccess'));
     });
   }
 
@@ -75,7 +77,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
           this.travelperkService.getTravelperkData().subscribe(() => {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
-            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkOnboardingLanding.connectSuccess'));
             this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE ? '' : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
             forkJoin([
               this.travelperkService.syncPaymentProfile(),

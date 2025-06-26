@@ -34,6 +34,8 @@
     "@angular/router": "^18.2.13",
     "@auth0/angular-jwt": "^5.1.0",
     "@babel/runtime": "^7.27.0",
+    "@jsverse/transloco": "^7.6.1",
+    "@jsverse/transloco-messageformat": "^7.0.1",
     "@rxweb/reactive-form-validators": "^2.1.6",
     "@sentry/angular": "^8.18.0",
     "@sentry/cli": "^2.32.2",

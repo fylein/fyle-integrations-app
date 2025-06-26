@@ -21,6 +21,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbo-advanced-settings',
@@ -92,7 +93,8 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
-    private exportSettingsService: QboExportSettingsService
+    private exportSettingsService: QboExportSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
 
@@ -144,7 +146,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboAdvancedSettings.advancedSettingsSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.COMPLETE);
@@ -152,7 +154,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboAdvancedSettings.advancedSettingsError'));
     });
   }
 

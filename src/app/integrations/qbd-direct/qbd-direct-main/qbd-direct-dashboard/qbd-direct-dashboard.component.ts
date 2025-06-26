@@ -19,11 +19,12 @@ import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-dashboard.component.html',
   styleUrl: './qbd-direct-dashboard.component.scss'
 })
@@ -95,7 +96,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
     private trackingService: TrackingService,
     private importSettingService: QbdDirectImportSettingsService,
     private refinerService: RefinerService,
-    private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService
+    private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   export() {

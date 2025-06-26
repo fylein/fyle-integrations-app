@@ -14,6 +14,7 @@ import { AccountingExportList, AccountingExportModel } from 'src/app/core/models
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-completed-export-log',
@@ -78,7 +79,8 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -128,7 +130,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];

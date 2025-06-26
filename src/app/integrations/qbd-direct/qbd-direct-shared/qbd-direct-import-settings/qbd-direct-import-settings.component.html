@@ -31,12 +31,12 @@
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select chart of accounts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'qbdDirectImportSettings.selectChartOfAccounts' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                     <ng-template let-value pTemplate="selectedItems">
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
                                             <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
-                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select Chart of Accounts')}}</div>
+                                        <div *ngIf="!value || value.length === 0">{{'qbdDirectImportSettings.selectChartOfAccountsSentenceCase' | transloco}}</div>
                                     </ng-template>
                                 </p-multiSelect>
                             </div>
@@ -49,12 +49,12 @@
                             [form]="importSettingForm"
                             [isDisableTextRequired]="false"
                             [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
-                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
+                            [placeholder]="'qbdDirectImportSettings.placeholderImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
+                            [label]="'qbdDirectImportSettings.labelImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
+                            [subLabel]="'qbdDirectImportSettings.subLabelImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
                             [isMultiLineOption]="true"
                             [isFieldMandatory]="true"
-                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
+                            [customErrorMessage]="'qbdDirectImportSettings.customErrorMessageImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
                             [isDisabled]="!QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
                             [formControllerName]="'importCategoryCode'">
                         </app-configuration-select-field>
@@ -78,7 +78,7 @@
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors in QuickBooks will be imported as merchants in ' + brandingConfig.brandName + ', available in a dropdown for employees to select when coding expenses.'"
+                        [subLabel]="'qbdDirectImportSettings.importVendorsAsMerchantsSubLabel' | transloco : { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -116,6 +116,6 @@
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'qbdDirectImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>

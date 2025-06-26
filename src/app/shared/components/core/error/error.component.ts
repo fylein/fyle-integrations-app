@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-error',
@@ -14,7 +15,8 @@ export class ErrorComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private translocoService: TranslocoService
   ) { }
 
   emailSupport(): void {
@@ -31,7 +33,7 @@ export class ErrorComponent implements OnInit {
 
     this.messageService.add({
       severity: 'success',
-      summary: 'Support Email copied to clipboard'
+      summary: this.translocoService.translate('error.clipboardSuccessMessage')
     });
 
     document.body.removeChild(selBox);

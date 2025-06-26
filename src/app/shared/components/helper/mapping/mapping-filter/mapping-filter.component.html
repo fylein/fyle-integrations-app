@@ -1,10 +1,10 @@
 <div class="tw-flex tw-justify-start tw-items-end" [formGroup]="form">
     <div class="tw-mr-16-px tw-flex tw-content-center">
-        <app-search [form]="form" [placeholder]="'Search'" [width]="'150-px'" [height]="'40-px'"></app-search>
+        <app-search [form]="form" [placeholder]="'mappingFilter.searchPlaceholder' | transloco" [width]="'150-px'" [height]="'40-px'"></app-search>
     </div>
     <div>
         <div class="tw-pl-16-px">
-            <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">Status</p>
+            <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">{{ 'mappingFilter.statusLabel' | transloco }}</p>
         </div>
         <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
             <p-dropdown appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
@@ -22,7 +22,7 @@
     <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-12-px tw-text-14-px tw-items-center tw-justify-center">
         <div class="tw-flex">
             <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
-                All
+                {{ 'mappingFilter.allFilter' | transloco }}
             </p>
             <p class="tw-pr-8-px tw-cursor-pointer" *ngFor="let option of filterOptions" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
         </div>

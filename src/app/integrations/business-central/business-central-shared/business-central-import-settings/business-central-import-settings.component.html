@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'Import settings'"
-            [contentText]="'In this section, you can choose the fields required to be imported from Dynamics 365 Business Central to ' + brandingConfig.brandName + '. '"
+        <app-configuration-step-header [headerText]="'businessCentralImportSettings.headerText' | transloco"
+            [contentText]="'businessCentralImportSettings.contentText' | transloco:{ brandName: brandingConfig.brandName }"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import the chart of accounts as categories in ' + brandingConfig.brandName "
-                        [subLabel]="'Imported accounts will appear in a dropdown under the \'category\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses. '"
+                        [label]="'businessCentralImportSettings.importChartOfAccountsLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'businessCentralImportSettings.importChartOfAccountsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -25,18 +25,18 @@
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0 tw-pb-24-px" *ngIf="importSettingForm.get('importCategories')?.value">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                Select the accounts from {{ appName }} to import as categories in {{brandingConfig.brandName}}
+                                {{ 'businessCentralImportSettings.selectAccountsLabel' | transloco:{ appName: appName, brandName: brandingConfig.brandName } }}
                                 <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                                    By default expense will be selected. Open the dropdown to select more as per your requirements.
+                                    {{ 'businessCentralImportSettings.selectAccountsDescription' | transloco }}
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select chart of accounts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                     <ng-template let-value pTemplate="selectedItems">
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
                                             <div>{{ option | sentenceCase }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
-                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select chart of accounts')}}</div>
+                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion(('businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco))}}</div>
                                     </ng-template>
                                 </p-multiSelect>
                             </div>
@@ -46,8 +46,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import vendor as merchant in ' + brandingConfig.brandName "
-                        [subLabel]="'Imported vendors will appear in a dropdown under the \'merchant\' field in ' + brandingConfig.brandName + ', enabling employees to use these values for coding their expenses.'"
+                        [label]="'businessCentralImportSettings.importVendorLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'businessCentralImportSettings.importVendorSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorAsMerchant'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -85,6 +85,6 @@
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'businessCentralImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
@@ -75,7 +76,8 @@ export class XeroCompleteExportLogComponent implements OnInit {
     private paginatorService: PaginatorService,
     private userService: UserService,
     private storageService: StorageService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -120,7 +122,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
         this.xeroShortCode = this.storageService.get('xeroShortCode');
         AccountingExportModel.assignXeroShortCode(this.xeroShortCode);
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-          AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO)
+          AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
         );
 
         this.filteredAccountingExports = accountingExports;

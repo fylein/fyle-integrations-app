@@ -18,6 +18,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-import-settings',
@@ -95,7 +96,8 @@ export class XeroImportSettingsComponent implements OnInit {
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
-    private xeroConnectorService: XeroConnectorService
+    private xeroConnectorService: XeroConnectorService,
+    private translocoService: TranslocoService
   ) { }
 
   closeModel() {
@@ -197,7 +199,7 @@ export class XeroImportSettingsComponent implements OnInit {
     const importSettingPayload = XeroImportSettingModel.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);
@@ -205,7 +207,7 @@ export class XeroImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroImportSettings.importSettingsError'));
     });
   }
 
@@ -230,7 +232,7 @@ export class XeroImportSettingsComponent implements OnInit {
           const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
           if (fyleField.length === 0) {
             this.fyleExpenseFields.pop();
-            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: this.translocoService.translate('xeroImportSettings.project'), is_dependent: false });
             this.fyleExpenseFields.push(this.customFieldOption[0]);
           }
         }
@@ -243,7 +245,7 @@ export class XeroImportSettingsComponent implements OnInit {
           const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
           if (fyleField.length === 0) {
             this.fyleExpenseFields.pop();
-            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: this.translocoService.translate('xeroImportSettings.project'), is_dependent: false });
             this.fyleExpenseFields.push(this.customFieldOption[0]);
           }
         }
@@ -283,7 +285,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroImportSettings.createCustomField'), is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
 

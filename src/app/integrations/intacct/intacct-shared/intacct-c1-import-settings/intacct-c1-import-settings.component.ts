@@ -16,6 +16,7 @@ import { SiImportSettingService } from 'src/app/core/services/si/si-configuratio
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-c1-import-settings',
@@ -66,11 +67,11 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
+  costCodeFieldOption: ExpenseField[];
 
-  costCategoryOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: true }];
+  costCategoryOption: ExpenseField[];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[];
 
   isDialogVisible: boolean = false;
 
@@ -80,20 +81,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
-  readonly dependentImportFields: IntacctDependentImportFields[] = [
-    {
-      source_field: 'Cost code',
-      options: this.costCodeFieldOption,
-      formController: 'costCodes',
-      isDisabled: false
-    },
-    {
-      source_field: 'Cost type',
-      options: this.costCategoryOption,
-      formController: 'costTypes',
-      isDisabled: false
-    }
-  ];
+  dependentImportFields: IntacctDependentImportFields[];
 
   customFieldType: string;
 
@@ -111,8 +99,30 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private storageService: StorageService,
     private workspaceService: SiWorkspaceService,
-    private helper: HelperService
+    private helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
+
+  private setupDependentAndCustomFields(): void {
+    this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
+    this.costCategoryOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
+    this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
+    const dependentImportFields: IntacctDependentImportFields[] = [
+      {
+        source_field: this.translocoService.translate('intacctC1ImportSettings.costCode'),
+        options: this.costCodeFieldOption,
+        formController: 'costCodes',
+        isDisabled: false
+      },
+      {
+        source_field: this.translocoService.translate('intacctC1ImportSettings.costType'),
+        options: this.costCategoryOption,
+        formController: 'costTypes',
+        isDisabled: false
+      }
+    ];
+    this.dependentImportFields = dependentImportFields;
+  }
 
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
@@ -125,7 +135,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   refreshDimensions() {
     this.mappingService.refreshSageIntacctDimensions().subscribe();
     this.mappingService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.syncingDataDimensions'));
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -383,9 +393,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       source_placeholder: null
     }));
 
-    this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: 'General ledger account', source_placeholder: '', is_dependent: false });
+    this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: this.translocoService.translate('intacctC1ImportSettings.generalLedgerAccount'), source_placeholder: '', is_dependent: false });
     this.fyleFields.pop();
-    this.fyleFields.push({ attribute_type: FyleField.CATEGORY, display_name: 'Category', source_placeholder: '', is_dependent: false });
+    this.fyleFields.push({ attribute_type: FyleField.CATEGORY, display_name: this.translocoService.translate('intacctC1ImportSettings.category'), source_placeholder: '', is_dependent: false });
     this.fyleFields.push(this.customFieldOption[0]);
 
     // Handle only mapped fields
@@ -452,6 +462,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.setupDependentAndCustomFields();
 
     const sageIntacctFieldsObservable = this.mappingService.getSageIntacctFields();
     const fyleFieldsObservable = this.mappingService.getFyleFields();
@@ -495,7 +506,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings!.dependent_field_settings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.importSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
@@ -516,7 +527,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctC1ImportSettings.importSettingsError'));
       });
   }
 

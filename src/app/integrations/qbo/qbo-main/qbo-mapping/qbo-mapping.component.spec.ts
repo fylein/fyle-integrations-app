@@ -11,17 +11,23 @@ import { mockMappingSettings } from '../../qbo.fixture';
 import { MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboMappingComponent', () => {
   let component: QboMappingComponent;
   let fixture: ComponentFixture<QboMappingComponent>;
   let mappingServiceSpy: jasmine.SpyObj<MappingService>;
   let routerSpy: jasmine.SpyObj<Router>;
-
+  let translocoService: jasmine.SpyObj<TranslocoService>;
   beforeEach(async () => {
     mappingServiceSpy = jasmine.createSpyObj('MappingService', ['getMappingSettings']);
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en')
+    });
     await TestBed.configureTestingModule({
       declarations: [
         QboMappingComponent,
@@ -30,12 +36,14 @@ describe('QboMappingComponent', () => {
       ],
       providers: [
         { provide: MappingService, useValue: mappingServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: Router, useValue: routerSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboMappingComponent);
     component = fixture.componentInstance;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   it('should create', () => {
@@ -79,6 +87,7 @@ describe('QboMappingComponent', () => {
     const originalFeatureFlag = brandingFeatureConfig.featureFlags.mapEmployees;
     brandingFeatureConfig.featureFlags.mapEmployees = false;
 
+    translocoService.translate.and.returnValue('Category');
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettings as unknown as MappingSettingResponse));
 
     component.ngOnInit();

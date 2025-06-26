@@ -18,6 +18,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-netsuite-export-settings',
@@ -124,7 +125,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+private translocoService: TranslocoService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -201,7 +203,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       const exportSettingPayload = NetSuiteExportSettingModel.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: NetSuiteExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteExportSettings.exportSettingsSaved'));
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(NetsuiteOnboardingState.IMPORT_SETTINGS);
@@ -211,7 +213,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteExportSettings.exportSettingsError'));
       });
     }
   }
@@ -225,14 +227,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string | undefined | null, exportType: string): string {
-    const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
-    which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
-    features that could help customize and automate your integration workflows.`;
-
     let content = '';
     // If both are not none and it is an update case else for the new addition case
     if (updatedConfiguration && existingConfiguration) {
-      content = configurationUpdate.replace('$exportType', exportType).replace('$existingExportType', existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).replace('$updatedExportType', updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()));
+      const translatedExportType = this.translocoService.translate(exportType === 'reimbursable' ? 'netsuiteExportSettings.reimbursable' : 'netsuiteExportSettings.creditCard');
+      content = this.translocoService.translate('netsuiteExportSettings.configurationChangeWarning', {
+        exportType: translatedExportType,
+        existingExportType: existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()),
+        updatedExportType: updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())
+      });
     }
 
     return content;

@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-configuration',
   standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule],
+  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
   templateUrl: './qbd-direct-configuration.component.html',
   styleUrl: './qbd-direct-configuration.component.scss'
 })

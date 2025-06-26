@@ -7,11 +7,12 @@ import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-landing',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-onboarding-landing.component.html',
   styleUrl: './qbd-direct-onboarding-landing.component.scss'
 })

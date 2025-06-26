@@ -8,7 +8,7 @@
     <div class="tw-text-center">
       <h2 class="tw-text-text-primary !tw-font-400 !tw-text-18-px">
         <span *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
-          Congratulations!
+          {{ 'onboardingDone.congratulationsText' | transloco }}
         </span>
         <span>
           {{brandingContent.doneHeaderText}}

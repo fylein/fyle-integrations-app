@@ -6,6 +6,7 @@ import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-mapping',
@@ -16,10 +17,7 @@ export class XeroMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/xero/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/xero/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -31,7 +29,8 @@ export class XeroMappingComponent implements OnInit {
 
   constructor(
     private mappingService: MappingService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   private setupPage(): void {
@@ -41,7 +40,7 @@ export class XeroMappingComponent implements OnInit {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
-              label: new SentenceCasePipe().transform(mappingPage),
+              label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/xero/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
@@ -56,6 +55,10 @@ export class XeroMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mappingPages = [
+      {label: this.translocoService.translate('xeroMapping.employee'), routerLink: '/integrations/xero/main/mapping/employee'},
+      {label: this.translocoService.translate('xeroMapping.category'), routerLink: '/integrations/xero/main/mapping/category'}
+    ];
     this.setupPage();
   }
 }

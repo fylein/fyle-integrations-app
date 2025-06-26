@@ -2,12 +2,12 @@
     <ng-template pTemplate="header">
         <tr class="tw-text-text-primary">
             <th class="tw-min-w-120-px" *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.dateTime}}</th>
-            <th>Employee</th>
+            <th>{{ 'exportLogTable.employee' | transloco }}</th>
             <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{brandingContent.tableHeaders.expenseType}}</th>
-            <th>Reference ID</th>
+            <th>{{ 'exportLogTable.referenceID' | transloco }}</th>
             <th *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.exportedAs}}</th>
-            <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL">Link to {{appName}}</th>
-            <th class="tw-min-w-120-px" *ngIf="isDashboardFailed">Link to {{ brandingConfig.brandName }}</th>
+            <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL">{{ 'exportLogTable.linkTo' | transloco }} {{appName}}</th>
+            <th class="tw-min-w-120-px" *ngIf="isDashboardFailed">{{ 'exportLogTable.linkTo' | transloco }} {{ brandingConfig.brandName }}</th>
         </tr>
     </ng-template>
 
@@ -42,14 +42,14 @@
             </td>
             <td *ngIf="!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL">
                 <div>
-                  <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in new tab'" tooltipPosition="top">
+                  <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="'exportLogTable.openInNewTab' | transloco" tooltipPosition="top">
                     <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
                   </button>
                 </div>
             </td>
             <td *ngIf="isDashboardFailed">
                 <div>
-                  <button (click)="openUrl(rowData.fyleUrl)" [pTooltip]="brandingConfig.brandId === 'co' ? 'Open in new tab' : 'Open in new tab'" tooltipPosition="top">
+                  <button (click)="openUrl(rowData.fyleUrl)" [pTooltip]="'exportLogTable.openInNewTab' | transloco" tooltipPosition="top">
                     <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
                   </button>
                 </div>

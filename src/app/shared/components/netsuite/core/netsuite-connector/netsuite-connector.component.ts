@@ -9,6 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class NetsuiteConnectorComponent implements OnInit {
     private connectorService: NetsuiteConnectorService,
     private mappingsService: NetsuiteMappingsService,
     private workspaceService: WorkspaceService,
-    public helper: HelperService
+    public helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   private clearField() {
@@ -62,14 +64,14 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.connectorService.connectNetsuite(connectorPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteConnector.connectionSuccess'));
         this.isLoading = false;
       });
     }, () => {
       this.setupConnectionStatus.emit(false);
       this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteCredential);
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionError'));
     });
   }
 

@@ -14,6 +14,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/
 import { Observable, interval, take } from 'rxjs';
 import { LowerCasePipe } from '@angular/common';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 type PollDimensionsSyncStatusParams = {
   onPollingComplete: () => void
@@ -32,7 +33,8 @@ export class HelperService {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translocoService: TranslocoService
   ) {}
 
   shouldAutoEnableAccountingPeriod(workspaceCreatedAt: Date): boolean {
@@ -121,7 +123,7 @@ export class HelperService {
   }
 
   getExportType(exportType: string | null): string {
-    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new LowerCasePipe().transform(exportType)): 'expense';
+    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new LowerCasePipe().transform(exportType)): this.translocoService.translate('services.helper.expense');
   }
 
   setOrClearValidators(selectedValue: string, value: string[], form: FormGroup): void {
@@ -272,7 +274,7 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     content = new SnakeCaseToSpaceCasePipe().transform(content);
-    return new SentenceCasePipe().transform(content);
+    return new SentenceCasePipe(this.translocoService).transform(content);
   }
 
   /**

@@ -10,19 +10,19 @@
         <div class="tw-p-24-px">
             <div *ngIf="exportPresent" class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-3/5">
-                    <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from {{ brandingConfig.brandName }} as an IIF file.</h3>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">The IIF files will be generated based on your configuration.</h5>
+                    <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">{{ 'qbdDashboard.downloadExpensesTitle' | transloco: { brandName: brandingConfig.brandName } }}</h3>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">{{ 'qbdDashboard.iifFileGenerationInfo' | transloco }}</h5>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
                         <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerExports()" [disabled]="exportInProgress || disableQBDExportButton" >
-                            <p class="tw-flex tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="!exportInProgress">Export IIF file
+                            <p class="tw-flex tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="!exportInProgress">{{ 'qbdDashboard.exportIifFileButton' | transloco }}
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                             </p>
-                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">Exporting ...
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">{{ 'qbdDashboard.exportingButton' | transloco }}
                             </p>
                         </button><br>
-                        <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">Next automated export schedule: {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
+                        <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
                     </div>
                 </div>
             </div>
@@ -32,8 +32,8 @@
                         <img *ngIf="illustrationsAllowed" src="assets/illustrations/pinktick.svg" >
                     </div>
                     <div>
-                        <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">You are all caught up!</h3>
-                        <h5 class="tw-text-14-px tw-font-400 tw-text-text-muted tw-pt-4-px"> There are no expense in {{ brandingConfig.brandName }} as per the configuration setup to export.</h5>
+                        <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">{{ 'qbdDashboard.allCaughtUp' | transloco }}</h3>
+                        <h5 class="tw-text-14-px tw-font-400 tw-text-text-muted tw-pt-4-px">{{ 'qbdDashboard.noExpensesToExport' | transloco: { brandName: brandingConfig.brandName } }}</h5>
                     </div>
                 </div>
                 <div>
@@ -48,7 +48,7 @@
     <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
             <div>
-                <h4 class="tw-font-500">IIF file logs</h4>
+                <h4 class="tw-font-500">{{ 'qbdDashboard.iifFileLogsTitle' | transloco }}</h4>
             </div>
             <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-rounded-4-px drop-down">
                 <app-export-log-filter *ngIf="totalCount > 0 || selectedDateFilter"
@@ -65,10 +65,10 @@
                 <p-table [value]="accountingExports.results">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Date and time of export</th>
-                            <th>Exported as</th>
-                            <th>Expense type</th>
-                            <th>Download IIF file</th>
+                            <th>{{ 'qbdDashboard.tableHeaderDateTime' | transloco }}</th>
+                            <th>{{ 'qbdDashboard.tableHeaderExportedAs' | transloco }}</th>
+                            <th>{{ 'qbdDashboard.tableHeaderExpenseType' | transloco }}</th>
+                            <th>{{ 'qbdDashboard.tableHeaderDownloadIif' | transloco }}</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-exports let-i="rowIndex">
@@ -81,11 +81,11 @@
                             <td>{{getExpenseType(exports.fund_source)| sentenceCase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
-                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>
+                                    <button (click)="getDownloadLink(exports,i)" [pTooltip]="'qbdDashboard.downloadTooltip' | transloco" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
-                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">Downloading...</p>
+                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">{{ 'qbdDashboard.downloading' | transloco }}</p>
                                 </div>
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
                 </p-table>
             </div>
             <div *ngIf="accountingExports.count === 0">
-                <app-zero-state-with-illustration [mainText]="'No IIF logs to show yet!'" [subText]="'All your successful exports and their details will be stored here.'"></app-zero-state-with-illustration>
+                <app-zero-state-with-illustration [mainText]="'qbdDashboard.noIifLogs' | transloco" [subText]="'qbdDashboard.noIifLogsSubtext' | transloco"></app-zero-state-with-illustration>
             </div>
         </div>
         <div *ngIf="accountingExports.count > 0" class="tw-p-24-px">

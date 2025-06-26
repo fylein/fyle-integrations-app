@@ -16,6 +16,7 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-complete-export-log',
@@ -72,7 +73,8 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -117,7 +119,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];

@@ -5,6 +5,7 @@ import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacc
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-skip-export',
@@ -49,51 +50,58 @@ export class SkipExportComponent implements OnInit {
 
   joinByOptions = [{value: JoinOptions.AND}, {value: JoinOptions.OR}];
 
-  customOperatorOptions = [
-    {
-      label: 'Is',
-      value: CustomOperatorOption.Is
-    },
-    {
-      label: 'Is empty',
-      value: CustomOperatorOption.IsEmpty
-    },
-    {
-      label: 'Is not empty',
-      value: CustomOperatorOption.IsNotEmpty
-    }
-  ];
+  customOperatorOptions: { label: string; value: any; }[];
 
-  customSelectOperatorOptions = [
-    {
-      label: 'is',
-      value: 'iexact'
-    },
-    {
-      label: 'is not',
-      value: 'not_in'
-    }
-  ];
+  customSelectOperatorOptions: { label: string; value: string; }[];
 
   valueOption1: any[] = [];
 
   valueOption2: any[] = [];
 
-  customCheckBoxValueOptions: { label: string; value: string; }[] = [
-    {
-      label: 'Yes',
-      value: 'true'
-    },
-    {
-      label: 'No',
-      value: 'false'
-    }
-  ];
+  customCheckBoxValueOptions: { label: string; value: string; }[];
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private advancedSettingsService: SiAdvancedSettingService
-  ) { }
+    private advancedSettingsService: SiAdvancedSettingService,
+    private translocoService: TranslocoService
+  ) {
+    this.customOperatorOptions = [
+      {
+        label: this.translocoService.translate('skipExport.isOperator'),
+        value: CustomOperatorOption.Is
+      },
+      {
+        label: this.translocoService.translate('skipExport.isEmptyOperator'),
+        value: CustomOperatorOption.IsEmpty
+      },
+      {
+        label: this.translocoService.translate('skipExport.isNotEmptyOperator'),
+        value: CustomOperatorOption.IsNotEmpty
+      }
+    ];
+
+    this.customSelectOperatorOptions = [
+      {
+        label: this.translocoService.translate('skipExport.isOperatorSelect'),
+        value: 'iexact'
+      },
+      {
+        label: this.translocoService.translate('skipExport.isNotOperatorSelect'),
+        value: 'not_in'
+      }
+    ];
+
+    this.customCheckBoxValueOptions = [
+      {
+        label: this.translocoService.translate('skipExport.yes'),
+        value: 'true'
+      },
+      {
+        label: this.translocoService.translate('skipExport.no'),
+        value: 'false'
+      }
+    ];
+  }
 
   private skipExportWatcher(): void {
 
@@ -396,27 +404,27 @@ export class SkipExportComponent implements OnInit {
     ) {
       operatorList.push({
         value: 'iexact',
-        label: 'is'
+        label: this.translocoService.translate('skipExport.isOperatorSelect')
       });
     } else if (conditionField === 'spent_at') {
       operatorList.push({
         value: 'lt',
-        label: 'is before'
+        label: this.translocoService.translate('skipExport.isBeforeOperator')
       });
       operatorList.push({
         value: 'lte',
-        label: 'is on or before'
+        label: this.translocoService.translate('skipExport.isOnOrBeforeOperator')
       });
     }
     if (conditionField === 'report_title') {
       operatorList.push({
         value: 'icontains',
-        label: 'contains'
+        label: this.translocoService.translate('skipExport.containsOperator')
       });
     } else if (conditionField === 'category') {
       operatorList.push({
         value: 'not_in',
-        label: 'is not'
+        label: this.translocoService.translate('skipExport.isNotOperatorSelect')
       });
     }
     return operatorList;
@@ -426,7 +434,7 @@ export class SkipExportComponent implements OnInit {
     if (type === 'BOOLEAN') {
       const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
         {
-          label: 'Is',
+          label: this.translocoService.translate('skipExport.isOperator'),
           value: 'iexact'
         }
       ];

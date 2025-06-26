@@ -3,7 +3,7 @@
     <app-landing-page-header 
         [iconPath]="'assets/logos/travelperk-logo.svg'"
         [appName]="AppName.TRAVELPERK"
-        [appDescription]="'Effortlessly automate accurate expense creation for your TravelPerk invoices as credit card expenses in ' + brandingConfig.brandName + '.'"
+        [appDescription]="'travelperkOnboardingLanding.appDescription' | transloco: { brandName: brandingConfig.brandName }"
         [isIntegrationConnected]="isIntegrationConnected"
         [isRecipeRunning]="true"
         [logoStyleClasses]="'tw-p-3'"
@@ -14,7 +14,7 @@
 
 
     <app-landing-page-body
-        [headerText]="'Learn how to seamlessly connect your TravelPerk account with '+ brandingConfig.brandName +' and optimize your workflow for an efficient integration.'" 
+        [headerText]="'travelperkOnboardingLanding.headerText' | transloco: { brandName: brandingConfig.brandName }" 
         [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
         [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
         [embedVideo]="''"

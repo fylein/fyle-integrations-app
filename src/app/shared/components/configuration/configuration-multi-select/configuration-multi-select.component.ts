@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-configuration-multi-select',
@@ -46,7 +47,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    @Inject(FormBuilder) private formBuilder: FormBuilder
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private translocoService: TranslocoService
   ) { }
 
   onMultiSelectChange() {
@@ -54,7 +56,7 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? 'Expense/Report ID' : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe().transform(memo));
+    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
   }
 
 //   DragStart(memo: string) {
