@@ -25,7 +25,7 @@
       <p-inputSwitch
         [formControlName]="formControllerName"
         [tooltipPosition]="'top'"
-        [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco) : ''"
+        [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''"
         [attr.aria-label]="label"
         role="switch"
         [attr.aria-checked]="form.get(formControllerName)?.value"

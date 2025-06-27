@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'xero.configuration.importSetting.stepName' | transloco"
-            [contentText]="'xero.configuration.importSetting.contentText' | transloco"
+            [contentText]="'xero.configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
-                        [label]="'xero.configuration.importSetting.importCategoriesLabel' | transloco"
-                        [subLabel]="'xero.configuration.importSetting.importCategoriesSubLabel' | transloco"
+                        [label]="'xero.configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'xero.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -27,9 +27,9 @@
                             [form]="importSettingsForm"
                             [options]="chartOfAccountTypesList"
                             [formControllerName]="'chartOfAccountTypes'"
-                            [label]="'xero.configuration.importSetting.chartOfAccountsLabel' | transloco"
+                            [label]="'xero.configuration.importSetting.chartOfAccountsLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [placeholder]="'xeroImportSettings.selectChartOfAccountsPlaceholder' | transloco"
-                            [subLabel]="'xero.configuration.importSetting.chartOfAccountsSubLabel' | transloco">
+                            [subLabel]="'xero.configuration.importSetting.chartOfAccountsSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                         </app-configuration-multi-select>
                     </div>
                 </div>
@@ -38,14 +38,14 @@
                     <app-configuration-toggle-field
                       [form]="importSettingsForm"
                       [label]="'xero.configuration.importSetting.importCustomersLabel' | transloco"
-                      [subLabel]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco"
+                      [subLabel]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                       [formControllerName]="'importCustomers'"
                       [disabled]="isProjectMapped"
                       [appName]="appName"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                     <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
-                        {{'xero.configuration.importSetting.notes' | transloco}}
+                        {{ 'xero.configuration.importSetting.notes' | transloco: {brandName: brandingConfig.brandName} }}
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
                         [label]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
-                        [subLabel]="'xero.configuration.importSetting.importSuppliersAsMerchantsSubLabel' | transloco"
+                        [subLabel]="'xero.configuration.importSetting.importSuppliersAsMerchantsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importSuppliersAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>

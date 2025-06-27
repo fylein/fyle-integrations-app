@@ -6,7 +6,7 @@
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
       [headerText]="'intacctLocationEntity.headerText' | transloco"
-      [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco"
+      [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco: {brandName: brandingConfig.brandName}"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>

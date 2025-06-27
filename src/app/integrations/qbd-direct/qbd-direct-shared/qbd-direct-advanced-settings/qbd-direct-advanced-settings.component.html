@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field 
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco" 
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [iconPath]="'calendar'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'qbdDirectAdvancedSettings.automaticExportMethod' | transloco"
                             [label]="'qbd_direct.configuration.advancedSettings.autoExportfrequencyLabel' | transloco"
-                            [subLabel]="'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel' | transloco : {brandName: brandingConfig.brandName}"
                             [options]="hours"
                             [isEmailPresent]="false"
                             [formControllerName]="'exportScheduleFrequency'">
@@ -48,7 +48,7 @@
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.otherPreferencesLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco">
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
 
@@ -66,7 +66,7 @@
                         [form]="advancedSettingsForm"
                         [iconPath]="'user-plus'"
                         [label]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'autoCreateMerchantsAsVendors'">
                     </app-configuration-toggle-field>
                 </div>
@@ -74,14 +74,14 @@
                 <div class="tw-my-16-px">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco">
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qbdDirectAdvancedSettings.topLevelMemo' | transloco"
                         [options]="defaultTopMemoOptions"
@@ -101,7 +101,7 @@
                         [isFieldMandatory]="true"
                         [customErrorMessage]="'qbdDirectAdvancedSettings.selectAtleastOneMemoError' | transloco"
                         [label]="'qbd_direct.configuration.advancedSettings.memoStructureLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.memoStructureSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.memoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [options]="defaultMemoFields"
                         [iconPath]="'list'"
                         [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"

@@ -5,7 +5,7 @@
     <div>
     <app-configuration-step-header
     [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
-    [contentText]="'intacctExportSettings.configureExportDescription' | transloco:{ brandName: brandingConfig.brandName }"
+    [contentText]="'intacctExportSettings.configureExportDescription' | transloco: { brandName: brandingConfig.brandName }"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
     [appName]="appName"
@@ -131,7 +131,7 @@
                     <app-configuration-toggle-field
                     [form]="exportSettingsForm"
                     [label]="'configuration.exportSetting.headerText' | transloco"
-                    [subLabel]="'intacct.configuration.exportSetting.contentText' | transloco"
+                    [subLabel]="'intacct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -156,7 +156,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
                             [label]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -214,7 +214,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'intacctExportSettings.chargeCardError' | transloco"
                             [label]="'intacct.configuration.exportSetting.corporateCard.chargeCard' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.chargeCardSublabel' | transloco"
+                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.chargeCardSublabel' | transloco: {brandName: brandingConfig.brandName}"
                             [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"

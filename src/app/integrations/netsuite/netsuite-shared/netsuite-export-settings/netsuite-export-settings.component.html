@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'netsuite.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco"
+                [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 [appName]="appName"
@@ -151,7 +151,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="'netsuite.configuration.exportSetting.headerText' | transloco"
-                        [subLabel]="'netsuite.configuration.exportSetting.contentText' | transloco"
+                        [subLabel]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
@@ -166,7 +166,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'netsuiteExportSettings.exportModule' | transloco"
                             [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseLabel' | transloco"
-                            [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco"
+                            [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'netsuiteExportSettings.selectExpenseExportType' | transloco"
@@ -277,7 +277,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'netsuiteExportSettings.expenseState' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco"
+                            [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateSubLabel' | transloco"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
@@ -292,7 +292,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'netsuiteExportSettings.howExpensesGrouped' | transloco"
                             [label]="'netsuiteExportSettings.howShouldExpensesBeGrouped' | transloco"
-                            [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco"
+                            [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'netsuiteExportSettings.selectExpenseGrouping' | transloco"

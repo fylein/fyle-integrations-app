@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'configuration.importSetting.stepName' | transloco"
-            [contentText]="'configuration.importSetting.contentText' | transloco"
+            [contentText]="'configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'configuration.importSetting.importCategoriesLabel' | transloco"
-                        [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco"
+                        [label]="'configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -25,7 +25,7 @@
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.get('importCategories')?.value" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                {{'configuration.importSetting.chartOfAccountTypes' | transloco}}
+                                {{ 'configuration.importSetting.chartOfAccountTypes' | transloco: {brandName: brandingConfig.brandName} }}
                                 <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                                     {{'configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
                                 </p>
@@ -64,8 +64,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
-                      [label]="'configuration.importSetting.importItemsLabel' | transloco"
-                      [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco"
+                      [label]="'configuration.importSetting.importItemsLabel' | transloco: {brandName: brandingConfig.brandName}"
+                      [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                       [formControllerName]="'importItems'"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
