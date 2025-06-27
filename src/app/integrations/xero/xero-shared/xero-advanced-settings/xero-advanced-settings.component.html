@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco" 
-                        [subLabel]="'xero.configuration.advancedSettings.scheduleSubLabel' | transloco"
+                        [subLabel]="'xero.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'xeroAdvancedSettings.automaticExportMethodError' | transloco"
                             [label]="'xeroAdvancedSettings.exportFrequencyLabel' | transloco"
-                            [subLabel]="'xero.configuration.advancedSettings.frequencySubLabel' | transloco"
+                            [subLabel]="'xero.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -50,7 +50,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'xero.configuration.advancedSettings.customPreferencesLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco">
+                    [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -95,7 +95,7 @@
                 <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [subLabel]="'xeroAdvancedSettings.autoCreateMerchantSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
@@ -103,7 +103,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco">
+                    [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -112,7 +112,7 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'xeroAdvancedSettings.itemLevelDescriptionError' | transloco"
                     [label]="'xero.configuration.advancedSettings.memoStructureLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.memoStructureSubLabel' | transloco"
+                    [subLabel]="'xero.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [options]="defaultMemoFields"
                     [iconPath]="'list'"
                     [placeholder]="'xeroAdvancedSettings.setDescriptionPlaceholder' | transloco"

@@ -5,7 +5,7 @@
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
         <div>
             <app-configuration-step-header [headerText]="'qbd_direct.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'qbd_direct.configuration.exportSetting.contentText' | transloco" [redirectLink]="redirectLink"
+                [contentText]="'qbd_direct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}" [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding" [appName]="appName" (refreshDimension)="refreshDimensions()">
             </app-configuration-step-header>
         </div>
@@ -16,7 +16,7 @@
                     <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field [form]="exportSettingsForm"
                             [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseLabel' | transloco"
-                            [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseSubLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [formControllerName]="'reimbursableExpense'"
                             [isSectionHeader]="true">
                         </app-configuration-toggle-field>
@@ -28,7 +28,7 @@
                             <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'qbdDirectExportSettings.exportModule' | transloco"
                                 [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeLabel' | transloco"
-                                [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeSubLabel' | transloco"
+                                [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                                 [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
@@ -45,7 +45,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
                             [label]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingLabel' | transloco"
-                            [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="employeeMappingOptions"
                             [iconPath]="'user-two'"
                             [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
@@ -78,7 +78,7 @@
                         class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.expenseState' | transloco"
-                            [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseStateLabel' | transloco"
+                            [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseStateLabel' | transloco : {brandName: brandingConfig.brandName}"
                             [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseStateSubLabel' | transloco"
                             [options]="expenseStateOptions"
                             [iconPath]="'list'"
@@ -108,7 +108,7 @@
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
                             [label]="('qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseDateLabel' | transloco) + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
-                            [subLabel]="('qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseDateSubLabel' | transloco)"
+                            [subLabel]="('qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseDateSubLabel' | transloco: {brandName: brandingConfig.brandName})"
                             [options]="reimbursableExpenseGroupingDateOptions" [iconPath]="'calendar'"
                             [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"
                             [formControllerName]="'reimbursableExportDate'">
@@ -119,7 +119,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="'qbd_direct.configuration.exportSetting.headerText' | transloco"
-                        [subLabel]="'qbd_direct.configuration.exportSetting.creditCardExpenseSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
@@ -134,7 +134,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.exportModule' | transloco"
                             [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseTypeLabel' | transloco"
-                            [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseTypeSubLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
@@ -149,7 +149,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
                                 [label]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingLabel' | transloco"
-                                [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel' | transloco"
+                                [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                                 [options]="employeeMappingOptions"
                                 [iconPath]="'user-two'"
                                 [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
@@ -221,7 +221,7 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qbdDirectExportSettings.expenseState' | transloco"
-                        [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco"
+                        [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseStateSubLabel' | transloco"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'list'"
@@ -253,7 +253,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
                         [label]="('qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateLabel' | transloco) + (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
-                        [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateSubLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"

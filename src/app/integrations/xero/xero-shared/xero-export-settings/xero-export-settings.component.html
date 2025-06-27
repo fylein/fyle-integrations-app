@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'xero.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'xero.configuration.exportSetting.stepSubLabel' | transloco"
+                [contentText]="'xero.configuration.exportSetting.stepSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                 [redirectLink]="redirectLink"
                 [appName]="appName"
                 [showSyncButton]="isOnboarding"
@@ -105,7 +105,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="'xero.configuration.exportSetting.headerText' | transloco"
-                        [subLabel]="'xero.configuration.exportSetting.contentText' | transloco"
+                        [subLabel]="'xero.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
@@ -135,7 +135,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'xeroExportSettings.bankAccount' | transloco"
-                            [subLabel]="'xero.configuration.exportSetting.corporateCard.cccExpenseBankAccountSubLabel' | transloco"
+                            [subLabel]="'xero.configuration.exportSetting.corporateCard.cccExpenseBankAccountSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [label]="'xero.configuration.exportSetting.corporateCard.cccExpenseBankAccountLabel' | transloco"
                             [destinationAttributes]="bankAccounts"
                             [destinationOptionKey]="XeroExportSettingDestinationOptionKey.BANK_ACCOUNT"
@@ -155,7 +155,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'xeroExportSettings.expenseState' | transloco"
-                            [label]="'xero.configuration.exportSetting.cccExpenseStateLabel' | transloco"
+                            [label]="'xero.configuration.exportSetting.cccExpenseStateLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [subLabel]="'xero.configuration.exportSetting.corporateCard.cccExpenseStateSubLabel' | transloco"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"

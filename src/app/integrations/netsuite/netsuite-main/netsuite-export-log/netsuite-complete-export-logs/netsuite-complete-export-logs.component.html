@@ -30,13 +30,13 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="'exportLog.complete.zeroState.headerText' | transloco"
-            [subText]="'exportLog.complete.zeroState.subHeaderText' | transloco">
+            [mainText]="'exportLog.completeExportLogZeroStateHeaderText' | transloco"
+            [subText]="'exportLog.completeExportLogZeroStateSubHeaderText' | transloco">
         </app-zero-state-with-illustration>
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-        [mainText]="'exportLog.complete.countZeroState.headerText' | transloco"
-        [subText]="'exportLog.complete.countZeroState.subHeaderText' | transloco">
+        [mainText]="'exportLog.completeExportLogCountZeroStateHeaderText' | transloco"
+        [subText]="'exportLog.completeExportLogCountZeroStateSubHeaderText' | transloco">
     </app-zero-state-with-illustration>
 </div>

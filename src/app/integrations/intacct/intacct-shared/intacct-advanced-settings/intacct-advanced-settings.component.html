@@ -17,14 +17,14 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'intacctAdvancedSettings.automation' | transloco"
-                    [subLabel]="'intacct.configuration.advancedSettings.automationSubLabel' | transloco">
+                    [subLabel]="'intacct.configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
                 <div class="tw-my-16-px">
                     <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                         <app-configuration-toggle-field
                             [form]="advancedSettingsForm"
                             [label]="'intacctAdvancedSettings.scheduleAutomaticExport' | transloco"
-                            [subLabel]="'intacct.configuration.advancedSettings.scheduleSubLabel' | transloco"
+                            [subLabel]="'intacct.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [formControllerName]="'exportSchedule'"
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
@@ -36,7 +36,7 @@
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'intacctAdvancedSettings.mandatoryErrorListNameAutomaticExport' | transloco"
                                 [label]="'intacctAdvancedSettings.setupExportFrequency' | transloco"
-                                [subLabel]="'intacct.configuration.advancedSettings.frequencySubLabel' | transloco"
+                                [subLabel]="'intacct.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
                                 [options]="hours"
                                 [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                                 [formControllerName]="'exportScheduleFrequency'"
@@ -74,7 +74,7 @@
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
                 [label]="'intacct.configuration.advancedSettings.customPreferencesLabel' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.customPreferencesSubLabel' | transloco">
+                [subLabel]="'intacct.configuration.advancedSettings.customPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
             </app-configuration-step-sub-header>
             <div  class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field
@@ -119,14 +119,15 @@
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
                 [label]="'intacctAdvancedSettings.customization' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.customizeSectionSubLabel' | transloco">
+                [subLabel]="'intacct.configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                >
             </app-configuration-step-sub-header>
             @if (brandingFeatureConfig.featureFlags.advancedSettings.showTopLevelMemoFieldInIntacct) {
                 <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [label]="'intacct.configuration.advancedSettings.setTopMemoField' | transloco"
-                    [subLabel]="'intacct.configuration.advancedSettings.topMemoStructureSubLabel' | transloco"
+                    [subLabel]="'intacct.configuration.advancedSettings.topMemoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [options]="defaultTopMemoFields"
                     [iconPath]="'list'"
                     [placeholder]="'intacctAdvancedSettings.placeholderTopMemo' | transloco"
@@ -143,7 +144,7 @@
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
                 [label]="'intacct.configuration.advancedSettings.setDescriptionField' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.memoStructureSubLabel' | transloco"
+                [subLabel]="'intacct.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                 [options]="defaultMemoFields"
                 [iconPath]="'list'"
                 [placeholder]="'intacctAdvancedSettings.placeholderDescription' | transloco"
@@ -176,7 +177,7 @@
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
                 [label]="'intacct.configuration.advancedSettings.dfvLabel' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco">
+                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco: {brandName: brandingConfig.brandName}">
             </app-configuration-step-sub-header>
             <div class="tw-pt-28-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.location' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>

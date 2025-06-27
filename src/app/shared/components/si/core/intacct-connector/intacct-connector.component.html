@@ -5,7 +5,7 @@
    <div>
       <app-configuration-step-header *ngIf="!isLoading"
         [headerText]="'intacctConnector.headerText' | transloco"
-        [contentText]="'intacct.configuration.connector.subLabel' | transloco"
+        [contentText]="'intacct.configuration.connector.subLabel' | transloco: {brandName: brandingConfig.brandName}"
         [redirectLink]="redirectLink">
       </app-configuration-step-header>
    </div>

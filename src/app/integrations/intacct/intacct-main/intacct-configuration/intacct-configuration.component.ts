@@ -28,9 +28,9 @@ export class IntacctConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('intacct.configuration.exportSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/export_settings'},
-      {label: this.translocoService.translate('intacct.configuration.importSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/import_settings'},
-      {label: this.translocoService.translate('intacct.configuration.advancedSettings.stepName'), routerLink: '/integrations/intacct/main/configuration/advanced_settings'}
+      {label: this.translocoService.translate('configuration.exportSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/export_settings'},
+      {label: this.translocoService.translate('configuration.importSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/import_settings'},
+      {label: this.translocoService.translate('configuration.advancedSettings.stepName'), routerLink: '/integrations/intacct/main/configuration/advanced_settings'}
     ]
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
