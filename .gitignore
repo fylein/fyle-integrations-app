@@ -64,8 +64,8 @@ src/environments/environment.json
 src/environments/c1-environment.json
 src/environments/fyle-environment.json
 src/app/branding/config.json
-src/app/branding/c1-config.json
-src/app/branding/fyle-config.json
+src/app/branding/c1/config.json
+src/app/branding/fyle/config.json
 
 # Tests
 cypress/videos

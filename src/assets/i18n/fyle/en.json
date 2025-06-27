@@ -142,7 +142,7 @@
         "importCustomersLabel": "Import customers from NetSuite",
         "importCustomersSubLabel": "The customers in NetSuite will be imported as projects in {{brandName}} and will be a selectable field while creating an expense",
         "taxCodeLabel": "Import tax from NetSuite",
-        "taxCodeSubLabel": "The imported tax codes from NetSuite will be set as tax group in ",
+        "taxCodeSubLabel": "The imported tax codes from NetSuite will be set as tax group in {{brandName}}. This will be a selectable field while creating an expense",
         "defaultTaxCodeLabel": "Select default tax code",
         "importSuppliersAsMerchantsLabel": "Import suppliers from NetSuite as merchants",
         "importSuppliersAsMerchantsSubLabel": "The suppliers in NetSuite will be imported as merchants in {{brandName}} and will be a selectable field while creating an expense.",

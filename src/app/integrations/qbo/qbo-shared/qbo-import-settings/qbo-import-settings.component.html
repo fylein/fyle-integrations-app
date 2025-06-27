@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'configuration.importSettings.stepName' | transloco"
-            [contentText]="'configuration.importSettings.contentText' | transloco"
+        <app-configuration-step-header [headerText]="'configuration.importSetting.stepName' | transloco"
+            [contentText]="'configuration.importSetting.contentText' | transloco"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'configuration.importSettings.importCategoriesLabel' | transloco"
-                        [subLabel]="'configuration.importSettings.importCategoriesSubLabel' | transloco"
+                        [label]="'configuration.importSetting.importCategoriesLabel' | transloco"
+                        [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -25,9 +25,9 @@
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.get('importCategories')?.value" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                {{'configuration.importSettings.chartOfAccountTypes' | transloco}}
+                                {{'configuration.importSetting.chartOfAccountTypes' | transloco}}
                                 <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                                    {{'configuration.importSettings.chartOfAccountTypesSubLabel' | transloco}}
+                                    {{'configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
@@ -64,8 +64,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
-                      [label]="'configuration.importSettings.importItemsLabel' | transloco"
-                      [subLabel]="'configuration.importSettings.importItemsSubLabel' | transloco"
+                      [label]="'configuration.importSetting.importItemsLabel' | transloco"
+                      [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco"
                       [formControllerName]="'importItems'"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -97,7 +97,7 @@
                   <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'configuration.importSettings.importVendorsAsMerchantsLabel' | transloco"
+                        [label]="'configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
                         [subLabel]="'qboImportSettings.importVendorsAsMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">

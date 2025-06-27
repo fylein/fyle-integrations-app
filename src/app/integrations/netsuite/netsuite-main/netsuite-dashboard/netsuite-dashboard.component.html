@@ -22,8 +22,8 @@
 
     <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="'dashboard.export.zeroState.headerText'"
-        [subHeaderText]="'dashboard.export.zeroState.subHeaderText'">
+        [headerText]="'dashboard.dashboardExportZeroStateHeaderText'"
+        [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText'">
     </app-zero-state>
 
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
