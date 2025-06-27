@@ -9,7 +9,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
-import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -281,13 +281,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
