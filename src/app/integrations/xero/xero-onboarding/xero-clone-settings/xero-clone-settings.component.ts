@@ -14,7 +14,6 @@ import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
 import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
-import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -30,6 +29,7 @@ import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-s
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
+import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -153,7 +153,8 @@ export class XeroCloneSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private xeroOnboardingService: XeroOnboardingService
   ) { }
 
   resetCloneSetting(): void {
@@ -231,7 +232,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = this.xeroOnboardingService.getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,

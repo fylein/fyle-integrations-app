@@ -11,7 +11,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { TenantMapping, TenantMappingModel, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
-import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -21,6 +20,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -94,7 +94,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private cloneSettingService: CloneSettingService,
     private xeroHelperService: XeroHelperService,
     private storageService: StorageService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private xeroOnboardingService: XeroOnboardingService
   ) { }
 
   private checkCloneSettingsAvailablity(): void {
@@ -267,7 +268,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onboardingSteps = new XeroOnboardingModel().getOnboardingSteps(this.translocoService.translate('xero.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(this.translocoService.translate('xero.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
     this.setupPage();
   }
 
