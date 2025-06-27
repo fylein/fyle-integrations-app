@@ -17,7 +17,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 // Add to existing imports
-import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import { QBOEmployeeSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
@@ -122,7 +122,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   employeeMappingOptions: SelectFormOption[] = EmployeeSettingsService.getEmployeeFieldMappingOptions();
 
-  autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = QboEmployeeSettingsService.getAutoMapEmployeeOptions();
 
   employeeSetting: QBOEmployeeSettingGet;
 
@@ -197,7 +197,7 @@ export class QboExportSettingsComponent implements OnInit {
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
-      const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
+      const employeeSettingPayload = QboEmployeeSettingsService.constructPayload(this.employeeSettingForm);
 
       concat(
         this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),

@@ -13,7 +13,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
-import { QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
@@ -32,6 +31,7 @@ import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-s
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
+import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -48,7 +48,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   employeeMappingOptions: SelectFormOption[] = EmployeeSettingsService.getEmployeeFieldMappingOptions();
 
-  autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = QboEmployeeSettingsService.getAutoMapEmployeeOptions();
 
   employeeSettingForm: FormGroup;
 
@@ -446,7 +446,7 @@ export class QboCloneSettingsComponent implements OnInit {
         this.workspaceService.setWorkspaceId(workspaceId);
 
         // Employee Settings
-        this.employeeSettingForm = QBOEmployeeSettingModel.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
+        this.employeeSettingForm = QboEmployeeSettingsService.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
 
         // Export Settings
         this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
