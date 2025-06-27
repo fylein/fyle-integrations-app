@@ -3,7 +3,7 @@ import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, Expe
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 

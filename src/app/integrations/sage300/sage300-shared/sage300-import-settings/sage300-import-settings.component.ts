@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -17,6 +17,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -395,7 +396,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       } else {
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.sage300ImportCodeFieldCodeConfig));
       }
     });
 
@@ -404,7 +405,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importVendorCode');
       } else {
         this.importSettingForm.controls.importVendorCode.clearValidators();
-        this.importSettingForm.controls.importVendorCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.VENDOR, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importVendorCode.setValue(ImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.VENDOR, this.sage300ImportCodeFieldCodeConfig));
       }
     });
   }

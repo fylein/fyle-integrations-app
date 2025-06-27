@@ -24,8 +24,8 @@ import {
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
-import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 describe('QboImportSettingsComponent', () => {
   let component: QboImportSettingsComponent;
@@ -384,7 +384,7 @@ describe('QboImportSettingsComponent', () => {
       });
       component.importSettings = mockImportSettings;
       component.qboImportCodeFieldCodeConfig = mockImportCodeFieldConfig;
-      spyOn(ImportSettingsModel, 'getImportCodeField').and.returnValue(false);
+      spyOn(ImportSettingsService, 'getImportCodeField').and.returnValue(false);
       component['createCOAWatcher']();
     });
 
@@ -393,7 +393,7 @@ describe('QboImportSettingsComponent', () => {
 
       expect(component.importSettingForm.controls.chartOfAccountTypes.value).toEqual(['Expense']);
       expect(component.importSettingForm.controls.importCategoryCode.validator).toBeNull();
-      expect(ImportSettingsModel.getImportCodeField).toHaveBeenCalled();
+      expect(ImportSettingsService.getImportCodeField).toHaveBeenCalled();
     });
 
     it('should mark importCategoryCode as required when importCategories is enabled', () => {

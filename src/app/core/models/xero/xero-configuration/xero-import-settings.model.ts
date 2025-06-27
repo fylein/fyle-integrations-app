@@ -5,10 +5,10 @@ import { MappingSetting } from "../../db/mapping-setting.model";
 import { MappingDestinationField, MappingSourceField, XeroFyleField } from "../../enum/enum.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
-import { ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
+import { ImportSettingsService } from "src/app/core/services/common/import-settings.service";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -57,7 +57,7 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 }
 
 
-export class XeroImportSettingModel extends ImportSettingsModel {
+export class XeroImportSettingModel extends ImportSettingsService {
 
   static getChartOfAccountTypesList(): string[] {
     return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
@@ -73,7 +73,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
         is_custom: false,
         source_placeholder: null
       };
-      additionalOption = [ImportSettingsModel.createFormGroup(additionalMappingSetting)];
+      additionalOption = [ImportSettingsService.createFormGroup(additionalMappingSetting)];
     }
     const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(this.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
@@ -12,6 +12,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { Router } from '@angular/router';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -138,7 +139,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       is_custom: false,
       source_placeholder: null
     };
-    expenseFields.push(ImportSettingsModel.createFormGroup(defaultFieldData));
+    expenseFields.push(ImportSettingsService.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
 
