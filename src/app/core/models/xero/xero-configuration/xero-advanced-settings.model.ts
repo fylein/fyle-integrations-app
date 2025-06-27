@@ -4,9 +4,9 @@ import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
-import { ExportSettingModel } from "../../common/export-settings.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -132,7 +132,7 @@ export class XeroAdvancedSettingModel extends AdvancedSettingsService {
       if (isCloneSettings) {
         paymentAccount = advancedSettingsForm.get('billPaymentAccount')?.value;
       } else {
-        paymentAccount = ExportSettingModel.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
+        paymentAccount = ExportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
       }
     }
     const advancedSettingPayload: XeroAdvancedSettingPost = {

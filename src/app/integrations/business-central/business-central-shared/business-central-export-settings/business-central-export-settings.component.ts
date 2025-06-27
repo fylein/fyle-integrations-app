@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { ExportModuleRule, ExportSettingModel, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
+import { ExportModuleRule, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
 import { AppName, BCExportSettingDestinationOptionKey, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -16,6 +16,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -156,22 +157,22 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
         false,
         reimbursableExportGroup,
         this.exportSettingForm.controls.reimbursableExportDate.value
       );
 
-      ExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
         this.reimbursableExpenseGroupingDateOptions
       );
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
 
-      ExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
         this.cccExpenseGroupingDateOptions
       );

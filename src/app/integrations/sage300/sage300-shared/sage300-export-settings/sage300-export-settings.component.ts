@@ -5,7 +5,7 @@ import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportSettingDestinationOptionKey, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
-import { ExportSettingModel as CommonExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -17,6 +17,8 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -124,10 +126,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup');
-      CommonExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
         validOptions
       );
@@ -135,10 +137,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
-      this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup');
-      CommonExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
         validOptions
       );

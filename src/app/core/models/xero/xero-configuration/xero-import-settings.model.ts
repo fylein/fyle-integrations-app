@@ -5,10 +5,10 @@ import { MappingSetting } from "../../db/mapping-setting.model";
 import { MappingDestinationField, MappingSourceField, XeroFyleField } from "../../enum/enum.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
-import { ExportSettingModel } from "../../common/export-settings.model";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -101,7 +101,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
       if (isCloneSettings) {
         defaultTaxCode = importSettingsForm.get('defaultTaxCode')?.value;
       } else {
-        defaultTaxCode = ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
+        defaultTaxCode = ExportSettingsService.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
       }
     }
     const importSettingPayload: XeroImportSettingPost = {

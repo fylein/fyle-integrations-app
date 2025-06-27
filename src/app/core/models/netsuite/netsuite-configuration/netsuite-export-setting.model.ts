@@ -6,6 +6,7 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 
 export type NetsuiteExportSettingWorkspaceGeneralSettingPost = {
@@ -40,7 +41,7 @@ export type NetSuiteExportSettingGet = {
 }
 
 // TODO: Move to Service
-export class NetSuiteExportSettingModel extends ExportSettingModel {
+export class NetSuiteExportSettingModel extends ExportSettingsService {
 
     static getEmployeeFieldOptions(): SelectFormOption[] {
       return [

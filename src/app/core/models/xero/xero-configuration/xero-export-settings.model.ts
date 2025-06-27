@@ -1,10 +1,10 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
-import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, SplitExpenseGrouping, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { brandingConfig, brandingContent } from "src/app/branding/branding-config";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 export type XeroExpenseGroupSettingPost = {
   ccc_expense_state: XeroCCCExpenseState;
@@ -230,7 +230,7 @@ export class XeroExportSettingModel {
       if (isCloneSettings) {
         bankAccount = exportSettingsForm.get('bankAccount')?.value;
       } else {
-        bankAccount = ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
+        bankAccount = ExportSettingsService.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
       }
     }
 

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { EmailOption } from 'src/app/core/models/common/advanced-settings.model';
-import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { ExpenseField, ImportCodeFieldConfigType, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -31,6 +30,7 @@ import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
+import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -45,7 +45,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
-  employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
+  employeeMappingOptions: SelectFormOption[] = EmployeeSettingsService.getEmployeeFieldMappingOptions();
 
   autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
 

@@ -5,6 +5,7 @@ import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -41,7 +42,7 @@ export type QBOExportSettingGet = {
 }
 
 // TODO: Move to Service
-export class QBOExportSettingModel extends ExportSettingModel {
+export class QBOExportSettingModel extends ExportSettingsService {
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {
       EMPLOYEE: [

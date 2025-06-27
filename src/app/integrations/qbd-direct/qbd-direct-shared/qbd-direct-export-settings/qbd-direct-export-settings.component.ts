@@ -16,14 +16,15 @@ import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -62,7 +63,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   nameInJEOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingModel.nameInJEOptions();
 
-  employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
+  employeeMappingOptions: SelectFormOption[] = EmployeeSettingsService.getEmployeeFieldMappingOptions();
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -300,9 +301,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
 
-      ExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('reimbursableExportDate'),
         this.reimbursableExpenseGroupingDateOptions
       );
@@ -323,14 +324,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
       const allowPostedAt = cccModuleWithPostedAtDateSelected === currentCCCModule;
 
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
         isCoreCCCModule,
         creditCardExportGroupValue,
         this.exportSettingsForm.controls.creditCardExportDate.value,
         { allowPostedAt }
       );
 
-      ExportSettingModel.clearInvalidDateOption(
+      ExportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('creditCardExportDate'),
         this.cccExpenseGroupingDateOptions
       );

@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -19,6 +19,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-netsuite-export-settings',
@@ -297,14 +298,14 @@ private translocoService: TranslocoService
         this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
         this.exportSettingForm.controls.creditCardExportGroup.disable();
       }
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
         true,
         this.exportSettingForm.controls.creditCardExportGroup.value,
         this.exportSettingForm.controls.creditCardExportDate.value,
         { allowPostedAt }
       );
     } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
         false,
         this.exportSettingForm.controls.creditCardExportGroup.value,
         this.exportSettingForm.controls.creditCardExportDate.value,
@@ -312,7 +313,7 @@ private translocoService: TranslocoService
       );
     }
 
-    ExportSettingModel.clearInvalidDateOption(
+    ExportSettingsService.clearInvalidDateOption(
       this.exportSettingForm.get('creditCardExportDate'),
       this.cccExpenseGroupingDateOptions
     );
@@ -331,13 +332,13 @@ private translocoService: TranslocoService
 
   private setupCustomDateOptionWatchers(): void {
     if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
     }
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
 
-        ExportSettingModel.clearInvalidDateOption(
+        ExportSettingsService.clearInvalidDateOption(
           this.exportSettingForm.get('reimbursableExportDate'),
           this.reimbursableExpenseGroupingDateOptions
         );
