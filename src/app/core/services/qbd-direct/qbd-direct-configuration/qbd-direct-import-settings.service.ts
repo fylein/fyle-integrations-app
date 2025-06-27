@@ -20,10 +20,6 @@ export class QbdDirectImportSettingsService extends ImportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  constructor() {
-    super();
-  }
-
   static getChartOfAccountTypesList(): string[] {
     const typeList = [
       'Other Expense', 'Cost Of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',

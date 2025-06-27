@@ -17,10 +17,6 @@ export class QbdDirectAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService: QbdWorkspaceService = inject(QbdWorkspaceService);
 
-  constructor() { 
-    super();
-  }
-
   static defaultMemoFields(): string[] {
     return ['employee_name', 'employee_email',  'card_number', 'purpose', 'merchant', 'spent_on', 'expense_key', 'expense_link'];
   }

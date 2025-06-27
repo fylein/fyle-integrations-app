@@ -27,10 +27,6 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
   
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  constructor() {
-    super();
-  }
-
   static override getDefaultMemoOptions(): string[] {
     return AdvancedSettingsService.getDefaultMemoOptions();
   }

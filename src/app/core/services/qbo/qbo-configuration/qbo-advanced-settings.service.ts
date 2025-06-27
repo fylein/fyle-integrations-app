@@ -24,10 +24,6 @@ export class  QboAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  constructor() {
-    super();
-  }
-
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {

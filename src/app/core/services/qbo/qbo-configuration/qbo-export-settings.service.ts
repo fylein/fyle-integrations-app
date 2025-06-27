@@ -30,10 +30,6 @@ export class QboExportSettingsService extends ExportSettingsService {
 
   private translocoService: TranslocoService = inject(TranslocoService);
 
-  constructor() {
-    super();
-  }
-
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {
       EMPLOYEE: [
