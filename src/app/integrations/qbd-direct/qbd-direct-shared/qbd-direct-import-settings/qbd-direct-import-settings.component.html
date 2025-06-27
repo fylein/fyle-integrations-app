@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'qbd_direct.configuration.importSetting.stepName' | transloco"
-            [contentText]="'qbd_direct.configuration.importSetting.contentText' | transloco"
+            [contentText]="'qbd_direct.configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'qbd_direct.configuration.importSetting.importCategoriesLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.importSetting.importCategoriesSubLabel' | transloco"
+                        [label]="'qbd_direct.configuration.importSetting.importCategoriesLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.importSetting.importCategoriesSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -67,8 +67,8 @@
                             exportSettings.credit_card_expense_export_type !== QbdDirectCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'qbd_direct.configuration.importSetting.importItemsLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.importSetting.importItemsSubLabel' | transloco"
+                        [label]="'qbd_direct.configuration.importSetting.importItemsLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.importSetting.importItemsSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importItems'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -77,7 +77,7 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'qbd_direct.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
+                        [label]="'qbd_direct.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [subLabel]="'qbdDirectImportSettings.importVendorsAsMerchantsSubLabel' | transloco : { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">

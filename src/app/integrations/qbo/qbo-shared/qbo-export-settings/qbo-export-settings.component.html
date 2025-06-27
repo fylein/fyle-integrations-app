@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'configuration.exportSettings.stepName' | transloco"
-                [contentText]="'configuration.exportSettings.contentText' | transloco"
+                [contentText]="'configuration.exportSettings.contentText' | transloco: {brandName: brandingConfig.brandName}"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimension)="refreshDimensions()">
@@ -47,7 +47,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
                                     [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'qboExportSettings.bankAccountJournalSubLabel' : 'qboExportSettings.bankAccountExportedSubLabel') | transloco"
+                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'qboExportSettings.bankAccountJournalSubLabel' : 'qboExportSettings.bankAccountExportedSubLabel') | transloco: {brandName: brandingConfig.brandName}"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -180,7 +180,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="'configuration.exportSettings.headerText' | transloco"
-                        [subLabel]="'configuration.exportSettings.contentText' | transloco"
+                        [subLabel]="'configuration.exportSettings.contentText' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">

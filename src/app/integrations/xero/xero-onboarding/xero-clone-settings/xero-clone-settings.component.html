@@ -232,7 +232,7 @@
                     [formControllerName]="'importCustomers'"
                     [inputType]="InputType.TOGGLE"
                     [isDisabled]="isProjectMapped"
-                    [tooltipText]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco">
+                    [tooltipText]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-clone-setting-field>
             </div>
 
@@ -383,7 +383,7 @@
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'user-plus'"
-                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'"
                     [inputType]="InputType.TOGGLE"

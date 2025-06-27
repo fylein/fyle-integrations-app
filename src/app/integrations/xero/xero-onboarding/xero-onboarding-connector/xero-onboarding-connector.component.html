@@ -8,7 +8,7 @@
             <div>
                 <app-configuration-step-header
                     [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
-                    [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco"
+                    [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>

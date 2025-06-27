@@ -29,7 +29,7 @@ export class NetsuiteMainComponent {
   ) {
     this.modules = [
       {label: this.translocoService.translate('netsuiteMain.dashboardTab'), routerLink: '/integrations/netsuite/main/dashboard'},
-      {label: this.translocoService.translate('common.exportLogTab'), routerLink: '/integrations/netsuite/main/export_log'},
+      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/netsuite/main/export_log'},
       {label: this.translocoService.translate('netsuiteMain.mappingTab'), routerLink: '/integrations/netsuite/main/mapping'},
       {label: this.translocoService.translate('netsuiteMain.configurationTab'), routerLink: '/integrations/netsuite/main/configuration'}
     ];

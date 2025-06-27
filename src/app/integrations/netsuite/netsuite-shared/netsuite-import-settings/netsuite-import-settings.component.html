@@ -5,7 +5,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'netsuite.configuration.importSetting.stepName' | transloco"
-            [contentText]="'netsuite.configuration.importSetting.contentText' | transloco"
+            [contentText]="'netsuite.configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -17,8 +17,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="getCategoryLabel() + ('netsuite.configuration.importSetting.importCategoriesLabel' | transloco)"
-                        [subLabel]="getCategorySubLabel() + ('netsuite.configuration.importSetting.importCategoriesSubLabel' | transloco)"
+                        [label]="getCategoryLabel() + ('netsuite.configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName})"
+                        [subLabel]="getCategorySubLabel() + ('netsuite.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName})"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -28,8 +28,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'netsuite.configuration.importSetting.importNetsuiteEmployeesLabel' | transloco"
-                        [subLabel]="'netsuite.configuration.importSetting.importNetsuiteEmployeesSubLabel' | transloco"
+                        [label]="'netsuite.configuration.importSetting.importNetsuiteEmployeesLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'netsuite.configuration.importSetting.importNetsuiteEmployeesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importNetsuiteEmployees'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>

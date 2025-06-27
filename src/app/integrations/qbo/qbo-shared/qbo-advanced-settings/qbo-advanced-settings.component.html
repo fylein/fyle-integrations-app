@@ -17,7 +17,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'qboAdvancedSettings.automation' | transloco"
-                    [subLabel]="'configuration.advancedSettings.automationSubLabel' | transloco">
+                    [subLabel]="'configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'qboAdvancedSettings.scheduleAutomaticExport' | transloco"
-                        [subLabel]="'configuration.advancedSettings.scheduleSubLabel' | transloco"
+                        [subLabel]="'configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'qboAdvancedSettings.automaticExportMethod' | transloco"
                             [label]="'qboAdvancedSettings.setupExportFrequency' | transloco"
-                            [subLabel]="'configuration.advancedSettings.frequencySubLabel' | transloco"
+                            [subLabel]="'configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -50,7 +50,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'configuration.advancedSettings.otherPreferencesLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.otherPreferencesSubLabel' | transloco">
+                    [subLabel]="'configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -105,7 +105,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco"
+                    [subLabel]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [formControllerName]="'autoCreateMerchantsAsVendors'">
                 </app-configuration-toggle-field>
             </div>
@@ -113,7 +113,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'qboAdvancedSettings.customization' | transloco"
-                    [subLabel]="'configuration.advancedSettings.customizeSectionSubLabel' | transloco">
+                    [subLabel]="'configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -122,7 +122,7 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'qboAdvancedSettings.itemLevelDescription' | transloco"
                     [label]="'configuration.advancedSettings.memoStructureLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.memoStructureSubLabel' | transloco"
+                    [subLabel]="'configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
                     [placeholder]="'qboAdvancedSettings.setDescriptionPlaceholder' | transloco"

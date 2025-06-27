@@ -16,8 +16,8 @@
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'netsuiteAdvancedSettings.automation' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.automationSubLabel' | transloco">
+                    [label]="'netsuite.configuration.advancedSettings.automation' | transloco"
+                    [subLabel]="'netsuite.configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'netsuiteAdvancedSettings.scheduleAutomaticExport' | transloco" 
-                        [subLabel]="'netsuite.configuration.advancedSettings.scheduleSubLabel' | transloco"
+                        [subLabel]="'netsuite.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'netsuiteAdvancedSettings.automaticExportMethod' | transloco"
                             [label]="'netsuiteAdvancedSettings.setupExportFrequency' | transloco"
-                            [subLabel]="'netsuite.configuration.advancedSettings.frequencySubLabel' | transloco"
+                            [subLabel]="'netsuite.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -52,7 +52,7 @@
                         [options]="paymentSyncOptions"
                         [iconPath]="'arrow-rotate'"
                         [label]="'netsuite.configuration.advancedSettings.paymentSyncLabel' | transloco"
-                        [subLabel]="'netsuiteAdvancedSettings.paymentSyncSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'netsuiteAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [placeholder]="'netsuiteAdvancedSettings.selectPaymentSyncPlaceholder' | transloco"
                         [formControllerName]="'paymentSync'">
                     </app-configuration-select-field>
@@ -65,7 +65,7 @@
                         [optionLabel]="'name'"
                         [iconPath]="'arrow-rotate'"
                         [label]="'netsuite.configuration.advancedSettings.defaultPaymentAccount' | transloco"
-                        [subLabel]="'netsuiteAdvancedSettings.defaultPaymentAccountSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'netsuiteAdvancedSettings.defaultPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [placeholder]="'netsuiteAdvancedSettings.selectPaymentAccountPlaceholder' | transloco"
                         [formControllerName]="'paymentAccount'">
                     </app-configuration-select-field>
@@ -75,7 +75,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'netsuite.configuration.advancedSettings.preferenceLabel' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.preferenceSubLabel' | transloco">
+                    [subLabel]="'netsuite.configuration.advancedSettings.preferenceSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -83,7 +83,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
                     [label]="'netsuite.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.changeAccountingPeriodSubLabel' | transloco"
+                    [subLabel]="'netsuite.configuration.advancedSettings.changeAccountingPeriodSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
@@ -91,7 +91,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateVendorLabel() "
-                    [subLabel]="'netsuiteAdvancedSettings.autoCreateVendorsSubLabel' | transloco:{ brandName: brandingConfig.brandName, vendorType: getCreateVendorLabel().toLowerCase() }"
+                    [subLabel]="'netsuiteAdvancedSettings.autoCreateVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName, vendorType: getCreateVendorLabel().toLowerCase() }"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
@@ -99,7 +99,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateMerchantLabel()"
-                    [subLabel]="'netsuiteAdvancedSettings.autoCreateMerchantsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [subLabel]="'netsuiteAdvancedSettings.autoCreateMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
 
@@ -116,7 +116,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'netsuiteAdvancedSettings.customization' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.customizationSubLabel' | transloco">
+                    [subLabel]="'netsuite.configuration.advancedSettings.customizationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -125,7 +125,7 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'netsuiteAdvancedSettings.itemLevelDescription' | transloco"
                     [label]="'netsuite.configuration.advancedSettings.memoStructureLabel' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.memoStructureSubLabel' | transloco"
+                    [subLabel]="'netsuite.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
                     [placeholder]="'netsuiteAdvancedSettings.setDescriptionPlaceholder' | transloco"
@@ -143,8 +143,8 @@
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [label]="'netsuiteAdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }" 
-                    [subLabel]="'netsuiteAdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [label]="'netsuiteAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }" 
+                    [subLabel]="'netsuiteAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
@@ -163,7 +163,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'netsuite.configuration.advancedSettings.dfvLabel' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.dfvSubLabel' | transloco">
+                    [subLabel]="'netsuite.configuration.advancedSettings.dfvSubLabel' | transloco"
                 </app-configuration-step-sub-header>
 
                 <div class="tw-flex tw-items-center tw-p-24-px ">
