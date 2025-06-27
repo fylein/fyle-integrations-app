@@ -1,10 +1,11 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { QBDExportSettingFormOption } from "../../qbd/qbd-configuration/qbd-export-setting.model";
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { brandingContent } from "src/app/branding/branding-config";
 import { QbdDirectDestinationAttribute } from "../db/qbd-direct-destination-attribuite.model";
+import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 export type QbdDirectExportSettingsPost = {
     reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
@@ -32,7 +33,7 @@ export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
     workspace: number;
 }
 // TODO: Move to Service
-export class QbdDirectExportSettingModel extends ExportSettingModel {
+export class QbdDirectExportSettingModel extends ExportSettingsService {
 
     static nameInJEOptions(): QBDExportSettingFormOption[] {
         return [

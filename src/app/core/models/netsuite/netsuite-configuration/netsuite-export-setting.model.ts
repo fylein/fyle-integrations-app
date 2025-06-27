@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";

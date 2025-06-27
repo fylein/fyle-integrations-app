@@ -37,7 +37,7 @@ import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { AutoMapEmployeeOptions, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey, QBOOnboardingState, QBOReimbursableExpensesObject, SplitExpenseGrouping, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { EventEmitter } from '@angular/core';
 import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
@@ -46,6 +46,7 @@ import { FeatureConfiguration } from 'src/app/core/models/branding/feature-confi
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -733,7 +734,7 @@ describe('QboExportSettingsComponent', () => {
       spyOn<any>(component, 'setupCustomDateOptionWatchers').and.callThrough();
 
       spyOn(QBOExportSettingModel, 'getReimbursableExpenseGroupingDateOptions').and.returnValue([]);
-      spyOn(ExportSettingModel, 'constructGroupingDateOptions').and.returnValue([]);
+      spyOn(ExportSettingsService, 'constructGroupingDateOptions').and.returnValue([]);
       spyOn<any>(component, 'updateCCCExpenseGroupingDateOptions');
     });
 

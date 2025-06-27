@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
-import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -23,6 +22,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -305,8 +305,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
-        const reimbursableGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
-        const cccGroup = ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
+        const reimbursableGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
+        const cccGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
 
         this.reimbursableExportGroup = reimbursableGroup ? reimbursableGroup as ExpenseGroupingFieldOption : undefined;
         this.cccExportGroup = cccGroup ? cccGroup as ExpenseGroupingFieldOption : undefined;

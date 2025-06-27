@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState, XeroCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
@@ -16,6 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-xero-export-settings',
@@ -112,8 +113,8 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     // Removing not relevant date options
-    this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, this.exportSettingForm.controls.reimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
-    this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+    this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, this.exportSettingForm.controls.reimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
+    this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
   }
 
   save() {
