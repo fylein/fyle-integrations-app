@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import type { QBOImportSettingGet} from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { ConfigurationImportFieldComponent } from 'src/app/shared/components/configuration/configuration-import-field/configuration-import-field.component';
 import { setupStoryBookFormGroup } from './utility';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 const meta: Meta<ConfigurationImportFieldComponent> = {
   title: 'Configuration/ImportSetting/ConfigurationImportField',
@@ -71,13 +71,13 @@ const fixture: QBOImportSettingGet = {
   ],
   workspace_id: 1
 };
-const importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(fixture);
+const importSettingForm = QboImportSettingsService.mapAPIResponseToFormGroup(fixture);
 
 export const fixedDestinationImport: Story = {
   args: {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.QBO,
-    accountingFieldOptions: QBOImportSettingModel.getQBOFields(),
+    accountingFieldOptions: QboImportSettingsService.getQBOFields(),
     fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
     isDestinationFixedImport: true
   }
@@ -87,7 +87,7 @@ export const dynamicDestinationImport: Story = {
   args: {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.INTACCT,
-    accountingFieldOptions: QBOImportSettingModel.getQBOFields(),
+    accountingFieldOptions: QboImportSettingsService.getQBOFields(),
     fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
     isDestinationFixedImport: false
   }
@@ -97,7 +97,7 @@ export const cloneSetting: Story = {
   args: {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.INTACCT,
-    accountingFieldOptions: QBOImportSettingModel.getQBOFields(),
+    accountingFieldOptions: QboImportSettingsService.getQBOFields(),
     fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
     isDestinationFixedImport: true,
     isCloneSettingView: true

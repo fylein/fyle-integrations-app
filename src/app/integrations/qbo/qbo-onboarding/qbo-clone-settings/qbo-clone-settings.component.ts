@@ -13,7 +13,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -111,7 +110,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   nameInJournalOptions = QboExportSettingsService.getNameInJournalOptions();
 
-  chartOfAccountTypesList: string[] = QBOImportSettingModel.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = QboImportSettingsService.getChartOfAccountTypesList();
 
   showNameInJournalOption: boolean;
 
@@ -496,7 +495,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
         this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
         this.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
-        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, this.cloneQboImportCodeFieldCodeConfig);
+        this.importSettingForm = QboImportSettingsService.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, this.cloneQboImportCodeFieldCodeConfig);
         this.fyleFields = fyleFieldsResponse;
         this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboCloneSettings.createCustomField'), is_dependent: false });
         this.setupImportSettingFormWatcher();

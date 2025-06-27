@@ -9,7 +9,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, DefaultImportFields, QBOCorporateCreditCardExpensesObject, QBOField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { QBOImportSettingGet, QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -68,7 +68,7 @@ export class QboImportSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = QBOImportSettingModel.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = QboImportSettingsService.getChartOfAccountTypesList();
 
   workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
 
@@ -138,7 +138,7 @@ export class QboImportSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const importSettingPayload = QBOImportSettingModel.constructPayload(this.importSettingForm);
+    const importSettingPayload = QboImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboImportSettings.importSettingsSuccess'));
@@ -286,7 +286,7 @@ export class QboImportSettingsComponent implements OnInit {
       }
 
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
+      this.importSettingForm = QboImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();

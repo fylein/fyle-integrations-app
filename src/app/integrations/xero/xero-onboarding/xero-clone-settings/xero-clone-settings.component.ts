@@ -13,7 +13,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
-import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -82,7 +81,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
+  chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -362,7 +361,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.isProjectMapped = cloneSetting.import_settings.mapping_settings.findIndex((data: { source_field: XeroFyleField; destination_field: XeroFyleField; }) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
+      this.importSettingForm = XeroImportSettingsService.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroCloneSettings.createCustomField'), is_dependent: false });
       this.setupImportSettingFormWatcher();

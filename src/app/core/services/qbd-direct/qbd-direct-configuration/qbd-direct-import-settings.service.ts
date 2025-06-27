@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { WorkspaceService } from '../../common/workspace.service';
 import { ApiService } from '../../common/api.service';
@@ -6,18 +6,67 @@ import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { QbdDirectImportSettingGet, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingsService } from '../../common/import-settings.service';
+import { FormArray, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 const qbdDirectImportSettingGetCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
 })
-export class QbdDirectImportSettingsService {
+export class QbdDirectImportSettingsService extends ImportSettingsService {
+  private apiService: ApiService = inject(ApiService);
 
-  constructor(
-    private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+  private workspaceService: WorkspaceService = inject(WorkspaceService);
+
+  constructor() {
+    super();
+  }
+
+  static getChartOfAccountTypesList(): string[] {
+    const typeList = [
+      'Other Expense', 'Cost Of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',
+      'Long Term Liability', 'Other Current Liability', 'Income', 'Other Income', 'Equity'
+    ].sort((a, b) => a.localeCompare(b));
+
+    return ['Expense'].concat(typeList);
+  }
+
+  static mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
+    const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
+    const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings?.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
+    return new FormGroup({
+      importCategories: new FormControl(importSettings?.import_settings?.import_account_as_category ?? false),
+      importItems: new FormControl(importSettings?.import_settings?.import_item_as_category ?? false),
+      expenseFields: new FormArray(expenseFieldsArray),
+      chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : ['Expense']),
+      importVendorsAsMerchants: new FormControl(importSettings?.import_settings?.import_vendor_as_merchant ?? false),
+      searchOption: new FormControl(''),
+      importCodeFields: new FormControl( importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : []),
+      importCategoryCode: new FormControl(ImportSettingsService.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig)),
+      workSpaceId: new FormControl(importSettings?.workspace_id)
+    });
+  }
+
+  static constructPayload(importSettingsForm: FormGroup): QbdDirectImportSettingPost {
+    const emptyDestinationAttribute = {id: null, name: null};
+    const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
+    const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+    const coaArray = importSettingsForm.get('chartOfAccountTypes')?.value.map((item: string) => item.replace(/\s+/g, ''));
+
+    return {
+      import_settings: {
+        import_account_as_category: importSettingsForm.get('importCategories')?.value,
+        import_item_as_category: importSettingsForm.get('importItems')?.value,
+        chart_of_accounts: coaArray,
+        import_vendor_as_merchant: importSettingsForm.get('importVendorsAsMerchants')?.value,
+        import_code_fields: importSettingsForm.get('importCodeFields')?.value
+      },
+      mapping_settings: mappingSettings,
+      workspace_id: importSettingsForm.get('workSpaceId')?.value
+    };
+  }
 
   @Cacheable({
     cacheBusterObserver: qbdDirectImportSettingGetCache$
