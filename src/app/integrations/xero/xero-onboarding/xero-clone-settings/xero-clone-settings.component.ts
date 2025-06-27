@@ -13,7 +13,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
-import { XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
@@ -49,25 +48,25 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   bankAccounts: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes = XeroExportSettingModel.getReimbursableExportTypes();
+  reimbursableExportTypes = XeroExportSettingsService.getReimbursableExportTypes();
 
-  creditCardExportTypes =  XeroExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes =  XeroExportSettingsService.getCreditCardExportTypes();
 
-  reimbursableExpenseGroupByOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingOptions();
+  reimbursableExpenseGroupByOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingOptions();
 
-  cccExpenseGroupByOptions =  XeroExportSettingModel.getCCCExpenseGroupingOptions();
+  cccExpenseGroupByOptions =  XeroExportSettingsService.getCCCExpenseGroupingOptions();
 
-  reimbursableExpenseGroupingDateOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions = XeroExportSettingModel.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions = XeroExportSettingsService.getCCCExpenseGroupingDateOptions();
 
-  autoMapEmployeeTypes = XeroExportSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeTypes = XeroExportSettingsService.getAutoMapEmployeeOptions();
 
-  expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions = XeroExportSettingsService.getReimbursableExpenseStateOptions();
 
-  cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = XeroExportSettingsService.getCCCExpenseStateOptions();
 
-  splitExpenseGroupingOptions = XeroExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions = XeroExportSettingsService.getSplitExpenseGroupingOptions();
 
   exportSettingForm: FormGroup;
 
@@ -333,11 +332,11 @@ export class XeroCloneSettingsComponent implements OnInit {
       // Export Settings
       this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.reimbursableExportTypes = XeroExportSettingModel.getReimbursableExportTypes();
-      this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(cloneSetting.export_settings, destinationAttributes.BANK_ACCOUNT);
+      this.reimbursableExportTypes = XeroExportSettingsService.getReimbursableExportTypes();
+      this.exportSettingForm = XeroExportSettingsService.mapAPIResponseToFormGroup(cloneSetting.export_settings, destinationAttributes.BANK_ACCOUNT);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
