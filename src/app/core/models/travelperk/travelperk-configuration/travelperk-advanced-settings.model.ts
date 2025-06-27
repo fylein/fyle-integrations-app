@@ -39,6 +39,7 @@ type TravelperkAdvancedSettingFormArray = {
 
 export interface TravelperkAdvancedSettingPost extends TravelperkAdvancedSetting { }
 
+// TODO: Move to Service
 export class TravelperkAdvancedSettingModel {
 
     static getDefaultCategory(): SelectFormLabel[] {

@@ -46,6 +46,7 @@ export type ImportCodeFieldConfigType = {
   [key: string]: boolean;
 };
 
+// TODO: Move to Service
 export class ImportSettingsModel {
 
   static getCustomFieldOption(): ExpenseField[] {

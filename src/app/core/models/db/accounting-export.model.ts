@@ -61,6 +61,7 @@ export type AccountingExportGetParam = {
 
 }
 
+// TODO: Move to Service
 export class AccountingExportModel {
   static xeroShortCode: string;
 

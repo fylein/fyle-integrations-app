@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -30,6 +29,7 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -98,7 +98,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   advancedSettingForm: FormGroup<any>;
 

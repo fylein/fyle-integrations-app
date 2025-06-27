@@ -18,11 +18,11 @@ import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/dest
 import { Configuration } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
-import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -59,7 +59,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   adminEmails: QBDEmailOptions[] = [];
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   sageIntacctLocations: IntacctDestinationAttribute[];
 
@@ -95,7 +95,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  defaultMemoFields: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
+  defaultMemoFields: string[] = AdvancedSettingsService.getDefaultMemoOptions();
 
   defaultTopMemoFields: string[];
 
@@ -163,21 +163,21 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private createMemoStructureWatchers(): void {
     // For the line item-level memo fields selector
     const selectedMemoFields = this.advancedSettingsForm.get('setDescriptionField')?.value;
-    const [memoPreviewText] = AdvancedSettingsModel.formatMemoPreview(selectedMemoFields, this.defaultMemoFields);
+    const [memoPreviewText] = AdvancedSettingsService.formatMemoPreview(selectedMemoFields, this.defaultMemoFields);
     this.memoPreviewText = memoPreviewText;
 
     this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
-      const [memoPreviewText] = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoFields);
+      const [memoPreviewText] = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoFields);
       this.memoPreviewText = memoPreviewText;
     });
 
     // For the top-level memo fields selector
     const selectedTopMemoFields = this.advancedSettingsForm.get('setTopMemoField')?.value;
-    const [topMemoPreviewText] = AdvancedSettingsModel.formatMemoPreview(selectedTopMemoFields, this.defaultTopMemoFields);
+    const [topMemoPreviewText] = AdvancedSettingsService.formatMemoPreview(selectedTopMemoFields, this.defaultTopMemoFields);
     this.topMemoPreviewText = topMemoPreviewText;
 
     this.advancedSettingsForm.controls.setTopMemoField?.valueChanges.subscribe((topMemoChanges) => {
-      const [topMemoPreviewText] = AdvancedSettingsModel.formatMemoPreview(topMemoChanges, this.defaultTopMemoFields);
+      const [topMemoPreviewText] = AdvancedSettingsService.formatMemoPreview(topMemoChanges, this.defaultTopMemoFields);
       this.topMemoPreviewText = topMemoPreviewText;
     });
   }
@@ -217,10 +217,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsForm = this.formBuilder.group({
       exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(AdvancedSettingsModel.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
+      exportScheduleFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
-      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
+      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
       autoSyncPayments: [this.getPaymentSyncConfiguration(this.advancedSettings.configurations)],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
@@ -317,12 +317,12 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         if (this.advancedSettings.workspace_schedules?.additional_email_options) {
           this.adminEmails = this.adminEmails.concat(this.advancedSettings.workspace_schedules?.additional_email_options);
         }
-        this.defaultMemoFields = AdvancedSettingsModel.getMemoOptions(configuration, AppName.INTACCT);
+        this.defaultMemoFields = AdvancedSettingsService.getMemoOptions(configuration, AppName.INTACCT);
 
         const isReimbursableEnabled = exportSettings.configurations.reimbursable_expenses_object;
         const isCCCEnabled = exportSettings.configurations.corporate_credit_card_expenses_object;
 
-        this.defaultTopMemoFields = AdvancedSettingsModel.getTopLevelMemoOptions(
+        this.defaultTopMemoFields = AdvancedSettingsService.getTopLevelMemoOptions(
           isReimbursableEnabled ? this.reimbursableExportGroup : undefined,
           isCCCEnabled ? this.cccExportGroup : undefined
         );

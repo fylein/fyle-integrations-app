@@ -45,6 +45,7 @@ export type NetsuiteImportSettingConfiguration = {
     workspace?: number;
   };
 
+  // TODO: Move to Service
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
 
   static getCustomSegmentOptions(): SelectFormOption[] {

@@ -1,7 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseFilterPost, ExpenseFilterPayload, ConditionField, AdvancedSettingsModel } from "../../common/advanced-settings.model";
-import { JoinOption, Operator } from "../../enum/enum.model";
 import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
 export type Sage300AdvancedSetting = {
   expense_memo_structure: string[],
@@ -28,7 +27,7 @@ export class Sage300AdvancedSettingModel {
       memoStructure: new FormControl(advancedSettings?.expense_memo_structure ? advancedSettings?.expense_memo_structure : defaultMemoOptions),
       scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
-      scheduleAutoExportFrequency: new FormControl(AdvancedSettingsModel.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
+      scheduleAutoExportFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
       skipExport: new FormControl(isSkipExportEnabled)
     });
   }

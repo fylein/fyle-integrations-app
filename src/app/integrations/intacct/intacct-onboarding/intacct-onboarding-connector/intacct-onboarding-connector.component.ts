@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
 
 @Component({
   selector: 'app-onboarding-intacct-connector',
@@ -19,7 +19,8 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
 
   constructor(
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private intacctOnboardingService: IntacctOnboardingService
   ) { }
 
   setupConnectionStatus(eventData: boolean) {
@@ -27,6 +28,6 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onboardingSteps = new IntacctOnboardingModel().getOnboardingSteps(this.translocoService.translate('intacct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
   }
 }

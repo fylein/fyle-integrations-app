@@ -21,6 +21,7 @@ export type ExportSettingOptionSearch = {
   formControllerName: string,
 };
 
+// TODO: Move to Service
 export class ExportSettingModel {
   static getSplitExpenseGroupingOptions(): SelectFormOption[] {
     return [

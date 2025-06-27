@@ -1,11 +1,12 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { AdvancedSettingValidatorRule, AdvancedSettingsModel, EmailOption } from "../../common/advanced-settings.model";
+import { AdvancedSettingValidatorRule, EmailOption } from "../../common/advanced-settings.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
 import { ExportSettingModel } from "../../common/export-settings.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -61,7 +62,8 @@ export interface XeroAdvancedSettingFormOption extends SelectFormOption {
   value: PaymentSyncDirection | number | 'None';
 }
 
-export class XeroAdvancedSettingModel extends AdvancedSettingsModel {
+// TODO: Move to Service
+export class XeroAdvancedSettingModel extends AdvancedSettingsService {
 
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
@@ -118,7 +120,7 @@ export class XeroAdvancedSettingModel extends AdvancedSettingsModel {
       memoStructure: new FormControl(advancedSettings.workspace_general_settings.memo_structure),
       search: new FormControl(),
       searchOption: new FormControl(),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
       additionalEmails: new FormControl([])
     });
   }
@@ -150,7 +152,7 @@ export class XeroAdvancedSettingModel extends AdvancedSettingsModel {
         interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
         is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
         start_datetime: new Date(),
-        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsService.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
         additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value : []
       }
     };

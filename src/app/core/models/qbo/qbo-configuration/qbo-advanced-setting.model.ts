@@ -3,9 +3,10 @@ import { EmailOption, SelectFormOption } from "../../common/select-form-option.m
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { QBOPaymentSyncDirection } from "../../enum/enum.model";
 import { ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
 
 export type QBOAdvancedSettingWorkspaceGeneralSetting = {
@@ -57,7 +58,9 @@ export type QBOAdvancedSettingAddEmailModel = {
   selectedEmails: string[];
 }
 
-export class QBOAdvancedSettingModel extends AdvancedSettingsModel {
+// TODO: Move to Service
+
+export class QBOAdvancedSettingModel extends AdvancedSettingsService {
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
@@ -102,13 +105,13 @@ export class QBOAdvancedSettingModel extends AdvancedSettingsModel {
       autoCreateVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_destination_entity),
       autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_merchants_as_vendors),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
+      exportScheduleFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
       memoStructure: new FormControl(advancedSettings?.workspace_general_settings.memo_structure),
       skipExport: new FormControl(isSkipExportEnabled),
       searchOption: new FormControl(),
       search: new FormControl(),
       additionalEmails: new FormControl([]),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
     });
   }
 
@@ -131,7 +134,7 @@ export class QBOAdvancedSettingModel extends AdvancedSettingsModel {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
         interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
         is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
-        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsService.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
         additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
       }
     };

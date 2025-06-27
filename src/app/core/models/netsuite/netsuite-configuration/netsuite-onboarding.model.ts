@@ -14,6 +14,7 @@ type NetsuiteOnboardingStepperMap = {
 
 const brandingContentStepName = brandingContent.netsuite.configuration;
 
+// TODO: Move to Service
 export class NetsuiteOnboardingModel {
     private onboardingSteps: OnboardingStepper[] = [
         {

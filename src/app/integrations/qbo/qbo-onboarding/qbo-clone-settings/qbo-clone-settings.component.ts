@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
+import { EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { ExpenseField, ImportCodeFieldConfigType, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -30,6 +30,7 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -128,7 +129,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  defaultMemoOptions: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
+  defaultMemoOptions: string[] = AdvancedSettingsService.getDefaultMemoOptions();
 
   paymentSyncOptions: SelectFormOption[] = QBOAdvancedSettingModel.getPaymentSyncOptions();
 
@@ -158,7 +159,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   DefaultImportFields = DefaultImportFields;
 
@@ -400,17 +401,17 @@ export class QboCloneSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoOptions)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.cloneSetting.advanced_configurations.workspace_general_settings.memo_structure;
-    const memo = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo = AdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-       this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
+       this.memoPreviewText = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
 
@@ -508,7 +509,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
         this.setupAdvancedSettingFormWatcher();
 
-        this.defaultMemoOptions = AdvancedSettingsModel.getMemoOptions(this.cloneSetting.export_settings, AppName.QBO);
+        this.defaultMemoOptions = AdvancedSettingsService.getMemoOptions(this.cloneSetting.export_settings, AppName.QBO);
 
         this.isLoading = false;
       });

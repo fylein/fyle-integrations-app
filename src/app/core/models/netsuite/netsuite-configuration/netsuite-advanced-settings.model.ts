@@ -7,6 +7,7 @@ import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { environment } from "src/environments/environment";
 import { NetSuiteExportSettingGet } from "./netsuite-export-setting.model";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
 
 export type NetsuiteAdvancedSettingConfiguration = {
@@ -67,9 +68,11 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
   selectedEmails: string[];
 }
 
-export class NetsuiteAdvancedSettingModel extends AdvancedSettingsModel {
+// TODO: Move to Service
+
+export class NetsuiteAdvancedSettingModel extends AdvancedSettingsService {
   static override getDefaultMemoOptions(): string[] {
-    return AdvancedSettingsModel.getDefaultMemoOptions();
+    return AdvancedSettingsService.getDefaultMemoOptions();
   }
 
   static override getMemoOptions(exportSettings: NetSuiteExportSettingGet, appName: AppName): string[] {
@@ -166,7 +169,7 @@ export class NetsuiteAdvancedSettingModel extends AdvancedSettingsModel {
       searchOption: new FormControl(),
       search: new FormControl(),
       additionalEmails: new FormControl([]),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
     });
   }
 
@@ -199,7 +202,7 @@ export class NetsuiteAdvancedSettingModel extends AdvancedSettingsModel {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
         interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
         is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
-        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsService.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
         additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
       }
     };

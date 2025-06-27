@@ -16,7 +16,7 @@ type QbdOnboardingStepperMap = {
     [QbdDirectOnboardingState.ADVANCED_SETTINGS]: number;
     [QbdDirectOnboardingState.COMPLETE]: number;
 }
-
+// TODO: Move to Service
 export class QbdDirectOnboardingModel {
   brandingContent = brandingContent.qbd_direct.configuration;
 

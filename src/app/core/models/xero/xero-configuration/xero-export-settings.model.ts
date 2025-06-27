@@ -45,6 +45,7 @@ export interface XeroSelectFormOption extends SelectFormOption {
   value: ExpenseState | XeroCCCExpenseState | XeroReimbursableExpensesObject | XeroCorporateCreditCardExpensesObject | ExpenseGroupingFieldOption | ExportDateType | AutoMapEmployeeOptions | null;
 }
 
+// TODO: Move to Service
 export class XeroExportSettingModel {
 
   static getReimbursableExportTypes() {

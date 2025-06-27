@@ -12,6 +12,7 @@ type XeroOnboardingStepperMap = {
     [XeroOnboardingState.CLONE_SETTINGS]: number
 };
 
+// TODO: Move to Service
 export class XeroOnboardingModel {
     brandingContent = brandingContent.configuration;
 

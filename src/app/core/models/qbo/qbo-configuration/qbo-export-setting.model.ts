@@ -40,6 +40,7 @@ export type QBOExportSettingGet = {
   workspace_id: number
 }
 
+// TODO: Move to Service
 export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {

@@ -31,7 +31,7 @@ export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
     updated_at: Date,
     workspace: number;
 }
-
+// TODO: Move to Service
 export class QbdDirectExportSettingModel extends ExportSettingModel {
 
     static nameInJEOptions(): QBDExportSettingFormOption[] {

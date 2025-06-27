@@ -17,8 +17,8 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
-import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-xero-advanced-settings',
@@ -57,7 +57,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   ConfigurationCtaText = ConfigurationCta;
 
@@ -86,7 +86,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoFields)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoFields)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 

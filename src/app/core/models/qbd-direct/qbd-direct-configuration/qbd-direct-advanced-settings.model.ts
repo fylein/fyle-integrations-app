@@ -1,6 +1,7 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AdvancedSettingsModel, EmailOption } from "../../common/advanced-settings.model";
+import { EmailOption } from "../../common/advanced-settings.model";
 import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
 export type QbdDirectAdvancedSettingsPost = {
     line_level_memo_structure: string[],
@@ -21,7 +22,7 @@ export interface QbdDirectAdvancedSettingsGet extends QbdDirectAdvancedSettingsP
     workspace_id: number
 }
 
-export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
+export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsService {
 
     static defaultMemoFields(): string[] {
         return ['employee_name', 'employee_email',  'card_number', 'purpose', 'merchant', 'spent_on', 'expense_key', 'expense_link'];
@@ -56,7 +57,7 @@ export class QbdDirectAdvancedSettingsModel extends AdvancedSettingsModel {
             topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : this.defaultTopMemoOptions(), Validators.required),
             exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
             email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
-            exportScheduleFrequency: new FormControl(AdvancedSettingsModel.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
+            exportScheduleFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
             autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false),
             autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
             skipExport: new FormControl(isSkipExportEnabled),

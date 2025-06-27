@@ -60,6 +60,7 @@ export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSea
     destinationOptionKey: IntacctExportSettingDestinationOptionKey
 }
 
+// TODO: Move to Service
   export class ExportSettingModel {
     static constructPayload(exportSettingsForm: FormGroup): ExportSettingPost {
         const getValueOrDefault = (control: AbstractControl | null, defaultValue: any = null) => {

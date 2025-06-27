@@ -11,6 +11,7 @@ type QBOOnboardingStepperMap = {
     [QBOOnboardingState.CLONE_SETTINGS]: number,
 }
 
+// TODO: Move to Service
 export class QBOOnboardingModel {
   brandingContent = brandingContent.configuration;
 

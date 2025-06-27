@@ -15,12 +15,13 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2, mockGroupedDestinationAttributes, mockAdditionalEmails, mockMemo, mockFormattedMemo, mockDefaultMemoOptions, mockInitialMemoStructure, mocknewMemoStructure, invalidMemoStructure, mockExpenseFilterResponse } from 'src/app/integrations/qbo/qbo.fixture';
 import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, Operator, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingsModel, ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -368,11 +369,11 @@ describe('QboAdvancedSettingsComponent', () => {
         memoStructure: mockMemo
       });
 
-      spyOn(AdvancedSettingsModel, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
+      spyOn(AdvancedSettingsService, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
 
       component.onMultiSelectChange();
 
-      expect(AdvancedSettingsModel.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
+      expect(AdvancedSettingsService.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
       expect(component.advancedSettingForm.get('memoStructure')?.value).toEqual(mockFormattedMemo);
     });
   });

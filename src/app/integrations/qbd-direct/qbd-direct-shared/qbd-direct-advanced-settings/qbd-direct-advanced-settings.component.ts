@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, IntacctUpdateEvent, NameInJournalEntry, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
@@ -45,7 +46,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   QBDScheduleFrequency = QBDScheduleFrequency;
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   defaultMemoFields: string[] = QbdDirectAdvancedSettingsModel.defaultMemoFields();
 

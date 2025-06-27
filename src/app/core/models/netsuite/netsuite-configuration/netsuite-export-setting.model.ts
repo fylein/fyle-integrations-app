@@ -39,7 +39,7 @@ export type NetSuiteExportSettingGet = {
     workspace_id: number
 }
 
-
+// TODO: Move to Service
 export class NetSuiteExportSettingModel extends ExportSettingModel {
 
     static getEmployeeFieldOptions(): SelectFormOption[] {

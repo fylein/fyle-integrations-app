@@ -17,6 +17,7 @@ export type QBOEmployeeSettingGet = {
   workspace_id: number
 }
 
+// TODO: Move to Service
 export class QBOEmployeeSettingModel {
   static getAutoMapEmployeeOptions(): SelectFormOption[] {
     return [

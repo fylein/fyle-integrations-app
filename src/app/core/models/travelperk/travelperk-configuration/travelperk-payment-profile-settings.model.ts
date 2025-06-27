@@ -22,6 +22,7 @@ export interface TravelperkPaymentProfileSettingResponse extends PaginatedRespon
     results: TravelperkPaymentProfileSettingGet[]
 }
 
+// TODO: Move to Service
 export class TravelperkPaymentProfileSettingModel {
 
     static getUserRoleOptions(): SelectFormOption[] {
