@@ -56,8 +56,8 @@ export class NetsuiteOnboardingService {
         route: '/integrations/netsuite/onboarding/advanced_settings',
         styleClasses: ['step-name-advanced--text']
       }
-    ]
-    
+    ];
+
       this.onboardingSteps.forEach(step => {
         if (step.step.toLowerCase() === currentStep.toLowerCase()) {
           step.active = true;

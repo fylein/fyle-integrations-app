@@ -31,7 +31,7 @@ export class IntacctConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('configuration.exportSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/export_settings'},
       {label: this.translocoService.translate('configuration.importSetting.stepName'), routerLink: '/integrations/intacct/main/configuration/import_settings'},
       {label: this.translocoService.translate('configuration.advancedSettings.stepName'), routerLink: '/integrations/intacct/main/configuration/advanced_settings'}
-    ]
+    ];
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
   }

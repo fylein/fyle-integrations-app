@@ -109,7 +109,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private qbdDirectHelperService: QbdDirectHelperService,
     private translocoService: TranslocoService,
     private qbdDirectExportSettingsService: QbdDirectExportSettingsService
-  ) { 
+  ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
   }

@@ -71,4 +71,4 @@ export class IntacctOnboardingService {
 
       return this.onboardingSteps;
   }
-} 
+}

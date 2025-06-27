@@ -156,7 +156,7 @@ export class XeroCloneSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private xeroOnboardingService: XeroOnboardingService,
     private xeroExportSettingsService: XeroExportSettingsService
-  ) { 
+  ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
 

@@ -101,7 +101,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     public helper: HelperService,
     private translocoService: TranslocoService,
     private businessCentralExportSettingsService: BusinessCentralExportSettingsService
-  ) { 
+  ) {
     this.reimbursableExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
     this.cccExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();
   }

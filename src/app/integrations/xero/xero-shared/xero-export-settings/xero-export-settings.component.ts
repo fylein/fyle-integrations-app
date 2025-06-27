@@ -102,7 +102,7 @@ export class XeroExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
     private xeroExportSettingsService: XeroExportSettingsService
-  ) { 
+  ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
 

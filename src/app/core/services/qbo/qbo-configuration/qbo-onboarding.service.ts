@@ -55,7 +55,7 @@ export class QboOnboardingService {
             route: '/integrations/qbo/onboarding/advanced_settings',
             styleClasses: ['step-name-advanced--text']
           }
-        ]
+        ];
 
         this.onboardingSteps.forEach(step => {
           if (step.step.toLowerCase() === currentStep.toLowerCase()) {
