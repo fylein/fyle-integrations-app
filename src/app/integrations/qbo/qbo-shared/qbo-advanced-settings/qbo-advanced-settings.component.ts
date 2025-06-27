@@ -9,7 +9,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOPaymentSyncDirection, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { QBOAdvancedSettingGet, QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
+import { QBOAdvancedSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -69,7 +69,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
 
-  paymentSyncOptions: SelectFormOption[] = QBOAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = QboAdvancedSettingsService.getPaymentSyncOptions();
 
   ConfigurationCtaText = ConfigurationCta;
 
@@ -140,7 +140,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   save(): void {
     this.saveSkipExport();
-    const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(this.advancedSettingForm);
+    const advancedSettingPayload = QboAdvancedSettingsService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
@@ -217,7 +217,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   private setupFormWatchers() {
     this.createMemoStructureWatcher();
 
-    QBOAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    QboAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
     this.skipExportWatcher();
   }
 
@@ -247,7 +247,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.defaultMemoOptions = AdvancedSettingsService.getMemoOptions(exportSettings, AppName.QBO);
       this.setupFormWatchers();

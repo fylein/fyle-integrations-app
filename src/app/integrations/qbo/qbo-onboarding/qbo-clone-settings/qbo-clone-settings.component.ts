@@ -12,7 +12,6 @@ import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarning
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
 import { QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
@@ -32,6 +31,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -132,7 +132,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   defaultMemoOptions: string[] = AdvancedSettingsService.getDefaultMemoOptions();
 
-  paymentSyncOptions: SelectFormOption[] = QBOAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = QboAdvancedSettingsService.getPaymentSyncOptions();
 
   adminEmails: EmailOption[] = [];
 
@@ -419,7 +419,7 @@ export class QboCloneSettingsComponent implements OnInit {
   private setupAdvancedSettingFormWatcher() {
     this.createMemoStructureWatcher();
 
-    QBOAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    QboAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
   private setupPage(): void {
@@ -506,7 +506,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
 
         this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
+        this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
 
         this.setupAdvancedSettingFormWatcher();
 
