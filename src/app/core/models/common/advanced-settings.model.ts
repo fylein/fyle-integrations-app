@@ -1,14 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { AppName, ExpenseGroupingFieldOption, JoinOption, Operator } from "../enum/enum.model";
-import { environment } from "src/environments/environment";
-import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
-import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
-import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
-import { IntacctConfiguration } from "../db/configuration.model";
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { SelectFormOption } from "./select-form-option.model";
+import { JoinOption, Operator } from "../enum/enum.model";
 
-// TODO: Move to Service
 export type EmailOption = {
     email: string;
     name: string;

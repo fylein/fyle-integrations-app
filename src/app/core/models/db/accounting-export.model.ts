@@ -1,12 +1,7 @@
-import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
+import { AccountingExportStatus, FundSource } from "../enum/enum.model";
 import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
 import { Expense } from "../intacct/db/expense.model";
-import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
-import { ExpenseGroup } from "./expense-group.model";
-import { SentenceCasePipe } from "src/app/shared/pipes/sentence-case.pipe";
-import { TranslocoService } from "@jsverse/transloco";
 
 export interface AccountingExportCount {
     count: number;
@@ -60,8 +55,6 @@ export type AccountingExportGetParam = {
     expenses__claim_number?: string;
 
 }
-
-// TODO: Move to Service
 
 export class SkippedAccountingExportModel {
   static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
