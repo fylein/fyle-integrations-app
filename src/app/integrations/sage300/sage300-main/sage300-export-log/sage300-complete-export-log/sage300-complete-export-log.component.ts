@@ -6,7 +6,7 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -34,7 +34,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -78,7 +78,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
@@ -110,7 +110,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+          AccountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -129,7 +129,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

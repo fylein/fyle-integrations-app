@@ -9,9 +9,9 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { mockExpenseGroupResponse, mockPageSize, mockUser } from 'src/app/integrations/qbo/qbo.fixture';
 import { TranslocoService } from '@jsverse/transloco';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 describe('QboCompleteExportLogComponent', () => {
   let component: QboCompleteExportLogComponent;
@@ -75,7 +75,7 @@ describe('QboCompleteExportLogComponent', () => {
     const expenseId = 'txGDE32dCf';
     component.openExpenseinFyle(expenseId);
     expect(windowService.openInNewTab).toHaveBeenCalledWith(
-      AccountingExportModel.getFyleExpenseUrl(expenseId)
+      AccountingExportService.getFyleExpenseUrl(expenseId)
     );
   });
 

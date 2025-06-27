@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
-import { AccountingExportModel, AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -38,7 +38,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -84,7 +84,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
@@ -116,7 +116,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+        AccountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
@@ -135,7 +135,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

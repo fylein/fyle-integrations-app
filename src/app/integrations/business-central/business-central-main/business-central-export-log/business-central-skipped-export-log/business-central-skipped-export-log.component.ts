@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
@@ -13,6 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-business-central-skipped-export-log',
@@ -27,7 +28,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   expenses: SkipExportList[];
 
@@ -117,7 +118,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
