@@ -26,6 +26,6 @@ export class QbdDirectHelperService {
     this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_SYNC);
     this.workspaceService.importFyleAttributes(refresh).subscribe();
     this.importQBDAttributes(refresh).subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Quickbooks Desktop');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Desktop');
   }
 }
