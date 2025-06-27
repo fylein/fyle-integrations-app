@@ -11,7 +11,7 @@ import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, Expe
 import { ExportSettingsService } from '../../common/export-settings.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { brandingContent } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,8 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
   private apiService: ApiService = inject(ApiService);
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
+
+  private translocoService: TranslocoService = inject(TranslocoService);
 
   constructor(
   ) { 
@@ -156,10 +158,10 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
       ];
     }
 
-    static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
+    getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
-          label: brandingContent.common.currentDate,
+          label: this.translocoService.translate('common.currentDate'),
           value: ExportDateType.CURRENT_DATE
         },
         {

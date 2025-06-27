@@ -45,7 +45,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   exportSettingsForm: FormGroup;
 
-  cccExpenseGroupingDateOptions: SelectFormOption[] = QbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseStateOptions: QBDExportSettingFormOption[];
 
@@ -55,7 +55,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.expenseGroupingFieldOptions();
 
-  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = QbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   creditCardExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.creditCardExportTypes();
 
@@ -85,7 +85,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   destinationAccounts: QbdDirectDestinationAttribute[];
 
-
   QbdDirectExportSettingDestinationOptionKey = QbdDirectExportSettingDestinationOptionKey;
 
   QbdDirectExportSettingDestinationAccountType = QbdDirectExportSettingDestinationAccountType;
@@ -108,8 +107,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     public helperService: HelperService,
     private mappingService: MappingService,
     private qbdDirectHelperService: QbdDirectHelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private qbdDirectExportSettingsService: QbdDirectExportSettingsService
+  ) { 
+    this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
+  }
 
   isEmployeeMappingDisabled(): boolean {
     if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY)) {

@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { IntacctCorporateCreditCardExpensesObject, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../../../models/enum/enum.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../../models/db/destination-attribute.model";
-import { IntacctDestinationAttribute } from "../../../models/intacct/db/destination-attribute.model";
 import { SelectFormOption } from "../../../models/common/select-form-option.model";
-import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingPost } from "../../../models/intacct/intacct-configuration/export-settings.model"
+import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExportSettingsService {
+  private translocoService: TranslocoService = inject(TranslocoService);
+
   static constructPayload(exportSettingsForm: FormGroup): ExportSettingPost {
       const getValueOrDefault = (control: AbstractControl | null, defaultValue: any = null) => {
           return control?.value ? control.value : defaultValue;
@@ -71,10 +71,10 @@ export class ExportSettingsService {
       return exportSettingPayload;
   }
 
-  static getExpenseGroupingDateOptions(): SelectFormOption[] {
+  getExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
-          label: brandingContent.common.currentDate,
+          label: this.translocoService.translate('common.currentDate'),
           value: ExportDateType.CURRENT_DATE
         },
         {

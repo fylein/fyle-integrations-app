@@ -12,7 +12,8 @@ import { SplitExpenseGrouping } from 'src/app/core/models/enum/enum.model';
 import { FormControl, Validators } from '@angular/forms';
 import { DefaultDestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { CCCExpenseState, ExpenseState, ExportDateType, NameInJournalEntry, ExpenseGroupingFieldOption, EmployeeFieldMapping, QBOReimbursableExpensesObject, QBOCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,8 @@ export class QboExportSettingsService extends ExportSettingsService {
   private apiService: ApiService = inject(ApiService);
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
+
+  private translocoService: TranslocoService = inject(TranslocoService);
 
   constructor() {
     super();
@@ -142,10 +145,10 @@ export class QboExportSettingsService extends ExportSettingsService {
     ];
   }
 
-  static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
+  getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: brandingContent.common.currentDate,
+        label: this.translocoService.translate('common.currentDate'),
         value: ExportDateType.CURRENT_DATE
       },
       {

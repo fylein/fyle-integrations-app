@@ -1,8 +1,9 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportCodeFieldConfigType, ImportSettingMappingRow } from "../../common/import-settings.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
 import { IntegrationField } from "../../db/mapping.model";
+import { ImportSettingsService } from "src/app/core/services/common/import-settings.service";
 
 export type QBOImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
@@ -33,7 +34,7 @@ export type QBOImportSettingGet = {
 
 
 
-export class QBOImportSettingModel extends ImportSettingsModel {
+export class QBOImportSettingModel extends ImportSettingsService {
   static getChartOfAccountTypesList(): string[] {
     return [
       'Expense', 'Other Expense', 'Fixed Asset', 'Cost of Goods Sold', 'Current Liability', 'Equity',

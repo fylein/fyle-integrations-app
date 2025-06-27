@@ -10,10 +10,9 @@ import { ExportModuleRule, ExportSettingValidatorRule } from "../../../models/co
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../../models/enum/enum.model";
 import { QBDExportSettingFormOption } from "../../../models/qbd/qbd-configuration/qbd-export-setting.model";
 import { DestinationAttribute } from "../../../models/db/destination-attribute.model";
-import { brandingContent } from "src/app/branding/branding-config";
 import { QbdDirectDestinationAttribute } from "../../../models/qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
-  
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +28,8 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
   private helper: HelperService = inject(HelperService);
+
+  private translocoService: TranslocoService = inject(TranslocoService);
 
   constructor() {
     super();
@@ -61,19 +62,19 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       ];
   }
 
-  static reimbursableExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
+  reimbursableExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
       return [
           {
-              label: brandingContent.common.currentDate,
+              label: this.translocoService.translate('common.currentDate'),
               value: QbdDirectReimbursableExportDateType.CURRENT_DATE
           }
       ];
   }
 
-  static creditCardExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
+  creditCardExpenseGroupingDateOptions(): QBDExportSettingFormOption[] {
       return [
           {
-              label: brandingContent.common.currentDate,
+              label: this.translocoService.translate('common.currentDate'),
               value: QbdDirectCCCExportDateType.CURRENT_DATE
           },
           {
@@ -139,7 +140,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       ];
   }
 
-  static setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
+  setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
       if (cccExportGroup === QbdDirectExpenseGroupBy.REPORT) {
         return this.creditCardExpenseGroupingDateOptions().concat([{
           label: 'Last spend date',
@@ -152,7 +153,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       }]);
   }
 
-  static setReimbursableExpenseGroupingDateOptions(reimbursableExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
+  setReimbursableExpenseGroupingDateOptions(reimbursableExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
       if (reimbursableExportGroup === QbdDirectExpenseGroupBy.REPORT) {
         return this.reimbursableExpenseGroupingDateOptions().concat([{
           label: 'Last spend date',

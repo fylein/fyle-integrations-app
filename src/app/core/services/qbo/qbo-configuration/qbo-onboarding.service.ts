@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
 import { TranslocoService } from "@jsverse/transloco";
-import { brandingContent } from "src/app/branding/branding-config";
 import { QBOOnboardingState } from "src/app/core/models/enum/enum.model";
 import { OnboardingStepper } from "src/app/core/models/misc/onboarding-stepper.model";
 import { QBOOnboardingStepperMap } from "src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model";
@@ -9,10 +8,8 @@ import { QBOOnboardingStepperMap } from "src/app/core/models/qbo/qbo-configurati
   providedIn: 'root'
 })
 export class QboOnboardingService {
-  brandingContent = brandingContent.configuration;
-
     private onboardingSteps: OnboardingStepper[] = [];
-    
+
     private translocoService: TranslocoService = inject(TranslocoService);
 
     private readonly onboardingStateStepMap: QBOOnboardingStepperMap = {

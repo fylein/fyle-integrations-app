@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Observable, Subject } from 'rxjs';
@@ -9,8 +9,9 @@ import { SelectFormOption } from "../../../models/common/select-form-option.mode
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, SplitExpenseGrouping, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../../models/enum/enum.model";
 import { ExportModuleRule, ExportSettingValidatorRule } from "../../../models/common/export-settings.model";
-import { brandingConfig, brandingContent } from "src/app/branding/branding-config";
+import { brandingConfig } from "src/app/branding/branding-config";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const xeroExportSettingCache$ = new Subject<void>();
@@ -19,6 +20,8 @@ const xeroExportSettingCache$ = new Subject<void>();
   providedIn: 'root'
 })
 export class XeroExportSettingsService {
+
+  private translocoService: TranslocoService = inject(TranslocoService);
 
   constructor(
     private apiService: ApiService,
@@ -78,10 +81,10 @@ export class XeroExportSettingsService {
     ];
   }
 
-  static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
+  getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
      return [
       {
-        label: brandingContent.common.currentDate,
+        label: this.translocoService.translate('common.currentDate'),
         value: ExportDateType.CURRENT_DATE
       },
       {

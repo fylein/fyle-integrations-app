@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportSettingMappingRow } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
+import { ImportSettingsService } from "src/app/core/services/common/import-settings.service";
 
 export type BusinessCentralImportSettings = {
     import_settings: {
@@ -20,7 +21,7 @@ export interface BusinessCentralImportSettingsGet extends BusinessCentralImportS
 
 export interface BusinessCentralImportSettingsPost extends BusinessCentralImportSettings {}
 
-export class BusinessCentralImportSettingsModel extends ImportSettingsModel {
+export class BusinessCentralImportSettingsModel extends ImportSettingsService {
 
     static mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
         const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;

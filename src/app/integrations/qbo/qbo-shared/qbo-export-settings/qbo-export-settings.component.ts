@@ -64,7 +64,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions = QboExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions = QboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
@@ -142,9 +142,11 @@ export class QboExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
-    private employeeSettingService: QboEmployeeSettingsService
+    private employeeSettingService: QboEmployeeSettingsService,
+    private qboExportSettingsService: QboExportSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
+    this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {

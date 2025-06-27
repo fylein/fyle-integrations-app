@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportCodeFieldConfigType, ImportSettingMappingRow } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
+import { ImportSettingsService } from "src/app/core/services/common/import-settings.service";
 
 export type QdbDirectImportSetting = {
     import_account_as_category: boolean,
@@ -18,7 +19,7 @@ export type QdbDirectImportSetting = {
 
 export interface QbdDirectImportSettingGet extends QbdDirectImportSettingPost {}
 
-export class QbdDirectImportSettingModel extends ImportSettingsModel {
+export class QbdDirectImportSettingModel extends ImportSettingsService {
     static getChartOfAccountTypesList(): string[] {
       const typeList = [
         'Other Expense', 'Cost Of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',

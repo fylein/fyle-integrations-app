@@ -1,10 +1,6 @@
-import { FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, SplitExpenseGrouping, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
-import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { brandingConfig, brandingContent } from "src/app/branding/branding-config";
-import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
 
 export type XeroExpenseGroupSettingPost = {
   ccc_expense_state: XeroCCCExpenseState;

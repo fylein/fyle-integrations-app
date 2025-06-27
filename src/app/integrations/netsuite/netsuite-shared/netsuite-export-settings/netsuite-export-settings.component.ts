@@ -64,7 +64,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions = NetsuiteExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions = NetsuiteExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
@@ -125,9 +125,11 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
-private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private netsuiteExportSettingsService: NetsuiteExportSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
+    this.reimbursableExpenseGroupingDateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
 
 

@@ -105,7 +105,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   expenseGroupByOptions = QboExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions = QboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
@@ -189,8 +189,11 @@ export class QboCloneSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
     private translocoService: TranslocoService,
-    private qboOnboardingService: QboOnboardingService
-  ) { }
+    private qboOnboardingService: QboOnboardingService,
+    private qboExportSettingsService: QboExportSettingsService
+  ) { 
+    this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  }
 
   resetCloneSetting(): void {
     this.warningHeaderText = this.translocoService.translate('qboCloneSettings.areYouSureWarning');

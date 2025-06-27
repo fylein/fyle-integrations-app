@@ -261,7 +261,7 @@
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.item' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
-                  formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}"></p-dropdown>
+                  formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
                                 {{ item.value }}

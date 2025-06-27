@@ -47,7 +47,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   cccExpenseGroupByOptions =  XeroExportSettingsService.getCCCExpenseGroupingOptions();
 
-  reimbursableExpenseGroupingDateOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions = XeroExportSettingsService.getCCCExpenseGroupingDateOptions();
 
@@ -100,8 +100,11 @@ export class XeroExportSettingsComponent implements OnInit {
     private router : Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private xeroExportSettingsService: XeroExportSettingsService
+  ) { 
+    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  }
 
   refreshDimensions(isRefresh: boolean) {
     this.xeroHelperService.refreshXeroDimensions().subscribe();

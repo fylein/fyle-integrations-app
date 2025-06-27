@@ -35,9 +35,6 @@ const demoVideoLinks: DemoVideo = {
 export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 
-// @ts-ignore
-export const brandingContent = content[brandingConfig.brandId];
-
 
 const styles = {
     fyle: fyleStyles,

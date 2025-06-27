@@ -59,9 +59,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions: SelectFormOption[] = BusinessCentralExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = BusinessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions: SelectFormOption[] = BusinessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getReimbursableExpensesExportTypeOptions();
 
@@ -99,8 +99,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     public helper: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private businessCentralExportSettingsService: BusinessCentralExportSettingsService
+  ) { 
+    this.reimbursableExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.cccExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();
+  }
 
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;

@@ -56,7 +56,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   cccExpenseGroupByOptions =  XeroExportSettingsService.getCCCExpenseGroupingOptions();
 
-  reimbursableExpenseGroupingDateOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions = XeroExportSettingsService.getCCCExpenseGroupingDateOptions();
 
@@ -154,8 +154,11 @@ export class XeroCloneSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
     private translocoService: TranslocoService,
-    private xeroOnboardingService: XeroOnboardingService
-  ) { }
+    private xeroOnboardingService: XeroOnboardingService,
+    private xeroExportSettingsService: XeroExportSettingsService
+  ) { 
+    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  }
 
   resetCloneSetting(): void {
     this.warningHeaderText = this.translocoService.translate('xeroCloneSettings.areYouSure');

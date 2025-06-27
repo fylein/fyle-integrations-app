@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
+import { ImportSettingsService } from "src/app/core/services/common/import-settings.service";
 
 export type Sage300DefaultFields = {
     destination_field: string,
@@ -41,7 +42,7 @@ export interface  Sage300ImportSettingGet extends Sage300ImportSetting {
 
 export interface  Sage300ImportSettingPost extends Sage300ImportSetting {}
 
-export class Sage300ImportSettingModel extends ImportSettingsModel {
+export class Sage300ImportSettingModel extends ImportSettingsService {
 
     static generateDependentFieldValue(attribute_type: string, source_placeholder: string): ExpenseField {
         return {

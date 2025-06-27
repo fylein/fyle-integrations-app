@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/c1/content-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { FyleField, AppName, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName } from 'src/app/core/models/enum/enum.model';

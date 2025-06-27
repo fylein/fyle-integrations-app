@@ -9,9 +9,9 @@ import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { BusinessCentralExportType, ExpenseGroupedBy, CCCExpenseState, ExportDateType, ExpenseState, FyleField, AutoMapEmployeeOptions, NameInJEField } from 'src/app/core/models/enum/enum.model';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const businessCentralExportSettingCache$ = new Subject<void>();
@@ -24,7 +24,8 @@ export class BusinessCentralExportSettingsService {
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    helper: HelperService
+    helper: HelperService,
+    private translocoService: TranslocoService
   ) {
     helper.setBaseApiURL();
   }
@@ -56,14 +57,14 @@ export class BusinessCentralExportSettingsService {
     ];
   }
 
-  static getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
+  getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
         label: 'Card transaction post date',
         value: ExportDateType.POSTED_AT
       },
       {
-        label: brandingContent.common.currentDate,
+        label: this.translocoService.translate('common.currentDate'),
         value: ExportDateType.CURRENT_DATE
       },
       {
@@ -77,10 +78,10 @@ export class BusinessCentralExportSettingsService {
     ];
   }
 
-  static getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
+  getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
     return [
       {
-        label: brandingContent.common.currentDate,
+        label: this.translocoService.translate('common.currentDate'),
         value: ExportDateType.CURRENT_DATE
       },
       {
