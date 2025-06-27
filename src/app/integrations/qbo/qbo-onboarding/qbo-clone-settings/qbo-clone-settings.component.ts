@@ -14,7 +14,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
-import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -31,6 +30,7 @@ import { EmployeeSettingsService } from 'src/app/core/services/common/employee-s
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
+import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -188,7 +188,8 @@ export class QboCloneSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private qboOnboardingService: QboOnboardingService
   ) { }
 
   resetCloneSetting(): void {
@@ -282,7 +283,7 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new QBOOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = this.qboOnboardingService.getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
