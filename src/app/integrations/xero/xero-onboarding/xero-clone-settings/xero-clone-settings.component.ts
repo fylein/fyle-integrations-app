@@ -13,7 +13,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
-import { XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
 import { XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
@@ -31,6 +30,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -95,7 +95,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingsService.getPaymentSyncOptions();
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -307,7 +307,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   setupAdvancedSettingFormWatcher() {
-    XeroAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    XeroAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
   updateCustomerImportAvailability(isMapped: boolean) {
@@ -372,7 +372,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       }
 
       this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingsService.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
+      this.advancedSettingForm = XeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
       this.setupAdvancedSettingFormWatcher();
 
       // Convert field values from destination attributes to *default* destination attributes
