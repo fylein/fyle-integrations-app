@@ -8,7 +8,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FundSource, FyleField, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -56,19 +56,19 @@ export class QboExportSettingsComponent implements OnInit {
 
   isImportItemsEnabled: boolean;
 
-  creditCardExportTypes = QBOExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes = QboExportSettingsService.getCreditCardExportTypes();
 
-  cccExpenseStateOptions = QBOExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = QboExportSettingsService.getCCCExpenseStateOptions();
 
-  expenseStateOptions = QBOExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions = QboExportSettingsService.getReimbursableExpenseStateOptions();
 
-  expenseGroupByOptions = QBOExportSettingModel.getExpenseGroupByOptions();
+  expenseGroupByOptions = QboExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions = QboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
 
   cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
-  nameInJournalOptions = QBOExportSettingModel.getNameInJournalOptions();
+  nameInJournalOptions = QboExportSettingsService.getNameInJournalOptions();
 
   showNameInJournalOption: boolean;
 
@@ -196,7 +196,7 @@ export class QboExportSettingsComponent implements OnInit {
     this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
-      const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
+      const exportSettingPayload = QboExportSettingsService.constructPayload(this.exportSettingForm);
       const employeeSettingPayload = QboEmployeeSettingsService.constructPayload(this.employeeSettingForm);
 
       concat(
@@ -423,7 +423,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private updateOptions(destinationOptionKey: QboExportSettingDestinationOptionKey, newResults: any[], existingOptions: DefaultDestinationAttribute[]): void {
-    const newOptions = newResults.map(QBOExportSettingModel.formatGeneralMappingPayload);
+    const newOptions = newResults.map(QboExportSettingsService.formatGeneralMappingPayload);
     const updatedOptions = this.mergeOptions(existingOptions, newOptions);
     this.setUpdatedOptions(destinationOptionKey as QboExportSettingDestinationOptionKey, updatedOptions);
     this.isOptionSearchInProgress = false;
@@ -503,17 +503,17 @@ return of(null);
       this.exportSettings = exportSetting;
       this.employeeFieldMapping = workspaceGeneralSettings?.employee_field_mapping;
       this.setLiveEntityExample(destinationAttributes);
-      this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.vendors = vendors.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.bankAccounts = bankAccounts.results.map((option) => QboExportSettingsService.formatGeneralMappingPayload(option));
+      this.cccAccounts = cccAccounts.results.map((option) => QboExportSettingsService.formatGeneralMappingPayload(option));
+      this.accountsPayables = accountsPayables.results.map((option) => QboExportSettingsService.formatGeneralMappingPayload(option));
+      this.vendors = vendors.results.map((option) => QboExportSettingsService.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
       this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
-      this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
-      this.employeeSettingForm = QBOExportSettingModel.createEmployeeSettingsForm(
+      this.exportSettingForm = QboExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
+      this.employeeSettingForm = QboExportSettingsService.createEmployeeSettingsForm(
         this.employeeFieldMapping,
         workspaceGeneralSettings?.auto_map_employees || false
       );
@@ -523,7 +523,7 @@ return of(null);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
-      const [exportSettingValidatorRule, exportModuleRule] = QBOExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = QboExportSettingsService.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 

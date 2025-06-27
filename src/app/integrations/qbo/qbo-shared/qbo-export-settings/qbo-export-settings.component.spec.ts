@@ -33,7 +33,7 @@ import {
   mockCCCExpenseDateGrouping,
   mockReimbursableExpenseDateGrouping
 } from '../../qbo.fixture';
-import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { AutoMapEmployeeOptions, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey, QBOOnboardingState, QBOReimbursableExpensesObject, SplitExpenseGrouping, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -166,7 +166,7 @@ describe('QboExportSettingsComponent', () => {
         of(mockVendors)
       );
 
-      spyOn(QBOExportSettingModel, 'mapAPIResponseToFormGroup').and.returnValue(component.exportSettingForm);
+      spyOn(QboExportSettingsService, 'mapAPIResponseToFormGroup').and.returnValue(component.exportSettingForm);
     });
 
     it('should fetch and set up export settings correctly', fakeAsync(() => {
@@ -733,7 +733,7 @@ describe('QboExportSettingsComponent', () => {
 
       spyOn<any>(component, 'setupCustomDateOptionWatchers').and.callThrough();
 
-      spyOn(QBOExportSettingModel, 'getReimbursableExpenseGroupingDateOptions').and.returnValue([]);
+      spyOn(QboExportSettingsService, 'getReimbursableExpenseGroupingDateOptions').and.returnValue([]);
       spyOn(ExportSettingsService, 'constructGroupingDateOptions').and.returnValue([]);
       spyOn<any>(component, 'updateCCCExpenseGroupingDateOptions');
     });

@@ -10,7 +10,6 @@ import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { QBOAdvancedSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
-import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -243,7 +242,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 

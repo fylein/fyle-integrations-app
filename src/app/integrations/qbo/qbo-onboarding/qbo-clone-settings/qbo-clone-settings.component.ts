@@ -13,7 +13,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
-import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
@@ -98,19 +97,19 @@ export class QboCloneSettingsComponent implements OnInit {
 
   reimbursableExportTypes: SelectFormOption[];
 
-  creditCardExportTypes = QBOExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes = QboExportSettingsService.getCreditCardExportTypes();
 
-  cccExpenseStateOptions = QBOExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = QboExportSettingsService.getCCCExpenseStateOptions();
 
-  expenseStateOptions = QBOExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions = QboExportSettingsService.getReimbursableExpenseStateOptions();
 
-  expenseGroupByOptions = QBOExportSettingModel.getExpenseGroupByOptions();
+  expenseGroupByOptions = QboExportSettingsService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions = QboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
 
   cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
-  nameInJournalOptions = QBOExportSettingModel.getNameInJournalOptions();
+  nameInJournalOptions = QboExportSettingsService.getNameInJournalOptions();
 
   chartOfAccountTypesList: string[] = QBOImportSettingModel.getChartOfAccountTypesList();
 
@@ -156,7 +155,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
-  splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions = QboExportSettingsService.getSplitExpenseGroupingOptions();
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -309,7 +308,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   private updateCCCExpenseGroupingDateOptions(selectedValue: QBOCorporateCreditCardExpensesObject): void {
     if ([QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(selectedValue)) {
-      this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
+      this.cccExpenseGroupingDateOptions = QboExportSettingsService.getAdditionalCreditCardExpenseGroupingDateOptions();
       if (selectedValue === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
         this.cccExpenseGroupingDateOptions.push({
           label: this.translocoService.translate('common.currentDate'),
@@ -449,21 +448,21 @@ export class QboCloneSettingsComponent implements OnInit {
         this.employeeSettingForm = QboEmployeeSettingsService.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
 
         // Export Settings
-        this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-        this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
+        this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
+        this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
+        this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
         this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
 
         this.isImportItemsEnabled = cloneSetting.import_settings.workspace_general_settings.import_items;
 
-        this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
+        this.reimbursableExportTypes = QboExportSettingsService.getReimbursableExportTypeOptions(cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
         this.showNameInJournalOption = cloneSetting.export_settings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
-        this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(cloneSetting.export_settings, cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
+        this.exportSettingForm = QboExportSettingsService.mapAPIResponseToFormGroup(cloneSetting.export_settings, cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
 
         this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
-        const [exportSettingValidatorRule, exportModuleRule] = QBOExportSettingModel.getValidators();
+        const [exportSettingValidatorRule, exportModuleRule] = QboExportSettingsService.getValidators();
 
         this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
@@ -485,7 +484,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
         // Import Settings
         this.qboFields = qboFields;
-        this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
         this.isImportMerchantsAllowed = !cloneSetting.advanced_configurations.workspace_general_settings.auto_create_merchants_as_vendors;
 
         if (qboCredentials && qboCredentials.country !== 'US') {
@@ -505,7 +504,7 @@ export class QboCloneSettingsComponent implements OnInit {
           this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options);
         }
 
-        this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
         this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
 
         this.setupAdvancedSettingFormWatcher();

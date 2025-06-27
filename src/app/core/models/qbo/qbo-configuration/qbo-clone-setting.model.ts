@@ -1,11 +1,12 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MappingSetting } from "../../db/mapping-setting.model";
-import { QBOExportSettingGet, QBOExportSettingModel, QBOExportSettingPost } from "./qbo-export-setting.model";
+import { QBOExportSettingGet, QBOExportSettingPost } from "./qbo-export-setting.model";
 import { QBOImportSettingGet, QBOImportSettingModel, QBOImportSettingPost } from "./qbo-import-setting.model";
 import { QBOAdvancedSettingGet, QBOAdvancedSettingPost } from "./qbo-advanced-setting.model";
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from "./qbo-employee-setting.model";
 import { QboAdvancedSettingsService } from "src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service";
 import { QboEmployeeSettingsService } from "src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service";
+import { QboExportSettingsService } from "src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service";
 
 export type QBOCloneSetting = {
     workspace_id: number,
@@ -25,7 +26,7 @@ export type QBOCloneSettingPost = {
 export class QBOCloneSettingModel {
     static constructPayload(employeeSettingForm: FormGroup, exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): QBOCloneSettingPost {
         const employeeSettingPayload = QboEmployeeSettingsService.constructPayload(employeeSettingForm);
-        const exportSettingPayload = QBOExportSettingModel.constructPayload(exportSettingForm);
+        const exportSettingPayload = QboExportSettingsService.constructPayload(exportSettingForm);
         const importSettingPayload = QBOImportSettingModel.constructPayload(importSettingForm);
         const advancedSettingPayload = QboAdvancedSettingsService.constructPayload(advancedSettingForm);
 
