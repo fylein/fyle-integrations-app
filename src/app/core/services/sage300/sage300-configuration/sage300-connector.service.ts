@@ -83,7 +83,7 @@ export class Sage300ConnectorService {
     );
   }
 
-  connectSage300(sage300SetupForm: FormGroup, isReconnecting?: boolean): Observable<{sage300SetupForm: FormGroup, isSage300Connected: boolean}> {
+  connectSage300(sage300SetupForm: FormGroup, isReconnecting?: boolean): Observable<Sage300ConnectorModel> {
     const sage300Credential: Sage300Credential = {
       username: sage300SetupForm.get('userID')?.value,
       identifier: sage300SetupForm.get('companyID')?.value,
