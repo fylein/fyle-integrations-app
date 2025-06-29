@@ -45,14 +45,14 @@ export class Sage300Component implements OnInit {
     if (pathName === '/integrations/sage300') {
       const onboardingStateComponentMap = {
         [Sage300OnboardingState.CONNECTION]: '/integrations/sage300/onboarding/landing',
-        [Sage300OnboardingState.LOCATION_ENTITY]: '/integrations/sage300/onboarding/connector',
+        [Sage300OnboardingState.CONNECTOR_AUTH]: '/integrations/sage300/onboarding/connector',
         [Sage300OnboardingState.EXPORT_SETTINGS]: '/integrations/sage300/onboarding/export_settings',
         [Sage300OnboardingState.IMPORT_SETTINGS]: '/integrations/sage300/onboarding/import_settings',
         [Sage300OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage300/onboarding/advanced_settings',
         [Sage300OnboardingState.COMPLETE]: '/integrations/sage300/main/dashboard'
       };
 
-      this.router.navigateByUrl(isSage300TokenValid === false && ![Sage300OnboardingState.CONNECTION, Sage300OnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[Sage300OnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(isSage300TokenValid === false && ![Sage300OnboardingState.CONNECTION, Sage300OnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[Sage300OnboardingState.CONNECTOR_AUTH] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
 
