@@ -6,7 +6,7 @@ import { StorageService } from '../../common/storage.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 import { FormGroup } from '@angular/forms';
-import { Sage300ConnectorModel, Sage300ConnectorHelper } from 'src/app/core/models/sage300/sage300-configuration/sage300-connector.model';
+import { Sage300ConnectorModel, Sage300ConnectorFormModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-connector.model';
 import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -71,14 +71,20 @@ export class Sage300ConnectorService {
     );
   }
 
-  getSage300FormGroup(): Observable<FormGroup> {
+  getSage300FormGroup(): Observable<Sage300ConnectorModel> {
     return this.getSage300Credential().pipe(
       map((sage300Credential: Sage300Credential) => {
         this.sage300Credential = sage300Credential;
-        return Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential);
+        return {
+          sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential),
+          isSage300Connected: true
+        };
       }),
       catchError(() => {
-        return of(Sage300ConnectorHelper.mapAPIResponseToFormGroup(null));
+        return of({
+          sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(null),
+          isSage300Connected: false
+        });
       })
     );
   }
@@ -97,14 +103,14 @@ export class Sage300ConnectorService {
           return this.mappingsService.importSage300Attributes(true).pipe(
             map(() => {
               return {
-                sage300SetupForm: Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential),
+                sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential),
                 isSage300Connected: true
               };
             })
           );
         }
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage300 successfully.', 6000);
-          return of({ sage300SetupForm: Sage300ConnectorHelper.mapAPIResponseToFormGroup(sage300Credential), isSage300Connected: true });
+          return of({ sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential), isSage300Connected: true });
       }),
       catchError(() => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.', 6000);

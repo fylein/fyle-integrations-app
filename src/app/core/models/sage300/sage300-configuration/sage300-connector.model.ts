@@ -6,7 +6,7 @@ export type Sage300ConnectorModel = {
   isSage300Connected: boolean;
 }
 
-export class Sage300ConnectorHelper {
+export class Sage300ConnectorFormModel {
 
   static mapAPIResponseToFormGroup(sage300Connection: Sage300Credential | null): FormGroup {
     const isDisabled = sage300Connection?.identifier ? true : false;
