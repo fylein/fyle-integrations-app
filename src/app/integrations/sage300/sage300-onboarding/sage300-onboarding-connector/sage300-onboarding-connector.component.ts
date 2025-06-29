@@ -2,9 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ConfigurationCta, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
@@ -39,8 +38,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private connectorService: Sage300ConnectorService,
-    private toastService: IntegrationsToastService
+    private connectorService: Sage300ConnectorService
   ) { }
 
   connectSage300() {

@@ -24,6 +24,8 @@ export class Sage300ConnectorService {
 
   sage300Credential: Sage300Credential | null = null;
 
+  doesSage300CredentialsExist: boolean;
+
   constructor(
     private apiService: ApiService,
     private storageService: StorageService,
@@ -45,8 +47,11 @@ export class Sage300ConnectorService {
   @CacheBuster({
     cacheBusterNotifier: sage300CredentialCache
   })
-  postCredentials(data: Sage300Credential): Observable<Sage300Credential> {
+  upsertCredentials(data: Sage300Credential): Observable<Sage300Credential> {
     globalCacheBusterNotifier.next();
+    if (this.doesSage300CredentialsExist){
+      return this.apiService.patch(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
+    }
     return this.apiService.post(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
   }
 
@@ -75,9 +80,11 @@ export class Sage300ConnectorService {
     return this.getSage300Credential().pipe(
       map((sage300Credential: Sage300Credential) => {
         this.sage300Credential = sage300Credential;
+        this.doesSage300CredentialsExist = true;
         return Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential);
       }),
       catchError(() => {
+        this.doesSage300CredentialsExist = false;
         return of(Sage300ConnectorFormModel.mapAPIResponseToFormGroup(null));
       })
     );
@@ -91,7 +98,7 @@ export class Sage300ConnectorService {
       workspace: this.storageService.get('workspaceId')
     };
 
-    return this.postCredentials(sage300Credential).pipe(
+    return this.upsertCredentials(sage300Credential).pipe(
       switchMap(() => {
         if (!isReconnecting) {
           return this.mappingsService.importSage300Attributes(true).pipe(

@@ -46,7 +46,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   save() {
     this.isLoading = true;
-    this.connectorService.connectNetsuite(this.connectNetsuiteForm, true)
+    this.connectorService.connectNetsuite(this.connectNetsuiteForm)
     .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
       this.connectNetsuiteForm = netsuiteSetupForm;
       this.isLoading = false;

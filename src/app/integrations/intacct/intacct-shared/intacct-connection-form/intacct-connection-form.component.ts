@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { HelperService } from 'src/app/core/services/common/helper.service';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
@@ -18,9 +17,7 @@ export class IntacctConnectionFormComponent {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor(
-    public helper: HelperService
-  ){
+  constructor(){
 
   }
 }

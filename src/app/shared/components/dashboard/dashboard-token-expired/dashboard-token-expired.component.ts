@@ -99,7 +99,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
         this.integrationSetupForm = netsuiteSetupForm;
         this.isConnectionInProgress = false;
-        if (isNetsuiteConnected === true){
+        if (isNetsuiteConnected){
           this.router.navigate(['integrations/netsuite/main/dashboard']);
         }
       });
@@ -110,7 +110,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
         this.integrationSetupForm = intacctSetupForm;
         this.isConnectionInProgress = false;
-        if (isIntacctConnected === true){
+        if (isIntacctConnected){
           this.router.navigate(['integrations/intacct/main/dashboard']);
         }
       });
@@ -121,7 +121,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       .subscribe(({ sage300SetupForm, isSage300Connected }) => {
         this.integrationSetupForm = sage300SetupForm;
         this.isConnectionInProgress = false;
-        if (isSage300Connected === true){
+        if (isSage300Connected){
           this.router.navigate(['integrations/sage300/main/dashboard']);
         }
       });
