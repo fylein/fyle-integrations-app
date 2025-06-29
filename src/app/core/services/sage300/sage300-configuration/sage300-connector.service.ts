@@ -71,20 +71,14 @@ export class Sage300ConnectorService {
     );
   }
 
-  getSage300FormGroup(): Observable<Sage300ConnectorModel> {
+  getSage300FormGroup(): Observable<FormGroup> {
     return this.getSage300Credential().pipe(
       map((sage300Credential: Sage300Credential) => {
         this.sage300Credential = sage300Credential;
-        return {
-          sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential),
-          isSage300Connected: true
-        };
+        return Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential);
       }),
       catchError(() => {
-        return of({
-          sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(null),
-          isSage300Connected: false
-        });
+        return of(Sage300ConnectorFormModel.mapAPIResponseToFormGroup(null));
       })
     );
   }
