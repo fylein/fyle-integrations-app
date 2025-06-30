@@ -11,14 +11,14 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { mockExportSettings, mockPaginatedDestinationAttributes } from '../../intacct.fixture';
 import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingOptionSearch, ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { ExportSettingGet, ExportSettingModel as IntacctExportSettingModel } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { ExportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { LowerCasePipe } from '@angular/common';
-import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
-import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
+import { c1FeatureConfig } from 'src/app/branding/c1/branding-config';
+import { fyleFeatureConfig } from 'src/app/branding/fyle/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 

@@ -7,8 +7,8 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
-                    [headerText]="brandingContent.configurationHeaderText"
-                    [contentText]="brandingContent.configurationSubHeaderText"
+                    [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
+                    [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>

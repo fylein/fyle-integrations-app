@@ -2,15 +2,15 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ExpenseField, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
-import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
+import { XeroImportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -19,6 +19,7 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
   selector: 'app-xero-import-settings',
@@ -61,13 +62,13 @@ export class XeroImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
 
   isSaveInProgress: boolean;
 
   ConfigurationCtaText = ConfigurationCta;
 
-  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList();
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -78,8 +79,6 @@ export class XeroImportSettingsComponent implements OnInit {
   org: Org = this.orgService.getCachedOrg();
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  readonly brandingContent = brandingContent.xero.configuration.importSetting;
 
   readonly supportArticleLink = brandingKbArticles.onboardingArticles.XERO.IMPORT_SETTING;
 
@@ -196,7 +195,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = XeroImportSettingModel.constructPayload(this.importSettingsForm);
+    const importSettingPayload = XeroImportSettingsService.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
@@ -273,7 +272,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
 
-      this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
+      this.importSettingsForm = XeroImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
 
       if (response[5] && response[5].country !== 'US' && new Date(this.org.created_at) < new Date('2024-08-19')) {
         this.isTaxGroupSyncAllowed = true;

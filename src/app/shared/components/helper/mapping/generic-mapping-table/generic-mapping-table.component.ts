@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
@@ -72,8 +72,6 @@ export class GenericMappingTableComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.mapping;
 
   readonly brandingStyle = brandingStyle;
 
@@ -212,7 +210,7 @@ export class GenericMappingTableComponent implements OnInit {
       this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
         this.appName === AppName.NETSUITE ? this.decrementUnmappedCountInNetsuiteEmployeeMapping(selectedRow.employeemapping) : this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
         selectedRow.employeemapping = [response];
-        this.displaySuccessToast(this.brandingContent.employeeMappingToastText);
+        this.displaySuccessToast(this.translocoService.translate('mapping.employeeMappingToastText'));
       }, () => {
         this.displayErrorToast();
       });
@@ -222,7 +220,7 @@ export class GenericMappingTableComponent implements OnInit {
       this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.categorymapping);
         selectedRow.categorymapping = [response];
-        this.displaySuccessToast(this.brandingContent.categoryMappingToastText);
+        this.displaySuccessToast(this.translocoService.translate('mapping.categoryMappingToastText'));
       }, () => {
         this.displayErrorToast();
       });
@@ -232,7 +230,7 @@ export class GenericMappingTableComponent implements OnInit {
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
         selectedRow.mapping = [response];
-        this.displaySuccessToast(this.brandingContent.mappingToastText);
+        this.displaySuccessToast(this.translocoService.translate('mapping.mappingToastText'));
       }, () => {
         this.displayErrorToast();
       });

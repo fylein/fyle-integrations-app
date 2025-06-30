@@ -2,14 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroFyleField, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
-import { XeroAdvancedSettingGet, XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import { XeroAdvancedSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -17,8 +17,8 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
-import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-xero-advanced-settings',
@@ -53,19 +53,17 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingsService.getPaymentSyncOptions();
 
   org: Org = this.orgService.getCachedOrg();
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   ConfigurationCtaText = ConfigurationCta;
 
   isSaveInProgress: boolean;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  readonly brandingContent = brandingContent.xero.configuration.advancedSettings;
 
   readonly brandingStyle = brandingStyle;
 
@@ -88,12 +86,12 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoFields)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoFields)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
   save(): void {
-    const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(this.advancedSettingForm);
+    const advancedSettingPayload = XeroAdvancedSettingsService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
@@ -115,7 +113,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
   }
 
   private setupFormWatchers() {
-    XeroAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    XeroAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
   private formatMemoPreview(): void {
@@ -169,7 +167,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = XeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.setupFormWatchers();
       this.createMemoStructureWatcher();
       this.isLoading = false;

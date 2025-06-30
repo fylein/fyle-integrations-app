@@ -8,7 +8,6 @@ import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 const sage300ExportSettingGetCache = new Subject<void>();
@@ -78,7 +77,7 @@ export class Sage300ExportSettingService {
   getReimbursableExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: brandingContent.common.currentDate,
+        label: this.translocoService.translate('common.currentDate'),
         value: Sage300ExpenseDate.CURRENT_DATE
       },
       {

@@ -6,7 +6,7 @@
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
       [headerText]="'intacctLocationEntity.headerText' | transloco"
-      [contentText]="brandingContent.intacct.configuration.connector.locationSubLabel"
+      [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco: {brandName: brandingConfig.brandName}"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>
@@ -33,7 +33,7 @@
             </div>
           </div>
             <div class="tw-pt-16-px">
-              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: brandingContent.intacct.common.locationEntity }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: locationEntityLabel }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
               </p-dropdown>
           </div>
             <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
@@ -41,7 +41,7 @@
             </h3>
 
             <div *ngIf="!locationEntity" class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              {{ 'intacctLocationEntity.selectLocationEntityToContinue' | transloco: { locationEntity: brandingContent.intacct.common.locationEntity } }}
+              {{ 'intacctLocationEntity.selectLocationEntityToContinue' | transloco: { locationEntity: locationEntityLabel } }}
             </div>
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">

@@ -1,8 +1,8 @@
 <div>
     <div>
-        <app-landing-page-header [iconPath]="'assets/logos/netsuite-logo-onboarding.png'" [appName]="'netsuiteOnboardingLanding.appName' | transloco" [appDescription]="brandingContent.contentText" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'netsuiteOnboardingLanding.connectButton' | transloco" [postConnectionRoute]="'netsuite/onboarding/connector'"></app-landing-page-header>
+        <app-landing-page-header [iconPath]="'assets/logos/netsuite-logo-onboarding.png'" [appName]="'netsuiteOnboardingLanding.appName' | transloco" [appDescription]="'netsuite.landing.contentText' | transloco: {brandName: brandingConfig.brandName}" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'netsuiteOnboardingLanding.connectButton' | transloco" [postConnectionRoute]="'netsuite/onboarding/connector'"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="brandingContent.guideHeaderText" [headerText]="'netsuiteOnboardingLanding.guideHeaderText' | transloco" [embedImage]="brandingConfig.brandId === 'co' ? 'assets/co/coNetsuiteLanding.svg' : ''" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId + '-netsuite-data-flow.svg'" [embedVideo]="embedVideoLink"></app-landing-page-body>
+        <app-landing-page-body [headlineText]="'netsuite.landing.guideHeaderText' | transloco" [headerText]="'netsuiteOnboardingLanding.guideHeaderText' | transloco" [embedImage]="brandingConfig.brandId === 'co' ? 'assets/co/coNetsuiteLanding.svg' : ''" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId + '-netsuite-data-flow.svg'" [embedVideo]="embedVideoLink"></app-landing-page-body>
     </div>
 </div>

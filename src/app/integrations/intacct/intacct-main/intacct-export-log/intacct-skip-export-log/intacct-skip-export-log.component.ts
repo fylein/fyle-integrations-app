@@ -7,11 +7,12 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-intacct-skip-export-log',
@@ -38,7 +39,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter?: SelectedDateFilter | null;
 
@@ -65,8 +66,6 @@ export class IntacctSkipExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   hideCalendar: boolean;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   readonly brandingStyle = brandingStyle;
 
@@ -139,7 +138,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.isDateSelected = false;
         this.selectedDateFilter = null;
 

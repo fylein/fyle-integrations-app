@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
-import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
   export interface GeneralMappingEntity {
     id: string;
@@ -113,7 +113,7 @@ export type AdvancedSettingsPost = {
     workspace_schedules: WorkspaceSchedules;
   }
 
-  export class AdvancedSetting extends AdvancedSettingsModel {
+  export class AdvancedSetting extends AdvancedSettingsService {
     static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
       const getFormValue = (key: string) => advancedSettingsForm.get(key)?.value;
 

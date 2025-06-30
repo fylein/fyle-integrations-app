@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -10,7 +10,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -22,6 +21,7 @@ import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
+import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
   selector: 'app-qbo-onboarding-connector',
@@ -30,9 +30,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
-  brandingContent = brandingContent.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -90,7 +88,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private qboOnboardingService: QboOnboardingService
   ) { }
 
   connectQbo(): void {
@@ -244,6 +243,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.qboOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+
     this.setupPage();
   }
 

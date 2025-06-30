@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
@@ -35,7 +35,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -78,7 +78,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 }
 
   openExpenseinFyle(expenseId: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expenseId));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expenseId));
   }
 
   public handleSimpleSearch(query: string) {
@@ -110,7 +110,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
 
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+          AccountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -137,7 +137,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

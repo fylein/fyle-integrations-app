@@ -7,8 +7,6 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { mockDimensionDetailsForAccountingFields, mockDimensionDetailsForFyleFields, mockMappingSettingsResponse, mockMappingSettingsWithCustomFieldResponse } from '../../intacct.fixture';
 import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { c1FeatureConfig } from 'src/app/branding/c1-branding-config';
-import { fyleFeatureConfig } from 'src/app/branding/fyle-branding-config';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 import { PaginatedDimensionDetails } from 'src/app/core/models/db/dimension-details.model';
 import { TranslocoService } from '@jsverse/transloco';

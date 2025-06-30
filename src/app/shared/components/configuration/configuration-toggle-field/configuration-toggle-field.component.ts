@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
@@ -39,11 +39,7 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
-  readonly brandingContent = brandingContent.common;
-
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingXeroContent = brandingContent.xero.configuration.importSetting.toggleToastMessage;
 
   readonly brandingStyle = brandingStyle;
 

@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-content-config';
+import { brandingKbArticles, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDDirectInteractionType, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
-import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -24,9 +23,7 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 })
 export class QbdDirectOnboardingPreRequisiteComponent {
 
-  brandingContent = brandingContent.qbd_direct.configuration.preRequisite;
-
-  onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean;
 
@@ -58,7 +55,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private router: Router,
     private workspaceService: WorkspaceService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private onboardingService: QbdDirectOnboardingService
   ) {
     this.preRequisitesteps = [
       {
@@ -84,6 +82,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         state: QBDPreRequisiteState.INCOMPLETE
       }
     ];
+    this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.preRequisite.stepName'), this.workspaceService.getOnboardingState());
   }
 
   updateConnectorStatus(status: CheckBoxUpdate): void {

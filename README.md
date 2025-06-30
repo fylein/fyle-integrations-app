@@ -36,14 +36,14 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 
     ```bash
     cp ../fyle-integrations-central/app-secrets/integrations-app/fyle-environment.json src/environments/fyle-environment.json
-    cp ../fyle-integrations-central/app-secrets/integrations-app/fyle-config.json src/app/branding/fyle-config.json
+    cp ../fyle-integrations-central/app-secrets/integrations-app/fyle-config.json src/app/branding/fyle/config.json
     ```
 
 * Copy `c1-environment.json` from integrations-central/ and add it to `src/environments`
 
     ```bash
     cp ../fyle-integrations-central/app-secrets/integrations-app/c1-environment.json src/environments/c1-environment.json
-    cp ../fyle-integrations-central/app-secrets/integrations-app/c1-config.json src/app/branding/c1-config.json
+    cp ../fyle-integrations-central/app-secrets/integrations-app/c1-config.json src/app/branding/c1/config.json
     ```
 
 * Run app

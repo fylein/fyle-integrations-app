@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
@@ -19,8 +19,6 @@ export class MappingCardHeaderComponent implements OnInit {
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent;
 
   readonly brandingStyle = brandingStyle;
 

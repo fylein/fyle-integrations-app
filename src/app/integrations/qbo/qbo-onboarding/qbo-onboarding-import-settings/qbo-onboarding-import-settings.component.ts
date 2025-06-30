@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingContent } from 'src/app/branding/branding-config';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
   selector: 'app-qbo-onboarding-import-settings',
@@ -11,15 +11,16 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class QboOnboardingImportSettingsComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.importSetting;
-
-  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService,
+    private qboOnboardingService: QboOnboardingService
   ) { }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.qboOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.importSetting.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

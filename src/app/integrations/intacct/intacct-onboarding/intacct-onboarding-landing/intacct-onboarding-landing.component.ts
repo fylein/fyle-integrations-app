@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
@@ -16,8 +16,6 @@ export class IntacctOnboardingLandingComponent implements OnInit {
   embedVideoLink = brandingDemoVideoLinks.onboarding.INTACCT;
 
   readonly brandingConfig = brandingConfig;
-
-  brandingContent = brandingContent;
 
   constructor() { }
 

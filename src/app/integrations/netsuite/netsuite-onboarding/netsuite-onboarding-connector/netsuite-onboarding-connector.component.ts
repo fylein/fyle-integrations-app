@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { NetsuiteOnboardingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { NetsuiteOnboardingService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-onboarding.service';
 
 @Component({
   selector: 'app-netsuite-onboarding-connector',
@@ -14,10 +14,11 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
 
   isNetsuiteConnected: boolean = false;
 
-  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Connect to NetSuite', this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private onboardingService: NetsuiteOnboardingService
   ) { }
 
   setupConnectionStatus(eventData: boolean) {
@@ -25,5 +26,6 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.onboardingService.getOnboardingSteps('Connect to NetSuite', this.workspaceService.getOnboardingState());
   }
 }

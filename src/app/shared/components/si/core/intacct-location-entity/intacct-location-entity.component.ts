@@ -12,8 +12,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { interval, take } from 'rxjs';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -50,11 +49,11 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent;
-
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  locationEntityLabel: string;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -186,6 +185,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.locationEntityLabel = this.translocoService.translate('intacct.common.locationEntity');
     this.setupPage();
   }
 }

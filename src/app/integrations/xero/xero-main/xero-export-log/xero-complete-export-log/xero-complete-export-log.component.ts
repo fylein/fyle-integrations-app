@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Workspace } from 'src/app/core/models/db/workspaces.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
@@ -17,6 +17,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-xero-complete-export-log',
@@ -37,7 +38,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -56,8 +57,6 @@ export class XeroCompleteExportLogComponent implements OnInit {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 
@@ -90,7 +89,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
@@ -120,9 +119,9 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
         this.xeroShortCode = this.storageService.get('xeroShortCode');
-        AccountingExportModel.assignXeroShortCode(this.xeroShortCode);
+        AccountingExportService.assignXeroShortCode(this.xeroShortCode);
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-          AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
+          AccountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
         );
 
         this.filteredAccountingExports = accountingExports;
@@ -142,7 +141,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = AccountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

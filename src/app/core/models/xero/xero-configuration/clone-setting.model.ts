@@ -1,8 +1,10 @@
 import { FormGroup } from "@angular/forms";
-import { MappingSetting } from "../../db/mapping-setting.model";
-import { XeroAdvancedSettingGet, XeroAdvancedSettingModel, XeroAdvancedSettingPost } from "./xero-advanced-settings.model";
-import { XeroExportSettingGet, XeroExportSettingModel, XeroExportSettingPost } from "./xero-export-settings.model";
-import { XeroImportSettingGet, XeroImportSettingModel, XeroImportSettingPost } from "./xero-import-settings.model";
+import { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from "./xero-advanced-settings.model";
+import { XeroExportSettingGet, XeroExportSettingPost } from "./xero-export-settings.model";
+import { XeroImportSettingGet, XeroImportSettingPost } from "./xero-import-settings.model";
+import { XeroAdvancedSettingsService } from "src/app/core/services/xero/xero-configuration/xero-advanced-settings.service";
+import { XeroExportSettingsService } from "src/app/core/services/xero/xero-configuration/xero-export-settings.service";
+import { XeroImportSettingsService } from "src/app/core/services/xero/xero-configuration/xero-import-settings.service";
 
 
 export type XeroCloneSetting = {
@@ -20,9 +22,9 @@ export type XeroCloneSettingPost = {
 
 export class XeroCloneSettingModel {
     static constructPayload(exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): XeroCloneSettingPost {
-        const exportSettingPayload = XeroExportSettingModel.constructPayload(exportSettingForm, true);
-        const importSettingPayload = XeroImportSettingModel.constructPayload(importSettingForm, true);
-        const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(advancedSettingForm, true);
+        const exportSettingPayload = XeroExportSettingsService.constructPayload(exportSettingForm, true);
+        const importSettingPayload = XeroImportSettingsService.constructPayload(importSettingForm, true);
+        const advancedSettingPayload = XeroAdvancedSettingsService.constructPayload(advancedSettingForm, true);
 
         if (!isTaxGroupSyncAllowed) {
             importSettingPayload.workspace_general_settings.import_tax_codes = false;
