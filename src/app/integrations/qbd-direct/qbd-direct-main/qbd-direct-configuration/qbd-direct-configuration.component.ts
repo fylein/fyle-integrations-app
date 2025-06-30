@@ -17,7 +17,7 @@ export class QbdDirectConfigurationComponent {
 
   modules: MenuItem[] = [];
 
-  activeModule: MenuItem
+  activeModule: MenuItem;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
