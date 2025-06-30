@@ -17,7 +17,7 @@ export class QbdDirectConfigurationComponent {
 
   modules: MenuItem[] = [];
 
-  activeModule: MenuItem = this.modules[0];
+  activeModule: MenuItem
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -31,6 +31,8 @@ export class QbdDirectConfigurationComponent {
       {label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/import_settings'},
       {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings'}
     ];
+
+    this.activeModule = this.modules[0];
   }
 
 }

@@ -12,7 +12,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
     const brandId = brandingConfig.brandId;
     return forkJoin({
       brandSpecificContent: this.http.get<Translation>(`./assets/i18n/${brandId}/${lang}.json`),
-      app: this.http.get<Translation>(`./assets/i18n/common/${lang}.json`)
+      app: this.http.get<Translation>(`./assets/i18n/${lang}.json`)
     }).pipe(map(({brandSpecificContent, app}) => ({
       ...brandSpecificContent,
       ...app

@@ -74,7 +74,7 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
-                      [label]="'configuration.exportSettings.taxCodeLabel' | transloco"
+                      [label]="'configuration.exportSetting.taxCodeLabel' | transloco"
                       [subLabel]="('configuration.exportSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('qboImportSettings.selectableFieldOnExpense' | transloco)"
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'"
@@ -85,7 +85,7 @@
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qboImportSettings.mandatoryTaxCodeError' | transloco"
-                        [label]="'configuration.exportSettings.defaultTaxCodeLabel' | transloco"
+                        [label]="'configuration.exportSetting.defaultTaxCodeLabel' | transloco"
                         [subLabel]="'qboImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [destinationAttributes]="taxCodes"
                         [optionLabel]="'name'"
