@@ -114,7 +114,10 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private translocoService: TranslocoService,
     private qbdDirectImportSettingsService: QbdDirectImportSettingsService
-  ) { }
+  ) {
+    this.customFieldOption = this.qbdDirectImportSettingsService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
+  }
 
   closeModel() {
     this.customFieldForm.reset();

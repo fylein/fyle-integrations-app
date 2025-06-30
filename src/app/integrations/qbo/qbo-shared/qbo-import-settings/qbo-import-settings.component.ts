@@ -103,7 +103,10 @@ export class QboImportSettingsComponent implements OnInit {
     public helper: HelperService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService
-  ) { }
+  ) {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
+  }
 
   closeModel() {
     this.customFieldForm.reset();

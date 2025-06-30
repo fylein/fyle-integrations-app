@@ -44,7 +44,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   defaultCategories: TravelperkDestinationAttribuite[];
 
-  destinationFieldOptions: SelectFormOption[] = this.travelperkAdvancedSettingService.getDefaultCategory();
+  destinationFieldOptions: SelectFormOption[];
 
   defaultMemoOptions: string[] = ['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
 
@@ -62,7 +62,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     value: ''
   };
 
-  lineItems: SelectFormOption[] = this.travelperkAdvancedSettingService.getExpenseGroup();
+  lineItems: SelectFormOption[];
 
   readonly brandingStyle = brandingStyle;
 
@@ -75,7 +75,10 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
     private travelperkAdvancedSettingService: TravelperkAdvancedSettingService
-  ) { }
+  ) {
+    this.destinationFieldOptions = this.travelperkAdvancedSettingService.getDefaultCategory();
+    this.lineItems = this.travelperkAdvancedSettingService.getExpenseGroup();
+  }
 
   private formatMemoPreview(): void {
     const previewValues: { [key: string]: string } = {

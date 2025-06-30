@@ -48,6 +48,7 @@ import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-config
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('QboExportSettingsComponent', () => {
@@ -105,6 +106,7 @@ describe('QboExportSettingsComponent', () => {
     const router = jasmine.createSpyObj('Router', ['navigate']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
     const exportSettingsServiceSpy = jasmine.createSpyObj('ExportSettingsService', ['mapAPIResponseToFormGroup', 'constructGroupingDateOptions']);
+    const employeeSettingsServiceSpy = jasmine.createSpyObj('EmployeeSettingsService', ['getEmployeeFieldMappingOptions']);
 
     await TestBed.configureTestingModule({
     declarations: [QboExportSettingsComponent],
@@ -133,7 +135,8 @@ describe('QboExportSettingsComponent', () => {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        { provide: ExportSettingsService, useValue: exportSettingsServiceSpy }
+        { provide: ExportSettingsService, useValue: exportSettingsServiceSpy },
+        { provide: EmployeeSettingsService, useValue: employeeSettingsServiceSpy }
     ]
 }).compileComponents();
 
@@ -146,8 +149,22 @@ describe('QboExportSettingsComponent', () => {
     integrationsToastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    fixture = TestBed.createComponent(QboExportSettingsComponent);
     exportSettingsService = TestBed.inject(ExportSettingsService) as jasmine.SpyObj<ExportSettingsService>;
+    
+    // Set up mock return values before creating the component
+    qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
+    qboExportSettingsServiceSpy.getCreditCardExportTypes.and.returnValue([]);
+    qboExportSettingsServiceSpy.getCCCExpenseStateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getReimbursableExpenseStateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getExpenseGroupByOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getNameInJournalOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getAdditionalCreditCardExpenseGroupingDateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getSplitExpenseGroupingOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.clearInvalidDateOption.and.stub();
+    employeeSettingsServiceSpy.getEmployeeFieldMappingOptions.and.returnValue([]);
+    
+    fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
     // Initialize all arrays to prevent undefined errors
     component.bankAccounts = [];
@@ -191,16 +208,6 @@ describe('QboExportSettingsComponent', () => {
       id: option.destination_id,
       name: option.value
     }));
-    qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
-    qboExportSettingsServiceSpy.getCreditCardExportTypes.and.returnValue([]);
-    qboExportSettingsServiceSpy.getCCCExpenseStateOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.getReimbursableExpenseStateOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.getExpenseGroupByOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.getNameInJournalOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.getAdditionalCreditCardExpenseGroupingDateOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.getSplitExpenseGroupingOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue([]);
-    qboExportSettingsServiceSpy.clearInvalidDateOption.and.stub();
   });
 
   describe('getSettingsAndSetupForm', () => {

@@ -48,25 +48,25 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   bankAccounts: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes = this.xeroExportSettingsService.getReimbursableExportTypes();
+  reimbursableExportTypes: SelectFormOption[] = [];
 
-  creditCardExportTypes =  this.xeroExportSettingsService.getCreditCardExportTypes();
+  creditCardExportTypes: SelectFormOption[] = [];
 
-  reimbursableExpenseGroupByOptions =  this.xeroExportSettingsService.getReimbursableExpenseGroupingOptions();
+  reimbursableExpenseGroupByOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupByOptions =  this.xeroExportSettingsService.getCCCExpenseGroupingOptions();
+  cccExpenseGroupByOptions: SelectFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = this.xeroExportSettingsService.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  autoMapEmployeeTypes = this.xeroExportSettingsService.getAutoMapEmployeeOptions();
+  autoMapEmployeeTypes: SelectFormOption[] = [];
 
-  expenseStateOptions = this.xeroExportSettingsService.getReimbursableExpenseStateOptions();
+  expenseStateOptions: SelectFormOption[] = [];
 
-  cccExpenseStateOptions = this.xeroExportSettingsService.getCCCExpenseStateOptions();
+  cccExpenseStateOptions: SelectFormOption[] = [];
 
-  splitExpenseGroupingOptions = this.xeroExportSettingsService.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[] = [];
 
   exportSettingForm: FormGroup;
 
@@ -80,7 +80,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
-  customFieldOption: ExpenseField[] = this.xeroImportSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[];
 
   chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
 
@@ -94,7 +94,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  paymentSyncOptions: SelectFormOption[] = this.xeroAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[];
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -161,6 +161,17 @@ export class XeroCloneSettingsComponent implements OnInit {
     private exportSettingsService: ExportSettingsService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExportTypes = this.xeroExportSettingsService.getReimbursableExportTypes();
+    this.creditCardExportTypes =  this.xeroExportSettingsService.getCreditCardExportTypes();
+    this.reimbursableExpenseGroupByOptions =  this.xeroExportSettingsService.getReimbursableExpenseGroupingOptions();
+    this.cccExpenseGroupByOptions =  this.xeroExportSettingsService.getCCCExpenseGroupingOptions();
+    this.cccExpenseGroupingDateOptions = this.xeroExportSettingsService.getCCCExpenseGroupingDateOptions();
+    this.autoMapEmployeeTypes = this.xeroExportSettingsService.getAutoMapEmployeeOptions();
+    this.expenseStateOptions = this.xeroExportSettingsService.getReimbursableExpenseStateOptions();
+    this.cccExpenseStateOptions = this.xeroExportSettingsService.getCCCExpenseStateOptions();
+    this.splitExpenseGroupingOptions = this.xeroExportSettingsService.getSplitExpenseGroupingOptions();
+    this.customFieldOption = this.xeroImportSettingsService.getCustomFieldOption();
+    this.paymentSyncOptions = this.xeroAdvancedSettingsService.getPaymentSyncOptions();
   }
 
   resetCloneSetting(): void {

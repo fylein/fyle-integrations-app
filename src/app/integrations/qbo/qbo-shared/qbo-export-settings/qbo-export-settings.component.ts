@@ -56,19 +56,19 @@ export class QboExportSettingsComponent implements OnInit {
 
   isImportItemsEnabled: boolean;
 
-  creditCardExportTypes: SelectFormOption[];
+  creditCardExportTypes: SelectFormOption[] = [];
 
-  cccExpenseStateOptions: SelectFormOption[];
+  cccExpenseStateOptions: SelectFormOption[] = [];
 
-  expenseStateOptions: SelectFormOption[];
+  expenseStateOptions: SelectFormOption[] = [];
 
-  expenseGroupByOptions: SelectFormOption[];
+  expenseGroupByOptions: SelectFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions: SelectFormOption[];
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  nameInJournalOptions: SelectFormOption[];
+  nameInJournalOptions: SelectFormOption[] = [];
 
   showNameInJournalOption: boolean;
 
@@ -88,7 +88,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   EmployeeFieldMapping = EmployeeFieldMapping;
 
-  splitExpenseGroupingOptions: SelectFormOption[];
+  splitExpenseGroupingOptions: SelectFormOption[] = [];
 
   isOptionSearchInProgress: boolean;
 
@@ -120,9 +120,9 @@ export class QboExportSettingsComponent implements OnInit {
   // Employee settings
   employeeSettingForm: FormGroup;
 
-  employeeMappingOptions: SelectFormOption[];
+  employeeMappingOptions: SelectFormOption[] = [];
 
-  autoMapEmployeeOptions: SelectFormOption[];
+  autoMapEmployeeOptions: SelectFormOption[] = [];
 
   employeeSetting: QBOEmployeeSettingGet;
 
@@ -147,6 +147,16 @@ export class QboExportSettingsComponent implements OnInit {
     private qboEmployeeSettingsService: QboEmployeeSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
+    this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.creditCardExportTypes = this.qboExportSettingsService.getCreditCardExportTypes();
+    this.cccExpenseStateOptions = this.qboExportSettingsService.getCCCExpenseStateOptions();
+    this.expenseStateOptions = this.qboExportSettingsService.getReimbursableExpenseStateOptions();
+    this.expenseGroupByOptions = this.qboExportSettingsService.getExpenseGroupByOptions();
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+    this.nameInJournalOptions = this.qboExportSettingsService.getNameInJournalOptions();
+    this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
+    this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+    this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {

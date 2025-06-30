@@ -93,7 +93,9 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private exportSettingsService: QboExportSettingsService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+    this.paymentSyncOptions = this.advancedSettingsService.getPaymentSyncOptions();
+  }
 
 
   navigateToPreviousStep(): void {

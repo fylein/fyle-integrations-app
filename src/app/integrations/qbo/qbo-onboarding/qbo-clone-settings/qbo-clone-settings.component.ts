@@ -45,9 +45,9 @@ export class QboCloneSettingsComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
-  employeeMappingOptions: SelectFormOption[] = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+  employeeMappingOptions: SelectFormOption[] = [];
 
-  autoMapEmployeeOptions: SelectFormOption[] = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = [];
 
   employeeSettingForm: FormGroup;
 
@@ -71,7 +71,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = this.importSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = [];
 
   isPreviewDialogVisible: boolean;
 
@@ -97,21 +97,21 @@ export class QboCloneSettingsComponent implements OnInit {
 
   reimbursableExportTypes: SelectFormOption[];
 
-  creditCardExportTypes = this.qboExportSettingsService.getCreditCardExportTypes();
+  creditCardExportTypes: SelectFormOption[] = [];
 
-  cccExpenseStateOptions = this.qboExportSettingsService.getCCCExpenseStateOptions();
+  cccExpenseStateOptions: SelectFormOption[] = [];
 
-  expenseStateOptions = this.qboExportSettingsService.getReimbursableExpenseStateOptions();
+  expenseStateOptions: SelectFormOption[] = [];
 
-  expenseGroupByOptions = this.qboExportSettingsService.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  nameInJournalOptions = this.qboExportSettingsService.getNameInJournalOptions();
+  nameInJournalOptions: SelectFormOption[] = [];
 
-  chartOfAccountTypesList: string[] = this.qboImportSettingsService.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = [];
 
   showNameInJournalOption: boolean;
 
@@ -131,7 +131,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   defaultMemoOptions: string[] = AdvancedSettingsService.getDefaultMemoOptions();
 
-  paymentSyncOptions: SelectFormOption[] = this.qboAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = [];
 
   adminEmails: EmailOption[] = [];
 
@@ -155,7 +155,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
-  splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[] = [];
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -197,7 +197,20 @@ export class QboCloneSettingsComponent implements OnInit {
     private qboAdvancedSettingsService: QboAdvancedSettingsService,
     private qboCloneSettingsService: QboCloneSettingsService
   ) {
+    this.customFieldOption = this.importSettingsService.getCustomFieldOption();
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+    this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
+    this.creditCardExportTypes = this.qboExportSettingsService.getCreditCardExportTypes();
+    this.cccExpenseStateOptions = this.qboExportSettingsService.getCCCExpenseStateOptions();
+    this.expenseStateOptions = this.qboExportSettingsService.getReimbursableExpenseStateOptions();
+    this.expenseGroupByOptions = this.qboExportSettingsService.getExpenseGroupByOptions();
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+    this.nameInJournalOptions = this.qboExportSettingsService.getNameInJournalOptions();
+    this.chartOfAccountTypesList = this.qboImportSettingsService.getChartOfAccountTypesList();
+    this.paymentSyncOptions = this.qboAdvancedSettingsService.getPaymentSyncOptions();
+    this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
+
   }
 
   resetCloneSetting(): void {

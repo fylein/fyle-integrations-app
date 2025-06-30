@@ -67,11 +67,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   customFieldControl: AbstractControl;
 
-  customFieldOption: ExpenseField[] = this.importSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = [];
 
   importSettings: NetsuiteImportSettingGet | null;
 
-  customrSegmentOptions: SelectFormOption[] = this.netsuiteImportSettingsService.getCustomSegmentOptions();
+  customrSegmentOptions: SelectFormOption[] = [];
 
   isImportItemsAllowed: boolean;
 
@@ -111,7 +111,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private importSettingsService: ImportSettingsService,
     private netsuiteImportSettingsService: NetsuiteImportSettingsService
-  ) { }
+  ) {
+    this.customFieldOption = this.importSettingsService.getCustomFieldOption();
+    this.customrSegmentOptions = this.netsuiteImportSettingsService.getCustomSegmentOptions();
+
+  }
 
   addCustomSegment() {
     this.isCustomSegmentTrigged = true;

@@ -25,7 +25,7 @@ export class SkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = this.accountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[];
 
   expenses: SkipExportList[];
 
@@ -153,5 +153,6 @@ export class SkippedExportLogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
   }
 }

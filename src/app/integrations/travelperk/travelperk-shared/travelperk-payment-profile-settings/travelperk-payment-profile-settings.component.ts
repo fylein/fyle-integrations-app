@@ -29,7 +29,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   paymentProfileMappingForm: FormGroup;
 
-  userRole: SelectFormOption[] = this.travelperkPaymentProfileSettingService.getUserRoleOptions();
+  userRole: SelectFormOption[];
 
   isSaveInProgress: boolean;
 
@@ -68,7 +68,9 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
     private travelperkPaymentProfileSettingService: TravelperkPaymentProfileSettingService
-  ) { }
+  ) {
+    this.userRole = this.travelperkPaymentProfileSettingService.getUserRoleOptions();
+  }
 
   navigateBack(): void {
     this.router.navigate([`/integrations/travelperk/onboarding/landing`]);

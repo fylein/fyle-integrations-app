@@ -39,25 +39,25 @@ export class XeroExportSettingsComponent implements OnInit {
 
   bankAccounts: DestinationAttribute[];
 
-  reimbursableExportTypes: SelectFormOption[] = this.xeroExportSettingService.getReimbursableExportTypes();
+  reimbursableExportTypes: SelectFormOption[];
 
-  creditCardExportTypes =  this.xeroExportSettingService.getCreditCardExportTypes();
+  creditCardExportTypes: SelectFormOption[];
 
-  reimbursableExpenseGroupByOptions =  this.xeroExportSettingService.getReimbursableExpenseGroupingOptions();
+  reimbursableExpenseGroupByOptions: SelectFormOption[];
 
-  cccExpenseGroupByOptions =  this.xeroExportSettingService.getCCCExpenseGroupingOptions();
+  cccExpenseGroupByOptions: SelectFormOption[];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = this.xeroExportSettingService.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[];
 
-  splitExpenseGroupingOptions = this.xeroExportSettingService.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[];
 
-  autoMapEmployeeTypes = this.xeroExportSettingService.getAutoMapEmployeeOptions();
+  autoMapEmployeeTypes: SelectFormOption[];
 
-  expenseStateOptions = this.xeroExportSettingService.getReimbursableExpenseStateOptions();
+  expenseStateOptions: SelectFormOption[];
 
-  cccExpenseStateOptions = this.xeroExportSettingService.getCCCExpenseStateOptions();
+  cccExpenseStateOptions: SelectFormOption[];
 
   exportSettingForm: FormGroup;
 
@@ -104,6 +104,15 @@ export class XeroExportSettingsComponent implements OnInit {
     private exportSettingsService: ExportSettingsService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExportTypes = this.xeroExportSettingService.getReimbursableExportTypes();
+    this.creditCardExportTypes =  this.xeroExportSettingService.getCreditCardExportTypes();
+    this.reimbursableExpenseGroupByOptions =  this.xeroExportSettingService.getReimbursableExpenseGroupingOptions();
+    this.cccExpenseGroupByOptions =  this.xeroExportSettingService.getCCCExpenseGroupingOptions();
+    this.cccExpenseGroupingDateOptions = this.xeroExportSettingService.getCCCExpenseGroupingDateOptions();
+    this.splitExpenseGroupingOptions = this.xeroExportSettingService.getSplitExpenseGroupingOptions();
+    this.autoMapEmployeeTypes = this.xeroExportSettingService.getAutoMapEmployeeOptions();
+    this.expenseStateOptions = this.xeroExportSettingService.getReimbursableExpenseStateOptions();
+    this.cccExpenseStateOptions = this.xeroExportSettingService.getCCCExpenseStateOptions();
   }
 
   refreshDimensions(isRefresh: boolean) {

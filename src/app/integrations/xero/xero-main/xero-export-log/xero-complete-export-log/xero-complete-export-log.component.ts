@@ -38,7 +38,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = this.accountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -79,6 +79,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
     private translocoService: TranslocoService,
     private accountingExportService: AccountingExportService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
