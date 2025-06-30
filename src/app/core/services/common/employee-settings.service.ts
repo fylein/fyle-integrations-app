@@ -1,7 +1,11 @@
-import { FyleField } from "../enum/enum.model";
-import { SelectFormOption } from "./select-form-option.model";
+import { Injectable } from "@angular/core";
+import { FyleField } from "../../models/enum/enum.model";
+import { SelectFormOption } from "../../models/common/select-form-option.model";
 
-export class EmployeeSettingModel {
+@Injectable({
+    providedIn: 'root'
+})
+export class EmployeeSettingsService {
     static getEmployeeFieldMappingOptions(): SelectFormOption[] {
         return [
             {

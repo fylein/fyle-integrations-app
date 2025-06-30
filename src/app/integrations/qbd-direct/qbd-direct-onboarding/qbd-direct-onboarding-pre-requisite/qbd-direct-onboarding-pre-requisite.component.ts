@@ -8,8 +8,8 @@ import { AppName, ConfigurationCta, Page, ProgressPhase, QBDDirectInteractionTyp
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QBDPrerequisiteObject } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
-import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -55,7 +55,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private router: Router,
     private workspaceService: WorkspaceService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private onboardingService: QbdDirectOnboardingService
   ) {
     this.preRequisitesteps = [
       {
@@ -81,7 +82,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         state: QBDPreRequisiteState.INCOMPLETE
       }
     ];
-    this.onboardingSteps = new QbdDirectOnboardingModel().getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.preRequisite.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.preRequisite.stepName'), this.workspaceService.getOnboardingState());
   }
 
   updateConnectorStatus(status: CheckBoxUpdate): void {

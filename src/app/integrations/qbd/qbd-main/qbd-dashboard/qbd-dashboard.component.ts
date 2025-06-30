@@ -10,9 +10,9 @@ import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuratio
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-qbd-dashboard',
@@ -31,7 +31,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
   pageNo: number = 0;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null = null;
 

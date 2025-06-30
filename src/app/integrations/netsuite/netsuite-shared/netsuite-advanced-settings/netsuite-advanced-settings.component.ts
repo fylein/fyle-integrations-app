@@ -3,13 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
-import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
-import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetsuiteAdvancedSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
+import { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -23,6 +23,7 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-netsuite-advanced-settings',
@@ -44,7 +45,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   appName: AppName = AppName.NETSUITE;
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService .getHoursOptions();
 
   advancedSetting: NetsuiteAdvancedSettingGet;
 
@@ -70,19 +71,19 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  defaultMemoOptions: string[] = NetsuiteAdvancedSettingModel.getDefaultMemoOptions();
+  defaultMemoOptions: string[] = NetsuiteAdvancedSettingsService.getDefaultMemoOptions();
 
   memoPreviewText: string = '';
 
   workspaceGeneralSettings: NetsuiteConfiguration;
 
-  paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingsService.getPaymentSyncOptions();
 
-  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
 
-  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
 
-  netsuiteClassLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteClassLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
 
   paymentAccounts: DefaultDestinationAttribute[];
 
@@ -172,7 +173,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   save(): void {
     this.saveSkipExport();
-    const advancedSettingPayload = NetsuiteAdvancedSettingModel.constructPayload(this.advancedSettingForm);
+    const advancedSettingPayload = NetsuiteAdvancedSettingsService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
@@ -215,17 +216,17 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoOptions)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSetting.configuration.memo_structure;
-    const memo: [string, string[]] = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo: [string, string[]] = AdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
+      this.memoPreviewText = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
 
@@ -248,7 +249,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   private setupFormWatchers() {
     this.createMemoStructureWatcher();
 
-    NetsuiteAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    NetsuiteAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
     this.skipExportWatcher();
   }
 
@@ -268,7 +269,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       this.exportSettings = exportSettings;
-      this.defaultMemoOptions = NetsuiteAdvancedSettingModel.getMemoOptions(this.exportSettings, this.appName);
+      this.defaultMemoOptions = NetsuiteAdvancedSettingsService.getMemoOptions(this.exportSettings, this.appName);
       this.adminEmails = adminEmails;
       if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
         this.adminEmails = this.adminEmails.concat(this.advancedSetting.workspace_schedules?.additional_email_options);
@@ -280,17 +281,17 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = NetsuiteAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = NetsuiteAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.isLoading = false;
       this.setupFormWatchers();

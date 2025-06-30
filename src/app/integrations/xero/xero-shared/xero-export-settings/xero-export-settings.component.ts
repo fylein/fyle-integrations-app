@@ -3,12 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState, XeroCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { XeroExportSettingGet, XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
+import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -16,6 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-xero-export-settings',
@@ -38,25 +39,25 @@ export class XeroExportSettingsComponent implements OnInit {
 
   bankAccounts: DestinationAttribute[];
 
-  reimbursableExportTypes: SelectFormOption[] = XeroExportSettingModel.getReimbursableExportTypes();
+  reimbursableExportTypes: SelectFormOption[] = XeroExportSettingsService.getReimbursableExportTypes();
 
-  creditCardExportTypes =  XeroExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes =  XeroExportSettingsService.getCreditCardExportTypes();
 
-  reimbursableExpenseGroupByOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingOptions();
+  reimbursableExpenseGroupByOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingOptions();
 
-  cccExpenseGroupByOptions =  XeroExportSettingModel.getCCCExpenseGroupingOptions();
+  cccExpenseGroupByOptions =  XeroExportSettingsService.getCCCExpenseGroupingOptions();
 
-  reimbursableExpenseGroupingDateOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = XeroExportSettingModel.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions = XeroExportSettingsService.getCCCExpenseGroupingDateOptions();
 
-  splitExpenseGroupingOptions = XeroExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions = XeroExportSettingsService.getSplitExpenseGroupingOptions();
 
-  autoMapEmployeeTypes = XeroExportSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeTypes = XeroExportSettingsService.getAutoMapEmployeeOptions();
 
-  expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions = XeroExportSettingsService.getReimbursableExpenseStateOptions();
 
-  cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = XeroExportSettingsService.getCCCExpenseStateOptions();
 
   exportSettingForm: FormGroup;
 
@@ -100,7 +101,9 @@ export class XeroExportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+    this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+  }
 
   refreshDimensions(isRefresh: boolean) {
     this.xeroHelperService.refreshXeroDimensions().subscribe();
@@ -112,8 +115,8 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     // Removing not relevant date options
-    this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, this.exportSettingForm.controls.reimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
-    this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+    this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, this.exportSettingForm.controls.reimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
+    this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
   }
 
   save() {
@@ -129,7 +132,7 @@ export class XeroExportSettingsComponent implements OnInit {
     this.isConfirmationDialogVisible = false;
     if (event.hasAccepted) {
       this.isSaveInProgress = true;
-      const exportSettingPayload = XeroExportSettingModel.constructPayload(this.exportSettingForm);
+      const exportSettingPayload = XeroExportSettingsService.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'));
@@ -198,12 +201,12 @@ export class XeroExportSettingsComponent implements OnInit {
           value: this.exportSettings.general_mappings.bank_account.name
         });
       }
-      this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccounts);
+      this.exportSettingForm = XeroExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccounts);
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 

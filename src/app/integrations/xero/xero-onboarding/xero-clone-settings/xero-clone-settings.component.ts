@@ -3,9 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
-import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
-import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -15,10 +13,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
-import { XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
-import { XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
-import { XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
-import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -30,6 +24,11 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
+import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -48,25 +47,25 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   bankAccounts: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes = XeroExportSettingModel.getReimbursableExportTypes();
+  reimbursableExportTypes = XeroExportSettingsService.getReimbursableExportTypes();
 
-  creditCardExportTypes =  XeroExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes =  XeroExportSettingsService.getCreditCardExportTypes();
 
-  reimbursableExpenseGroupByOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingOptions();
+  reimbursableExpenseGroupByOptions =  XeroExportSettingsService.getReimbursableExpenseGroupingOptions();
 
-  cccExpenseGroupByOptions =  XeroExportSettingModel.getCCCExpenseGroupingOptions();
+  cccExpenseGroupByOptions =  XeroExportSettingsService.getCCCExpenseGroupingOptions();
 
-  reimbursableExpenseGroupingDateOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = XeroExportSettingModel.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions = XeroExportSettingsService.getCCCExpenseGroupingDateOptions();
 
-  autoMapEmployeeTypes = XeroExportSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeTypes = XeroExportSettingsService.getAutoMapEmployeeOptions();
 
-  expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions = XeroExportSettingsService.getReimbursableExpenseStateOptions();
 
-  cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = XeroExportSettingsService.getCCCExpenseStateOptions();
 
-  splitExpenseGroupingOptions = XeroExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions = XeroExportSettingsService.getSplitExpenseGroupingOptions();
 
   exportSettingForm: FormGroup;
 
@@ -80,9 +79,9 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
-  customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
+  chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -94,11 +93,11 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingModel.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingsService.getPaymentSyncOptions();
 
   org: Org = this.orgService.getCachedOrg();
 
-  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  scheduleIntervalHours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   advancedSettingForm: FormGroup<any>;
 
@@ -153,8 +152,12 @@ export class XeroCloneSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private xeroOnboardingService: XeroOnboardingService,
+    private xeroExportSettingsService: XeroExportSettingsService
+  ) {
+    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+  }
 
   resetCloneSetting(): void {
     this.warningHeaderText = this.translocoService.translate('xeroCloneSettings.areYouSure');
@@ -231,7 +234,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = new XeroOnboardingModel().getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = this.xeroOnboardingService.getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
@@ -306,7 +309,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   setupAdvancedSettingFormWatcher() {
-    XeroAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    XeroAdvancedSettingsService.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
   updateCustomerImportAvailability(isMapped: boolean) {
@@ -330,13 +333,13 @@ export class XeroCloneSettingsComponent implements OnInit {
       this.cloneSetting = cloneSetting;
 
       // Export Settings
-      this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
+      this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingsService.formatGeneralMappingPayload(option));
 
-      this.reimbursableExportTypes = XeroExportSettingModel.getReimbursableExportTypes();
-      this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(cloneSetting.export_settings, destinationAttributes.BANK_ACCOUNT);
+      this.reimbursableExportTypes = XeroExportSettingsService.getReimbursableExportTypes();
+      this.exportSettingForm = XeroExportSettingsService.mapAPIResponseToFormGroup(cloneSetting.export_settings, destinationAttributes.BANK_ACCOUNT);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
@@ -344,7 +347,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       // Import Settings
       this.xeroFields = xeroFields;
-      this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
+      this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => ExportSettingsService.formatGeneralMappingPayload(option));
 
       if (xeroCredentials && xeroCredentials.country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
@@ -358,7 +361,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.isProjectMapped = cloneSetting.import_settings.mapping_settings.findIndex((data: { source_field: XeroFyleField; destination_field: XeroFyleField; }) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
+      this.importSettingForm = XeroImportSettingsService.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroCloneSettings.createCustomField'), is_dependent: false });
       this.setupImportSettingFormWatcher();
@@ -370,8 +373,8 @@ export class XeroCloneSettingsComponent implements OnInit {
         this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options).flat();
       }
 
-      this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
+      this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingsService.formatGeneralMappingPayload(option));
+      this.advancedSettingForm = XeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
       this.setupAdvancedSettingFormWatcher();
 
       // Convert field values from destination attributes to *default* destination attributes
@@ -384,7 +387,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       for (const control of controls) {
         const fullDestinationAttribute: DestinationAttribute | null = control?.value;
         control?.setValue(
-          fullDestinationAttribute && ExportSettingModel.formatGeneralMappingPayload(fullDestinationAttribute)
+          fullDestinationAttribute && ExportSettingsService.formatGeneralMappingPayload(fullDestinationAttribute)
         );
       }
 

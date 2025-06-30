@@ -5,6 +5,11 @@ import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { QBOEmployeeSettingGet, QBOEmployeeSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { AutoMapEmployeeOptions, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 const employeeSettingsCache$ = new Subject<void>();
 
@@ -17,6 +22,40 @@ export class QboEmployeeSettingsService {
     private apiService: ApiService,
     private workspaceService: WorkspaceService
   ) { }
+
+  static getAutoMapEmployeeOptions(): SelectFormOption[] {
+    return [
+        {
+          value: AutoMapEmployeeOptions.NAME,
+          label: `${brandingConfig.brandName} Name to QuickBooks Online Display name`
+        },
+        {
+          value: AutoMapEmployeeOptions.EMAIL,
+          label: `${brandingConfig.brandName} Email to QuickBooks Online Email`
+        },
+        {
+          value: AutoMapEmployeeOptions.EMPLOYEE_CODE,
+          label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
+        }
+      ];
+  }
+
+  static parseAPIResponseToFormGroup(employee_settings: QBOEmployeeSettingGet): FormGroup {
+    return new FormGroup({
+        employeeMapping: new FormControl(employee_settings.workspace_general_settings?.employee_field_mapping),
+        autoMapEmployee: new FormControl(employee_settings.workspace_general_settings?.auto_map_employees)
+    });
+  }
+
+  static constructPayload(employeeSettingsForm: FormGroup): QBOEmployeeSettingPost {
+    const employeeSettingPayload: QBOEmployeeSettingPost = {
+      workspace_general_settings: {
+        employee_field_mapping: employeeSettingsForm.get('employeeMapping')?.value || EmployeeFieldMapping.VENDOR,
+        auto_map_employees: employeeSettingsForm.get('autoMapEmployee')?.value || null
+      }
+    };
+    return employeeSettingPayload;
+  }
 
   @Cacheable({
     cacheBusterObserver: employeeSettingsCache$

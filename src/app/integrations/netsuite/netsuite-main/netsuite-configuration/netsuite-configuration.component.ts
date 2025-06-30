@@ -10,7 +10,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class NetsuiteConfigurationComponent implements OnInit {
 
-  modules: MenuItem[] = []
+  modules: MenuItem[] = [];
 
   activeModule: MenuItem = this.modules[0];
 

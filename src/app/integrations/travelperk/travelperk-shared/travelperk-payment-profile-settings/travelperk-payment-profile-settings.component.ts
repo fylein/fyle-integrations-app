@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingResponse } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -12,6 +12,7 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { TravelperkPaymentProfileSettingService } from 'src/app/core/services/travelperk/travelperk-payment-profile-settings.service';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -28,7 +29,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   paymentProfileMappingForm: FormGroup;
 
-  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoleOptions();
+  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingService.getUserRoleOptions();
 
   isSaveInProgress: boolean;
 
@@ -82,7 +83,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
-    const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
+    const paymentProfileMappingPayload = TravelperkPaymentProfileSettingService.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkPaymentProfileSettings.paymentProfileSettingsSuccess'));
@@ -122,10 +123,10 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   getProfileMappings(limit: number) {
     this.travelperkService.getTravelperkPaymentProfileMapping(limit).subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingResponse) => {
       this.paymentProfileSettings = travelperkPaymentProfileMappingResponse;
-      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
+      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingService.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
       this.isLoading = false;
     }, () => {
-      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
+      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingService.mapAPIResponseToFormGroup(null);
       this.isLoading = false;
     });
   }

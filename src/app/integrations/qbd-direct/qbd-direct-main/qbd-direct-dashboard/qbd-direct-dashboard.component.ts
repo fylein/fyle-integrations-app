@@ -9,7 +9,6 @@ import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dash
 import { AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AppName, AccountingErrorType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState, ClickEvent, TrackingApp, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectTaskResponse, QbdDirectTaskLog } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
-import { QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -172,7 +171,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
       this.importCodeFields = responses[5].import_settings?.import_code_fields;
 
-      this.chartOfAccounts = responses[5].import_settings.import_account_as_category ? responses[5].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : QbdDirectImportSettingModel.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
+      this.chartOfAccounts = responses[5].import_settings.import_account_as_category ? responses[5].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : QbdDirectImportSettingsService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.ERROR || task.status === TaskLogState.FATAL).length;

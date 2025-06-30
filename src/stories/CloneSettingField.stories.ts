@@ -15,7 +15,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RippleModule } from 'primeng/ripple';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 const meta: Meta<CloneSettingFieldComponent> = {
   title: 'Onboarding/CloneSetting/CloneSettingField',
@@ -66,7 +66,7 @@ export const dropdown: Story = {
 export const multiSelect: Story = {
   args: {
     label: 'Select the accounts from QuickBooks Online to import as categories',
-    options: QBOImportSettingModel.getChartOfAccountTypesList(),
+    options: QboImportSettingsService.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
     form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
     formControllerName: 'chartOfAccountTypes',
