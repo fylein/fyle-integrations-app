@@ -67,7 +67,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   customFieldControl: AbstractControl;
 
-  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = this.importSettingsService.getCustomFieldOption();
 
   importSettings: NetsuiteImportSettingGet | null;
 
@@ -108,7 +108,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router,
     private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private importSettingsService: ImportSettingsService,
+    private netsuiteImportSettingsService: NetsuiteImportSettingsService
   ) { }
 
   addCustomSegment() {
@@ -122,7 +124,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   save() {
     this.isSaveInProgress = true;
-    const importSettingPayload = NetsuiteImportSettingsService.constructPayload(this.importSettingForm);
+    const importSettingPayload = this.netsuiteImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'));
@@ -212,7 +214,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   saveCustomSegment() {
     this.isCustomSegmentSaveInProgress = true;
-    const customSegmentPayload = NetsuiteImportSettingsService.constructCustomSegmentPayload(this.customSegmentForm, +this.workspaceService.getWorkspaceId());
+    const customSegmentPayload = this.netsuiteImportSettingsService.constructCustomSegmentPayload(this.customSegmentForm, +this.workspaceService.getWorkspaceId());
 
     this.importSettingService.postNetsuiteCustomSegments(customSegmentPayload).subscribe(() => {
       this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
@@ -223,7 +225,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         } else {
           this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
         }
-        this.importSettingForm = NetsuiteImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
+        this.importSettingForm = this.netsuiteImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.customFieldAddSuccess'));
         this.customSegmentForm.reset();
       });
@@ -297,7 +299,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       }
 
       this.taxCodes = destinationAttribute.results;
-      this.importSettingForm = NetsuiteImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
+      this.importSettingForm = this.netsuiteImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('netsuiteImportSettings.createCustomField'), is_dependent: false });
       this.setupFormWatchers();

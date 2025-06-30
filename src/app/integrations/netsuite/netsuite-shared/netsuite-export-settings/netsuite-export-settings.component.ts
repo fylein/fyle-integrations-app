@@ -50,19 +50,19 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   accountsPayables: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes: SelectFormOption[] =  NetsuiteExportSettingsService.getReimbursableExportTypeOptions();
+  reimbursableExportTypes: SelectFormOption[] =  this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
 
-  autoMapEmployeeOptions: SelectFormOption[] = NetsuiteExportSettingsService.getAutoMapEmplyeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = this.netsuiteExportSettingsService.getAutoMapEmplyeeOptions();
 
-  employeeFieldOptions: SelectFormOption[] = NetsuiteExportSettingsService.getEmployeeFieldOptions();
+  employeeFieldOptions: SelectFormOption[] = this.netsuiteExportSettingsService.getEmployeeFieldOptions();
 
-  creditCardExportTypes = NetsuiteExportSettingsService.getCreditCardExportTypes();
+  creditCardExportTypes = this.netsuiteExportSettingsService.getCreditCardExportTypes();
 
-  cccExpenseStateOptions = NetsuiteExportSettingsService.getCCCExpenseStateOptions();
+  cccExpenseStateOptions = this.netsuiteExportSettingsService.getCCCExpenseStateOptions();
 
-  expenseStateOptions = NetsuiteExportSettingsService.getReimbursableExpenseStateOptions();
+  expenseStateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseStateOptions();
 
-  expenseGroupByOptions = NetsuiteExportSettingsService.getExpenseGroupByOptions();
+  expenseGroupByOptions = this.netsuiteExportSettingsService.getExpenseGroupByOptions();
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
@@ -457,7 +457,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.bankAccounts =  bankAccounts.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
       this.cccAccounts =  cccAccounts.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.reimbursableExportTypes = NetsuiteExportSettingsService.getReimbursableExportTypeOptions();
+      this.reimbursableExportTypes = this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();

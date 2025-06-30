@@ -25,7 +25,8 @@ export class XeroExportSettingsService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private exportSettingsService: ExportSettingsService
   ) { }
 
   getReimbursableExportTypes() {
@@ -181,7 +182,7 @@ export class XeroExportSettingsService {
     return [exportSettingValidatorRule, exportModuleRule];
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null, destinationAttribute: DestinationAttribute[]): FormGroup {
+  mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null, destinationAttribute: DestinationAttribute[]): FormGroup {
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       expenseState: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_state),
@@ -201,7 +202,7 @@ export class XeroExportSettingsService {
     });
   }
 
-  static constructPayload(exportSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroExportSettingPost {
+  constructPayload(exportSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroExportSettingPost {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
 
     let bankAccount = {...emptyDestinationAttribute};
@@ -210,7 +211,7 @@ export class XeroExportSettingsService {
       if (isCloneSettings) {
         bankAccount = exportSettingsForm.get('bankAccount')?.value;
       } else {
-        bankAccount = ExportSettingsService.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
+        bankAccount = this.exportSettingsService.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
       }
     }
 

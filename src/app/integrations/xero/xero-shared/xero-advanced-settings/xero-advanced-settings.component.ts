@@ -53,7 +53,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = this.advancedSettingService.getPaymentSyncOptions();
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -91,7 +91,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
   }
 
   save(): void {
-    const advancedSettingPayload = XeroAdvancedSettingsService.constructPayload(this.advancedSettingForm);
+    const advancedSettingPayload = this.advancedSettingService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {

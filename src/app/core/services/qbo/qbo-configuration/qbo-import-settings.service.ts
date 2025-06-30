@@ -21,8 +21,6 @@ export class QboImportSettingsService extends ImportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   getChartOfAccountTypesList(): string[] {
     return [
       this.translocoService.translate('services.qboImportSettings.expense'), this.translocoService.translate('services.qboImportSettings.otherExpense'), this.translocoService.translate('services.qboImportSettings.fixedAsset'), this.translocoService.translate('services.qboImportSettings.costOfGoodsSold'), this.translocoService.translate('services.qboImportSettings.currentLiability'), this.translocoService.translate('services.qboImportSettings.equity'),
@@ -32,7 +30,7 @@ export class QboImportSettingsService extends ImportSettingsService {
 
   mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[], qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
     const importCode = importSettings?.workspace_general_settings?.import_code_fields ? importSettings?.workspace_general_settings?.import_code_fields : [];
-    const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings.mapping_settings, qboFields, qboImportCodeFieldCodeConfig) : [];
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields, qboImportCodeFieldCodeConfig) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
@@ -43,14 +41,14 @@ export class QboImportSettingsService extends ImportSettingsService {
       defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
       searchOption: new FormControl(''),
       importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-      importCategoryCode: new FormControl(ImportSettingsService.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
+      importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
+  constructPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
-    const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+    const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     return {
       workspace_general_settings: {

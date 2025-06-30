@@ -2289,7 +2289,23 @@
       "verificationDate": "Verification date",
       "spendDate": "Spend date",
       "approvalDate": "Approval date",
-      "lastSpendDate": "Last spend date"
+      "lastSpendDate": "Last spend date",
+      "cardTransactionPostDate": "Card transaction post date",
+      "processing": "Processing",
+      "closed": "Closed",
+      "approved": "Approved",
+      "employee": "Employee",
+      "vendor": "Vendor",
+      "basedOnEmployeeEmailId": "Based on employee e-mail ID",
+      "basedOnEmployeeName": "Based on employee name",
+      "basedOnEmployeeCode": "Based on employee code",
+      "creditCardCharge": "Credit card charge",
+      "expense": "Expense",
+      "expenseReport": "Expense report",
+      "journalEntry": "Journal entry",
+      "merchantName": "Merchant name",
+      "employeeName": "Employee name",
+      "bill": "Bill"
     }
   },
   "pipes": {

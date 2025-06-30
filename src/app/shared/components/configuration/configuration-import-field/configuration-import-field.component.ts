@@ -86,7 +86,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     public helper: HelperService,
     public router: Router,
     private workspace: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private importSettingsService: ImportSettingsService
   ) { }
 
   get expenseFieldsGetter() {
@@ -139,7 +140,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       is_custom: false,
       source_placeholder: null
     };
-    expenseFields.push(ImportSettingsService.createFormGroup(defaultFieldData));
+    expenseFields.push(this.importSettingsService.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
 

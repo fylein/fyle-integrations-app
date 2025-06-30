@@ -12,7 +12,7 @@ import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarning
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
+import { QBOCloneSetting } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -30,6 +30,7 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
+import { QboCloneSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-clone-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -193,7 +194,8 @@ export class QboCloneSettingsComponent implements OnInit {
     private employeeSettingsService: EmployeeSettingsService,
     private qboEmployeeSettingsService: QboEmployeeSettingsService,
     private importSettingsService: ImportSettingsService,
-    private qboAdvancedSettingsService: QboAdvancedSettingsService
+    private qboAdvancedSettingsService: QboAdvancedSettingsService,
+    private qboCloneSettingsService: QboCloneSettingsService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
@@ -259,7 +261,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
+    const cloneSettingPayload = this.qboCloneSettingsService.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
