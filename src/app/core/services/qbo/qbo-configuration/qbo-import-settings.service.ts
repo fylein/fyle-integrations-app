@@ -17,6 +17,7 @@ const qboImportSettingGetCache$ = new Subject<void>();
 export class QboImportSettingsService extends ImportSettingsService {
 
   private apiService: ApiService = inject(ApiService);
+  
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
   static getChartOfAccountTypesList(): string[] {

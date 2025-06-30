@@ -21,7 +21,7 @@ const xeroImportSettingGetCache$ = new Subject<void>();
 export class XeroImportSettingsService extends ImportSettingsService {
 
   private apiService = inject(ApiService);
-  
+
   private workspaceService = inject(WorkspaceService);
 
   static getChartOfAccountTypesList(): string[] {

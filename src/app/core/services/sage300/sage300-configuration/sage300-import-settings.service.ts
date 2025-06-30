@@ -18,7 +18,9 @@ const sage300ImportSettingGetCache = new Subject<void>();
 })
 export class Sage300ImportSettingsService extends ImportSettingsService {
   private apiService = inject(ApiService);
+
   private workspaceService = inject(WorkspaceService);
+  
   private helper = inject(HelperService);
 
   constructor() {

@@ -16,7 +16,9 @@ const businessCentralImportSettingGetCache$ = new Subject<void>();
 })
 export class BusinessCentralImportSettingsService extends ImportSettingsService {
   private apiService: ApiService = inject(ApiService);
+
   private workspaceService: WorkspaceService = inject(WorkspaceService);
+  
   private helper: HelperService = inject(HelperService);
 
   constructor() {

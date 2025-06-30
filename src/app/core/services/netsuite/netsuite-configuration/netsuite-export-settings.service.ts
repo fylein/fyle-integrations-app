@@ -27,7 +27,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
   private translocoService: TranslocoService = inject(TranslocoService);
-  
+
   static getEmployeeFieldOptions(): SelectFormOption[] {
     return [
       {
