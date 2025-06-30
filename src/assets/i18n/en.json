@@ -2306,6 +2306,18 @@
       "merchantName": "Merchant name",
       "employeeName": "Employee name",
       "bill": "Bill"
+    },
+    "netsuiteAdvancedSettings": {
+      "exportACHPayments": "Export {{brandName}} ACH payments to NetSuite",
+      "importPayments": "Import NetSuite payments into {{brandName}}",
+      "all": "All",
+      "transactionLine": "Transaction line",
+      "transactionBody": "Transaction body"
+    },
+    "netsuiteImportSettings": {
+      "customList": "Custom list",
+      "customRecord": "Custom record",
+      "customSegment": "Custom segment"
     }
   },
   "pipes": {

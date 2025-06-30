@@ -66,7 +66,7 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
+  mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;

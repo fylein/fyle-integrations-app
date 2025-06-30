@@ -514,7 +514,7 @@ export class QboCloneSettingsComponent implements OnInit {
         }
 
         this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
-        this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
+        this.advancedSettingForm = this.qboAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
 
         this.setupAdvancedSettingFormWatcher();
 

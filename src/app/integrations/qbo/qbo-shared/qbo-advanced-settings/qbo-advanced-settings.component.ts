@@ -246,7 +246,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.defaultMemoOptions = AdvancedSettingsService.getMemoOptions(exportSettings, AppName.QBO);
       this.setupFormWatchers();

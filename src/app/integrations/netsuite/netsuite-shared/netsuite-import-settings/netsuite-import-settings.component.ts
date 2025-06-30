@@ -71,7 +71,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   importSettings: NetsuiteImportSettingGet | null;
 
-  customrSegmentOptions: SelectFormOption[] = NetsuiteImportSettingsService.getCustomSegmentOptions();
+  customrSegmentOptions: SelectFormOption[] = this.netsuiteImportSettingsService.getCustomSegmentOptions();
 
   isImportItemsAllowed: boolean;
 

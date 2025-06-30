@@ -378,7 +378,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       }
 
       this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = XeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
+      this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
       this.setupAdvancedSettingFormWatcher();
 
       // Convert field values from destination attributes to *default* destination attributes

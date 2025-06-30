@@ -26,18 +26,18 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
 
   private netsuiteExportSettingsService: NetsuiteExportSettingsService = inject(NetsuiteExportSettingsService);
 
-  static getCustomSegmentOptions(): SelectFormOption[] {
+  getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Custom list',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customList'),
         value: NetsuiteCustomSegmentOption.CUSTOM_LIST
       },
       {
-        label: 'Custom record',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customRecord'),
         value: NetsuiteCustomSegmentOption.CUSTOM_RECORD
       },
       {
-        label: 'Custom segment',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customSegment'),
         value: NetsuiteCustomSegmentOption.CUSTOM_SEGMENT
       }
     ];

@@ -77,13 +77,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: NetsuiteConfiguration;
 
-  paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = this.advancedSettingsService.getPaymentSyncOptions();
 
-  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = this.advancedSettingsService.getDefaultLevelOptions();
 
-  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  this.advancedSettingsService.getDefaultLevelOptions();
 
-  netsuiteClassLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteClassLevels:  DefaultDestinationAttribute[]  = this.advancedSettingsService.getDefaultLevelOptions();
 
   paymentAccounts: DefaultDestinationAttribute[];
 
@@ -291,7 +291,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = NetsuiteAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.isLoading = false;
       this.setupFormWatchers();

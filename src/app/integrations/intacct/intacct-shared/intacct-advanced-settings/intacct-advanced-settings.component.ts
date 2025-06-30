@@ -121,7 +121,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private siExportSettingService : SiExportSettingService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    private advanceSettingsService: AdvancedSettingsService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -218,7 +219,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsForm = this.formBuilder.group({
       exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
+      exportScheduleFrequency: new FormControl(this.advanceSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],

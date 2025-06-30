@@ -13,7 +13,7 @@ export class QbdAdvancedSettingService {
   constructor(
     private apiService: ApiService,
     private workspaceService: QbdWorkspaceService,
-    private helper: HelperService
+    helper: HelperService
   ) {
     helper.setBaseApiURL();
   }

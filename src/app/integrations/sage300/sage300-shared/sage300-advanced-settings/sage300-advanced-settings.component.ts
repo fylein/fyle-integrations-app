@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName, ConfigurationCta, CustomOperatorOption, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { Sage300AdvancedSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
@@ -208,7 +208,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.saveSkipExportFields();
     }
     this.isSaveInProgress = true;
-    const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
+    const advancedSettingPayload = this.advancedSettingsService.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300AdvancedSettings.advancedSettingsSavedSuccess'));
@@ -256,7 +256,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
-      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.isOnboarding);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;

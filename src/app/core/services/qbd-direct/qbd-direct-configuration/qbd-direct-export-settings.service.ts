@@ -12,7 +12,6 @@ import { QBDExportSettingFormOption } from "../../../models/qbd/qbd-configuratio
 import { DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { QbdDirectDestinationAttribute } from "../../../models/qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
-import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
