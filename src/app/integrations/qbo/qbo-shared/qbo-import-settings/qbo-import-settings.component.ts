@@ -65,9 +65,9 @@ export class QboImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = this.importSettingService.getCustomFieldOption();
+  customFieldOption: ExpenseField[];
 
-  chartOfAccountTypesList: string[] = this.importSettingService.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[];
 
   workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
 
@@ -298,6 +298,8 @@ export class QboImportSettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
     this.setupPage();
   }
 

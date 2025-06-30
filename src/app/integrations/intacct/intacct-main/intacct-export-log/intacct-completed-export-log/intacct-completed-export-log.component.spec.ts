@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { IntacctCompletedExportLogComponent } from './intacct-completed-export-log.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -36,7 +37,7 @@ describe('IntacctCompletedExportLogComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ IntacctCompletedExportLogComponent ],
-      imports: [ ReactiveFormsModule, SharedModule ],
+      imports: [ ReactiveFormsModule, SharedModule, HttpClientTestingModule ],
       providers: [
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },

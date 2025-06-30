@@ -18,11 +18,15 @@ describe('SkippedExportLogComponent', () => {
   let exportLogService: jasmine.SpyObj<ExportLogService>;
   let userService: jasmine.SpyObj<UserService>;
   let paginatorService: jasmine.SpyObj<PaginatorService>;
+  let accountingExportService: jasmine.SpyObj<AccountingExportService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getSkippedExpenses']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
+    const accountingExportServiceSpy = jasmine.createSpyObj('AccountingExportService', ['getDateOptionsV2']);
+
+    accountingExportServiceSpy.getDateOptionsV2.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       declarations: [ SkippedExportLogComponent ],
@@ -31,7 +35,7 @@ describe('SkippedExportLogComponent', () => {
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: UserService, useValue: userServiceSpy },
-        { provide: AccountingExportService, useValue: {} },
+        { provide: AccountingExportService, useValue: accountingExportServiceSpy },
         { provide: WindowService, useValue: {} },
         { provide: PaginatorService, useValue: paginatorServiceSpy }
       ]
@@ -40,6 +44,7 @@ describe('SkippedExportLogComponent', () => {
     exportLogService = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
+    accountingExportService = TestBed.inject(AccountingExportService) as jasmine.SpyObj<AccountingExportService>;
   });
 
   beforeEach(() => {
