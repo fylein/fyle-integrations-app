@@ -150,7 +150,7 @@ describe('QboExportSettingsComponent', () => {
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     exportSettingsService = TestBed.inject(ExportSettingsService) as jasmine.SpyObj<ExportSettingsService>;
-    
+
     // Set up mock return values before creating the component
     qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
     qboExportSettingsServiceSpy.getCreditCardExportTypes.and.returnValue([]);
@@ -163,7 +163,7 @@ describe('QboExportSettingsComponent', () => {
     qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue([]);
     qboExportSettingsServiceSpy.clearInvalidDateOption.and.stub();
     employeeSettingsServiceSpy.getEmployeeFieldMappingOptions.and.returnValue([]);
-    
+
     fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
     // Initialize all arrays to prevent undefined errors
