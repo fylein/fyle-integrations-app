@@ -24,11 +24,13 @@ export class XeroImportSettingsService extends ImportSettingsService {
 
   private workspaceService = inject(WorkspaceService);
 
+  private exportSettingsService = inject(ExportSettingsService);
+
   static getChartOfAccountTypesList(): string[] {
     return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean, destinationAttribute: DestinationAttribute[]): FormGroup {
+  mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean, destinationAttribute: DestinationAttribute[]): FormGroup {
     let additionalOption: any[] = [];
     if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField && isCustomerPresent) {
       const additionalMappingSetting = {
@@ -38,9 +40,9 @@ export class XeroImportSettingsService extends ImportSettingsService {
         is_custom: false,
         source_placeholder: null
       };
-      additionalOption = [ImportSettingsService.createFormGroup(additionalMappingSetting)];
+      additionalOption = [this.createFormGroup(additionalMappingSetting)];
     }
-    const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(ImportSettingsService.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
+    const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(this.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
@@ -54,19 +56,19 @@ export class XeroImportSettingsService extends ImportSettingsService {
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroImportSettingPost {
+  constructPayload(importSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroImportSettingPost {
 
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     const COA = importSettingsForm.get('chartOfAccountTypes')?.value.map((name: string) => name.toUpperCase());
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
-    const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+    const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     let defaultTaxCode = {...emptyDestinationAttribute};
     if (importSettingsForm.get('defaultTaxCode')?.value) {
       if (isCloneSettings) {
         defaultTaxCode = importSettingsForm.get('defaultTaxCode')?.value;
       } else {
-        defaultTaxCode = ExportSettingsService.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
+        defaultTaxCode = this.exportSettingsService.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value);
       }
     }
     const importSettingPayload: XeroImportSettingPost = {

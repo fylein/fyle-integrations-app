@@ -119,8 +119,9 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private exportSettingService : SiExportSettingService,
-    private translocoService: TranslocoService
+    private siExportSettingService : SiExportSettingService,
+    private translocoService: TranslocoService,
+    private exportSettingsService: ExportSettingsService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -286,7 +287,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
-    const exportSettings$ = this.exportSettingService.getExportSettings();
+    const exportSettings$ = this.siExportSettingService.getExportSettings();
 
     forkJoin({
       advancedSettings: advancedSettings$,
@@ -305,8 +306,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
-        const reimbursableGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
-        const cccGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
+        const reimbursableGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
+        const cccGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
 
         this.reimbursableExportGroup = reimbursableGroup ? reimbursableGroup as ExpenseGroupingFieldOption : undefined;
         this.cccExportGroup = cccGroup ? cccGroup as ExpenseGroupingFieldOption : undefined;

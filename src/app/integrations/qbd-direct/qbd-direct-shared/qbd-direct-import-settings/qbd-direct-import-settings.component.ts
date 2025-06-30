@@ -74,9 +74,9 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = this.qbdDirectImportSettingsService.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = QbdDirectImportSettingsService.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
 
   QbdDirectReimbursableExpensesObject = QBDReimbursableExpensesObject;
 
@@ -112,7 +112,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private qbdDirectImportSettingsService: QbdDirectImportSettingsService
   ) { }
 
   closeModel() {
@@ -192,7 +193,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? ImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
+        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? this.qbdDirectImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -237,7 +238,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const importSettingPayload = QbdDirectImportSettingsService.constructPayload(this.importSettingForm);
+    const importSettingPayload = this.qbdDirectImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: QbdDirectImportSettingPost) => {
       this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.IMPORT_SETTINGS_QBD_DIRECT, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.IMPORT_SETTINGS) {
@@ -283,7 +284,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
       this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
-      this.importSettingForm = QbdDirectImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
+      this.importSettingForm = this.qbdDirectImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qbdDirectImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();

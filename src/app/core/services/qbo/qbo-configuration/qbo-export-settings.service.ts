@@ -28,8 +28,6 @@ export class QboExportSettingsService extends ExportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {
       EMPLOYEE: [
@@ -228,7 +226,7 @@ export class QboExportSettingsService extends ExportSettingsService {
     return [exportSettingValidatorRule, exportModuleRule];
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: QBOExportSettingGet | null, employeeFieldMapping: EmployeeFieldMapping): FormGroup {
+  mapAPIResponseToFormGroup(exportSettings: QBOExportSettingGet | null, employeeFieldMapping: EmployeeFieldMapping): FormGroup {
     return new FormGroup({
       employeeMapping: new FormControl(employeeFieldMapping),
       expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),

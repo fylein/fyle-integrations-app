@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ImportSettingMappingRow } from "../../models/common/import-settings.model";
 import { IntegrationField } from "../../models/db/mapping.model";
@@ -11,7 +11,7 @@ import { TranslocoService } from "@jsverse/transloco";
 })
 export class ImportSettingsService {
 
-  constructor(private translocoService: TranslocoService) {}
+  protected translocoService: TranslocoService = inject(TranslocoService);
 
   getCustomFieldOption(): ExpenseField[] {
     return [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('services.importSettings.createCustomField'), source_placeholder: null, is_dependent: false }];

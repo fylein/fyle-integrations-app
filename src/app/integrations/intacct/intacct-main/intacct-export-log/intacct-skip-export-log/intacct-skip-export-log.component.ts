@@ -39,7 +39,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter?: SelectedDateFilter | null;
 
@@ -74,8 +74,10 @@ export class IntacctSkipExportLogComponent implements OnInit {
     private userService: UserService,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private accountingExportService: AccountingExportService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
     debounceTime(1000)
   ).subscribe((query: string) => {
@@ -138,7 +140,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportService.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.isDateSelected = false;
         this.selectedDateFilter = null;
 

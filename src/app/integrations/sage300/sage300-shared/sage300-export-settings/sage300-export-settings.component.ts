@@ -116,7 +116,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     public helper: HelperService,
     private mappingService: MappingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private exportSettingsService: ExportSettingsService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
@@ -126,10 +127,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup');
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
         validOptions
       );
@@ -137,10 +138,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
-      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup');
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
         validOptions
       );

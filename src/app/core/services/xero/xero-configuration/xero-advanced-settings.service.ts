@@ -29,6 +29,8 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
 
   private translocoService = inject(TranslocoService);
 
+  private exportSettingsService = inject(ExportSettingsService);
+
   getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
@@ -89,14 +91,14 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  static constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
+  constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     let paymentAccount = {...emptyDestinationAttribute};
     if (advancedSettingsForm.get('billPaymentAccount')?.value) {
       if (isCloneSettings) {
         paymentAccount = advancedSettingsForm.get('billPaymentAccount')?.value;
       } else {
-        paymentAccount = ExportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
+        paymentAccount = this.exportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
       }
     }
     const advancedSettingPayload: XeroAdvancedSettingPost = {

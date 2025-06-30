@@ -29,8 +29,6 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   private helper: HelperService = inject(HelperService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   constructor() {
     super();
     this.helper.setBaseApiURL();

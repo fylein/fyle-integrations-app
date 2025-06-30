@@ -22,15 +22,13 @@ export class BusinessCentralImportSettingsService extends ImportSettingsService 
 
   private helper: HelperService = inject(HelperService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   constructor() {
     super();
     this.helper.setBaseApiURL();
   }
 
   mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
-    const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
     return new FormGroup({
         importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
         chartOfAccountTypes: new FormControl(importSettings?.import_settings?.charts_of_accounts ? importSettings?.import_settings?.charts_of_accounts : [this.translocoService.translate('services.businessCentralImportSettings.expense')]),
@@ -39,9 +37,9 @@ export class BusinessCentralImportSettingsService extends ImportSettingsService 
     });
   }
 
-  static createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
+  createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
       const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
-      const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+      const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
       return {
           import_settings: {
               import_categories: importSettingsForm.get('importCategories')?.value,

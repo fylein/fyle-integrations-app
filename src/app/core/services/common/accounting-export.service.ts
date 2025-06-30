@@ -28,33 +28,34 @@ export class AccountingExportService {
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    private helper: HelperService
+    private translocoService: TranslocoService,
+    helper: HelperService
   ) {
     helper.setBaseApiURL();
   }
 
-  static xeroShortCode: string;
+  xeroShortCode: string;
 
-  static getDateOptionsV2(): DateFilter[] {
+  getDateOptionsV2(): DateFilter[] {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
       {
-        dateRange: 'This week',
+        dateRange: this.translocoService.translate('services.accountingExport.thisWeek'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Last week',
+        dateRange: this.translocoService.translate('services.accountingExport.lastWeek'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
         endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
       },
       {
-        dateRange: 'This month',
+        dateRange: this.translocoService.translate('services.accountingExport.thisMonth'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Last month',
+        dateRange: this.translocoService.translate('services.accountingExport.lastMonth'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
         endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
       }
@@ -83,7 +84,7 @@ export class AccountingExportService {
     );
   }
 
-  static getReferenceType(description: ExpenseGroupDescription): FyleReferenceType {
+  getReferenceType(description: ExpenseGroupDescription): FyleReferenceType {
     let referenceType = FyleReferenceType.REPORT_ID;
 
     if (FyleReferenceType.EXPENSE in description) {
@@ -97,7 +98,7 @@ export class AccountingExportService {
     return referenceType;
   }
 
-  static formatExportType(exportType: string, translocoService: TranslocoService): string {
+  formatExportType(exportType: string, translocoService: TranslocoService): string {
     if (exportType.startsWith('CREATING_')) {
       exportType = exportType.substring('CREATING_'.length);
     }
@@ -105,7 +106,7 @@ export class AccountingExportService {
     return new SentenceCasePipe(translocoService).transform(exportType);
   }
 
-  static getFyleReferenceNumber(referenceType: string, expense: Expense): string {
+  getFyleReferenceNumber(referenceType: string, expense: Expense): string {
     if (referenceType === FyleReferenceType.EXPENSE) {
       return expense.expense_number;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
@@ -116,7 +117,7 @@ export class AccountingExportService {
     return expense.claim_number;
   }
 
-  static generateFyleUrl(expense: Expense, referenceType: FyleReferenceType, org_id: string) : string {
+  generateFyleUrl(expense: Expense, referenceType: FyleReferenceType, org_id: string) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
       url += `admin/#/view_expense/${expense.expense_id}`;
@@ -128,7 +129,7 @@ export class AccountingExportService {
     return `${url}?org_id=${org_id}`;
   }
 
-  static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string, translocoService: TranslocoService): AccountingExportList {
+  parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string, translocoService: TranslocoService): AccountingExportList {
     const referenceType = this.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport.expenses[0]);
     return {
@@ -143,7 +144,7 @@ export class AccountingExportService {
     };
   }
 
-  static generateExportTypeAndId(expenseGroup: ExpenseGroup) {
+  generateExportTypeAndId(expenseGroup: ExpenseGroup) {
     if (!expenseGroup.response_logs) {
       return [null, null, null];
     }
@@ -157,7 +158,7 @@ export class AccountingExportService {
       exportId = expenseGroup.response_logs.Bill.Id;
     } else if ('JournalEntry' in expenseGroup.response_logs && expenseGroup.response_logs.JournalEntry) {
       exportRedirection = 'journal';
-      exportType = 'Journal entry';
+      exportType = this.translocoService.translate('services.accountingExport.journalEntry');
       exportId = expenseGroup.response_logs.JournalEntry.Id;
     } else if ('Purchase' in expenseGroup.response_logs && expenseGroup.response_logs.Purchase) {
       exportId = expenseGroup.response_logs.Purchase.Id;
@@ -167,15 +168,15 @@ export class AccountingExportService {
       } else {
         exportRedirection = 'expense';
         if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit card purchase';
+          exportType = this.translocoService.translate('services.accountingExport.creditCardPurchase');
         } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit card credit';
+          exportType = this.translocoService.translate('services.accountingExport.creditCardCredit');
           exportRedirection = 'creditcardcredit';
         } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
-          exportType = 'Debit card expense';
+          exportType = this.translocoService.translate('services.accountingExport.debitCardExpense');
           exportRedirection = 'expense';
         } else {
-          exportType = 'expense';
+          exportType = this.translocoService.translate('services.accountingExport.expense');
         }
       }
     }
@@ -183,16 +184,16 @@ export class AccountingExportService {
     return [exportRedirection, exportId, exportType];
   }
 
-  static constructQBOExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+  constructQBOExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
     const [exportRedirection, exportId, exportType] = this.generateExportTypeAndId(expenseGroup);
     return [`${environment.qbo_app_url}/app/${exportRedirection}?txnId=${exportId}`, exportType];
   }
 
-  static constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+  constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
     return [`https://www.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
   }
 
-  static constructXeroExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+  constructXeroExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
     let exportRedirection = '';
     let exportType = '';
     let exportId = null;
@@ -209,7 +210,7 @@ export class AccountingExportService {
           exportRedirection = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=${exportId}`;
         }
       } else if ('BankTransactions' in expenseGroup.response_logs && expenseGroup.response_logs.BankTransactions) {
-        exportType = 'Bank transaction';
+        exportType = this.translocoService.translate('services.accountingExport.bankTransaction');
         exportId = expenseGroup.response_logs.BankTransactions[0].BankTransactionID;
         accountId = expenseGroup.response_logs.BankTransactions[0].BankAccount.AccountID;
         if (this.xeroShortCode) {
@@ -222,14 +223,14 @@ export class AccountingExportService {
     return [exportRedirection, exportType];
   }
 
-  static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
+  constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
     const words: string[] = expenseGroup.response_logs?.type.split(/(?=[A-Z])/);
     const exportType = new SentenceCasePipe(translocoService).transform(words?.join(' '));
 
     return [expenseGroup.export_url, exportType];
   }
 
-  static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
+  constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
     } else if (appName === AppName.INTACCT) {
@@ -243,7 +244,7 @@ export class AccountingExportService {
     return ['', ''];
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName, translocoService: TranslocoService): AccountingExportList {
+  parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName, translocoService: TranslocoService): AccountingExportList {
       const referenceType = this.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
@@ -260,7 +261,7 @@ export class AccountingExportService {
       };
   }
 
-  static assignXeroShortCode(xeroShortCode: string){
+  assignXeroShortCode(xeroShortCode: string){
     this.xeroShortCode = xeroShortCode;
   }
 

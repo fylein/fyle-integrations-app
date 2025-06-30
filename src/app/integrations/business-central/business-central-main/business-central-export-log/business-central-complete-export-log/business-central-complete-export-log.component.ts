@@ -35,7 +35,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -110,7 +110,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
 
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+          this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -137,7 +137,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportService.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
@@ -169,6 +169,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.getAccountingExportsAndSetupPage();
   }
 

@@ -281,13 +281,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 

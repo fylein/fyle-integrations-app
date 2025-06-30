@@ -2247,8 +2247,12 @@
       "creditCardPurchase": "Credit card purchase",
       "creditCardCredit": "Credit card credit",
       "debitCardExpense": "Debit card expense",
-      "expense": "Expense",
-      "bankTransaction": "Bank transaction"
+      "expense": "expense",
+      "bankTransaction": "Bank transaction",
+      "thisWeek": "This week",
+      "lastWeek": "Last week",
+      "thisMonth": "This month",
+      "lastMonth": "Last month"
     },
     "qbdDirectAdvancedSettings": {
       "expenseReportIdLabel": "Expense/Report ID"
