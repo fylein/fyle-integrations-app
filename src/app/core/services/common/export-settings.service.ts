@@ -5,26 +5,29 @@ import { DefaultDestinationAttribute } from "../../models/db/destination-attribu
 import { ExpenseGroupingFieldOption } from "../../models/enum/enum.model";
 import { SelectFormOption } from "../../models/common/select-form-option.model";
 import { ExportDateType } from "../../models/enum/enum.model";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExportSettingsService {
-  static getSplitExpenseGroupingOptions(): SelectFormOption[] {
+  protected translocoService: TranslocoService = inject(TranslocoService);
+
+  getSplitExpenseGroupingOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Single line item',
+        label: this.translocoService.translate('services.exportSettings.singleLineItem'),
         value: SplitExpenseGrouping.SINGLE_LINE_ITEM
       },
       {
-        label: 'Multiple line item',
+        label: this.translocoService.translate('services.exportSettings.multipleLineItem'),
         value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       }
     ];
   }
 
-  static getExportGroup(exportGroups: string[] | null | undefined): string {
+  getExportGroup(exportGroups: string[] | null | undefined): string {
       if (exportGroups) {
           const exportGroup = exportGroups.find((exportGroup) => {
               return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.REPORT_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
@@ -34,81 +37,81 @@ export class ExportSettingsService {
       return '';
   }
 
-  static formatGeneralMappingPayload(destinationAttribute: DestinationAttribute): DefaultDestinationAttribute {
+  formatGeneralMappingPayload(destinationAttribute: DestinationAttribute): DefaultDestinationAttribute {
       return {
           name: destinationAttribute.value,
           id: destinationAttribute.destination_id
       };
   }
 
-  static constructCCCOptions(brandId: string) {
+  constructCCCOptions(brandId: string) {
       if (brandId === 'fyle') {
           return [
               {
-                label: 'Bill',
+                label: this.translocoService.translate('services.exportSettings.bill'),
                 value: IntacctReimbursableExpensesObject.BILL
               },
               {
-                label: 'Expense report',
+                label: this.translocoService.translate('services.exportSettings.expenseReport'),
                 value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
               },
               {
-                label: 'Journal entry',
+                label: this.translocoService.translate('services.exportSettings.journalEntry'),
                 value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
               },
               {
-                label: 'Charge card transaction',
+                label: this.translocoService.translate('services.exportSettings.chargeCardTransaction'),
                 value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
               }
             ];
       }
           return [
               {
-                label: 'Charge card transaction',
+                label: this.translocoService.translate('services.exportSettings.chargeCardTransaction'),
                 value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
               },
               {
-                label: 'Journal entry',
+                label: this.translocoService.translate('services.exportSettings.journalEntry'),
                 value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
               },
               {
-                label: 'Bill',
+                label: this.translocoService.translate('services.exportSettings.bill'),
                 value: IntacctReimbursableExpensesObject.BILL
               }
             ];
 
   }
 
-  static getExpenseGroupingDateOptions(): SelectFormOption[] {
+  getExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Export date',
+        label: this.translocoService.translate('services.exportSettings.exportDate'),
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification date',
+        label: this.translocoService.translate('services.exportSettings.verificationDate'),
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend date',
+        label: this.translocoService.translate('services.exportSettings.spendDate'),
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval date',
+        label: this.translocoService.translate('services.exportSettings.approvalDate'),
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last spend date',
+        label: this.translocoService.translate('services.exportSettings.lastSpendDate'),
         value: ExportDateType.LAST_SPENT_AT
       },
       {
-        label: 'Card transaction post date',
+        label: this.translocoService.translate('services.exportSettings.cardTransactionPostDate'),
         value: ExportDateType.POSTED_AT
       }
     ];
   }
 
-  static constructExportDateOptions(
+  constructExportDateOptions(
     isCoreCCCModule: boolean,
     expenseGrouping: ExpenseGroupingFieldOption,
     exportDateType: ExportDateType,
@@ -143,22 +146,22 @@ export class ExportSettingsService {
     );
   }
 
-  static filterDateOptions(exportDateType: ExportDateType, dateOptions: SelectFormOption[]){
+  filterDateOptions(exportDateType: ExportDateType, dateOptions: SelectFormOption[]){
     const dateOptionToRemove = exportDateType;
     const filteredOptions = dateOptions.filter(option => option.value !== dateOptionToRemove);
     return filteredOptions;
   }
 
-  static constructGroupingDateOptions(exportGroupType: ExpenseGroupingFieldOption, dateOptions: SelectFormOption[]) {
+  constructGroupingDateOptions(exportGroupType: ExpenseGroupingFieldOption, dateOptions: SelectFormOption[]) {
     if (exportGroupType === ExpenseGroupingFieldOption.EXPENSE_ID) {
-      return ExportSettingsService.filterDateOptions(ExportDateType.LAST_SPENT_AT, dateOptions);
+      return this.filterDateOptions(ExportDateType.LAST_SPENT_AT, dateOptions);
     } else if (exportGroupType===ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroupType===ExpenseGroupingFieldOption.REPORT_ID) {
-      return ExportSettingsService.filterDateOptions(ExportDateType.SPENT_AT, dateOptions);
+      return this.filterDateOptions(ExportDateType.SPENT_AT, dateOptions);
     }
     return dateOptions;
   }
 
-  static clearInvalidSelectedOption<T>(control: AbstractControl<T | null> | null, validOptions: T[]) {
+  clearInvalidSelectedOption<T>(control: AbstractControl<T | null> | null, validOptions: T[]) {
     const selectedOption = control?.value;
     if (selectedOption && !validOptions.includes(selectedOption)) {
       control?.setValue(null);
@@ -168,8 +171,8 @@ export class ExportSettingsService {
   /**
    * If the current selected option is not in the valid options, clear the field
    */
-  static clearInvalidDateOption(control: AbstractControl | null, validDateOptions: SelectFormOption[]) {
+  clearInvalidDateOption(control: AbstractControl | null, validDateOptions: SelectFormOption[]) {
     const validOptions = validDateOptions.map((option) => option.value);
-      return ExportSettingsService.clearInvalidSelectedOption(control, validOptions);
+      return this.clearInvalidSelectedOption(control, validOptions);
   }
 }

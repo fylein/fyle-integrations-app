@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from '../misc/user.service';
 import { AppName } from '../../models/enum/enum.model';
 import { MinimalUser } from '../../models/db/user.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AppcuesService {
   user: MinimalUser = this.userService.getUserProfile();
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) { }
 
   get appcues() {
@@ -25,7 +27,7 @@ export class AppcuesService {
       this.appcues.identify(user.user_id, {
         'org_id': user.org_id,
         'user_id': user.user_id,
-        source: 'Fyle Integrations App',
+        source: this.translocoService.translate('services.appcues.sourceFyleIntegrationsApp'),
         'app_name': appName
       });
     }

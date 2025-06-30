@@ -12,6 +12,7 @@ import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AdvancedSettingValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 const advancedSettingsCache$ = new Subject<void>();
 
@@ -24,14 +25,16 @@ export class  QboAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  static getPaymentSyncOptions(): SelectFormOption[] {
+  private translocoService: TranslocoService = inject(TranslocoService);
+
+  getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: `Export ${brandingConfig.brandName} ACH Payments to QuickBooks Online`,
+        label: this.translocoService.translate('services.qboAdvancedSettings.exportFyleACHPaymentsToQBO', { brandName: brandingConfig.brandName }),
         value: QBOPaymentSyncDirection.FYLE_TO_QBO
       },
       {
-        label: `Import QuickBooks Payments into ${brandingConfig.brandName}`,
+        label: this.translocoService.translate('services.qboAdvancedSettings.importQBOPaymentsToFyle', { brandName: brandingConfig.brandName }),
         value: QBOPaymentSyncDirection.QBO_TO_FYLE
       }
     ];
@@ -118,4 +121,3 @@ export class  QboAdvancedSettingsService extends AdvancedSettingsService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
 }
-

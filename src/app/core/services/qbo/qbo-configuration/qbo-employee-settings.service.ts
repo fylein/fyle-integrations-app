@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AutoMapEmployeeOptions, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 const employeeSettingsCache$ = new Subject<void>();
 
@@ -18,24 +19,25 @@ const employeeSettingsCache$ = new Subject<void>();
 })
 export class QboEmployeeSettingsService {
 
-  constructor(
-    private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+  private apiService: ApiService = inject(ApiService);
 
-  static getAutoMapEmployeeOptions(): SelectFormOption[] {
+  private workspaceService: WorkspaceService = inject(WorkspaceService);
+
+  private translocoService: TranslocoService = inject(TranslocoService);
+
+  getAutoMapEmployeeOptions(): SelectFormOption[] {
     return [
         {
           value: AutoMapEmployeeOptions.NAME,
-          label: `${brandingConfig.brandName} Name to QuickBooks Online Display name`
+          label: this.translocoService.translate('services.qboEmployeeSettings.nameToQboDisplayName', { brandName: brandingConfig.brandName })
         },
         {
           value: AutoMapEmployeeOptions.EMAIL,
-          label: `${brandingConfig.brandName} Email to QuickBooks Online Email`
+          label: this.translocoService.translate('services.qboEmployeeSettings.emailToQboEmail', { brandName: brandingConfig.brandName })
         },
         {
           value: AutoMapEmployeeOptions.EMPLOYEE_CODE,
-          label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
+          label: this.translocoService.translate('services.qboEmployeeSettings.employeeCodeToQboDisplayName', { brandName: brandingConfig.brandName })
         }
       ];
   }

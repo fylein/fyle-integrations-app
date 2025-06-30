@@ -30,58 +30,58 @@ export class QboExportSettingsService extends ExportSettingsService {
 
   private translocoService: TranslocoService = inject(TranslocoService);
 
-  static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
+  getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {
       EMPLOYEE: [
         {
-          label: 'Check',
+          label: this.translocoService.translate('services.qboExportSettings.check'),
           value: QBOReimbursableExpensesObject.CHECK
         },
         {
-          label: 'Expense',
+          label: this.translocoService.translate('services.qboExportSettings.expense'),
           value: QBOReimbursableExpensesObject.EXPENSE
         },
         {
-          label: 'Journal entry',
+          label: this.translocoService.translate('services.qboExportSettings.journalEntry'),
           value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
         }
       ],
       VENDOR: [
         {
-          label: 'Bill',
+          label: this.translocoService.translate('services.qboExportSettings.bill'),
           value: QBOReimbursableExpensesObject.BILL
         },
         {
-          label: 'Expense',
+          label: this.translocoService.translate('services.qboExportSettings.expense'),
           value: QBOReimbursableExpensesObject.EXPENSE
         },
         {
-          label: 'Journal entry',
+          label: this.translocoService.translate('services.qboExportSettings.journalEntry'),
           value: QBOReimbursableExpensesObject.JOURNAL_ENTRY
         }
       ]
     }[employeeFieldMapping];
   }
 
-  static getCreditCardExportTypes(): SelectFormOption[] {
+  getCreditCardExportTypes(): SelectFormOption[] {
     const creditCardExportTypes = [
       {
-        label: 'Bill',
+        label: this.translocoService.translate('services.qboExportSettings.bill'),
         value: QBOCorporateCreditCardExpensesObject.BILL
       },
       {
-        label: 'Credit card purchase',
+        label: this.translocoService.translate('services.qboExportSettings.creditCardPurchase'),
         value: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
       },
       {
-        label: 'Journal entry',
+        label: this.translocoService.translate('services.qboExportSettings.journalEntry'),
         value: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
 
     if (brandingConfig.brandId !== 'co') {
       creditCardExportTypes.push({
-        label: 'Debit & credit card expense',
+        label: this.translocoService.translate('services.qboExportSettings.debitCreditCardExpense'),
         value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
       });
     }
@@ -89,53 +89,53 @@ export class QboExportSettingsService extends ExportSettingsService {
     return creditCardExportTypes;
   }
 
-  static getCCCExpenseStateOptions(): SelectFormOption[] {
+  getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Approved',
+        label: this.translocoService.translate('services.qboExportSettings.approved'),
         value: CCCExpenseState.APPROVED
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.qboExportSettings.closed'),
         value: CCCExpenseState.PAID
       }
     ];
   }
 
-  static getReimbursableExpenseStateOptions(): SelectFormOption[] {
+  getReimbursableExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Processing',
+        label: this.translocoService.translate('services.qboExportSettings.processing'),
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.qboExportSettings.closed'),
         value: ExpenseState.PAID
       }
     ];
   }
 
-  static getExpenseGroupByOptions(): SelectFormOption[] {
+  getExpenseGroupByOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Expense',
+        label: this.translocoService.translate('services.qboExportSettings.expense'),
         value: ExpenseGroupingFieldOption.EXPENSE_ID
       },
       {
-        label: 'Expense report',
+        label: this.translocoService.translate('services.qboExportSettings.expenseReport'),
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
   }
 
-  static getNameInJournalOptions(): SelectFormOption[] {
+  getNameInJournalOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Merchant name',
+        label: this.translocoService.translate('services.qboExportSettings.merchantName'),
         value: NameInJournalEntry.MERCHANT
       },
       {
-        label: 'Employee name',
+        label: this.translocoService.translate('services.qboExportSettings.employeeName'),
         value: NameInJournalEntry.EMPLOYEE
       }
     ];
@@ -148,32 +148,32 @@ export class QboExportSettingsService extends ExportSettingsService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification date',
+        label: this.translocoService.translate('services.qboExportSettings.verificationDate'),
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend date',
+        label: this.translocoService.translate('services.qboExportSettings.spendDate'),
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval date',
+        label: this.translocoService.translate('services.qboExportSettings.approvalDate'),
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last spend date',
+        label: this.translocoService.translate('services.qboExportSettings.lastSpendDate'),
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
   }
 
-  static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
+  getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Card transaction post date',
+        label: this.translocoService.translate('services.qboExportSettings.cardTransactionPostDate'),
         value: ExportDateType.POSTED_AT
       },
       {
-        label: 'Spend date',
+        label: this.translocoService.translate('services.qboExportSettings.spendDate'),
         value: ExportDateType.SPENT_AT
       }
     ];

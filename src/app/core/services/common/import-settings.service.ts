@@ -4,17 +4,20 @@ import { ImportSettingMappingRow } from "../../models/common/import-settings.mod
 import { IntegrationField } from "../../models/db/mapping.model";
 import { ImportCodeFieldConfigType, ExpenseField } from "../../models/common/import-settings.model";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImportSettingsService {
 
-  static getCustomFieldOption(): ExpenseField[] {
-    return [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
+  constructor(private translocoService: TranslocoService) {}
+
+  getCustomFieldOption(): ExpenseField[] {
+    return [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('services.importSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
   }
 
-  static createFormGroup(data: ImportSettingMappingRow): FormGroup {
+  createFormGroup(data: ImportSettingMappingRow): FormGroup {
     return new FormGroup ({
       source_field: new FormControl(data.source_field || '', RxwebValidators.unique()),
       destination_field: new FormControl(data.destination_field || '', RxwebValidators.unique()),
@@ -25,7 +28,7 @@ export class ImportSettingsService {
     });
   }
 
-  static getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): boolean | null {
+  getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): boolean | null {
     if (importCodeFields?.includes(destinationField)) {
       return importCodeFields?.includes(destinationField);
     } else if (!importCodeFieldCodeConfig[destinationField]) {
@@ -34,7 +37,7 @@ export class ImportSettingsService {
     return null;
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], importCodeFieldCodeConfig?: ImportCodeFieldConfigType, isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
+  constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], importCodeFieldCodeConfig?: ImportCodeFieldConfigType, isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
@@ -81,7 +84,7 @@ export class ImportSettingsService {
     return expenseFieldFormArray;
   }
 
-  static constructMappingSettingPayload(expenseFieldArray: ImportSettingMappingRow[]): ImportSettingMappingRow[] {
+  constructMappingSettingPayload(expenseFieldArray: ImportSettingMappingRow[]): ImportSettingMappingRow[] {
     const filteredExpenseFieldArray = expenseFieldArray.filter((field: ImportSettingMappingRow) => field.destination_field && field.source_field);
     const mappingSettings = filteredExpenseFieldArray.map((field: ImportSettingMappingRow) => {
       return {

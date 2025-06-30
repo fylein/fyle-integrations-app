@@ -7,6 +7,7 @@ import { AdvancedSettingsService } from '../../common/advanced-settings.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class QbdDirectAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService: QbdWorkspaceService = inject(QbdWorkspaceService);
 
+  private translocoService: TranslocoService = inject(TranslocoService);
+
   static defaultMemoFields(): string[] {
     return ['employee_name', 'employee_email',  'card_number', 'purpose', 'merchant', 'spent_on', 'expense_key', 'expense_link'];
   }
@@ -25,10 +28,10 @@ export class QbdDirectAdvancedSettingsService extends AdvancedSettingsService {
       return ["employee_name", "expense_key"];
   }
 
-  static topMemoExpenseKeyNameConversion(keys: string[]): string[] {
+  topMemoExpenseKeyNameConversion(keys: string[]): string[] {
       keys.forEach((key: string, index: number) => {
           if (key === 'expense_key') {
-              keys[index] = 'Expense/Report ID';
+              keys[index] = this.translocoService.translate('services.qbdDirectAdvancedSettings.expenseReportIdLabel');
           }
       });
       return keys;

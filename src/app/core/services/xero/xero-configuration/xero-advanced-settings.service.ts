@@ -14,6 +14,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { ExportSettingsService } from '../../common/export-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const advancedSettingsCache$ = new Subject<void>();
@@ -26,14 +27,16 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService = inject(WorkspaceService);
 
-  static getPaymentSyncOptions(): SelectFormOption[] {
+  private translocoService = inject(TranslocoService);
+
+  getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Export ' + brandingConfig.brandName + ' ACH payments to Xero',
+        label: this.translocoService.translate('services.xeroAdvancedSettings.exportACHPayments', { brandName: brandingConfig.brandName }),
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
       {
-        label: 'Import Xero payments into ' + brandingConfig.brandName,
+        label: this.translocoService.translate('services.xeroAdvancedSettings.importPayments', { brandName: brandingConfig.brandName }),
         value: PaymentSyncDirection.XERO_TO_FYLE
       }
     ];

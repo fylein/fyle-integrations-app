@@ -3,30 +3,35 @@ import { SelectFormOption } from "../../models/common/select-form-option.model";
 import { TravelPerkUserRole } from "../../models/enum/enum.model";
 import { TravelperkPaymentProfileSettingGet, TravelperkPaymentProfileSettingPost } from "../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
 import { Injectable } from "@angular/core";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TravelperkPaymentProfileSettingService {
 
-  static getUserRoleOptions(): SelectFormOption[] {
+  constructor(
+    private translocoService: TranslocoService
+  ) { }
+
+  getUserRoleOptions(): SelectFormOption[] {
       return [
           {
-              label: 'Booker',
+              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.booker'),
               value: TravelPerkUserRole.BOOKER
           },
           {
-              label: 'Card holder',
+              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.cardHolder'),
               value: TravelPerkUserRole.CARD_HOLDER
           },
           {
-              label: 'Traveller',
+              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.traveller'),
               value: TravelPerkUserRole.TRAVELLER
           }
       ];
   }
 
-  static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
+  createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
       return new FormGroup ({
           destinationName: new FormControl(data.profile_name || ''),
           sourceName: new FormControl(data.user_role || null),
@@ -34,13 +39,13 @@ export class TravelperkPaymentProfileSettingService {
       });
   }
 
-  static constructFormArray(arrayData: TravelperkPaymentProfileSettingGet[]): FormGroup[] {
+  constructFormArray(arrayData: TravelperkPaymentProfileSettingGet[]): FormGroup[] {
       const resultentArray:FormGroup[] = [];
       arrayData.forEach((data) => resultentArray.push(this.createFormGroup(data)));
       return resultentArray;
   }
 
-  static constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
+  constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
       const paymentProfileSettings = paymentProfileFieldArray.map((field: any) => {
           return {
               profile_name: field.destinationName,
@@ -52,14 +57,14 @@ export class TravelperkPaymentProfileSettingService {
       return paymentProfileSettings;
     }
 
-  static mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
+  mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
       const paymentProfileMappingsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
       return new FormGroup({
           paymentProfileMappings: new FormArray(paymentProfileMappingsArray)
       });
   }
 
-  static createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
+  createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
       return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.get('paymentProfileMappings')?.value);
   }
 
