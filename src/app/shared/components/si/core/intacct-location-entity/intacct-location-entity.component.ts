@@ -53,6 +53,8 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  locationEntityLabel: string;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
@@ -183,6 +185,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.locationEntityLabel = this.translocoService.translate('intacct.common.locationEntity');
     this.setupPage();
   }
 }
