@@ -8,7 +8,7 @@ import { TranslocoService } from "@jsverse/transloco";
   providedIn: 'root'
 })
 export class QbdDirectOnboardingService {
-  
+
     private onboardingSteps: OnboardingStepper[] = [];
 
     private translocoService: TranslocoService = inject(TranslocoService);
@@ -70,8 +70,8 @@ export class QbdDirectOnboardingService {
             route: '/integrations/qbd_direct/onboarding/advanced_settings',
             styleClasses: ['step-name-advanced--text']
           }
-        ]
-          
+        ];
+
         this.onboardingSteps.forEach(step => {
           if (step.step.toLowerCase() === currentStep.toLowerCase()) {
             step.active = true;

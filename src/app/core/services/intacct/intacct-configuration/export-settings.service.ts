@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { IntacctCorporateCreditCardExpensesObject, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../../../models/enum/enum.model";
 import { SelectFormOption } from "../../../models/common/select-form-option.model";
-import { ExportSettingPost } from "../../../models/intacct/intacct-configuration/export-settings.model"
+import { ExportSettingPost } from "../../../models/intacct/intacct-configuration/export-settings.model";
 import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({

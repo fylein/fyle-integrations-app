@@ -105,7 +105,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   expenseGroupingFieldOptions: ExportSettingFormOption[];
 
-  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = []
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
 
@@ -140,7 +140,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     private intacctExportSettingsService: IntacctExportSettingsService
     ) {
     this.reimbursableExpenseGroupingDateOptions = this.intacctExportSettingsService.getExpenseGroupingDateOptions();
-    
+
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('intacctExportSettings.expense'),

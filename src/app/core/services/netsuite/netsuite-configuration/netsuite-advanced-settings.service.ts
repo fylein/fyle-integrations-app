@@ -24,7 +24,7 @@ const advancedSettingsCache$ = new Subject<void>();
 export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
 
   private apiService: ApiService = inject(ApiService);
-  
+
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
   static override getDefaultMemoOptions(): string[] {
