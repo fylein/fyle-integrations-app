@@ -100,10 +100,9 @@ export class XeroExportSettingsComponent implements OnInit {
     private router : Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService,
-    private xeroExportSettingsService: XeroExportSettingsService
-  ) {
-    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    private translocoService: TranslocoService
+  ) { 
+    this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
   }
 
   refreshDimensions(isRefresh: boolean) {

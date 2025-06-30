@@ -27,12 +27,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
   private translocoService: TranslocoService = inject(TranslocoService);
-
-  constructor(
-  ) {
-    super();
-  }
-
+  
   static getEmployeeFieldOptions(): SelectFormOption[] {
     return [
       {
@@ -264,12 +259,12 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         autoMapEmployees: new FormControl(exportSettings?.configuration?.auto_map_employees),
         reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
         reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
-        reimbursableExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
+        reimbursableExportGroup: new FormControl(NetsuiteExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
         reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
         cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
         creditCardExpense: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object ? true : false),
         creditCardExportType: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object),
-        creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
+        creditCardExportGroup: new FormControl(NetsuiteExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
         creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
         bankAccount: new FormControl(exportSettings?.general_mappings?.reimbursable_account?.id ? exportSettings.general_mappings.reimbursable_account : null),
         creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),

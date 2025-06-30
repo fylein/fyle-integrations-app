@@ -23,7 +23,6 @@ import {
   mockImportCodeSelectorOptions
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
@@ -149,7 +148,7 @@ describe('QboImportSettingsComponent', () => {
       component.qboImportCodeFieldCodeConfig = {
         [DefaultImportFields.ACCOUNT]: false
       };
-      spyOn(QBOImportSettingModel, 'constructPayload').and.returnValue({} as any);
+      spyOn(QboImportSettingsService, 'constructPayload').and.returnValue({} as any);
     });
 
     it('should save import settings successfully', () => {

@@ -26,10 +26,6 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService = inject(WorkspaceService);
 
-  constructor() {
-    super();
-  }
-
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {

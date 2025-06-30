@@ -24,10 +24,6 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  constructor() {
-    super();
-  }
-
   static getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
