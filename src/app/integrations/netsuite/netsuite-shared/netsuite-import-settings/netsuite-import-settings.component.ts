@@ -8,7 +8,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, EmployeeFieldMapping, NetSuiteCorporateCreditCardExpensesObject, NetsuiteFyleField, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteImportSettingGet, } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { NetsuiteImportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';

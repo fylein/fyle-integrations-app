@@ -21,7 +21,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
   private mandatoryFormController: string[] = [];
 
   @Output() creditCardExportTypeChange: EventEmitter<string> = new EventEmitter();
-  
+
   private apiService: ApiService = inject(ApiService);
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);

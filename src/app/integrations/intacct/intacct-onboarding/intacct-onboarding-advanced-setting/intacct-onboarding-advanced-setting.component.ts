@@ -21,7 +21,7 @@ export class IntacctOnboardingAdvancedSettingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.advancedSettings.stepName'),this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.advancedSettings.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

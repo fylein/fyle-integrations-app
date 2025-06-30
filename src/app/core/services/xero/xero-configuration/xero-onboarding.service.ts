@@ -1,13 +1,13 @@
 import { OnboardingStepper } from "../../../models/misc/onboarding-stepper.model";
 import { XeroOnboardingState } from "../../../models/enum/enum.model";
-import { XeroOnboardingStepperMap } from "../../../models/xero/xero-configuration/xero-onboarding.model"; 
+import { XeroOnboardingStepperMap } from "../../../models/xero/xero-configuration/xero-onboarding.model";
 import { TranslocoService } from "@jsverse/transloco";
 import { inject } from "@angular/core";
 
 export class XeroOnboardingService {
-  
+
   private onboardingSteps: OnboardingStepper[] = [];
-  
+
   private translocoService: TranslocoService = inject(TranslocoService);
 
 
@@ -55,7 +55,7 @@ export class XeroOnboardingService {
         route: '/integrations/xero/onboarding/advanced_settings',
         styleClasses: ['step-name-advanced--text']
       }
-    ]
+    ];
 
       this.onboardingSteps.forEach(step => {
         if (step.step.toLowerCase() === currentStep.toLowerCase()) {

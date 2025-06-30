@@ -190,7 +190,7 @@ export class QboCloneSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private qboOnboardingService: QboOnboardingService,
     private qboExportSettingsService: QboExportSettingsService
-  ) { 
+  ) {
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
   }
 

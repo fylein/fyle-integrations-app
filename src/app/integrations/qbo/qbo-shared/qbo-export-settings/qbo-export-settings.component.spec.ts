@@ -62,7 +62,7 @@ describe('QboExportSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers', 'postExportSettings'], {
+    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers', 'postExportSettings', 'getReimbursableExpenseGroupingDateOptions'], {
       creditCardExportTypeChange: new EventEmitter<QBOCorporateCreditCardExpensesObject>()
     });
     const helperService = jasmine.createSpyObj('HelperService', ['addExportSettingFormValidator', 'setConfigurationSettingValidatorsAndWatchers', 'setOrClearValidators', 'addDefaultDestinationAttributeIfNotExists', 'enableFormField']);
@@ -732,8 +732,8 @@ describe('QboExportSettingsComponent', () => {
       component.cccExpenseGroupingDateOptions = [];
 
       spyOn<any>(component, 'setupCustomDateOptionWatchers').and.callThrough();
+      exportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue([]);
 
-      spyOn(QboExportSettingsService, 'getReimbursableExpenseGroupingDateOptions').and.returnValue([]);
       spyOn(ExportSettingsService, 'constructGroupingDateOptions').and.returnValue([]);
       spyOn<any>(component, 'updateCCCExpenseGroupingDateOptions');
     });

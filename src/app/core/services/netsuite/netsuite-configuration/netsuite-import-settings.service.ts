@@ -83,7 +83,7 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
       },
       mapping_settings: mappingSettings
     };
-  } 
+  }
 
   @Cacheable({
     cacheBusterObserver: netsuiteImportSettingGetCache$

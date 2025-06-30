@@ -30,7 +30,7 @@ export class XeroConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('xero.configuration.exportSetting.stepName'), routerLink: '/integrations/xero/main/configuration/export_settings'},
       {label: this.translocoService.translate('xero.configuration.importSetting.stepName'), routerLink: '/integrations/xero/main/configuration/import_settings'},
       {label: this.translocoService.translate('xero.configuration.advancedSettings.stepName'), routerLink: '/integrations/xero/main/configuration/advanced_settings'}
-    ]
+    ];
   }
 
 }
