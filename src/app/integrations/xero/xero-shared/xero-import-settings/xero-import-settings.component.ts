@@ -62,7 +62,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = this.importSettingService.getCustomFieldOption();
+  customFieldOption: ExpenseField[];
 
   isSaveInProgress: boolean;
 
@@ -97,7 +97,9 @@ export class XeroImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+  }
 
   closeModel() {
     this.customFieldForm.reset();

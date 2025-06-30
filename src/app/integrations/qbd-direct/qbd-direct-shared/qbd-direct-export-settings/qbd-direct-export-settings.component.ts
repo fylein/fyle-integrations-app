@@ -51,19 +51,19 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   expenseStateOptions: QBDExportSettingFormOption[];
 
-  reimbursableExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+  reimbursableExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = [];
 
-  creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+  creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  creditCardExportTypes: QBDExportSettingFormOption[] = this.qbdDirectExportSettingsService.creditCardExportTypes();
+  creditCardExportTypes: QBDExportSettingFormOption[] = [];
 
-  reimbursableExportTypes: QBDExportSettingFormOption[] = this.qbdDirectExportSettingsService.reimbursableExportTypes();
+  reimbursableExportTypes: QBDExportSettingFormOption[] = [];
 
-  nameInJEOptions: QBDExportSettingFormOption[] = this.qbdDirectExportSettingsService.nameInJEOptions();
+  nameInJEOptions: QBDExportSettingFormOption[] = [];
 
-  employeeMappingOptions: SelectFormOption[] = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+  employeeMappingOptions: SelectFormOption[] = [];
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -113,6 +113,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingFieldOptions = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+    this.creditCardExpenseGroupingFieldOptions = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+    this.creditCardExportTypes = this.qbdDirectExportSettingsService.creditCardExportTypes();
+    this.reimbursableExportTypes = this.qbdDirectExportSettingsService.reimbursableExportTypes();
+    this.nameInJEOptions = this.qbdDirectExportSettingsService.nameInJEOptions();
+    this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {

@@ -50,27 +50,27 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   accountsPayables: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes: SelectFormOption[] =  this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
+  reimbursableExportTypes: SelectFormOption[] = [];
 
-  autoMapEmployeeOptions: SelectFormOption[] = this.netsuiteExportSettingsService.getAutoMapEmplyeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = [];
 
-  employeeFieldOptions: SelectFormOption[] = this.netsuiteExportSettingsService.getEmployeeFieldOptions();
+  employeeFieldOptions: SelectFormOption[] = [];
 
-  creditCardExportTypes = this.netsuiteExportSettingsService.getCreditCardExportTypes();
+  creditCardExportTypes: SelectFormOption[] = [];
 
-  cccExpenseStateOptions = this.netsuiteExportSettingsService.getCCCExpenseStateOptions();
+  cccExpenseStateOptions: SelectFormOption[] = [];
 
-  expenseStateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseStateOptions();
+  expenseStateOptions: SelectFormOption[] = [];
 
-  expenseGroupByOptions = this.netsuiteExportSettingsService.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  nameInJournalOptions = this.netsuiteExportSettingsService.getNameInJournalOptions();
+  nameInJournalOptions: SelectFormOption[] = [];
 
-  readonly splitExpenseGroupingOptions = this.netsuiteExportSettingsService.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[] = [];
 
   showNameInJournalOption: boolean;
 
@@ -131,6 +131,16 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   ) {
     this.windowReference = this.windowService.nativeWindow;
     this.reimbursableExpenseGroupingDateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExportTypes = this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
+    this.autoMapEmployeeOptions = this.netsuiteExportSettingsService.getAutoMapEmplyeeOptions();
+    this.employeeFieldOptions = this.netsuiteExportSettingsService.getEmployeeFieldOptions();
+    this.creditCardExportTypes = this.netsuiteExportSettingsService.getCreditCardExportTypes();
+    this.cccExpenseStateOptions = this.netsuiteExportSettingsService.getCCCExpenseStateOptions();
+    this.expenseStateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseStateOptions();
+    this.expenseGroupByOptions = this.netsuiteExportSettingsService.getExpenseGroupByOptions();
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+    this.nameInJournalOptions = this.netsuiteExportSettingsService.getNameInJournalOptions();
+    this.splitExpenseGroupingOptions = this.netsuiteExportSettingsService.getSplitExpenseGroupingOptions();
   }
 
 

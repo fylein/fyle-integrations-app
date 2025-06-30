@@ -77,13 +77,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: NetsuiteConfiguration;
 
-  paymentSyncOptions: SelectFormOption[] = this.advancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = [];
 
-  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = this.advancedSettingsService.getDefaultLevelOptions();
+  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = [];
 
-  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  this.advancedSettingsService.getDefaultLevelOptions();
+  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  = [];
 
-  netsuiteClassLevels:  DefaultDestinationAttribute[]  = this.advancedSettingsService.getDefaultLevelOptions();
+  netsuiteClassLevels:  DefaultDestinationAttribute[]  = [];
 
   paymentAccounts: DefaultDestinationAttribute[];
 
@@ -113,7 +113,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private exportSettingsService: NetsuiteExportSettingsService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+
+    this.paymentSyncOptions = this.advancedSettingsService.getPaymentSyncOptions();
+    this.netsuiteLocationLevels = this.advancedSettingsService.getDefaultLevelOptions();
+    this.netsuiteDepartmentLevels = this.advancedSettingsService.getDefaultLevelOptions();
+    this.netsuiteClassLevels = this.advancedSettingsService.getDefaultLevelOptions();
+  }
 
   isOptional(): string {
     return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? this.translocoService.translate('netsuiteAdvancedSettings.optional') : '';

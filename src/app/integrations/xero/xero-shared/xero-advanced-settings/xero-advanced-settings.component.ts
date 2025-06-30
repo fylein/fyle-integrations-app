@@ -53,7 +53,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  paymentSyncOptions: SelectFormOption[] = this.advancedSettingService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[];
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -79,7 +79,9 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private helperService: HelperService,
     private translocoService: TranslocoService,
     private xeroAdvancedSettingsService: XeroAdvancedSettingsService
-  ) { }
+  ) {
+    this.paymentSyncOptions = this.advancedSettingService.getPaymentSyncOptions();
+  }
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/xero/onboarding/import_settings`]);

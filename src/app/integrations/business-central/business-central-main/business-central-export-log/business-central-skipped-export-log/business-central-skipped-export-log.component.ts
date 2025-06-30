@@ -28,7 +28,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = this.accountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   expenses: SkipExportList[];
 
@@ -58,6 +58,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     private paginatorService: PaginatorService,
     private accountingExportService: AccountingExportService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {

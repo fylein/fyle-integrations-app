@@ -77,7 +77,7 @@ export class Sage300ExportSettingService {
   getReimbursableExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.currentDate'),
+        label: this.translocoService.translate('common.currentDate'),
         value: Sage300ExpenseDate.CURRENT_DATE
       },
       {

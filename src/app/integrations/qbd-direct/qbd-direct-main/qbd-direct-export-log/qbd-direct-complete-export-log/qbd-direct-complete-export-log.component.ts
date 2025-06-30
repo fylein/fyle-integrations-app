@@ -38,7 +38,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = this.accountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -73,6 +73,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private translocoService: TranslocoService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
