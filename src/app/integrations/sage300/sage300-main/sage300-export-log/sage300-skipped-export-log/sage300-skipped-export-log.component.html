@@ -25,14 +25,14 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="'Sorry, no results found!'"
-            [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
+            [mainText]="'sage300SkippedExportLog.noResultsFound' | transloco"
+            [subText]="'sage300SkippedExportLog.noResultsSuggestion' | transloco">
         </app-zero-state-with-illustration>
 
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-    [mainText]="'No records to show yet!'"
-    [subText]="'All your expenses that were skipped from exporting will be stored here.'">
+    [mainText]="'sage300SkippedExportLog.noRecordsToShow' | transloco"
+    [subText]="'sage300SkippedExportLog.skippedExportsStoredHere' | transloco">
     </app-zero-state-with-illustration>
 </div>

@@ -6,6 +6,7 @@ import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-mapping',
@@ -16,10 +17,7 @@ export class Sage300MappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/sage300/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/sage300/main/mapping/category'}
-  ];
+  mappingPages: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -31,17 +29,22 @@ export class Sage300MappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private translocoService: TranslocoService
   ) { }
 
   private setupPage(): void {
     this.isLoading = true;
+    this.mappingPages = [
+      {label: this.translocoService.translate('sage300Mapping.employeeLabel'), routerLink: '/integrations/sage300/main/mapping/employee'},
+      {label: this.translocoService.translate('sage300Mapping.categoryLabel'), routerLink: '/integrations/sage300/main/mapping/category'}
+    ];
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY' && item.source_field !== 'PROJECT') {
             this.mappingPages.push({
-              label: new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
               routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }

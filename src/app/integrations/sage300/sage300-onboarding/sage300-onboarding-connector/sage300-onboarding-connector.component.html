@@ -9,8 +9,8 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header 
-                [headerText]="'Connect to your Sage 300 CRE account'"
-                [contentText]="'To connect your Sage 300 CRE database to your ' + brandingConfig.brandName + ' account, you need to set up the HH2 sync. Click here for details or contact your ' + brandingConfig.brandName + ' implementation specialist for help with the setup.'"
+                [headerText]="'sage300OnboardingConnector.headerText' | transloco"
+                [contentText]="'sage300OnboardingConnector.contentText' | transloco:{ brandName: brandingConfig.brandName }"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">

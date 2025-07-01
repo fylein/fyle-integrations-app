@@ -11,13 +11,13 @@
             <app-mapping-filter [appName]="AppName.QBD" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
-            <app-qbd-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="sourceType + ' in ' + brandingConfig.brandName + ''" [destinationHeaderName]="destinationHeaderName" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-qbd-mapping-table>
+            <app-qbd-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'qbdGenericMapping.fyleHeaderName' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }" [destinationHeaderName]="destinationHeaderName" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-qbd-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
         <div *ngIf="totalCount === 0">
-            <app-zero-state-with-illustration [mainText]="'No ' + sourceType +  ' to show yet!'" [subText]="'Add ' + sourceType + ' to ' + brandingConfig.brandName + ' to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>
+            <app-zero-state-with-illustration [mainText]="'qbdGenericMapping.noSourceTypeToShow' | transloco: { sourceType: sourceType }" [subText]="'qbdGenericMapping.zeroStateSubText' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }"></app-zero-state-with-illustration>
         </div>
     </div>
 </div>

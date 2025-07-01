@@ -16,6 +16,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { interval } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -83,7 +84,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   uiExposedAppName: string;
 
-  meridiemOption: string[] = ['AM', 'PM'];
+  meridiemOption: string[];
 
   timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
 
@@ -99,11 +100,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   optionsCopy: any[];
 
-  exportTableData = [
-    { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
-    { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
-    { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
-  ];
+  exportTableData: { exportModule: string; employeeMapping: string; chartOfAccounts: string; sageIntacctModule: string; }[];
 
   dialogHeader: string;
 
@@ -119,7 +116,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   constructor(
     private trackingService: TrackingService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   onSearchFocus(isSearchFocused: boolean): void {
@@ -136,13 +134,13 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportTable() {
-    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Preview' : 'Export module';
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.TRAVELPERK ? 'configurationSelectField.preview' : 'configurationSelectField.exportModule');
     this.exportTypeIconPath = this.exportConfigurationIconPath;
     this.isPreviewDialogVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = 'Preview of a '+ new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()) +' exported to '+ this.appName;
+    this.dialogHeader = this.translocoService.translate('configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
     this.isPreviewDialogVisible = true;
@@ -170,6 +168,12 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.meridiemOption = [this.translocoService.translate('configurationSelectField.am'), this.translocoService.translate('configurationSelectField.pm')];
+    this.exportTableData = [
+      { exportModule: this.translocoService.translate('configurationSelectField.expenseReport'), employeeMapping: this.translocoService.translate('configurationSelectField.employee'), chartOfAccounts: this.translocoService.translate('configurationSelectField.expenseTypes'), sageIntacctModule: this.translocoService.translate('configurationSelectField.timeAndExpense') },
+      { exportModule: this.translocoService.translate('configurationSelectField.bill'), employeeMapping: this.translocoService.translate('configurationSelectField.vendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.accountsPayable') },
+      { exportModule: this.translocoService.translate('configurationSelectField.journalEntry'), employeeMapping: this.translocoService.translate('configurationSelectField.employeeVendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.generalLedger') }
+    ];
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.isOnboarding = this.router.url.includes('onboarding');
     if (this.destinationAttributes) {

@@ -1,8 +1,8 @@
 <app-outlined-icon-button 
-  [buttonText]="interactionType === 'BOOK_SLOT' ? 'Request assisted setup' : 'Need help with setup'" 
+  [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco" 
   [svgSource]="'headset'" 
   (buttonClick)="toggleAssistedSetupDialog()"
-  [pTooltip]="isAssistedSetupSlotBooked ? 'Your request has been&#10;received.' : ''"
+  [pTooltip]="isAssistedSetupSlotBooked ? ('qbdDirectAssistedSetup.requestReceivedTooltip' | transloco) : ''"
   tooltipPosition="bottom"
   tooltipStyleClass="assisted-setup-tooltip"
   [disabled]="isAssistedSetupSlotBooked">
@@ -25,8 +25,8 @@
           </div>
         }
         <p class="tw-text-20-px tw-font-medium tw-text-text-primary tw-leading-6">
-          {{  isQuerySubmitted ? 'Request Received successfully' 
-            : (interactionType === 'BOOK_SLOT' ? 'QuickBooks Desktop integration support' : 'How can we help?') 
+          {{  (isQuerySubmitted ? 'qbdDirectAssistedSetup.requestReceivedSuccessfullyTitle' 
+            : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.qbdIntegrationSupportTitle' : 'qbdDirectAssistedSetup.howCanWeHelpTitle')) | transloco
           }}
         </p>
       </div>
@@ -40,19 +40,19 @@
       @if (interactionType === 'BOOK_SLOT' || isQuerySubmitted) {
         <div class="tw-flex tw-flex-col tw-gap-4 tw-text-text-primary tw-text-14-px">
           <div class="tw-flex tw-flex-col tw-gap-4 tw-font-400">
-            {{ isQuerySubmitted ? 'We have successfully received your request. Our team will get in touch with you shortly to help you with your issue.' : 'Schedule a quick call with our onboarding specialist at your convenience, we will guide you step-by-step through the entire process and ensure a smooth setup experience'}}
+            {{ (isQuerySubmitted ? 'qbdDirectAssistedSetup.requestReceivedBody' : 'qbdDirectAssistedSetup.scheduleCallBody') | transloco}}
           </div>
 
           <div class="tw-flex tw-flex-col tw-rounded-lg tw-border tw-border-box-color tw-p-3 tw-gap-2 tw-cursor-pointer" (click)="openQBDArticle()">
             <div class="tw-font-500">
-              Learn how to connect QuickBooks Desktop with {{brandingConfig.brandName}}
+              {{ 'qbdDirectAssistedSetup.learnToConnectText' | transloco }}{{brandingConfig.brandName}}
             </div>
             
             <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center">
               <span class="tw-flex tw-items-center tw-gap-1">
                 <img src="assets/{{brandingConfig.brandId}}/favicon.svg" width="16px" height="16px" />
                 <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1">
-                  View article
+                  {{ 'qbdDirectAssistedSetup.viewArticle' | transloco }}
                   <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
                 </span>
               </span>
@@ -62,12 +62,12 @@
       } @else if(!isQuerySubmitted){ 
         <div class="tw-flex tw-flex-col tw-mb-2">
             <div class="tw-flex tw-items-center tw-mb-2">
-              <span class="tw-text-text-label tw-text-14-px tw-font-400">Describe the issue you're facing</span>
+              <span class="tw-text-text-label tw-text-14-px tw-font-400">{{ 'qbdDirectAssistedSetup.describeIssueLabel' | transloco }}</span>
               <span class="tw-text-mandatory-field-color tw-text-14-px tw-font-500 tw-ml-1">*</span>
             </div>
               <textarea 
                 class="tw-w-full tw-h-64-px tw-bg-white tw-border tw-border-border-secondary tw-rounded-4 tw-flex tw-py-2 tw-px-3 tw-flex-col tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-leading-6 focus:tw-border-border-secondary focus:tw-outline-none" 
-                placeholder="Explain the issue in detail. Share the step you are stuck on, what didn't work, and any error codes or messages you saw."
+                [placeholder]="'qbdDirectAssistedSetup.issueTextareaPlaceholder' | transloco"
                 [(ngModel)]="issueDescription"></textarea>
           </div>
       }
@@ -77,13 +77,13 @@
     <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-4">
         @if(interactionType === 'QUERY' && !isQuerySubmitted){
           <button type="button" (click)="toggleAssistedSetupDialog()" class="cancel-btn">
-            Cancel
+            {{ 'qbdDirectAssistedSetup.cancel' | transloco }}
           </button>
         }
 
         <button type="button" pButton (click)="onRequestAssistedSetup()" class="submit-btn" [disabled]="isButtonDisabled" [ngClass]="interactionType === 'BOOK_SLOT' && isAssistedSetupSlotBooked || isQuerySubmitted ? 'tw-max-w-66-px' : (interactionType === 'BOOK_SLOT' ? 'tw-max-w-104-px' : 'tw-max-w-144-px')">
           {{ 
-            isQuerySubmitted ? 'Okay' : (interactionType === 'BOOK_SLOT' ? 'Book a slot' : 'Submit a request') 
+            (isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco
           }}
         </button>
     </div>

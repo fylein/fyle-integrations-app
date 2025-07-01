@@ -1,16 +1,16 @@
 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{ sourceFieldDisplayName ?? (sourceField | snakeCaseToSpaceCase | sentenceCase) }} in {{brandingConfig.brandName}}</th>
-        <th>{{ destinationFieldDisplayName ?? (destinationField | snakeCaseToSpaceCase | sentenceCase) }} in {{uiExposedAppName}}</th>
-        <th *ngIf="!isDashboardMappingResolve">Status</th>
+        <th class="!tw-pl-40-px">{{ sourceFieldDisplayName ?? (sourceField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{brandingConfig.brandName}}</th>
+        <th>{{ destinationFieldDisplayName ?? (destinationField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{uiExposedAppName}}</th>
+        <th *ngIf="!isDashboardMappingResolve">{{'genericMappingTable.status' | transloco}}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-mapping>
         <tr *ngIf="!isLoading" [ngClass]="{'tw-h-70-px': isDashboardMappingResolve}">
             <td>
                 <div class="tw-flex tw-items-center">
-                    <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
+                    <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'genericMappingTable.autoMappedTooltip' | transloco" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
                     <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped && !isDashboardMappingResolve}">{{ mapping.value }}</span>
                 </div>
             </td>
@@ -21,12 +21,12 @@
                     [ngModel]="getDropdownValue(mapping)"
                     [options]="destinationOptions"
                     optionLabel="value"
-                    placeholder="Select an option"
+                    [placeholder]="'genericMappingTable.selectAnOption' | transloco"
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
                     [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
                     (onFocus)="destinationAttributes.resetFilter()"
-                    [emptyFilterMessage]="isSearching ? 'Searching...' : 'No results found'"
+                    [emptyFilterMessage]="isSearching ? ('genericMappingTable.searching' | transloco) : ('genericMappingTable.noResultsFound' | transloco)"
                     (onFilter)="searchOptions($event)">
                     <ng-template let-value pTemplate="selectedItem">
                         <div *ngIf="value" #textElement
@@ -38,7 +38,7 @@
                             </p>
                         </div>
                         <div *ngIf="!value" class="tw-text-placeholder">
-                            Select an option
+                            {{'genericMappingTable.selectAnOption' | transloco}}
                         </div>
                     </ng-template>
                     <ng-template let-options pTemplate="item">
@@ -57,8 +57,8 @@
                 </p-dropdown>
             </td>
             <td *ngIf="!isDashboardMappingResolve">
-                <p *ngIf="getDropdownValue(mapping)" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'MAPPED': 'Mapped'}}</p>
-                <p *ngIf="!getDropdownValue(mapping)" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'UNMAPPED': 'Unmapped'}}</p>
+                <p *ngIf="getDropdownValue(mapping)" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('genericMappingTable.mappedStatusUpper' | transloco): ('genericMappingTable.mappedStatusLower' | transloco)}}</p>
+                <p *ngIf="!getDropdownValue(mapping)" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('genericMappingTable.unmappedStatusUpper' | transloco): ('genericMappingTable.unmappedStatusLower' | transloco)}}</p>
             </td>
         </tr>
         <ng-container *ngTemplateOutlet="shimmers"></ng-container>

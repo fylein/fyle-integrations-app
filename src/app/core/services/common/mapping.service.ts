@@ -11,6 +11,7 @@ import { GenericMappingResponse } from '../../models/db/extended-generic-mapping
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class MappingService {
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    helper: HelperService
+    helper: HelperService,
+    private translocoService: TranslocoService
   ) {
     helper.setBaseApiURL();
   }
@@ -136,7 +138,7 @@ export class MappingService {
       params.value = searchQuery;
     }
 
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
+    if (alphabetsFilter && alphabetsFilter !== this.translocoService.translate('services.mapping.allFilter')) {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 

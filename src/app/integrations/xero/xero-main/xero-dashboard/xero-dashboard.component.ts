@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
@@ -12,6 +12,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
+import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { Router } from '@angular/router';
 @Component({
@@ -40,6 +41,8 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
   exportProgressPercentage: number = 0;
 
   accountingExportSummary: AccountingExportSummary | null;
+
+  isRealTimeExportEnabled: boolean = false;
 
   processedCount: number = 0;
 
@@ -84,8 +87,6 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.dashboard;
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -95,7 +96,8 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private workspaceService: WorkspaceService,
     private xeroExportSettingService: XeroExportSettingsService,
-    private router: Router
+    private router: Router,
+    private xeroAdvancedSettingsService: XeroAdvancedSettingsService
   ) { }
 
   export() {
@@ -156,7 +158,8 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, AppName.XERO),
       this.dashboardService.getExportableAccountingExportIds('v1'),
-      this.xeroExportSettingService.getExportSettings()
+      this.xeroExportSettingService.getExportSettings(),
+      this.xeroAdvancedSettingsService.getAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.reimbursableImportState = responses[4].workspace_general_settings?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[4].expense_group_settings.reimbursable_expense_state] : null;
@@ -177,6 +180,8 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
       this.failedExpenseGroupCount = responses[2].results.filter((task: XeroTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids;
+
+      this.isRealTimeExportEnabled = responses[5].workspace_schedules?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

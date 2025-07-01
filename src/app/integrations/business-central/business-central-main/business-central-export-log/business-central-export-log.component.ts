@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-export-log',
@@ -12,10 +13,7 @@ export class BusinessCentralExportLogComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/business_central/main/export_log/complete_export_log'},
-    {label: 'Skipped', routerLink: '/integrations/business_central/main/export_log/skip_export_log'}
-  ];
+  modules: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -26,11 +24,16 @@ export class BusinessCentralExportLogComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('businessCentralExportLog.completed'), routerLink: '/integrations/business_central/main/export_log/complete_export_log'},
+      {label: this.translocoService.translate('businessCentralExportLog.skipped'), routerLink: '/integrations/business_central/main/export_log/skip_export_log'}
+    ];
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
   }

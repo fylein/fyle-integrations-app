@@ -5,7 +5,7 @@ import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportSettingDestinationOptionKey, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
-import { ExportSettingModel as CommonExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -16,6 +16,9 @@ import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-help
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -112,7 +115,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     public helper: HelperService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private translocoService: TranslocoService,
+    private exportSettingsService: ExportSettingsService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
@@ -122,10 +127,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
-      this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup');
-      CommonExportSettingModel.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
         validOptions
       );
@@ -133,10 +138,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
-      this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
 
       const validOptions = this.getExportDate(this.cccExpenseGroupingDateOptions, 'cccExportGroup');
-      CommonExportSettingModel.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
         validOptions
       );
@@ -148,7 +153,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     const exportSettingPayload = ExportSettingModel.createExportSettingPayload(this.exportSettingForm);
     this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: Sage300ExportSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ExportSettings.exportSettingsSavedSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
@@ -172,7 +177,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300ExportSettings.errorSavingExportSettings'));
       });
   }
 

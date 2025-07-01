@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -25,7 +25,7 @@ export class SkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[];
 
   expenses: SkipExportList[];
 
@@ -42,8 +42,6 @@ export class SkippedExportLogComponent implements OnInit {
   selectedDateFilter: SelectedDateFilter | null;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   searchQuery: string | null;
 
@@ -121,7 +119,7 @@ export class SkippedExportLogComponent implements OnInit {
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.isDateSelected = false;
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
@@ -155,5 +153,6 @@ export class SkippedExportLogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
   }
 }

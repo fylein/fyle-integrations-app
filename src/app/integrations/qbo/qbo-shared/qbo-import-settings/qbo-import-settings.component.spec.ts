@@ -23,8 +23,7 @@ import {
   mockImportCodeSelectorOptions
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
-import { ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('QboImportSettingsComponent', () => {
   let component: QboImportSettingsComponent;
@@ -37,16 +36,17 @@ describe('QboImportSettingsComponent', () => {
   let toastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
-
+  let translocoService: jasmine.SpyObj<TranslocoService>;
   beforeEach(async () => {
     const qboHelperServiceSpyObj = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const helperServiceSpyObj = jasmine.createSpyObj('HelperService', ['markControllerAsRequired']);
-    const importSettingServiceSpyObj = jasmine.createSpyObj('QboImportSettingsService', ['getImportSettings', 'postImportSettings', 'getQBOFields', 'getImportCodeFieldConfig']);
+    const importSettingServiceSpyObj = jasmine.createSpyObj('QboImportSettingsService', ['getImportSettings', 'postImportSettings', 'getQBOFields', 'getImportCodeFieldConfig', 'getImportCodeField', 'constructPayload', 'getCustomFieldOption', 'getChartOfAccountTypesList', 'mapAPIResponseToFormGroup']);
     const qboConnectorServiceSpyObj = jasmine.createSpyObj('QboConnectorService', ['getQBOCredentials']);
     const mappingServiceSpyObj = jasmine.createSpyObj('MappingService', ['getFyleFields', 'getDestinationAttributes']);
     const routerSpyObj = jasmine.createSpyObj('Router', ['navigate']);
     const toastServiceSpyObj = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
       declarations: [ QboImportSettingsComponent ],
@@ -60,7 +60,8 @@ describe('QboImportSettingsComponent', () => {
         { provide: Router, useValue: routerSpyObj },
         { provide: IntegrationsToastService, useValue: toastServiceSpyObj },
         { provide: WorkspaceService, useValue: workspaceServiceSpyObj },
-        { provide: HelperService, useValue: helperServiceSpyObj }
+        { provide: HelperService, useValue: helperServiceSpyObj },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -72,6 +73,7 @@ describe('QboImportSettingsComponent', () => {
     toastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
   });
 
   beforeEach(() => {
@@ -145,11 +147,12 @@ describe('QboImportSettingsComponent', () => {
       component.qboImportCodeFieldCodeConfig = {
         [DefaultImportFields.ACCOUNT]: false
       };
-      spyOn(QBOImportSettingModel, 'constructPayload').and.returnValue({} as any);
+      importSettingServiceSpy.constructPayload.and.returnValue({} as any);
     });
 
     it('should save import settings successfully', () => {
       importSettingServiceSpy.postImportSettings.and.returnValue(of({} as any));
+      translocoService.translate.and.returnValue('Import settings saved successfully');
       component.isOnboarding = true;
       component.save();
       expect(component.isSaveInProgress).toBeFalse();
@@ -159,6 +162,7 @@ describe('QboImportSettingsComponent', () => {
     });
 
     it('should handle error when saving import settings', () => {
+      translocoService.translate.and.returnValue('Error saving import settings, please try again later');
       importSettingServiceSpy.postImportSettings.and.returnValue(throwError('Error'));
       component.save();
       expect(component.isSaveInProgress).toBeFalse();
@@ -186,6 +190,8 @@ describe('QboImportSettingsComponent', () => {
     });
 
       it('should save custom Fyle expense field', () => {
+        component.customFieldOption = [{ attribute_type: 'custom_field', display_name: 'Test Field', source_placeholder: null, is_dependent: false }];
+
         component.customFieldControl = (component.importSettingForm.get('expenseFields') as FormArray).at(0) as FormGroup;
         component.saveFyleExpenseField();
         expect(component.fyleFields.length).toBe(2);
@@ -378,7 +384,7 @@ describe('QboImportSettingsComponent', () => {
       });
       component.importSettings = mockImportSettings;
       component.qboImportCodeFieldCodeConfig = mockImportCodeFieldConfig;
-      spyOn(ImportSettingsModel, 'getImportCodeField').and.returnValue(false);
+      importSettingServiceSpy.getImportCodeField.and.returnValue(false);
       component['createCOAWatcher']();
     });
 
@@ -387,7 +393,7 @@ describe('QboImportSettingsComponent', () => {
 
       expect(component.importSettingForm.controls.chartOfAccountTypes.value).toEqual(['Expense']);
       expect(component.importSettingForm.controls.importCategoryCode.validator).toBeNull();
-      expect(ImportSettingsModel.getImportCodeField).toHaveBeenCalled();
+      expect(importSettingServiceSpy.getImportCodeField).toHaveBeenCalled();
     });
 
     it('should mark importCategoryCode as required when importCategories is enabled', () => {

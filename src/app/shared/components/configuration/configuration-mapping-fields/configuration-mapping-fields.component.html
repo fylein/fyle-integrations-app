@@ -50,14 +50,14 @@
                 </div>    
                 <div class="tw-flex">
                     <div class="tw-w-400-px"></div>
-                    <app-mandatory-error-message class="tw-mr-20-px" *ngIf="mappingField.invalid && mappingField.value.isRequired && mappingField.touched" [customErrorMessage]="'Please select a category as this is a mandatory field'"></app-mandatory-error-message>
+                    <app-mandatory-error-message class="tw-mr-20-px" *ngIf="mappingField.invalid && mappingField.value.isRequired && mappingField.touched" [customErrorMessage]="'configurationMappingFields.mandatoryFieldErrorMessage' | transloco"></app-mandatory-error-message>
                 </div>                  
             </div> 
         </div>               
     </div>
     <div *ngIf="showOrHideLoadMoreButton()" class="tw-mt-30-px">
         <a class="tw-cursor-pointer tw-text-mandatory-field-color" (click)="showAllFields()">
-            Load more
+            {{ 'configurationMappingFields.loadMore' | transloco }}
         </a>
     </div> 
 </div>

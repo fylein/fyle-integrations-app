@@ -13,6 +13,7 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { Router } from '@angular/router';
+import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
   selector: 'app-sage300-dashboard',
@@ -39,6 +40,8 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
 
   accountingExportSummary: AccountingExportSummary | null;
 
+  isRealTimeExportEnabled: boolean = false;
+
   processedCount: number = 0;
 
   errors: AccountingGroupedErrors;
@@ -59,7 +62,7 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(undefined, true, AppName.SAGE300);
 
   LoaderType = LoaderType;
 
@@ -81,7 +84,8 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
     private refinerService: RefinerService,
     private sage300ExportSettingService: Sage300ExportSettingService,
     private sage300ImportSettingService: Sage300ImportSettingsService,
-    private router: Router
+    private router: Router,
+    private sage300AdvancedSettingsService: Sage300AdvancedSettingsService
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
@@ -140,7 +144,8 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
       this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0),
       this.dashboardService.getExportableAccountingExportIds(),
       this.sage300ExportSettingService.getSage300ExportSettings(),
-      this.sage300ImportSettingService.getSage300ImportSettings()
+      this.sage300ImportSettingService.getSage300ImportSettings(),
+      this.sage300AdvancedSettingsService.getAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
@@ -153,6 +158,8 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
       this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
       this.importCodeFields = responses[5].import_settings.import_code_fields ? responses[5].import_settings.import_code_fields : [];
+
+      this.isRealTimeExportEnabled = responses[6].is_real_time_export_enabled;
 
       this.isLoading = false;
 

@@ -13,15 +13,22 @@
           <a *ngIf="redirectLink"
             class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
             (click)="windowService.openInNewTab(redirectLink)">
-            {{brandingContent.readMoreText}}
+            {{'common.readMoreText' | transloco}}
             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
               class="tw-text-link-primary tw-pl-2-px tw-w-fit">
             </app-svg-icon>
           </a>
-        </h5>        
+        </h5>
       </div>
     </div>
     <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
-      <p-inputSwitch [formControlName]="formControllerName" [tooltipPosition]="'top'" [pTooltip]="disabled && appName === AppName.XERO ? brandingXeroContent : ''"></p-inputSwitch>
+      <p-inputSwitch
+        [formControlName]="formControllerName"
+        [tooltipPosition]="'top'"
+        [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''"
+        [attr.aria-label]="label"
+        role="switch"
+        [attr.aria-checked]="form.get(formControllerName)?.value"
+      ></p-inputSwitch>
     </div>
   </div>

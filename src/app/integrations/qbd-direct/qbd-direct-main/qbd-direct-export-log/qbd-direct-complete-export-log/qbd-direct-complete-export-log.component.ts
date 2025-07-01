@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-content-config';
-import { AccountingExportModel, AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
+import { brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
+import { AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -16,6 +15,7 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-complete-export-log',
@@ -38,7 +38,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -58,8 +58,6 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.exportLog;
-
   searchQuery: string | null;
 
   private searchQuerySubject = new Subject<string>();
@@ -72,8 +70,10 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
+    private translocoService: TranslocoService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
@@ -85,7 +85,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
@@ -117,7 +117,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+        this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
@@ -136,7 +136,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

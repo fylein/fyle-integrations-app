@@ -11,6 +11,7 @@ import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,8 @@ export class QboAuthService implements OnDestroy {
     private router: Router,
     private workspaceService: WorkspaceService,
     private qboConnectorService: QboConnectorService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) {}
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
@@ -71,11 +73,11 @@ export class QboAuthService implements OnDestroy {
       this.router.navigate([`/integrations/qbo/main/dashboard`]);
     }, (error) => {
       this.qboConnectionInProgressSubject.next(false);
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('services.qboAuth.failedToConnect');
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.isIncorrectQBOConnectedDialogVisibleSubject.next(true);
       } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.qboAuth.somethingWentWrong'));
         if (this.router.url.includes("/token_expired/")){
         this.router.navigate([`/integrations/qbo/token_expired/dashboard`]);
         } else {

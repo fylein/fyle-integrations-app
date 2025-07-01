@@ -6,8 +6,8 @@
       <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
           <div>
             <app-configuration-step-header 
-            [headerText]="'Connect to NetSuite'"
-            [contentText]="'Provide your credentials to establish a secure connection between your ' + brandingConfig.brandName + ' and NetSuite account.'"
+            [headerText]="'netsuiteConnector.headerText' | transloco"
+            [contentText]="'netsuiteConnector.contentText' | transloco:{ brandName: brandingConfig.brandName }"
             [redirectLink]="redirectLink"></app-configuration-step-header>
           </div>
           <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
@@ -19,4 +19,3 @@
       </div>
   </div>
 </div>
-

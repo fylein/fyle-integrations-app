@@ -5,8 +5,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
-      [headerText]="'Connect to Sage Intacct'"
-      [contentText]="brandingContent.intacct.configuration.connector.locationSubLabel"
+      [headerText]="'intacctLocationEntity.headerText' | transloco"
+      [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco: {brandName: brandingConfig.brandName}"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>
@@ -33,7 +33,7 @@
             </div>
           </div>
             <div class="tw-pt-16-px">
-              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select {{brandingContent.intacct.common.locationEntity}}" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: locationEntityLabel }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
               </p-dropdown>
           </div>
             <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
@@ -41,11 +41,11 @@
             </h3>
 
             <div *ngIf="!locationEntity" class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Select a {{brandingContent.intacct.common.locationEntity}} from Sage Intacct to continue.
+              {{ 'intacctLocationEntity.selectLocationEntityToContinue' | transloco: { locationEntity: locationEntityLabel } }}
             </div>
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Fetching data from your Sage Intacct account…
+              {{ 'intacctLocationEntity.fetchingData' | transloco }}
               <app-loader *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
             </div>
         </form>

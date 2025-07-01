@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header 
-            [headerText]="brandingContent.stepName"
-            [contentText]="brandingContent.contentText"
+            [headerText]="'qbd_direct.configuration.advancedSettings.stepName' | transloco"
+            [contentText]="'qbd_direct.configuration.advancedSettings.contentText' | transloco"
             [showSyncButton]="isOnboarding"
             [appName]="appName.QBD_DIRECT"
             [redirectLink]="redirectLink"
@@ -17,15 +17,15 @@
             <div class="tw-p-24-px">
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="brandingContent.automationLabel"
-                        [subLabel]="brandingContent.automationSubLabel">
+                        [label]="'qbd_direct.configuration.advancedSettings.automationLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-my-16-px">
                     <app-configuration-toggle-field 
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.scheduleAutoExportLabel" 
-                        [subLabel]="brandingContent.scheduleAutoExportSubLabel"
+                        [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco" 
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [iconPath]="'calendar'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
@@ -35,9 +35,9 @@
                             [form]="advancedSettingsForm"
                             [appName]="appName.QBD_DIRECT"
                             [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'automatic export method'"
-                            [label]="brandingContent.autoExportfrequencyLabel"
-                            [subLabel]="brandingContent.autoExportfrequencySubLabel"
+                            [mandatoryErrorListName]="'qbdDirectAdvancedSettings.automaticExportMethod' | transloco"
+                            [label]="'qbd_direct.configuration.advancedSettings.autoExportfrequencyLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel' | transloco : {brandName: brandingConfig.brandName}"
                             [options]="hours"
                             [isEmailPresent]="false"
                             [formControllerName]="'exportScheduleFrequency'">
@@ -47,8 +47,8 @@
 
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
-                        [label]="brandingContent.otherPreferencesLabel"
-                        [subLabel]="brandingContent.otherPreferencesSubLabel">
+                        [label]="'qbd_direct.configuration.advancedSettings.otherPreferencesLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
 
@@ -56,41 +56,41 @@
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.autoCreateReimbursableEnitityLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + 's in QuickBooks Desktop'" 
+                        [label]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)" 
                         [iconPath]="'user-plus'"
-                        [subLabel]="brandingContent.autoCreateReimbursableEnititySubLabel + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ' record for them, ensuring expenses are posted to this new record.'"
+                        [subLabel]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnititySubLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)"
                         [formControllerName]="'autoCreateReimbursableEnitity'">
                     </app-configuration-toggle-field>
 
                     <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
                         [form]="advancedSettingsForm"
                         [iconPath]="'user-plus'"
-                        [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
-                        [subLabel]="brandingContent.autoCreateMerchantsAsVendorsSubLabel"
+                        [label]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'autoCreateMerchantsAsVendors'">
                     </app-configuration-toggle-field>
                 </div>
 
                 <div class="tw-my-16-px">
                     <app-configuration-step-sub-header
-                        [label]="brandingContent.customizeSectionLabel"
-                        [subLabel]="brandingContent.customizeSectionSubLabel">
+                        [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.topLevelMemoStructureLabel"
-                        [subLabel]="brandingContent.topLevelMemoStructureSubLabel"
+                        [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'top level memo'"
+                        [mandatoryErrorListName]="'qbdDirectAdvancedSettings.topLevelMemo' | transloco"
                         [options]="defaultTopMemoOptions"
                         [iconPath]="'list'"
-                        [placeholder]="'Select top memo type'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectTopMemoTypePlaceholder' | transloco"
                         [formControllerName]="'topMemoStructure'">
                     </app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{brandingContent.previewDescriptionFieldLabel}}</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{'qbd_direct.configuration.advancedSettings.previewDescriptionFieldLabel' | transloco}}</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                             <span>{{ topMemoPreviewText }}</span>
                         </div>
@@ -99,16 +99,16 @@
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
-                        [customErrorMessage]="'Please select atleast one memo type from the list'"
-                        [label]="brandingContent.memoStructureLabel"
-                        [subLabel]="brandingContent.memoStructureSubLabel"
+                        [customErrorMessage]="'qbdDirectAdvancedSettings.selectAtleastOneMemoError' | transloco"
+                        [label]="'qbd_direct.configuration.advancedSettings.memoStructureLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.memoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [options]="defaultMemoFields"
                         [iconPath]="'list'"
-                        [placeholder]="'Select memo types'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"
                         [formControllerName]="'expenseMemoStructure'">
                     </app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{brandingContent.previewDescriptionFieldLabel}}</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">{{'qbd_direct.configuration.advancedSettings.previewDescriptionFieldLabel' | transloco}}</p>
                         <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                             <span>{{ memoPreviewText }}</span>
                         </div>
@@ -118,8 +118,8 @@
                 <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-my-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="brandingContent.skipExportLabel" 
-                        [subLabel]="brandingContent.skipExportSubLabel"
+                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco" 
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco"
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'">
                     </app-configuration-toggle-field>

@@ -2,9 +2,9 @@
     <p-table [value]="errorExpenses" [tableStyle]="{ 'min-width': '20rem' }">
       <ng-template pTemplate="header">
           <tr>
-              <th>{{brandingContent.expenseID}}</th>
-              <th>{{brandingContent.employee}}</th>
-              <th>{{brandingContent.expenseType}}</th>
+              <th>{{'exportLog.tableHeaders.expenseID' | transloco}}</th>
+              <th>{{'exportLog.tableHeaders.employee' | transloco}}</th>
+              <th>{{'exportLog.tableHeaders.expenseType' | transloco}}</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
@@ -22,7 +22,7 @@
               </td>
               <td>
                   <h4>
-                      {{rowData.fund_source === 'PERSONAL' ? 'Reimbursable' : brandingContentCommon.corporateCard}}
+                      {{rowData.fund_source === 'PERSONAL' ? ('dashboardAccountingErrorDialog.reimbursable' | transloco) : ('common.corporateCard' | transloco)}}
                   </h4>
               </td>
           </tr>

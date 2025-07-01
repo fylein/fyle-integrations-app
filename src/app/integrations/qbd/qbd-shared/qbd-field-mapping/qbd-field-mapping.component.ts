@@ -10,6 +10,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { forkJoin } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-field-mapping',
@@ -30,16 +31,7 @@ export class QbdFieldMappingComponent implements OnInit {
 
   redirectLink = brandingKbArticles.topLevelArticles.QBD;
 
-  representationOption: QBDExportSettingFormOption[] = [
-    {
-      label: 'Project',
-      value: QBDFyleField.PROJECT
-    },
-    {
-      label: 'Cost center',
-      value: QBDFyleField.COST_CENTER
-    }
-  ];
+  representationOption: QBDExportSettingFormOption[];
 
   additionalOptionsItemType: QBDExportSettingFormOption[] = [];
 
@@ -57,7 +49,8 @@ export class QbdFieldMappingComponent implements OnInit {
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   mappingFieldFormOptionsFunction(formControllerName1: string, formControllerName2: string): QBDExportSettingFormOption[] {
@@ -83,7 +76,7 @@ export class QbdFieldMappingComponent implements OnInit {
 
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdFieldMapping.fieldMappingSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.FIELD_MAPPING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.FIELD_MAPPINGS, 3, fieldMappingPayload);
@@ -105,7 +98,7 @@ export class QbdFieldMappingComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving field mapping, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdFieldMapping.fieldMappingError'));
       });
   }
 
@@ -149,6 +142,16 @@ export class QbdFieldMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.representationOption = [
+      {
+        label: this.translocoService.translate('qbdFieldMapping.project'),
+        value: QBDFyleField.PROJECT
+      },
+      {
+        label: this.translocoService.translate('qbdFieldMapping.costCenter'),
+        value: QBDFyleField.COST_CENTER
+      }
+    ];
     this.getSettingsAndSetupForm();
   }
 }

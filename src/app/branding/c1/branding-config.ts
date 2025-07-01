@@ -1,8 +1,8 @@
-import { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
-import { DemoVideo } from "../core/models/branding/demo-video.model";
-import { FeatureConfiguration } from "../core/models/branding/feature-configuration.model";
-import { KbArticle } from "../core/models/branding/kb-article.model";
-import config from './config.json';
+import { BrandingConfiguration } from "../../core/models/branding/branding-configuration.model";
+import { DemoVideo } from "../../core/models/branding/demo-video.model";
+import { FeatureConfiguration } from "../../core/models/branding/feature-configuration.model";
+import { KbArticle } from "../../core/models/branding/kb-article.model";
+import config from '../config.json';
 
 const brandingConfig = config as BrandingConfiguration;
 
@@ -55,7 +55,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             autoCreateContacts: false,
             useEmployeeAttributes: true,
             autoCreateMerchants: true,
-            excludeCardNumberAndEmployeeNameInMemo: true
+            excludeCardNumberAndEmployeeNameInMemo: true,
+            showTopLevelMemoFieldInIntacct: false
         },
         exportLog: {
             expenseType: false
@@ -141,6 +142,7 @@ export const c1KbArticles: KbArticle[string] = {
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
+            ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
         }

@@ -1,8 +1,8 @@
-import { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
-import { DemoVideo } from "../core/models/branding/demo-video.model";
-import { FeatureConfiguration } from "../core/models/branding/feature-configuration.model";
-import { KbArticle } from "../core/models/branding/kb-article.model";
-import config from './config.json';
+import { BrandingConfiguration } from "../../core/models/branding/branding-configuration.model";
+import { DemoVideo } from "../../core/models/branding/demo-video.model";
+import { FeatureConfiguration } from "../../core/models/branding/feature-configuration.model";
+import { KbArticle } from "../../core/models/branding/kb-article.model";
+import config from '../config.json';
 
 const brandingConfig = config as BrandingConfiguration;
 
@@ -55,7 +55,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             autoCreateContacts: true,
             useEmployeeAttributes: true,
             autoCreateMerchants: true,
-            excludeCardNumberAndEmployeeNameInMemo: false
+            excludeCardNumberAndEmployeeNameInMemo: false,
+            showTopLevelMemoFieldInIntacct: true
         },
         exportLog: {
             expenseType: true
@@ -142,6 +143,7 @@ export const fyleKbArticles: KbArticle[string] = {
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_1366df4107`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_b3850646c0`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
+            ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
         }

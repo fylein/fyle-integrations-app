@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, catchError, of } from 'rxjs';
-import { SkipExportValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
+import { SkipExportValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { BusinessCentralAdvancedSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-advanced-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -13,6 +13,8 @@ import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsMode
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, CustomOperatorOption, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -71,7 +73,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -108,17 +111,17 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoOptions)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingForm.get('memoStructure')?.value;
-    const memo = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo = AdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
+      this.memoPreviewText = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
 
@@ -169,7 +172,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = BusinessCentralAdvancedSettingsModel.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralAdvancedSettings.saveSuccessToast'));
       this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
@@ -193,7 +196,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralAdvancedSettings.saveErrorToast'));
       });
   }
 

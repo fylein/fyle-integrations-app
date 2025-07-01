@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ClickEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from '../../integration/tracking.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class QbdDirectHelperService {
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   importQBDAttributes(refresh: boolean): Observable<{}> {
@@ -26,6 +28,6 @@ export class QbdDirectHelperService {
     this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_SYNC);
     this.workspaceService.importFyleAttributes(refresh).subscribe();
     this.importQBDAttributes(refresh).subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Quickbooks Desktop');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.qbdDirectHelper.syncDataDimensionsToast'));
   }
 }

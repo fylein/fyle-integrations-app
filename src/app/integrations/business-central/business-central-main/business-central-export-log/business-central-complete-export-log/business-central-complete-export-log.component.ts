@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
@@ -14,6 +14,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-complete-export-log',
@@ -34,7 +35,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -63,7 +64,8 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) {
     this.searchQuerySubject.pipe(
     debounceTime(1000)
@@ -76,7 +78,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 }
 
   openExpenseinFyle(expenseId: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expenseId));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expenseId));
   }
 
   public handleSimpleSearch(query: string) {
@@ -108,7 +110,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
 
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+          this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -135,7 +137,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
@@ -167,6 +169,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.getAccountingExportsAndSetupPage();
   }
 

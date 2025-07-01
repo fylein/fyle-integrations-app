@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-mapping-filter',
@@ -27,15 +28,7 @@ export class MappingFilterComponent implements OnInit {
 
   filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-  readonly brandingContent = brandingContent.mapping;
-
-  mappingsFilter: SelectFormOption[] = [{
-    label: this.brandingContent.mappedHeader,
-    value: MappingState.MAPPED
-  }, {
-    label: this.brandingContent.unMappedHeader,
-    value: MappingState.UNMAPPED
-  }];
+  mappingsFilter: SelectFormOption[] = [];
 
   form: UntypedFormGroup;
 
@@ -47,7 +40,8 @@ export class MappingFilterComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) private formBuilder: UntypedFormBuilder,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   getSelectedFilter(item: string): string {
@@ -110,6 +104,13 @@ export class MappingFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mappingsFilter = [{
+      label: this.translocoService.translate('mapping.mappedHeader'),
+      value: MappingState.MAPPED
+    }, {
+      label: this.translocoService.translate('mapping.unMappedHeader'),
+      value: MappingState.UNMAPPED
+    }];
     this.setupFilter();
   }
 

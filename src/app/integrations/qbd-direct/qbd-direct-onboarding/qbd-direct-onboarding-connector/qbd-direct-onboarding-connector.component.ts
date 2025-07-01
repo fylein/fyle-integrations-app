@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { brandingConfig, brandingContent, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDConnectionStatus, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { QbdDirectOnboardingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.model';
 import { Router } from '@angular/router';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { CommonModule } from '@angular/common';
@@ -19,19 +18,19 @@ import { QbdDirectTaskResponse } from 'src/app/core/models/qbd-direct/db/qbd-dir
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-connector',
   standalone: true,
-  imports: [QbdDirectSharedModule, SharedModule, CommonModule],
+  imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
   templateUrl: './qbd-direct-onboarding-connector.component.html',
   styleUrl: './qbd-direct-onboarding-connector.component.scss'
 })
 export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.qbd_direct.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new QbdDirectOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -87,7 +86,9 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     private storageService: StorageService,
     private qbdDirectConnectorService: QbdDirectConnectorService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService,
+    private onboardingService: QbdDirectOnboardingService
   ) { }
 
   triggerDownload(filePath: string) {
@@ -174,13 +175,13 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     if (onboardingState === QbdDirectOnboardingState.INCORRECT_COMPANY_PATH) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.INCORRECT_COMPANY_PATH;
-      this.warningDialogText = 'Incorrect company file path detected. Please check and try again.';
+      this.warningDialogText = this.translocoService.translate('qbdDirectOnboardingConnector.incorrectCompanyPathMessage');
       this.isDialogVisible = true;
       this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       // Set connection status, open dialog, and stop polling
       this.connectionStatus = QBDConnectionStatus.IN_CORRECT_PASSWORD;
-      this.warningDialogText = 'Incorrect password detected. Please check and try again.';
+      this.warningDialogText = this.translocoService.translate('qbdDirectOnboardingConnector.incorrectPasswordMessage');
       this.isDialogVisible = true;
       this.isConnectionLoading = false;
     } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS || onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
@@ -276,7 +277,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'QuickBooks Desktop connection successful');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'));
     });
   }
 
@@ -302,6 +303,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
     this.setupPage();
   }
 }

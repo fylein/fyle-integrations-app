@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AppName, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLogResponse, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -24,7 +25,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[];
 
   expenses: SkipExportList[];
 
@@ -48,16 +49,16 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
 
   hideCalendar: boolean;
 
-  readonly brandingContent = brandingContent.exportLog;
-
   readonly brandingStyle = brandingStyle;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private exportLogService: ExportLogService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private accountingExportService: AccountingExportService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
@@ -118,7 +119,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.isDateSelected = false;
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);

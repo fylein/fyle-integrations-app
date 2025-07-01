@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-onboarding-landing',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-onboarding-landing.component.html',
   styleUrl: './qbd-direct-onboarding-landing.component.scss'
 })
@@ -28,8 +29,6 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
   isQbdConnectionInProgress = false;
 
   isAssistedSetupSlotBooked: boolean;
-
-  readonly brandingContent = brandingContent.qbd_direct.landing;
 
   constructor(
     private router: Router,

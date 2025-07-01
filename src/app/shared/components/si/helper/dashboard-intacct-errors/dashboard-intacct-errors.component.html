@@ -2,9 +2,9 @@
       <p-table [value]="intacctErrorExpenses" [tableStyle]="{ 'min-width': '20rem' }">
         <ng-template pTemplate="header">
             <tr>
-                <th>Expense ID</th>
-                <th>Employee name and ID</th>
-                <th>Expense type</th>
+                <th>{{ 'dashboardIntacctErrors.expenseId' | transloco }}</th>
+                <th>{{ 'dashboardIntacctErrors.employeeNameAndId' | transloco }}</th>
+                <th>{{ 'dashboardIntacctErrors.expenseType' | transloco }}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
@@ -22,7 +22,7 @@
                 </td>
                 <td>
                     <h4>
-                        {{rowData.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card'}}
+                        {{(rowData.fund_source === 'PERSONAL' ? 'dashboardIntacctErrors.reimbursable' : 'dashboardIntacctErrors.corporateCard') | transloco}}
                     </h4>
                 </td>
             </tr>

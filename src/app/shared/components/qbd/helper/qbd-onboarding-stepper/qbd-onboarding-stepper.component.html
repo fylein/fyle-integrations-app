@@ -4,7 +4,7 @@
 <div class="tw-py-24-px tw-text-slightly-normal-text-color">
     <div>
         <div class="tw-normal-text-color tw-text-center tw-pb-16-px ">
-            <p class="!tw-font-400">Complete the following steps to generate the IIF file for QuickBooks Desktop.</p>
+            <p class="!tw-font-400">{{ 'qbdOnboardingStepper.description' | transloco }}</p>
         </div>
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps; let i = index">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Export settings' ? 'step-name-export' : '', onboardingStep.step === 'Field mapping' ? 'step-name-field' : '', onboardingStep.step === 'Advanced' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-text-muted' : 'tw-text-normal-text-color' ]">
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.route === 'export_settings' ? 'step-name-export' : '', onboardingStep.route === 'field_mappings' ? 'step-name-field' : '', onboardingStep.route === 'advanced_settings' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-text-muted' : 'tw-text-normal-text-color' ]">
                         {{ onboardingStep.step }}
                     </div>
                 </div>

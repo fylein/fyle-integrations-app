@@ -7,16 +7,16 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
-                    [headerText]="'Connect to QuickBooks Online'"
-                    [contentText]="'Connect to QuickBooks Online to import and export data. The connection cannot be changed once the setup is complete.'"
+                    [headerText]="'qboOnboardingConnector.headerText' | transloco"
+                    [contentText]="'qboOnboardingConnector.contentText' | transloco"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
             <div class="tw-px-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'QuickBooks Online company'"
-                    [subLabel]="'Please select a company from QuickBooks Online company to proceed further.'"
-                    [placeholder]="'Select company'"
+                    [accountingAppTitle]="'qboOnboardingConnector.accountingAppTitle' | transloco"
+                    [subLabel]="'qboOnboardingConnector.subLabel' | transloco"
+                    [placeholder]="'qboOnboardingConnector.placeholder' | transloco"
                     [accountingCompanyName]="qboCompanyName"
                     [fyleOrgName]="fyleOrgName"
                     [appName]="appName"
@@ -24,7 +24,7 @@
                     [isAccountingCompanyConnected]="isQboConnected"
                     [showDisconnect]="showDisconnectQBO"
                     [accountingCompanyConnectionInProgress]="qboConnectionInProgress"
-                    [switchLinkText]="'Disconnect company'"
+                    [switchLinkText]="'qboOnboardingConnector.switchLinkText' | transloco"
                     (switchCompany)="disconnectQbo()"
                     (connectCompany)="connectQbo()">
                 </app-configuration-connector>

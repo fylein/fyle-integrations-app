@@ -22,15 +22,16 @@
 
     <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="brandingContent.dashboardExportZeroStateHeaderText"
-        [subHeaderText]="brandingContent.dashboardExportZeroStateSubHeaderText">
+        [headerText]="'dashboard.dashboardExportZeroStateHeaderText' | transloco"
+        [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco">
     </app-zero-state>
 
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
         [appName]="appName"
         [exportLogVersion]="'v1'"
         [accountingExportType]="accountingExportType"
-        [accountingExportSummary]="accountingExportSummary">
+        [accountingExportSummary]="accountingExportSummary"
+        [isRealTimeExportEnabled]="isRealTimeExportEnabled">
     </app-dashboard-export-summary-section>
 
     <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"

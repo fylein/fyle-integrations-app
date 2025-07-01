@@ -64,8 +64,8 @@ src/environments/environment.json
 src/environments/c1-environment.json
 src/environments/fyle-environment.json
 src/app/branding/config.json
-src/app/branding/c1-config.json
-src/app/branding/fyle-config.json
+src/app/branding/c1/config.json
+src/app/branding/fyle/config.json
 
 # Tests
 cypress/videos
@@ -85,3 +85,10 @@ dependency-check-report.html
 
 # JSCPD report
 /report
+
+
+**/i18n/services
+**/i18n/components
+**/i18n/pipes
+**/i18n/directives
+**/i18n/.env

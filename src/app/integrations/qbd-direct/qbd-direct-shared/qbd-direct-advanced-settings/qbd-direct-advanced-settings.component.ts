@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, skipExportValidator, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, IntacctUpdateEvent, NameInJournalEntry, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { QbdDirectAdvancedSettingsGet, QbdDirectAdvancedSettingsModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
+import { QbdDirectAdvancedSettingsGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
@@ -24,7 +26,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @Component({
   selector: 'app-qbd-direct-advanced-settings',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-advanced-settings.component.html',
   styleUrl: './qbd-direct-advanced-settings.component.scss'
 })
@@ -44,11 +46,11 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   QBDScheduleFrequency = QBDScheduleFrequency;
 
-  hours: SelectFormOption[] = AdvancedSettingsModel.getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
-  defaultMemoFields: string[] = QbdDirectAdvancedSettingsModel.defaultMemoFields();
+  defaultMemoFields: string[] = QbdDirectAdvancedSettingsService.defaultMemoFields();
 
-  defaultTopMemoOptions: string[] = QbdDirectAdvancedSettingsModel.defaultTopMemoOptions();
+  defaultTopMemoOptions: string[] = QbdDirectAdvancedSettingsService.defaultTopMemoOptions();
 
   adminEmails: EmailOption[];
 
@@ -69,8 +71,6 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly appName = AppName;
-
-  readonly brandingContent = brandingContent.qbd_direct.configuration.advancedSettings;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -103,7 +103,8 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private qbdDirectHelperService: QbdDirectHelperService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService
   ) { }
 
   private saveSkipExportFields(): void {
@@ -154,7 +155,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
   save() {
     this.saveInProgress = true;
     this.saveSkipExport();
-    const advancedSettingPayload = QbdDirectAdvancedSettingsModel.constructPayload(this.advancedSettingsForm, this.adminEmails);
+    const advancedSettingPayload = QbdDirectAdvancedSettingsService.constructPayload(this.advancedSettingsForm, this.adminEmails);
     this.advancedSettingsService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QbdDirectAdvancedSettingsGet) => {
 
       this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.ADVANCED_SETTINGS_QBD_DIRECT, this.sessionStartTime);
@@ -173,7 +174,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       }
 
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectAdvancedSettings.advancedSettingsSavedSuccess'));
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
@@ -181,7 +182,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       }
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectAdvancedSettings.errorSavingAdvancedSettings'));
     });
   }
 
@@ -211,19 +212,19 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
-    this.memoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
+    this.memoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.memoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
+      this.memoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     });
   }
 
   private createTopMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.topMemoStructure;
-    this.topMemoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+    this.topMemoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
     this.advancedSettingsForm.controls.topMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.topMemoPreviewText = QbdDirectAdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+      this.topMemoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
     });
   }
 
@@ -277,7 +278,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingsForm = QbdDirectAdvancedSettingsModel.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled, this.isOnboarding);
+      this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled, this.isOnboarding);
 
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
 

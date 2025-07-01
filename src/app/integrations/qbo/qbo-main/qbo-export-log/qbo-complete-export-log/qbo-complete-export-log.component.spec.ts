@@ -9,8 +9,10 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { mockExpenseGroupResponse, mockPageSize, mockUser } from 'src/app/integrations/qbo/qbo.fixture';
+import { TranslocoService } from '@jsverse/transloco';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('QboCompleteExportLogComponent', () => {
   let component: QboCompleteExportLogComponent;
@@ -19,12 +21,19 @@ describe('QboCompleteExportLogComponent', () => {
   let paginatorService: jasmine.SpyObj<PaginatorService>;
   let windowService: jasmine.SpyObj<WindowService>;
   let userService: jasmine.SpyObj<UserService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
+  let accountingExportService: jasmine.SpyObj<AccountingExportService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['storePageSize', 'getPageSize']);
     const windowServiceSpy = jasmine.createSpyObj('WindowService', ['openInNewTab']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const accountingExportServiceSpy = jasmine.createSpyObj('AccountingExportService', ['getFyleExpenseUrl', 'getDateOptionsV2', 'parseExpenseGroupAPIResponseToExportLog']);
+
+    accountingExportServiceSpy.getDateOptionsV2.and.returnValue(of([]));
+    accountingExportServiceSpy.parseExpenseGroupAPIResponseToExportLog.and.callFake((response: any) => response);
 
     await TestBed.configureTestingModule({
       declarations: [ QboCompleteExportLogComponent ],
@@ -34,14 +43,19 @@ describe('QboCompleteExportLogComponent', () => {
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
         { provide: WindowService, useValue: windowServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
-      ]
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+        { provide: AccountingExportService, useValue: accountingExportServiceSpy }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     exportLogService = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
     windowService = TestBed.inject(WindowService) as jasmine.SpyObj<WindowService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
+    accountingExportService = TestBed.inject(AccountingExportService) as jasmine.SpyObj<AccountingExportService>;
   });
 
   beforeEach(() => {
@@ -71,7 +85,7 @@ describe('QboCompleteExportLogComponent', () => {
     const expenseId = 'txGDE32dCf';
     component.openExpenseinFyle(expenseId);
     expect(windowService.openInNewTab).toHaveBeenCalledWith(
-      AccountingExportModel.getFyleExpenseUrl(expenseId)
+      AccountingExportService.getFyleExpenseUrl(expenseId)
     );
   });
 

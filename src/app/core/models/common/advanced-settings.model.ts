@@ -1,12 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { AppName, JoinOption, Operator } from "../enum/enum.model";
-import { environment } from "src/environments/environment";
-import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
-import { QBOExportSettingGet } from "../qbo/qbo-configuration/qbo-export-setting.model";
-import { NetSuiteExportSettingGet } from "../netsuite/netsuite-configuration/netsuite-export-setting.model";
-import { IntacctConfiguration } from "../db/configuration.model";
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { SelectFormOption } from "./select-form-option.model";
+import { JoinOption, Operator } from "../enum/enum.model";
 
 export type EmailOption = {
     email: string;
@@ -72,107 +65,6 @@ export type AdvancedSettingValidatorRule = {
   paymentSync: string;
   exportSchedule: string;
 };
-
-export class AdvancedSettingsModel {
-  static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
-  }
-
-  static getHoursOptions(): SelectFormOption[] {
-    return [
-      ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
-      ...[...Array(24).keys()].map(hour => ({
-        label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
-        value: hour + 1
-      }))
-    ];
-  }
-
-  static getMemoOptions(exportSettings: IntacctConfiguration | ExportSettingGet | NetSuiteExportSettingGet | QBOExportSettingGet, appName: string): string[] {
-    const defaultOptions = this.getDefaultMemoOptions();
-    let cccExportType: string | undefined;
-    // Handle both configurations and configuration properties
-    if (appName === AppName.INTACCT) {
-      cccExportType = (exportSettings as IntacctConfiguration).corporate_credit_card_expenses_object ?? undefined;
-    } else if ('configurations' in exportSettings) {
-      cccExportType = exportSettings.configurations?.corporate_credit_card_expenses_object ?? undefined;
-    } else if ('workspace_general_settings' in exportSettings) {
-      cccExportType = exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ?? undefined;
-    }
-
-    if (brandingFeatureConfig.featureFlags.advancedSettings.excludeCardNumberAndEmployeeNameInMemo) {
-      return defaultOptions.filter(option => option !== 'card_number' && option !== 'employee_name');
-    }
-    if (cccExportType && ['netsuite', 'quickbooks online', 'sage intacct'].includes(appName.toLowerCase()) && !brandingFeatureConfig.featureFlags.advancedSettings.excludeCardNumberAndEmployeeNameInMemo) {
-      return defaultOptions;
-    }
-    return defaultOptions.filter(option => option !== 'card_number');
-
-  }
-
-  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
-    const time = Date.now();
-    const today = new Date(time);
-
-    const previewValues: { [key: string]: string } = {
-      employee_email: 'john.doe@acme.com',
-      employee_name: 'John Doe',
-      card_number: '**** 3456',
-      category: 'Meals and Entertainment',
-      purpose: 'Client Meeting',
-      merchant: 'Pizza Hut',
-      report_number: 'C/2021/12/R/1',
-      spent_on: today.toLocaleDateString(),
-      expense_key: 'E/2024/02/T/11',
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
-    };
-    let memoPreviewText = '';
-    const memo: string[] = [];
-    const originMemo: string[] = [];
-    memoStructure.forEach((field, index) => {
-      if (field in previewValues) {
-        const defaultIndex = defaultMemoOptions.indexOf(memoStructure[index]);
-        memo[defaultIndex] = previewValues[field];
-        originMemo[defaultIndex] = field;
-      }
-    });
-    memoStructure = originMemo.filter(item => item.trim() !== '');
-    memo.forEach((field, index) => {
-      memoPreviewText += field;
-      if (index + 1 !== memo.length) {
-        memoPreviewText = memoPreviewText + ' - ';
-      }
-    });
-    return [memoPreviewText, memoStructure];
-  }
-
-  static filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOption[]) => {
-    const adminEmailsList: EmailOption[] = [];
-    for (const email of emailToSearch) {
-      adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
-    }
-    return adminEmailsList;
-};
-
-  static formatSelectedEmails(emails: EmailOption[]): string[] {
-    return emails.map((option: EmailOption) => option.email);
-  }
-
-  static getExportFrequency(isRealTimeExportEnabled: boolean, isOnboarding: boolean, autoImportExportEnabled: boolean, intervalHours: number): number {
-    let frequency;
-
-    // Set frequency to 0 if real time export is enabled or onboarding is true
-    if (isRealTimeExportEnabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
-      frequency = 0;
-    } else if (autoImportExportEnabled) {
-      frequency = intervalHours;
-    } else {
-      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
-    }
-
-    return frequency;
-  }
-}
 
 export class SkipExportModel {
 

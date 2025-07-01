@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "@messageformat/core"
+            ],
             "outputPath": "dist/fyle-integrations-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -63,7 +66,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
-                  "with": "src/app/branding/fyle-config.json"
+                  "with": "src/app/branding/fyle/config.json"
                 },
                 {
                   "replace": "src/environments/environment.json",
@@ -75,7 +78,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
-                  "with": "src/app/branding/c1-config.json"
+                  "with": "src/app/branding/c1/config.json"
                 },
                 {
                   "replace": "src/environments/environment.json",

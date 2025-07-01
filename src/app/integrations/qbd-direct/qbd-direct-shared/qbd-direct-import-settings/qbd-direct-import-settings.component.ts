@@ -4,28 +4,31 @@ import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '
 import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingKbArticles, brandingFeatureConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-content-config';
-import { ExpenseField, ImportSettingsModel, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
+import { brandingKbArticles, brandingFeatureConfig, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
+import { ExpenseField, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState, ProgressPhase, QbdDirectUpdateEvent, TrackingApp, Page } from 'src/app/core/models/enum/enum.model';
-import { QbdDirectImportSettingGet, QbdDirectImportSettingModel, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import { QbdDirectImportSettingGet, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
+import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
   selector: 'app-qbd-direct-import-settings',
   standalone: true,
-  imports: [CommonModule, SharedModule, MultiSelectModule],
+  imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
   templateUrl: './qbd-direct-import-settings.component.html',
   styleUrl: './qbd-direct-import-settings.component.scss'
 })
@@ -63,15 +66,17 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   importSettings: QbdDirectImportSettingGet | null;
 
+  exportSettings: QbdDirectExportSettingGet;
+
   customFieldType: string;
 
   customFieldControl: AbstractControl;
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+  customFieldOption: ExpenseField[] = this.qbdDirectImportSettingsService.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = QbdDirectImportSettingModel.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
 
   QbdDirectReimbursableExpensesObject = QBDReimbursableExpensesObject;
 
@@ -89,22 +94,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.qbd_direct.configuration.importSetting;
-
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
-    "ACCOUNT": [
-      {
-        label: 'Import codes + names',
-        value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
-      },
-      {
-        label: 'Import names only',
-        value: false,
-        subLabel: 'Example: Meals & Entertainment'
-      }
-    ]
-  };
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
 
   sessionStartTime: Date = new Date();
 
@@ -118,10 +108,16 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private advancedSettingsService: QbdDirectAdvancedSettingsService,
+    private exportSettingService: QbdDirectExportSettingsService,
     private qbdDirectHelperService: QbdDirectHelperService,
     public helper: HelperService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+    private translocoService: TranslocoService,
+    private qbdDirectImportSettingsService: QbdDirectImportSettingsService
+  ) {
+    this.customFieldOption = this.qbdDirectImportSettingsService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
+  }
 
   closeModel() {
     this.customFieldForm.reset();
@@ -200,7 +196,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? ImportSettingsModel.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
+        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? this.qbdDirectImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -245,7 +241,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const importSettingPayload = QbdDirectImportSettingModel.constructPayload(this.importSettingForm);
+    const importSettingPayload = this.qbdDirectImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: QbdDirectImportSettingPost) => {
       this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.IMPORT_SETTINGS_QBD_DIRECT, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.IMPORT_SETTINGS) {
@@ -263,7 +259,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
 
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'));
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
@@ -271,7 +267,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectImportSettings.saveError'));
     });
   }
 
@@ -282,16 +278,18 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields(),
       this.importSettingService.getQbdDirectFields(),
       this.importSettingService.getImportCodeFieldConfig(),
-      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null)))
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse]) => {
+      this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null))),
+      this.exportSettingService.getQbdExportSettings()
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse, exportSettingsResponse]) => {
       this.QbdDirectFields = QbdDirectFields;
       this.importSettings = importSettingsResponse;
+      this.exportSettings = exportSettingsResponse;
 
       this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
-      this.importSettingForm = QbdDirectImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
+      this.importSettingForm = this.qbdDirectImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qbdDirectImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
@@ -301,6 +299,20 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.importCodeSelectorOptions = {
+      "ACCOUNT": [
+        {
+          label: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNames'),
+          value: true,
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNamesSubLabel')
+        },
+        {
+          label: this.translocoService.translate('qbdDirectImportSettings.importNamesOnly'),
+          value: false,
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importNamesOnlySubLabel')
+        }
+      ]
+    };
     this.setupPage();
   }
 

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { IntacctCompletedExportLogComponent } from './intacct-completed-export-log.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -10,6 +11,7 @@ import { mockExpenseGroupResponse, mockPaginator } from '../../../intacct.fixtur
 import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctCompletedExportLogComponent', () => {
   let component: IntacctCompletedExportLogComponent;
@@ -18,22 +20,31 @@ describe('IntacctCompletedExportLogComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let paginatorService: jasmine.SpyObj<PaginatorService>;
   let userService: jasmine.SpyObj<UserService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
     const exportLogServiceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups']);
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['onDateFilter']);
     const paginatorServiceSpy = jasmine.createSpyObj('PaginatorService', ['getPageSize', 'storePageSize']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
 
     await TestBed.configureTestingModule({
       declarations: [ IntacctCompletedExportLogComponent ],
-      imports: [ ReactiveFormsModule, SharedModule ],
+      imports: [ ReactiveFormsModule, SharedModule, HttpClientTestingModule ],
       providers: [
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -41,6 +52,7 @@ describe('IntacctCompletedExportLogComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     paginatorService = TestBed.inject(PaginatorService) as jasmine.SpyObj<PaginatorService>;
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     userService.getUserProfile.and.returnValue({ org_id: 'ORG123' } as MinimalUser);
     paginatorService.getPageSize.and.returnValue(mockPaginator);

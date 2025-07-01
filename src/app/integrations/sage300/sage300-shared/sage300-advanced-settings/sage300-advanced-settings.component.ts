@@ -3,11 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName, ConfigurationCta, CustomOperatorOption, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { Sage300AdvancedSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -16,6 +15,9 @@ import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sag
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -46,7 +48,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   appName: string = AppName.SAGE300;
 
-  hours: HourOption[] = [];
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   isReimbursableExpense: boolean = false;
 
@@ -80,7 +82,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -205,10 +208,10 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.saveSkipExportFields();
     }
     this.isSaveInProgress = true;
-    const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
+    const advancedSettingPayload = this.advancedSettingsService.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300AdvancedSettings.advancedSettingsSavedSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
@@ -232,7 +235,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300AdvancedSettings.errorSavingAdvancedSettings'));
       });
   }
 
@@ -243,9 +246,6 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   }
 
   private getSettingsAndSetupForm(): void {
-    for (let i = 1; i <= 24; i++) {
-      this.hours.push({ label: `${i}`, value: i });
-    }
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
@@ -256,7 +256,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
-      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;

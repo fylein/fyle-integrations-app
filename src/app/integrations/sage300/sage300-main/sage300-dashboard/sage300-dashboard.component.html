@@ -28,8 +28,8 @@
     @if(!accountingExportSummary && !exportableAccountingExportIds.length){
     <app-zero-state 
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="'Looks like you have'"
-        [subHeaderText]="'0 expenses to export right now'">
+        [headerText]="'sage300Dashboard.zeroStateHeaderText' | transloco"
+        [subHeaderText]="'sage300Dashboard.zeroStateSubHeaderText' | transloco">
     </app-zero-state>
     }
     
@@ -37,7 +37,8 @@
     <app-dashboard-export-summary-section
         [appName]="appName"
         [accountingExportType]="accountingExportType"
-        [accountingExportSummary]="accountingExportSummary">
+        [accountingExportSummary]="accountingExportSummary"
+        [isRealTimeExportEnabled]="isRealTimeExportEnabled">
     </app-dashboard-export-summary-section>
     }
     
@@ -63,3 +64,4 @@
     </app-dashboard-token-expired>
   </div>
 }
+</div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Calendar } from 'primeng/calendar';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
@@ -43,8 +43,6 @@ export class ExportLogFilterComponent implements OnInit, OnDestroy {
   private observer: MutationObserver | undefined;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.exportLog;
 
   constructor(private renderer: Renderer2) { }
 

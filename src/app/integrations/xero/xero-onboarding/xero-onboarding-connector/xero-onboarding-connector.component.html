@@ -7,16 +7,16 @@
         <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
             <div>
                 <app-configuration-step-header
-                    [headerText]="brandingContent.configurationHeaderText"
-                    [contentText]="brandingContent.configurationSubHeaderText"
+                    [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
+                    [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
             <div class="tw-px-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'Xero'"
-                    [subLabel]="'Select a tenant from Xero to continue.'"
-                    [placeholder]="'Select tenant'"
+                    [accountingAppTitle]="'xeroOnboardingConnector.xeroAppName' | transloco"
+                    [subLabel]="'xeroOnboardingConnector.selectTenantSubLabel' | transloco"
+                    [placeholder]="'xeroOnboardingConnector.selectTenantPlaceholder' | transloco"
                     [accountingCompanyName]="xeroCompanyName"
                     [fyleOrgName]="fyleOrgName"
                     [accountingCompanyTokenExpired]="xeroTokenExpired"
@@ -24,7 +24,7 @@
                     [showDisconnect]="showDisconnectXero"
                     [accountingCompanyConnectionInProgress]="xeroConnectionInProgress"
                     [accountingCompanyList]="tenantList"
-                    [switchLinkText]="'Disconnect'"
+                    [switchLinkText]="'xeroOnboardingConnector.disconnectButton' | transloco"
                     [isDisconnectClicked]="isDisconnectClicked"
                     [appName]="appName"
                     (switchCompany)="disconnectXero()"

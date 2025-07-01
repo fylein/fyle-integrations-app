@@ -1,10 +1,10 @@
 <p-table *ngIf="filteredExpense.length > 0" #dt1 [value]="filteredExpense">
     <ng-template pTemplate="header">
         <tr>
-            <th>{{brandingContent.tableHeaders.exportSkippedOn}}</th>
-            <th>Employee</th>
-            <th *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{brandingContent.tableHeaders.expenseType}}</th>
-            <th>Reference ID</th>
+            <th>{{ 'exportLog.tableHeaders.exportSkippedOn' | transloco}}</th>
+            <th>{{ 'skippedExportLogTable.employee' | transloco }}</th>
+            <th *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{ 'exportLog.tableHeaders.expenseType' | transloco}}</th>
+            <th>{{ 'skippedExportLogTable.referenceID' | transloco }}</th>
         </tr>
     </ng-template>
 

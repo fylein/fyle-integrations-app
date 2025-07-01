@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-travelperk-onboarding-done',
@@ -8,10 +9,11 @@ import { Router } from '@angular/router';
 })
 export class TravelperkOnboardingDoneComponent implements OnInit {
 
-  headerText: string = 'Congratulations! <p class="tw-pt-10-px">Your configuration setup is now complete. </p>';
+  headerText: string;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   navigateToDashboard(): void {
@@ -20,6 +22,7 @@ export class TravelperkOnboardingDoneComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.headerText = this.translocoService.translate('travelperkOnboardingDone.headerText');
   }
 
 }

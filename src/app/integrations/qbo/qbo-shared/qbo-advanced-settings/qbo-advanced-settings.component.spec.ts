@@ -15,11 +15,13 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2, mockGroupedDestinationAttributes, mockAdditionalEmails, mockMemo, mockFormattedMemo, mockDefaultMemoOptions, mockInitialMemoStructure, mocknewMemoStructure, invalidMemoStructure, mockExpenseFilterResponse } from 'src/app/integrations/qbo/qbo.fixture';
 import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, Operator, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingsModel, ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 describe('QboAdvancedSettingsComponent', () => {
   let component: QboAdvancedSettingsComponent;
@@ -35,9 +37,10 @@ describe('QboAdvancedSettingsComponent', () => {
   let workspaceService: jasmine.SpyObj<WorkspaceService>;
   let router: jasmine.SpyObj<Router>;
   let orgService: jasmine.SpyObj<OrgService>;
+  let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings']);
+    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings', 'getPaymentSyncOptions']);
     const exportSettingsServiceSpy = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings']);
     const configurationServiceSpy = jasmine.createSpyObj('ConfigurationService', ['getAdditionalEmails']);
     const helperServiceSpy = jasmine.createSpyObj('HelperService', ['setConfigurationSettingValidatorsAndWatchers', 'handleSkipExportFormInAdvancedSettingsUpdates', 'shouldAutoEnableAccountingPeriod']);
@@ -48,6 +51,7 @@ describe('QboAdvancedSettingsComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     orgServiceSpy.getCachedOrg.and.returnValue(orgMockData);
     helperServiceSpy.shouldAutoEnableAccountingPeriod.and.returnValue(false);
@@ -67,7 +71,8 @@ describe('QboAdvancedSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: OrgService, useValue: orgServiceSpy }
+        { provide: OrgService, useValue: orgServiceSpy },
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     }).compileComponents();
 
@@ -84,6 +89,7 @@ describe('QboAdvancedSettingsComponent', () => {
     workspaceService = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     orgService = TestBed.inject(OrgService) as jasmine.SpyObj<OrgService>;
+    translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     component.advancedSettingForm = new FormBuilder().group({
       paymentSync: [null],
@@ -173,6 +179,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should save advanced settings and skip export fields successfully', fakeAsync(() => {
       advancedSettingsService.postAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilterResponse));
+      translocoService.translate.and.returnValue('Advanced settings saved successfully');
       component.isOnboarding = true;
 
       // Set skipExport to true to trigger the skip export save
@@ -207,6 +214,7 @@ describe('QboAdvancedSettingsComponent', () => {
     }));
 
     it('should handle error when saving advanced settings', fakeAsync(() => {
+      translocoService.translate.and.returnValue('Error saving advanced settings, please try again later');
       advancedSettingsService.postAdvancedSettings.and.returnValue(throwError('Error'));
       component.isOnboarding = true;
 
@@ -361,11 +369,11 @@ describe('QboAdvancedSettingsComponent', () => {
         memoStructure: mockMemo
       });
 
-      spyOn(AdvancedSettingsModel, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
+      spyOn(AdvancedSettingsService, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
 
       component.onMultiSelectChange();
 
-      expect(AdvancedSettingsModel.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
+      expect(AdvancedSettingsService.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
       expect(component.advancedSettingForm.get('memoStructure')?.value).toEqual(mockFormattedMemo);
     });
   });

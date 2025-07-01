@@ -1,8 +1,8 @@
 pr_checks:
   title:
     - name: 'prefix_check'
-      regex: '^(?i)(fix|feat|test|chore|refactor|build):'
-      message_if_not_matching: 'PR title must start with "fix:", "feat:", "chore:", "refactor", or "test:" (case-insensitive)'
+      regex: '^(chore|ci|docs|feat|fix|refactor|revert|test)(\([\w\-\.]+\))?(!)?:'
+      message_if_not_matching: 'PR title must start with "fix:", "feat:", or one of the other commit types specified in [pr-checks-config.yml](https://github.com/fylein/fyle-integrations-app-e2e-tests/blob/master/.github/pr-checks-config.yml). See [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) for more information.'
 
   description:
     - name: 'clickup_check'

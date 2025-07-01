@@ -2,27 +2,28 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
-import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { brandingConfig } from 'src/app/branding/c1-content-config';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AppName, AccountingErrorType, ReimbursableImportState, CCCImportState, AppUrl, TaskLogState, ClickEvent, TrackingApp, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectTaskResponse, QbdDirectTaskLog } from 'src/app/core/models/qbd-direct/db/qbd-direct-task-log.model';
-import { QbdDirectImportSettingModel } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
+import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-qbd-direct-dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
   templateUrl: './qbd-direct-dashboard.component.html',
   styleUrl: './qbd-direct-dashboard.component.scss'
 })
@@ -43,6 +44,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
   exportProgressPercentage: number = 0;
 
   accountingExportSummary: AccountingExportSummary | null;
+
+  isRealTimeExportEnabled: boolean = false;
 
   processedCount: number = 0;
 
@@ -77,8 +80,6 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.dashboard;
-
   importCodeFields: any;
 
   chartOfAccounts: string[];
@@ -91,7 +92,9 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
     private QbdDirectExportSettingsService: QbdDirectExportSettingsService,
     private trackingService: TrackingService,
     private importSettingService: QbdDirectImportSettingsService,
-    private refinerService: RefinerService
+    private refinerService: RefinerService,
+    private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   export() {
@@ -151,7 +154,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
       this.dashboardService.getAllTasks(this.exportLogProcessingStates.concat(TaskLogState.ERROR), undefined, [], AppName.QBD_DIRECT),
       this.dashboardService.getExportableAccountingExportIds('v2'),
       this.QbdDirectExportSettingsService.getQbdExportSettings(),
-      this.importSettingService.getImportSettings()
+      this.importSettingService.getImportSettings(),
+      this.qbdDirectAdvancedSettingsService.getQbdAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -167,7 +171,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
       this.importCodeFields = responses[5].import_settings?.import_code_fields;
 
-      this.chartOfAccounts = responses[5].import_settings.import_account_as_category ? responses[5].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : QbdDirectImportSettingModel.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
+      this.chartOfAccounts = responses[5].import_settings.import_account_as_category ? responses[5].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : this.importSettingService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
 
       const queuedTasks: QbdDirectTaskLog[] = responses[2].results.filter((task: QbdDirectTaskLog) => this.exportLogProcessingStates.includes(task.status));
       this.failedExpenseGroupCount = responses[2].results.filter((task: QbdDirectTaskLog) => task.status === TaskLogState.ERROR || task.status === TaskLogState.FATAL).length;
@@ -176,6 +180,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
       this.reimbursableImportState = responses[4]?.reimbursable_expense_export_type && responses[4].reimbursable_expense_state ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
       this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
+
+      this.isRealTimeExportEnabled = responses[6]?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

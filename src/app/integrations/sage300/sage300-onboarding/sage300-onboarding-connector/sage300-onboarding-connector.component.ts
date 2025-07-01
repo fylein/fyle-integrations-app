@@ -7,6 +7,8 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
+import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-onboarding-connector',
@@ -38,7 +40,10 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private connectorService: Sage300ConnectorService
+    private connectorService: Sage300ConnectorService,
+    private toastService: IntegrationsToastService,
+    private mappingService: Sage300MappingService,
+    private translocoService: TranslocoService
   ) { }
 
   connectSage300() {

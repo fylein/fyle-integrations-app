@@ -6,6 +6,7 @@ import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AppName, FyleField, IntegrationName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage300-base-mapping',
@@ -37,17 +38,18 @@ export class Sage300BaseMappingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   triggerAutoMapEmployees() {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('sage300BaseMapping.autoMappingInfo'));
     }, () => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300BaseMapping.autoMappingError'));
     });
   }
 

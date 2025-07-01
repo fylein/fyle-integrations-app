@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -12,6 +12,7 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
+import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 
 @Component({
   selector: 'app-qbo-dashboard',
@@ -38,6 +39,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   accountingExportSummary: AccountingExportSummary | null;
 
+  isRealTimeExportEnabled: boolean = false;
+
   processedCount: number = 0;
 
   errors: AccountingGroupedErrors;
@@ -45,8 +48,6 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
   destinationFieldMap : DestinationFieldMap;
 
   readonly brandingConfig = brandingConfig;
-
-  readonly brandingContent = brandingContent.dashboard;
 
   groupedErrorStat: AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
@@ -83,7 +84,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
     private qboExportSettingsService: QboExportSettingsService,
     private workspaceService: WorkspaceService,
     private importSettingService: QboImportSettingsService,
-    private router: Router
+    private router: Router,
+    private qboAdvancedSettingsService: QboAdvancedSettingsService
   ) { }
 
   export() {
@@ -137,7 +139,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.qboExportSettingsService.getExportSettings(),
-      this.importSettingService.getImportSettings()
+      this.importSettingService.getImportSettings(),
+      this.qboAdvancedSettingsService.getAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -160,6 +163,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
       this.reimbursableImportState = responses[5].workspace_general_settings.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
       this.cccImportState = responses[5].workspace_general_settings.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+
+      this.isRealTimeExportEnabled = responses[7]?.workspace_schedules?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

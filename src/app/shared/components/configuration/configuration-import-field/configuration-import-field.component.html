@@ -1,11 +1,11 @@
 <div [formGroup]="form">
     <div *ngIf="!isDestinationFixedImport && !isCloneSettingView" class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{uiExposedAppName}} Dimensions</div>
-        <div class="fields-header-text tw-w-30-vw">{{brandingConfig.brandName}} Fields</div>
+        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'configurationImportField.dimensionsHeader' | transloco: { appName: uiExposedAppName } }}</div>
+        <div class="fields-header-text tw-w-30-vw">{{ 'configurationImportField.brandNameFieldsHeader' | transloco: { brandName: brandingConfig.brandName } }}</div>
         <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
-            Import to {{brandingConfig.brandName}}
+            {{ 'configurationImportField.importToBrandNameHeader' | transloco: { brandName: brandingConfig.brandName } }}
             <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipPosition]="'top'"
-                [tooltipText]="'Importing a dimension syncs active values from ' + uiExposedAppName + ' every 24 hours. Deactivated values in ' + uiExposedAppName + ' will also be disabled in ' + brandingConfig.brandName + ''">
+                [tooltipText]="'configurationImportField.importDimensionTooltip' | transloco: { appName: uiExposedAppName, brandName: brandingConfig.brandName }">
             </app-svg-icon>
         </div>
     </div>
@@ -38,23 +38,23 @@
                       </div>
                       <div>
                         <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                            Import {{ (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ) }} from {{ uiExposedAppName }}
+                            {{ 'configurationImportField.importDestinationFieldFromApp' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                          The imported {{ (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) }}
+                          {{ 'configurationImportField.importedDestinationFieldInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) } }}
                           <span> will be an available field when creating an expense.</span>
                         </h5>
                       </div>
                     </div>
                     <div class="configuration--input-toggle-section">
-                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? brandingXeroContent : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
+                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
                     </div>
                 </div>
             </div>
             <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
-                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{uiExposedAppName}} field" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" [placeholder]="'configurationImportField.chooseAppFieldPlaceholder' | transloco: { appName: uiExposedAppName }" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
@@ -70,14 +70,14 @@
                         </ng-template>
                     </p-dropdown>
                     <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                        {{uiExposedAppName}} Fields should be unique
+                        {{ 'configurationImportField.uniqueAppFieldsError' | transloco: { appName: uiExposedAppName } }}
                     </p>
                 </div>
                     <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
-                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'configurationImportField.chooseExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.uiExposedAppName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -95,17 +95,19 @@
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field'))" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                        {{brandingConfig.brandName}} Fields should be unique
+                        {{ 'configurationImportField.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                       </p>
                     </div>
-                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
+                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
             </div>
             <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
-                    <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and' + (uiExposedAppName === AppName.INTACCT ? '/or' : '') + ' Cost Type from ')}} {{uiExposedAppName}} as dependent fields.
+                    <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
+                        <ng-container *ngIf="uiExposedAppName === AppName.INTACCT; else elseBlock">{{ 'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName } }}</ng-container>
+                        <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }}</ng-template>
                         <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
-                            Read more
+                            {{ 'configurationImportField.readMore' | transloco }}
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
@@ -121,15 +123,15 @@
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'Line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
                             </div>
                             <div class="tw-pl-20-px">
-                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{helper.sentenseCaseConversion('Dependent Field')}}<app-mandatory-field></app-mandatory-field> </p>
+                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{ 'configurationImportField.dependentFieldLabel' | transloco }}<app-mandatory-field></app-mandatory-field> </p>
                                 <input type="text" [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']" class="tw-text-14-px tw-text-input-read-only-text !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px" value="{{helper.sentenseCaseConversion(dependentField.source_field)}}" disabled>
                             </div>
                             <div [ngClass]="brandingStyle.configuration.importFieldDependentFieldSvg">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
                             </div>
                             <div>
-                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{brandingConfig.brandName}} field <app-mandatory-field></app-mandatory-field> </p>
-                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select expense field')" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{ 'configurationImportField.brandNameFieldLabel' | transloco: { brandName: brandingConfig.brandName } }} <app-mandatory-field></app-mandatory-field> </p>
+                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="'configurationImportField.selectExpenseFieldPlaceholder' | transloco" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                             <div class="tw-ml-0 tw-mr-6-px ">
@@ -148,10 +150,10 @@
                         }
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
-                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-export commitment based on the cost code and cost category.
+                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
-                                Read more
+                                {{ 'configurationImportField.readMore' | transloco }}
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                     class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                                 </app-svg-icon>
@@ -163,7 +165,7 @@
                 </div>
             </div>
             <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
-                *{{brandingConfig.brandName}} and {{uiExposedAppName}} Fields should be unique.
+                {{ 'configurationImportField.uniqueFieldsError' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}
             </div>
         </div>
     </div>
@@ -171,7 +173,7 @@
     <div *ngIf="showOrHideAddButton() && !isDestinationFixedImport" class="add-button-container">
         <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
         <a class="add-row-text tw-pl-2" (click)="addExpenseField()">
-            Add more fields
+            {{ 'configurationImportField.addMoreFields' | transloco }}
         </a>
     </div>
     <div *ngIf="uiExposedAppName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
@@ -179,15 +181,15 @@
             <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                 <div>
                     <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                        Configure import method
+                        {{ 'configurationImportField.configureImportMethodTitle' | transloco }}
                     </h4>
                     <p class="tw-text-14-px tw-text-text-muted">
-                        You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
+                        {{ 'configurationImportField.configureImportMethodInfo' | transloco }}
                     </p>
                 </div>
                 <div class="tw-pt-16-px">
                     <app-configuration-info-label
-                        [infoText]="'This is a one-time setup and cannot be modified once the values are imported to ' + brandingConfig.brandName + '.'">
+                        [infoText]="'configurationImportField.oneTimeSetupInfo' | transloco: { brandName: brandingConfig.brandName }">
                     </app-configuration-info-label>
                 </div>
             </div>
@@ -200,13 +202,13 @@
                         [form]="form"
                         [isDisableTextRequired]="false"
                         [options]="getImportCodeSelectorOptions(defaultField.destination_field)"
-                        [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()"
-                        [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' from ' + uiExposedAppName + '?'"
-                        [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase() +' or both the names and codes.'"
+                        [placeholder]="'configurationImportField.selectImportMethodPlaceholder' | transloco: { destinationField: (helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()) }"
+                        [label]="'configurationImportField.howToImportLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase()), appName: uiExposedAppName }"
+                        [subLabel]="'configurationImportField.howToImportSubLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase()) }"
                         [isMultiLineOption]="true"
                         [isFieldMandatory]="true"
                         [isimportSettings]="true"
-                        [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() + ' should be imported'"
+                        [customErrorMessage]="'configurationImportField.importMethodErrorMessage' | transloco: { destinationField: (helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()) }"
                         [isDisabled]="!importCodeFieldConfig[defaultField.destination_field]"
                         [formControllerName]="defaultField.import_code">
                     </app-configuration-select-field>
@@ -220,13 +222,13 @@
                             [isDisableTextRequired]="false"
                             [form]="getFormGroup(expenseField)"
                             [options]="getImportCodeSelectorOptions(expenseField.value.destination_field)"
-                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' from ' + uiExposedAppName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase() +' or both the names and codes.' + getContentForJob(expenseField.value.destination_field)"
+                            [placeholder]="'configurationImportField.selectImportMethodPlaceholder' | transloco: { destinationField: (helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()) }"
+                            [label]="'configurationImportField.howToImportLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase()), appName: uiExposedAppName }"
+                            [subLabel]="getImportSubLabel(expenseField.value.destination_field)"
                             [isMultiLineOption]="true"
                             [isimportSettings]="true"
                             [isFieldMandatory]="true"
-                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() + ' should be imported'"
+                            [customErrorMessage]="'configurationImportField.importMethodErrorMessage' | transloco: { destinationField: (helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()) }"
                             [isDisabled]="!importCodeFieldConfig[expenseField.value.destination_field]"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>

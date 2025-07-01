@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -11,7 +11,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { TenantMapping, TenantMappingModel, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
-import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -21,7 +20,9 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
+import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-onboarding-connector',
@@ -30,9 +31,7 @@ import { environment } from 'src/environments/environment';
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.xero.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -94,16 +93,17 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private cloneSettingService: CloneSettingService,
     private xeroHelperService: XeroHelperService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translocoService: TranslocoService,
+    private xeroOnboardingService: XeroOnboardingService
   ) { }
 
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
       if (response.is_available && brandingFeatureConfig.featureFlags.cloneSettings) {
-        this.warningHeaderText = 'Your settings are pre-filled';
-        this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
-        <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`;
-        this.primaryButtonText = 'Continue';
+        this.warningHeaderText = this.translocoService.translate('xeroOnboardingConnector.warningHeader');
+        this.warningContextText = this.translocoService.translate('xeroOnboardingConnector.warningContext', { workspaceName: response.workspace_name });
+        this.primaryButtonText = this.translocoService.translate('xeroOnboardingConnector.continueButton');
         this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
         this.isWarningDialogVisible = true;
         this.isContinueDisabled = false;
@@ -149,7 +149,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isDisconnectClicked = false;
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero tenant. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingConnector.failedToConnect');
       if (errorMessage === 'Please choose the correct Xero Tenten') {
         this.isXeroConnected = false;
         this.xeroConnectionInProgress = false;
@@ -268,6 +268,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(this.translocoService.translate('xero.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
     this.setupPage();
   }
 

@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="brandingContent.stepName"
-            [contentText]="brandingContent.contentText"
+        <app-configuration-step-header [headerText]="'qbd_direct.configuration.importSetting.stepName' | transloco"
+            [contentText]="'qbd_direct.configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importCategoriesLabel"
-                        [subLabel]="brandingContent.importCategoriesSubLabel"
+                        [label]="'qbd_direct.configuration.importSetting.importCategoriesLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.importSetting.importCategoriesSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -25,18 +25,18 @@
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                {{brandingContent.chartOfAccountTypes}}
+                                {{'qbd_direct.configuration.importSetting.chartOfAccountTypes' | transloco}}
                                 <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                                    {{brandingContent.chartOfAccountTypesSubLabel}}
+                                    {{'qbd_direct.configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select chart of accounts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'qbdDirectImportSettings.selectChartOfAccounts' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                     <ng-template let-value pTemplate="selectedItems">
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
                                             <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
-                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select Chart of Accounts')}}</div>
+                                        <div *ngIf="!value || value.length === 0">{{'qbdDirectImportSettings.selectChartOfAccountsSentenceCase' | transloco}}</div>
                                     </ng-template>
                                 </p-multiSelect>
                             </div>
@@ -49,23 +49,36 @@
                             [form]="importSettingForm"
                             [isDisableTextRequired]="false"
                             [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
-                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
+                            [placeholder]="'qbdDirectImportSettings.placeholderImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
+                            [label]="'qbdDirectImportSettings.labelImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
+                            [subLabel]="'qbdDirectImportSettings.subLabelImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
                             [isMultiLineOption]="true"
                             [isFieldMandatory]="true"
-                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
+                            [customErrorMessage]="'qbdDirectImportSettings.customErrorMessageImport' | transloco : { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
                             [isDisabled]="!QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
                             [formControllerName]="'importCategoryCode'">
                         </app-configuration-select-field>
                     </div>
                 </div>
 
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" 
+                     *ngIf="brandingFeatureConfig.featureFlags.importSettings.importItems && 
+                            exportSettings.reimbursable_expense_export_type !== QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY && 
+                            exportSettings.credit_card_expense_export_type !== QbdDirectCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="'qbd_direct.configuration.importSetting.importItemsLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.importSetting.importItemsSubLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [formControllerName]="'importItems'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors in QuickBooks will be imported as merchants in ' + brandingConfig.brandName + ', available in a dropdown for employees to select when coding expenses.'"
+                        [label]="'qbd_direct.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbdDirectImportSettings.importVendorsAsMerchantsSubLabel' | transloco : { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -103,6 +116,6 @@
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'qbdDirectImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>

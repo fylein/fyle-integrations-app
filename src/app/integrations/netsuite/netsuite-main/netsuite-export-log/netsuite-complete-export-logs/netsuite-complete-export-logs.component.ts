@@ -1,13 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subject, debounceTime } from 'rxjs';
-import { brandingConfig, brandingContent, brandingStyle } from 'src/app/branding/branding-config';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -32,7 +34,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -56,8 +58,6 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
 
   private searchQuerySubject = new Subject<string>();
 
-  readonly brandingContent = brandingContent.exportLog;
-
   readonly brandingStyle = brandingStyle;
 
   constructor(
@@ -65,7 +65,9 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService,
+    private accountingExportService: AccountingExportService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -78,7 +80,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
@@ -110,7 +112,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.NETSUITE)
+        this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.NETSUITE, this.translocoService)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
@@ -129,7 +131,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange: string | any[]) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
@@ -162,6 +164,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.getAccountingExportsAndSetupPage();
   }
 

@@ -25,14 +25,14 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="brandingContent.skipExportLogZeroStateHeaderText"
-            [subText]="brandingContent.skipExportLogZeroStateSubHeaderText">
+            [mainText]="'exportLog.skipExportLogZeroStateHeaderText' | transloco"
+            [subText]="'exportLog.skipExportLogZeroStateSubHeaderText' | transloco">
         </app-zero-state-with-illustration>
 
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-    [mainText]="brandingContent.skipExportLogCountZeroStateHeaderText"
-    [subText]="brandingContent.skipExportLogCountZeroStateSubHeaderText">
+    [mainText]="'exportLog.skipExportLogCountZeroStateHeaderText' | transloco"
+    [subText]="'exportLog.skipExportLogCountZeroStateSubHeaderText' | transloco">
     </app-zero-state-with-illustration>
 </div>

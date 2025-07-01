@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
-import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
+import { BusinessCentralImportSettingsGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
 import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
@@ -16,6 +16,7 @@ import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.mode
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { businessCentralFieldsResponse, fyleFieldsResponse, importSettingsResponse } from '../business-central.fixture';
 import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-import-settings',
@@ -48,9 +49,9 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a custom field', source_placeholder: null, is_dependent: false }];
+  customFieldOption: ExpenseField[];
 
-  readonly chartOfAccountTypesList: string[] = BusinessCentralImportSettingsModel.getChartOfAccountTypesList();
+  readonly chartOfAccountTypesList: string[] = [];
 
   readonly brandingConfig = brandingConfig;
 
@@ -75,8 +76,12 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     public helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService,
+    private businessCentralImportSettingsService: BusinessCentralImportSettingsService
+  ) {
+    this.chartOfAccountTypesList = this.businessCentralImportSettingsService.getChartOfAccountTypesList();
+  }
 
   get expenseFieldsGetter() {
     return this.importSettingForm.get('expenseFields') as FormArray;
@@ -159,10 +164,10 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = BusinessCentralImportSettingsModel.createImportSettingPayload(this.importSettingForm);
+    const importSettingPayload = this.businessCentralImportSettingsService.createImportSettingPayload(this.importSettingForm);
     this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralImportSettings.saveSuccessToast'));
       this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.IMPORT_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.IMPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
@@ -186,7 +191,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralImportSettings.saveErrorToast'));
       });
   }
 
@@ -205,10 +210,10 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
       this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, businessCentralFieldsResponse]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = BusinessCentralImportSettingsModel.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
+      this.importSettingForm = this.businessCentralImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
       this.fyleFields = fyleFieldsResponse;
       this.businessCentralFields = businessCentralFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a custom field', is_dependent: false });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'), is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;
@@ -216,6 +221,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
     this.setupPage();
   }
 

@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
+import { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -18,6 +18,8 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-netsuite-export-settings',
@@ -48,27 +50,27 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   accountsPayables: DefaultDestinationAttribute[];
 
-  reimbursableExportTypes: SelectFormOption[] =  NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
+  reimbursableExportTypes: SelectFormOption[] = [];
 
-  autoMapEmployeeOptions: SelectFormOption[] = NetSuiteExportSettingModel.getAutoMapEmplyeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = [];
 
-  employeeFieldOptions: SelectFormOption[] = NetSuiteExportSettingModel.getEmployeeFieldOptions();
+  employeeFieldOptions: SelectFormOption[] = [];
 
-  creditCardExportTypes = NetSuiteExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes: SelectFormOption[] = [];
 
-  cccExpenseStateOptions = NetSuiteExportSettingModel.getCCCExpenseStateOptions();
+  cccExpenseStateOptions: SelectFormOption[] = [];
 
-  expenseStateOptions = NetSuiteExportSettingModel.getReimbursableExpenseStateOptions();
+  expenseStateOptions: SelectFormOption[] = [];
 
-  expenseGroupByOptions = NetSuiteExportSettingModel.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = [];
 
-  reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  nameInJournalOptions = NetSuiteExportSettingModel.getNameInJournalOptions();
+  nameInJournalOptions: SelectFormOption[] = [];
 
-  readonly splitExpenseGroupingOptions = NetSuiteExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[] = [];
 
   showNameInJournalOption: boolean;
 
@@ -81,8 +83,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   warningDialogText: string;
 
   appName: AppName = AppName.NETSUITE;
-
-  readonly brandingContent = brandingContent.netsuite.configuration.exportSetting;
 
   NetSuiteCorporateCreditCardExpensesObject = NetSuiteCorporateCreditCardExpensesObject;
 
@@ -124,9 +124,23 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService,
+    private netsuiteExportSettingsService: NetsuiteExportSettingsService,
+    private exportSettingsService: ExportSettingsService
   ) {
     this.windowReference = this.windowService.nativeWindow;
+    this.reimbursableExpenseGroupingDateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExportTypes = this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
+    this.autoMapEmployeeOptions = this.netsuiteExportSettingsService.getAutoMapEmplyeeOptions();
+    this.employeeFieldOptions = this.netsuiteExportSettingsService.getEmployeeFieldOptions();
+    this.creditCardExportTypes = this.netsuiteExportSettingsService.getCreditCardExportTypes();
+    this.cccExpenseStateOptions = this.netsuiteExportSettingsService.getCCCExpenseStateOptions();
+    this.expenseStateOptions = this.netsuiteExportSettingsService.getReimbursableExpenseStateOptions();
+    this.expenseGroupByOptions = this.netsuiteExportSettingsService.getExpenseGroupByOptions();
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+    this.nameInJournalOptions = this.netsuiteExportSettingsService.getNameInJournalOptions();
+    this.splitExpenseGroupingOptions = this.netsuiteExportSettingsService.getSplitExpenseGroupingOptions();
   }
 
 
@@ -147,7 +161,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
     });
     this.exportSettingForm.controls.employeeFieldMapping.valueChanges.subscribe((isemployeeFieldMappingSelected) => {
-      const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = NetsuiteExportSettingsService.getValidators();
       this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
     });
   }
@@ -198,10 +212,10 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
-      const exportSettingPayload = NetSuiteExportSettingModel.constructPayload(this.exportSettingForm);
+      const exportSettingPayload = NetsuiteExportSettingsService.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: NetSuiteExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteExportSettings.exportSettingsSaved'));
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(NetsuiteOnboardingState.IMPORT_SETTINGS);
@@ -211,7 +225,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         }
       }, () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteExportSettings.exportSettingsError'));
       });
     }
   }
@@ -225,14 +239,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string | undefined | null, exportType: string): string {
-    const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
-    which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
-    features that could help customize and automate your integration workflows.`;
-
     let content = '';
     // If both are not none and it is an update case else for the new addition case
     if (updatedConfiguration && existingConfiguration) {
-      content = configurationUpdate.replace('$exportType', exportType).replace('$existingExportType', existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).replace('$updatedExportType', updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()));
+      const translatedExportType = this.translocoService.translate(exportType === 'reimbursable' ? 'netsuiteExportSettings.reimbursable' : 'netsuiteExportSettings.creditCard');
+      content = this.translocoService.translate('netsuiteExportSettings.configurationChangeWarning', {
+        exportType: translatedExportType,
+        existingExportType: existingConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase()),
+        updatedExportType: updatedConfiguration.toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())
+      });
     }
 
     return content;
@@ -296,14 +311,14 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
         this.exportSettingForm.controls.creditCardExportGroup.disable();
       }
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
         true,
         this.exportSettingForm.controls.creditCardExportGroup.value,
         this.exportSettingForm.controls.creditCardExportDate.value,
         { allowPostedAt }
       );
     } else {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
         false,
         this.exportSettingForm.controls.creditCardExportGroup.value,
         this.exportSettingForm.controls.creditCardExportDate.value,
@@ -311,7 +326,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       );
     }
 
-    ExportSettingModel.clearInvalidDateOption(
+    this.exportSettingsService.clearInvalidDateOption(
       this.exportSettingForm.get('creditCardExportDate'),
       this.cccExpenseGroupingDateOptions
     );
@@ -330,13 +345,13 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   private setupCustomDateOptionWatchers(): void {
     if (this.exportSettingForm.get('creditCardExportType')?.value && this.exportSettingForm.get('creditCardExportType')?.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
-      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
     }
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
+        this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingForm.controls.reimbursableExportDate.value);
 
-        ExportSettingModel.clearInvalidDateOption(
+        this.exportSettingsService.clearInvalidDateOption(
           this.exportSettingForm.get('reimbursableExportDate'),
           this.reimbursableExpenseGroupingDateOptions
         );
@@ -381,7 +396,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
 
         // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
-        newOptions = response.results.map(NetSuiteExportSettingModel.formatGeneralMappingPayload);
+        newOptions = response.results.map(this.exportSettingsService.formatGeneralMappingPayload);
 
         // Insert new options to existing options
         newOptions.forEach((option) => {
@@ -447,23 +462,23 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     ]).subscribe(([exportSetting, vendors, accountsPayables, bankAccounts, cccAccounts]) => {
       this.exportSettings = exportSetting;
 
-      this.creditCardVendors =  vendors.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.accountsPayables = accountsPayables.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.bankAccounts =  bankAccounts.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.cccAccounts =  cccAccounts.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.creditCardVendors =  vendors.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.accountsPayables = accountsPayables.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.bankAccounts =  bankAccounts.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.cccAccounts =  cccAccounts.results.map((option) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.reimbursableExportTypes = NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
+      this.reimbursableExportTypes = this.netsuiteExportSettingsService.getReimbursableExportTypeOptions();
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
-      this.exportSettingForm = NetSuiteExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+      this.exportSettingForm = this.netsuiteExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings);
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
-      const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+      const [exportSettingValidatorRule, exportModuleRule] = NetsuiteExportSettingsService.getValidators();
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 

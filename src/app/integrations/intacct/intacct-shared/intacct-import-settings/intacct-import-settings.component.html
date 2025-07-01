@@ -4,8 +4,8 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
-        [headerText]="'Import settings'"
-        [contentText]="'In this section, you can choose the fields required to be imported from Sage Intacct to ' + brandingConfig.brandName + '.'"
+        [headerText]="'intacctImportSettings.header' | transloco"
+        [contentText]="'intacctImportSettings.description' | transloco: { brandName: brandingConfig.brandName }"
         [redirectLink]="redirectLink"
         [showSyncButton]="isOnboarding"
         [appName]="appName"
@@ -15,105 +15,105 @@
         <div class="tw-p-24-px">
             <div class="container">
                 <div class="sub-text">
-                    <h4 class="tw-text-16-px !tw-font-500 ">Import Sage Intacct dimensions</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">The Sage Intacct dimensions listed below will be mapped to their corresponding {{brandingConfig.brandName}} Field as shown below. Importing these dimensions from Sage Intacct to {{brandingConfig.brandName}} will make the values available as a dropdown in the expense form for your employees to choose from. <a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">Click here</a> to preview.</h5>
+                    <h4 class="tw-text-16-px !tw-font-500 ">{{ 'intacctImportSettings.importDimensionsTitle' | transloco }}</h4>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.importDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-12-px sub-text-note tw-flex">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
-                        <span class="tw-text-14-px tw-pl-6-px">This is a default mapping and you will not be able to modify it.</span>
+                        <span class="tw-text-14-px tw-pl-6-px">{{ 'intacctImportSettings.defaultMappingNote' | transloco }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-            <div class="fields-header-text tw-pl-48-px tw-w-450-px">Sage Intacct dimensions</div>
-            <div class="fields-header-text tw-w-30-vw">{{brandingConfig.brandName}} Fields</div>
+            <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+            <div class="fields-header-text tw-w-30-vw">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
             <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
-                Import to {{brandingConfig.brandName}}
-                <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'Importing a dimension syncs active values from Sage Intacct every 24 hours. Deactivated values in Sage will also be disabled in ' + brandingConfig.brandName " [tooltipPosition]="'top'"></app-svg-icon>
+                {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
+                <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
             <div class="tw-pl-48-px">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{(intacctCategoryDestination | snakeCaseToSpaceCase | sentenceCase).replace('Gl ', 'GL ')}}" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="intacctCategoryDestinationLabel" disabled>
             </div>
             <div class="tw-pt-16-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <div class="tw-w-30-vw">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.categoryLabel' | transloco" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
+                <p-inputSwitch formControlName="importCategories" [attr.aria-label]="'intacctImportSettings.importCategoriesAriaLabel' | transloco: { intacctCategoryDestinationLabel: intacctCategoryDestinationLabel }" role="switch" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
             <span class="tw-pl-48-px">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Vendor" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.vendorLabel' | transloco" disabled>
             </span>
             <div class="tw-pt-16-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Merchant" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.merchantLabel' | transloco" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
+                <p-inputSwitch formControlName="importVendorAsMerchant" [attr.aria-label]="'intacctImportSettings.importVendorAriaLabel' | transloco" role="switch"></p-inputSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px" *ngIf="isImportTaxVisible">
             <span class="tw-pl-48-px">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax detail" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxDetailLabel' | transloco" disabled>
             </span>
             <div class="tw-pt-16-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
-                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax group" disabled>
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxGroupLabel' | transloco" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importTaxCodes"></p-inputSwitch>
+                <p-inputSwitch formControlName="importTaxCodes" [attr.aria-label]="'intacctImportSettings.importTaxCodesAriaLabel' | transloco" role="switch"></p-inputSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible">
-            <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select tax group">
+            <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" [placeholder]="'intacctImportSettings.selectTaxGroupPlaceholder' | transloco">
             </p-dropdown>
         </div>
         <div class="tw-p-24-px">
             <div class="container">
                 <div class="sub-text">
-                    <h4 class="tw-text-16-px !tw-font-500">Import / map Sage Intacct dimensions</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">The Sage Intacct dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference, or a new custom field. Importing these dimensions from Sage Intacct to {{brandingConfig.brandName}} will make the values available as a dropdown in the expense form for your employees to choose from.  <a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">Click here</a> to preview.</h5>
+                    <h4 class="tw-text-16-px !tw-font-500">{{ 'intacctImportSettings.mapDimensionsTitle' | transloco }}</h4>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.mapDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-4 sub-text-note">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
                         <span class="tw-pl-6-px">
-                            If you'd like to use only selective data from Sage Intacct, map a Sage Intacct dimension to a field in {{brandingConfig.brandName}} and turn off the import, as importing the data will sync in all the active values in Sage Intacct. You can add the required values in {{brandingConfig.brandName}} and map them later in the integration mapping section.
+                            {{ 'intacctImportSettings.selectiveDataNote' | transloco: { brandName: brandingConfig.brandName } }}
                         </span>
                     </div>
                 </div>
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-pl-14-px tw-w-404-px tw-whitespace-nowrap">Sage Intacct dimensions</div>
-                    <div class="fields-header-text tw-w-30-vw tw-pl-14-px tw-whitespace-nowrap">{{brandingConfig.brandName}} Fields</div>
+                    <div class="fields-header-text tw-pl-14-px tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+                    <div class="fields-header-text tw-w-30-vw tw-pl-14-px tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
                     <div class="fields-header-text tw-flex tw-whitespace-nowrap">
-                        Import to {{brandingConfig.brandName}}
-                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'Importing a dimension syncs active values from Sage Intacct every 24 hours. Deactivated values in Sage will also be disabled in ' + brandingConfig.brandName " [tooltipPosition]="'top'"></app-svg-icon>
+                        {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
+                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                 </div>
                 <div class="tw-pt-32-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
                         <div>
-                            <p-dropdown appendTo="body" [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
+                            <p-dropdown appendTo="body" [options]="sageIntacctFields" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
                             <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
-                                Sage Intacct fields should be unique
+                                {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
                             </p>
                         </div>
                             <div class="tw-pt-16-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
-                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
+                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -133,26 +133,26 @@
                                     </ng-template>
                               </p-dropdown>
                               <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field') || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
-                                {{brandingConfig.brandName}} Fields should be unique
+                                {{ 'intacctImportSettings.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                                 </p>
                             </div>
-                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('intacctImportSettings.cannotImportDependentFieldsTooltip' | transloco) : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field === 'PROJECT' && expenseField.value.destination_field === 'PROJECT' && expenseField.value.import_to_fyle" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
                             <div>
                                 <input formControlName="isDependentImportEnabled" type="checkbox"/>
                             </div>
-                            <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import cost code and/or cost type from Sage Intacct as dependent fields</label>
+                            <label class="tw-pl-2 tw-text-14-px" for="checkbox">{{ 'intacctImportSettings.importDependentFieldsLabel' | transloco }}</label>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
-                                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost code" disabled>
+                                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costCodeLabel' | transloco" disabled>
                             </div>
                             <div class="tw-pt-16-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select expense field">
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -162,16 +162,16 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-inputSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
-                                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost type" disabled>
+                                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costTypeLabel' | transloco" disabled>
                             </div>
                             <div class="tw-pt-16-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select expense field">
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -180,18 +180,18 @@
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-inputSwitch>
                         </div>
                     </div>
                 </div>
                 <div class="tw-text-alert-toast tw-pt-4 tw-pl-14-px" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
-                    *{{brandingConfig.brandName}} and Sage Intacct fields should be unique.
+                    {{ 'intacctImportSettings.uniqueFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                   </div>
             </div>
             <div *ngIf="showAddButton" class="add-button-container tw-pl-36-px">
                 <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
                 <a class="tw-cursor-pointer tw-text-mandatory-field-color tw-pl-2" (click)="addExpenseField()">
-                    Add more fields
+                    {{ 'intacctImportSettings.addMoreFields' | transloco }}
                 </a>
             </div>
         </div>
@@ -201,15 +201,15 @@
                 <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                            Configure import method
+                            {{ 'intacctImportSettings.configureImportMethodTitle' | transloco }}
                         </h4>
                         <p class="tw-text-14-px tw-text-text-muted">
-                            You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
+                            {{ 'intacctImportSettings.configureImportMethodDescription' | transloco }}
                         </p>
                     </div>
                     <div class="tw-pt-16-px">
                         <app-configuration-info-label
-                            [infoText]="'This is a one-time setup and cannot be modified once the values are imported to ' + brandingConfig.brandName + '.'">
+                            [infoText]="'intacctImportSettings.oneTimeSetupNote' | transloco: { brandName: brandingConfig.brandName }">
                         </app-configuration-info-label>
                     </div>
                 </div>
@@ -222,13 +222,13 @@
                             [form]="getFormGroup(intacctImportCodeField)"
                             [isDisableTextRequired]="false"
                             [options]="importCodeSelectorOptions[intacctImportCodeField.value.source_field]"
-                            [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' from ' + appName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() +' or both the names and codes.'"
+                            [placeholder]="'intacctImportSettings.selectImportMethodPlaceholder' | transloco: { field: helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() }"
+                            [label]="'intacctImportSettings.howToImportLabel' | transloco: { field: helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase(), appName: appName }"
+                            [subLabel]="'intacctImportSettings.howToImportSubLabel' | transloco: { field: helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() }"
                             [isMultiLineOption]="true"
                             [isFieldMandatory]="true"
                             [isimportSettings]="true"
-                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() + ' should be imported'"
+                            [customErrorMessage]="'intacctImportSettings.selectImportMethodError' | transloco: { field: helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() }"
                             [isDisabled]="!intacctImportCodeConfig[intacctImportCodeField.value.source_field]"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
@@ -245,7 +245,7 @@
     <div [formGroup]="customFieldForm">
         <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
-                <p class="tw-text-20-px tw-font-500">Add new custom field</p>
+                <p class="tw-text-20-px tw-font-500">{{ 'intacctImportSettings.addNewCustomField' | transloco }}</p>
                 <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
@@ -254,51 +254,51 @@
                 <span class="error-box tw-flex tw-p-4-px">
                     <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
                     <h5 class="tw-ml-6-px">
-                        Oops! It looks like another field with the same name already exists in your {{brandingConfig.brandName}} account. Would you please give the field a different name?
+                        {{ 'intacctImportSettings.duplicateFieldNameError' | transloco: { brandName: brandingConfig.brandName } }}
                     </h5>
                 </span>
             </div>
         </div>
         <div class="tw-p-24-px">
             <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
-                Field Name <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'intacctImportSettings.fieldNameLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
+            <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldTypePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'intacctImportSettings.validTypeErrorMessage' | transloco"></app-mandatory-error-message>
 
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'intacctImportSettings.placeholderNameLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid name'"></app-mandatory-error-message>
+            <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'intacctImportSettings.validNameErrorMessage' | transloco"></app-mandatory-error-message>
 
             <div>
                 <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                  Field type
+                  {{ 'intacctImportSettings.fieldTypeLabel' | transloco }}
                 </h5>
                 <div class="tw-w-420-px tw-h-48-px">
-                  <input class="tw-w-420-px form-input-disabled" type="text" placeholder="Select" disabled>
+                  <input class="tw-w-420-px form-input-disabled" type="text" [placeholder]="'intacctImportSettings.selectPlaceholder' | transloco" disabled>
                 </div>
               </div>
 
               <div class="label-section tw-pt-8">
                 <div class="label-content tw-w-420-px">
                   <h5 class="name-text sub-text-color tw-text-14-px">
-                    {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : 'Label'}}
+                    {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : ('intacctImportSettings.label' | transloco)}}
                   </h5>
                   <div class="form-field tw-pt-4-px">
                     <input class="form-input tw-w-352-px" type="text"
-                    [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : 'Enter text'">
+                    [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : ('intacctImportSettings.enterTextPlaceholder' | transloco)">
                   </div>
                 </div>
               </div>
 
             <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
                 <button type="button" class="cancel-btn" (click)="closeModel()">
-                    Cancel
+                    {{ 'intacctImportSettings.cancel' | transloco }}
                 </button>
                 <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
-                    Create and save
+                    {{ 'intacctImportSettings.createAndSave' | transloco }}
                 </button>
             </div>
         </div>
@@ -312,35 +312,36 @@
                 <div class="tw-p-8-px tw-bg-bg-warning-lighter tw-mr-10-px">
                     <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning'"></app-svg-icon>
                 </div>
-                <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">Warning</p>
+                <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">{{ 'intacctImportSettings.warningTitle' | transloco }}</p>
             </div>
             <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
         </div>
     </div>
     <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
         <div class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
-            You have imported cost codes{{ dependentFieldSettings?.cost_type_field_name ? ' and cost types' : '' }} from Sage Intacct by mapping them to fields in {{brandingConfig.brandName}}. By turning off the import, you would lose the mappings you've established for these fields.
+            {{ (dependentFieldSettings?.cost_type_field_name ? 'intacctImportSettings.dependentFieldWarningCostCodesAndTypes' : 'intacctImportSettings.dependentFieldWarningCostCodes') | transloco: { brandName: brandingConfig.brandName } }}
         </div>
         <div class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
-            Are you sure you want to continue?
+            {{ 'intacctImportSettings.continueConfirmation' | transloco }}
         </div>
     </div>
     <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px">
         <div class="tw-px-24-px tw-py-16-px">
             <button type="button" class="cancel-btn" (click)="acceptDependentFieldWarning(false)">
-                Cancel
+                {{ 'intacctImportSettings.cancel' | transloco }}
             </button>
             <button type="button" class="save-btn" pButton (click)="acceptDependentFieldWarning(true)">
-                Continue
+                {{ 'intacctImportSettings.continueButton' | transloco }}
             </button>
         </div>
     </div>
 </p-dialog>
 
 <div *ngIf="isDialogVisible">
-    <p-dialog header="Preview" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isDialogVisible" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+    <p-dialog [header]="'intacctImportSettings.previewHeader' | transloco" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isDialogVisible" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
         <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
             <img height="300px" width="700px" src="assets/illustrations/sageIntacct/IntacctImportSettings.png">
         </div>
     </p-dialog>
 </div>
+

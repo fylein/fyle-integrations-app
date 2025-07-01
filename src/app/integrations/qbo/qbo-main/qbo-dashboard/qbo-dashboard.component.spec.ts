@@ -9,12 +9,13 @@ import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { of, throwError } from 'rxjs';
 import { AppName, TaskLogState, QBOTaskLogType, ReimbursableImportState, CCCImportState } from 'src/app/core/models/enum/enum.model';
-import { mockWorkspaceGeneralSettingsForDashboard, mockExportableExpenseGroup, mockExportSettingsForDashboard, mockImportSettingsForDashboard, mockExportErrors, mockQBOTaskResponse, mockAccountingExportSummary, mockExportSettings, mockQBOEnqueuedTaskResponse, mockQBOCompletedTaskResponse } from 'src/app/integrations/qbo/qbo.fixture';
+import { mockWorkspaceGeneralSettingsForDashboard, mockExportableExpenseGroup, mockExportSettingsForDashboard, mockImportSettingsForDashboard, mockExportErrors, mockQBOTaskResponse, mockAccountingExportSummary, mockExportSettings, mockQBOEnqueuedTaskResponse, mockQBOCompletedTaskResponse, mockQboAdvancedSettings } from 'src/app/integrations/qbo/qbo.fixture';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 
 describe('QboDashboardComponent', () => {
   let component: QboDashboardComponent;
@@ -24,6 +25,7 @@ describe('QboDashboardComponent', () => {
   let workspaceService: jasmine.SpyObj<WorkspaceService>;
   let qboExportSettingsService: jasmine.SpyObj<QboExportSettingsService>;
   let importSettingService: jasmine.SpyObj<QboImportSettingsService>;
+  let qboAdvancedSettingsService: jasmine.SpyObj<QboAdvancedSettingsService>;
 
   beforeEach(async () => {
     const accountingExportServiceSpy = jasmine.createSpyObj('AccountingExportService', ['getAccountingExportSummary', 'importExpensesFromFyle']);
@@ -31,6 +33,7 @@ describe('QboDashboardComponent', () => {
     const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings']);
     const qboExportSettingsServiceSpy = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings']);
     const importSettingServiceSpy = jasmine.createSpyObj('QboImportSettingsService', ['getImportSettings']);
+    const qboAdvancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings']);
 
     await TestBed.configureTestingModule({
       declarations: [ QboDashboardComponent ],
@@ -39,7 +42,8 @@ describe('QboDashboardComponent', () => {
         { provide: DashboardService, useValue: dashboardServiceSpy },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: QboExportSettingsService, useValue: qboExportSettingsServiceSpy },
-        { provide: QboImportSettingsService, useValue: importSettingServiceSpy }
+        { provide: QboImportSettingsService, useValue: importSettingServiceSpy },
+        { provide: QboAdvancedSettingsService, useValue: qboAdvancedSettingsServiceSpy }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -49,6 +53,7 @@ describe('QboDashboardComponent', () => {
     workspaceService = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     qboExportSettingsService = TestBed.inject(QboExportSettingsService) as jasmine.SpyObj<QboExportSettingsService>;
     importSettingService = TestBed.inject(QboImportSettingsService) as jasmine.SpyObj<QboImportSettingsService>;
+    qboAdvancedSettingsService = TestBed.inject(QboAdvancedSettingsService) as jasmine.SpyObj<QboAdvancedSettingsService>;
   });
 
   beforeEach(() => {
@@ -82,6 +87,7 @@ describe('QboDashboardComponent', () => {
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
     qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettings));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
 
@@ -116,6 +122,7 @@ describe('QboDashboardComponent', () => {
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
 
     component.getExportErrors$ = of(mockExportErrors);
     component.getAccountingExportSummary$ = of(mockAccountingExportSummary);
@@ -136,6 +143,7 @@ describe('QboDashboardComponent', () => {
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
 
@@ -154,6 +162,7 @@ describe('QboDashboardComponent', () => {
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
     qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingsForDashboard as QBOExportSettingGet));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
 
@@ -214,6 +223,7 @@ describe('QboDashboardComponent', () => {
     modifiedSettings.workspace_general_settings.reimbursable_expenses_object = '';
     modifiedSettings.workspace_general_settings.corporate_credit_card_expenses_object = '';
     qboExportSettingsService.getExportSettings.and.returnValue(of(modifiedSettings as QBOExportSettingGet));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
 
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
@@ -240,6 +250,7 @@ describe('QboDashboardComponent', () => {
     workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettingsForDashboard));
     dashboardService.getExportableAccountingExportIds.and.returnValue(of(mockExportableExpenseGroup));
     qboExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingsForDashboard as QBOExportSettingGet));
+    qboAdvancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
     importSettingService.getImportSettings.and.returnValue(of(mockImportSettingsForDashboard as QBOImportSettingGet));
     accountingExportService.importExpensesFromFyle.and.returnValue(of({}));
 

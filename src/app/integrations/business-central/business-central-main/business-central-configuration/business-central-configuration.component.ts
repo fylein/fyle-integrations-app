@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-business-central-configuration',
@@ -8,18 +9,23 @@ import { MenuItem } from 'primeng/api';
 })
 export class BusinessCentralConfigurationComponent implements OnInit {
 
-  modules: MenuItem[] = [
-    {label: 'Export settings', routerLink: '/integrations/business_central/main/configuration/export_settings'},
-    {label: 'Import settings', routerLink: '/integrations/business_central/main/configuration/import_settings'},
-    {label: 'Advanced settings', routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
-  ];
+  modules: MenuItem[];
 
-  activeModule: MenuItem = this.modules[0];
+  activeModule: MenuItem;
 
 
-  constructor() { }
+  constructor(
+    private translocoService: TranslocoService
+  ) { }
 
   ngOnInit(): void {
+    this.modules = [
+      {label: this.translocoService.translate('businessCentralConfiguration.exportSettings'), routerLink: '/integrations/business_central/main/configuration/export_settings'},
+      {label: this.translocoService.translate('businessCentralConfiguration.importSettings'), routerLink: '/integrations/business_central/main/configuration/import_settings'},
+      {label: this.translocoService.translate('businessCentralConfiguration.advancedSettings'), routerLink: '/integrations/business_central/main/configuration/advanced_settings'}
+    ];
+
+    this.activeModule = this.modules[0];
   }
 
 }

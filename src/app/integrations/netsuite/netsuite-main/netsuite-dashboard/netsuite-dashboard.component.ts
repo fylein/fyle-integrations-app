@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, from, interval, of, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
@@ -12,6 +12,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
+import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 
 @Component({
   selector: 'app-netsuite-dashboard',
@@ -37,6 +38,8 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
   exportProgressPercentage: number = 0;
 
   accountingExportSummary: AccountingExportSummary | null;
+
+  isRealTimeExportEnabled: boolean = false;
 
   processedCount: number = 0;
 
@@ -69,8 +72,6 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.dashboard;
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -78,7 +79,8 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
     private dashboardService: DashboardService,
     private netsuiteExportSettingsService: NetsuiteExportSettingsService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private netsuiteAdvancedSettingsService: NetsuiteAdvancedSettingsService
   ) { }
 
   export() {
@@ -130,7 +132,8 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, this.appName),
       this.dashboardService.getExportableAccountingExportIds('v1'),
-      this.netsuiteExportSettingsService.getExportSettings()
+      this.netsuiteExportSettingsService.getExportSettings(),
+      this.netsuiteAdvancedSettingsService.getAdvancedSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       if (responses[1]) {
@@ -150,6 +153,8 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 
       this.reimbursableImportState = responses[4].configuration.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[4].expense_group_settings.expense_state] : null;
       this.cccImportState = responses[4].configuration.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[4].expense_group_settings.ccc_expense_state] : null;
+
+      this.isRealTimeExportEnabled = responses[5].workspace_schedules?.is_real_time_export_enabled;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

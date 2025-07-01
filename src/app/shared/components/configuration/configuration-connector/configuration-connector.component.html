@@ -50,29 +50,29 @@
                 {{ accountingCompanyName }}
             </h3>
             <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v2'">
-                Fetching data from your {{appName}} account…</p> 
+                {{ 'configurationConnector.fetchingData' | transloco: { appName: appName } }}</p> 
             <div [ngClass]="{'tw-mt-16-px': brandingFeatureConfig.featureFlags.contentVersion === 'v1'}">
                 <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
             </div>
         </div>
         <div class="tw-text-14-px tw-font-500 tw-text-center">
             <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-text-muted tw-mb-4-px">
-                Not the company you want to connect?
+                {{ 'configurationConnector.notTheCompany' | transloco }}
             </p>
             <p *ngIf="accountingCompanyConnectionInProgress && brandingConfig.brandId !== 'co'" class="tw-text-text-muted tw-max-w-300-px tw-text-pretty">
-                Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
+                {{ 'configurationConnector.pleaseHoldOn' | transloco: { accountingAppTitle: accountingAppTitle } }}
             </p>
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted tw-mb-4-px">
-                Token expired.
+                {{ 'configurationConnector.tokenExpired' | transloco }}
             </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px ">
-                    Re-Connect to {{ accountingAppTitle }}
+                    {{ 'configurationConnector.reconnectToApp' | transloco: { accountingAppTitle: accountingAppTitle } }}
                 </span>
             </div>
             <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px ">
-                    Connect to {{ accountingAppTitle }}
+                    {{ 'configurationConnector.connectToApp' | transloco: { accountingAppTitle: accountingAppTitle } }}
                 </span>
             </div>
             <div *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" class="tw-h-60-px">
@@ -83,3 +83,4 @@
         </div>
     </div>
 </div>
+

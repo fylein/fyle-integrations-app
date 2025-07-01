@@ -4,8 +4,8 @@
 
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="brandingContent.stepName"
-            [contentText]="brandingContent.contentText"
+        <app-configuration-step-header [headerText]="'netsuite.configuration.importSetting.stepName' | transloco"
+            [contentText]="'netsuite.configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -17,8 +17,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="getCategoryLabel() + brandingContent.importCategoriesLabel"
-                        [subLabel]="getCategorySubLabel() + brandingContent.importCategoriesSubLabel"
+                        [label]="getCategoryLabel() + ('netsuite.configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName})"
+                        [subLabel]="getCategorySubLabel() + ('netsuite.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName})"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -28,8 +28,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importNetsuiteEmployeesLabel"
-                        [subLabel]="brandingContent.importNetsuiteEmployeesSubLabel"
+                        [label]="'netsuite.configuration.importSetting.importNetsuiteEmployeesLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'netsuite.configuration.importSetting.importNetsuiteEmployeesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importNetsuiteEmployees'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -38,8 +38,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportItemsAllowed && brandingFeatureConfig.featureFlags.importSettings.importItems">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importItemsLabel"
-                        [subLabel]="'Items from NetSuite will be imported as categories in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [label]="'netsuite.configuration.importSetting.importItemsLabel' | transloco"
+                        [subLabel]="'netsuiteImportSettings.importItemsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importItems'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -48,8 +48,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors from NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [label]="'netsuite.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
+                        [subLabel]="'netsuiteImportSettings.importVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -58,8 +58,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
-                      [label]="brandingContent.taxCodeLabel"
-                      [subLabel]="brandingContent.taxCodeSubLabel + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
+                      [label]="'netsuite.configuration.importSetting.taxCodeLabel' | transloco"
+                      [subLabel]="'netsuite.configuration.importSetting.taxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -67,12 +67,12 @@
                     <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'tax code'"
-                        [label]="brandingContent.defaultTaxCodeLabel"
-                        [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
+                        [mandatoryErrorListName]="'netsuiteImportSettings.taxCode' | transloco"
+                        [label]="'netsuite.configuration.importSetting.defaultTaxCodeLabel' | transloco"
+                        [subLabel]="'netsuiteImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [destinationAttributes]="taxCodes"
                         [optionLabel]="'value'"
-                        [placeholder]="'Select tax code'"
+                        [placeholder]="'netsuiteImportSettings.selectTaxCodePlaceholder' | transloco"
                         [formControllerName]="'defaultTaxCode'">
                     </app-configuration-select-field>
                 </div>
@@ -93,7 +93,7 @@
                             <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"></app-svg-icon>
                         </div>
                         <div class="tw-cursor-pointer tw-text-mandatory-field-color tw-font-500 tw-text-14-px">
-                            {{brandingContent.customSegmentHeader}}
+                            {{'netsuite.configuration.importSetting.customSegmentHeader' | transloco}}
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
     <app-preview-dialog
         [isPreviewDialogVisible]="true"
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'Preview'">
+        [header]="'netsuiteImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
 </div>
 

@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard-export-summary-section',
@@ -23,6 +24,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   @Input() accountingExportType: string[];
 
   @Input() exportLogVersion: 'v1' | 'v2' = 'v2';
+
+  @Input() isRealTimeExportEnabled: boolean;
 
   filteredAccountingExports: AccountingExportList[] = [];
 
@@ -44,8 +47,6 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.dashboard;
-
   readonly brandingStyle = brandingStyle;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -53,7 +54,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
-    private userService: UserService
+    private userService: UserService,
+    private translocoService: TranslocoService
   ) { }
 
   handleDialogClose(){
@@ -82,7 +84,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     };
     this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt || lastUpdatedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
+        this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName, this.translocoService)
       );
       this.setFormattedAccountingExport(accountingExports);
     });
@@ -91,7 +93,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   private getAccountingExports(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null) {
     this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, null, lastExportedAt, null, this.appName).subscribe(accountingExportResponse => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
+        this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
       );
       this.setFormattedAccountingExport(accountingExports);
     });
@@ -104,12 +106,12 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
       if (status === AccountingExportStatus.COMPLETE) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
-        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(this.appName)) {
+        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(this.appName)) {
           lastExportedAt = this.accountingExportSummary.repurposed_last_exported_at;
         } else {
           lastExportedAt = this.accountingExportSummary.last_exported_at;
         }
-      } else if (status === AccountingExportStatus.FAILED && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT].includes(this.appName)) {
+      } else if (status === AccountingExportStatus.FAILED && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(this.appName)) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
       }
@@ -125,8 +127,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   showExportLog(status: AccountingExportStatus) {
     this.filteredAccountingExports = [];
     this.isExportLogFetchInProgress = true;
-    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : brandingContent.dashboard.exportLogHeader;
-    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : brandingContent.dashboard.exportLogSubHeader;
+    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : this.translocoService.translate('dashboard.exportLogHeader');
+    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : this.translocoService.translate('dashboard.exportLogSubHeader');
     this.setupAccountingExports(500, 0, status);
     this.isExportLogVisible = true;
   }

@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
-import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
+import { AdvancedSettingsService } from "src/app/core/services/common/advanced-settings.service";
 
   export interface GeneralMappingEntity {
     id: string;
@@ -75,6 +75,7 @@ export interface Configuration {
     auto_create_destination_entity: boolean;
     auto_create_merchant_destination_entity: boolean;
     memo_structure: string[];
+    top_level_memo_structure: string[];
     auto_create_merchants_as_vendors: boolean;
     je_single_credit_line: boolean;
   }
@@ -112,7 +113,7 @@ export type AdvancedSettingsPost = {
     workspace_schedules: WorkspaceSchedules;
   }
 
-  export class AdvancedSetting extends AdvancedSettingsModel {
+  export class AdvancedSetting extends AdvancedSettingsService {
     static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
       const getFormValue = (key: string) => advancedSettingsForm.get(key)?.value;
 
@@ -129,6 +130,7 @@ export type AdvancedSettingsPost = {
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
           change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
           memo_structure: getFormValue('setDescriptionField'),
+          top_level_memo_structure: getFormValue('setTopMemoField'),
           auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false,
           je_single_credit_line: getFormValue('singleCreditLineJE') ? getFormValue('singleCreditLineJE') : false
         },

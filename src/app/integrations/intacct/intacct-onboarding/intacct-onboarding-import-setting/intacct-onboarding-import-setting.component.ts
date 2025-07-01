@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
-import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-intacct-onboarding-import-setting',
@@ -11,17 +12,18 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class IntacctOnboardingImportSettingComponent implements OnInit {
 
-  readonly brandingContent = brandingContent.configuration.importSetting;
-
-  onboardingSteps: OnboardingStepper[] = new IntacctOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService,
+    private intacctOnboardingService: IntacctOnboardingService
   ) { }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.importSetting.stepName'), this.workspaceService.getOnboardingState());
   }
 
 }

@@ -2,16 +2,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent, AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
-import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import { TravelperkAdvancedSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
-import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } from '../travelperk.fixture';
+import { travelperkDestinationAttribute } from '../travelperk.fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { TravelperkAdvancedSettingService } from 'src/app/core/services/travelperk/travelperk-advanced-settings.service';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -42,7 +44,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   defaultCategories: TravelperkDestinationAttribuite[];
 
-  destinationFieldOptions: SelectFormOption[] = TravelperkAdvancedSettingModel.getDefaultCategory();
+  destinationFieldOptions: SelectFormOption[];
 
   defaultMemoOptions: string[] = ['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
 
@@ -60,7 +62,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     value: ''
   };
 
-  lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
+  lineItems: SelectFormOption[];
 
   readonly brandingStyle = brandingStyle;
 
@@ -70,8 +72,13 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService,
+    private travelperkAdvancedSettingService: TravelperkAdvancedSettingService
+  ) {
+    this.destinationFieldOptions = this.travelperkAdvancedSettingService.getDefaultCategory();
+    this.lineItems = this.travelperkAdvancedSettingService.getExpenseGroup();
+  }
 
   private formatMemoPreview(): void {
     const previewValues: { [key: string]: string } = {
@@ -112,10 +119,10 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const advancedSettingsPayload = TravelperkAdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingsForm);
+    const advancedSettingsPayload = this.travelperkAdvancedSettingService.createAdvancedSettingPayload(this.advancedSettingsForm);
     this.travelperkService.postTravelperkAdvancedSettings(advancedSettingsPayload).subscribe((travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsSuccess'));
       this.trackingService.trackTimeSpent(TrackingApp.TRAVELPERK, Page.ADVANCED_SETTINGS_TRAVELPERK, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.TRAVELPERK, TravelPerkOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingsPayload);
@@ -139,7 +146,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsError'));
     });
   }
 
@@ -157,7 +164,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
-      this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
+      this.advancedSettingsForm = this.travelperkAdvancedSettingService.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
       this.createMemoStructureWatcher();
       this.isLoading = false;
     });

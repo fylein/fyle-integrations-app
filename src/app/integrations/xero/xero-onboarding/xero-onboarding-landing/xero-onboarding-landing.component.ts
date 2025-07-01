@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
@@ -12,6 +12,7 @@ import { XeroConnectorService } from 'src/app/core/services/xero/xero-configurat
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-onboarding-landing',
@@ -36,8 +37,6 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.xero.landing;
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -47,7 +46,8 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private router: Router,
     private xeroHelper: XeroHelperService,
     private toastService: IntegrationsToastService,
-    private xeroAuthService: XeroAuthService
+    private xeroAuthService: XeroAuthService,
+    private translocoService: TranslocoService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -63,7 +63,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
       this.xeroConnectionInProgress = false;
       this.checkProgressAndRedirect();
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero tenant. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingLanding.connectionFailedMessage');
       if (errorMessage === 'Please choose the correct Xero account') {
         this.isIntegrationConnected = false;
         this.xeroConnectionInProgress = false;

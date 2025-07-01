@@ -8,25 +8,25 @@
     <div class="tw-text-center">
       <h2 class="tw-text-text-primary !tw-font-400 !tw-text-18-px">
         <span *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
-          Congratulations!
+          {{ 'onboardingDone.congratulationsText' | transloco }}
         </span>
         <span>
-          {{brandingContent.doneHeaderText}}
+          {{ 'configuration.done.doneHeaderText' | transloco }}
         </span>
       </h2>
       <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v2'" class="tw-py-10-px">
-        <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
+        <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="'configuration.done.hintText' | transloco"></h5>
       </div>
     </div>
     <div class="tw-flex tw-justify-center tw-py-20-px">
       <div>
         <button type="button" class="p-button" (click)="navigateToDashboard()">
-          {{brandingContent.ctaText}}
+          {{ 'configuration.done.ctaText' | transloco }}
         </button>
       </div>
     </div>
     <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'" class="tw-py-20-px">
-      <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
+      <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="'configuration.done.hintText' | transloco"></h5>
     </div>
   </div>
 </div>

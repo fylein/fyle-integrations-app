@@ -241,6 +241,11 @@ export const mockCCCExpenseGroupingDateOptionsForCreditDebit: SelectFormOption[]
   }
 ];
 
+export const mockCCCExpenseDateGroupingForCreditDebit: SelectFormOption[] = [
+  {label: 'Card Transaction Post Date', value: ExportDateType.POSTED_AT},
+  {label: 'Spend date', value: ExportDateType.SPENT_AT}
+];
+
 export const mockCCCExpenseDateGrouping: SelectFormOption[] = [
   {label: 'Export date', value: ExportDateType.CURRENT_DATE},
   {label: 'Verification date', value: ExportDateType.VERIFIED_AT},

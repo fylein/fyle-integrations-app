@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -10,7 +10,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -21,6 +20,8 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { environment } from 'src/environments/environment';
+import { TranslocoService } from '@jsverse/transloco';
+import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
   selector: 'app-qbo-onboarding-connector',
@@ -29,9 +30,7 @@ import { environment } from 'src/environments/environment';
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
-  brandingContent = brandingContent.configuration.connector;
-
-  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
 
@@ -88,7 +87,9 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private toastService: IntegrationsToastService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translocoService: TranslocoService,
+    private qboOnboardingService: QboOnboardingService
   ) { }
 
   connectQbo(): void {
@@ -140,10 +141,9 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
       if (response.is_available) {
-        this.warningHeaderText = 'Your settings are pre-filled';
-        this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
-        <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`;
-        this.primaryButtonText = 'Continue';
+        this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.prefilledSettingsWarningHeader');
+        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.prefilledSettingsWarningContent', { workspaceName: `(${response.workspace_name})` });
+        this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.continueButtonText');
         this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
         this.isWarningDialogVisible = true;
         this.isContinueDisabled = false;
@@ -195,15 +195,15 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       });
 
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
+      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('qboOnboardingConnector.failedToConnectQBO');
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
-        this.warningHeaderText = 'Incorrect account selected';
-        this.warningContextText = 'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings';
-        this.primaryButtonText = 'Re connect';
+        this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningHeader');
+        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent');
+        this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.reconnectButtonText');
         this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
         this.isWarningDialogVisible = true;
       } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboOnboardingConnector.somethingWentWrong'));
         this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });
@@ -243,6 +243,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.onboardingSteps = this.qboOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+
     this.setupPage();
   }
 

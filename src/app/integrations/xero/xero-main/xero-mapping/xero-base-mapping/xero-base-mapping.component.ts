@@ -8,6 +8,7 @@ import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-wo
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-xero-base-mapping',
@@ -41,17 +42,18 @@ export class XeroBaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) { }
 
   triggerAutoMapEmployees(): void {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('xeroBaseMapping.autoMappingInfo'));
     }, () => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroBaseMapping.autoMappingError'));
     });
   }
 
