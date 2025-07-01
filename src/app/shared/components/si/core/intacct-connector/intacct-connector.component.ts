@@ -37,7 +37,7 @@ export class IntacctConnectorComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private intacctConnectorService: IntacctConnectorService,
+    private intacctConnectorService: IntacctConnectorService
   ) { }
 
   save() {
