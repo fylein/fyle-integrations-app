@@ -47,7 +47,7 @@
     </div>
   }
 
-  @if (appName === AppName.NETSUITE || appName === AppName.INTACCT) {
+  @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
         <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect integration</button>
       </div>
@@ -97,6 +97,12 @@
     <div class="tw-min-w-full">
     @if (appName === AppName.NETSUITE) {
     <app-netsuite-connection-form [connectNetsuiteForm]="integrationSetupForm" [isReconnecting]="true"></app-netsuite-connection-form>
+    }
+    @if (appName === AppName.INTACCT) {
+    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true"></app-intacct-connection-form>
+    }
+    @if (appName === AppName.SAGE300) {
+    <app-sage300-connection-form [connectSage300Form]="integrationSetupForm" [isReconnecting]="true"></app-sage300-connection-form>
     }
     </div>
   </div>

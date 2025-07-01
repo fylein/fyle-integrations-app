@@ -1,11 +1,15 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+@if (isGradientAllowed){
+<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
 
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+@if(isLoading){
+<div class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
+}
 
-<div *ngIf="!isLoading">
+@if(!isLoading && !isSage300TokenNotValid){
     <app-dashboard-export-section
         (export)="export()"
         [loaderType]="LoaderType.INDETERMINATE"
@@ -21,20 +25,24 @@
         [cccImportState]="cccImportState">
     </app-dashboard-export-section>
     
+    @if(!accountingExportSummary && !exportableAccountingExportIds.length){
     <app-zero-state 
-        *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length" 
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
         [headerText]="'Looks like you have'"
         [subHeaderText]="'0 expenses to export right now'">
     </app-zero-state>
+    }
     
-    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
+    @if(exportableAccountingExportIds.length || accountingExportSummary){
+    <app-dashboard-export-summary-section
         [appName]="appName"
         [accountingExportType]="accountingExportType"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
+    }
     
-    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
+    @if(errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length){
+    <app-dashboard-error-section
         [appName]="appName" 
         [errors]="errors" 
         [groupedErrorStat]="groupedErrorStat"
@@ -44,4 +52,14 @@
         [exportableExpenseGroupIds]="exportableAccountingExportIds"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-error-section>
-</div>
+    }
+}
+
+@if (!isLoading && isSage300TokenNotValid) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
+    <app-dashboard-token-expired
+      [appName]="appName"
+    >
+    </app-dashboard-token-expired>
+  </div>
+}

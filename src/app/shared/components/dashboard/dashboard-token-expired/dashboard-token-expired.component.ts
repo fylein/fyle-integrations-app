@@ -8,6 +8,8 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
@@ -50,7 +52,9 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private router: Router,
     private xeroAuthService: XeroAuthService,
     private windowService: WindowService,
-    private netsuiteConnector: NetsuiteConnectorService
+    private netsuiteConnector: NetsuiteConnectorService,
+    private intacctConnector: IntacctConnectorService,
+    private sage300Connector: Sage300ConnectorService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -66,6 +70,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
     if (this.appName === AppName.INTACCT){
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR);
+    }
+
+    if (this.appName === AppName.SAGE300){
+      this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.SAGE300.LANDING);
     }
   }
 
@@ -85,14 +93,39 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   reconnectToIntegration(): void{
     this.isIntegrationReconnectDialogVisible = false;
     this.isConnectionInProgress = true;
-    this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true)
-    .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
-      this.integrationSetupForm = netsuiteSetupForm;
-      this.isConnectionInProgress = false;
-      if (isNetsuiteConnected === true){
-        this.router.navigate(['integrations/netsuite/main/dashboard']);
-      }
-    });
+
+    if (this.appName === AppName.NETSUITE) {
+      this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true)
+      .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
+        this.integrationSetupForm = netsuiteSetupForm;
+        this.isConnectionInProgress = false;
+        if (isNetsuiteConnected){
+          this.router.navigate(['integrations/netsuite/main/dashboard']);
+        }
+      });
+    }
+
+    if (this.appName === AppName.INTACCT) {
+      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true)
+      .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
+        this.integrationSetupForm = intacctSetupForm;
+        this.isConnectionInProgress = false;
+        if (isIntacctConnected){
+          this.router.navigate(['integrations/intacct/main/dashboard']);
+        }
+      });
+    }
+
+    if (this.appName === AppName.SAGE300) {
+      this.sage300Connector.connectSage300(this.integrationSetupForm, true)
+      .subscribe(({ sage300SetupForm, isSage300Connected }) => {
+        this.integrationSetupForm = sage300SetupForm;
+        this.isConnectionInProgress = false;
+        if (isSage300Connected){
+          this.router.navigate(['integrations/sage300/main/dashboard']);
+        }
+      });
+    }
   }
 
   setupPage(): void{
@@ -112,6 +145,20 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
     if (this.appName === AppName.INTACCT){
       this.isTokenBasedAuthApp = true;
+      this.helperService.setBaseApiURL(AppUrl.INTACCT);
+
+      this.intacctConnector.getIntacctFormGroup().subscribe(({ intacctSetupForm }) => {
+        this.integrationSetupForm = intacctSetupForm;
+      });
+    }
+
+    if (this.appName === AppName.SAGE300){
+      this.isTokenBasedAuthApp = true;
+      this.helperService.setBaseApiURL(AppUrl.SAGE300);
+
+      this.sage300Connector.getSage300FormGroup().subscribe((sage300SetupForm) => {
+        this.integrationSetupForm = sage300SetupForm;
+      });
     }
 
     if (this.appName === AppName.QBO){
