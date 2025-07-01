@@ -107,7 +107,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   creditCardExportTypes: ExportSettingFormOption[];
 
@@ -153,6 +153,8 @@ export class IntacctExportSettingsComponent implements OnInit {
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
+
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
     this.autoMapEmployeeOptions = [
       { label: this.translocoService.translate('intacctExportSettings.emailIdMapping'), value: 'EMAIL' },

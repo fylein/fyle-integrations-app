@@ -301,6 +301,8 @@ export class QboImportSettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
     this.setupPage();
   }
 

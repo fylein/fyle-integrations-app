@@ -40,7 +40,7 @@ describe('QboAdvancedSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings']);
+    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings', 'getPaymentSyncOptions']);
     const exportSettingsServiceSpy = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings']);
     const configurationServiceSpy = jasmine.createSpyObj('ConfigurationService', ['getAdditionalEmails']);
     const helperServiceSpy = jasmine.createSpyObj('HelperService', ['setConfigurationSettingValidatorsAndWatchers', 'handleSkipExportFormInAdvancedSettingsUpdates', 'shouldAutoEnableAccountingPeriod']);

@@ -134,7 +134,6 @@ export class QboExportSettingsComponent implements OnInit {
 
   constructor(
     private translocoService: TranslocoService,
-    private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
@@ -214,7 +213,7 @@ export class QboExportSettingsComponent implements OnInit {
 
       concat(
         this.employeeSettingService.postEmployeeSettings(employeeSettingPayload),
-        this.exportSettingService.postExportSettings(exportSettingPayload)
+        this.qboExportSettingsService.postExportSettings(exportSettingPayload)
       ).subscribe({
         complete: () => {
           this.isSaveInProgress = false;
@@ -338,7 +337,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
     }
 
-    this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
+    this.qboExportSettingsService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
       this.showNameInJournalOption = selectedValue === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
@@ -505,7 +504,7 @@ export class QboExportSettingsComponent implements OnInit {
     });
 
     forkJoin([
-      this.exportSettingService.getExportSettings(),
+      this.qboExportSettingsService.getExportSettings(),
       this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {
 return of(null);
 })),
@@ -542,12 +541,12 @@ return of(null);
 
       const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
       if (this.exportSettings.workspace_general_settings?.reimbursable_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[0], this.exportSettings.workspace_general_settings?.reimbursable_expenses_object);
+        this.qboExportSettingsService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[0], this.exportSettings.workspace_general_settings?.reimbursable_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
       if (this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[1], this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object);
+        this.qboExportSettingsService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[1], this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
@@ -558,7 +557,7 @@ return of(null);
       this.setupCustomDateOptionWatchers();
       this.optionSearchWatcher();
 
-      this.exportSettingService.setExportTypeValidatorsAndWatchers(
+      this.qboExportSettingsService.setExportTypeValidatorsAndWatchers(
         exportModuleRule, this.exportSettingForm, employeeMappingControl
       );
 
@@ -567,6 +566,17 @@ return of(null);
   }
 
   ngOnInit(): void {
+    this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.creditCardExportTypes = this.qboExportSettingsService.getCreditCardExportTypes();
+    this.cccExpenseStateOptions = this.qboExportSettingsService.getCCCExpenseStateOptions();
+    this.expenseStateOptions = this.qboExportSettingsService.getReimbursableExpenseStateOptions();
+    this.expenseGroupByOptions = this.qboExportSettingsService.getExpenseGroupByOptions();
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+    this.nameInJournalOptions = this.qboExportSettingsService.getNameInJournalOptions();
+    this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
+    this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+    this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
+
     this.getSettingsAndSetupForm();
   }
 
