@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Format only staged files with Prettier
+npx prettier --write $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|js|html|scss|css|json)$' | grep '^src/')
+
+# Lint and fix code
 ng lint --fix

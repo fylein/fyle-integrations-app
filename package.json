@@ -11,6 +11,8 @@
     "setup:env": "node scripts/setup_env.js",
     "setup:branding": "node scripts/setup_branding_config.js",
     "lint": "ng lint",
+    "format": "prettier --write \"src/**/*.{ts,js,html,scss,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,html,scss,css,json}\"",
     "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id",
     "stop": "kill $(lsof -t -i:4200) || true",
     "storybook": "ng run fyle-integrations-app:storybook",
@@ -72,6 +74,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "postcss": "^8.4.18",
+    "prettier": "^3.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "svg2sprite-cli": "^2.0.1"
