@@ -28,7 +28,7 @@ describe('Sage300ConnectionFormComponent', () => {
     fixture = TestBed.createComponent(Sage300ConnectionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    
+
   });
 
   it('should create', () => {
