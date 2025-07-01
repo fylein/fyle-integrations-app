@@ -4,11 +4,13 @@ import { of } from 'rxjs';
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector.component';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctOnboardingConnectorComponent', () => {
   let component: IntacctOnboardingConnectorComponent;
@@ -19,16 +21,29 @@ describe('IntacctOnboardingConnectorComponent', () => {
   beforeEach(async () => {
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
     const intacctConnectorSpyObj = jasmine.createSpyObj('IntacctConnectorService', ['getIntacctTokenHealthStatus']);
+    const intacctOnboardingServiceSpy = jasmine.createSpyObj('IntacctOnboardingService', ['getOnboardingSteps']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
+
+    translocoServiceSpy.translate.and.returnValue('Intacct Connection');
+    intacctOnboardingServiceSpy.getOnboardingSteps.and.returnValue([]);
 
     await TestBed.configureTestingModule({
       declarations: [IntacctOnboardingConnectorComponent],
-      imports: [SharedModule],
+      imports: [SharedModule, TranslocoModule],
       providers: [
         { provide: WorkspaceService, useValue: workspaceSpy },
         { provide: IntacctConnectorService, useValue: intacctConnectorSpyObj },
+        { provide: IntacctOnboardingService, useValue: intacctOnboardingServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        MessageService
+        MessageService,
+        { provide: TranslocoService, useValue: translocoServiceSpy }
       ]
     })
     .compileComponents();

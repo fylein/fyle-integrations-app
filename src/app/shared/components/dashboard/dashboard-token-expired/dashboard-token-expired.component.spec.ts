@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardTokenExpiredComponent } from './dashboard-token-expired.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { of } from 'rxjs';
 
 describe('DashboardTokenExpiredComponent', () => {
   let component: DashboardTokenExpiredComponent;
@@ -11,12 +12,19 @@ describe('DashboardTokenExpiredComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const translocoSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
+      config: {
+        reRenderOnLangChange: true
+      },
+      langChanges$: of('en'),
+      _loadDependencies: () => Promise.resolve()
+    });
+
 
     await TestBed.configureTestingModule({
       declarations: [DashboardTokenExpiredComponent],
-      imports: [HttpClientModule],
-      providers: [MessageService, { provide: TranslocoService, useValue: translocoSpy }]
+      imports: [HttpClientModule, TranslocoModule],
+      providers: [MessageService, { provide: TranslocoService, useValue: translocoServiceSpy }]
     })
     .compileComponents();
 
