@@ -1,11 +1,11 @@
 <form [formGroup]="connectNetsuiteForm">
     <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'Invalid account ID. Please enter valid account ID.'" [form]="connectNetsuiteForm" [formControllerName]="'accountId'" [isFieldMandatory]="true" [label]="'Account ID'" [placeholder]="'Enter account ID'"></app-configuration-text-field>
+        <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnector.invalidAccountIdError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'accountId'" [isFieldMandatory]="true" [label]="'netsuiteConnector.accountIdLabel' | transloco" [placeholder]="'netsuiteConnector.accountIdPlaceholder' | transloco"></app-configuration-text-field>
     </div>
     <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'Invalid token ID. Please enter valid token ID.'" [form]="connectNetsuiteForm" [formControllerName]="'tokenId'" [isFieldMandatory]="true" [label]="'Token ID'" [placeholder]="'Enter token ID'"></app-configuration-text-field>
+        <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnector.invalidTokenIdError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'tokenId'" [isFieldMandatory]="true" [label]="'netsuiteConnector.tokenIdLabel' | transloco" [placeholder]="'netsuiteConnector.tokenIdPlaceholder' | transloco"></app-configuration-text-field>
     </div>
     <div>
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'Incorrect token secret. Please enter correct token secret.'" [form]="connectNetsuiteForm" [formControllerName]="'tokenSecret'" [isFieldMandatory]="true" [label]="'Token secret'" [placeholder]="'Enter token secret ID'"></app-configuration-text-field>
+        <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnector.incorrectTokenSecretError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'tokenSecret'" [isFieldMandatory]="true" [label]="'netsuiteConnector.tokenSecretLabel' | transloco" [placeholder]="'netsuiteConnector.tokenSecretPlaceholder' | transloco"></app-configuration-text-field>
     </div>
 </form>
