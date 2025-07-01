@@ -1,10 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Format only staged files with Prettier
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM --z | grep -E '\.(ts|js|html|scss|css|json)$' | grep '^src/' || true)
+set -e  # Exit on any error
 
-if [ -n "$STAGED_FILES" ]; then
+# Format only staged files with Prettier
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM --z | grep -z -E '\.(ts|js|html|scss|css|json)$' | grep -z '^src/' || true)
+
+# Check if STAGED_FILES is not empty (handle null-terminated strings properly)
+if [ -n "$STAGED_FILES" ] && [ "$STAGED_FILES" != "" ]; then
   echo "$STAGED_FILES" | xargs -0 npx prettier --write
   echo "$STAGED_FILES" | xargs -0 git add
 fi
