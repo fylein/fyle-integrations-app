@@ -1,6 +1,3 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { environment } from "src/environments/environment";
-
 export type NetsuiteConnector = {
   ns_account_id: string;
   ns_token_id: string;
@@ -15,28 +12,6 @@ export interface NetsuiteConnectorGet extends NetsuiteConnector {
 }
 
 export interface NetsuiteConnectorPost extends NetsuiteConnector {}
-
-
-export class NetsuiteConnectorModel {
-
-  static mapAPIResponseToFormGroup(netsuiiteConnection: NetsuiteConnectorGet | null): FormGroup {
-    const isDisabled = netsuiiteConnection?.ns_account_id ? true : false;
-    return new FormGroup({
-      accountId: new FormControl({value: netsuiiteConnection?.ns_account_id ? netsuiiteConnection?.ns_account_id : null, disabled: isDisabled}, Validators.required),
-      tokenId: new FormControl(null, Validators.required),
-      tokenSecret: new FormControl(null, Validators.required)
-    });
-  }
-
-  static constructPayload(form: FormGroup): NetsuiteConnectorPost {
-    return {
-      ns_account_id: form.controls.accountId.value,
-      ns_token_id: form.controls.tokenId.value,
-      ns_token_secret: form.controls.tokenSecret.value
-    };
-  }
-}
-
 
 export type NetsuiteSubsidiaryMappingPost = {
   country_name: string | null,

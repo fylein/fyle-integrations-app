@@ -4,9 +4,9 @@ import { ApiService } from '../../common/api.service';
 import { StorageService } from '../../common/storage.service';
 import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { catchError, map, Observable, of, Subject, switchMap } from 'rxjs';
-import { NetsuiteConnectorGet, NetsuiteConnectorModel, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteConnectorGet, NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { WorkspaceService } from '../../common/workspace.service';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NetsuiteMappingsService } from './netsuite-mappings.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -34,6 +34,23 @@ export class NetsuiteConnectorService {
     private translocoService: TranslocoService
   ) { }
 
+  mapAPIResponseToNetSuiteConnectorFormGroup(netsuiiteConnection: NetsuiteConnectorGet | null): FormGroup {
+    const isDisabled = netsuiiteConnection?.ns_account_id ? true : false;
+    return new FormGroup({
+      accountId: new FormControl({value: netsuiiteConnection?.ns_account_id ? netsuiiteConnection?.ns_account_id : null, disabled: isDisabled}, Validators.required),
+      tokenId: new FormControl(null, Validators.required),
+      tokenSecret: new FormControl(null, Validators.required)
+    });
+  }
+
+  constructNetSuiteConnectorPayload(form: FormGroup): NetsuiteConnectorPost {
+    return {
+      ns_account_id: form.controls.accountId.value,
+      ns_token_id: form.controls.tokenId.value,
+      ns_token_secret: form.controls.tokenSecret.value
+    };
+  }
+
   @Cacheable({
     cacheBusterObserver: netsuiteCredentialCache
   })
@@ -53,23 +70,23 @@ export class NetsuiteConnectorService {
 
   connectNetsuite(connectNetsuiteForm: FormGroup, isReconnecting?: boolean): Observable<{netsuiteSetupForm: FormGroup, isNetsuiteConnected: boolean}>{
     this.workspaceId = this.storageService.get('workspaceId');
-    const connectorPayload = NetsuiteConnectorModel.constructPayload(connectNetsuiteForm);
+    const connectorPayload = this.constructNetSuiteConnectorPayload(connectNetsuiteForm);
     return this.postCredentials(connectorPayload).pipe(
       switchMap((response) => {
         if (!isReconnecting){
           return this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).pipe(
             map(() => {
-              return { netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(response), isNetsuiteConnected: true };
+              return { netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(response), isNetsuiteConnected: true };
             })
           );
         }
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteConnector.connectionReconnectedToast'), 6000);
-          return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(response), isNetsuiteConnected: true });
+          return of({ netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(response), isNetsuiteConnected: true });
 
       }),
       catchError(() => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionErrorToast'));
-        return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteCredential), isNetsuiteConnected: false });
+        return of({ netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(this.netsuiteCredential), isNetsuiteConnected: false });
       })
     );
   }
@@ -79,12 +96,12 @@ export class NetsuiteConnectorService {
     return this.getNetsuiteCredentials().pipe(
       map((netsuiteCredential) => {
         this.netsuiteCredential = netsuiteCredential;
-        return { netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential) };
+        return { netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(netsuiteCredential) };
       }),
       catchError(() => {
         this.netsuiteCredential = null;
         return of({
-        netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(null) });
+        netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(null) });
       })
     );
 }
