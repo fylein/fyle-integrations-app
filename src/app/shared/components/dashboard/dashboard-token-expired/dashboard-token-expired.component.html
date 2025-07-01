@@ -6,7 +6,7 @@
   }
 
   @if (!isConnectionInProgress) {
-  <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="appName === AppName.NETSUITE ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
+  <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
     
     <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' : 'Connection expired' }} </p>
     @if (!isIntegrationDisconnected) {
@@ -47,7 +47,7 @@
     </div>
   }
 
-  @if (appName === AppName.NETSUITE) {
+  @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
         <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect integration</button>
       </div>
@@ -72,3 +72,46 @@
   [confirmBtnText]="'Re connect'" [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 }
+
+<p-dialog 
+  [visible]="isIntegrationReconnectDialogVisible"
+  header="Reconnect to NetSuite"
+  [showHeader]="false"
+  [modal]="true"
+  [style]="{ width: '515px', borderRadius: '8px' }"
+  styleClass="tw-overflow-hidden tw-border-b tw-border-gray-300"
+>
+
+  <!-- Header -->
+  <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color tw-h-[76px] tw-flex tw-justify-between tw-items-center tw-self-stretch">
+    <div class="tw-flex tw-justify-between tw-items-center">
+        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">Reconnect to {{appName}}</p>
+    </div>
+    <div class="tw-flex tw-justify-between tw-items-center tw-cursor-pointer">
+      <app-svg-icon [styleClasses]="'tw-transform tw-scale-[1.6]'" (click)="toggleIntegrationReconnectDialog()" [svgSource]="'cross-medium'" [width]="'15px'" [height]="'15px'"></app-svg-icon>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="tw-min-w-full tw-p-6">
+    <div class="tw-min-w-full">
+    @if (appName === AppName.NETSUITE) {
+    <app-netsuite-connection-form [connectNetsuiteForm]="integrationSetupForm" [isReconnecting]="true"></app-netsuite-connection-form>
+    }
+    @if (appName === AppName.INTACCT) {
+    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true"></app-intacct-connection-form>
+    }
+    @if (appName === AppName.SAGE300) {
+    <app-sage300-connection-form [connectSage300Form]="integrationSetupForm" [isReconnecting]="true"></app-sage300-connection-form>
+    }
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
+    <button type="button" (click)="reconnectToIntegration()" class="connect-btn" pButton>
+      Reconnect
+    </button>
+  </div>
+
+</p-dialog>

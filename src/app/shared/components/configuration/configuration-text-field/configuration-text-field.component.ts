@@ -23,6 +23,8 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   @Input() type: string = 'text';
 
+  @Input() styleClasses?: string;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingStyle = brandingStyle;
