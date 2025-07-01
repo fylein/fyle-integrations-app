@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, forkJoin, from, interval, of, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -20,6 +21,8 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
 export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
+
+  isNetSuiteTokenNotValid: boolean = false;
 
   appName: AppName = AppName.NETSUITE;
 
@@ -74,7 +77,8 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private netsuiteExportSettingsService: NetsuiteExportSettingsService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private router: Router
   ) { }
 
   export() {
@@ -163,6 +167,10 @@ export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.router.url.includes("/token_expired/")){
+      this.isNetSuiteTokenNotValid = true;
+    }
+
     this.setupPage();
   }
 
