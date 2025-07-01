@@ -4,13 +4,17 @@
 set -e  # Exit on any error
 
 # Format only staged files with Prettier
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM --z | grep -z -E '\.(ts|js|html|scss|css|json)$' | grep -z '^src/' || true)
+# Process files directly to preserve null-termination
+git diff --cached --name-only --diff-filter=ACM --z | \
+  grep -z -E '\.(ts|js|html|scss|css|json)$' | \
+  grep -z '^src/' | \
+  xargs -0 -r npx prettier --write
 
-# Check if STAGED_FILES is not empty (handle null-terminated strings properly)
-if [ -n "$STAGED_FILES" ] && [ "$STAGED_FILES" != "" ]; then
-  echo "$STAGED_FILES" | xargs -0 npx prettier --write
-  echo "$STAGED_FILES" | xargs -0 git add
-fi
+# Re-add the formatted files
+git diff --cached --name-only --diff-filter=ACM --z | \
+  grep -z -E '\.(ts|js|html|scss|css|json)$' | \
+  grep -z '^src/' | \
+  xargs -0 -r git add
 
 # Lint and fix code
 ng lint --fix
