@@ -12,7 +12,6 @@ import { QBDExportSettingFormOption } from "../../../models/qbd/qbd-configuratio
 import { DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { QbdDirectDestinationAttribute } from "../../../models/qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
-import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -29,34 +28,32 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   private helper: HelperService = inject(HelperService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   constructor() {
     super();
     this.helper.setBaseApiURL();
   }
 
-  static nameInJEOptions(): QBDExportSettingFormOption[] {
+  nameInJEOptions(): QBDExportSettingFormOption[] {
     return [
         {
-          label: 'Employee',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.employee'),
           value: FyleField.EMPLOYEE
         },
         {
-          label: 'Merchant',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.merchant'),
           value: NameInJEField.MERCHANT
         }
     ];
   }
 
-  static expenseGroupingFieldOptions(): QBDExportSettingFormOption[] {
+  expenseGroupingFieldOptions(): QBDExportSettingFormOption[] {
       return [
           {
-              label: 'Report',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.report'),
               value: QbdDirectExpenseGroupBy.REPORT
           },
           {
-              label: 'Expense',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.expense'),
               value: QbdDirectExpenseGroupBy.EXPENSE
           }
       ];
@@ -78,33 +75,33 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
               value: QbdDirectCCCExportDateType.CURRENT_DATE
           },
           {
-              label: 'Card transaction post date',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.cardTransactionPostDate'),
               value: QbdDirectCCCExportDateType.POSTED_AT
           }
       ];
   }
 
-  static creditCardExportTypes(): QBDExportSettingFormOption[] {
+  creditCardExportTypes(): QBDExportSettingFormOption[] {
       return [
           {
-              label: 'Credit card purchase',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.creditCardPurchase'),
               value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
           },
           {
-              label: 'Journal entry',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.journalEntry'),
               value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
           }
       ];
   }
 
-  static reimbursableExportTypes(): QBDExportSettingFormOption[] {
+  reimbursableExportTypes(): QBDExportSettingFormOption[] {
       return [
           {
-              label: 'Bill',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.bill'),
               value: QbdDirectReimbursableExpensesObject.BILL
           },
           {
-              label: 'Journal entry',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.journalEntry'),
               value: QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY
           }
           // {
@@ -114,27 +111,27 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       ];
   }
 
-  static cccExpenseStateOptions(): QBDExportSettingFormOption[] {
+  cccExpenseStateOptions(): QBDExportSettingFormOption[] {
       return [
           {
-              label: 'Approved',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.approved'),
               value: CCCExpenseState.APPROVED
           },
           {
-              label: 'Closed',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.closed'),
               value: CCCExpenseState.PAID
           }
       ];
   }
 
-  static expenseStateOptions(): QBDExportSettingFormOption[] {
+  expenseStateOptions(): QBDExportSettingFormOption[] {
       return [
           {
-              label: 'Processing',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.processing'),
               value: ExpenseState.PAYMENT_PROCESSING
           },
           {
-              label: 'Closed',
+              label: this.translocoService.translate('services.qbdDirectExportSettings.closed'),
               value: ExpenseState.PAID
           }
       ];
@@ -143,12 +140,12 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
   setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
       if (cccExportGroup === QbdDirectExpenseGroupBy.REPORT) {
         return this.creditCardExpenseGroupingDateOptions().concat([{
-          label: 'Last spend date',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.lastSpendDate'),
           value: QbdDirectCCCExportDateType.LAST_SPEND_AT
       }]);
       }
       return this.creditCardExpenseGroupingDateOptions().concat([{
-          label: 'Spend date',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.spendDate'),
           value: QbdDirectCCCExportDateType.SPENT_AT
       }]);
   }
@@ -156,12 +153,12 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
   setReimbursableExpenseGroupingDateOptions(reimbursableExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
       if (reimbursableExportGroup === QbdDirectExpenseGroupBy.REPORT) {
         return this.reimbursableExpenseGroupingDateOptions().concat([{
-          label: 'Last spend date',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.lastSpendDate'),
           value: QbdDirectReimbursableExportDateType.LAST_SPENT_AT
       }]);
       }
       return this.reimbursableExpenseGroupingDateOptions().concat([{
-          label: 'Spend date',
+          label: this.translocoService.translate('services.qbdDirectExportSettings.spendDate'),
           value: QbdDirectReimbursableExportDateType.SPENT_AT
       }]);
   }
@@ -210,7 +207,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       return [exportSettingValidatorRule, exportModuleRule];
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null, destinationAccounts: QbdDirectDestinationAttribute[]): FormGroup {
+  mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null, destinationAccounts: QbdDirectDestinationAttribute[]): FormGroup {
       const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
       return new FormGroup({
           reimbursableExportType: new FormControl(exportSettings?.reimbursable_expense_export_type),

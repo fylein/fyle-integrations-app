@@ -11,7 +11,6 @@ import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, Expe
 import { ExportSettingsService } from '../../common/export-settings.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -26,72 +25,70 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
-  static getEmployeeFieldOptions(): SelectFormOption[] {
+  getEmployeeFieldOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Employee',
+        label: this.translocoService.translate('services.netsuiteExportSettings.employee'),
         value: FyleField.EMPLOYEE
       },
       {
-        label: 'Vendor',
+        label: this.translocoService.translate('services.netsuiteExportSettings.vendor'),
         value: FyleField.VENDOR
       }
     ];
   }
 
-  static getAutoMapEmplyeeOptions(): SelectFormOption[] {
+  getAutoMapEmplyeeOptions(): SelectFormOption[] {
     return  [
       {
-        label: 'Based on employee e-mail ID',
+        label: this.translocoService.translate('services.netsuiteExportSettings.basedOnEmployeeEmailId'),
         value: 'EMAIL'
       },
       {
-        label: 'Based on employee name',
+        label: this.translocoService.translate('services.netsuiteExportSettings.basedOnEmployeeName'),
         value: 'NAME'
       },
       {
-        label: 'Based on employee code',
+        label: this.translocoService.translate('services.netsuiteExportSettings.basedOnEmployeeCode'),
         value: 'EMPLOYEE_CODE'
       }
     ];
   }
 
-  static getReimbursableExportTypeOptions(): SelectFormOption[] {
+  getReimbursableExportTypeOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Bill',
+        label: this.translocoService.translate('services.netsuiteExportSettings.bill'),
         value: NetSuiteCorporateCreditCardExpensesObject.BILL
       },
       {
-        label: 'Journal entry',
+        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
         value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       },
       {
-          label: 'Expense report',
+          label: this.translocoService.translate('services.netsuiteExportSettings.expenseReport'),
           value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
       }
     ];
   }
 
-  static getCreditCardExportTypes(): SelectFormOption[] {
+  getCreditCardExportTypes(): SelectFormOption[] {
 
     const exportType = [
       {
-        label: 'Bill',
+        label: this.translocoService.translate('services.netsuiteExportSettings.bill'),
         value: NetSuiteCorporateCreditCardExpensesObject.BILL
       },
       {
-        label: 'Credit card charge',
+        label: this.translocoService.translate('services.netsuiteExportSettings.creditCardCharge'),
         value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
       },
       {
-        label: 'Journal entry',
+        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
         value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       },
       {
-        label: 'Expense report',
+        label: this.translocoService.translate('services.netsuiteExportSettings.expenseReport'),
         value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
       }
     ];
@@ -101,53 +98,53 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
     return exportType;
   }
 
-  static getCCCExpenseStateOptions(): SelectFormOption[] {
+  getCCCExpenseStateOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Approved',
+          label: this.translocoService.translate('services.netsuiteExportSettings.approved'),
           value: CCCExpenseState.APPROVED
         },
         {
-          label: 'Closed',
+          label: this.translocoService.translate('services.netsuiteExportSettings.closed'),
           value: CCCExpenseState.PAID
         }
       ];
   }
 
-  static getReimbursableExpenseStateOptions(): SelectFormOption[] {
+  getReimbursableExpenseStateOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Processing',
+          label: this.translocoService.translate('services.netsuiteExportSettings.processing'),
           value: ExpenseState.PAYMENT_PROCESSING
         },
         {
-          label: 'Closed',
+          label: this.translocoService.translate('services.netsuiteExportSettings.closed'),
           value: ExpenseState.PAID
         }
       ];
     }
 
-    static getExpenseGroupByOptions(): SelectFormOption[] {
+    getExpenseGroupByOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Expense',
+          label: this.translocoService.translate('services.netsuiteExportSettings.expense'),
           value: ExpenseGroupingFieldOption.EXPENSE_ID
         },
         {
-          label: 'Expense report',
+          label: this.translocoService.translate('services.netsuiteExportSettings.expenseReport'),
           value: ExpenseGroupingFieldOption.CLAIM_NUMBER
         }
       ];
     }
 
-    static getNameInJournalOptions(): SelectFormOption[] {
+    getNameInJournalOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Merchant name',
+          label: this.translocoService.translate('services.netsuiteExportSettings.merchantName'),
           value: NameInJournalEntry.MERCHANT
         },
         {
-          label: 'Employee name',
+          label: this.translocoService.translate('services.netsuiteExportSettings.employeeName'),
           value: NameInJournalEntry.EMPLOYEE
         }
       ];
@@ -160,32 +157,32 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: 'Verification date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.verificationDate'),
           value: ExportDateType.VERIFIED_AT
         },
         {
-          label: 'Spend date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.spendDate'),
           value: ExportDateType.SPENT_AT
         },
         {
-          label: 'Approval date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.approvalDate'),
           value: ExportDateType.APPROVED_AT
         },
         {
-          label: 'Last spend date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.lastSpendDate'),
           value: ExportDateType.LAST_SPENT_AT
         }
       ];
     }
 
-    static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
+    getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
-          label: 'Card transaction post date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.cardTransactionPostDate'),
           value: ExportDateType.POSTED_AT
         },
         {
-          label: 'Spend date',
+          label: this.translocoService.translate('services.netsuiteExportSettings.spendDate'),
           value: ExportDateType.SPENT_AT
         }
       ];
@@ -248,23 +245,23 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
       return [exportSettingValidatorRule, exportModuleRule];
     }
 
-    static getEmployeeFieldMapping(employeeFieldMapping: string): string {
+    getEmployeeFieldMapping(employeeFieldMapping: string): string {
       return brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
     }
 
-    static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
+    mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
       return new FormGroup({
         expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
         employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping ? this.getEmployeeFieldMapping(exportSettings?.configuration?.employee_field_mapping) : null),
         autoMapEmployees: new FormControl(exportSettings?.configuration?.auto_map_employees),
         reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
         reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
-        reimbursableExportGroup: new FormControl(NetsuiteExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
+        reimbursableExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
         reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
         cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
         creditCardExpense: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object ? true : false),
         creditCardExportType: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object),
-        creditCardExportGroup: new FormControl(NetsuiteExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
+        creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
         creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
         bankAccount: new FormControl(exportSettings?.general_mappings?.reimbursable_account?.id ? exportSettings.general_mappings.reimbursable_account : null),
         creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),

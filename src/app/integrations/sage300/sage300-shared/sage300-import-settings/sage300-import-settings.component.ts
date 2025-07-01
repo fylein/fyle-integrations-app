@@ -396,7 +396,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       } else {
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.sage300ImportCodeFieldCodeConfig));
       }
     });
 
@@ -405,7 +405,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importVendorCode');
       } else {
         this.importSettingForm.controls.importVendorCode.clearValidators();
-        this.importSettingForm.controls.importVendorCode.setValue(ImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.VENDOR, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importVendorCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.VENDOR, this.sage300ImportCodeFieldCodeConfig));
       }
     });
   }
@@ -434,7 +434,7 @@ updateImportCodeFieldConfig() {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = Sage300ImportSettingsService.createImportSettingPayload(this.importSettingForm, this.importSettings);
+    const importSettingPayload = this.importSettingService.createImportSettingPayload(this.importSettingForm, this.importSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
       this.updateImportCodeFieldConfig();
@@ -481,7 +481,7 @@ updateImportCodeFieldConfig() {
       this.importSettingService.getImportCodeFieldConfig()
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse, importCodeFieldConfig]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = Sage300ImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse, importCodeFieldConfig);
+      this.importSettingForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse, importCodeFieldConfig);
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
       this.sage300ImportCodeFieldCodeConfig = importCodeFieldConfig;

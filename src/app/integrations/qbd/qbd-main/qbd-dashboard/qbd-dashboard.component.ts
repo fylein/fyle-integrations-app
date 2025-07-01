@@ -31,7 +31,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
   pageNo: number = 0;
 
-  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = this.accountingExportService.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null = null;
 
@@ -84,7 +84,8 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private accountingExportService: AccountingExportService
   ) { }
 
   showCalendar(event: Event) {

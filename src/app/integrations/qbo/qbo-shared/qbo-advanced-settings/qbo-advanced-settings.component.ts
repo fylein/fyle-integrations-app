@@ -68,7 +68,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
 
-  paymentSyncOptions: SelectFormOption[] = QboAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = this.advancedSettingsService.getPaymentSyncOptions();
 
   ConfigurationCtaText = ConfigurationCta;
 
@@ -93,7 +93,9 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private exportSettingsService: QboExportSettingsService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+    this.paymentSyncOptions = this.advancedSettingsService.getPaymentSyncOptions();
+  }
 
 
   navigateToPreviousStep(): void {
@@ -242,11 +244,11 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
+      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = QboAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.defaultMemoOptions = AdvancedSettingsService.getMemoOptions(exportSettings, AppName.QBO);
       this.setupFormWatchers();

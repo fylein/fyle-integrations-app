@@ -57,25 +57,25 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  expenseGroupByOptions: SelectFormOption[] = BusinessCentralExportSettingsService.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getReimbursableExpensesExportTypeOptions();
+  reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = [];
 
-  cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getCCCExpensesExportTypeOptions();
+  cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = [];
 
-  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getReimbursableExpenseState();
+  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = [];
 
-  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getCCCExpenseState();
+  cccExpenseState: BusinessCentralExportSettingFormOption[] = [];
 
-  employeeFieldMappingOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getEntityOptions();
+  employeeFieldMappingOptions: BusinessCentralExportSettingFormOption[] = [];
 
-  employeeMapOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getEmployeeMappingOptions();
+  employeeMapOptions: BusinessCentralExportSettingFormOption[] = [];
 
-  nameReferenceInCCC: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingsService.getNameInJEOptions();
+  nameReferenceInCCC: BusinessCentralExportSettingFormOption[] = [];
 
   sessionStartTime = new Date();
 
@@ -100,10 +100,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     public helper: HelperService,
     private translocoService: TranslocoService,
-    private businessCentralExportSettingsService: BusinessCentralExportSettingsService
+    private businessCentralExportSettingsService: BusinessCentralExportSettingsService,
+    private exportSettingsService: ExportSettingsService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
     this.cccExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();
+    this.expenseGroupByOptions = this.businessCentralExportSettingsService.getExpenseGroupByOptions();
+    this.reimbursableExpensesExportTypeOptions = this.businessCentralExportSettingsService.getReimbursableExpensesExportTypeOptions();
+    this.cccExpensesExportTypeOptions = this.businessCentralExportSettingsService.getCCCExpensesExportTypeOptions();
+    this.reimbursableExpenseState = this.businessCentralExportSettingsService.getReimbursableExpenseState();
+    this.cccExpenseState = this.businessCentralExportSettingsService.getCCCExpenseState();
+    this.employeeFieldMappingOptions = this.businessCentralExportSettingsService.getEntityOptions();
+    this.employeeMapOptions = this.businessCentralExportSettingsService.getEmployeeMappingOptions();
   }
 
   private constructPayloadAndSave(): void {
@@ -161,22 +169,22 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
+      this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
         false,
         reimbursableExportGroup,
         this.exportSettingForm.controls.reimbursableExportDate.value
       );
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
         this.reimbursableExpenseGroupingDateOptions
       );
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
         this.cccExpenseGroupingDateOptions
       );

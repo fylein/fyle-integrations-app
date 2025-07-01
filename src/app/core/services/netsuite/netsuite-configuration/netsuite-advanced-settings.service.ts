@@ -14,6 +14,7 @@ import { HelperUtility } from "../../../models/common/helper.model";
 import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { environment } from "src/environments/environment";
 import { NetSuiteExportSettingGet } from "../../../models/netsuite/netsuite-configuration/netsuite-export-setting.model";
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const advancedSettingsCache$ = new Subject<void>();
@@ -26,6 +27,8 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
   private apiService: ApiService = inject(ApiService);
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
+
+  private translocoService: TranslocoService = inject(TranslocoService);
 
   static override getDefaultMemoOptions(): string[] {
     return AdvancedSettingsService.getDefaultMemoOptions();
@@ -46,10 +49,10 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
     return defaultOptions;
   }
 
-  static getPaymentSyncOptions(): SelectFormOption[] {
+  getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: `Export ${brandingConfig.brandName} ACH Payments to NetSuite`,
+        label: this.translocoService.translate('services.netsuiteAdvancedSettings.exportNetsuitePayments'),
         value: NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE
       },
       {
@@ -59,18 +62,18 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
     ];
   }
 
-  static getDefaultLevelOptions(): DefaultDestinationAttribute[] {
+  getDefaultLevelOptions(): DefaultDestinationAttribute[] {
     return [
       {
-        name: 'All',
+        name: this.translocoService.translate('services.netsuiteAdvancedSettings.all'),
         id: NetsuiteDefaultLevelOptions.ALL
       },
       {
-        name: 'Transaction line',
+        name: this.translocoService.translate('services.netsuiteAdvancedSettings.transactionLine'),
         id: NetsuiteDefaultLevelOptions.TRANSACTION_LINE
       },
       {
-        name: 'Transaction body',
+        name: this.translocoService.translate('services.netsuiteAdvancedSettings.transactionBody'),
         id: NetsuiteDefaultLevelOptions.TRANSACTION_BODY
       }
     ];
@@ -98,7 +101,7 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
+  mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
     const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
     const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
 

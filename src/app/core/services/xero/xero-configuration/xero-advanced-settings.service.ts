@@ -14,6 +14,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { ExportSettingsService } from '../../common/export-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const advancedSettingsCache$ = new Subject<void>();
@@ -26,14 +27,18 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
 
   private workspaceService = inject(WorkspaceService);
 
-  static getPaymentSyncOptions(): SelectFormOption[] {
+  private translocoService = inject(TranslocoService);
+
+  private exportSettingsService = inject(ExportSettingsService);
+
+  getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Export ' + brandingConfig.brandName + ' ACH payments to Xero',
+        label: this.translocoService.translate('services.xeroAdvancedSettings.exportACHPayments', { brandName: brandingConfig.brandName }),
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
       {
-        label: 'Import Xero payments into ' + brandingConfig.brandName,
+        label: this.translocoService.translate('services.xeroAdvancedSettings.importPayments', { brandName: brandingConfig.brandName }),
         value: PaymentSyncDirection.XERO_TO_FYLE
       }
     ];
@@ -61,7 +66,7 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
+  mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
@@ -86,14 +91,14 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  static constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
+  constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     let paymentAccount = {...emptyDestinationAttribute};
     if (advancedSettingsForm.get('billPaymentAccount')?.value) {
       if (isCloneSettings) {
         paymentAccount = advancedSettingsForm.get('billPaymentAccount')?.value;
       } else {
-        paymentAccount = ExportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
+        paymentAccount = this.exportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
       }
     }
     const advancedSettingPayload: XeroAdvancedSettingPost = {

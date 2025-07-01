@@ -130,7 +130,7 @@ export class QbdDirectBaseMappingComponent implements OnInit {
       // Extract items setting
       this.isImportItemsEnabled = responses[1].import_settings.import_item_as_category;
 
-      this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : QbdDirectImportSettingsService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
+      this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : this.importSettingService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
 
       this.destinationField = this.getDestinationField(responses[0], responses[2].results);
 

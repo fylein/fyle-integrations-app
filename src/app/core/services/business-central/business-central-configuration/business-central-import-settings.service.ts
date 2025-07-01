@@ -8,6 +8,7 @@ import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { ImportSettingsService } from '../../common/import-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 const businessCentralImportSettingGetCache$ = new Subject<void>();
 
@@ -26,19 +27,19 @@ export class BusinessCentralImportSettingsService extends ImportSettingsService 
     this.helper.setBaseApiURL();
   }
 
-  static mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
-    const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
+  mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
     return new FormGroup({
         importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-        chartOfAccountTypes: new FormControl(importSettings?.import_settings?.charts_of_accounts ? importSettings?.import_settings?.charts_of_accounts : ['Expense']),
+        chartOfAccountTypes: new FormControl(importSettings?.import_settings?.charts_of_accounts ? importSettings?.import_settings?.charts_of_accounts : [this.translocoService.translate('services.businessCentralImportSettings.expense')]),
         importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false ),
         expenseFields: new FormArray(expenseFieldsArray)
     });
   }
 
-  static createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
+  createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
       const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
-      const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+      const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
       return {
           import_settings: {
               import_categories: importSettingsForm.get('importCategories')?.value,
@@ -49,8 +50,8 @@ export class BusinessCentralImportSettingsService extends ImportSettingsService 
       };
   }
 
-  static getChartOfAccountTypesList() {
-      return ['Expense', 'Assets', 'Income', 'Equity', 'Liabilities', 'Others', 'Cost of Goods Sold'];
+  getChartOfAccountTypesList() {
+      return [this.translocoService.translate('services.businessCentralImportSettings.expense'), this.translocoService.translate('services.businessCentralImportSettings.assets'), this.translocoService.translate('services.businessCentralImportSettings.income'), this.translocoService.translate('services.businessCentralImportSettings.equity'), this.translocoService.translate('services.businessCentralImportSettings.liabilities'), this.translocoService.translate('services.businessCentralImportSettings.others'), this.translocoService.translate('services.businessCentralImportSettings.costOfGoodsSold')];
   }
 
   @Cacheable({

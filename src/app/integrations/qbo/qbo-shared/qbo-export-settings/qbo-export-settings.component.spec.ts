@@ -31,7 +31,8 @@ import {
   mockExportSettingFormValueforNavigate,
   mockDateOptionsforWatchers,
   mockCCCExpenseDateGrouping,
-  mockReimbursableExpenseDateGrouping
+  mockReimbursableExpenseDateGrouping,
+  mockCCCExpenseDateGroupingForCreditDebit
 } from '../../qbo.fixture';
 import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -47,11 +48,13 @@ import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-config
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
   let fixture: ComponentFixture<QboExportSettingsComponent>;
-  let exportSettingsServiceSpy: jasmine.SpyObj<QboExportSettingsService>;
+  let qboExportSettingsServiceSpy: jasmine.SpyObj<QboExportSettingsService>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
   let qboHelperServiceSpy: jasmine.SpyObj<QboHelperService>;
   let mappingServiceSpy: jasmine.SpyObj<MappingService>;
@@ -60,9 +63,28 @@ describe('QboExportSettingsComponent', () => {
   let integrationsToastServiceSpy: jasmine.SpyObj<IntegrationsToastService>;
   let routerSpy: jasmine.SpyObj<Router>;
   let translocoService: jasmine.SpyObj<TranslocoService>;
+  let exportSettingsService: jasmine.SpyObj<ExportSettingsService>;
 
   beforeEach(async () => {
-    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers', 'postExportSettings', 'getReimbursableExpenseGroupingDateOptions'], {
+    const qboExportSettingsService = jasmine.createSpyObj('QboExportSettingsService', [
+      'getExportSettings',
+      'setupDynamicValidators',
+      'setExportTypeValidatorsAndWatchers',
+      'postExportSettings',
+      'mapAPIResponseToFormGroup',
+      'formatGeneralMappingPayload',
+      'getPaginatedDestinationAttributes',
+      'getReimbursableExpenseGroupingDateOptions',
+      'getCreditCardExportTypes',
+      'getCCCExpenseStateOptions',
+      'getReimbursableExpenseStateOptions',
+      'getExpenseGroupByOptions',
+      'getNameInJournalOptions',
+      'getAdditionalCreditCardExpenseGroupingDateOptions',
+      'getSplitExpenseGroupingOptions',
+      'constructExportDateOptions',
+      'clearInvalidDateOption'
+    ], {
       creditCardExportTypeChange: new EventEmitter<QBOCorporateCreditCardExpensesObject>()
     });
     const helperService = jasmine.createSpyObj('HelperService', ['addExportSettingFormValidator', 'setConfigurationSettingValidatorsAndWatchers', 'setOrClearValidators', 'addDefaultDestinationAttributeIfNotExists', 'enableFormField']);
@@ -83,13 +105,16 @@ describe('QboExportSettingsComponent', () => {
     const integrationsToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const router = jasmine.createSpyObj('Router', ['navigate']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
+    const exportSettingsServiceSpy = jasmine.createSpyObj('ExportSettingsService', ['mapAPIResponseToFormGroup', 'constructGroupingDateOptions']);
+    const employeeSettingsServiceSpy = jasmine.createSpyObj('EmployeeSettingsService', ['getEmployeeFieldMappingOptions']);
 
     await TestBed.configureTestingModule({
     declarations: [QboExportSettingsComponent],
     imports: [ReactiveFormsModule, TranslocoModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         FormBuilder,
-        { provide: QboExportSettingsService, useValue: exportSettingsService },
+        { provide: QboExportSettingsService, useValue: qboExportSettingsService },
         { provide: HelperService, useValue: helperService },
         { provide: QboHelperService, useValue: qboHelperService },
         { provide: MappingService, useValue: mappingService },
@@ -103,16 +128,19 @@ describe('QboExportSettingsComponent', () => {
             provide: QboEmployeeSettingsService,
             useValue: jasmine.createSpyObj('QboEmployeeSettingsService', [
                 'getEmployeeSettings',
-                'getDistinctQBODestinationAttributes'
+                'getDistinctQBODestinationAttributes',
+                'getAutoMapEmployeeOptions'
             ])
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        { provide: TranslocoService, useValue: translocoServiceSpy }
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+        { provide: ExportSettingsService, useValue: exportSettingsServiceSpy },
+        { provide: EmployeeSettingsService, useValue: employeeSettingsServiceSpy }
     ]
 }).compileComponents();
 
-    exportSettingsServiceSpy = TestBed.inject(QboExportSettingsService) as jasmine.SpyObj<QboExportSettingsService>;
+    qboExportSettingsServiceSpy = TestBed.inject(QboExportSettingsService) as jasmine.SpyObj<QboExportSettingsService>;
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     qboHelperServiceSpy = TestBed.inject(QboHelperService) as jasmine.SpyObj<QboHelperService>;
     mappingServiceSpy = TestBed.inject(MappingService) as jasmine.SpyObj<MappingService>;
@@ -121,8 +149,29 @@ describe('QboExportSettingsComponent', () => {
     integrationsToastServiceSpy = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    exportSettingsService = TestBed.inject(ExportSettingsService) as jasmine.SpyObj<ExportSettingsService>;
+
+    // Set up mock return values before creating the component
+    qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
+    qboExportSettingsServiceSpy.getCreditCardExportTypes.and.returnValue([]);
+    qboExportSettingsServiceSpy.getCCCExpenseStateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getReimbursableExpenseStateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getExpenseGroupByOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getNameInJournalOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getAdditionalCreditCardExpenseGroupingDateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.getSplitExpenseGroupingOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue([]);
+    qboExportSettingsServiceSpy.clearInvalidDateOption.and.stub();
+    employeeSettingsServiceSpy.getEmployeeFieldMappingOptions.and.returnValue([]);
+
     fixture = TestBed.createComponent(QboExportSettingsComponent);
     component = fixture.componentInstance;
+    // Initialize all arrays to prevent undefined errors
+    component.bankAccounts = [];
+    component.cccAccounts = [];
+    component.accountsPayables = [];
+    component.vendors = [];
+    component.expenseAccounts = [];
     const employeeSettingsService = TestBed.inject(QboEmployeeSettingsService) as jasmine.SpyObj<QboEmployeeSettingsService>;
     employeeSettingsService.getEmployeeSettings.and.returnValue(of({
       workspace_general_settings: {
@@ -132,6 +181,7 @@ describe('QboExportSettingsComponent', () => {
       workspace_id: 0 // Changed from string to number
     }));
     employeeSettingsService.getDistinctQBODestinationAttributes.and.returnValue(of([]));
+    employeeSettingsService.getAutoMapEmployeeOptions.and.returnValue([]);
     // Initialize the form
     component.exportSettingForm = new FormBuilder().group({
       reimbursableExpenseObject: [mockExportSettingsResponse.workspace_general_settings.reimbursable_expenses_object],
@@ -153,11 +203,16 @@ describe('QboExportSettingsComponent', () => {
       defaultCreditCardVendor: [mockExportSettingsResponse.general_mappings.default_ccc_vendor],
       nameInJournalEntry: [mockExportSettingsResponse.workspace_general_settings.name_in_journal_entry]
     });
+    qboExportSettingsServiceSpy.mapAPIResponseToFormGroup.and.returnValue(component.exportSettingForm);
+    qboExportSettingsServiceSpy.formatGeneralMappingPayload.and.callFake((option: any) => ({
+      id: option.destination_id,
+      name: option.value
+    }));
   });
 
   describe('getSettingsAndSetupForm', () => {
     beforeEach(() => {
-      exportSettingsServiceSpy.getExportSettings.and.returnValue(of(mockExportSettingsResponse));
+      qboExportSettingsServiceSpy.getExportSettings.and.returnValue(of(mockExportSettingsResponse));
       workspaceServiceSpy.getWorkspaceGeneralSettings.and.returnValue(of(mockWorkspaceGeneralSettings));
       mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValues(
         of(mockBankAccounts),
@@ -165,8 +220,12 @@ describe('QboExportSettingsComponent', () => {
         of(mockAccountsPayable),
         of(mockVendors)
       );
-
-      spyOn(QboExportSettingsService, 'mapAPIResponseToFormGroup').and.returnValue(component.exportSettingForm);
+      qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
+      qboExportSettingsServiceSpy.mapAPIResponseToFormGroup.and.returnValue(component.exportSettingForm);
+      qboExportSettingsServiceSpy.formatGeneralMappingPayload.and.callFake((option: any) => ({
+        id: option.destination_id,
+        name: option.value
+      }));
     });
 
     it('should fetch and set up export settings correctly', fakeAsync(() => {
@@ -227,6 +286,7 @@ describe('QboExportSettingsComponent', () => {
           }
         }
       };
+      qboExportSettingsServiceSpy.getCreditCardExportTypes.and.returnValue(mockCCCExpenseDateGroupingForCreditDebit);
       component.ngOnInit();
       tick();
       expect(component.creditCardExportTypes).toBeDefined();
@@ -467,7 +527,7 @@ describe('QboExportSettingsComponent', () => {
 
     xit('should handle error when saving export settings', fakeAsync(() => {
       // Mock the postExportSettings to return an error
-      exportSettingsServiceSpy.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
+      qboExportSettingsServiceSpy.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
 
       // Spy on the isAdvancedSettingAffected method to return false
       spyOn<any>(component, 'isAdvancedSettingAffected').and.returnValue(false);
@@ -477,7 +537,7 @@ describe('QboExportSettingsComponent', () => {
       tick();
 
       // Assert that the error handling is done correctly
-      expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
+      expect(qboExportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
       expect(component.isSaveInProgress).toBeFalse();
       expect(integrationsToastServiceSpy.displayToastMessage).toHaveBeenCalledWith(
         ToastSeverity.ERROR,
@@ -699,7 +759,7 @@ describe('QboExportSettingsComponent', () => {
       component['setupCustomWatchers']();
 
       // Emit JOURNAL_ENTRY
-      exportSettingsServiceSpy.creditCardExportTypeChange.next(QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+      qboExportSettingsServiceSpy.creditCardExportTypeChange.next(QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
 
       // Check if showNameInJournalOption is set to true
       expect(component.showNameInJournalOption).toBeTrue();
@@ -711,7 +771,7 @@ describe('QboExportSettingsComponent', () => {
       (component['updateCCCExpenseGroupingDateOptions'] as jasmine.Spy).calls.reset();
 
       // Emit CREDIT_CARD_PURCHASE
-      exportSettingsServiceSpy.creditCardExportTypeChange.next(QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
+      qboExportSettingsServiceSpy.creditCardExportTypeChange.next(QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
 
       // Check if showNameInJournalOption is set to false
       expect(component.showNameInJournalOption).toBeFalse();
@@ -728,28 +788,25 @@ describe('QboExportSettingsComponent', () => {
         creditCardExportType: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
         creditCardExportGroup: ''
       });
-      component.reimbursableExpenseGroupingDateOptions = [];
-      component.cccExpenseGroupingDateOptions = [];
-
-      spyOn<any>(component, 'setupCustomDateOptionWatchers').and.callThrough();
-      exportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue([]);
-
-      spyOn(ExportSettingsService, 'constructGroupingDateOptions').and.returnValue([]);
+      component.reimbursableExpenseGroupingDateOptions = mockReimbursableExpenseDateGrouping;
+      component.cccExpenseGroupingDateOptions = mockCCCExpenseDateGrouping;
+      qboExportSettingsServiceSpy.getReimbursableExpenseGroupingDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
+      exportSettingsService.constructGroupingDateOptions.and.returnValue([]);
       spyOn<any>(component, 'updateCCCExpenseGroupingDateOptions');
     });
 
     it('should update reimbursableExpenseGroupingDateOptions when reimbursableExportGroup changes', () => {
       component['setupCustomDateOptionWatchers']();
-
+      qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue(mockReimbursableExpenseDateGrouping);
       component.exportSettingForm.patchValue({
         reimbursableExportGroup: ExpenseGroupingFieldOption.EXPENSE_ID
       });
-
       expect(component.reimbursableExpenseGroupingDateOptions).toEqual(mockReimbursableExpenseDateGrouping);
     });
 
     it('should call updateCCCExpenseGroupingDateOptions when creditCardExportType changes', () => {
       component['setupCustomDateOptionWatchers']();
+      component.cccExpenseGroupingDateOptions = [];
 
       component.exportSettingForm.patchValue({
         creditCardExportType: QBOCorporateCreditCardExpensesObject.BILL
@@ -759,13 +816,14 @@ describe('QboExportSettingsComponent', () => {
     });
 
     it('should update cccExpenseGroupingDateOptions when creditCardExportGroup changes', () => {
+      qboExportSettingsServiceSpy.constructExportDateOptions.and.returnValue(mockCCCExpenseDateGrouping);
+
       component['setupCustomDateOptionWatchers']();
 
       component.exportSettingForm.patchValue({
         creditCardExportType: QBOCorporateCreditCardExpensesObject.BILL,
         creditCardExportGroup: ExpenseGroupingFieldOption.EXPENSE_ID
       });
-
       expect(component.cccExpenseGroupingDateOptions).toEqual(mockCCCExpenseDateGrouping);
     });
   });

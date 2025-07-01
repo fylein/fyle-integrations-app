@@ -62,7 +62,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[];
 
   isSaveInProgress: boolean;
 
@@ -97,7 +97,9 @@ export class XeroImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+  }
 
   closeModel() {
     this.customFieldForm.reset();
@@ -195,7 +197,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = XeroImportSettingsService.constructPayload(this.importSettingsForm);
+    const importSettingPayload = this.importSettingService.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
@@ -272,7 +274,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
 
-      this.importSettingsForm = XeroImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
+      this.importSettingsForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
 
       if (response[5] && response[5].country !== 'US' && new Date(this.org.created_at) < new Date('2024-08-19')) {
         this.isTaxGroupSyncAllowed = true;

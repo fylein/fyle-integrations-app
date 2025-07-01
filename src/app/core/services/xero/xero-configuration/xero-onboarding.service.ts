@@ -26,7 +26,7 @@ export class XeroOnboardingService {
       {
         active: false,
         completed: false,
-        step: 'Connect to Xero',
+        step: this.translocoService.translate('services.xeroOnboarding.connectToXero'),
         icon: 'link-vertical-medium',
         route: '/integrations/xero/onboarding/connector',
         styleClasses: ['step-name-connector--text tw-pl-24-px']

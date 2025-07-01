@@ -8,7 +8,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
-import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } from '../travelperk.fixture';
+import { travelperkDestinationAttribute } from '../travelperk.fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -44,7 +44,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   defaultCategories: TravelperkDestinationAttribuite[];
 
-  destinationFieldOptions: SelectFormOption[] = TravelperkAdvancedSettingService.getDefaultCategory();
+  destinationFieldOptions: SelectFormOption[];
 
   defaultMemoOptions: string[] = ['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
 
@@ -62,7 +62,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     value: ''
   };
 
-  lineItems: SelectFormOption[] = TravelperkAdvancedSettingService.getExpenseGroup();
+  lineItems: SelectFormOption[];
 
   readonly brandingStyle = brandingStyle;
 
@@ -73,8 +73,12 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private travelperkAdvancedSettingService: TravelperkAdvancedSettingService
+  ) {
+    this.destinationFieldOptions = this.travelperkAdvancedSettingService.getDefaultCategory();
+    this.lineItems = this.travelperkAdvancedSettingService.getExpenseGroup();
+  }
 
   private formatMemoPreview(): void {
     const previewValues: { [key: string]: string } = {
@@ -115,7 +119,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const advancedSettingsPayload = TravelperkAdvancedSettingService.createAdvancedSettingPayload(this.advancedSettingsForm);
+    const advancedSettingsPayload = this.travelperkAdvancedSettingService.createAdvancedSettingPayload(this.advancedSettingsForm);
     this.travelperkService.postTravelperkAdvancedSettings(advancedSettingsPayload).subscribe((travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsSuccess'));
@@ -160,7 +164,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
-      this.advancedSettingsForm = TravelperkAdvancedSettingService.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
+      this.advancedSettingsForm = this.travelperkAdvancedSettingService.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
       this.createMemoStructureWatcher();
       this.isLoading = false;
     });

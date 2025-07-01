@@ -9,6 +9,7 @@ import { ImportCodeFieldConfigType } from 'src/app/core/models/common/import-set
 import { ImportSettingsService } from '../../common/import-settings.service';
 import { FormArray, FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 
 const qbdDirectImportSettingGetCache$ = new Subject<void>();
 
@@ -20,35 +21,35 @@ export class QbdDirectImportSettingsService extends ImportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  static getChartOfAccountTypesList(): string[] {
+  getChartOfAccountTypesList(): string[] {
     const typeList = [
-      'Other Expense', 'Cost Of Goods Sold', 'Fixed Asset', 'Other Asset', 'Other Current Asset',
-      'Long Term Liability', 'Other Current Liability', 'Income', 'Other Income', 'Equity'
+      this.translocoService.translate('services.qbdDirectImportSettings.otherExpense'), this.translocoService.translate('services.qbdDirectImportSettings.costOfGoodsSold'), this.translocoService.translate('services.qbdDirectImportSettings.fixedAsset'), this.translocoService.translate('services.qbdDirectImportSettings.otherAsset'), this.translocoService.translate('services.qbdDirectImportSettings.otherCurrentAsset'),
+      this.translocoService.translate('services.qbdDirectImportSettings.longTermLiability'), this.translocoService.translate('services.qbdDirectImportSettings.otherCurrentLiability'), this.translocoService.translate('services.qbdDirectImportSettings.income'), this.translocoService.translate('services.qbdDirectImportSettings.otherIncome'), this.translocoService.translate('services.qbdDirectImportSettings.equity')
     ].sort((a, b) => a.localeCompare(b));
 
-    return ['Expense'].concat(typeList);
+    return [this.translocoService.translate('services.qbdDirectImportSettings.expense')].concat(typeList);
   }
 
-  static mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
+  mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
     const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
-    const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings?.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings?.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.import_settings?.import_account_as_category ?? false),
       importItems: new FormControl(importSettings?.import_settings?.import_item_as_category ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : ['Expense']),
+      chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : [this.translocoService.translate('services.qbdDirectImportSettings.expense')]),
       importVendorsAsMerchants: new FormControl(importSettings?.import_settings?.import_vendor_as_merchant ?? false),
       searchOption: new FormControl(''),
       importCodeFields: new FormControl( importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : []),
-      importCategoryCode: new FormControl(ImportSettingsService.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig)),
+      importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig)),
       workSpaceId: new FormControl(importSettings?.workspace_id)
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup): QbdDirectImportSettingPost {
+  constructPayload(importSettingsForm: FormGroup): QbdDirectImportSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
-    const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+    const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
     const coaArray = importSettingsForm.get('chartOfAccountTypes')?.value.map((item: string) => item.replace(/\s+/g, ''));
 
     return {

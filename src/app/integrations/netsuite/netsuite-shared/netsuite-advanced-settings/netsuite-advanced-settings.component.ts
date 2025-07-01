@@ -77,13 +77,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: NetsuiteConfiguration;
 
-  paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[] = [];
 
-  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = [];
 
-  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  = [];
 
-  netsuiteClassLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingsService.getDefaultLevelOptions();
+  netsuiteClassLevels:  DefaultDestinationAttribute[]  = [];
 
   paymentAccounts: DefaultDestinationAttribute[];
 
@@ -113,7 +113,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private exportSettingsService: NetsuiteExportSettingsService,
     private translocoService: TranslocoService
-  ) { }
+  ) {
+
+    this.paymentSyncOptions = this.advancedSettingsService.getPaymentSyncOptions();
+    this.netsuiteLocationLevels = this.advancedSettingsService.getDefaultLevelOptions();
+    this.netsuiteDepartmentLevels = this.advancedSettingsService.getDefaultLevelOptions();
+    this.netsuiteClassLevels = this.advancedSettingsService.getDefaultLevelOptions();
+  }
 
   isOptional(): string {
     return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? this.translocoService.translate('netsuiteAdvancedSettings.optional') : '';
@@ -281,17 +287,17 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetsuiteExportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = NetsuiteAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.isLoading = false;
       this.setupFormWatchers();

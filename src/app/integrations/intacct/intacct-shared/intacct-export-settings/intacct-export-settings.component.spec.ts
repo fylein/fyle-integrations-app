@@ -20,12 +20,14 @@ import { LowerCasePipe } from '@angular/common';
 import { c1FeatureConfig } from 'src/app/branding/c1/branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 
 describe('IntacctExportSettingsComponent', () => {
   let component: IntacctExportSettingsComponent;
   let fixture: ComponentFixture<IntacctExportSettingsComponent>;
-  let exportSettingService: jasmine.SpyObj<SiExportSettingService>;
+  let siExportSettingService: jasmine.SpyObj<SiExportSettingService>;
+  let exportSettingsService: jasmine.SpyObj<ExportSettingsService>;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let toastService: jasmine.SpyObj<IntegrationsToastService>;
@@ -63,7 +65,7 @@ describe('IntacctExportSettingsComponent', () => {
       ]
     }).compileComponents();
 
-    exportSettingService = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
+    siExportSettingService = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
@@ -72,7 +74,7 @@ describe('IntacctExportSettingsComponent', () => {
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
-    exportSettingService.getExportSettings.and.returnValue(of(mockExportSettings));
+    siExportSettingService.getExportSettings.and.returnValue(of(mockExportSettings));
     mappingService.refreshSageIntacctDimensions.and.returnValue(of(null));
     mappingService.refreshFyleDimensions.and.returnValue(of(null));
 
@@ -138,7 +140,7 @@ describe('IntacctExportSettingsComponent', () => {
     });
 
     it('should fetch and store export settings', () => {
-      expect(exportSettingService.getExportSettings).toHaveBeenCalled();
+      expect(siExportSettingService.getExportSettings).toHaveBeenCalled();
       expect(component.exportSettings).toEqual(mockExportSettings);
       expect(component.exportSettingsForm).toBeDefined();
       expect(component.isLoading).toBeFalse();
@@ -148,7 +150,7 @@ describe('IntacctExportSettingsComponent', () => {
   describe('Form Save', () => {
     it('should save export settings successfully during onboarding', fakeAsync(() => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.EXPORT_SETTINGS);
-      exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      siExportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
       translocoService.translate.and.returnValue('Export settings saved successfully');
       spyOnProperty(router, 'url').and.returnValue('/integrations/intacct/onboarding/export_settings');
 
@@ -156,7 +158,7 @@ describe('IntacctExportSettingsComponent', () => {
       component.save();
       tick();
 
-      expect(exportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(siExportSettingService.postExportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalled();
       expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.IMPORT_SETTINGS);
@@ -165,19 +167,19 @@ describe('IntacctExportSettingsComponent', () => {
 
     it('should save export settings successfully post onboarding', () => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
-      exportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      siExportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
       translocoService.translate.and.returnValue('Export settings saved successfully');
       fixture.detectChanges();
       component.save();
 
-      expect(exportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(siExportSettingService.postExportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       expect(trackingService.intacctUpdateEvent).toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
     });
 
     it('should handle save failure', () => {
-      exportSettingService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
+      siExportSettingService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
       translocoService.translate.and.returnValue('Error saving export settings, please try again later');
       fixture.detectChanges();
       component.save();
@@ -442,11 +444,27 @@ describe('IntacctExportSettingsComponent', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should set the correct CCC expense grouping date options when grouping by report', () => {
+    it('should set the correct CCC expense grouping date options when grouping by report', fakeAsync(() => {
       fixture.detectChanges();
 
-      component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+      translocoService.translate.and.callFake(<T = string>(key: string): T => {
+        if (key === 'services.exportSettings.exportDate') {
+          return 'Export date' as T;
+        }
+        if (key === 'services.exportSettings.spendDate') {
+          return 'Spend date' as T;
+        }
+        if (key === 'services.exportSettings.cardTransactionPostDate') {
+          return 'Card transaction post date' as T;
+        }
+        return key as T;
+      });
 
+      component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+      tick();
+
+      component.exportSettingsForm.get('cccExportGroup')?.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
+      tick();
       expect(component.cccExpenseGroupingDateOptions).toEqual([
         {
           label: 'Export date',
@@ -461,7 +479,7 @@ describe('IntacctExportSettingsComponent', () => {
           value: ExportDateType.POSTED_AT
         }
       ]);
-    });
+    }));
 
     it('should enable the employeeFieldMapping field when at least one export type is Journal Entry', () => {
       fixture.detectChanges();

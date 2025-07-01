@@ -38,7 +38,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -76,8 +76,10 @@ export class XeroCompleteExportLogComponent implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private accountingExportService: AccountingExportService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
@@ -119,9 +121,9 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
         this.xeroShortCode = this.storageService.get('xeroShortCode');
-        AccountingExportService.assignXeroShortCode(this.xeroShortCode);
+        this.accountingExportService.assignXeroShortCode(this.xeroShortCode);
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-          AccountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
+          this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
         );
 
         this.filteredAccountingExports = accountingExports;
@@ -141,7 +143,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
-        this.dateOptions = AccountingExportService.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);

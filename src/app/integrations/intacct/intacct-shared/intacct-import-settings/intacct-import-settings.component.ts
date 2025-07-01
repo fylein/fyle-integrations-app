@@ -122,7 +122,8 @@ export class IntacctImportSettingsComponent implements OnInit {
     private storageService: StorageService,
     private workspaceService: SiWorkspaceService,
     public helper: HelperService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private importSettingsService: ImportSettingsService
   ) { }
 
   get expenseFieldsGetter() {
@@ -148,7 +149,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       // Create a new FormGroup
       const value = this.formBuilder.group({
         source_field: [sourceField],
-        import_code: [ImportSettingsService.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
+        import_code: [this.importSettingsService.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
       });
 
       // Push the new FormGroup into the FormArray

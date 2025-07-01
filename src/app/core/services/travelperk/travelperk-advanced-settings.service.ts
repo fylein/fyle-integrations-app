@@ -4,47 +4,52 @@ import { SelectFormOption, SelectFormLabel } from "src/app/core/models/common/se
 import { TravelPerkExpenseGroup } from "../../models/enum/enum.model";
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost, TravelperkAdvancedSettingArray, TravelperkAdvancedSettingFormArray, TravelperkCategoryMapping } from "../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
 import { TravelperkDestinationAttribuite } from "../../models/travelperk/travelperk.model";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TravelperkAdvancedSettingService {
 
-  static getDefaultCategory(): SelectFormLabel[] {
+  constructor(
+    private translocoService: TranslocoService
+  ) { }
+
+  getDefaultCategory(): SelectFormLabel[] {
       return [
           {
-              label: 'Cars',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.cars'),
               value: 'Cars'
           },
           {
-              label: 'Flights',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.flights'),
               value: 'Flights'
           },
           {
-              label: 'Hotels',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.hotels'),
               value: 'Hotels'
           },
           {
-              label: 'Trains',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.trains'),
               value: 'Trains'
           }
       ];
   }
 
-  static getExpenseGroup(): SelectFormOption[] {
+  getExpenseGroup(): SelectFormOption[] {
       return [
           {
-              label: 'Single expense',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.singleExpense'),
               value: TravelPerkExpenseGroup.SINGLE
           },
           {
-              label: 'Multiple expenses',
+              label: this.translocoService.translate('services.travelperkAdvancedSetting.multipleExpenses'),
               value: TravelPerkExpenseGroup.MULTIPLE
           }
       ];
   }
 
-  static createFormGroup(data: TravelperkAdvancedSettingArray): FormGroup {
+  createFormGroup(data: TravelperkAdvancedSettingArray): FormGroup {
       return new FormGroup ({
           destinationName: new FormControl(data.destination_name || '', Validators.required),
           sourceName: new FormControl(data.source_name || null, Validators.required),
@@ -52,7 +57,7 @@ export class TravelperkAdvancedSettingService {
       });
   }
 
-  static constructFormArray(arrayData: TravelperkAdvancedSettingGet, source_fields: TravelperkDestinationAttribuite[]): FormGroup[] {
+  constructFormArray(arrayData: TravelperkAdvancedSettingGet, source_fields: TravelperkDestinationAttribuite[]): FormGroup[] {
       const mappingPayload:FormGroup[] = [];
       const defaultCategories = this.getDefaultCategory();
       const categoryMapping = Object.keys(arrayData.category_mappings);
@@ -70,7 +75,7 @@ export class TravelperkAdvancedSettingService {
       return mappingPayload;
   }
 
-  static constructCategoryMapping(categoryMappingFieldArray: TravelperkAdvancedSettingFormArray[]) {
+  constructCategoryMapping(categoryMappingFieldArray: TravelperkAdvancedSettingFormArray[]) {
       const data:TravelperkCategoryMapping = {};
       categoryMappingFieldArray.forEach((item: TravelperkAdvancedSettingFormArray) => {
           data[item.destinationName.value] = {
@@ -82,7 +87,7 @@ export class TravelperkAdvancedSettingService {
       return data;
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null, sourceOptions: TravelperkDestinationAttribuite[]): FormGroup {
+  mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null, sourceOptions: TravelperkDestinationAttribuite[]): FormGroup {
       const defaultMemoOptions: string[] =['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
       const categoryMappings = advancedSettings ? this.constructFormArray(advancedSettings, sourceOptions) : [] ;
       const findObjectByDestinationId = (array: TravelperkDestinationAttribuite[], id: string) => array?.find(item => item.source_id === id) || null;
@@ -97,7 +102,7 @@ export class TravelperkAdvancedSettingService {
       });
   }
 
-  static createAdvancedSettingPayload(advancedSettingsForm: FormGroup): TravelperkAdvancedSettingPost {
+  createAdvancedSettingPayload(advancedSettingsForm: FormGroup): TravelperkAdvancedSettingPost {
       return {
           default_employee_name: advancedSettingsForm.get('defaultEmployee')?.value ? advancedSettingsForm.get('defaultEmployee')?.value : null,
           default_employee_id: advancedSettingsForm.get('defaultEmployeeId')?.value ? advancedSettingsForm.get('defaultEmployeeId')?.value : null,

@@ -25,57 +25,58 @@ export class XeroExportSettingsService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private exportSettingsService: ExportSettingsService
   ) { }
 
-  static getReimbursableExportTypes() {
+  getReimbursableExportTypes() {
     return [
       {
-        label: 'Purchase bill',
+        label: this.translocoService.translate('services.xeroExportSettings.purchaseBill'),
         value: XeroReimbursableExpensesObject.PURCHASE_BILL
       }
     ];
   }
 
-  static getCreditCardExportTypes() {
+  getCreditCardExportTypes() {
     return [
       {
-        label: 'Bank transactions',
+        label: this.translocoService.translate('services.xeroExportSettings.bankTransactions'),
         value: XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION
       }
     ];
   }
 
-  static getReimbursableExpenseGroupingOptions(): SelectFormOption[] {
+  getReimbursableExpenseGroupingOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Report',
+        label: this.translocoService.translate('services.xeroExportSettings.report'),
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
   }
 
-  static getCCCExpenseGroupingOptions(): SelectFormOption[] {
+  getCCCExpenseGroupingOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Expense',
+        label: this.translocoService.translate('services.xeroExportSettings.expense'),
         value: ExpenseGroupingFieldOption.EXPENSE_ID
       }
     ];
   }
 
-  static getAutoMapEmployeeOptions(): SelectFormOption[] {
+  getAutoMapEmployeeOptions(): SelectFormOption[] {
     return [
       {
-        label: 'None',
+        label: this.translocoService.translate('services.xeroExportSettings.none'),
         value: null
       },
       {
-        label: 'Employee name on ' + brandingConfig.brandName + ' to contact name on Xero',
+        label: this.translocoService.translate('services.xeroExportSettings.employeeNameToContactName', { brandName: brandingConfig.brandName }),
         value: AutoMapEmployeeOptions.NAME
       },
       {
-        label: 'Employee email on ' + brandingConfig.brandName + ' to contact email on Xero',
+        label: this.translocoService.translate('services.xeroExportSettings.employeeEmailToContactEmail', { brandName: brandingConfig.brandName }),
         value: AutoMapEmployeeOptions.EMAIL
       }
     ];
@@ -88,71 +89,71 @@ export class XeroExportSettingsService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification date',
+        label: this.translocoService.translate('services.xeroExportSettings.verificationDate'),
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend date',
+        label: this.translocoService.translate('services.xeroExportSettings.spendDate'),
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval date',
+        label: this.translocoService.translate('services.xeroExportSettings.approvalDate'),
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last spend date',
+        label: this.translocoService.translate('services.xeroExportSettings.lastSpendDate'),
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
   }
 
-  static getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
+  getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
      {
-       label: 'Spend date',
+       label: this.translocoService.translate('services.xeroExportSettings.spendDate'),
        value: ExportDateType.SPENT_AT
      },
      {
-       label: 'Card transaction post date',
+       label: this.translocoService.translate('services.xeroExportSettings.cardTransactionPostDate'),
        value: ExportDateType.POSTED_AT
      }
    ];
  }
 
-  static getReimbursableExpenseStateOptions(): SelectFormOption[] {
+  getReimbursableExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Processing',
+        label: this.translocoService.translate('services.xeroExportSettings.processing'),
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.xeroExportSettings.closed'),
         value: ExpenseState.PAID
       }
     ];
   }
 
-  static getCCCExpenseStateOptions(): SelectFormOption[] {
+  getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Approved',
+        label: this.translocoService.translate('services.xeroExportSettings.approved'),
         value: XeroCCCExpenseState.APPROVED
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.xeroExportSettings.closed'),
         value: XeroCCCExpenseState.PAID
       }
     ];
   }
 
-  static getSplitExpenseGroupingOptions() {
+  getSplitExpenseGroupingOptions() {
     return [
       {
-        label: 'Single line item',
+        label: this.translocoService.translate('services.xeroExportSettings.singleLineItem'),
         value: SplitExpenseGrouping.SINGLE_LINE_ITEM
       },
       {
-        label: 'Multiple line item',
+        label: this.translocoService.translate('services.xeroExportSettings.multipleLineItem'),
         value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       }
     ];
@@ -181,7 +182,7 @@ export class XeroExportSettingsService {
     return [exportSettingValidatorRule, exportModuleRule];
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null, destinationAttribute: DestinationAttribute[]): FormGroup {
+  mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null, destinationAttribute: DestinationAttribute[]): FormGroup {
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       expenseState: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_state),
@@ -201,7 +202,7 @@ export class XeroExportSettingsService {
     });
   }
 
-  static constructPayload(exportSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroExportSettingPost {
+  constructPayload(exportSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroExportSettingPost {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
 
     let bankAccount = {...emptyDestinationAttribute};
@@ -210,7 +211,7 @@ export class XeroExportSettingsService {
       if (isCloneSettings) {
         bankAccount = exportSettingsForm.get('bankAccount')?.value;
       } else {
-        bankAccount = ExportSettingsService.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
+        bankAccount = this.exportSettingsService.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value);
       }
     }
 

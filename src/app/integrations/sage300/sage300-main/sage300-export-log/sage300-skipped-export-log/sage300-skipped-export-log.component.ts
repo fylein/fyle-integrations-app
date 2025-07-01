@@ -29,7 +29,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = AccountingExportService.getDateOptionsV2();
+  dateOptions: DateFilter[] = [];
 
   expenses: SkipExportList[];
 
@@ -60,6 +60,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService
   ) {
+    this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
@@ -137,7 +138,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
           this.hideCalendar = false;
         }, 10);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
-        this.dateOptions = AccountingExportService.getDateOptionsV2();
+        this.dateOptions = this.accountingExportService.getDateOptionsV2();
       }
     });
   }

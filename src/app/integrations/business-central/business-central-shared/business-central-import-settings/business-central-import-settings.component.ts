@@ -51,7 +51,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[];
 
-  readonly chartOfAccountTypesList: string[] = BusinessCentralImportSettingsService.getChartOfAccountTypesList();
+  readonly chartOfAccountTypesList: string[] = [];
 
   readonly brandingConfig = brandingConfig;
 
@@ -77,8 +77,11 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private businessCentralImportSettingsService: BusinessCentralImportSettingsService
+  ) {
+    this.chartOfAccountTypesList = this.businessCentralImportSettingsService.getChartOfAccountTypesList();
+  }
 
   get expenseFieldsGetter() {
     return this.importSettingForm.get('expenseFields') as FormArray;
@@ -161,7 +164,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = BusinessCentralImportSettingsService.createImportSettingPayload(this.importSettingForm);
+    const importSettingPayload = this.businessCentralImportSettingsService.createImportSettingPayload(this.importSettingForm);
     this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralImportSettings.saveSuccessToast'));
@@ -207,7 +210,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
       this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, businessCentralFieldsResponse]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = BusinessCentralImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
+      this.importSettingForm = this.businessCentralImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
       this.fyleFields = fyleFieldsResponse;
       this.businessCentralFields = businessCentralFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'), is_dependent: false });

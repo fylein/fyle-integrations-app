@@ -18,8 +18,7 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
   selector: 'app-qbo-import-settings',
@@ -66,9 +65,9 @@ export class QboImportSettingsComponent implements OnInit {
 
   customField: ExpenseField;
 
-  customFieldOption: ExpenseField[] = ImportSettingsService.getCustomFieldOption();
+  customFieldOption: ExpenseField[];
 
-  chartOfAccountTypesList: string[] = QboImportSettingsService.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[];
 
   workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
 
@@ -102,8 +101,12 @@ export class QboImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     public helper: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private exportSettingsService: ExportSettingsService
+  ) {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
+  }
 
   closeModel() {
     this.customFieldForm.reset();
@@ -138,7 +141,7 @@ export class QboImportSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const importSettingPayload = QboImportSettingsService.constructPayload(this.importSettingForm);
+    const importSettingPayload = this.importSettingService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboImportSettings.importSettingsSuccess'));
@@ -210,7 +213,7 @@ export class QboImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsService.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -278,7 +281,7 @@ export class QboImportSettingsComponent implements OnInit {
       this.qboFields = qboFields;
       this.importSettings = importSettingsResponse;
       this.workspaceGeneralSettings = workspaceGeneralSettings;
-      this.taxCodes = taxCodes.map((option: DestinationAttribute) => QboExportSettingsService.formatGeneralMappingPayload(option));
+      this.taxCodes = taxCodes.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
       this.isImportMerchantsAllowed = !workspaceGeneralSettings.auto_create_merchants_as_vendors;
 
       if (qboCredentials && qboCredentials.country !== 'US') {
@@ -286,7 +289,7 @@ export class QboImportSettingsComponent implements OnInit {
       }
 
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.importSettingForm = QboImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
+      this.importSettingForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();
@@ -298,6 +301,8 @@ export class QboImportSettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.customFieldOption = this.importSettingService.getCustomFieldOption();
+    this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
     this.setupPage();
   }
 

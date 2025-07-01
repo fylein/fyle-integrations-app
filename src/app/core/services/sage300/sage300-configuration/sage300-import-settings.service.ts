@@ -37,15 +37,15 @@ export class Sage300ImportSettingsService extends ImportSettingsService {
     };
 }
 
-  static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[], importCodeFieldConfig: ImportCodeFieldConfigType): FormGroup {
+  mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[], importCodeFieldConfig: ImportCodeFieldConfigType): FormGroup {
       const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
-      const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsService.constructFormArray(importSettings.mapping_settings, sage300Fields, importCodeFieldConfig, false, importCode) : [] ;
+      const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, importCodeFieldConfig, false, importCode) : [] ;
       return new FormGroup({
           importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
           importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-          importCategoryCode: new FormControl(ImportSettingsService.getImportCodeField(importCode, 'ACCOUNT', importCodeFieldConfig)),
+          importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', importCodeFieldConfig)),
           importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
-          importVendorCode: new FormControl(ImportSettingsService.getImportCodeField(importCode, 'VENDOR', importCodeFieldConfig)),
+          importVendorCode: new FormControl(this.getImportCodeField(importCode, 'VENDOR', importCodeFieldConfig)),
           expenseFields: new FormArray(expenseFieldsArray),
           isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
           costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? Sage300ImportSettingsService.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
@@ -55,9 +55,9 @@ export class Sage300ImportSettingsService extends ImportSettingsService {
       });
   }
 
-  static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
+  createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
       const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
-      const mappingSettings = ImportSettingsService.constructMappingSettingPayload(expenseFieldArray);
+      const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
       return {
           import_settings: {

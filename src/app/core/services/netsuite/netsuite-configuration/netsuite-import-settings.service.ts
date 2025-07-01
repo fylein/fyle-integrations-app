@@ -24,24 +24,26 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
 
   private workspaceService: WorkspaceService = inject(WorkspaceService);
 
-  static getCustomSegmentOptions(): SelectFormOption[] {
+  private netsuiteExportSettingsService: NetsuiteExportSettingsService = inject(NetsuiteExportSettingsService);
+
+  getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Custom list',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customList'),
         value: NetsuiteCustomSegmentOption.CUSTOM_LIST
       },
       {
-        label: 'Custom record',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customRecord'),
         value: NetsuiteCustomSegmentOption.CUSTOM_RECORD
       },
       {
-        label: 'Custom segment',
+        label: this.translocoService.translate('services.netsuiteImportSettings.customSegment'),
         value: NetsuiteCustomSegmentOption.CUSTOM_SEGMENT
       }
     ];
   }
 
-  static constructCustomSegmentPayload(customSegmentForm: FormGroup, workspaceId: number): CustomSegment {
+  constructCustomSegmentPayload(customSegmentForm: FormGroup, workspaceId: number): CustomSegment {
     return {
       segment_type: customSegmentForm.get('customFieldType')?.value,
       script_id: customSegmentForm.get('scriptId')?.value,
@@ -50,7 +52,7 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
     };
   }
 
-  static mapAPIResponseToFormGroup(importSettings: NetsuiteImportSettingGet | null, netsuiteFields: IntegrationField[], destinationAttribute: DestinationAttribute[]): FormGroup {
+  mapAPIResponseToFormGroup(importSettings: NetsuiteImportSettingGet | null, netsuiteFields: IntegrationField[], destinationAttribute: DestinationAttribute[]): FormGroup {
     const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, netsuiteFields) : [];
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
@@ -65,7 +67,7 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
     });
   }
 
-  static constructPayload(importSettingsForm: FormGroup): NetsuiteImportSettingPost {
+  constructPayload(importSettingsForm: FormGroup): NetsuiteImportSettingPost {
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
     const emptyDestinationAttribute = {id: null, name: null};
@@ -79,7 +81,7 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
         import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value
       },
       general_mappings: {
-        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? NetsuiteExportSettingsService.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute
+        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? this.netsuiteExportSettingsService.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute
       },
       mapping_settings: mappingSettings
     };

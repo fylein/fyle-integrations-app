@@ -278,7 +278,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingsForm = QbdDirectAdvancedSettingsService.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled, this.isOnboarding);
+      this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(qbdDirectAdvancedSettings, isSkipExportEnabled, this.isOnboarding);
 
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
 

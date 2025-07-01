@@ -119,8 +119,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private exportSettingService : SiExportSettingService,
-    private translocoService: TranslocoService
+    private siExportSettingService : SiExportSettingService,
+    private translocoService: TranslocoService,
+    private exportSettingsService: ExportSettingsService,
+    private advanceSettingsService: AdvancedSettingsService
   ) { }
 
   invalidSkipExportForm($event: boolean) {
@@ -217,7 +219,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsForm = this.formBuilder.group({
       exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(AdvancedSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
+      exportScheduleFrequency: new FormControl(this.advanceSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
@@ -286,7 +288,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
-    const exportSettings$ = this.exportSettingService.getExportSettings();
+    const exportSettings$ = this.siExportSettingService.getExportSettings();
 
     forkJoin({
       advancedSettings: advancedSettings$,
@@ -305,8 +307,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
-        const reimbursableGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
-        const cccGroup = ExportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
+        const reimbursableGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
+        const cccGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields);
 
         this.reimbursableExportGroup = reimbursableGroup ? reimbursableGroup as ExpenseGroupingFieldOption : undefined;
         this.cccExportGroup = cccGroup ? cccGroup as ExpenseGroupingFieldOption : undefined;

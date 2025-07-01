@@ -23,23 +23,3 @@ export type QBOCloneSettingPost = {
     advanced_configurations: QBOAdvancedSettingPost,
     employee_mappings: QBOEmployeeSettingPost
 }
-
-export class QBOCloneSettingModel {
-    static constructPayload(employeeSettingForm: FormGroup, exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): QBOCloneSettingPost {
-        const employeeSettingPayload = QboEmployeeSettingsService.constructPayload(employeeSettingForm);
-        const exportSettingPayload = QboExportSettingsService.constructPayload(exportSettingForm);
-        const importSettingPayload = QboImportSettingsService.constructPayload(importSettingForm);
-        const advancedSettingPayload = QboAdvancedSettingsService.constructPayload(advancedSettingForm);
-
-        if (!isTaxGroupSyncAllowed) {
-            importSettingPayload.workspace_general_settings.import_tax_codes = false;
-        }
-
-        return {
-            export_settings: exportSettingPayload,
-            import_settings: importSettingPayload,
-            advanced_configurations: advancedSettingPayload,
-            employee_mappings: employeeSettingPayload
-        };
-    }
-}

@@ -2102,6 +2102,222 @@
     },
     "qbdDirectHelper": {
       "syncDataDimensionsToast": "Syncing data dimensions from QuickBooks Desktop"
+    },
+    "travelperkPaymentProfileSetting": {
+      "booker": "Booker",
+      "cardHolder": "Card holder",
+      "traveller": "Traveller"
+    },
+    "travelperkAdvancedSetting": {
+      "cars": "Cars",
+      "flights": "Flights",
+      "hotels": "Hotels",
+      "trains": "Trains",
+      "singleExpense": "Single expense",
+      "multipleExpenses": "Multiple expenses"
+    },
+    "qboExportSettings": {
+      "check": "Check",
+      "expense": "Expense",
+      "journalEntry": "Journal entry",
+      "bill": "Bill",
+      "creditCardPurchase": "Credit card purchase",
+      "debitCreditCardExpense": "Debit & credit card expense",
+      "approved": "Approved",
+      "closed": "Closed",
+      "processing": "Processing",
+      "expenseReport": "Expense report",
+      "merchantName": "Merchant name",
+      "employeeName": "Employee name",
+      "verificationDate": "Verification date",
+      "spendDate": "Spend date",
+      "approvalDate": "Approval date",
+      "lastSpendDate": "Last spend date",
+      "cardTransactionPostDate": "Card transaction post date"
+    },
+    "qboEmployeeSettings": {
+      "nameToQboDisplayName": "{brandName} Name to QuickBooks Online Display name",
+      "emailToQboEmail": "{brandName} Email to QuickBooks Online Email",
+      "employeeCodeToQboDisplayName": "{brandName} Employee Code to QuickBooks Online Display name"
+    },
+    "intacctExportSettings": {
+      "verificationDate": "Verification date",
+      "spendDate": "Spend date",
+      "approvalDate": "Approval date",
+      "lastSpendDate": "Last spend date"
+    },
+    "qboAdvancedSettings": {
+      "exportFyleACHPaymentsToQBO": "Export {{brandName}} ACH Payments to QuickBooks Online",
+      "importQBOPaymentsToFyle": "Import QuickBooks Payments into {{brandName}}"
+    },
+    "qboImportSettings": {
+      "expense": "Expense",
+      "otherExpense": "Other Expense",
+      "fixedAsset": "Fixed Asset",
+      "costOfGoodsSold": "Cost of Goods Sold",
+      "currentLiability": "Current Liability",
+      "equity": "Equity",
+      "otherCurrentAsset": "Other Current Asset",
+      "otherCurrentLiability": "Other Current Liability",
+      "longTermLiability": "Long Term Liability",
+      "currentAsset": "Current Asset",
+      "income": "Income",
+      "otherIncome": "Other Income"
+    },
+    "businessCentralExportSettings": {
+      "expense": "Expense",
+      "expenseReport": "Expense report",
+      "cardTransactionPostDate": "Card transaction post date",
+      "lastSpentDate": "Last spent date",
+      "spentDate": "Spent date",
+      "purchaseInvoice": "Purchase invoice",
+      "journalEntry": "Journal entry",
+      "approved": "Approved",
+      "closed": "Closed",
+      "processing": "Processing",
+      "employee": "Employee",
+      "vendor": "Vendor",
+      "merchant": "Merchant",
+      "basedOnEmployeeEmailID": "Based on employee e-mail ID",
+      "basedOnEmployeeName": "Based on employee name"
+    },
+    "businessCentralImportSettings": {
+      "expense": "Expense",
+      "assets": "Assets",
+      "income": "Income",
+      "equity": "Equity",
+      "liabilities": "Liabilities",
+      "others": "Others",
+      "costOfGoodsSold": "Cost of Goods Sold"
+    },
+    "employeeSettings": {
+      "employee": "Employee",
+      "vendor": "Vendor"
+    },
+    "xeroOnboarding": {
+      "connectToXero": "Connect to Xero"
+    },
+    "xeroAdvancedSettings": {
+      "exportACHPayments": "Export {{brandName}} ACH payments to Xero",
+      "importPayments": "Import Xero payments into {{brandName}}"
+    },
+    "mapping": {
+      "allFilter": "All"
+    },
+    "xeroExportSettings": {
+      "purchaseBill": "Purchase bill",
+      "bankTransactions": "Bank transactions",
+      "report": "Report",
+      "expense": "Expense",
+      "none": "None",
+      "employeeNameToContactName": "Employee name on {{brandName}} to contact name on Xero",
+      "employeeEmailToContactEmail": "Employee email on {{brandName}} to contact email on Xero",
+      "verificationDate": "Verification date",
+      "spendDate": "Spend date",
+      "approvalDate": "Approval date",
+      "lastSpendDate": "Last spend date",
+      "cardTransactionPostDate": "Card transaction post date",
+      "processing": "Processing",
+      "closed": "Closed",
+      "approved": "Approved",
+      "singleLineItem": "Single line item",
+      "multipleLineItem": "Multiple line item"
+    },
+    "exportSettings": {
+      "singleLineItem": "Single line item",
+      "multipleLineItem": "Multiple line item",
+      "bill": "Bill",
+      "expenseReport": "Expense report",
+      "journalEntry": "Journal entry",
+      "chargeCardTransaction": "Charge card transaction",
+      "exportDate": "Export date",
+      "verificationDate": "Verification date",
+      "spendDate": "Spend date",
+      "approvalDate": "Approval date",
+      "lastSpendDate": "Last spend date",
+      "cardTransactionPostDate": "Card transaction post date"
+    },
+    "importSettings": {
+      "createCustomField": "Create a custom field"
+    },
+    "accountingExport": {
+      "bill": "Bill",
+      "journalEntry": "Journal entry",
+      "check": "Check",
+      "creditCardPurchase": "Credit card purchase",
+      "creditCardCredit": "Credit card credit",
+      "debitCardExpense": "Debit card expense",
+      "expense": "expense",
+      "bankTransaction": "Bank transaction",
+      "thisWeek": "This week",
+      "lastWeek": "Last week",
+      "thisMonth": "This month",
+      "lastMonth": "Last month"
+    },
+    "qbdDirectAdvancedSettings": {
+      "expenseReportIdLabel": "Expense/Report ID"
+    },
+    "qbdDirectImportSettings": {
+      "otherExpense": "Other Expense",
+      "costOfGoodsSold": "Cost Of Goods Sold",
+      "fixedAsset": "Fixed Asset",
+      "otherAsset": "Other Asset",
+      "otherCurrentAsset": "Other Current Asset",
+      "longTermLiability": "Long Term Liability",
+      "otherCurrentLiability": "Other Current Liability",
+      "income": "Income",
+      "otherIncome": "Other Income",
+      "equity": "Equity",
+      "expense": "Expense"
+    },
+    "qbdDirectExportSettings": {
+      "employee": "Employee",
+      "merchant": "Merchant",
+      "report": "Report",
+      "expense": "Expense",
+      "cardTransactionPostDate": "Card transaction post date",
+      "creditCardPurchase": "Credit card purchase",
+      "journalEntry": "Journal entry",
+      "bill": "Bill",
+      "approved": "Approved",
+      "closed": "Closed",
+      "processing": "Processing",
+      "lastSpendDate": "Last spend date",
+      "spendDate": "Spend date"
+    },
+    "netsuiteExportSettings": {
+      "verificationDate": "Verification date",
+      "spendDate": "Spend date",
+      "approvalDate": "Approval date",
+      "lastSpendDate": "Last spend date",
+      "cardTransactionPostDate": "Card transaction post date",
+      "processing": "Processing",
+      "closed": "Closed",
+      "approved": "Approved",
+      "employee": "Employee",
+      "vendor": "Vendor",
+      "basedOnEmployeeEmailId": "Based on employee e-mail ID",
+      "basedOnEmployeeName": "Based on employee name",
+      "basedOnEmployeeCode": "Based on employee code",
+      "creditCardCharge": "Credit card charge",
+      "expense": "Expense",
+      "expenseReport": "Expense report",
+      "journalEntry": "Journal entry",
+      "merchantName": "Merchant name",
+      "employeeName": "Employee name",
+      "bill": "Bill"
+    },
+    "netsuiteAdvancedSettings": {
+      "exportACHPayments": "Export {{brandName}} ACH payments to NetSuite",
+      "importPayments": "Import NetSuite payments into {{brandName}}",
+      "all": "All",
+      "transactionLine": "Transaction line",
+      "transactionBody": "Transaction body"
+    },
+    "netsuiteImportSettings": {
+      "customList": "Custom list",
+      "customRecord": "Custom record",
+      "customSegment": "Custom segment"
     }
   },
   "pipes": {

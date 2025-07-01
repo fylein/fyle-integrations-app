@@ -44,14 +44,14 @@ export class BusinessCentralExportSettingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 
-  static getExpenseGroupByOptions(): SelectFormOption[] {
+  getExpenseGroupByOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Expense',
+        label: this.translocoService.translate('services.businessCentralExportSettings.expense'),
         value: ExpenseGroupedBy.EXPENSE
       },
       {
-        label: 'Expense report',
+        label: this.translocoService.translate('services.businessCentralExportSettings.expenseReport'),
         value: ExpenseGroupedBy.REPORT
       }
     ];
@@ -60,7 +60,7 @@ export class BusinessCentralExportSettingsService {
   getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Card transaction post date',
+        label: this.translocoService.translate('services.businessCentralExportSettings.cardTransactionPostDate'),
         value: ExportDateType.POSTED_AT
       },
       {
@@ -68,11 +68,11 @@ export class BusinessCentralExportSettingsService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Last spent date',
+        label: this.translocoService.translate('services.businessCentralExportSettings.lastSpentDate'),
         value: ExportDateType.LAST_SPENT_AT
       },
       {
-        label: 'Spent date',
+        label: this.translocoService.translate('services.businessCentralExportSettings.spentDate'),
         value: ExportDateType.SPENT_AT
       }
     ];
@@ -85,94 +85,94 @@ export class BusinessCentralExportSettingsService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Spent date',
+        label: this.translocoService.translate('services.businessCentralExportSettings.spentDate'),
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Last spent date',
+        label: this.translocoService.translate('services.businessCentralExportSettings.lastSpentDate'),
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
   }
 
-  static getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
+  getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
       return [
         {
-          label: 'Purchase invoice',
+          label: this.translocoService.translate('services.businessCentralExportSettings.purchaseInvoice'),
           value: BusinessCentralExportType.PURCHASE_INVOICE
         },
         {
-          label: 'Journal entry',
+          label: this.translocoService.translate('services.businessCentralExportSettings.journalEntry'),
           value: BusinessCentralExportType.JOURNAL_ENTRY
         }
       ];
   }
 
-  static getCCCExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
+  getCCCExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
       return [
         {
-          label: 'Journal entry',
+          label: this.translocoService.translate('services.businessCentralExportSettings.journalEntry'),
           value: BusinessCentralExportType.JOURNAL_ENTRY
         }
       ];
   }
 
-  static getCCCExpenseState(): BusinessCentralExportSettingFormOption[] {
+  getCCCExpenseState(): BusinessCentralExportSettingFormOption[] {
     return [
       {
-        label: 'Approved',
+        label: this.translocoService.translate('services.businessCentralExportSettings.approved'),
         value: CCCExpenseState.APPROVED
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.businessCentralExportSettings.closed'),
         value: CCCExpenseState.PAID
       }
     ];
   }
 
-  static getReimbursableExpenseState(): BusinessCentralExportSettingFormOption[] {
+  getReimbursableExpenseState(): BusinessCentralExportSettingFormOption[] {
     return [
       {
-        label: 'Processing',
+        label: this.translocoService.translate('services.businessCentralExportSettings.processing'),
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: 'Closed',
+        label: this.translocoService.translate('services.businessCentralExportSettings.closed'),
         value: ExpenseState.PAID
       }
     ];
   }
 
-  static getEntityOptions(): BusinessCentralExportSettingFormOption[] {
+  getEntityOptions(): BusinessCentralExportSettingFormOption[] {
       return [
           {
-            label: 'Employee',
+            label: this.translocoService.translate('services.businessCentralExportSettings.employee'),
             value: FyleField.EMPLOYEE
           },
           {
-            label: 'Vendor',
+            label: this.translocoService.translate('services.businessCentralExportSettings.vendor'),
             value: FyleField.VENDOR
           }
       ];
   }
 
-  static getNameInJEOptions(): BusinessCentralExportSettingFormOption[] {
+  getNameInJEOptions(): BusinessCentralExportSettingFormOption[] {
     return [
         {
-          label: 'Employee',
+          label: this.translocoService.translate('services.businessCentralExportSettings.employee'),
           value: FyleField.EMPLOYEE
         },
         {
-          label: 'Merchant',
+          label: this.translocoService.translate('services.businessCentralExportSettings.merchant'),
           value: NameInJEField.MERCHANT
         }
     ];
   }
 
-  static getEmployeeMappingOptions(): BusinessCentralExportSettingFormOption[] {
+  getEmployeeMappingOptions(): BusinessCentralExportSettingFormOption[] {
       return [
-          { label: 'Based on employee e-mail ID', value: AutoMapEmployeeOptions.EMAIL },
-          { label: 'Based on employee name', value: AutoMapEmployeeOptions.NAME }
+          { label: this.translocoService.translate('services.businessCentralExportSettings.basedOnEmployeeEmailID'), value: AutoMapEmployeeOptions.EMAIL },
+          { label: this.translocoService.translate('services.businessCentralExportSettings.basedOnEmployeeName'), value: AutoMapEmployeeOptions.NAME }
       ];
   }
 

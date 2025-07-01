@@ -58,7 +58,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   customMessage: string;
 
-  splitExpenseGroupingOptions = ExportSettingsService.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions: SelectFormOption[];
 
   destinationOptions: ExportSettingDestinationAttributeOption = {
     [IntacctExportSettingDestinationOptionKey.ACCOUNT]: [],
@@ -107,9 +107,9 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  creditCardExportTypes: ExportSettingFormOption[] = ExportSettingsService.constructCCCOptions(brandingConfig.brandId);
+  creditCardExportTypes: ExportSettingFormOption[];
 
   autoMapEmployeeOptions: ExportSettingFormOption[];
 
@@ -137,10 +137,12 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService,
-    private intacctExportSettingsService: IntacctExportSettingsService
+    private intacctExportSettingsService: IntacctExportSettingsService,
+    private exportSettingsService: ExportSettingsService
     ) {
+    this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
     this.reimbursableExpenseGroupingDateOptions = this.intacctExportSettingsService.getExpenseGroupingDateOptions();
-
+    this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('intacctExportSettings.expense'),
@@ -151,6 +153,8 @@ export class IntacctExportSettingsComponent implements OnInit {
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
+
+    this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
 
     this.autoMapEmployeeOptions = [
       { label: this.translocoService.translate('intacctExportSettings.emailIdMapping'), value: 'EMAIL' },
@@ -459,7 +463,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],
         reimbursableExportType: [configurations?.reimbursable_expenses_object || null],
         reimbursableExpensePaymentType: [findObjectById(this.destinationOptions.EXPENSE_PAYMENT_TYPE, generalMappings?.default_reimbursable_expense_payment_type.id)],
-        reimbursableExportGroup: [ExportSettingsService.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
+        reimbursableExportGroup: [this.exportSettingsService.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
         reimbursableExportDate: [this.exportSettings?.expense_group_settings.reimbursable_export_date_type || null],
         reimbursableExpenseState: [this.exportSettings?.expense_group_settings.expense_state || null],
         employeeFieldMapping: [configurations?.employee_field_mapping || null, Validators.required],
@@ -467,7 +471,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         glAccount: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_gl_account.id)],
         creditCardExpense: [Boolean(configurations?.corporate_credit_card_expenses_object), this.exportSelectionValidator()],
         cccExportType: [configurations?.corporate_credit_card_expenses_object || null],
-        cccExportGroup: [ExportSettingsService.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
+        cccExportGroup: [this.exportSettingsService.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
         cccExportDate: [this.exportSettings?.expense_group_settings.ccc_export_date_type || null],
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
         cccExpensePaymentType: [findObjectById(this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE, generalMappings?.default_ccc_expense_payment_type.id)],
@@ -550,9 +554,9 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingsForm.controls.reimbursableExportDate.value);
+      this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(false, reimbursableExportGroup, this.exportSettingsForm.controls.reimbursableExportDate.value);
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('reimbursableExportDate'),
         this.reimbursableExpenseGroupingDateOptions
       );
@@ -560,11 +564,11 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       const isCoreCCCModule = this.exportSettingsForm?.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION;
-      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
         isCoreCCCModule, cccExportGroup, this.exportSettingsForm.controls.cccExportDate.value
       );
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('cccExportDate'),
         this.cccExpenseGroupingDateOptions
       );

@@ -51,19 +51,19 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   expenseStateOptions: QBDExportSettingFormOption[];
 
-  reimbursableExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.expenseGroupingFieldOptions();
+  reimbursableExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = [];
 
-  creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.expenseGroupingFieldOptions();
+  creditCardExpenseGroupingFieldOptions: QBDExportSettingFormOption[] = [];
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [];
 
-  creditCardExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.creditCardExportTypes();
+  creditCardExportTypes: QBDExportSettingFormOption[] = [];
 
-  reimbursableExportTypes: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.reimbursableExportTypes();
+  reimbursableExportTypes: QBDExportSettingFormOption[] = [];
 
-  nameInJEOptions: QBDExportSettingFormOption[] = QbdDirectExportSettingsService.nameInJEOptions();
+  nameInJEOptions: QBDExportSettingFormOption[] = [];
 
-  employeeMappingOptions: SelectFormOption[] = EmployeeSettingsService.getEmployeeFieldMappingOptions();
+  employeeMappingOptions: SelectFormOption[] = [];
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -108,10 +108,17 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private mappingService: MappingService,
     private qbdDirectHelperService: QbdDirectHelperService,
     private translocoService: TranslocoService,
-    private qbdDirectExportSettingsService: QbdDirectExportSettingsService
+    private qbdDirectExportSettingsService: QbdDirectExportSettingsService,
+    private employeeSettingsService: EmployeeSettingsService
   ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingFieldOptions = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+    this.creditCardExpenseGroupingFieldOptions = this.qbdDirectExportSettingsService.expenseGroupingFieldOptions();
+    this.creditCardExportTypes = this.qbdDirectExportSettingsService.creditCardExportTypes();
+    this.reimbursableExportTypes = this.qbdDirectExportSettingsService.reimbursableExportTypes();
+    this.nameInJEOptions = this.qbdDirectExportSettingsService.nameInJEOptions();
+    this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {
@@ -296,7 +303,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   cccExportTypeWatcher(): void {
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
       if (creditCardExportTypeValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
-        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
+        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.qbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
       }
     });
@@ -304,9 +311,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   reimbursableExpenseGroupWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroupValue) => {
-      this.reimbursableExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
+      this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.constructExportDateOptions(false, reimbursableExportGroupValue, this.exportSettingsForm.controls.reimbursableExportDate.value);
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.qbdDirectExportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('reimbursableExportDate'),
         this.reimbursableExpenseGroupingDateOptions
       );
@@ -327,14 +334,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
       const allowPostedAt = cccModuleWithPostedAtDateSelected === currentCCCModule;
 
-      this.cccExpenseGroupingDateOptions = ExportSettingsService.constructExportDateOptions(
+      this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.constructExportDateOptions(
         isCoreCCCModule,
         creditCardExportGroupValue,
         this.exportSettingsForm.controls.creditCardExportDate.value,
         { allowPostedAt }
       );
 
-      ExportSettingsService.clearInvalidDateOption(
+      this.qbdDirectExportSettingsService.clearInvalidDateOption(
         this.exportSettingsForm.get('creditCardExportDate'),
         this.cccExpenseGroupingDateOptions
       );
@@ -376,7 +383,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   cccExportGroupingWatcher() {
     this.exportSettingsForm.controls.defaultCCCAccountsPayableAccountName.valueChanges.subscribe((defaultCCCAccountsPayableAccountNameValue: QbdDirectDestinationAttribute) => {
       if (defaultCCCAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
-        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(QbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
+        this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.qbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
       } else {
         this.exportSettingsForm.controls.creditCardExportGroup.enable();
@@ -387,7 +394,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   reimburesmentExpenseGroupingWatcher() {
     this.exportSettingsForm.controls.defaultReimbursableAccountsPayableAccountName.valueChanges.subscribe((defaultReimbursableAccountsPayableAccountNameValue: QbdDirectDestinationAttribute) => {
       if (defaultReimbursableAccountsPayableAccountNameValue?.detail?.account_type === 'AccountsPayable') {
-        this.exportSettingsForm.controls.reimbursableExportGroup.patchValue(QbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
+        this.exportSettingsForm.controls.reimbursableExportGroup.patchValue(this.qbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.reimbursableExportGroup.disable();
       } else {
         this.exportSettingsForm.controls.reimbursableExportGroup.enable();
@@ -421,12 +428,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
     this.exportSettings = exportSettingResponse;
 
-    this.cccExpenseStateOptions = QbdDirectExportSettingsService.cccExpenseStateOptions();
-    this.expenseStateOptions = QbdDirectExportSettingsService.expenseStateOptions();
+    this.cccExpenseStateOptions = this.qbdDirectExportSettingsService.cccExpenseStateOptions();
+    this.expenseStateOptions = this.qbdDirectExportSettingsService.expenseStateOptions();
 
     this.destinationAccounts = accounts as QbdDirectDestinationAttribute[];
 
-    this.exportSettingsForm = QbdDirectExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
+    this.exportSettingsForm = this.qbdDirectExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.destinationAccounts);
 
     this.helperService.addExportSettingFormValidator(this.exportSettingsForm);
 

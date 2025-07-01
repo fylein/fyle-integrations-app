@@ -53,7 +53,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  paymentSyncOptions: SelectFormOption[] = XeroAdvancedSettingsService.getPaymentSyncOptions();
+  paymentSyncOptions: SelectFormOption[];
 
   org: Org = this.orgService.getCachedOrg();
 
@@ -77,8 +77,11 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private orgService: OrgService,
     private helperService: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private xeroAdvancedSettingsService: XeroAdvancedSettingsService
+  ) {
+    this.paymentSyncOptions = this.advancedSettingService.getPaymentSyncOptions();
+  }
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/xero/onboarding/import_settings`]);
@@ -91,7 +94,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
   }
 
   save(): void {
-    const advancedSettingPayload = XeroAdvancedSettingsService.constructPayload(this.advancedSettingForm);
+    const advancedSettingPayload = this.advancedSettingService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
@@ -167,7 +170,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
-      this.advancedSettingForm = XeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
       this.setupFormWatchers();
       this.createMemoStructureWatcher();
       this.isLoading = false;
