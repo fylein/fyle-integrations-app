@@ -9,6 +9,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
@@ -52,7 +53,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private xeroAuthService: XeroAuthService,
     private windowService: WindowService,
     private netsuiteConnector: NetsuiteConnectorService,
-    private intacctConnector: IntacctConnectorService
+    private intacctConnector: IntacctConnectorService,
+    private sage300Connector: Sage300ConnectorService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -97,7 +99,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
         this.integrationSetupForm = netsuiteSetupForm;
         this.isConnectionInProgress = false;
-        if (isNetsuiteConnected === true){
+        if (isNetsuiteConnected){
           this.router.navigate(['integrations/netsuite/main/dashboard']);
         }
       });
@@ -108,8 +110,19 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
         this.integrationSetupForm = intacctSetupForm;
         this.isConnectionInProgress = false;
-        if (isIntacctConnected === true){
+        if (isIntacctConnected){
           this.router.navigate(['integrations/intacct/main/dashboard']);
+        }
+      });
+    }
+
+    if (this.appName === AppName.SAGE300) {
+      this.sage300Connector.connectSage300(this.integrationSetupForm, true)
+      .subscribe(({ sage300SetupForm, isSage300Connected }) => {
+        this.integrationSetupForm = sage300SetupForm;
+        this.isConnectionInProgress = false;
+        if (isSage300Connected){
+          this.router.navigate(['integrations/sage300/main/dashboard']);
         }
       });
     }
@@ -141,6 +154,11 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
     if (this.appName === AppName.SAGE300){
       this.isTokenBasedAuthApp = true;
+      this.helperService.setBaseApiURL(AppUrl.SAGE300);
+
+      this.sage300Connector.getSage300FormGroup().subscribe((sage300SetupForm) => {
+        this.integrationSetupForm = sage300SetupForm;
+      });
     }
 
     if (this.appName === AppName.QBO){
