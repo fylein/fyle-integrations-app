@@ -1957,7 +1957,14 @@
     "syncingDataMessage": "We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
     "incorrectAccountSelectedContext": "You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings",
-    "reconnectButton": "Re connect"
+    "reconnectButton": "Reconnect",
+    "reconectDialogHeaderText": "Reconnect to {{appName}}",
+    "reconnectIntegrationButtonText": "Reconnect integration",
+    "tokenBasedAppDisconnectedDescription": "The integration is disconnected because the credentials used to connect to {{appName}} have expired.",
+    "tutorialStep1Text": "Step 1:",
+    "tutorialStep2Text": "Step 2:",
+    "tutorialStep1Context": "Generate new credentials from {{appName}} by following these steps",
+    "tutorialStep2Context": "Once generated, click the button below to reconnect."
   },
   "dashboardExportSummarySection": {
     "todaysExportOverview": "Today's export overview",

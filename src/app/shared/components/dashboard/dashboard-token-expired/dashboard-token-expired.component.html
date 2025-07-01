@@ -8,28 +8,28 @@
   @if (!isConnectionInProgress) {
   <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
     
-    <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'Integration disconnected' : 'Connection expired' }} </p>
+    <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired' | transloco}} </p>
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
     <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
-      Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect
-      your account. </p>
+      {{ 'dashboardTokenExpired.connectionExpiredDescription' | transloco}} </p>
     } @else {
       <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
-        <span> The integration is disconnected because the credentials used to connect to {{appName}} have expired. </span>
+        <span> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedDescription' | transloco}}</span>
 
         <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
-          Step 1: <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> Generate new credentials from {{appName}} by following these steps
+          {{ 'dashboardTokenExpired.tutorialStep1Text' | transloco}}
+             <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> 
+              {{ 'dashboardTokenExpired.tutorialStep1Context' | transloco}}
              <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
            </span>
         </span>
 
-        <span> Step 2: Once generated, click the button below to reconnect. </span> 
+        <span> {{ 'dashboardTokenExpired.tutorialStep2Text' | transloco}} {{ 'dashboardTokenExpired.tutorialStep2Context' | transloco}} </span> 
       </p> }
     } @else {
       <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
-        The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please
-        reconnect your account. </p>
+        {{ 'dashboardTokenExpired.integrationDisconnectedDescription' | transloco}} </p>
     }
   </div>
 
@@ -49,15 +49,14 @@
 
   @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
-        <button pButton (click)="toggleIntegrationReconnectDialog()"> Reconnect integration</button>
+        <button pButton (click)="toggleIntegrationReconnectDialog()"> {{'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco}}</button>
       </div>
   }
 }
 
   @if (isConnectionInProgress) {
   <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-break-words tw-whitespace-normal">
-    We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few
-    seconds. </p>
+    {{ 'dashboardTokenExpired.syncingDataMessage' | transloco}}</p>
 
   <div class="tw-flex tw-justify-center tw-items-center">
     <app-loader></app-loader>
@@ -67,15 +66,14 @@
 
 @if (isIncorrectAccountSelected) {
 <app-configuration-confirmation-dialog (warningAccepted)="acceptWarning($event)"
-  [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'Incorrect account selected'"
-  [contextText]="'You had previously set up the integration with a different ' + appName + ' account. Please choose the same to restore the settings'"
-  [confirmBtnText]="'Re connect'" [showSecondaryCTA]="false">
+  [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco"
+  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco"
+  [confirmBtnText]="'dashboardTokenExpired.reconnectButton' | transloco" [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 }
 
 <p-dialog 
   [visible]="isIntegrationReconnectDialogVisible"
-  header="Reconnect to NetSuite"
   [showHeader]="false"
   [modal]="true"
   [style]="{ width: '515px', borderRadius: '8px' }"
@@ -85,7 +83,7 @@
   <!-- Header -->
   <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color tw-h-[76px] tw-flex tw-justify-between tw-items-center tw-self-stretch">
     <div class="tw-flex tw-justify-between tw-items-center">
-        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">Reconnect to {{appName}}</p>
+        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">{{'dashboardTokenExpired.reconectDialogHeaderText' | transloco}}</p>
     </div>
     <div class="tw-flex tw-justify-between tw-items-center tw-cursor-pointer">
       <app-svg-icon [styleClasses]="'tw-transform tw-scale-[1.6]'" (click)="toggleIntegrationReconnectDialog()" [svgSource]="'cross-medium'" [width]="'15px'" [height]="'15px'"></app-svg-icon>
@@ -110,7 +108,7 @@
   <!-- Footer -->
   <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
     <button type="button" (click)="reconnectToIntegration()" class="connect-btn" pButton>
-      Reconnect
+      {{ 'dashboardTokenExpired.reconnectButton' | transloco}}
     </button>
   </div>
 
