@@ -1,4 +1,20 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+set -e  # Exit on any error
+
+# Format only staged files with Prettier
+# Process files directly to preserve null-termination
+git diff --cached --name-only --diff-filter=ACM --z | \
+  grep -z -E '\.(ts|js|html|scss|css|json)$' | \
+  grep -z '^src/' | \
+  xargs -0 -r npx prettier --write
+
+# Re-add the formatted files
+git diff --cached --name-only --diff-filter=ACM --z | \
+  grep -z -E '\.(ts|js|html|scss|css|json)$' | \
+  grep -z '^src/' | \
+  xargs -0 -r git add
+
+# Lint and fix code
 ng lint --fix
