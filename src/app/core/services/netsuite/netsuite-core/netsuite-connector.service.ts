@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { NetsuiteMappingsService } from './netsuite-mappings.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const netsuiteCredentialCache = new Subject<void>();
@@ -29,7 +30,8 @@ export class NetsuiteConnectorService {
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
     private mappingsService: NetsuiteMappingsService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   @Cacheable({
@@ -61,12 +63,12 @@ export class NetsuiteConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to NetSuite successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteConnector.connectionReconnectedToast'), 6000);
           return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(response), isNetsuiteConnected: true });
 
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionErrorToast'));
         return of({ netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteCredential), isNetsuiteConnected: false });
       })
     );
@@ -85,7 +87,7 @@ export class NetsuiteConnectorService {
         netsuiteSetupForm: NetsuiteConnectorModel.mapAPIResponseToFormGroup(null) });
       })
     );
-  }
+}
 
   postSubsdiaryMapping(subsdiaryMappingPayload: NetsuiteSubsidiaryMappingPost): Observable<SubsidiaryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
@@ -102,7 +104,7 @@ export class NetsuiteConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Netsuite credentials not found" && shouldShowTokenExpiredMessage){
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your NetSuite connection expired, please connect again', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionExpiredToast'), 6000);
         }
         return of(false);
       })

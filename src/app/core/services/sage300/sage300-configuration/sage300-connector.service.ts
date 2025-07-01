@@ -11,6 +11,7 @@ import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.servic
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from '../../common/workspace.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 const sage300CredentialCache = new Subject<void>();
 
@@ -32,7 +33,8 @@ export class Sage300ConnectorService {
     helper: HelperService,
     private mappingsService: Sage300MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private translocoService: TranslocoService
   ) {
     helper.setBaseApiURL();
   }
@@ -69,7 +71,7 @@ export class Sage300ConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Sage300 credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage300 connection expired, please connect again', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300Connector.connectionExpiredToast'), 6000);
         }
         return of(false);
       })
@@ -110,11 +112,11 @@ export class Sage300ConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage300 successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300Connector.connectionReconnectedToast'), 6000);
           return of({ sage300SetupForm: Sage300ConnectorFormModel.mapAPIResponseToFormGroup(sage300Credential), isSage300Connected: true });
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.', 6000);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300Connector.connectionErrorToast'), 6000);
         return of({sage300SetupForm: sage300SetupForm, isSage300Connected: false});
       })
     );

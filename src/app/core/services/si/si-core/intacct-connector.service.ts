@@ -12,6 +12,7 @@ import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-confi
 import { SiMappingsService } from './si-mappings.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 const sageIntacctCredentialCache = new Subject<void>();
@@ -30,7 +31,8 @@ export class IntacctConnectorService {
     private workspaceService: SiWorkspaceService,
     private storageService: StorageService,
     private mappingsService: SiMappingsService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService
   ) { }
 
   @Cacheable({
@@ -62,12 +64,12 @@ export class IntacctConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Reconnected to Sage Intacct successfully.', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctConnector.connectionReconnectToast'), 6000);
           return of({ intacctSetupForm: IntacctConnectorModel.mapAPIResponseToFormGroup(response), isIntacctConnected: true });
 
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.', 6000);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctConnector.connectionErrorToast'), 6000);
         return of({ intacctSetupForm: IntacctConnectorModel.mapAPIResponseToFormGroup(this.intacctCredential), isIntacctConnected: false });
       })
     );
@@ -102,7 +104,7 @@ export class IntacctConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Sage Intacct connection expired, please connect again', 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctConnector.ConnectionExpiredToast'), 6000);
         }
         return of(false);
       })

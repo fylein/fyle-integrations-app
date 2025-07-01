@@ -262,8 +262,9 @@
     "locationEntity": "Location Entity"
   },
   "intacctConnector": {
-    "connectionSuccessToast": "Connection successful.",
+    "connectionReconnectToast ": "Reconnected to Sage Intacct successfully.",
     "connectionErrorToast": "Error while connecting, please try again later.",
+    "ConnectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
     "headerText": "Connect to Sage Intacct",
     "companyIdLabel": "Company ID",
     "enterCompanyIdPlaceholder": "Enter {{companyId}}",
@@ -320,8 +321,9 @@
     "syncTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export"
   },
   "netsuiteConnector": {
-    "connectionSuccess": "Connection successful.",
-    "connectionError": "Error while connecting, please try again later.",
+    "connectionReconnectedToast": "Reconnected to NetSuite successfully.",
+    "connectionExpiredToast": "Oops! Your NetSuite connection expired, please connect again",
+    "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to NetSuite",
     "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account.",
     "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
@@ -1099,9 +1101,10 @@
     "headlineText": "Guide to setup your integrations",
     "headerText": "A set up through to help you set up the integration quick and easy."
   },
-  "sage300OnboardingConnector": {
-    "connectionSuccessToast": "Connection successful.",
+  "sage300Connector": {
+    "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
     "connectionErrorToast": "Error while connecting, please try again later.",
+    "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again",
     "headerText": "Connect to your Sage 300 CRE account",
     "contentText": "To connect your Sage 300 CRE database to your {{brandName}} account, you need to set up the HH2 sync. Click here for details or contact your {{brandName}} implementation specialist for help with the setup.",
     "identifierError": "Please enter a valid identifier.",
