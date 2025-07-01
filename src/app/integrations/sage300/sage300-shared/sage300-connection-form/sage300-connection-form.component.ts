@@ -3,13 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-intacct-connection-form',
-  templateUrl: './intacct-connection-form.component.html',
-  styleUrl: './intacct-connection-form.component.scss'
+  selector: 'app-sage300-connection-form',
+  templateUrl: './sage300-connection-form.component.html',
+  styleUrl: './sage300-connection-form.component.scss'
 })
-export class IntacctConnectionFormComponent {
+export class Sage300ConnectionFormComponent {
 
-  @Input() connectIntacctForm: FormGroup;
+  @Input() connectSage300Form: FormGroup;
 
   @Input() isReconnecting?: boolean;
 
