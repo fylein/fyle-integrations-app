@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-intacct-connector',
@@ -42,56 +39,30 @@ export class IntacctConnectorComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private connectorService: IntacctConnectorService,
-    private mappingsService: SiMappingsService,
-    private toastService: IntegrationsToastService
+    private intacctConnectorService: IntacctConnectorService
   ) { }
 
-  private clearField() {
-    this.connectSageIntacctForm.get("userID")?.setValue('');
-    this.connectSageIntacctForm.get("companyID")?.setValue('');
-    this.connectSageIntacctForm.get("userPassword")?.setValue('');
+  save() {
+    this.isLoading = true;
+    this.saveInProgress = true;
+
+    this.intacctConnectorService.connectSageIntacct(this.connectSageIntacctForm)
+    .subscribe((response) => {
+      this.connectSageIntacctForm = response.intacctSetupForm;
+      this.isLoading = false;
+      this.saveInProgress = false;
+      this.setupConnectionStatus.emit(response.isIntacctConnected);
+    });
   }
 
-    save() {
-      const userID = this.connectSageIntacctForm.get('userID')?.value;
-      const companyID = this.connectSageIntacctForm.get('companyID')?.value;
-      const userPassword = this.connectSageIntacctForm.get('userPassword')?.value;
-
-      this.isLoading = true;
-      this.saveInProgress = true;
-
-      const sageIntacctConnection = IntacctConnectorModel.constructPayload(this.connectSageIntacctForm);
-
-      this.connectorService.connectSageIntacct(sageIntacctConnection).subscribe((response) => {
-        this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
-          this.setupConnectionStatus.emit(true);
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
-          this.isLoading = false;
-          this.saveInProgress = false;
-        });
-      }, () => {
-        this.setupConnectionStatus.emit(false);
-        this.clearField();
-        this.isLoading = false;
-        this.saveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
-      });
-    }
-
-    private setupPage(): void {
-      this.isLoading = true;
-      this.isOnboarding = this.router.url.includes('onboarding');
-      this.connectorService.getSageIntacctCredential().subscribe((intacctCredential) => {
-        this.connectSageIntacctForm = IntacctConnectorModel.mapAPIResponseToFormGroup(intacctCredential);
-        this.setupConnectionStatus.emit(true);
-        this.isLoading = false;
-      }, () => {
-        this.connectSageIntacctForm = IntacctConnectorModel.mapAPIResponseToFormGroup(null);
-        this.setupConnectionStatus.emit(false);
-        this.isLoading = false;
-      });
-    }
+  private setupPage(): void {
+    this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
+    this.intacctConnectorService.getIntacctFormGroup().subscribe((response) => {
+      this.connectSageIntacctForm = response.intacctSetupForm;
+      this.isLoading = false;
+    });
+  }
 
   ngOnInit(): void {
     this.setupPage();
