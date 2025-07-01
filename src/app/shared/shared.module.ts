@@ -171,7 +171,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     NetsuiteSubsidiaryMappingComponent,
     ConfigurationMappingFieldsComponent,
     SvgIconComponent,
-    NetsuiteConnectorComponent,
     NetsuiteSubsidiaryMappingComponent,
     SearchComponent,
     OptionalFieldComponent,

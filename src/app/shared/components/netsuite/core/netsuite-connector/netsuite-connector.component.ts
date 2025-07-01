@@ -6,9 +6,6 @@ import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConnectorGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
-import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
-import { TranslocoService } from '@jsverse/transloco';
-
 
 @Component({
   selector: 'app-netsuite-connector',
@@ -43,11 +40,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: NetsuiteConnectorService,
-    public helper: HelperService,
-    private mappingsService: NetsuiteMappingsService,
-    private workspaceService: WorkspaceService,
-    public helper: HelperService,
-    private translocoService: TranslocoService
+    public helper: HelperService
   ) { }
 
   save() {
