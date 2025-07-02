@@ -262,9 +262,9 @@
     "locationEntity": "Location Entity"
   },
   "intacctConnector": {
-    "connectionReconnectToast ": "Reconnected to Sage Intacct successfully.",
+    "connectionReconnectedToast ": "Reconnected to Sage Intacct successfully.",
+    "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
     "connectionErrorToast": "Error while connecting, please try again later.",
-    "ConnectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
     "headerText": "Connect to Sage Intacct",
     "companyIdLabel": "Company ID",
     "enterCompanyIdPlaceholder": "Enter {{companyId}}",
@@ -1103,8 +1103,8 @@
   },
   "sage300Connector": {
     "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
-    "connectionErrorToast": "Error while connecting, please try again later.",
     "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again",
+    "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to your Sage 300 CRE account",
     "contentText": "To connect your Sage 300 CRE database to your {{brandName}} account, you need to set up the HH2 sync. Click here for details or contact your {{brandName}} implementation specialist for help with the setup.",
     "identifierError": "Please enter a valid identifier.",
