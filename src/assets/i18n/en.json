@@ -262,7 +262,7 @@
     "locationEntity": "Location Entity"
   },
   "intacctConnector": {
-    "connectionReconnectedToast ": "Reconnected to Sage Intacct successfully.",
+    "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
     "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
     "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to Sage Intacct",
