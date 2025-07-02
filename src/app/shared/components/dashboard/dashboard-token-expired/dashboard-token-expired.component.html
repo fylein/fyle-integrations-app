@@ -12,15 +12,15 @@
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
     <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
-      {{ 'dashboardTokenExpired.connectionExpiredDescription' | transloco}} </p>
+      {{ 'dashboardTokenExpired.connectionExpiredDescription' | transloco:{ appName: appName } }} </p>
     } @else {
       <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
-        <span> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedDescription' | transloco}}</span>
+        <span> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedDescription' | transloco:{ appName: appName } }}</span>
 
         <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
           {{ 'dashboardTokenExpired.tutorialStep1Text' | transloco}}
              <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> 
-              {{ 'dashboardTokenExpired.tutorialStep1Context' | transloco}}
+              {{ 'dashboardTokenExpired.tutorialStep1Context' | transloco:{ appName: appName } }}
              <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
            </span>
         </span>
@@ -29,7 +29,7 @@
       </p> }
     } @else {
       <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
-        {{ 'dashboardTokenExpired.integrationDisconnectedDescription' | transloco}} </p>
+        {{ 'dashboardTokenExpired.integrationDisconnectedDescription' | transloco:{ appName: appName } }} </p>
     }
   </div>
 
@@ -56,7 +56,7 @@
 
   @if (isConnectionInProgress) {
   <p class="tw-text-center tw-font-400 tw-text-slightly-normal-text-color tw-break-words tw-whitespace-normal">
-    {{ 'dashboardTokenExpired.syncingDataMessage' | transloco}}</p>
+    {{ 'dashboardTokenExpired.syncingDataMessage' | transloco: {brandName: brandingConfig.brandName,appName: appName }  }}</p>
 
   <div class="tw-flex tw-justify-center tw-items-center">
     <app-loader></app-loader>
@@ -67,7 +67,7 @@
 @if (isIncorrectAccountSelected) {
 <app-configuration-confirmation-dialog (warningAccepted)="acceptWarning($event)"
   [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco"
-  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco"
+  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco:{ appName: appName }"
   [confirmBtnText]="'dashboardTokenExpired.reconnectButton' | transloco" [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 }
@@ -83,7 +83,7 @@
   <!-- Header -->
   <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color tw-h-[76px] tw-flex tw-justify-between tw-items-center tw-self-stretch">
     <div class="tw-flex tw-justify-between tw-items-center">
-        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">{{'dashboardTokenExpired.reconectDialogHeaderText' | transloco}}</p>
+        <p class="tw-text-20-px tw-text-normal-text-color tw-font-medium tw-leading-[140%]">{{'dashboardTokenExpired.reconectDialogHeaderText' | transloco:{ appName: appName } }}</p>
     </div>
     <div class="tw-flex tw-justify-between tw-items-center tw-cursor-pointer">
       <app-svg-icon [styleClasses]="'tw-transform tw-scale-[1.6]'" (click)="toggleIntegrationReconnectDialog()" [svgSource]="'cross-medium'" [width]="'15px'" [height]="'15px'"></app-svg-icon>

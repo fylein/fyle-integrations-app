@@ -1954,7 +1954,7 @@
     "connectionExpired": "Connection expired",
     "connectionExpiredDescription": "Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. ",
     "integrationDisconnectedDescription": "The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. ",
-    "syncingDataMessage": "We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. ",
+    "syncingDataMessage": "We are syncing your data between your {{brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
     "incorrectAccountSelectedContext": "You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings",
     "reconnectButton": "Reconnect",
