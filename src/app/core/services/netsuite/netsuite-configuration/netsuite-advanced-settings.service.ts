@@ -52,7 +52,7 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
   getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.netsuiteAdvancedSettings.exportNetsuitePayments'),
+        label: this.translocoService.translate('services.netsuiteAdvancedSettings.exportACHPayments'),
         value: NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE
       },
       {
