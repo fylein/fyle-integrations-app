@@ -262,7 +262,8 @@
     "locationEntity": "Location Entity"
   },
   "intacctConnector": {
-    "connectionSuccessToast": "Connection successful.",
+    "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
+    "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
     "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to Sage Intacct",
     "companyIdLabel": "Company ID",
@@ -320,8 +321,9 @@
     "syncTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export"
   },
   "netsuiteConnector": {
-    "connectionSuccess": "Connection successful.",
-    "connectionError": "Error while connecting, please try again later.",
+    "connectionReconnectedToast": "Reconnected to NetSuite successfully.",
+    "connectionExpiredToast": "Oops! Your NetSuite connection expired, please connect again",
+    "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to NetSuite",
     "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account.",
     "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
@@ -1099,8 +1101,9 @@
     "headlineText": "Guide to setup your integrations",
     "headerText": "A set up through to help you set up the integration quick and easy."
   },
-  "sage300OnboardingConnector": {
-    "connectionSuccessToast": "Connection successful.",
+  "sage300Connector": {
+    "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
+    "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again",
     "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to your Sage 300 CRE account",
     "contentText": "To connect your Sage 300 CRE database to your {{brandName}} account, you need to set up the HH2 sync. Click here for details or contact your {{brandName}} implementation specialist for help with the setup.",
@@ -1951,10 +1954,17 @@
     "connectionExpired": "Connection expired",
     "connectionExpiredDescription": "Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. ",
     "integrationDisconnectedDescription": "The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. ",
-    "syncingDataMessage": "We are syncing your data between your {{brandingConfig.brandName}} - {{appName}} account and this may take a few seconds. ",
+    "syncingDataMessage": "We are syncing your data between your {{brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
     "incorrectAccountSelectedContext": "You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings",
-    "reconnectButton": "Re connect"
+    "reconnectButton": "Reconnect",
+    "reconectDialogHeaderText": "Reconnect to {{appName}}",
+    "reconnectIntegrationButtonText": "Reconnect integration",
+    "tokenBasedAppDisconnectedDescription": "The integration is disconnected because the credentials used to connect to {{appName}} have expired.",
+    "tutorialStep1Text": "Step 1:",
+    "tutorialStep2Text": "Step 2:",
+    "tutorialStep1Context": "Generate new credentials from {{appName}} by following these steps",
+    "tutorialStep2Context": "Once generated, click the button below to reconnect."
   },
   "dashboardExportSummarySection": {
     "todaysExportOverview": "Today's export overview",

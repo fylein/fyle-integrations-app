@@ -75,22 +75,4 @@ xdescribe('IntacctConnectorComponent', () => {
     expect(component.isLoading).toBe(false);
     expect(component.connectSageIntacctForm).toBeTruthy();
   }));
-
-  it('clearField funtion check', () => {
-    const connectorResponse:SageIntacctCredential = {
-      id: 1,
-      si_user_id: "string",
-      si_company_id: "string",
-      si_company_name: "string;",
-      si_user_password: "string;",
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: 1
-    };
-    mockConnectorService.connectSageIntacct.and.returnValue(of(connectorResponse));
-    mockMappingsService.refreshSageIntacctDimensions.and.returnValue(of({}));
-    expect(component.save()).toBeUndefined();
-    mockConnectorService.connectSageIntacct.and.returnValue(throwError({}));
-    expect(component.save()).toBeUndefined();
-  });
 });

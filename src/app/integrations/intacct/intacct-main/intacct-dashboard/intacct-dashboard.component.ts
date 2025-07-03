@@ -15,6 +15,7 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { Router } from '@angular/router';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 
 @Component({
@@ -33,6 +34,8 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   isImportInProgress: boolean = true;
 
   isExportInProgress: boolean = false;
+
+  isIntacctTokenNotValid: boolean = false;
 
   exportableAccountingExportIds: number[] = [];
 
@@ -120,6 +123,7 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private workspaceService: WorkspaceService,
     private intacctExportSettingService: SiExportSettingService,
+    private router: Router,
     private intacctAdvancedSettingsService: SiAdvancedSettingService
   ) { }
 
@@ -229,6 +233,11 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    if (this.router.url.includes("/token_expired/")){
+      this.isIntacctTokenNotValid = true;
+    }
+
     this.setupPage();
   }
 

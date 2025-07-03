@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NetsuiteComponent } from './netsuite.component';
+import { NetsuiteTokenGuard } from 'src/app/core/guard/netsuite-token.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
       },
       {
         path: 'main',
+        loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule),
+        canActivate: [NetsuiteTokenGuard]
+      },
+      {
+        path: 'token_expired',
         loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule)
       }
     ]

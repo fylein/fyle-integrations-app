@@ -12,6 +12,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
+import { Router } from '@angular/router';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
@@ -26,6 +27,8 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
   appName: AppName = AppName.SAGE300;
 
   isImportInProgress: boolean = true;
+
+  isSage300TokenNotValid: boolean = false;
 
   isExportInProgress: boolean = false;
 
@@ -81,6 +84,7 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
     private refinerService: RefinerService,
     private sage300ExportSettingService: Sage300ExportSettingService,
     private sage300ImportSettingService: Sage300ImportSettingsService,
+    private router: Router,
     private sage300AdvancedSettingsService: Sage300AdvancedSettingsService
   ) { }
 
@@ -175,6 +179,11 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    if (this.router.url.includes("/token_expired/")){
+      this.isSage300TokenNotValid = true;
+    }
+
     this.setupPage();
   }
 

@@ -17,25 +17,35 @@ export class OnboardingSteppersComponent implements OnInit {
 
   @Input() disableConnectionStepsIfCompleted: boolean;
 
+  @Input() disableConfigurationStepsIfTokenInvalid: boolean;
+
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router
   ) { }
 
+  shouldDisableConfigurationSteps(index: number): boolean {
+    return ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) || ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted);
+  }
+
   navigate(index: number, canNavigate: boolean, route: string): void {
     if (!canNavigate) {
       return;
     }
 
-  if (!this.disableConnectionStepsIfCompleted) {
+    if (!this.disableConnectionStepsIfCompleted && !this.disableConfigurationStepsIfTokenInvalid) {
       this.router.navigate([route]);
       return;
-  }
+    }
 
-  if (index > 1) {
+    if (this.disableConfigurationStepsIfTokenInvalid){
+      return;
+    }
+
+    if (index > 1) {
       this.router.navigate([route]);
-  }
+    }
   }
 
   ngOnInit(): void {
