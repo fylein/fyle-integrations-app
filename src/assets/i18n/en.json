@@ -1961,6 +1961,7 @@
     "reconectDialogHeaderText": "Reconnect to {{appName}}",
     "reconnectIntegrationButtonText": "Reconnect integration",
     "tokenBasedAppDisconnectedDescription": "The integration is disconnected because the credentials used to connect to {{appName}} have expired.",
+    "tokenBasedAppDisconnectedExtendedDescription": "To continue using the integration seamlessly,",
     "tutorialStep1Text": "Step 1:",
     "tutorialStep2Text": "Step 2:",
     "tutorialStep1Context": "Generate new credentials from {{appName}} by following these steps",
