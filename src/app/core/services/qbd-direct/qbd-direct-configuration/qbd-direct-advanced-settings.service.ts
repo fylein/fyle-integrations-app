@@ -48,15 +48,21 @@ export class QbdDirectAdvancedSettingsService extends AdvancedSettingsService {
     }
 
   mapAPIResponseToFormGroup(advancedSettings: QbdDirectAdvancedSettingsGet | null, isSkipExportEnabled: boolean, isOnboarding: boolean): FormGroup {
+      // For CO theme, disable certain advanced features
+      const isSkipExportAllowed = brandingFeatureConfig.featureFlags.advancedSettings.skipExport;
+      const isAutoCreateVendorsAllowed = brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors;
+      const isAutoCreateContactsAllowed = brandingFeatureConfig.featureFlags.advancedSettings.autoCreateContacts;
+      const isAutoCreateMerchantsAllowed = brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants;
+
       return new FormGroup({
           expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? QbdDirectAdvancedSettingsService.formatMemoStructure(QbdDirectAdvancedSettingsService.defaultMemoFields(), advancedSettings?.line_level_memo_structure) : QbdDirectAdvancedSettingsService.defaultMemoFields(), Validators.required),
           topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : QbdDirectAdvancedSettingsService.defaultTopMemoOptions(), Validators.required),
           exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
           email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
           exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
-          autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false),
-          autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false),
-          skipExport: new FormControl(isSkipExportEnabled),
+          autoCreateReimbursableEnitity: new FormControl(isAutoCreateContactsAllowed ? (advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false) : false),
+          autoCreateMerchantsAsVendors: new FormControl(isAutoCreateVendorsAllowed && isAutoCreateMerchantsAllowed ? (advancedSettings?.auto_create_merchant_as_vendor ? advancedSettings?.auto_create_merchant_as_vendor : false) : false),
+          skipExport: new FormControl(isSkipExportAllowed ? isSkipExportEnabled : false),
           searchOption: new FormControl('')
       });
   }

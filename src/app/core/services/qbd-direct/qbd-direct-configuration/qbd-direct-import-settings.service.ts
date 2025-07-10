@@ -10,6 +10,7 @@ import { ImportSettingsService } from '../../common/import-settings.service';
 import { FormArray, FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 const qbdDirectImportSettingGetCache$ = new Subject<void>();
 
@@ -33,15 +34,20 @@ export class QbdDirectImportSettingsService extends ImportSettingsService {
   mapAPIResponseToFormGroup(importSettings: QbdDirectImportSettingGet | null, QbdDirectFields: IntegrationField[], QbdDirectImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
     const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
     const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings?.mapping_settings, QbdDirectFields, QbdDirectImportCodeFieldCodeConfig) : [];
+
+    // For co theme, need to disable certain import features
+    const isImportVendorsAsMerchantsAllowed = brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants;
+    const isImportCodeAllowed = brandingFeatureConfig.featureFlags.importSettings.allowImportCode;
+
     return new FormGroup({
       importCategories: new FormControl(importSettings?.import_settings?.import_account_as_category ?? false),
       importItems: new FormControl(importSettings?.import_settings?.import_item_as_category ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
       chartOfAccountTypes: new FormControl(importSettings?.import_settings?.chart_of_accounts ? importSettings.import_settings.chart_of_accounts.map(item => item.replace(/([a-z])([A-Z])/g, '$1 $2')) : [this.translocoService.translate('services.qbdDirectImportSettings.expense')]),
-      importVendorsAsMerchants: new FormControl(importSettings?.import_settings?.import_vendor_as_merchant ?? false),
+      importVendorsAsMerchants: new FormControl(isImportVendorsAsMerchantsAllowed ? (importSettings?.import_settings?.import_vendor_as_merchant ?? false) : false),
       searchOption: new FormControl(''),
-      importCodeFields: new FormControl( importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : []),
-      importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig)),
+      importCodeFields: new FormControl(isImportCodeAllowed ? (importSettings?.import_settings?.import_code_fields ? importSettings.import_settings.import_code_fields : []) : []),
+      importCategoryCode: new FormControl(isImportCodeAllowed ? this.getImportCodeField(importCode, 'ACCOUNT', QbdDirectImportCodeFieldCodeConfig) : false),
       workSpaceId: new FormControl(importSettings?.workspace_id)
     });
   }
