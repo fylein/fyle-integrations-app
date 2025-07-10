@@ -61,7 +61,7 @@
     "@angular-eslint/eslint-plugin-template": "14.1.2",
     "@angular-eslint/schematics": "^18.4.3",
     "@angular-eslint/template-parser": "14.1.2",
-    "@fyle/eslint-plugin": "github:fylein/fyle-eslint-plugin#v1.0.0",
+    "@fyle/eslint-plugin": "github:fylein/fyle-eslint-plugin#v1.0.1",
     "@types/jasmine": "~4.0.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
