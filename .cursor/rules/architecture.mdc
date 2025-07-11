@@ -1,0 +1,159 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Architecture & Code Organization
+
+## Application Architecture
+
+### Module Structure
+The application follows Angular's feature module pattern with lazy loading:
+- **App Module**: [src/app/app.module.ts](mdc:src/app/app.module.ts) - Root module with core providers
+- **Shared Module**: [src/app/shared/shared.module.ts](mdc:src/app/shared/shared.module.ts) - Reusable components and utilities
+- **Core Module**: [src/app/core/core.module.ts](mdc:src/app/core/core.module.ts) - Singleton services and guards
+- **Integration Modules**: Lazy-loaded feature modules for each integration
+
+### Routing Architecture
+- **Main Routing**: [src/app/app-routing.module.ts](mdc:src/app/app-routing.module.ts) - Top-level routes
+- **Integration Routing**: [src/app/integrations/integrations-routing.module.ts](mdc:src/app/integrations/integrations-routing.module.ts) - Integration-specific routes
+- **Route Guards**: Authentication and token validation guards
+
+### User Flow Architecture
+- **Login Flow**: Authentication through Fyle SSO or direct login
+- **Integration Selection**: Landing page with available integrations
+- **Onboarding Flow**: Step-by-step configuration wizard
+- **Main Dashboard**: Integration management console
+- **Export Logs**: History of data exports and errors
+- **Configuration Sections**: Settings grouped by functional area
+
+## Folder Structure Guidelines
+
+### Core Module ([src/app/core/](mdc:src/app/core))
+- **Services**: Business logic, API calls, state management
+  - **Common**: [src/app/core/services/common/](mdc:src/app/core/services/common) - Shared services
+  - **Integration-specific**: Services organized by integration type
+- **Models**: TypeScript interfaces and types organized by integration
+  - **Common**: [src/app/core/models/common/](mdc:src/app/core/models/common) - Shared models
+  - **Enums**: [src/app/core/models/enum/](mdc:src/app/core/models/enum) - Application constants
+- **Guards**: [src/app/core/guard/](mdc:src/app/core/guard) - Route guards for authentication and authorization
+  - **Auth Guard**: [src/app/core/guard/auth.guard.ts](mdc:src/app/core/guard/auth.guard.ts) - Main authentication guard
+  - **Token Guards**: Integration-specific token validation guards
+- **Interceptors**: [src/app/core/interceptor/](mdc:src/app/core/interceptor) - HTTP interceptors
+  - **JWT Interceptor**: [src/app/core/interceptor/jwt.interceptor.ts](mdc:src/app/core/interceptor/jwt.interceptor.ts) - Token management
+
+### Shared Module ([src/app/shared/](mdc:src/app/shared))
+- **Components**: Reusable UI components categorized by purpose
+  - **Core**: [src/app/shared/components/core/](mdc:src/app/shared/components/core) - Basic UI components
+  - **Configuration**: [src/app/shared/components/configuration/](mdc:src/app/shared/components/configuration) - Configuration form components
+  - **Dashboard**: [src/app/shared/components/dashboard/](mdc:src/app/shared/components/dashboard) - Dashboard widgets
+  - **Export Log**: [src/app/shared/components/export-log/](mdc:src/app/shared/components/export-log) - Export history components
+  - **Helper**: [src/app/shared/components/helper/](mdc:src/app/shared/components/helper) - Utility components
+  - **Input**: [src/app/shared/components/input/](mdc:src/app/shared/components/input) - Custom form inputs
+  - **Menu**: [src/app/shared/components/menu/](mdc:src/app/shared/components/menu) - Navigation components
+- **Pipes**: [src/app/shared/pipes/](mdc:src/app/shared/pipes) - Custom Angular pipes for data transformation
+- **Pages**: [src/app/shared/pages/](mdc:src/app/shared/pages) - Shared page components
+
+### Integration Modules ([src/app/integrations/](mdc:src/app/integrations))
+Each integration follows a consistent structure:
+- `{integration}/` - Root integration folder
+- `{integration}/{integration}.module.ts` - Feature module
+- `{integration}/{integration}-routing.module.ts` - Routing configuration
+- `{integration}/{integration}-main/` - Main dashboard and overview
+- `{integration}/{integration}-onboarding/` - Setup and configuration flow
+- `{integration}/{integration}-shared/` - Integration-specific shared components
+
+### Authentication & Authorization
+- **Auth Module**: [src/app/auth/](mdc:src/app/auth) - Login and authentication flows
+- **OAuth Module**: [src/app/oauth/](mdc:src/app/oauth) - OAuth callback handling
+- **JWT Service**: Token management and refresh logic
+- **Route Guards**: Multiple guards for different integration tokens
+
+### Multi-Tenant Architecture
+- **Branding Folder**: [src/app/branding/](mdc:src/app/branding) - Tenant-specific configurations
+- **Environment Files**: Configuration per tenant
+- **Branding Service**: Dynamic configuration loading
+- **Theme Switching**: Runtime theme application
+- **Feature Toggling**: Tenant-specific feature flags
+
+### Data Flow Architecture
+1. **Authentication**: User login and token acquisition
+2. **API Interactions**: Services communicate with backend APIs
+3. **State Management**: Data stored in services with BehaviorSubject
+4. **Component Binding**: Components subscribe to service observables
+5. **Form Management**: Reactive forms for user input
+6. **Configuration Storage**: Settings saved to backend via services
+7. **Export Processing**: Background processing with status monitoring
+
+### Models Organization ([src/app/core/models/](mdc:src/app/core/models))
+- **Common**: [src/app/core/models/common/](mdc:src/app/core/models/common) - Shared models across integrations
+- **Integration-specific**: Models organized by integration type
+- **Enums**: [src/app/core/models/enum/](mdc:src/app/core/models/enum) - Enumerations and constants
+- **DB**: Database entity models
+- **Branding**: [src/app/core/models/branding/](mdc:src/app/core/models/branding) - Multi-tenant configuration models
+
+### Services Organization ([src/app/core/services/](mdc:src/app/core/services))
+- **Common**: [src/app/core/services/common/](mdc:src/app/core/services/common) - Shared services
+  - **Auth Service**: [src/app/core/services/common/auth.service.ts](mdc:src/app/core/services/common/auth.service.ts) - Authentication management
+  - **API Service**: [src/app/core/services/common/api.service.ts](mdc:src/app/core/services/common/api.service.ts) - Base API service
+  - **Helper Service**: [src/app/core/services/common/helper.service.ts](mdc:src/app/core/services/common/helper.service.ts) - Utility functions
+  - **Workspace Service**: [src/app/core/services/common/workspace.service.ts](mdc:src/app/core/services/common/workspace.service.ts) - Workspace management
+- **Integration-specific**: Services organized by integration type
+- **Misc**: [src/app/core/services/misc/](mdc:src/app/core/services/misc) - Utility services
+
+## Naming Conventions
+- **Components**: PascalCase with Component suffix (e.g., `ConfigurationComponent`)
+- **Services**: PascalCase with Service suffix (e.g., `QboService`)
+- **Models**: PascalCase interfaces (e.g., `QboCredentials`)
+- **Enums**: PascalCase with descriptive names (e.g., `MappingState`)
+- **Files**: kebab-case (e.g., `configuration.component.ts`)
+- **Directories**: kebab-case (e.g., `export-log`)
+- **Variables**: camelCase (e.g., `exportSettings`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `DEFAULT_PAGE_SIZE`)
+
+## Component Architecture Patterns
+- Use OnPush change detection strategy for performance
+- Implement OnDestroy for cleanup and unsubscriptions
+- Use reactive forms with custom validators from @rxweb/reactive-form-validators
+- Follow Angular style guide conventions
+- Separate presentation and business logic
+- Use dependency injection for services
+- Implement proper error handling and loading states
+
+## State Management Patterns
+- Use BehaviorSubject for component state management
+- Implement proper loading states for async operations
+- Use reactive forms for form state management
+- Cache API responses using ts-cacheable decorator
+- Implement proper error handling with user feedback
+
+## Error Handling Architecture
+- **Global Error Handler**: [src/app/app.error-handling.ts](mdc:src/app/app.error-handling.ts) - Application-wide error handling
+- **Sentry Integration**: Error tracking and monitoring
+- **HTTP Error Interceptor**: Centralized HTTP error handling
+- **User-friendly Error Messages**: Toast notifications via PrimeNG
+- **Error Retry Logic**: Automatic retries for transient failures
+- **Error Logging**: Structured error logging for troubleshooting
+- **Error Recovery**: Graceful degradation and recovery strategies
+
+## Security Architecture
+- **JWT Authentication**: Token-based authentication with refresh logic
+- **Route Guards**: Protect routes based on authentication and authorization
+- **HTTP Interceptors**: Automatically add authentication tokens to requests
+- **Secure Storage**: Proper handling of sensitive information
+- **CORS Handling**: Cross-origin resource sharing configuration
+- **XSS Protection**: Input sanitization and output escaping
+- **CSRF Protection**: Protection against cross-site request forgery
+
+## UI/UX Architecture
+- **Responsive Design**: Mobile-first approach with TailwindCSS
+- **Component Library**: PrimeNG components for consistent UI
+- **Theme System**: Dynamic theme switching based on tenant
+- **Loading States**: Consistent loading indicators
+- **Error States**: User-friendly error messages
+- **Empty States**: Helpful guidance when no data exists
+- **Form Validation**: Client-side validation with clear feedback
+- **Accessibility**: ARIA attributes and keyboard navigation
+
+
+

@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Quick Reference
+
+## AI Assistant Guidelines
+- **Knowledge Base**: Read these specialized rule files when needed for domain-specific guidance:
+  - [Project Overview](mdc:.cursor/rules/project-overview.mdc) - High-level project structure and workflow
+  - [Architecture](mdc:.cursor/rules/architecture.mdc) - System architecture and design patterns
+  - [Development Patterns](mdc:.cursor/rules/development-patterns.mdc) - Code organization and implementation patterns
+  - [Component Hierarchy](mdc:.cursor/rules/component-hierarchy.mdc) - Angular component relationships
+  - [API Integration](mdc:.cursor/rules/api-integration.mdc) - Backend API communication patterns
+  - [Integration Development](mdc:.cursor/rules/integration-development.mdc) - Building accounting/HR integrations
+  - [Testing Patterns](mdc:.cursor/rules/testing-patterns.mdc) - Unit and integration testing approaches
+  - [UI Element Modification](mdc:.cursor/rules/ui-element-modification.mdc) - Styling and UI component changes
+  - [Common Tasks](mdc:.cursor/rules/common-tasks.mdc) - Frequently performed development operations
+  - [Branding Theme System](mdc:.cursor/rules/branding-theme-system.mdc) - Multi-tenant theming overview
+  - [Theme Feature Flags](mdc:.cursor/rules/theme-feature-flags.mdc) - Theme-specific feature configuration
+  - [Theme Usage Patterns](mdc:.cursor/rules/theme-usage-patterns.mdc) - Implementing themed components
+  - [feature-verification-methodology.mdc](mdc:.cursor/rules/feature-verification-methodology.mdc) - Systematic approach to verify feature existence and avoid confusion between similar features
+
+## Project Type
+Angular 18.2.x application for Fyle Integrations Settings Dashboard
+
+## Important Files
+- [src/app/app.module.ts](mdc:src/app/app.module.ts) - Main app module
+- [src/app/app-routing.module.ts](mdc:src/app/app-routing.module.ts) - Main routing configuration
+- [src/app/integrations/](mdc:src/app/integrations) - Integration modules
+- [src/app/core/](mdc:src/app/core) - Services and models
+- [src/app/shared/](mdc:src/app/shared) - Shared components
+- [src/environments/environment.ts](mdc:src/environments/environment.ts) - Environment configuration
+- [angular.json](mdc:angular.json) - Angular workspace configuration
+
+## Tech Stack
+- Angular 18.2.x + TypeScript
+- TailwindCSS + PrimeNG
+- RxJS + Reactive Forms
+- Auth0 JWT + Sentry
+- ts-cacheable for API response caching
+- @rxweb/reactive-form-validators for form validation
+
+## Development Commands
+- `npm start` - Development server
+- `npm test` - Run tests  
+- `npm run lint` - Code linting
+- `npm run start:fyle` - Fyle-branded version (port 4201)
+- `npm run start:c1` - Capital One-branded version (port 4202)
+- `npm run storybook` - Start Storybook server (port 6006)
+- `npm run build` - Production build
+- `npm run unit_test:ci` - Run tests in CI environment
+
+## Development URLs
+- Default: http://localhost:4200
+- Fyle: http://localhost:4201
+- Capital One: http://localhost:4202
+- Login: http://localhost:4200/auth/redirect (for all configurations)
+
