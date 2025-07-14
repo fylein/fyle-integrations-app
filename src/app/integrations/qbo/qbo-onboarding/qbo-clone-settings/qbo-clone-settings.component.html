@@ -265,9 +265,9 @@
                             </app-clone-setting-field>
                 </div>    </div>
 
-<div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
-                <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+            <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
                 <div class="tw-p-24-px" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
+                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
