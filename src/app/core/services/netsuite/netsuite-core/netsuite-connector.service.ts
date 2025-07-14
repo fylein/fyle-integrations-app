@@ -80,12 +80,12 @@ export class NetsuiteConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteConnector.connectionReconnectedToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.netsuiteConnector.connectionReconnectedToast'), 6000);
           return of({ netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(response), isNetsuiteConnected: true });
 
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionErrorToast'));
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.netsuiteConnector.connectionErrorToast'));
         return of({ netsuiteSetupForm: this.mapAPIResponseToNetSuiteConnectorFormGroup(this.netsuiteCredential), isNetsuiteConnected: false });
       })
     );
@@ -121,7 +121,7 @@ export class NetsuiteConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Netsuite credentials not found" && shouldShowTokenExpiredMessage){
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteConnector.connectionExpiredToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.netsuiteConnector.connectionExpiredToast'), 6000);
         }
         return of(false);
       })
