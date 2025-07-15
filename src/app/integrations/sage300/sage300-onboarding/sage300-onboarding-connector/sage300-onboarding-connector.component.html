@@ -8,9 +8,9 @@
         </div>
         <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
             <div>
-                <app-configuration-step-header 
-                [headerText]="'sage300Connector.headerText' | transloco"
-                [contentText]="'sage300Connector.contentText' | transloco:{ brandName: brandingConfig.brandName }"
+                <app-configuration-step-header
+                [headerText]="'sage300OnboardingConnector.headerText' | transloco"
+                [contentText]="'sage300OnboardingConnector.contentText' | transloco:{ brandName: brandingConfig.brandName }"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
