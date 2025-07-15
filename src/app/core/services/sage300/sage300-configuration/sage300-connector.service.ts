@@ -80,7 +80,7 @@ export class Sage300ConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Sage300 credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300Connector.connectionExpiredToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.sage300Connector.connectionExpiredToast'), 6000);
         }
         return of(false);
       })
@@ -121,11 +121,11 @@ export class Sage300ConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300Connector.connectionReconnectedToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.sage300Connector.connectionReconnectedToast'), 6000);
           return of({ sage300SetupForm: this.mapAPIResponseToConnectorFormGroup(sage300Credential), isSage300Connected: true });
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300Connector.connectionErrorToast'), 6000);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.sage300Connector.connectionErrorToast'), 6000);
         return of({sage300SetupForm: sage300SetupForm, isSage300Connected: false});
       })
     );

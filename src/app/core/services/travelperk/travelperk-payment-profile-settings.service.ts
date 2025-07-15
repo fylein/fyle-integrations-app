@@ -17,15 +17,15 @@ export class TravelperkPaymentProfileSettingService {
   getUserRoleOptions(): SelectFormOption[] {
       return [
           {
-              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.booker'),
+              label: this.translocoService.translate('services.travelperkPaymentProfileSettings.booker'),
               value: TravelPerkUserRole.BOOKER
           },
           {
-              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.cardHolder'),
+              label: this.translocoService.translate('services.travelperkPaymentProfileSettings.cardHolder'),
               value: TravelPerkUserRole.CARD_HOLDER
           },
           {
-              label: this.translocoService.translate('services.travelperkPaymentProfileSetting.traveller'),
+              label: this.translocoService.translate('services.travelperkPaymentProfileSettings.traveller'),
               value: TravelPerkUserRole.TRAVELLER
           }
       ];
