@@ -3,6 +3,9 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "plugins": [
+    "@fyle"
+  ],
   "overrides": [
     {
       "files": [
@@ -115,7 +118,14 @@
         "comma-spacing": ["error"],
         "comma-style": ["error"],
         "computed-property-spacing": ["error"],
-        "switch-colon-spacing": ["error"]
+        "switch-colon-spacing": ["error"],
+        "@fyle/i18n-key-naming-convention": [
+          "error",
+          {
+            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "exportLog.", "mapping.", "landing.", "common."]
+          }
+        ],
+        "@fyle/no-hardcoded-strings": "warn"
       }
     },
     {
@@ -125,7 +135,15 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "@fyle/i18n-key-naming-convention": [
+          "error",
+          {
+            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "exportLog.", "mapping.", "landing.", "common."]
+          }
+        ],
+        "@fyle/no-hardcoded-strings": "warn"
+      }
     }
   ]
 }

@@ -78,19 +78,19 @@ export class ExportSettingsService {
           value: ExportDateType.CURRENT_DATE
         },
         {
-          label: this.translocoService.translate('services.intacctExportSettings.verificationDate'),
+          label: this.translocoService.translate('services.exportSettings.verificationDate'),
           value: ExportDateType.VERIFIED_DATE
         },
         {
-          label: this.translocoService.translate('services.intacctExportSettings.spendDate'),
+          label: this.translocoService.translate('services.exportSettings.spendDate'),
           value: ExportDateType.SPENT_AT
         },
         {
-          label: this.translocoService.translate('services.intacctExportSettings.approvalDate'),
+          label: this.translocoService.translate('services.exportSettings.approvalDate'),
           value: ExportDateType.APPROVAL_DATE
         },
         {
-          label: this.translocoService.translate('services.intacctExportSettings.lastSpendDate'),
+          label: this.translocoService.translate('services.exportSettings.lastSpendDate'),
           value: ExportDateType.LAST_SPENT_AT
         }
       ];
