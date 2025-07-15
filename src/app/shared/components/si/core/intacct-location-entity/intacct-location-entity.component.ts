@@ -45,7 +45,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
 
-  fyleOrgName: string = this.userService.getUserProfile().org_name;
+  fyleOrgName: string = this.userService.getUserProfile()?.org_name || '';
 
   readonly brandingConfig = brandingConfig;
 
