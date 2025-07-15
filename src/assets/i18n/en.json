@@ -321,7 +321,7 @@
   },
   "netsuiteConnector": {
     "headerText": "Connect to NetSuite",
-    "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account.",
+    "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account."
   },
   "netsuiteConnectionForm": {
     "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
@@ -2072,12 +2072,12 @@
     "sage300Connector": {
       "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
-      "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again",
+      "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
     },
     "intacctConnector": {
       "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
-      "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
+      "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again"
     },
     "qboAuth": {
       "failedToConnect": "Failed to connect to QuickBooks Online. Please try again",
