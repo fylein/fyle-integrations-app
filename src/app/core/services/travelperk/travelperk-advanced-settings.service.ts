@@ -18,19 +18,19 @@ export class TravelperkAdvancedSettingService {
   getDefaultCategory(): SelectFormLabel[] {
       return [
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.cars'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.cars'),
               value: 'Cars'
           },
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.flights'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.flights'),
               value: 'Flights'
           },
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.hotels'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.hotels'),
               value: 'Hotels'
           },
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.trains'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.trains'),
               value: 'Trains'
           }
       ];
@@ -39,11 +39,11 @@ export class TravelperkAdvancedSettingService {
   getExpenseGroup(): SelectFormOption[] {
       return [
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.singleExpense'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.singleExpense'),
               value: TravelPerkExpenseGroup.SINGLE
           },
           {
-              label: this.translocoService.translate('services.travelperkAdvancedSetting.multipleExpenses'),
+              label: this.translocoService.translate('services.travelperkAdvancedSettings.multipleExpenses'),
               value: TravelPerkExpenseGroup.MULTIPLE
           }
       ];
