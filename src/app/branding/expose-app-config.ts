@@ -50,7 +50,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             NETSUITE: true,
             QBD: false,
             BAMBOO: false,
-            QBD_DIRECT: false
+            QBD_DIRECT: true
         },
         'c1-production-1-us': {
             INTACCT: true,
@@ -62,7 +62,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             NETSUITE: true,
             QBD: false,
             BAMBOO: false,
-            QBD_DIRECT: false
+            QBD_DIRECT: true
         }
     }
 };
