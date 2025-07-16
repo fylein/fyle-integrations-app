@@ -63,7 +63,9 @@ const ICON_MAPPING = {
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
-  'user-one': 'grv-person'
+  'user-one': 'grv-person',
+  'download-medium': 'grv-download-medium',
+  'expand': 'grv-expand'
 };
 
 @Component({
