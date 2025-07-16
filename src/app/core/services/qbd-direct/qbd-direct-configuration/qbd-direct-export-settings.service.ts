@@ -213,7 +213,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
 
       let creditCardExpenseValue = !!exportSettings?.credit_card_expense_export_type;
-      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed && !exportSettings?.credit_card_expense_export_type) {
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
         creditCardExpenseValue = true;
       }
 
