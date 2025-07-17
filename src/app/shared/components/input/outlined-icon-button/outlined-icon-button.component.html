@@ -5,10 +5,12 @@
   [ngClass]="disabled ? 'tw-text-text-placeholder tw-cursor-not-allowed' : 'tw-text-text-secondary tw-cursor-pointer hover:tw-shadow-md'"
   (click)="!disabled && onClick()">
   {{ buttonText }}
+  @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
   <app-svg-icon
     [svgSource]="svgSource" 
     [width]="'18px'"
     [height]="'18px'"
     [ngClass]="disabled ? 'tw-text-text-placeholder' : 'tw-text-text-secondary'">
   </app-svg-icon>
+  }
 </button>
