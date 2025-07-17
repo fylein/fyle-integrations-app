@@ -23,6 +23,7 @@ const ICON_MAPPING = {
   'check-circle-outline-extra-large': 'grv-checkmark-encircled-extra-large',
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
+  'check-small': 'grv-checkmark-medium',
   'check-large': 'grv-checkmark-large',
   'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
@@ -63,7 +64,10 @@ const ICON_MAPPING = {
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
-  'user-one': 'grv-person'
+  'user-one': 'grv-person',
+  'download-medium': 'grv-download-medium',
+  'expand': 'grv-expand',
+  'folder': 'grv-folder'
 };
 
 @Component({

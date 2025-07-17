@@ -40,6 +40,18 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
         }
     },
     co: {
+        'c1-staging': {
+            INTACCT: true,
+            SAGE300: false,
+            QBO: true,
+            BUSINESS_CENTRAL: false,
+            TRAVELPERK: false,
+            XERO: true,
+            NETSUITE: true,
+            QBD: false,
+            BAMBOO: false,
+            QBD_DIRECT: true
+        },
         'c1-qa': {
             INTACCT: true,
             SAGE300: false,

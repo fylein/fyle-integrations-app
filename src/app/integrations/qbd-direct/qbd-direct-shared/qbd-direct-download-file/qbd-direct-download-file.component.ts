@@ -6,6 +6,7 @@ import { AppName, ConfigurationCta, QBDDirectInteractionType } from 'src/app/cor
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbd-direct-download-file',
@@ -39,6 +40,8 @@ export class QbdDirectDownloadFileComponent {
   appName = AppName;
 
   QBDDirectInteractionType = QBDDirectInteractionType;
+
+  readonly brandingConfig = brandingConfig;
 
   continueToNextStep() {
     this.nextStep.emit();
