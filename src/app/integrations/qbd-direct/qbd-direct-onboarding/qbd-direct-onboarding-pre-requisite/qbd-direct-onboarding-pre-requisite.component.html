@@ -16,7 +16,7 @@
                 <div *ngFor="let step of preRequisitesteps">
                     <div class="tw-flex tw-items-center tw-justify-between tw-py-14-px tw-gap-5">
                         <div class="tw-flex tw-items-center tw-justify-center">
-                            <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-rounded-border-radius-2xs tw-justify-center tw-bg-disabled-bg-color">
+                            <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color" [ngClass]="brandingConfig.brandId === 'co' ? 'tw-rounded-border-radius-full' : 'tw-rounded-border-radius-2xs'">
                                 <app-svg-icon [svgSource]="step.iconName" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary'"></app-svg-icon>
                             </div>
                             <div class="tw-ml-16-px">
