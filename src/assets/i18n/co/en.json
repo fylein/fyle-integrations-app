@@ -79,7 +79,7 @@
         "scheduleAutoExportLabel": "Schedule automatic export",
         "scheduleAutoExportSubLabel": "Set up a schedule to frequently automate the export of expenses from {{brandName}} to QuickBooks Desktop.",
         "autoExportfrequencyLabel": "Set up export frequency",
-        "autoExportfrequencySubLabel": "",
+        "autoExportfrequencySubLabel": "Set a frequency based on how often you want your expenses in {{brandName}} to be exported to QuickBooks Desktop.",
         "topLevelMemoStructureLabel": "Select the top level memo field data for QuickBooks Desktop",
         "topLevelMemoStructureSubLabel": "You can customize the <b>data point</b> you would like to export to QuickBooks Desktop's <b>top-level memo</b> field while exporting expenses from {{brandName}}.",
         "memoStructureLabel": "Set the line-item level memo field data for QuickBooks Desktop.",

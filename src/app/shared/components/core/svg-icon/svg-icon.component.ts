@@ -23,6 +23,7 @@ const ICON_MAPPING = {
   'check-circle-outline-extra-large': 'grv-checkmark-encircled-extra-large',
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
+  'check-small': 'grv-checkmark-medium',
   'check-large': 'grv-checkmark-large',
   'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
