@@ -7,7 +7,7 @@
     "configuration": {
       "preRequisite": {
         "stepName": "Prerequisites",
-        "configurationHeaderText": "Getting started",
+        "configurationHeaderText": "Prerequisites to get started",
         "configurationSubHeaderText": "Begin your QuickBooks integration by completing the following steps."
       },
       "connector": {

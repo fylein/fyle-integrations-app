@@ -65,7 +65,8 @@ const ICON_MAPPING = {
   'eye-medium': 'grv-show-medium',
   'user-one': 'grv-person',
   'download-medium': 'grv-download-medium',
-  'expand': 'grv-expand'
+  'expand': 'grv-expand',
+  'folder': 'grv-folder'
 };
 
 @Component({
