@@ -18,7 +18,7 @@ export class OutlinedIconButtonComponent {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
-  
+
   onClick(): void {
     this.buttonClick.emit();
   }
