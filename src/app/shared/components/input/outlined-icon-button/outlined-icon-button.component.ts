@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingFeatureConfig, brandingConfig } from "src/app/branding/branding-config";
 
 @Component({
   selector: 'app-outlined-icon-button',
@@ -17,6 +17,8 @@ export class OutlinedIconButtonComponent {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly brandingConfig = brandingConfig;
+  
   onClick(): void {
     this.buttonClick.emit();
   }

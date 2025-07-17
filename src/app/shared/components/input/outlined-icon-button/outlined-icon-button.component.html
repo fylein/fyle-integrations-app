@@ -1,8 +1,12 @@
 <button
   type="button" 
   [disabled]="disabled"
-  [class]="'tw-flex tw-justify-center tw-items-center tw-text-size-14 tw-font-500 tw-bg-white tw-px-4 tw-py-2.5 tw-gap-2 tw-rounded-4-px tw-border tw-border-grey-300'"
-  [ngClass]="disabled ? 'tw-text-text-placeholder tw-cursor-not-allowed' : 'tw-text-text-secondary tw-cursor-pointer hover:tw-shadow-md'"
+  [class]="'tw-flex tw-justify-center tw-items-center tw-text-size-14 tw-font-500 tw-px-4 tw-py-2.5 tw-gap-2 tw-rounded-4-px tw-border tw-border-grey-300'"
+  [ngClass]="{
+  'tw-text-text-placeholder tw-cursor-not-allowed': disabled,
+  'tw-bg-btn-primary-bg tw-text-btn-primary-text-color tw-cursor-pointer hover:tw-shadow-md': brandingConfig.brandId === 'co' && !disabled,
+  'tw-text-text-secondary tw-cursor-pointer hover:tw-shadow-md': brandingConfig.brandId !== 'co' && !disabled
+  }"
   (click)="!disabled && onClick()">
   {{ buttonText }}
   @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
