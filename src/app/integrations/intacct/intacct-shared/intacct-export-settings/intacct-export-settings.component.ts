@@ -295,7 +295,6 @@ export class IntacctExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.glAccount.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
         } else {
-          this.exportSettingsForm.controls.glAccount.setValue(null);
           this.exportSettingsForm.controls.glAccount.clearValidators();
         }
 
@@ -309,6 +308,14 @@ export class IntacctExportSettingsComponent implements OnInit {
         if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.BILL) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
+          this.creditCardExportTypes = this.creditCardExportTypes.filter(
+            option => option.value !== IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT
+          );
+          if (this.exportSettingsForm.controls.cccExportType.value === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+            this.exportSettingsForm.controls.cccExportType.setValue(null);
+          }
+        } else {
+          this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
         }
       });
     }
@@ -335,7 +342,6 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
         if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.creditCard.setValidators(Validators.required);
-          this.exportSettingsForm.controls.employeeFieldMapping.enable();
         } else {
           this.exportSettingsForm.controls.creditCard.clearValidators();
           this.exportSettingsForm.controls.creditCard.setValue(null);
