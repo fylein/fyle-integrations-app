@@ -25,10 +25,10 @@ export class MainComponent {
     private translocoService: TranslocoService
   ) {
     this.modules = [
-      {label: this.translocoService.translate('main.dashboardLabel'), routerLink: '/integrations/intacct/main/dashboard'},
+      {label: this.translocoService.translate('intacctMain.dashboardLabel'), routerLink: '/integrations/intacct/main/dashboard'},
       {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/intacct/main/export_log'},
-      {label: this.translocoService.translate('main.mappingLabel'), routerLink: '/integrations/intacct/main/mapping'},
-      {label: this.translocoService.translate('main.configurationLabel'), routerLink: '/integrations/intacct/main/configuration'}
+      {label: this.translocoService.translate('intacctMain.mappingLabel'), routerLink: '/integrations/intacct/main/mapping'},
+      {label: this.translocoService.translate('intacctMain.configurationLabel'), routerLink: '/integrations/intacct/main/configuration'}
     ];
   }
 
@@ -36,6 +36,6 @@ export class MainComponent {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
     this.dashboardService.syncExpensesFromFyle().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('main.syncDataDimensionsToast'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctMain.syncDataDimensionsToast'));
   }
 }

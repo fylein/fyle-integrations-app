@@ -16,7 +16,7 @@
     } @else {
       <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
         <span> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedDescription' | transloco:{ appName: appName } }}</span>
-
+        <span class="tw-mt-8-px tw-block"> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedExtendedDescription' | transloco }} </span>
         <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
           {{ 'dashboardTokenExpired.tutorialStep1Text' | transloco}}
              <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> 
