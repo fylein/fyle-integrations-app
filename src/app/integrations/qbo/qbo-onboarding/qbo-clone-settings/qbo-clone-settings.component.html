@@ -9,7 +9,7 @@
 
         <div class="clone-setting--field-section">
             <div class="clone-setting--field">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'user-two'"
@@ -118,7 +118,7 @@
 
 
             <div class="tw-mt-16-px" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
@@ -133,7 +133,7 @@
                         </app-clone-setting-field>
                     </div> </div>
 
-                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                    <div class="tw-mt-16-px clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
@@ -148,7 +148,7 @@
                         </app-clone-setting-field>
                     </div> </div>
 
-                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                    <div class="tw-mt-16-px clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'calendar'"
@@ -266,8 +266,8 @@
                 </div>    </div>
 
             <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
-                <div class="tw-p-24-px" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
-                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="tw-mt-16-px" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
+                    <div class="tw-p-24-px clone-setting--field-container">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
@@ -281,7 +281,7 @@
                         </app-clone-setting-field>
                     </div></div>
     
-                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                    <div class="tw-mt-16-px clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
@@ -298,7 +298,7 @@
 
                     
                     <div class="tw-mt-16-px" *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE">
-                        <div class="tw-p-24-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                        <div class="tw-p-24-px clone-setting--field-container">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'qboCloneSettings.howSplitExpensesGroupedLabel' | transloco"
@@ -311,7 +311,7 @@
                         </app-clone-setting-field>
                     </div></div>
 
-                    <div class="tw-mt-16-px tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                    <div class="tw-mt-16-px clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'calendar'"
@@ -334,7 +334,7 @@
 
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'arrow-tail-down'"
@@ -376,7 +376,7 @@
             </div>
 
             <div class="tw-mt-16-px" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'arrow-tail-down'"
@@ -391,7 +391,7 @@
             </div>
 
             <div class="tw-mt-16-px" *ngIf="isTaxGroupSyncAllowed">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'arrow-tail-down'"
@@ -419,7 +419,7 @@
             </div>
 
             <div class="tw-mt-16-px" *ngIf="isImportMerchantsAllowed">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'arrow-tail-down'"
@@ -443,12 +443,13 @@
                     [isCloneSettingView]="true">
                 </app-configuration-import-field>
             </div>
-        </div>
+        </div> </div>
 
         <app-clone-setting-header [headerText]="'qboCloneSettings.advancedSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.advancedSettingsSubHeader' | transloco"></app-clone-setting-header>
+        <div class="clone-setting--field-section">
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'calendar'"
@@ -500,7 +501,7 @@
             </div>
 
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'calendar'"
@@ -515,7 +516,7 @@
             </div>
 
             <div class="tw-mb-16-px" *ngIf="isAutoCreateVendorsFieldVisible()">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'user-plus'"
@@ -530,7 +531,7 @@
             </div>
 
             <div class="tw-mb-16-px" *ngIf="isPaymentSyncFieldVisible()">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'arrow-rotate'"
@@ -560,7 +561,7 @@
             </div>
 
             <div class="tw-mb-16-px" *ngIf="isSingleCreditLineJEFieldVisible()">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'list'"
@@ -575,7 +576,7 @@
             </div>
 
             <div class="tw-mb-16-px" *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'user-plus'"
@@ -590,7 +591,7 @@
             </div>
 
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white">
+                <div class="clone-setting--field-container">
                     <div class="tw-p-24-px">
                         <div class="tw-flex tw-justify-between">
                             <div class="tw-flex tw-items-center">
@@ -623,7 +624,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div></div>
         <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!employeeSettingForm.valid || !exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
     </div>
 </div>

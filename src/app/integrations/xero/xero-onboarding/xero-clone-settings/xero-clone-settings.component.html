@@ -9,7 +9,7 @@
         <app-clone-setting-header [headerText]="'xeroCloneSettings.exportSettings' | transloco" [subHeaderText]="'xeroCloneSettings.exportSettingsDescription' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
         <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
             <div class="tw-px-24-px tw-pt-24-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <div class="reimbursableExpense">
                         <app-clone-setting-field
                             [additionalClasses]="'!tw-text-16-px !tw-text-text-primary'"
@@ -24,7 +24,7 @@
             </div>
             <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
                 <div class="tw-px-24-px tw-pt-24-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'list'"
                         [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
@@ -40,7 +40,7 @@
                 </div></div> </div>
 
             <div class="tw-px-24-px tw-mt-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
                         [label]="'xeroCloneSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
@@ -55,7 +55,7 @@
                 </div></div>
             </div>
             <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
                         [label]="'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
@@ -70,7 +70,7 @@
                 </div></div>
             </div>
             <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
                         [label]="'xeroCloneSettings.expenseGroupingLabel' | transloco"
@@ -86,7 +86,7 @@
                 </div></div>
             </div>
             <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
                         [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) }"
@@ -103,7 +103,7 @@
 
         <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
             <div class="clone-setting--field">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                 <div class="creditCardExpense">
                     <app-clone-setting-field
                         [label]="'xeroCloneSettings.exportCccExpensesLabel' | transloco"
@@ -117,7 +117,7 @@
 
             <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
             <div class="tw-px-24-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'list'"
                             [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
@@ -147,7 +147,7 @@
                 </div></div>
 
                 <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.creditCardExportType.value">
-                    <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                    <div class="clone-setting--field-container"><div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.creditCardExportType.value">
-                    <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                    <div class="clone-setting--field-container"><div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'xeroCloneSettings.expenseGroupingLabel' | transloco"
@@ -180,7 +180,7 @@
                 </div>
 
                 <div class="tw-px-24-px tw-mt-16-px" *ngIf="exportSettingForm.controls.creditCardExportType.value">
-                    <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                    <div class="clone-setting--field-container"><div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'calendar'"
                             [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) }"
@@ -197,7 +197,7 @@
 
                 <div class="tw-px-24-px tw-my-16-px" *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
                     exportSettingForm.controls.creditCardExportType.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION">
-                    <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                    <div class="clone-setting--field-container"><div class="tw-p-24-px">
                         <app-clone-setting-field
                             [iconSource]="'question-square-outline'"
                             [label]="'xeroCloneSettings.splitExpenseGroupingLabel' | transloco"
@@ -218,7 +218,7 @@
 
         <div class="clone-setting--field-section">
             <div class="clone-setting--field">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'arrow-tail-down'"
                         [label]="'xeroCloneSettings.importCoaLabel' | transloco"
@@ -245,7 +245,7 @@
             </div></div>
 
             <div class="tw-px-24-px tw-mb-16-px" *ngIf="isCustomerPresent">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'arrow-tail-down'"
                         [label]="'xero.configuration.importSetting.importCustomersLabel' | transloco"
@@ -259,7 +259,7 @@
             </div>
 
             <div class="tw-px-24-px tw-mb-16-px" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'arrow-tail-down'"
                         [label]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
@@ -272,7 +272,7 @@
             </div>
 
             <div class="tw-px-24-px tw-mb-16-px" *ngIf="isTaxGroupSyncAllowed">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'arrow-tail-down'"
                         [label]="'xeroCloneSettings.importTaxLabel' | transloco"
@@ -312,7 +312,7 @@
         <app-clone-setting-header [headerText]="'xeroCloneSettings.advancedSettings' | transloco" [subHeaderText]="'xeroCloneSettings.advancedSettingsDescription' | transloco"></app-clone-setting-header>
         <div class="clone-setting--field-section">
             <div class="clone-setting--field">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
                         [label]="'xeroCloneSettings.scheduleAutomaticExportLabel' | transloco"
@@ -362,7 +362,7 @@
             </div>
 
             <div class="tw-mt-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
                         [label]="'netsuite.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
@@ -375,7 +375,7 @@
             </div>
 
             <div class="tw-mt-16-px" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'user-plus'"
                         [label]="'xeroCloneSettings.autoCreateContactsLabel' | transloco"
@@ -388,7 +388,7 @@
             </div>
 
             <div class="tw-mt-16-px" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'arrow-rotate'"
                         [label]="'xeroCloneSettings.autoSyncPaymentStatusLabel' | transloco"
@@ -416,7 +416,7 @@
             </div>
 
             <div class="tw-mt-16-px tw-mb-24-px" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white"><div class="tw-p-24-px">
+                <div class="clone-setting--field-container"><div class="tw-p-24-px">
                     <app-clone-setting-field
                         [iconSource]="'user-plus'"
                         [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
