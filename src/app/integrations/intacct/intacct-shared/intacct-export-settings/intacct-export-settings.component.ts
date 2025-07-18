@@ -307,7 +307,6 @@ export class IntacctExportSettingsComponent implements OnInit {
 
         if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.BILL) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
-          this.exportSettingsForm.controls.glAccount.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
           this.creditCardExportTypes = this.creditCardExportTypes.filter(
             option => option.value !== IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT

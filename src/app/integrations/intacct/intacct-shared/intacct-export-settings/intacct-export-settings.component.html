@@ -38,7 +38,7 @@
                             [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
-                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY || exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.BILL">
+                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
