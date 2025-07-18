@@ -89,6 +89,7 @@ import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/n
 import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
+import { ExcludeSelectedOptionsPipe } from './pipes/exclude-selected-options.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
@@ -110,6 +111,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
+    ExcludeSelectedOptionsPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -218,6 +220,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
+    ExcludeSelectedOptionsPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,

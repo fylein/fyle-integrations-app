@@ -103,7 +103,7 @@
                 <div class="tw-pt-32-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
                         <div>
-                            <p-dropdown appendTo="body" [options]="sageIntacctFields" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
+                            <p-dropdown appendTo="body" [options]="sageIntacctFields | excludeSelectedOptions:expenseFieldsGetter:i:'destination_field'" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
                             <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
@@ -113,7 +113,7 @@
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
-                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
+                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
