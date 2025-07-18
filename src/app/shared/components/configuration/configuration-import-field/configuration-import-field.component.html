@@ -28,10 +28,10 @@
         </div>
     </div>
     <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
-        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-border-tertiary tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
+        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-border-tertiary tw-border': isDestinationFixedImport}">
             <div class="tw-mt-18-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.get('source_field')?.value === 'PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue && brandingConfig.brandId !== 'co' , 'tw-pl-24-px': !isDestinationFixedImport}">
             <div *ngIf="isDestinationFixedImport">
-                <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
+                <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-px-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
                       <div class="tw-pr-16-px">
                         <app-svg-icon [svgSource]="'arrow-tail-down'" [width]="'24px'" [height]="'24px'" [styleClasses]="isCloneSettingView ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0' : 'tw-text-mandatory-field-color tw-block tw-ml-0'"></app-svg-icon>
@@ -41,9 +41,8 @@
                             {{ 'configurationImportField.importDestinationFieldFromApp' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
-                        <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+                        <h5 class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                           {{ 'configurationImportField.importedDestinationFieldInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) } }}
-                          <span> will be an available field when creating an expense.</span>
                         </h5>
                       </div>
                     </div>
