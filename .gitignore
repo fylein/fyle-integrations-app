@@ -2,7 +2,10 @@
 
 # Compiled output
 .cursorrules
-.cursor/
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
 /dist
 /tmp
 /out-tsc
