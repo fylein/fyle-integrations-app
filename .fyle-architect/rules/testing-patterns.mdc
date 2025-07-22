@@ -1,0 +1,226 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Testing Patterns & Best Practices
+
+## Testing Architecture
+
+The Fyle Integrations App follows a comprehensive testing approach including:
+
+1. **Unit Tests**: Testing individual components, services, and utilities in isolation
+2. **Integration Tests**: Testing interactions between components, services, and the API
+3. **End-to-End Tests**: Testing complete user flows and application behavior
+
+## Unit Testing
+
+### Component Testing
+
+```typescript
+describe('UserProfileComponent', () => {
+  let component: UserProfileComponent;
+  let fixture: ComponentFixture<UserProfileComponent>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
+
+  beforeEach(async () => {
+    // Create spy for UserService
+    const spy = jasmine.createSpyObj('UserService', ['getUserProfile', 'updateUserProfile']);
+
+    await TestBed.configureTestingModule({
+      declarations: [ UserProfileComponent ],
+      imports: [ ReactiveFormsModule ],
+      providers: [
+        { provide: UserService, useValue: spy }
+      ]
+    }).compileComponents();
+
+    userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    fixture = TestBed.createComponent(UserProfileComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should load user profile on init', () => {
+    const mockUser = { id: 1, name: 'Test User', email: 'test@example.com' };
+    userServiceSpy.getUserProfile.and.returnValue(of(mockUser));
+    
+    fixture.detectChanges(); // trigger ngOnInit
+    
+    expect(userServiceSpy.getUserProfile).toHaveBeenCalled();
+    expect(component.profileForm.get('name')?.value).toBe(mockUser.name);
+  });
+});
+```
+
+### Service Testing
+
+```typescript
+describe('UserService', () => {
+  let service: UserService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [UserService]
+    });
+    service = TestBed.inject(UserService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  it('should get user profile', () => {
+    const mockUser = { id: 1, name: 'Test User' };
+    
+    service.getUserProfile().subscribe(user => {
+      expect(user).toEqual(mockUser);
+    });
+    
+    const req = httpMock.expectOne('/api/users/profile');
+    req.flush(mockUser);
+  });
+});
+```
+
+## Advanced Testing Techniques
+
+### Async Testing
+
+```typescript
+// Using fakeAsync
+it('should load data after delay', fakeAsync(() => {
+  const mockData = [{ id: 1, name: 'Item 1' }];
+  dataServiceSpy.getDataWithDelay.and.returnValue(of(mockData).pipe(delay(1000)));
+  
+  component.loadData();
+  tick(1000); // simulate 1 second passing
+  
+  expect(component.data).toEqual(mockData);
+}));
+
+// Using async/await
+it('should handle async operations', async () => {
+  userServiceSpy.getUsers.and.returnValue(of([{ id: 1, name: 'User 1' }]));
+  
+  await component.loadUsersAsync();
+  
+  expect(component.users.length).toBe(1);
+});
+```
+
+### Testing PrimeNG Components
+
+```typescript
+describe('DataTableComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ DataTableComponent ],
+      imports: [
+        NoopAnimationsModule, // Required for PrimeNG
+        TableModule,
+        ButtonModule
+      ]
+    }).compileComponents();
+  });
+
+  it('should render p-table with data', () => {
+    component.data = [{ id: 1, name: 'Item 1' }];
+    fixture.detectChanges();
+    
+    const tableRows = fixture.debugElement.queryAll(By.css('p-table tr.p-element'));
+    expect(tableRows.length).toBe(1);
+  });
+});
+```
+
+## Mocking Strategies
+
+### Mocking Services
+
+```typescript
+// Basic service mock
+const mockUserService = jasmine.createSpyObj('UserService', ['getUsers', 'getUserById']);
+
+mockUserService.getUsers.and.returnValue(of([
+  { id: 1, name: 'User 1' },
+  { id: 2, name: 'User 2' }
+]));
+
+// Conditional response
+mockUserService.getUserById.and.callFake((id: number) => {
+  if (id === 1) {
+    return of({ id: 1, name: 'User 1' });
+  } else {
+    return throwError(() => new Error('User not found'));
+  }
+});
+```
+
+## Integration-Specific Testing
+
+### Example: QBO OAuth Testing
+
+```typescript
+describe('QboConnectorComponent', () => {
+  beforeEach(async () => {
+    const qboSpy = jasmine.createSpyObj('QboService', ['getConnectUri']);
+    const windowSpy = jasmine.createSpyObj('WindowRef', ['getNativeWindow']);
+    windowSpy.getNativeWindow.and.returnValue({ open: jasmine.createSpy() });
+    
+    // Configure TestBed with spies
+  });
+  
+  it('should open OAuth window when connect button clicked', () => {
+    qboServiceSpy.getConnectUri.and.returnValue(of('https://oauth.qbo.com/connect'));
+    
+    const connectButton = fixture.debugElement.query(By.css('.connect-button'));
+    connectButton.nativeElement.click();
+    
+    expect(windowRefSpy.getNativeWindow().open).toHaveBeenCalled();
+  });
+});
+```
+
+## Best Practices
+
+### AAA Pattern (Arrange-Act-Assert)
+
+```typescript
+it('should update user successfully', () => {
+  // Arrange
+  const userId = 1;
+  const updateData = { name: 'Updated Name' };
+  userServiceSpy.updateUser.and.returnValue(of({ id: userId, ...updateData }));
+  
+  // Act
+  component.updateUser(userId, updateData);
+  
+  // Assert
+  expect(component.isLoading).toBe(false);
+  expect(component.user.name).toBe('Updated Name');
+});
+```
+
+### Code Coverage
+
+The project aims for high code coverage:
+
+- **Unit Tests**: >90% coverage
+- **Integration Tests**: >80% coverage
+
+Run coverage report:
+```bash
+npm test -- --code-coverage
+```
+
+### Key Testing Commands
+
+```bash
+# Run unit tests with watch mode
+npm test
+
+# Run tests with coverage report
+npm test -- --code-coverage
+
+# Run specific test file
+npm test -- --include="**/user.service.spec.ts"
+```

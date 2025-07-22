@@ -1,0 +1,171 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Theme Feature Flags Reference
+
+## Feature Flag Structure
+The application uses a hierarchical feature flag system to control functionality based on the current brand (Fyle or Capital One).
+
+## Accessing Feature Flags
+```typescript
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+
+// Check feature flag
+if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+  // Feature is enabled
+}
+```
+
+## Top-Level Brand Features
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `illustrationsAllowed` | Whether to display illustrations | ✅ | ❌ |
+| `isGradientAllowed` | Allow gradient styles | ✅ | ❌ |
+| `isIconsInsideButtonAllowed` | Show icons inside buttons | ✅ | ❌ |
+| `exposeC1Apps` | Show Capital One specific apps | ❌ | ✅ |
+| `isBackgroundColorAllowed` | Allow background colors | ❌ | ✅ |
+| `isAsterikAllowed` | Use asterisk for required fields | ✅ | ❌ |
+| `allowIntacctHelperDoc` | Show Intacct helper docs | ✅ | ❌ |
+| `showMoreDropdownInMainMenu` | Show more dropdown in menu | ✅ | ❌ |
+| `loginRedirectUri` | Use redirect URI for login | ❌ | ✅ |
+| `loginToAllConnectedApps` | Login to all connected apps | ✅ | ❌ |
+
+## UI/UX Feature Flags
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `featureFlags.showOptionalTextInsteadOfAsterisk` | Show "Optional" text | ❌ | ✅ |
+| `featureFlags.useCustomIcon` | Use custom icons | ❌ | ✅ |
+| `featureFlags.displayAppLogoInDashboard` | Show app logo in dashboard | ❌ | ✅ |
+| `featureFlags.contentVersion` | Content version | "v1" | "v2" |
+| `featureFlags.useLandingV2` | Use landing page v2 | ✅ | ❌ |
+| `featureFlags.cloneSettings` | Allow cloning settings | ✅ | ❌ |
+| `featureFlags.mapEmployees` | Enable employee mapping | ✅ | ❌ |
+
+## Export Settings Feature Flags
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `featureFlags.exportSettings.reimbursableExpenses` | Show reimbursable expenses | ✅ | ❌ |
+| `featureFlags.exportSettings.nameInJournalEntry` | Show name in journal entry | ✅ | ❌ |
+| `featureFlags.exportSettings.useMerchantInJournalLine` | Use merchant in journal | ✅ | ❌ |
+| `featureFlags.exportSettings.splitExpenseGrouping` | Allow split expense grouping | ✅ | ❌ |
+| `featureFlags.exportSettings.isEmployeeMappingFixed` | Fixed employee mapping | ❌ | ✅ |
+| `featureFlags.exportSettings.isReimbursableExpensesAllowed` | Allow reimbursable expenses | ✅ | ❌ |
+
+## Import Settings Feature Flags
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `featureFlags.importSettings.tax` | Import tax settings | ✅ | ❌ |
+| `featureFlags.importSettings.importVendorsAsMerchants` | Import vendors as merchants | ✅ | ❌ |
+| `featureFlags.importSettings.importNetsuiteEmployees` | Import NetSuite employees | ✅ | ✅ |
+| `featureFlags.importSettings.importItems` | Import items | ✅ | ✅ |
+| `featureFlags.importSettings.importProjects` | Import projects | ✅ | ✅ |
+| `featureFlags.importSettings.allowCustomSegment` | Allow custom segment | ✅ | ❌ |
+| `featureFlags.importSettings.dependentField` | Enable dependent fields | ✅ | ✅ |
+| `featureFlags.importSettings.allowImportCode` | Allow import code | ✅ | ❌ |
+| `featureFlags.importSettings.importSettingsV1` | Use import settings v1 | ✅ | ❌ |
+| `featureFlags.importSettings.disableCustomerSourceField` | Disable customer source field | ❌ | ✅ |
+
+## Advanced Settings Feature Flags
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `featureFlags.advancedSettings.autoCreateVendors` | Auto-create vendors | ✅ | ❌ |
+| `featureFlags.advancedSettings.paymentsSync` | Enable payments sync | ✅ | ❌ |
+| `featureFlags.advancedSettings.singleCreditLineJE` | Single credit line journal entry | ✅ | ❌ |
+| `featureFlags.advancedSettings.emailNotification` | Email notifications | ✅ | ❌ |
+| `featureFlags.advancedSettings.defaultFields` | Use default fields | ✅ | ❌ |
+| `featureFlags.advancedSettings.skipExport` | Allow skipping exports | ✅ | ❌ |
+| `featureFlags.advancedSettings.autoCreateContacts` | Auto-create contacts | ✅ | ❌ |
+| `featureFlags.advancedSettings.useEmployeeAttributes` | Use employee attributes | ✅ | ✅ |
+| `featureFlags.advancedSettings.autoCreateMerchants` | Auto-create merchants | ✅ | ✅ |
+| `featureFlags.advancedSettings.excludeCardNumberAndEmployeeNameInMemo` | Exclude card/employee in memo | ❌ | ✅ |
+| `featureFlags.advancedSettings.showTopLevelMemoFieldInIntacct` | Show memo field in Intacct | ✅ | ❌ |
+
+## Dashboard Feature Flags
+
+| Feature | Description | Fyle | Capital One |
+|---------|-------------|------|-------------|
+| `featureFlags.dashboard.disconnectButton` | Show disconnect button | ✅ | ❌ |
+| `featureFlags.dashboard.useRepurposedExportSummary` | Use repurposed export summary | ✅ | ❌ |
+| `featureFlags.exportLog.expenseType` | Show expense type in export log | ✅ | ❌ |
+| `featureFlags.mappings.employeeMapping` | Enable employee mapping | ✅ | ❌ |
+
+## Environment-Specific App Availability
+The availability of specific integrations is controlled by brand and environment:
+
+```typescript
+import { exposeAppConfig } from 'src/app/branding/expose-app-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
+
+// Check if integration is available
+const isIntegrationAvailable = exposeAppConfig[brandingConfig.brandId][brandingConfig.envId].INTEGRATION_NAME;
+```
+
+### Available Integrations Matrix
+
+| Integration | Fyle (Staging) | Fyle (Prod IN) | Fyle (Prod US) | CO (QA) | CO (Prod US) |
+|-------------|----------------|----------------|----------------|---------|-------------|
+| INTACCT | ✅ | ✅ | ✅ | ✅ | ✅ |
+| SAGE300 | ✅ | ❌ | ✅ | ❌ | ❌ |
+| QBO | ✅ | ✅ | ✅ | ✅ | ✅ |
+| BUSINESS_CENTRAL | ✅ | ❌ | ✅ | ❌ | ❌ |
+| TRAVELPERK | ✅ | ✅ | ✅ | ❌ | ❌ |
+| XERO | ✅ | ✅ | ✅ | ✅ | ✅ |
+| NETSUITE | ✅ | ✅ | ✅ | ✅ | ✅ |
+| QBD | ✅ | ✅ | ✅ | ❌ | ❌ |
+| BAMBOO | ✅ | ✅ | ✅ | ❌ | ❌ |
+| QBD_DIRECT | ✅ | ❌ | ✅ | ❌ | ❌ |
+
+## Common Use Cases
+
+### Conditionally Showing UI Elements
+```typescript
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+
+// In component template
+<div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
+  <!-- Reimbursable expenses UI -->
+</div>
+```
+
+### Setting Class Based on Brand
+```typescript
+import { brandingStyle } from 'src/app/branding/branding-config';
+
+// In component
+get configClassNames(): string {
+  return brandingStyle.common.configurationContents;
+}
+```
+
+### Conditional Import Logic
+```typescript
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+
+// In service
+setupImportLogic() {
+  if (brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants) {
+    // Setup vendor import as merchants
+  } else {
+    // Alternative import logic
+  }
+}
+```
+
+### Checking Integration Availability
+```typescript
+import { exposeAppConfig } from 'src/app/branding/expose-app-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
+
+// Check if integration should be shown
+const showIntegration = (integrationName: string): boolean => {
+  return exposeAppConfig[brandingConfig.brandId][brandingConfig.envId][integrationName];
+};
+```
+
