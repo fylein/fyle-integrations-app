@@ -23,19 +23,6 @@ interface TranslationAnalysis {
     };
 }
 
-interface MissingTranslationItem {
-    key: string;
-    themes: ('common' | 'fyle' | 'co')[];
-    files: string[];
-}
-
-interface TranslationPattern {
-    keyPattern: string;
-    valuePattern: string;
-    confidence: number;
-    examples: { key: string; value: string }[];
-}
-
 interface TranslationSuggestion {
     value: string;
     confidence: number;
@@ -58,7 +45,6 @@ interface IncrementalAnalysisState {
     totalFilesAnalyzed: number;
     pendingFileUpdates: Set<string>;
 }
-
 
 
 export function activate(context: vscode.ExtensionContext) {
@@ -116,6 +102,10 @@ export function activate(context: vscode.ExtensionContext) {
         provider.analyzeTranslations(missingTranslationsStatusBar);
     });
 
+    const analyzeWithValidationCommand = vscode.commands.registerCommand('fyle-transloco.analyzeTranslationsWithValidation', () => {
+        provider.analyzeTranslationsWithValidation(missingTranslationsStatusBar);
+    });
+
     const showMissingCommand = vscode.commands.registerCommand('fyle-transloco.showMissingTranslations', () => {
         provider.showMissingTranslationsPopup();
     });
@@ -155,6 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
         deleteCommand,
         togglePreviewCommand,
         analyzeCommand,
+        analyzeWithValidationCommand,
         showMissingCommand,
         jsonCompletionProvider,
         codeActionProvider,
@@ -182,6 +173,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     private analysisTimeoutId: NodeJS.Timeout | undefined;
     private currentAnalysisAbortController: AbortController | undefined;
     private userSelectionHistory: Map<string, string> = new Map(); // key pattern -> selected value
+    private validationCache = new Map<string, boolean>(); // Cache validation results: key -> isUsed
+    private lastValidationTime: Date | null = null;
 
     // Incremental analysis cache system
     private fileAnalysisCache: Map<string, FileAnalysisCache> = new Map();
@@ -280,6 +273,10 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         this.loadAllTranslations();
         // Clear analysis cache to trigger re-analysis
         this.analysisCache = undefined;
+
+        // DON'T clear validation cache when translations are refreshed
+        // Validation cache tracks if keys are used in SOURCE CODE, which doesn't change when translation files change
+        console.log('🔄 TRANSLATION REFRESH: Keeping validation cache intact (source code usage unchanged)');
     }
 
     showTranslationStatus(): void {
@@ -354,6 +351,17 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             // Delete the key from the JSON file
             await this.deleteTranslationKey(selectedOption.filePath, key);
             this.refreshTranslations();
+
+            // Run validation analysis after deletion to update unused count
+            console.log('🔄 TRANSLATION DELETE: Running validation analysis to update unused count');
+            setTimeout(() => {
+                this.calculateTranslationCoverageWithValidation().then((validatedAnalysis) => {
+                    // IMPORTANT: Update the analysis cache with validated results
+                    this.analysisCache = validatedAnalysis;
+                    this.lastAnalysisTime = new Date();
+                    console.log('✅ TRANSLATION DELETE: Validation analysis completed and cache updated');
+                });
+            }, 100); // Small delay to ensure refresh completes
 
             // Show success message
             vscode.window.showInformationMessage(
@@ -502,6 +510,17 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             await this.updateTranslationFile(selectedOption.filePath, key, newValue);
             this.refreshTranslations();
 
+            // Run validation analysis after edit to update unused count
+            console.log('🔄 TRANSLATION EDIT: Running validation analysis to update unused count');
+            setTimeout(() => {
+                this.calculateTranslationCoverageWithValidation().then((validatedAnalysis) => {
+                    // IMPORTANT: Update the analysis cache with validated results
+                    this.analysisCache = validatedAnalysis;
+                    this.lastAnalysisTime = new Date();
+                    console.log('✅ TRANSLATION EDIT: Validation analysis completed and cache updated');
+                });
+            }, 100); // Small delay to ensure refresh completes
+
             // Show success with theme icon
             vscode.window.showInformationMessage(
                 `${themeIcon} Translation updated successfully in ${selectedOption.label}`,
@@ -549,7 +568,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 const content = fs.readFileSync(filePath, 'utf8');
                 const translations = JSON.parse(content);
                 this.translationCache.set(theme, translations);
-                console.log(`Loaded ${theme} translations from ${filePath}`);
+                // console.log(`Loaded ${theme} translations from ${filePath}`);
             }
         } catch (error) {
             console.error(`Error loading ${theme} translations:`, error);
@@ -1062,8 +1081,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             this.incrementalAnalysisState.lastFullAnalysisTime = new Date();
             this.incrementalAnalysisState.totalFilesAnalyzed = this.fileAnalysisCache.size;
 
-            console.log(`✅ Incremental analysis system initialized with ${this.fileAnalysisCache.size} files cached`);
-            console.log(`📊 PERFORMANCE BASELINE: Initial analysis completed - future translation file changes will be ~99% faster`);
+            // console.log(`✅ Incremental analysis system initialized with ${this.fileAnalysisCache.size} files cached`);
+            // console.log(`📊 PERFORMANCE BASELINE: Initial analysis completed - future translation file changes will be ~99% faster`);
         } catch (error) {
             console.error('Error initializing translation analysis:', error);
             statusBarItem.text = '$(error) Analysis Error';
@@ -1076,10 +1095,72 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         const improvement = ((estimatedOldDuration - actualDuration) / estimatedOldDuration * 100).toFixed(1);
         const speedup = (estimatedOldDuration / actualDuration).toFixed(1);
 
-        console.log(`📈 PERFORMANCE COMPARISON for ${operation}:`);
-        console.log(`   ⚡ New (optimized): ${actualDuration}ms`);
-        console.log(`   🐌 Old (estimated): ${estimatedOldDuration}ms`);
-        console.log(`   🚀 Improvement: ${improvement}% faster (${speedup}x speedup)`);
+        // console.log(`📈 PERFORMANCE COMPARISON for ${operation}:`);
+        // console.log(`   ⚡ New (optimized): ${actualDuration}ms`);
+        // console.log(`   🐌 Old (estimated): ${estimatedOldDuration}ms`);
+        // console.log(`   🚀 Improvement: ${improvement}% faster (${speedup}x speedup)`);
+    }
+
+    async analyzeTranslationsWithValidation(statusBarItem?: vscode.StatusBarItem): Promise<void> {
+        if (!vscode.workspace.workspaceFolders) {
+            vscode.window.showErrorMessage('No workspace folder found');
+            return;
+        }
+
+        const workspaceFolder = vscode.workspace.workspaceFolders[0];
+
+        try {
+            statusBarItem?.hide();
+
+            // Show progress with cancellation support
+            await vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: "Analyzing translations with VS Code search validation...",
+                cancellable: true
+            }, async (progress, token) => {
+                // Create abort controller for this analysis
+                this.currentAnalysisAbortController = new AbortController();
+                const signal = this.currentAnalysisAbortController.signal;
+
+                // Listen for cancellation
+                token.onCancellationRequested(() => {
+                    this.currentAnalysisAbortController?.abort();
+                });
+
+                progress.report({ increment: 0, message: "Scanning source files..." });
+
+                // Perform analysis
+                await this.scanWorkspaceForTranslationKeys();
+
+                if (signal.aborted) {
+                    return;
+                }
+
+                progress.report({ increment: 50, message: "Calculating coverage with validation..." });
+
+                // Analyze coverage with validation
+                this.analysisCache = await this.calculateTranslationCoverageWithValidation();
+                this.lastAnalysisTime = new Date();
+
+                // Check if cancelled before updating UI
+                if (signal.aborted) {
+                    return;
+                }
+
+                progress.report({ increment: 100, message: "Analysis complete!" });
+
+                // Update status bar
+                if (statusBarItem) {
+                    this.updateAnalysisStatusBar(statusBarItem);
+                }
+            });
+
+        } catch (error) {
+            console.error('Error during translation analysis with validation:', error);
+            vscode.window.showErrorMessage(`Translation analysis failed: ${error}`);
+        } finally {
+            this.currentAnalysisAbortController = undefined;
+        }
     }
 
     async analyzeTranslations(statusBarItem: vscode.StatusBarItem): Promise<void> {
@@ -1115,8 +1196,9 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 return;
             }
 
-            // Analyze coverage
-            this.analysisCache = this.calculateTranslationCoverage();
+            // Analyze coverage with automatic validation
+            // console.log(`🔍 AUTO-VALIDATION: Running analysis with automatic VS Code search validation...`);
+            this.analysisCache = await this.calculateTranslationCoverageWithValidation();
             this.lastAnalysisTime = new Date();
 
             // Check if cancelled before updating UI
@@ -1188,17 +1270,18 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
 
         // Scan HTML files and populate cache
         for (const file of htmlFiles) {
+            const relativePath = vscode.workspace.asRelativePath(file);
             await this.scanFileForTranslationKeys(file, 'html');
             await this.updateFileAnalysisCache(file); // Also populate incremental cache
         }
 
         // Scan TypeScript files and populate cache
         for (const file of tsFiles) {
+            const relativePath = vscode.workspace.asRelativePath(file);
             await this.scanFileForTranslationKeys(file, 'typescript');
             await this.updateFileAnalysisCache(file); // Also populate incremental cache
         }
 
-        console.log(`Initial analysis completed: ${this.fileAnalysisCache.size} files cached, ${this.allTranslationKeys.size} unique keys found`);
         this.incrementalAnalysisState.totalFilesAnalyzed = this.fileAnalysisCache.size;
     }
 
@@ -1208,24 +1291,43 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             const text = document.getText();
             const relativePath = vscode.workspace.asRelativePath(fileUri);
 
+            const keysBefore = this.allTranslationKeys.size;
+
             if (fileType === 'html') {
                 this.extractHtmlTranslationKeys(text, relativePath);
             } else {
                 this.extractTypeScriptTranslationKeys(text, relativePath);
             }
+
+            const keysAfter = this.allTranslationKeys.size;
+            const keysFound = keysAfter - keysBefore;
+
+            if (keysFound > 0) {
+                // console.log(`🔍 SCAN DEBUG: Found ${keysFound} translation keys in ${relativePath}`);
+            } else {
+                // console.log(`🔍 SCAN DEBUG: No translation keys found in ${relativePath}`);
+            }
         } catch (error) {
-            console.error(`Error scanning file ${fileUri.fsPath}:`, error);
+            console.error(`🔍 SCAN DEBUG: Error scanning file ${fileUri.fsPath}:`, error);
         }
     }
 
     private extractHtmlTranslationKeys(text: string, filePath: string): void {
         // Based on actual codebase patterns, extract only specific transloco usage patterns
 
-        // Pattern 1: {{ 'key' | transloco }} - Direct interpolation
         const interpolationMatches = [...text.matchAll(/\{\{\s*['"]([^'"]+)['"]\s*\|\s*transloco[^}]*\}\}/g)];
 
-        // Pattern 2: [attribute]="'key' | transloco" - Property binding
-        const propertyBindingMatches = [...text.matchAll(/\[[^\]]+\]\s*=\s*['"]([^'"]+)['"]\s*\|\s*transloco/g)];
+        // Fixed pattern that specifically handles double quotes containing single quotes
+        const propertyBindingMatches = [...text.matchAll(/\[([^\]]+)\]\s*=\s*"'([^']+)'\s*\|\s*transloco/g)];
+
+        // Also try pattern for single quotes containing double quotes: [attr]='"key" | transloco'
+        const reverseQuoteMatches = [...text.matchAll(/\[([^\]]+)\]\s*=\s*'"([^"]+)"\s*\|\s*transloco/g)];
+    
+        // Pattern for transloco inside parentheses in property bindings: [attr]="expr + ('key' | transloco) + expr"
+        const parenthesesMatches = [...text.matchAll(/\[([^\]]+)\]\s*=\s*"[^"]*\('([^']+)'\s*\|\s*transloco\)[^"]*"/g)];
+
+        // Combine all property binding patterns
+        const allPropertyBindingMatches = [...propertyBindingMatches, ...reverseQuoteMatches, ...parenthesesMatches];
 
         // Pattern 3: [transloco]="'key'" - Transloco directive
         const translocoDirectiveMatches = [...text.matchAll(/\[transloco\]\s*=\s*['"]([^'"]+)['"]/g)];
@@ -1233,20 +1335,106 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Pattern 4: 'key' | transloco: { params } - With parameters
         const parameterizedMatches = [...text.matchAll(/['"]([^'"]+)['"]\s*\|\s*transloco\s*:\s*\{[^}]*\}/g)];
 
-        // Process all matches
+        // Pattern 6: {{(condition ? 'key1' : 'key2') | transloco}} - Ternary operator in interpolation
+        const ternaryMatches = [...text.matchAll(/\{\{\s*\([^?]+\?\s*['"]([^'"]+)['"]\s*:\s*['"]([^'"]+)['"]\s*\)\s*\|\s*transloco[^}]*\}\}/g)];
+      
+        // Pattern 6: {{condition ? ('key1' | transloco) : ('key2' | transloco)}} - Ternary with individual transloco pipes
+        const ternaryIndividualMatches = [...text.matchAll(/\{\{\s*[^?]+\?\s*\(\s*['"]([^'"]+)['"]\s*\|\s*transloco\s*\)\s*:\s*\(\s*['"]([^'"]+)['"]\s*\|\s*transloco\s*\)\s*\}\}/g)];
+
+        // Pattern 7: ('key' | transloco) - Generic parenthesized transloco (catches multiple on same line)
+        const parenthesizedTranslocoMatches = [...text.matchAll(/\(\s*['"]([^'"]+)['"]\s*\|\s*transloco\s*\)/g)];
+
+
+        // Process all matches - handle ternary matches specially since they have 2 keys each
+        const ternaryKeyMatches = [];
+        for (const match of ternaryMatches) {
+            // Add both keys from ternary operator: match[1] is true case, match[2] is false case
+            ternaryKeyMatches.push([match[0], match[1]]); // true case key
+            ternaryKeyMatches.push([match[0], match[2]]); // false case key
+        }
+
+        // Process ternary individual matches (each branch has its own transloco pipe)
+        const ternaryIndividualKeyMatches = [];
+        for (const match of ternaryIndividualMatches) {
+            // Add both keys from ternary individual operator: match[1] is true case, match[2] is false case
+            ternaryIndividualKeyMatches.push([match[0], match[1]]); // true case key
+            ternaryIndividualKeyMatches.push([match[0], match[2]]); // false case key
+        }
+
+        // Process nested transloco matches
+        const nestedTranslocoKeys = this.extractNestedTranslocoKeys(text);
+        const nestedTranslocoMatches = nestedTranslocoKeys.map(key => ['nested', key]); // Format as [fullMatch, key]
+
         const allMatches = [
             ...interpolationMatches,
-            ...propertyBindingMatches,
+            ...allPropertyBindingMatches.map(match => [match[0], match[2]]), // Use match[2] for the key from new pattern
             ...translocoDirectiveMatches,
-            ...parameterizedMatches
+            ...parameterizedMatches,
+            ...ternaryKeyMatches, // Add both keys from ternary operators
+            ...ternaryIndividualKeyMatches, // Add both keys from ternary individual operators
+            ...parenthesizedTranslocoMatches, // Add keys from generic parenthesized transloco patterns
+            ...nestedTranslocoMatches // Add keys from nested transloco patterns
         ];
+
 
         for (const match of allMatches) {
             const key = match[1];
+       
             if (this.isValidTranslationKey(key)) {
+       
                 this.addKeyUsage(key, filePath);
+
+
+            } 
+        }
+    }
+
+    /**
+     * Extract nested transloco keys from complex patterns like:
+     * [placeholder]="'outerKey' | transloco: { param: 'innerKey' | transloco }"
+     */
+    private extractNestedTranslocoKeys(text: string): string[] {
+        const nestedKeys: string[] = [];
+
+        // Pattern for nested transloco: 'outerKey' | transloco: { ... 'innerKey' | transloco ... }
+        // This regex finds transloco expressions that contain parameters with nested transloco
+        const nestedPattern = /['"]([^'"]+)['"]\s*\|\s*transloco\s*:\s*\{[^}]*['"]([^'"]+)['"]\s*\|\s*transloco[^}]*\}/g;
+
+        let match;
+        while ((match = nestedPattern.exec(text)) !== null) {
+            const outerKey = match[1];
+            const innerKey = match[2];
+
+            // Add both keys
+            nestedKeys.push(outerKey);
+            nestedKeys.push(innerKey);
+        }
+
+        // Also handle more complex nested patterns with multiple inner transloco calls
+        // Pattern: 'outerKey' | transloco: { param1: 'innerKey1' | transloco, param2: 'innerKey2' | transloco }
+        const multiNestedPattern = /['"]([^'"]+)['"]\s*\|\s*transloco\s*:\s*\{([^}]+)\}/g;
+
+        while ((match = multiNestedPattern.exec(text)) !== null) {
+            const outerKey = match[1];
+            const paramBlock = match[2];
+
+            // Find all inner transloco calls within the parameter block
+            const innerTranslocoPattern = /['"]([^'"]+)['"]\s*\|\s*transloco/g;
+            let innerMatch;
+
+            while ((innerMatch = innerTranslocoPattern.exec(paramBlock)) !== null) {
+                const innerKey = innerMatch[1];
+                // console.log(`🔍 MULTI-NESTED TRANSLOCO: Found outer key "${outerKey}" with inner key "${innerKey}"`);
+
+                // Add outer key only once per pattern
+                if (!nestedKeys.includes(outerKey)) {
+                    nestedKeys.push(outerKey);
+                }
+                nestedKeys.push(innerKey);
             }
         }
+
+        return nestedKeys;
     }
 
     private extractTypeScriptTranslationKeys(text: string, filePath: string): void {
@@ -1261,11 +1449,28 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Pattern 3: .translate('key') or .translate('key', { params }) - Generic translate method calls
         const genericTranslateMatches = [...text.matchAll(/\.translate\s*\(\s*['"]([^'"]+)['"](?:\s*,\s*\{[^}]*\})?\s*\)/g)];
 
+        // Pattern 4: this.translocoService.translate(condition ? 'key1' : 'key2') - Ternary operator in TypeScript translate calls
+        const tsTranslateTernaryMatches = [...text.matchAll(/(?:this\.)?translocoService\.translate\s*\(\s*[^?]+\?\s*['"]([^'"]+)['"]\s*:\s*['"]([^'"]+)['"]\s*(?:\s*,\s*\{[^}]*\})?\s*\)/g)];
+
+
+        // Test the specific problematic line
+        const testTsTranslateTernaryLine = `this.translocoService.translate(this.appName === AppName.TRAVELPERK ? 'configurationSelectField.preview' : 'configurationSelectField.exportModule')`;
+        const testTsTranslateTernaryMatch = testTsTranslateTernaryLine.match(/(?:this\.)?translocoService\.translate\s*\(\s*[^?]+\?\s*['"]([^'"]+)['"]\s*:\s*['"]([^'"]+)['"]\s*(?:\s*,\s*\{[^}]*\})?\s*\)/);
+
+        // Process ternary TypeScript matches specially since they have 2 keys each
+        const tsTernaryKeyMatches = [];
+        for (const match of tsTranslateTernaryMatches) {
+            // Add both keys from ternary operator: match[1] is true case, match[2] is false case
+            tsTernaryKeyMatches.push([match[0], match[1]]); // true case key
+            tsTernaryKeyMatches.push([match[0], match[2]]); // false case key
+        }
+
         // Process all matches
         const allMatches = [
             ...translocoServiceMatches,
             ...translocoMatches,
-            ...genericTranslateMatches
+            ...genericTranslateMatches,
+            ...tsTernaryKeyMatches // Add both keys from TypeScript ternary operators
         ];
 
         for (const match of allMatches) {
@@ -1288,6 +1493,47 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         if (!files.includes(filePath)) {
             files.push(filePath);
         }
+    }
+
+    private async calculateTranslationCoverageWithValidation(): Promise<TranslationAnalysis> {
+        const analysis = this.calculateTranslationCoverage();
+
+        // Check if validation is enabled (can be disabled for performance)
+        const config = vscode.workspace.getConfiguration('fyle-transloco');
+        const validationEnabled = config.get('enableValidation', true);
+
+        if (!validationEnabled) {
+            // console.log(`⚠️ VALIDATION: Validation disabled in settings - skipping validation`);
+            return analysis;
+        }
+
+        // Limit validation to reasonable number of keys for performance
+        const maxKeysToValidate = 50;
+        const keysToValidate = analysis.unusedTranslations.slice(0, maxKeysToValidate);
+
+        if (analysis.unusedTranslations.length > maxKeysToValidate) {
+            // console.log(`🔍 VALIDATION: Limiting validation to first ${maxKeysToValidate} keys for performance (${analysis.unusedTranslations.length} total)`);
+        }
+
+        // Validate unused translations using VS Code search as a second opinion
+        // console.log(`🔍 VALIDATION: Starting VS Code search validation for ${keysToValidate.length} potentially unused keys...`);
+        const validatedUnusedTranslations = await this.validateUnusedKeysWithVSCodeSearch(keysToValidate);
+        const falsePositives = keysToValidate.length - validatedUnusedTranslations.length;
+
+        // Add back the keys we didn't validate
+        const remainingKeys = analysis.unusedTranslations.slice(maxKeysToValidate);
+        const finalUnusedTranslations = [...validatedUnusedTranslations, ...remainingKeys];
+
+        if (falsePositives > 0) {
+            // console.log(`🎯 VALIDATION: Found ${falsePositives} false positives that are actually used!`);
+            // console.log(`📊 VALIDATION: Refined unused count from ${analysis.unusedTranslations.length} to ${finalUnusedTranslations.length}`);
+        }
+
+        // Return analysis with validated unused translations
+        return {
+            ...analysis,
+            unusedTranslations: finalUnusedTranslations
+        };
     }
 
     private calculateTranslationCoverage(): TranslationAnalysis {
@@ -1415,6 +1661,14 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             });
         }
 
+        if (analysis.unusedTranslations.length > 0) {
+        items.push({
+        label: `$(info) Unused Translations`,
+        description: `${analysis.unusedTranslations.length} keys`,
+        detail: 'Keys in JSON files but not used in code'
+    });
+    }
+
         const selected = await vscode.window.showQuickPick(items, {
             placeHolder: 'Select category to view details',
             title: `Translation Analysis - ${totalMissing} Missing Translations`
@@ -1427,10 +1681,34 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 await this.showMissingKeysList(analysis.missingInFyle, 'Fyle Theme (fyle/en.json)');
             } else if (selected.label.includes('Missing in Capital One')) {
                 await this.showMissingKeysList(analysis.missingInCo, 'Capital One Theme (co/en.json)');
+            } else if (selected.label.includes('Unused Translations')) {
+                await this.showUnusedKeysList(analysis.unusedTranslations);
             }
         }
     }
 
+    private async showUnusedKeysList(unusedKeys: string[]): Promise<void> {
+    if (unusedKeys.length === 0) {
+        vscode.window.showInformationMessage('No unused translations found');
+        return;
+    }
+
+    const items = unusedKeys.map(key => ({
+        label: key,
+        description: 'Unused translation',
+        detail: 'This key exists in JSON but is not used in any code files'
+    }));
+
+    const selected = await vscode.window.showQuickPick(items, {
+        placeHolder: 'Select a key to delete or review',
+        title: `Unused Translations (${unusedKeys.length} keys)`
+    });
+
+    if (selected) {
+        // Option to delete the unused translation
+        await this.quickDeleteTranslation(selected.label);
+    }
+}
     private async showMissingKeysList(missingKeys: string[], theme: string): Promise<void> {
         if (missingKeys.length === 0) {
             vscode.window.showInformationMessage(`No missing translations in ${theme}`);
@@ -1526,7 +1804,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Handle file changes (create, change, delete) - OPTIMIZED VERSION
         const handleTranslationFileChange = (uri: vscode.Uri) => {
             const relativePath = vscode.workspace.asRelativePath(uri);
-            console.log(`Translation file changed: ${relativePath}`);
+            // console.log(`Translation file changed: ${relativePath}`);
 
             // Show a brief notification
             vscode.window.showInformationMessage(
@@ -1537,7 +1815,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             // Refresh translations (load new JSON values)
             this.refreshTranslations();
 
-            // Only recalculate coverage without re-scanning source files
+            // Only recalculate coverage without re-scanning source files (with validation cache)
             this.recalculateTranslationCoverageOnly(statusBarItem);
         };
 
@@ -1546,14 +1824,14 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         watcher.onDidChange(handleTranslationFileChange);
         watcher.onDidDelete((uri) => {
             const relativePath = vscode.workspace.asRelativePath(uri);
-            console.log(`Translation file deleted: ${relativePath}`);
+            // console.log(`Translation file deleted: ${relativePath}`);
 
             // Show warning for file deletion
             vscode.window.showWarningMessage(
                 `Translation file deleted: ${relativePath.split('/').pop()}. Updating coverage...`
             );
 
-            // Refresh translations and recalculate coverage only
+            // Refresh translations and recalculate coverage only (with validation cache)
             this.refreshTranslations();
             this.recalculateTranslationCoverageOnly(statusBarItem);
         });
@@ -1589,7 +1867,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 return;
             }
 
-            console.log(`Source file changed: ${relativePath}`);
+            // console.log(`Source file changed: ${relativePath}`);
             pendingChanges.add(uri.toString());
 
             // Clear existing timeout
@@ -1617,16 +1895,16 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Register event handlers
         watcher.onDidCreate(handleSourceFileChange);
         watcher.onDidChange(handleSourceFileChange);
-        watcher.onDidDelete((uri) => {
+        watcher.onDidDelete(async (uri) => {
             const relativePath = vscode.workspace.asRelativePath(uri);
-            console.log(`Source file deleted: ${relativePath}`);
+            // console.log(`Source file deleted: ${relativePath}`);
 
             // Remove from cache
             this.fileAnalysisCache.delete(relativePath);
 
             // Trigger incremental analysis to update global keys
             this.rebuildGlobalKeysFromCache();
-            this.analysisCache = this.calculateTranslationCoverage();
+            this.analysisCache = await this.calculateTranslationCoverageWithValidation();
             this.updateAnalysisStatusBar(statusBarItem);
         });
 
@@ -1653,11 +1931,32 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             const translationKeys = new Set<string>();
             const keyUsageMap = new Map<string, number[]>();
 
+            // Temporarily store the current state to restore after extraction
+            const originalAllKeys = new Set(this.allTranslationKeys);
+            const originalKeyUsageMap = new Map(this.keyUsageMap);
+
+            // Clear current state to extract only from this file
+            this.allTranslationKeys.clear();
+            this.keyUsageMap.clear();
+
             if (document.languageId === 'html') {
-                this.extractHtmlTranslationKeysWithLines(document.getText(), translationKeys, keyUsageMap);
+                this.extractHtmlTranslationKeys(document.getText(), filePath);
             } else if (document.languageId === 'typescript') {
-                this.extractTypeScriptTranslationKeysWithLines(document.getText(), translationKeys, keyUsageMap);
+                this.extractTypeScriptTranslationKeys(document.getText(), filePath);
             }
+
+            // Copy extracted keys to local variables
+            for (const key of this.allTranslationKeys) {
+                translationKeys.add(key);
+            }
+            // For the cache, we'll store line numbers as [1] since we don't track specific lines in the current extraction
+            for (const key of this.allTranslationKeys) {
+                keyUsageMap.set(key, [1]); // Simplified: just mark that the key exists in this file
+            }
+
+            // Restore original state
+            this.allTranslationKeys = originalAllKeys;
+            this.keyUsageMap = originalKeyUsageMap;
 
             // Update cache
             this.fileAnalysisCache.set(filePath, {
@@ -1668,7 +1967,15 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 fileSize: stats.size
             });
 
-            console.log(`Updated analysis cache for ${filePath}: ${translationKeys.size} keys found`);
+            // Invalidate validation cache when source files change
+            // This ensures validation results are recalculated when code changes
+            if (this.validationCache.size > 0) {
+                // console.log(`🗑️ VALIDATION CACHE: Clearing validation cache due to source file change: ${filePath}`);
+                this.validationCache.clear();
+                this.lastValidationTime = null;
+            }
+
+            // console.log(`🔧 INCREMENTAL FIX: Updated analysis cache for ${filePath}: ${translationKeys.size} keys found`);
         } catch (error) {
             console.error(`Error updating file analysis cache for ${fileUri.fsPath}:`, error);
         }
@@ -1747,7 +2054,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private async incrementalAnalyzeFiles(changedFiles: vscode.Uri[], statusBarItem: vscode.StatusBarItem): Promise<void> {
-        console.log(`🔄 OPTIMIZED: Incremental analysis for ${changedFiles.length} files (vs full workspace scan)`);
+        // console.log(`🔄 OPTIMIZED: Incremental analysis for ${changedFiles.length} files (vs full workspace scan)`);
         const startTime = Date.now();
 
         try {
@@ -1763,8 +2070,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             // Rebuild global translation keys from cache
             this.rebuildGlobalKeysFromCache();
 
-            // Recalculate coverage
-            this.analysisCache = this.calculateTranslationCoverage();
+            // Recalculate coverage with validation
+            this.analysisCache = await this.calculateTranslationCoverageWithValidation();
             this.lastAnalysisTime = new Date();
 
             // Update status bar
@@ -1772,8 +2079,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
 
             const duration = Date.now() - startTime;
             const fileNames = changedFiles.map(f => vscode.workspace.asRelativePath(f)).join(', ');
-            console.log(`✅ PERFORMANCE: Incremental analysis completed in ${duration}ms for ${changedFiles.length} files (${keysUpdated} keys updated)`);
-            console.log(`📁 Files analyzed: ${fileNames}`);
+            // // console.log(`✅ PERFORMANCE: Incremental analysis completed in ${duration}ms for ${changedFiles.length} files (${keysUpdated} keys updated)`);
+            // console.log(`📁 Files analyzed: ${fileNames}`);
 
             // Show performance notification for significant improvements
             if (duration < 200 && changedFiles.length > 0) {
@@ -1808,7 +2115,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             }
         }
 
-        console.log(`Rebuilt global keys: ${this.allTranslationKeys.size} unique keys from ${this.fileAnalysisCache.size} files`);
+        // console.log(`Rebuilt global keys: ${this.allTranslationKeys.size} unique keys from ${this.fileAnalysisCache.size} files`);
     }
 
     private shouldSkipSourceFile(relativePath: string): boolean {
@@ -1831,13 +2138,287 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         return skipPatterns.some(pattern => pattern.test(relativePath));
     }
 
-    private recalculateTranslationCoverageOnly(statusBarItem: vscode.StatusBarItem): void {
+    /**
+     * Validates unused translation keys using VS Code's search functionality as a second opinion
+     * This helps catch edge cases that our regex patterns might miss
+     */
+    private async validateUnusedKeysWithVSCodeSearch(potentiallyUnusedKeys: string[]): Promise<string[]> {
+        const validatedUnusedKeys: string[] = [];
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+
+        if (!workspaceFolder || potentiallyUnusedKeys.length === 0) {
+            return potentiallyUnusedKeys;
+        }
+
+        // Separate keys into cached and uncached
+        const keysToValidate: string[] = [];
+        const cachedResults = new Map<string, boolean>();
+
+        for (const key of potentiallyUnusedKeys) {
+            if (this.validationCache.has(key)) {
+                cachedResults.set(key, this.validationCache.get(key)!);
+                // console.log(`💾 VALIDATION: Using cached result for "${key}": ${this.validationCache.get(key) ? 'USED' : 'UNUSED'}`);
+            } else {
+                keysToValidate.push(key);
+            }
+        }
+
+        // console.log(`🔍 VALIDATION: ${cachedResults.size} keys from cache, ${keysToValidate.length} keys to validate`);
+        // console.log(`🔍 VALIDATION: Total validation cache size: ${this.validationCache.size}`);
+        // console.log(`🔍 VALIDATION: Potentially unused keys:`, potentiallyUnusedKeys.slice(0, 10), '...');
+
+        // Debug: Show some cached keys
+        if (this.validationCache.size > 0) {
+            const cachedKeys = Array.from(this.validationCache.keys()).slice(0, 5);
+            // console.log(`🔍 VALIDATION: Sample cached keys:`, cachedKeys);
+        }
+        
+        // Process only uncached keys in batches to avoid overwhelming the system
+        const batchSize = 10;
+        for (let i = 0; i < keysToValidate.length; i += batchSize) {
+            const batch = keysToValidate.slice(i, i + batchSize);
+
+            for (const key of batch) {
+                try {
+                    // console.log(`🔍 VALIDATION: Testing key "${key}" in workspace ${workspaceFolder.uri.fsPath}`);
+
+                    // Use ripgrep for ultra-fast search (same as VS Code's internal search)
+                    const keyFound = await this.searchWithRipgrep(key, workspaceFolder.uri.fsPath);
+
+                    // Cache the validation result
+                    this.validationCache.set(key, keyFound);
+                    // console.log(`💾 VALIDATION: Cached result for "${key}": ${keyFound ? 'USED' : 'UNUSED'}`);
+
+                    // console.log(`🔍 VALIDATION: Key "${key}" search result: ${keyFound ? 'FOUND' : 'NOT FOUND'}`);
+
+                    if (!keyFound) {
+                        // Ripgrep confirms it's unused
+                        validatedUnusedKeys.push(key);
+                        // console.log(`📝 VALIDATION: Added "${key}" to unused list`);
+                    } else {
+                        // console.log(`✅ VALIDATION: Removed "${key}" from unused list (found in codebase)`);
+                    }
+                } catch (error) {
+                    console.warn(`⚠️ VALIDATION: Error searching for key "${key}":`, error);
+                    // If search fails, keep it in the unused list to be safe and cache as unused
+                    this.validationCache.set(key, false);
+                    validatedUnusedKeys.push(key);
+                }
+            }
+
+            // Small delay between batches to avoid overwhelming the system
+            if (i + batchSize < keysToValidate.length) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+        }
+
+        // Process cached results
+        let cachedUsedCount = 0;
+        let cachedUnusedCount = 0;
+
+        for (const [key, isUsed] of cachedResults) {
+            if (!isUsed) {
+                // Key was cached as unused
+                validatedUnusedKeys.push(key);
+                cachedUnusedCount++;
+                // console.log(`💾 VALIDATION: Using cached UNUSED result for "${key}"`);
+            } else {
+                // Key was cached as used (false positive)
+                cachedUsedCount++;
+                // console.log(`💾 VALIDATION: Using cached USED result for "${key}" (false positive)`);
+            }
+        }
+
+        // console.log(`💾 VALIDATION: Processed ${cachedUsedCount} cached USED keys, ${cachedUnusedCount} cached UNUSED keys`);
+
+        // Update validation timestamp
+        this.lastValidationTime = new Date();
+
+        // console.log(`✅ VALIDATION: Completed. ${potentiallyUnusedKeys.length - validatedUnusedKeys.length} false positives found`);
+        // console.log(`💾 VALIDATION: Cache now contains ${this.validationCache.size} validation results`);
+
+        // Debug: Show cache statistics
+        const usedInCache = Array.from(this.validationCache.values()).filter(v => v).length;
+        const unusedInCache = this.validationCache.size - usedInCache;
+        // console.log(`💾 VALIDATION: Cache stats - ${usedInCache} USED keys, ${unusedInCache} UNUSED keys`);
+
+        return validatedUnusedKeys;
+    }
+
+    /**
+     * Search for a key using ripgrep (ultra-fast, same as VS Code's internal search)
+     */
+    private async searchWithRipgrep(searchKey: string, workspacePath: string): Promise<boolean> {
+        return new Promise((resolve) => {
+            const { spawn } = require('child_process');
+            const path = require('path');
+
+            // Try to find VS Code's bundled ripgrep first
+            let rgPath = 'rg'; // Default fallback
+
+            try {
+                // Try multiple ripgrep locations
+                const possiblePaths = [
+                    // Extension's own ripgrep dependency
+                    path.join(__dirname, '..', 'node_modules', '@vscode', 'ripgrep', 'bin', 'rg'),
+                    path.join(__dirname, '..', 'node_modules', '@vscode', 'ripgrep', 'bin', 'rg.exe'),
+                    // VS Code bundled ripgrep paths
+                    path.join(vscode.env.appRoot, 'node_modules.asar.unpacked', '@vscode', 'ripgrep', 'bin', 'rg'),
+                    path.join(vscode.env.appRoot, 'node_modules.asar.unpacked', '@vscode', 'ripgrep', 'bin', 'rg.exe'),
+                    path.join(vscode.env.appRoot, 'node_modules.asar.unpacked', 'vscode-ripgrep', 'bin', 'rg'),
+                    path.join(vscode.env.appRoot, 'node_modules.asar.unpacked', 'vscode-ripgrep', 'bin', 'rg.exe'),
+                    path.join(vscode.env.appRoot, 'node_modules', '@vscode', 'ripgrep', 'bin', 'rg'),
+                    path.join(vscode.env.appRoot, 'node_modules', '@vscode', 'ripgrep', 'bin', 'rg.exe'),
+                    path.join(vscode.env.appRoot, 'node_modules', 'vscode-ripgrep', 'bin', 'rg'),
+                    path.join(vscode.env.appRoot, 'node_modules', 'vscode-ripgrep', 'bin', 'rg.exe'),
+                ];
+
+                const fs = require('fs');
+                for (const possiblePath of possiblePaths) {
+                    if (fs.existsSync(possiblePath)) {
+                        rgPath = possiblePath;
+                        // console.log(`🔍 VALIDATION: Using VS Code bundled ripgrep at: ${rgPath}`);
+                        break;
+                    }
+                }
+
+                if (rgPath === 'rg') {
+                    // console.log(`🔍 VALIDATION: Using system ripgrep (rg command)`);
+                }
+            } catch (error) {
+                // console.log(`🔍 VALIDATION: Ripgrep path detection failed, using system rg`);
+            }
+
+            // Use ripgrep with correct flags (compatible with all versions)
+            const rgArgs = [
+                '--fixed-strings',  // Literal string search (faster than regex)
+                '--quiet',          // Exit immediately on first match
+                '--max-count=1',    // Stop after first match
+                '--type=html',      // Only HTML files
+                '--type=ts',        // Only TypeScript files
+                '--glob=!node_modules/**',
+                '--glob=!.git/**',
+                '--glob=!dist/**',
+                '--glob=!build/**',
+                '--glob=!coverage/**',
+                '--glob=!.angular/**',
+                '--glob=!.vscode/**',
+                searchKey,          // The search term
+                workspacePath       // Search path
+            ];
+
+            // console.log(`🔍 RIPGREP: Executing: ${rgPath} ${rgArgs.join(' ')}`);
+            // console.log(`🔍 RIPGREP: Working directory: ${workspacePath}`);
+
+            const rg = spawn(rgPath, rgArgs, {
+                cwd: workspacePath,
+                stdio: ['ignore', 'pipe', 'pipe']
+            });
+
+            let found = false;
+            let resolved = false;
+            let outputReceived = false;
+
+            rg.stdout.on('data', (data: any) => {
+                outputReceived = true;
+                const output = data.toString().trim();
+                // console.log(`🔍 RIPGREP: stdout received for "${searchKey}": ${output}`);
+
+                // If we get any output, the key was found
+                if (output) {
+                    // console.log(`🎯 VALIDATION: Key "${searchKey}" found via ripgrep - removing from unused list`);
+                    found = true;
+                }
+            });
+
+            rg.stderr.on('data', (data: any) => {
+                const error = data.toString().trim();
+                // console.log(`🔍 RIPGREP: stderr received for "${searchKey}": ${error}`);
+            });
+
+            rg.on('close', (code: any) => {
+                if (resolved) return;
+                resolved = true;
+                clearTimeout(timeout);
+
+                // console.log(`🔍 RIPGREP: Process closed for "${searchKey}" with exit code: ${code}, found: ${found}, outputReceived: ${outputReceived}`);
+
+                // ripgrep exit code 0 = found, 1 = not found, 2 = error
+                if (code === 0 || found) {
+                    // console.log(`🔍 RIPGREP: Resolving TRUE for "${searchKey}"`);
+                    resolve(true);  // Key found
+                } else {
+                    // console.log(`🔍 RIPGREP: Resolving FALSE for "${searchKey}"`);
+                    resolve(false); // Key not found
+                }
+            });
+
+            rg.on('error', (error: any) => {
+                if (resolved) return;
+                resolved = true;
+                clearTimeout(timeout);
+
+                console.warn(`⚠️ VALIDATION: Ripgrep not available for key "${searchKey}":`, error.message);
+                // Fallback to manual search if ripgrep is not available
+                this.searchManually(searchKey, workspacePath).then(resolve).catch(() => resolve(false));
+            });
+
+            // Much shorter timeout - ripgrep should be very fast
+            const timeout = setTimeout(() => {
+                if (resolved) return;
+                resolved = true;
+
+                rg.kill();
+                console.warn(`⚠️ VALIDATION: Ripgrep timeout for key "${searchKey}" - falling back to manual search`);
+                // Fallback to manual search on timeout
+                this.searchManually(searchKey, workspacePath).then(resolve).catch(() => resolve(false));
+            }, 1000); // Reduced to 1 second
+        });
+    }
+
+    /**
+     * Fallback manual search when ripgrep is not available
+     */
+    private async searchManually(searchKey: string, workspacePath: string): Promise<boolean> {
         try {
-            console.log('🚀 OPTIMIZED: Recalculating translation coverage (fast mode - no source file scan)');
+            // console.log(`🔄 VALIDATION: Using manual search fallback for key "${searchKey}"`);
+
+            const files = await vscode.workspace.findFiles(
+                '**/*.{html,ts}',
+                '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/coverage/**}'
+            );
+
+            // Search through first 50 files only for performance
+            for (const file of files.slice(0, 50)) {
+                try {
+                    const document = await vscode.workspace.openTextDocument(file);
+                    const content = document.getText();
+
+                    if (content.includes(searchKey)) {
+                        // console.log(`🎯 VALIDATION: Key "${searchKey}" found in ${vscode.workspace.asRelativePath(file)} (manual search) - removing from unused list`);
+                        return true;
+                    }
+                } catch (fileError) {
+                    // Skip files that can't be read
+                    continue;
+                }
+            }
+
+            return false; // Key not found
+        } catch (error) {
+            console.warn(`⚠️ VALIDATION: Manual search error for key "${searchKey}":`, error);
+            return false;
+        }
+    }
+
+    private async recalculateTranslationCoverageOnly(statusBarItem: vscode.StatusBarItem): Promise<void> {
+        try {
+            console.log('🚀 OPTIMIZED: Recalculating translation coverage (fast mode - no source file scan, with validation cache)');
             const startTime = Date.now();
 
-            // Only recalculate coverage using existing translation keys
-            this.analysisCache = this.calculateTranslationCoverage();
+            // Use validation analysis to preserve cached validation results
+            // Translation file changes don't affect source code, so validation cache is still valid
+            this.analysisCache = await this.calculateTranslationCoverageWithValidation();
             this.lastAnalysisTime = new Date();
 
             // Update status bar
@@ -2334,5 +2915,7 @@ class TranslationQuickActionProvider implements vscode.CodeActionProvider {
     }
 }
 
+
 export function deactivate() {}
+
 
