@@ -1,0 +1,376 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Development Patterns & Best Practices
+
+## Angular Development Patterns
+
+### Component Structure Template
+```typescript
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-feature',
+  templateUrl: './feature.component.html',
+  styleUrls: ['./feature.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class FeatureComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
+  form: FormGroup;
+  
+  private _destroy$ = new Subject<void>();
+  
+  constructor(
+    private formBuilder: FormBuilder,
+    private yourService: YourService
+  ) {
+    this.setupForm();
+  }
+  
+  ngOnInit(): void {
+    this.loadData();
+  }
+  
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+  
+  // Methods...
+}
+```
+
+### Service Patterns
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Cacheable } from 'ts-cacheable';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ExampleService {
+  private _dataSubject = new BehaviorSubject<any>(null);
+  public data$ = this._dataSubject.asObservable();
+  
+  constructor(private http: HttpClient) {}
+  
+  @Cacheable({ maxAge: 5 * 60 * 1000 }) // 5 minutes cache
+  getData(): Observable<any> {
+    return this.http.get('/api/data');
+  }
+  
+  updateData(data: any): void {
+    this._dataSubject.next(data);
+  }
+}
+```
+
+### Authentication Patterns
+- **JWT Token Management**: [src/app/core/interceptor/jwt.interceptor.ts](mdc:src/app/core/interceptor/jwt.interceptor.ts) handles token refresh
+- **Route Guards**: [src/app/core/guard/auth.guard.ts](mdc:src/app/core/guard/auth.guard.ts) for authentication
+- **Integration Token Guards**: Specific guards for each integration's token validation
+- **Token Storage**: LocalStorage management via [src/app/core/services/common/storage.service.ts](mdc:src/app/core/services/common/storage.service.ts)
+
+### State Management
+- Use BehaviorSubject for component state
+- Implement loading states for async operations
+- Use reactive forms for form state management
+- Cache API responses with ts-cacheable decorator
+
+### RxJS Usage Patterns
+```typescript
+// Component cleanup pattern
+private destroy$ = new Subject<void>();
+
+ngOnInit(): void {
+  this.service.getData()
+    .pipe(
+      takeUntil(this.destroy$), // Unsubscribe when component destroyed
+      catchError(error => {
+        this.errorHandler.handleError(error);
+        return of(null);
+      })
+    )
+    .subscribe(result => {
+      this.data = result;
+    });
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
+```
+
+### Error Handling Patterns
+```typescript
+// HTTP error handling in service
+getEmployees(): Observable<Employee[]> {
+  return this.http.get<Employee[]>('/api/employees').pipe(
+    catchError(error => {
+      console.error('Error fetching employees', error);
+      return error.status === 404 ? of([]) : throwError(() => error);
+    })
+  );
+}
+
+// Component-level error handling
+loadData(): void {
+  this.isLoading = true;
+  this.service.getData()
+    .pipe(
+      finalize(() => this.isLoading = false)
+    )
+    .subscribe({
+      next: (data) => this.data = data,
+      error: (error) => this.handleError(error)
+    });
+}
+```
+
+## Styling Guidelines
+
+### TailwindCSS Usage
+- **Primary Styling**: Utility-first approach with TailwindCSS
+- **Custom Configuration**: [tailwind.config.js](mdc:tailwind.config.js) with custom colors and spacing
+- **CSS Variables**: Brand-specific colors and spacing via CSS variables
+- **Global Styles**: [src/styles.scss](mdc:src/styles.scss) for global overrides
+
+### HTML Template Patterns
+```html
+<!-- Component template structure -->
+<div class="feature" *ngIf="!isLoading; else loadingTemplate">
+  <div class="flex items-center justify-between p-4">
+    <h2 class="text-xl font-semibold">{{ title }}</h2>
+    <button pButton type="button" icon="pi pi-plus" label="Add New"></button>
+  </div>
+  
+  <div class="p-4">
+    <ng-container *ngIf="items?.length; else emptyTemplate">
+      <!-- Content -->
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="flex justify-center items-center h-40">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-template>
+
+<ng-template #emptyTemplate>
+  <div class="text-center p-4 text-gray-500">
+    <p>No items found.</p>
+  </div>
+</ng-template>
+```
+
+### PrimeNG Integration
+- **Theme**: Lara Light Blue theme with custom overrides
+- **Components**: Table, Dialog, Toast, Button, etc.
+- **Styling**: Custom CSS classes to match brand guidelines
+- **Icons**: PrimeIcons + custom SVG sprite system
+
+## API Integration Patterns
+
+### API Service Implementation Pattern
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class IntegrationApiService extends BaseApiService {
+  constructor(
+    http: HttpClient,
+    apiService: ApiService
+  ) {
+    super(http, apiService);
+  }
+  
+  // GET with caching
+  @Cacheable({ maxAge: 5 * 60 * 1000 })
+  getConfiguration(workspaceId: number): Observable<Configuration> {
+    return this.get<Configuration>(`/workspaces/${workspaceId}/configurations/`);
+  }
+  
+  // POST with cache invalidation
+  @CacheEvict({ isAll: true })
+  updateConfiguration(workspaceId: number, configuration: Configuration): Observable<Configuration> {
+    return this.post<Configuration>(`/workspaces/${workspaceId}/configurations/`, configuration);
+  }
+}
+```
+
+### Error Handling
+- **HTTP Interceptor**: [src/app/core/interceptor/jwt.interceptor.ts](mdc:src/app/core/interceptor/jwt.interceptor.ts) handles HTTP errors
+- **Global Error Handler**: [src/app/app.error-handling.ts](mdc:src/app/app.error-handling.ts) for application errors
+- **Sentry Integration**: Automatic error reporting to Sentry
+- **User Feedback**: Toast notifications via PrimeNG MessageService
+
+### Environment Configuration
+- **Base Environment**: [src/environments/environment.json](mdc:src/environments/environment.json)
+- **Multi-tenant**: Different environments for Fyle and Capital One
+- **API URLs**: Environment-specific API endpoints
+- **Feature Flags**: Environment-based feature toggles
+
+## Form Handling Patterns
+
+### Reactive Forms
+```typescript
+// Form setup
+this.form = this.formBuilder.group({
+  email: ['', [Validators.required, Validators.email]],
+  name: ['', [Validators.required, Validators.minLength(2)]],
+  integration: ['', Validators.required]
+});
+
+// Form validation
+get isFormValid(): boolean {
+  return this.form.valid && !this.isLoading;
+}
+```
+
+### Advanced Form Patterns
+```typescript
+// Form with nested groups
+this.form = this.formBuilder.group({
+  basic: this.formBuilder.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]]
+  }),
+  preferences: this.formBuilder.group({
+    notifications: [true],
+    theme: ['light']
+  })
+});
+
+// Form Arrays for dynamic fields
+this.form = this.formBuilder.group({
+  name: ['', Validators.required],
+  contacts: this.formBuilder.array([
+    this.createContactFormGroup()
+  ])
+});
+```
+
+### Custom Form Components
+- **Configuration Components**: Reusable form components in [src/app/shared/components/configuration/](mdc:src/app/shared/components/configuration)
+- **Input Components**: Custom input components in [src/app/shared/components/input/](mdc:src/app/shared/components/input)
+- **Validation**: Consistent validation patterns across forms
+
+## Testing Patterns
+
+### Component Testing
+```typescript
+describe('ComponentName', () => {
+  let component: ComponentName;
+  let fixture: ComponentFixture<ComponentName>;
+  let mockService: jasmine.SpyObj<ServiceName>;
+
+  beforeEach(() => {
+    const spy = jasmine.createSpyObj('ServiceName', ['method1', 'method2']);
+    
+    TestBed.configureTestingModule({
+      declarations: [ComponentName],
+      providers: [{ provide: ServiceName, useValue: spy }]
+    });
+    
+    fixture = TestBed.createComponent(ComponentName);
+    component = fixture.componentInstance;
+    mockService = TestBed.inject(ServiceName) as jasmine.SpyObj<ServiceName>;
+  });
+});
+```
+
+### Service Testing
+```typescript
+describe('ServiceName', () => {
+  let service: ServiceName;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ServiceName]
+    });
+    service = TestBed.inject(ServiceName);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+});
+```
+
+## Performance Optimization
+
+### Change Detection
+- **OnPush Strategy**: Used throughout the application for better performance
+- **Immutable Data**: Ensure data immutability for OnPush to work correctly
+- **TrackBy Functions**: For ngFor loops with dynamic data
+
+### Lazy Loading
+- **Feature Modules**: All integration modules are lazy-loaded
+- **Route-based**: Modules loaded only when routes are accessed
+- **Bundle Optimization**: Separate chunks for each integration
+
+### Caching Strategies
+- **HTTP Caching**: Using ts-cacheable decorator for API responses
+- **Component Caching**: Avoid unnecessary re-renders with OnPush
+- **Asset Optimization**: SVG sprites for icons, optimized images
+
+### Memory Management
+```typescript
+// Unsubscribe pattern
+private destroy$ = new Subject<void>();
+
+ngOnInit(): void {
+  this.service.getData()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => this.data = data);
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
+```
+
+### Bundle Size Optimization
+- **Tree Shaking**: Eliminate unused code
+- **Lazy Loading**: Load features when needed
+- **Code Splitting**: Split bundles for optimal loading
+- **Bundle Analysis**: Regular review of bundle sizes
+
+## Code Quality Standards
+
+### ESLint Configuration
+- **Config File**: [.eslintrc.json](mdc:.eslintrc.json) with comprehensive rules
+- **Angular Rules**: Angular-specific linting rules
+- **TypeScript Rules**: Strict TypeScript checking
+- **Code Complexity**: Maximum complexity and depth limits
+
+### TypeScript Configuration
+- **Strict Mode**: [tsconfig.json](mdc:tsconfig.json) with strict settings
+- **Path Mapping**: Absolute imports where needed
+- **Compiler Options**: Optimized for Angular development
+
+### Git Workflow
+- **Husky Hooks**: Pre-commit linting and formatting
+- **Conventional Commits**: Standardized commit messages
+- **Branch Protection**: Code review requirements
+- **Feature Branching**: Development on feature branches
+
+## Accessibility Patterns
+- Use semantic HTML elements
+- Include proper ARIA attributes
+- Ensure keyboard navigation
+- Maintain sufficient color contrast
+- Provide text alternatives for non-text content
+
+
+

@@ -1,0 +1,243 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Component Hierarchy Navigation Guide
+
+## Understanding Angular Component Structure
+
+In the Fyle Integrations App, components are often deeply nested. This guide helps you navigate and modify specific elements without disturbing the surrounding structure.
+
+## Component Organization Patterns
+
+### Integration Module Structure
+
+Each integration (QBO, NetSuite, Xero, etc.) follows this component hierarchy:
+
+```
+IntegrationComponent (e.g., QboComponent)
+├── IntegrationOnboardingComponent
+│   ├── ConnectorComponent
+│   ├── ConfigurationComponent
+│   ├── AdvancedSettingsComponent
+│   ├── ImportSettingsComponent
+│   ├── ExportSettingsComponent
+│   └── OnboardingDoneComponent
+└── IntegrationMainComponent
+    ├── DashboardComponent
+    ├── ConfigurationComponent
+    ├── MappingsComponent
+    └── ExportLogComponent
+```
+
+### Shared Component Usage
+
+Many UI elements come from shared components:
+- Configuration forms use shared form components
+- Buttons and inputs use PrimeNG components (p-button, p-inputText, etc.)
+- Tables use p-table from PrimeNG
+- Custom form elements are in `src/app/shared/components/input`
+
+## Locating UI Elements
+
+### Button Elements
+
+Buttons are implemented in several ways:
+1. **PrimeNG Buttons**: `<p-button>` or `<button pButton>`
+2. **Standard HTML**: `<button>` with custom classes
+3. **Link Buttons**: `<a>` elements styled as buttons
+
+Example HTML structure for a button:
+```html
+<!-- Example of button in a form -->
+<form [formGroup]="configForm">
+  <!-- Other form fields -->
+  <div class="form-actions">
+    <button 
+      pButton 
+      type="submit" 
+      label="Continue"
+      [disabled]="!configForm.valid || isSubmitting"
+      (click)="saveConfiguration()"
+      class="continue-button">
+    </button>
+    <button 
+      pButton 
+      type="button" 
+      label="Skip"
+      class="p-button-text skip-button"
+      (click)="skipConfiguration()">
+    </button>
+  </div>
+</form>
+```
+
+### Finding Navigation Elements
+
+For navigation elements (like step indicators, back/next buttons):
+
+1. Look in the component's template for:
+   - Elements with classes like `nav-actions`, `step-navigation`
+   - Buttons with classes like `next-button`, `back-button`, `continue-button`
+   - Click handlers like `(click)="onNext()"`, `(click)="onBack()"`
+
+2. Standard navigation pattern:
+```html
+<div class="navigation-container">
+  <button 
+    pButton 
+    type="button" 
+    icon="pi pi-arrow-left" 
+    label="Back"
+    (click)="goBack()" 
+    class="p-button-text back-button">
+  </button>
+  <button 
+    pButton 
+    type="button" 
+    icon="pi pi-arrow-right" 
+    iconPos="right"
+    label="Continue" 
+    [disabled]="!isValid"
+    (click)="goNext()" 
+    class="continue-button">
+  </button>
+</div>
+```
+
+## Making Targeted UI Changes
+
+### Removing a Button
+
+To remove a button from a component:
+1. Locate the component where the button exists
+2. Find the button's HTML code in the component template
+3. Remove or modify only the button element, leaving surrounding HTML intact
+
+Example of removing a "Skip" button:
+```typescript
+// Original HTML in component template
+<div class="form-actions">
+  <button pButton type="submit" label="Save" class="save-button"></button>
+  <button pButton type="button" label="Skip" class="skip-button"></button>
+</div>
+
+// Modified HTML after removing the Skip button
+<div class="form-actions">
+  <button pButton type="submit" label="Save" class="save-button"></button>
+</div>
+```
+
+### Editing Button Text or Behavior
+
+To modify button text or behavior:
+1. Find the button element in the template
+2. For text changes, modify the `label` attribute
+3. For behavior changes, check the associated click handler method in the component class
+
+Example change:
+```typescript
+// Original button
+<button pButton type="button" label="Skip" (click)="skipStep()"></button>
+
+// Modified button text
+<button pButton type="button" label="Later" (click)="skipStep()"></button>
+
+// Modified button behavior
+<button pButton type="button" label="Skip" (click)="markAsOptional()"></button>
+```
+
+## Common Component Locations
+
+### QBD Integration
+- Main component: `src/app/integrations/qbd/qbd.component.html`
+- Onboarding component: `src/app/integrations/qbd/qbd-onboarding/qbd-onboarding.component.html`
+- Configuration page: `src/app/integrations/qbd/qbd-onboarding/qbd-configuration/qbd-configuration.component.html`
+- Dashboard page: `src/app/integrations/qbd/qbd-main/dashboard/dashboard.component.html`
+
+### QBO Integration
+- Main component: `src/app/integrations/qbo/qbo.component.html`
+- Onboarding component: `src/app/integrations/qbo/qbo-onboarding/qbo-onboarding.component.html`
+- Configuration page: `src/app/integrations/qbo/qbo-onboarding/qbo-configuration/qbo-configuration.component.html`
+- Dashboard page: `src/app/integrations/qbo/qbo-main/dashboard/dashboard.component.html`
+
+### NetSuite Integration
+- Main component: `src/app/integrations/netsuite/netsuite.component.html`
+- Onboarding component: `src/app/integrations/netsuite/netsuite-onboarding/netsuite-onboarding.component.html`
+- Configuration page: `src/app/integrations/netsuite/netsuite-onboarding/netsuite-configuration/netsuite-configuration.component.html`
+- Dashboard page: `src/app/integrations/netsuite/netsuite-main/dashboard/dashboard.component.html`
+
+## Common UI Element Classes
+
+When searching for UI elements, look for these common class names:
+
+- Buttons:
+  - Primary action: `primary-button`, `continue-button`, `save-button`
+  - Secondary action: `secondary-button`, `cancel-button`, `back-button`
+  - Text buttons: `p-button-text`
+  - Icon buttons: `p-button-icon`
+
+- Forms:
+  - Form containers: `configuration-form`, `export-form`, `settings-form`
+  - Form sections: `form-section`, `form-group`, `field-container`
+  - Form actions: `form-actions`, `button-container`
+
+- Navigation:
+  - Navigation containers: `stepper-container`, `navigation-container`
+  - Steps: `step-item`, `step-content`, `step-actions`
+
+## Examples of Finding and Modifying UI Elements
+
+### Example 1: Remove "Skip" button from QBD configuration
+
+1. Search for the QBD configuration component
+```
+src/app/integrations/qbd/qbd-onboarding/qbd-configuration/qbd-configuration.component.html
+```
+
+2. Look for skip button in the template
+```html
+<div class="button-row">
+  <button pButton type="submit" label="Save and Continue"></button>
+  <button pButton type="button" class="p-button-text" label="Skip" (click)="skipConfiguration()"></button>
+</div>
+```
+
+3. Remove the skip button
+```html
+<div class="button-row">
+  <button pButton type="submit" label="Save and Continue"></button>
+</div>
+```
+
+### Example 2: Change export settings submit button text
+
+1. Locate the export settings component
+```
+src/app/integrations/qbo/qbo-onboarding/qbo-export-settings/qbo-export-settings.component.html
+```
+
+2. Find the submit button
+```html
+<div class="form-actions">
+  <button pButton type="submit" [disabled]="!exportForm.valid" label="Complete Setup"></button>
+</div>
+```
+
+3. Change the button label
+```html
+<div class="form-actions">
+  <button pButton type="submit" [disabled]="!exportForm.valid" label="Save and Finish"></button>
+</div>
+```
+
+## Advanced Component Navigation Tips
+
+1. **Check Routing**: When modifying navigation, always check the routing module to understand component relationships
+2. **Inspect Child Components**: Look for `<app-component-name>` tags for child components
+3. **Look for ngIf Conditions**: Elements may be conditionally rendered with `*ngIf`
+4. **Check Component Inputs**: Custom components may have `[input]="value"` bindings
+5. **UI Logic in Component Class**: Button behavior is defined in the component's TypeScript file
+
+
