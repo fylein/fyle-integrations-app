@@ -7,7 +7,7 @@ interface EditOption {
     description: string;
     filePath: string;
     currentValue: string | undefined;
-    theme: 'common' | 'fyle' | 'co';
+    theme: string; // Changed to string to support any theme/module name
 }
 
 interface TranslationAnalysis {
@@ -21,6 +21,21 @@ interface TranslationAnalysis {
         fyle: number;
         co: number;
     };
+}
+
+interface ProjectConfig {
+    type: 'integrations-app' | 'fyle-app-v2';
+    name: string;
+    translationPaths: TranslationPath[];
+    sourcePaths: string[];
+    hasThemes: boolean;
+}
+
+interface TranslationPath {
+    key: string;           // 'common', 'fyle', 'co' OR 'shared', 'admin', 'accounts', etc.
+    label: string;         // Display name
+    filePath: string;      // Absolute path to en.json
+    isTheme?: boolean;     // true for theme overrides, false for modules
 }
 
 interface TranslationSuggestion {
@@ -175,6 +190,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     private userSelectionHistory: Map<string, string> = new Map(); // key pattern -> selected value
     private validationCache = new Map<string, boolean>(); // Cache validation results: key -> isUsed
     private lastValidationTime: Date | null = null;
+    private currentProject: ProjectConfig | null = null;
 
     // Incremental analysis cache system
     private fileAnalysisCache: Map<string, FileAnalysisCache> = new Map();
@@ -187,6 +203,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     private sourceFileWatcher: vscode.FileSystemWatcher | undefined;
 
     constructor() {
+        this.detectProject();
         this.loadAllTranslations();
 
         // Create decoration type for translation preview
@@ -269,37 +286,302 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     refreshTranslations(): void {
+        console.log(`🔄 REFRESH START: Clearing translation cache for ${this.currentProject?.name || 'unknown project'}`);
         this.translationCache.clear();
+
+        console.log(`🔄 REFRESH: Loading all translations for ${this.currentProject?.type || 'unknown type'}`);
         this.loadAllTranslations();
+
         // Clear analysis cache to trigger re-analysis
         this.analysisCache = undefined;
 
         // DON'T clear validation cache when translations are refreshed
         // Validation cache tracks if keys are used in SOURCE CODE, which doesn't change when translation files change
-        console.log('🔄 TRANSLATION REFRESH: Keeping validation cache intact (source code usage unchanged)');
+        console.log('🔄 REFRESH COMPLETE: Translation cache refreshed, validation cache preserved');
+
+        // Debug: Show cache status
+        console.log(`🔍 CACHE STATUS: ${this.translationCache.size} translation files loaded`);
+        for (const [key, value] of this.translationCache.entries()) {
+            const keyCount = this.countKeysInObject(value);
+            console.log(`   📁 ${key}: ${keyCount} keys`);
+        }
+
+        // IMPORTANT: Refresh preview decorations if preview mode is active
+        if (this.previewMode) {
+            console.log('🔄 PREVIEW: Refreshing translation preview decorations with new values');
+            this.updateDecorations();
+        }
     }
 
-    showTranslationStatus(): void {
+    /**
+     * Detect which project type we're working with and configure accordingly
+     */
+    private detectProject(): void {
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         if (!workspaceFolder) {
-            vscode.window.showErrorMessage('No workspace folder found');
+            console.warn('No workspace folder found for project detection');
             return;
         }
 
-        const i18nDir = path.join(workspaceFolder.uri.fsPath, 'src/assets/i18n');
-        const files = [
-            { name: 'Common (en.json)', path: path.join(i18nDir, 'en.json') },
-            { name: 'Fyle (fyle/en.json)', path: path.join(i18nDir, 'fyle/en.json') },
-            { name: 'Capital One (co/en.json)', path: path.join(i18nDir, 'co/en.json') }
+        const workspacePath = workspaceFolder.uri.fsPath;
+        const fs = require('fs');
+        const path = require('path');
+
+        // Check for integrations-app structure (current)
+        const integrationsI18nPath = path.join(workspacePath, 'src/assets/i18n');
+        const integrationsCommonFile = path.join(integrationsI18nPath, 'en.json');
+        const integrationsFyleFile = path.join(integrationsI18nPath, 'fyle/en.json');
+        const integrationsCoFile = path.join(integrationsI18nPath, 'co/en.json');
+
+        if (fs.existsSync(integrationsCommonFile) &&
+            (fs.existsSync(integrationsFyleFile) || fs.existsSync(integrationsCoFile))) {
+
+            this.currentProject = {
+                type: 'integrations-app',
+                name: 'Fyle Integrations App',
+                hasThemes: true,
+                sourcePaths: ['src/app/**/*.{html,ts}'],
+                translationPaths: [
+                    {
+                        key: 'common',
+                        label: 'Common (en.json)',
+                        filePath: integrationsCommonFile,
+                        isTheme: true
+                    },
+                    {
+                        key: 'fyle',
+                        label: 'Fyle Theme (fyle/en.json)',
+                        filePath: integrationsFyleFile,
+                        isTheme: true
+                    },
+                    {
+                        key: 'co',
+                        label: 'Capital One Theme (co/en.json)',
+                        filePath: integrationsCoFile,
+                        isTheme: true
+                    }
+                ]
+            };
+
+            console.log('🎯 PROJECT: Detected Fyle Integrations App (multi-theme)');
+            return;
+        }
+
+        // Check for fyle-app-v2 structure (new)
+        const appV2Paths = [
+            'app-v2/libs/shared/assets/i18n/en.json',
+            'app-v2/apps/admin/src/assets/i18n/en.json',
+            'app-v2/apps/accounts/src/assets/i18n/en.json',
+            'app-v2/apps/spender/src/assets/i18n/en.json',
+            'app-v2/apps/approver/src/assets/i18n/en.json',
+            'app-v2/apps/settings/src/assets/i18n/en.json',
+            'app-v2/apps/developers/src/assets/i18n/en.json'
         ];
 
-        const status = files.map(file => {
-            const exists = fs.existsSync(file.path);
-            const size = exists ? this.translationCache.get(file.name.split(' ')[0].toLowerCase()) ? 'Loaded' : 'Error' : 'Not Found';
-            return `${file.name}: ${exists ? '✅' : '❌'} ${size}`;
+        const existingAppV2Paths = appV2Paths.filter(relativePath => {
+            const fullPath = path.join(workspacePath, relativePath);
+            return fs.existsSync(fullPath);
+        });
+
+        if (existingAppV2Paths.length > 0) {
+            this.currentProject = {
+                type: 'fyle-app-v2',
+                name: 'Fyle App V2',
+                hasThemes: false,
+                sourcePaths: ['app-v2/**/*.{html,ts}'],
+                translationPaths: existingAppV2Paths.map(relativePath => {
+                    const fullPath = path.join(workspacePath, relativePath);
+                    const moduleName = this.extractModuleName(relativePath);
+
+                    return {
+                        key: moduleName,
+                        label: `${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} Module`,
+                        filePath: fullPath,
+                        isTheme: false
+                    };
+                })
+            };
+
+            console.log(`🎯 PROJECT: Detected Fyle App V2 (${existingAppV2Paths.length} modules)`);
+            return;
+        }
+
+        // Fallback to integrations-app if no clear detection
+        console.warn('⚠️ PROJECT: Could not detect project type, defaulting to integrations-app');
+        this.currentProject = {
+            type: 'integrations-app',
+            name: 'Unknown Project (integrations-app mode)',
+            hasThemes: true,
+            sourcePaths: ['src/app/**/*.{html,ts}'],
+            translationPaths: []
+        };
+    }
+
+    /**
+     * Extract module name from app-v2 path
+     */
+    private extractModuleName(relativePath: string): string {
+        if (relativePath.includes('libs/shared')) {
+            return 'shared';
+        }
+
+        const match = relativePath.match(/apps\/([^\/]+)\//);
+        return match ? match[1] : 'unknown';
+    }
+
+    /**
+     * Get project-specific search paths for ripgrep
+     */
+    private getProjectSearchPaths(workspacePath: string): string[] {
+        const path = require('path');
+
+        if (!this.currentProject) {
+            // Fallback to default
+            return [path.join(workspacePath, 'src', 'app')];
+        }
+
+        const searchPaths: string[] = [];
+
+        for (const sourcePath of this.currentProject.sourcePaths) {
+            // Convert glob pattern to actual directory path
+            // e.g., 'src/app/**/*.{html,ts}' -> 'src/app'
+            // e.g., 'app-v2/**/*.{html,ts}' -> 'app-v2'
+            const basePath = sourcePath.split('/**')[0];
+            const fullPath = path.join(workspacePath, basePath);
+            searchPaths.push(fullPath);
+        }
+
+        return searchPaths;
+    }
+
+    /**
+     * Get project-specific translation file patterns for file watching
+     */
+    private getTranslationFilePatterns(): string[] {
+        if (!this.currentProject) {
+            return ['src/assets/i18n/**/*.json']; // Default fallback
+        }
+
+        if (this.currentProject.type === 'integrations-app') {
+            return ['src/assets/i18n/**/*.json'];
+        } else if (this.currentProject.type === 'fyle-app-v2') {
+            return [
+                'app-v2/libs/shared/assets/i18n/**/*.json',
+                'app-v2/apps/*/src/assets/i18n/**/*.json'
+            ];
+        }
+
+        return ['**/**/assets/i18n/**/*.json']; // Generic fallback
+    }
+
+    /**
+     * Get all translations for a key across all loaded translation files
+     */
+    private getTranslationsForKey(key: string): Array<{key: string, label: string, value: string | undefined, isTheme?: boolean}> {
+        if (!this.currentProject) {
+            return [];
+        }
+
+        const translations: Array<{key: string, label: string, value: string | undefined, isTheme?: boolean}> = [];
+
+        for (const translationPath of this.currentProject.translationPaths) {
+            const translationData = this.translationCache.get(translationPath.key);
+            const value = this.getNestedValue(translationData, key);
+
+            translations.push({
+                key: translationPath.key,
+                label: translationPath.label,
+                value: value,
+                isTheme: translationPath.isTheme
+            });
+        }
+
+        return translations.filter(t => t.value !== undefined);
+    }
+
+    /**
+     * Add hover content for integrations app (theme-based)
+     */
+    private addIntegrationsAppHoverContent(markdownContent: vscode.MarkdownString, translations: Array<{key: string, label: string, value: string | undefined, isTheme?: boolean}>, highlightOverrides: boolean): void {
+        // Find common and theme translations dynamically
+        const common = translations.find(t => t.key === 'common');
+        const themes = translations.filter(t => t.isTheme);
+
+        // Check if it's a common translation (same for all themes)
+        const allThemesHaveSameValue = themes.length > 0 && themes.every(theme => theme.value === common?.value);
+
+        if (allThemesHaveSameValue && common?.value) {
+            markdownContent.appendMarkdown(`📄 **Common (All Themes):** ${common.value}\n\n`);
+        } else {
+            // Show theme-specific differences
+            for (const theme of themes) {
+                if (theme.value) {
+                    const isOverride = theme.value !== common?.value;
+                    const themeIcon = this.getThemeIcon(theme.key);
+                    const icon = isOverride && highlightOverrides ? '🔄' : themeIcon;
+                    const themeName = theme.key.charAt(0).toUpperCase() + theme.key.slice(1);
+                    markdownContent.appendMarkdown(`${icon} **${themeName}${isOverride ? ' (Override)' : ''}:** ${theme.value}\n\n`);
+                }
+            }
+
+            // Show common fallback if different from theme versions
+            if (common?.value && themes.some(theme => theme.value !== common.value)) {
+                markdownContent.appendMarkdown(`📋 **Common Fallback:** ${common.value}\n\n`);
+            }
+        }
+    }
+
+    /**
+     * Add hover content for fyle app v2 (module-based)
+     */
+    private addFyleAppV2HoverContent(markdownContent: vscode.MarkdownString, translations: Array<{key: string, label: string, value: string | undefined, isTheme?: boolean}>): void {
+        for (const translation of translations) {
+            const icon = this.getModuleIcon(translation.key);
+            markdownContent.appendMarkdown(`${icon} **${translation.label}:** ${translation.value}\n\n`);
+        }
+    }
+
+    /**
+     * Add generic hover content
+     */
+    private addGenericHoverContent(markdownContent: vscode.MarkdownString, translations: Array<{key: string, label: string, value: string | undefined, isTheme?: boolean}>): void {
+        for (const translation of translations) {
+            markdownContent.appendMarkdown(`📝 **${translation.label}:** ${translation.value}\n\n`);
+        }
+    }
+
+    /**
+     * Get icon for module type
+     */
+    private getModuleIcon(moduleKey: string): string {
+        switch (moduleKey) {
+            case 'shared': return '🔗';
+            case 'admin': return '👑';
+            case 'accounts': return '💼';
+            case 'spender': return '💳';
+            case 'approver': return '✅';
+            case 'settings': return '⚙️';
+            case 'developers': return '👨‍💻';
+            default: return '📦';
+        }
+    }
+
+    showTranslationStatus(): void {
+        if (!this.currentProject) {
+            vscode.window.showErrorMessage('No project configuration found');
+            return;
+        }
+
+        const status = this.currentProject.translationPaths.map(translationPath => {
+            const exists = require('fs').existsSync(translationPath.filePath);
+            const isLoaded = this.translationCache.has(translationPath.key);
+            const statusText = exists ? (isLoaded ? 'Loaded' : 'Error') : 'Not Found';
+            const icon = exists ? '✅' : '❌';
+            return `${translationPath.label}: ${icon} ${statusText}`;
         }).join('\n');
 
-        vscode.window.showInformationMessage(`Translation Files Status:\n\n${status}\n\nLast loaded: ${this.lastLoadTime.toLocaleTimeString()}`);
+        const projectInfo = `Project: ${this.currentProject.name} (${this.currentProject.type})`;
+        vscode.window.showInformationMessage(`Translation Files Status:\n\n${projectInfo}\n\n${status}\n\nLast loaded: ${this.lastLoadTime.toLocaleTimeString()}`);
     }
 
     async editTranslation(key: string): Promise<void> {
@@ -310,13 +592,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         }
 
         try {
-            // Get current translations for the key
-            const fyleTranslation = this.getTranslationForTheme(key, 'fyle');
-            const coTranslation = this.getTranslationForTheme(key, 'co');
-            const commonTranslation = this.getNestedValue(this.translationCache.get('common'), key);
-
             // Determine edit options
-            const editOptions = this.getEditOptions(key, fyleTranslation, coTranslation, commonTranslation);
+            const editOptions = this.getEditOptions(key);
 
             if (editOptions.length === 0) {
                 vscode.window.showErrorMessage('No translation files available for editing');
@@ -381,18 +658,14 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         }
 
         try {
-            // Get current translations for the key
-            const fyleTranslation = this.getTranslationForTheme(key, 'fyle');
-            const coTranslation = this.getTranslationForTheme(key, 'co');
-            const commonTranslation = this.getNestedValue(this.translationCache.get('common'), key);
-
             // Determine which files have this key
-            const editOptions = this.getEditOptions(key, fyleTranslation, coTranslation, commonTranslation);
+            const editOptions = this.getEditOptions(key);
             // For deletion, include options with empty values too (they still exist in the file)
             const availableOptions = editOptions.filter(option => option.currentValue !== undefined && option.currentValue !== null);
 
             if (availableOptions.length === 0) {
-                vscode.window.showWarningMessage(`Translation key "${key}" not found in any theme files`);
+                const fileType = this.currentProject?.type === 'fyle-app-v2' ? 'module files' : 'theme files';
+                vscode.window.showWarningMessage(`Translation key "${key}" not found in any ${fileType}`);
                 return;
             }
 
@@ -460,8 +733,9 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 };
             });
 
+            const fileType = this.currentProject?.type === 'fyle-app-v2' ? 'module file' : 'theme file';
             const picked = await vscode.window.showQuickPick(themeItems, {
-                placeHolder: `🎯 Select which theme file to edit for key: ${key}`,
+                placeHolder: `🎯 Select which ${fileType} to edit for key: ${key}`,
                 title: `🔤 Edit Translation`,
                 ignoreFocusOut: true, // Keep popup open even when clicking outside
                 matchOnDescription: true,
@@ -535,7 +809,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
 
 
 
-    private getThemeIcon(theme: 'common' | 'fyle' | 'co'): string {
+    private getThemeIcon(theme: string): string {
+        // Integrations app themes
         switch (theme) {
             case 'common':
                 return '📄';
@@ -543,25 +818,41 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 return '🟣';
             case 'co':
                 return '🔵';
+            // Fyle app v2 modules
+            case 'shared':
+                return '🔗';
+            case 'admin':
+                return '👑';
+            case 'accounts':
+                return '💼';
+            case 'spender':
+                return '💳';
+            case 'approver':
+                return '✅';
+            case 'settings':
+                return '⚙️';
+            case 'developers':
+                return '👨‍💻';
             default:
                 return '📝';
         }
     }
 
     private loadAllTranslations(): void {
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) return;
+        if (!this.currentProject) {
+            console.warn('No project configuration found, cannot load translations');
+            return;
+        }
 
-        const i18nDir = path.join(workspaceFolder.uri.fsPath, 'src/assets/i18n');
-        
-        // Load main common file
-        this.loadTranslationFile(path.join(i18nDir, 'en.json'), 'common');
-        
-        // Load theme-specific override files
-        this.loadTranslationFile(path.join(i18nDir, 'fyle/en.json'), 'fyle');
-        this.loadTranslationFile(path.join(i18nDir, 'co/en.json'), 'co');
-        
+        console.log(`📚 LOADING: ${this.currentProject.name} translations...`);
+
+        // Load all translation files based on project configuration
+        for (const translationPath of this.currentProject.translationPaths) {
+            this.loadTranslationFile(translationPath.filePath, translationPath.key);
+        }
+
         this.lastLoadTime = new Date();
+        console.log(`✅ LOADED: ${this.currentProject.translationPaths.length} translation files for ${this.currentProject.name}`);
     }
 
     private loadTranslationFile(filePath: string, theme: string): void {
@@ -570,25 +861,110 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 const content = fs.readFileSync(filePath, 'utf8');
                 const translations = JSON.parse(content);
                 this.translationCache.set(theme, translations);
-                // console.log(`Loaded ${theme} translations from ${filePath}`);
+
+                // Count keys for debugging
+                const keyCount = this.countKeysInObject(translations);
+                console.log(`✅ LOADED: ${theme} translations from ${filePath} (${keyCount} keys)`);
+
+                // Debug: Show sample keys for app-v2
+                if (this.currentProject?.type === 'fyle-app-v2' && keyCount > 0) {
+                    const sampleKeys = this.getSampleKeys(translations, 3);
+                    console.log(`🔍 SAMPLE KEYS in ${theme}:`, sampleKeys);
+                }
+            } else {
+                console.log(`⚠️ NOT FOUND: Translation file ${filePath}`);
+                this.translationCache.set(theme, {});
             }
         } catch (error) {
-            console.error(`Error loading ${theme} translations:`, error);
+            console.error(`❌ ERROR: Loading ${theme} translations from ${filePath}:`, error);
+            this.translationCache.set(theme, {});
         }
     }
 
+    /**
+     * Count total keys in a nested object
+     */
+    private countKeysInObject(obj: any, prefix: string = ''): number {
+        let count = 0;
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    count += this.countKeysInObject(obj[key], prefix ? `${prefix}.${key}` : key);
+                } else {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Get sample keys from translation object for debugging
+     */
+    private getSampleKeys(obj: any, limit: number = 3): string[] {
+        const keySet = new Set<string>();
+        this.extractAllKeysFromObject(obj, '', keySet);
+        return Array.from(keySet).slice(0, limit);
+    }
+
+    /**
+     * Get project-specific coverage message for completion dialog
+     */
+    private getProjectSpecificCoverageMessage(analysis: TranslationAnalysis): string {
+        if (!this.currentProject) {
+            return `Coverage: ${analysis.coveragePercentage.common}%`;
+        }
+
+        if (this.currentProject.type === 'integrations-app') {
+            return `Coverage: Common ${analysis.coveragePercentage.common}%, Fyle ${analysis.coveragePercentage.fyle}%, CO ${analysis.coveragePercentage.co}%`;
+        } else if (this.currentProject.type === 'fyle-app-v2') {
+            const moduleCount = this.currentProject.translationPaths.length;
+            return `Project: ${this.currentProject.name} (${moduleCount} modules)\nAll translation keys are available across modules`;
+        }
+
+        return `Project: ${this.currentProject.name}\nAll translations complete`;
+    }
+
     private getTranslationForTheme(key: string, theme: 'fyle' | 'co'): string | undefined {
+        // This method is kept for backward compatibility with integrations-app only
         // First check theme-specific override
         const themeTranslations = this.translationCache.get(theme);
         const themeValue = this.getNestedValue(themeTranslations, key);
-        
+
         if (themeValue) {
             return themeValue;
         }
-        
+
         // Fallback to common translation
         const commonTranslations = this.translationCache.get('common');
         return this.getNestedValue(commonTranslations, key);
+    }
+
+    /**
+     * Get translation value from any translation file/module dynamically
+     */
+    private getTranslationFromAnySource(key: string, sourceKey: string): string | undefined {
+        const translations = this.translationCache.get(sourceKey);
+        return this.getNestedValue(translations, key);
+    }
+
+    /**
+     * Get translation value with project-aware fallback logic
+     */
+    private getTranslationWithFallback(key: string, primarySource: string): string | undefined {
+        if (!this.currentProject) return undefined;
+
+        // First try the primary source
+        const primaryValue = this.getTranslationFromAnySource(key, primarySource);
+        if (primaryValue) return primaryValue;
+
+        // For integrations-app, fallback to common
+        if (this.currentProject.type === 'integrations-app' && primarySource !== 'common') {
+            return this.getTranslationFromAnySource(key, 'common');
+        }
+
+        // For fyle-app-v2, no fallback (modules are independent)
+        return undefined;
     }
 
     private createHoverContent(key: string): vscode.Hover {
@@ -601,39 +977,26 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         
         markdownContent.appendMarkdown(`**🔤 Translation Key:** \`${key}\` [✏️ Edit](command:fyle-transloco.editTranslation?${encodeURIComponent(JSON.stringify([key]))}) [🗑️ Delete](command:fyle-transloco.deleteTranslation?${encodeURIComponent(JSON.stringify([key]))})\n\n`);
         
-        // Get translations for both themes
-        const fyleTranslation = this.getTranslationForTheme(key, 'fyle');
-        const coTranslation = this.getTranslationForTheme(key, 'co');
-        const commonTranslation = this.getNestedValue(this.translationCache.get('common'), key);
-        
+        // Get translations dynamically based on project type
+        const translations = this.getTranslationsForKey(key);
+
         // Check if translation exists at all
-        if (!fyleTranslation && !coTranslation && !commonTranslation) {
+        if (translations.length === 0) {
             markdownContent.appendMarkdown(`❌ **Translation not found**\n\n`);
             markdownContent.appendMarkdown(`*Make sure the key exists in your translation files*`);
             return new vscode.Hover(markdownContent);
         }
         
-        // Show if it's a common translation (same for both themes)
-        if (fyleTranslation === coTranslation && commonTranslation && fyleTranslation === commonTranslation) {
-            markdownContent.appendMarkdown(`📄 **Common (Both Themes):** ${commonTranslation}\n\n`);
+        // Show translations dynamically based on project type
+        if (this.currentProject?.type === 'integrations-app') {
+            // Theme-based display for integrations app
+            this.addIntegrationsAppHoverContent(markdownContent, translations, highlightOverrides);
+        } else if (this.currentProject?.type === 'fyle-app-v2') {
+            // Module-based display for fyle app v2
+            this.addFyleAppV2HoverContent(markdownContent, translations);
         } else {
-            // Show theme-specific differences
-            if (fyleTranslation) {
-                const isOverride = fyleTranslation !== commonTranslation;
-                const icon = isOverride && highlightOverrides ? '🔄' : '🟣';
-                markdownContent.appendMarkdown(`${icon} **Fyle${isOverride ? ' (Override)' : ''}:** ${fyleTranslation}\n\n`);
-            }
-
-            if (coTranslation) {
-                const isOverride = coTranslation !== commonTranslation;
-                const icon = isOverride && highlightOverrides ? '🔄' : '🔵';
-                markdownContent.appendMarkdown(`${icon} **Capital One${isOverride ? ' (Override)' : ''}:** ${coTranslation}\n\n`);
-            }
-
-            // Show common fallback if different from theme versions
-            if (commonTranslation && (commonTranslation !== fyleTranslation || commonTranslation !== coTranslation)) {
-                markdownContent.appendMarkdown(`📋 **Common Fallback:** ${commonTranslation}\n\n`);
-            }
+            // Generic display
+            this.addGenericHoverContent(markdownContent, translations);
         }
         
         // Show source information
@@ -646,21 +1009,105 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private getTranslationSource(key: string): string {
-        const fyleOverride = this.getNestedValue(this.translationCache.get('fyle'), key);
-        const coOverride = this.getNestedValue(this.translationCache.get('co'), key);
-        const common = this.getNestedValue(this.translationCache.get('common'), key);
-        
-        if (fyleOverride && coOverride) {
-            return 'Both theme files override common';
-        } else if (fyleOverride) {
-            return 'fyle/en.json overrides common';
-        } else if (coOverride) {
-            return 'co/en.json overrides common';
-        } else if (common) {
-            return 'en.json (common)';
+        if (!this.currentProject) {
+            return 'No project configuration';
         }
-        
-        return 'Translation not found';
+
+        if (this.currentProject.type === 'integrations-app') {
+            return this.getIntegrationsAppSource(key);
+        } else if (this.currentProject.type === 'fyle-app-v2') {
+            return this.getFyleAppV2Source(key);
+        }
+
+        return this.getGenericSource(key);
+    }
+
+    /**
+     * Get source information for integrations app (theme-based)
+     */
+    private getIntegrationsAppSource(key: string): string {
+        if (!this.currentProject) return 'No project configuration';
+
+        const foundSources: string[] = [];
+        let commonValue: string | undefined;
+        let commonLabel = '';
+
+        // Check all translation paths dynamically
+        for (const translationPath of this.currentProject.translationPaths) {
+            const value = this.getNestedValue(this.translationCache.get(translationPath.key), key);
+            if (value) {
+                foundSources.push(translationPath.label);
+
+                // Track common translation
+                if (translationPath.key === 'common') {
+                    commonValue = value;
+                    commonLabel = translationPath.label;
+                }
+            }
+        }
+
+        if (foundSources.length === 0) {
+            return 'Translation not found';
+        }
+
+        // Check for overrides vs common
+        const themeOverrides = foundSources.filter(source => source !== commonLabel);
+
+        if (themeOverrides.length > 1 && commonValue) {
+            return `${themeOverrides.join(' and ')} override common`;
+        } else if (themeOverrides.length === 1 && commonValue) {
+            return `${themeOverrides[0]} overrides common`;
+        } else if (foundSources.length === 1) {
+            return foundSources[0];
+        } else {
+            return `Found in: ${foundSources.join(', ')}`;
+        }
+    }
+
+    /**
+     * Get source information for fyle app v2 (module-based)
+     */
+    private getFyleAppV2Source(key: string): string {
+        const foundModules: string[] = [];
+
+        for (const translationPath of this.currentProject!.translationPaths) {
+            const value = this.getNestedValue(this.translationCache.get(translationPath.key), key);
+            if (value) {
+                foundModules.push(translationPath.label);
+            }
+        }
+
+        if (foundModules.length === 0) {
+            return 'Translation not found in any module';
+        } else if (foundModules.length === 1) {
+            return foundModules[0];
+        } else {
+            return `Found in ${foundModules.length} modules: ${foundModules.join(', ')}`;
+        }
+    }
+
+    /**
+     * Get generic source information
+     */
+    private getGenericSource(key: string): string {
+        if (!this.currentProject) return 'No project configuration';
+
+        const foundSources: string[] = [];
+
+        for (const translationPath of this.currentProject.translationPaths) {
+            const value = this.getNestedValue(this.translationCache.get(translationPath.key), key);
+            if (value) {
+                foundSources.push(translationPath.label);
+            }
+        }
+
+        if (foundSources.length === 0) {
+            return 'Translation not found';
+        } else if (foundSources.length === 1) {
+            return foundSources[0];
+        } else {
+            return `Found in: ${foundSources.join(', ')}`;
+        }
     }
 
     private getNestedValue(obj: any, key: string): string | undefined {
@@ -668,50 +1115,48 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         return key.split('.').reduce((o, k) => o?.[k], obj);
     }
 
-    private getEditOptions(key: string, fyleTranslation: string | undefined, coTranslation: string | undefined, commonTranslation: string | undefined): EditOption[] {
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) return [];
+    private getEditOptions(key: string): EditOption[] {
+        if (!this.currentProject) {
+            console.warn('No project configuration found for edit options');
+            return [];
+        }
 
-        const i18nDir = path.join(workspaceFolder.uri.fsPath, 'src/assets/i18n');
         const options: EditOption[] = [];
+        const fs = require('fs');
 
-        // Common file option
-        const commonPath = path.join(i18nDir, 'en.json');
-        if (fs.existsSync(commonPath)) {
-            options.push({
-                label: 'Common (en.json)',
-                description: 'Edit the common translation (affects both themes)',
-                filePath: commonPath,
-                currentValue: commonTranslation,
-                theme: 'common'
-            });
-        }
+        // Generate edit options based on project configuration
+        for (const translationPath of this.currentProject.translationPaths) {
+            if (fs.existsSync(translationPath.filePath)) {
+                const currentValue = this.getNestedValue(this.translationCache.get(translationPath.key), key);
 
-        // Fyle theme option
-        const fylePath = path.join(i18nDir, 'fyle/en.json');
-        if (fs.existsSync(fylePath)) {
-            options.push({
-                label: 'Fyle Theme (fyle/en.json)',
-                description: 'Edit Fyle-specific override',
-                filePath: fylePath,
-                currentValue: this.getNestedValue(this.translationCache.get('fyle'), key),
-                theme: 'fyle'
-            });
-        }
-
-        // Capital One theme option
-        const coPath = path.join(i18nDir, 'co/en.json');
-        if (fs.existsSync(coPath)) {
-            options.push({
-                label: 'Capital One Theme (co/en.json)',
-                description: 'Edit Capital One-specific override',
-                filePath: coPath,
-                currentValue: this.getNestedValue(this.translationCache.get('co'), key),
-                theme: 'co'
-            });
+                options.push({
+                    label: translationPath.label,
+                    description: this.getEditDescription(translationPath),
+                    filePath: translationPath.filePath,
+                    currentValue: currentValue,
+                    theme: translationPath.key
+                });
+            }
         }
 
         return options;
+    }
+
+    /**
+     * Get description for edit option based on project type
+     */
+    private getEditDescription(translationPath: TranslationPath): string {
+        if (this.currentProject?.type === 'integrations-app') {
+            if (translationPath.key === 'common') {
+                return 'Edit the common translation (affects both themes)';
+            } else if (translationPath.isTheme) {
+                return `Edit ${translationPath.key}-specific override`;
+            }
+        } else if (this.currentProject?.type === 'fyle-app-v2') {
+            return `Edit translation in ${translationPath.key} module`;
+        }
+
+        return `Edit translation in ${translationPath.label}`;
     }
 
     private async updateTranslationFile(filePath: string, key: string, value: string): Promise<void> {
@@ -1003,15 +1448,67 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     getTranslationValue(key: string): string | undefined {
-        // Try to get translation for current theme (you might want to make this configurable)
-        const fyleValue = this.getTranslationForTheme(key, 'fyle');
-        if (fyleValue) return fyleValue;
+        if (!this.currentProject) {
+            return undefined;
+        }
 
-        const coValue = this.getTranslationForTheme(key, 'co');
-        if (coValue) return coValue;
+        // Get translations dynamically based on project configuration
+        if (this.currentProject.type === 'integrations-app') {
+            return this.getIntegrationsAppTranslationValue(key);
+        } else if (this.currentProject.type === 'fyle-app-v2') {
+            return this.getFyleAppV2TranslationValue(key);
+        }
 
-        // Fallback to common
-        return this.getNestedValue(this.translationCache.get('common'), key);
+        // Generic fallback
+        return this.getGenericTranslationValue(key);
+    }
+
+    /**
+     * Get translation value for integrations app (theme-based with fallback hierarchy)
+     */
+    private getIntegrationsAppTranslationValue(key: string): string | undefined {
+        if (!this.currentProject) return undefined;
+
+        // Try theme-specific overrides first, then fallback to common
+        for (const translationPath of this.currentProject.translationPaths) {
+            if (translationPath.isTheme) {
+                const value = this.getTranslationWithFallback(key, translationPath.key);
+                if (value) return value;
+            }
+        }
+
+        // If no theme overrides, try common directly
+        return this.getTranslationFromAnySource(key, 'common');
+    }
+
+    /**
+     * Get translation value for fyle app v2 (module-based, first available)
+     */
+    private getFyleAppV2TranslationValue(key: string): string | undefined {
+        // For module-based structure, return first available translation
+        for (const translationPath of this.currentProject!.translationPaths) {
+            const value = this.getNestedValue(this.translationCache.get(translationPath.key), key);
+            if (value) {
+                return value;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Generic translation value getter
+     */
+    private getGenericTranslationValue(key: string): string | undefined {
+        if (!this.currentProject) return undefined;
+
+        // Return first available translation from any file
+        for (const translationPath of this.currentProject.translationPaths) {
+            const value = this.getNestedValue(this.translationCache.get(translationPath.key), key);
+            if (value) {
+                return value;
+            }
+        }
+        return undefined;
     }
 
     private isValidTranslationKey(key: string): boolean {
@@ -1104,6 +1601,16 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     async analyzeTranslationsWithValidation(statusBarItem?: vscode.StatusBarItem): Promise<void> {
+        // Temporarily disable analysis for fyle-app-v2
+        if (this.currentProject?.type === 'fyle-app-v2') {
+            vscode.window.showInformationMessage('Translation analysis is temporarily disabled for Fyle App V2 projects');
+            if (statusBarItem) {
+                statusBarItem.text = '$(info) Analysis Disabled';
+                statusBarItem.tooltip = 'Translation analysis is temporarily disabled for Fyle App V2 projects';
+            }
+            return;
+        }
+
         if (!vscode.workspace.workspaceFolders) {
             vscode.window.showErrorMessage('No workspace folder found');
             return;
@@ -1185,6 +1692,15 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             return;
         }
 
+        if (this.currentProject?.type === 'fyle-app-v2') {
+            vscode.window.showInformationMessage('Translation analysis is temporarily disabled for Fyle App V2 projects');
+            if (statusBarItem) {
+                statusBarItem.text = '$(info) Analysis Disabled';
+                statusBarItem.tooltip = 'Translation analysis is temporarily disabled for Fyle App V2 projects';
+            }
+            return;
+        }
+
         this.analysisInProgress = true;
         statusBarItem.text = '$(loading~spin) Analyzing...';
         statusBarItem.tooltip = 'Analyzing translation coverage...';
@@ -1232,22 +1748,45 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private updateAnalysisStatusBar(statusBarItem: vscode.StatusBarItem): void {
+
+
         if (!this.analysisCache) {
             statusBarItem.text = '$(question) No Analysis';
             statusBarItem.tooltip = 'Click to analyze translations';
             return;
         }
 
-        const totalMissing = this.analysisCache.missingInCommon.length +
-                           this.analysisCache.missingInFyle.length +
-                           this.analysisCache.missingInCo.length;
+        // Calculate total missing based on project type
+        let totalMissing: number;
+        let tooltipDetails: string;
+
+        if (this.currentProject?.type === 'fyle-app-v2') {
+            // For app-v2, only count unused translations (missing analysis not applicable)
+            totalMissing = this.analysisCache.unusedTranslations.length;
+            tooltipDetails = totalMissing > 0
+                ? `${totalMissing} unused translations found in modules. Click to view details.`
+                : `All ${this.analysisCache.totalKeys} translation keys are used across ${this.currentProject.translationPaths.length} modules`;
+        } else {
+            // For integrations-app, count missing translations
+            totalMissing = this.analysisCache.missingInCommon.length +
+                          this.analysisCache.missingInFyle.length +
+                          this.analysisCache.missingInCo.length;
+            tooltipDetails = totalMissing > 0
+                ? `${totalMissing} missing translations found. Click to view details.`
+                : `All ${this.analysisCache.totalKeys} translation keys are covered`;
+        }
 
         if (totalMissing === 0) {
-            statusBarItem.text = '$(check) All Translations OK';
-            statusBarItem.tooltip = `All ${this.analysisCache.totalKeys} translation keys are covered`;
+        if (this.currentProject?.type === 'fyle-app-v2') {
+        statusBarItem.text = '$(info) Analysis Disabled';
+        statusBarItem.tooltip = 'Analysis Disabled';
         } else {
-            statusBarItem.text = `$(warning) ${totalMissing} Missing`;
-            statusBarItem.tooltip = `${totalMissing} missing translations found. Click to view details.`;
+            statusBarItem.text = '$(check) All Translations OK';
+            statusBarItem.tooltip = tooltipDetails; }
+        } else {
+            const label = this.currentProject?.type === 'fyle-app-v2' ? 'Unused' : 'Missing';
+            statusBarItem.text = `$(warning) ${totalMissing} ${label}`;
+            statusBarItem.tooltip = tooltipDetails;
         }
     }
 
@@ -1263,11 +1802,30 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Comprehensive exclude pattern that respects common ignore patterns
         const excludePattern = await this.buildExcludePattern(workspaceFolder);
 
-        // Find all HTML and TypeScript files in src/app folder only (optimized scope)
-        const htmlFiles = await vscode.workspace.findFiles('src/app/**/*.html', excludePattern);
-        const tsFiles = await vscode.workspace.findFiles('src/app/**/*.ts', excludePattern);
+        // Find all HTML and TypeScript files using project-specific source paths
+        const htmlFiles: vscode.Uri[] = [];
+        const tsFiles: vscode.Uri[] = [];
 
-        console.log(`🎯 SCOPE: Scanning only src/app folder - found ${htmlFiles.length} HTML and ${tsFiles.length} TS files`);
+        if (this.currentProject) {
+            for (const sourcePath of this.currentProject.sourcePaths) {
+                const htmlPattern = sourcePath.replace('**/*.{html,ts}', '**/*.html');
+                const tsPattern = sourcePath.replace('**/*.{html,ts}', '**/*.ts');
+
+                const projectHtmlFiles = await vscode.workspace.findFiles(htmlPattern, excludePattern);
+                const projectTsFiles = await vscode.workspace.findFiles(tsPattern, excludePattern);
+
+                htmlFiles.push(...projectHtmlFiles);
+                tsFiles.push(...projectTsFiles);
+            }
+
+            console.log(`🎯 SCOPE: Scanning ${this.currentProject.name} - found ${htmlFiles.length} HTML and ${tsFiles.length} TS files`);
+        } else {
+            console.warn('No project configuration found, using default src/app scope');
+            const defaultHtmlFiles = await vscode.workspace.findFiles('src/app/**/*.html', excludePattern);
+            const defaultTsFiles = await vscode.workspace.findFiles('src/app/**/*.ts', excludePattern);
+            htmlFiles.push(...defaultHtmlFiles);
+            tsFiles.push(...defaultTsFiles);
+        }
 
         // Clear file cache for fresh start
         this.fileAnalysisCache.clear();
@@ -1500,6 +2058,12 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private async calculateTranslationCoverageWithValidation(): Promise<TranslationAnalysis> {
+        // Temporarily disable analysis for fyle-app-v2
+        if (this.currentProject?.type === 'fyle-app-v2') {
+            console.log('⏸️ ANALYSIS: Skipping analysis for Fyle App V2 (temporarily disabled)');
+            return this.getEmptyAnalysis();
+        }
+
         const analysis = this.calculateTranslationCoverage();
 
         // Check if validation is enabled (can be disabled for performance)
@@ -1520,7 +2084,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         }
 
         // Validate unused translations using VS Code search as a second opinion
-        // console.log(`🔍 VALIDATION: Starting VS Code search validation for ${keysToValidate.length} potentially unused keys...`);
+        console.log(`🔍 VALIDATION: Starting VS Code search validation for ${keysToValidate.length} potentially unused keys in ${this.currentProject?.name || 'unknown project'}...`);
         const validatedUnusedTranslations = await this.validateUnusedKeysWithVSCodeSearch(keysToValidate);
         const falsePositives = keysToValidate.length - validatedUnusedTranslations.length;
 
@@ -1529,8 +2093,10 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         const finalUnusedTranslations = [...validatedUnusedTranslations, ...remainingKeys];
 
         if (falsePositives > 0) {
-            // console.log(`🎯 VALIDATION: Found ${falsePositives} false positives that are actually used!`);
-            // console.log(`📊 VALIDATION: Refined unused count from ${analysis.unusedTranslations.length} to ${finalUnusedTranslations.length}`);
+            console.log(`🎯 VALIDATION: Found ${falsePositives} false positives that are actually used in ${this.currentProject?.name}!`);
+            console.log(`📊 VALIDATION: Refined unused count from ${analysis.unusedTranslations.length} to ${finalUnusedTranslations.length}`);
+        } else {
+            console.log(`✅ VALIDATION: All ${keysToValidate.length} keys confirmed as unused in ${this.currentProject?.name}`);
         }
 
         // Return analysis with validated unused translations
@@ -1541,26 +2107,47 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private calculateTranslationCoverage(): TranslationAnalysis {
+        if (!this.currentProject) {
+            console.warn('No project configuration found for analysis');
+            return this.getEmptyAnalysis();
+        }
+
+        // Dynamic analysis based on project type
+        if (this.currentProject.type === 'integrations-app') {
+            return this.calculateIntegrationsAppCoverage();
+        } else if (this.currentProject.type === 'fyle-app-v2') {
+            return this.calculateFyleAppV2Coverage();
+        }
+
+        console.warn(`Unknown project type: ${this.currentProject.type}`);
+        return this.getEmptyAnalysis();
+    }
+
+    private calculateIntegrationsAppCoverage(): TranslationAnalysis {
         const missingInCommon: string[] = [];
         const missingInFyle: string[] = [];
         const missingInCo: string[] = [];
         const unusedTranslations: string[] = [];
 
-        const commonTranslations = this.translationCache.get('common') || {};
-        const fyleTranslations = this.translationCache.get('fyle') || {};
-        const coTranslations = this.translationCache.get('co') || {};
+        if (!this.currentProject) {
+            return this.getEmptyAnalysis();
+        }
 
-        // Get all available translation keys from JSON files
+        // Get translations dynamically based on project configuration
+        const translationsByKey = new Map<string, any>();
         const allAvailableKeys = new Set<string>();
-        this.extractAllKeysFromObject(commonTranslations, '', allAvailableKeys);
-        this.extractAllKeysFromObject(fyleTranslations, '', allAvailableKeys);
-        this.extractAllKeysFromObject(coTranslations, '', allAvailableKeys);
+
+        for (const translationPath of this.currentProject.translationPaths) {
+            const translations = this.translationCache.get(translationPath.key) || {};
+            translationsByKey.set(translationPath.key, translations);
+            this.extractAllKeysFromObject(translations, '', allAvailableKeys);
+        }
 
         // Check each used key for missing translations
         for (const key of this.allTranslationKeys) {
-            const commonValue = this.getNestedValue(commonTranslations, key);
-            const fyleValue = this.getNestedValue(fyleTranslations, key);
-            const coValue = this.getNestedValue(coTranslations, key);
+            const commonValue = this.getNestedValue(translationsByKey.get('common'), key);
+            const fyleValue = this.getNestedValue(translationsByKey.get('fyle'), key);
+            const coValue = this.getNestedValue(translationsByKey.get('co'), key);
 
             // Check if missing in common (and no theme override)
             if (!commonValue && !fyleValue && !coValue) {
@@ -1605,6 +2192,63 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 common: Math.round(commonCoverage * 100) / 100,
                 fyle: Math.round(fyleCoverage * 100) / 100,
                 co: Math.round(coCoverage * 100) / 100
+            }
+        };
+    }
+
+    private calculateFyleAppV2Coverage(): TranslationAnalysis {
+        const missingInCommon: string[] = [];
+        const missingInFyle: string[] = [];
+        const missingInCo: string[] = [];
+        const unusedTranslations: string[] = [];
+
+        // For Fyle App V2, we treat all modules as equal (no theme hierarchy)
+        // Get all available translation keys from all module files
+        const allAvailableKeys = new Set<string>();
+        const moduleTranslations = new Map<string, any>();
+
+        for (const translationPath of this.currentProject!.translationPaths) {
+            const translations = this.translationCache.get(translationPath.key) || {};
+            moduleTranslations.set(translationPath.key, translations);
+            this.extractAllKeysFromObject(translations, '', allAvailableKeys);
+        }
+
+        // For Fyle App V2, we only check for unused translations
+        // Missing translations are less relevant since modules are independent
+        for (const availableKey of allAvailableKeys) {
+            if (!this.allTranslationKeys.has(availableKey)) {
+                unusedTranslations.push(availableKey);
+            }
+        }
+
+        // Calculate basic coverage
+        const totalUsedKeys = this.allTranslationKeys.size;
+
+        return {
+            totalKeys: totalUsedKeys,
+            missingInCommon: [], // Not applicable for module-based structure
+            missingInFyle: [],   // Not applicable for module-based structure
+            missingInCo: [],     // Not applicable for module-based structure
+            unusedTranslations,
+            coveragePercentage: {
+                common: 100, // Not applicable
+                fyle: 100,   // Not applicable
+                co: 100      // Not applicable
+            }
+        };
+    }
+
+    private getEmptyAnalysis(): TranslationAnalysis {
+        return {
+            totalKeys: 0,
+            missingInCommon: [],
+            missingInFyle: [],
+            missingInCo: [],
+            unusedTranslations: [],
+            coveragePercentage: {
+                common: 0,
+                fyle: 0,
+                co: 0
             }
         };
     }
@@ -1667,9 +2311,10 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         const analysis = this.analysisCache;
         const totalMissing = analysis.missingInCommon.length + analysis.missingInFyle.length + analysis.missingInCo.length;
 
-        if (totalMissing === 0) {
+        if (totalMissing === 0 && analysis.unusedTranslations.length === 0) {
+            const coverageMessage = this.getProjectSpecificCoverageMessage(analysis);
             vscode.window.showInformationMessage(
-                `🎉 All translations are complete!\n\nTotal keys: ${analysis.totalKeys}\nCoverage: Common ${analysis.coveragePercentage.common}%, Fyle ${analysis.coveragePercentage.fyle}%, CO ${analysis.coveragePercentage.co}%`
+                `🎉 All translations are complete!\n\nTotal keys: ${analysis.totalKeys}\n${coverageMessage}`
             );
             return;
         }
@@ -1833,18 +2478,29 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             return { dispose: () => {} } as vscode.FileSystemWatcher;
         }
 
-        // Watch for changes to translation JSON files
+        // Create a comprehensive pattern that covers both project types
+        let watchPattern: string;
+
+        if (this.currentProject?.type === 'fyle-app-v2') {
+            // Watch app-v2 specific paths
+            watchPattern = '{app-v2/libs/shared/assets/i18n/**/*.json,app-v2/apps/*/src/assets/i18n/**/*.json}';
+        } else {
+            // Default to integrations-app pattern
+            watchPattern = 'src/assets/i18n/**/*.json';
+        }
+
         const translationFilePattern = new vscode.RelativePattern(
             workspaceFolder,
-            'src/assets/i18n/**/*.json'
+            watchPattern
         );
 
+        console.log(`🔍 WATCHING: Translation files with pattern: ${watchPattern} (Project: ${this.currentProject?.type || 'unknown'})`);
         const watcher = vscode.workspace.createFileSystemWatcher(translationFilePattern);
 
         // Handle file changes (create, change, delete) - OPTIMIZED VERSION
         const handleTranslationFileChange = (uri: vscode.Uri) => {
             const relativePath = vscode.workspace.asRelativePath(uri);
-            // console.log(`Translation file changed: ${relativePath}`);
+            console.log(`🔄 TRANSLATION FILE CHANGED: ${relativePath} (Project: ${this.currentProject?.type || 'unknown'})`);
 
             // Show a brief notification
             vscode.window.showInformationMessage(
@@ -1853,6 +2509,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             );
 
             // Refresh translations (load new JSON values)
+            console.log(`🔄 REFRESHING: Translation cache for ${this.currentProject?.name || 'unknown project'}`);
             this.refreshTranslations();
 
             // Only recalculate coverage without re-scanning source files (with validation cache)
@@ -2329,8 +2986,9 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 // console.log(`🔍 VALIDATION: Ripgrep path detection failed, using system rg`);
             }
 
-            // Use ripgrep with correct flags (compatible with all versions) - limited to src/app folder
-            const srcAppPath = require('path').join(workspacePath, 'src', 'app');
+            // Use ripgrep with correct flags (compatible with all versions) - project-aware search
+            const searchPaths = this.getProjectSearchPaths(workspacePath);
+            console.log(`🔍 VALIDATION: Searching for "${searchKey}" in paths:`, searchPaths);
             const rgArgs = [
                 '--fixed-strings',  // Literal string search (faster than regex)
                 '--quiet',          // Exit immediately on first match
@@ -2345,7 +3003,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 '--glob=!.angular/**',
                 '--glob=!.vscode/**',
                 searchKey,          // The search term
-                srcAppPath          // Search only in src/app folder
+                ...searchPaths      // Project-specific search paths
             ];
 
             // console.log(`🔍 RIPGREP: Executing: ${rgPath} ${rgArgs.join(' ')}`);
@@ -2642,8 +3300,13 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     private getAllTranslationEntries(): [string, string][] {
         const entries: [string, string][] = [];
 
-        for (const theme of ['common', 'fyle', 'co']) {
-            const translations = this.translationCache.get(theme) || {};
+        if (!this.currentProject) {
+            return entries;
+        }
+
+        // Get all translation entries dynamically based on project configuration
+        for (const translationPath of this.currentProject.translationPaths) {
+            const translations = this.translationCache.get(translationPath.key) || {};
             this.flattenTranslations(translations, '', entries);
         }
 
@@ -2778,14 +3441,21 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
     }
 
     private async createTranslationInFile(key: string, value: string): Promise<void> {
-        // Default to common translations file
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) return;
+        if (!this.currentProject || this.currentProject.translationPaths.length === 0) {
+            vscode.window.showErrorMessage('No translation files available for creating translations');
+            return;
+        }
 
-        const commonFilePath = path.join(workspaceFolder.uri.fsPath, 'src/assets/i18n/en.json');
+        // For integrations-app, default to common file
+        // For fyle-app-v2, default to first available file (usually shared)
+        const defaultTranslationPath = this.currentProject.type === 'integrations-app'
+            ? this.currentProject.translationPaths.find(p => p.key === 'common') || this.currentProject.translationPaths[0]
+            : this.currentProject.translationPaths[0];
+
+        const targetFilePath = defaultTranslationPath.filePath;
 
         try {
-            const fileContent = fs.readFileSync(commonFilePath, 'utf8');
+            const fileContent = fs.readFileSync(targetFilePath, 'utf8');
             const translations = JSON.parse(fileContent);
 
             // Set nested value
@@ -2793,7 +3463,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
 
             // Write back to file
             const updatedContent = JSON.stringify(translations, null, 2);
-            fs.writeFileSync(commonFilePath, updatedContent, 'utf8');
+            fs.writeFileSync(targetFilePath, updatedContent, 'utf8');
 
             // Refresh translations cache
             this.refreshTranslations();
