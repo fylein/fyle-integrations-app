@@ -388,7 +388,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
 
             // Determine which files have this key
             const editOptions = this.getEditOptions(key, fyleTranslation, coTranslation, commonTranslation);
-            const availableOptions = editOptions.filter(option => option.currentValue); // Only show options that have values
+            // For deletion, include options with empty values too (they still exist in the file)
+            const availableOptions = editOptions.filter(option => option.currentValue !== undefined && option.currentValue !== null);
 
             if (availableOptions.length === 0) {
                 vscode.window.showWarningMessage(`Translation key "${key}" not found in any theme files`);
@@ -404,12 +405,13 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 const deleteItems = availableOptions.map((option) => {
                     const themeIcon = this.getThemeIcon(option.theme);
                     const currentValue = option.currentValue || '';
-                    const truncatedValue = currentValue.length > 50 ? currentValue.substring(0, 47) + '...' : currentValue;
+                    const displayValue = currentValue === '' ? '(empty)' : currentValue;
+                    const truncatedValue = displayValue.length > 50 ? displayValue.substring(0, 47) + '...' : displayValue;
 
                     return {
                         label: `${themeIcon} Delete from ${option.label}`,
                         description: `Remove key from ${option.description.toLowerCase()}`,
-                        detail: `Current: "${truncatedValue}"`,
+                        detail: `Current: ${truncatedValue}`,
                         option: option
                     };
                 });
@@ -1261,9 +1263,11 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         // Comprehensive exclude pattern that respects common ignore patterns
         const excludePattern = await this.buildExcludePattern(workspaceFolder);
 
-        // Find all HTML and TypeScript files while respecting gitignore and common excludes
-        const htmlFiles = await vscode.workspace.findFiles('**/*.html', excludePattern);
-        const tsFiles = await vscode.workspace.findFiles('**/*.ts', excludePattern);
+        // Find all HTML and TypeScript files in src/app folder only (optimized scope)
+        const htmlFiles = await vscode.workspace.findFiles('src/app/**/*.html', excludePattern);
+        const tsFiles = await vscode.workspace.findFiles('src/app/**/*.ts', excludePattern);
+
+        console.log(`🎯 SCOPE: Scanning only src/app folder - found ${htmlFiles.length} HTML and ${tsFiles.length} TS files`);
 
         // Clear file cache for fresh start
         this.fileAnalysisCache.clear();
@@ -1575,6 +1579,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
         }
 
         // Find unused translations (keys in JSON but not used in code)
+        const problematicKey = 'configuration.exportSetting.corporateCard.exportSubLabel';
+
         for (const availableKey of allAvailableKeys) {
             if (!this.allTranslationKeys.has(availableKey)) {
                 unusedTranslations.push(availableKey);
@@ -1601,6 +1607,40 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 co: Math.round(coCoverage * 100) / 100
             }
         };
+    }
+
+    /**
+     * Check if a nested key exists in a translation object
+     */
+    private hasNestedTranslationKey(obj: any, key: string): boolean {
+        const keys = key.split('.');
+        let current = obj;
+
+        for (const k of keys) {
+            if (!current || typeof current !== 'object' || !(k in current)) {
+                return false;
+            }
+            current = current[k];
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the value of a nested key from a translation object
+     */
+    private getNestedTranslationValue(obj: any, key: string): any {
+        const keys = key.split('.');
+        let current = obj;
+
+        for (const k of keys) {
+            if (!current || typeof current !== 'object' || !(k in current)) {
+                return undefined;
+            }
+            current = current[k];
+        }
+
+        return current;
     }
 
     private extractAllKeysFromObject(obj: any, prefix: string, keySet: Set<string>): void {
@@ -2289,7 +2329,8 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 // console.log(`🔍 VALIDATION: Ripgrep path detection failed, using system rg`);
             }
 
-            // Use ripgrep with correct flags (compatible with all versions)
+            // Use ripgrep with correct flags (compatible with all versions) - limited to src/app folder
+            const srcAppPath = require('path').join(workspacePath, 'src', 'app');
             const rgArgs = [
                 '--fixed-strings',  // Literal string search (faster than regex)
                 '--quiet',          // Exit immediately on first match
@@ -2304,7 +2345,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
                 '--glob=!.angular/**',
                 '--glob=!.vscode/**',
                 searchKey,          // The search term
-                workspacePath       // Search path
+                srcAppPath          // Search only in src/app folder
             ];
 
             // console.log(`🔍 RIPGREP: Executing: ${rgPath} ${rgArgs.join(' ')}`);
@@ -2384,7 +2425,7 @@ class TranslocoHoverProvider implements vscode.HoverProvider {
             // console.log(`🔄 VALIDATION: Using manual search fallback for key "${searchKey}"`);
 
             const files = await vscode.workspace.findFiles(
-                '**/*.{html,ts}',
+                'src/app/**/*.{html,ts}',
                 '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/coverage/**}'
             );
 
