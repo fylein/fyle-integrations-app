@@ -36,7 +36,11 @@
                           </div>
                     </div>
                     <div class="tw-pt-40-px">
-                        <button pButton pRipple [label]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" class="downloadBtn" (click)="onDownloadClick()"></button>
+                        <button pButton pRipple class="downloadBtn" (click)="onDownloadClick()">
+                            <span pButtonLabel>
+                                {{ 'qbdDirectDownloadFile.downloadButtonLabel' | transloco }}
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>

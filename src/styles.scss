@@ -609,16 +609,16 @@ p {
     @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
-.p-calendar .p-inputtext {
+.p-datepicker .p-inputtext {
     @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
 }
 
-.p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+.p-datepicker:not(.p-datepicker-disabled).p-focus > .p-inputtext {
     @apply tw-shadow-none #{!important};
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext,
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext {
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-datepicker .p-inputtext,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-datepicker .p-inputtext {
     @apply tw-bg-input-read-only-bg #{!important};
 }
 
@@ -634,7 +634,7 @@ p {
     @apply tw-py-4-px tw-min-h-0 #{!important};
 }
 
-.p-calendar ::placeholder {
+.p-datepicker ::placeholder {
     @apply tw-text-sub-text-color #{!important};
 }
 
@@ -684,7 +684,7 @@ p {
 }
 
 .p-datepicker-touch-ui,
-.p-calendar .p-datepicker-touch-ui {
+.p-datepicker .p-datepicker-touch-ui {
     @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
 }
 
@@ -712,15 +712,15 @@ p {
     @apply tw-rounded-none #{!important};
 }
 
-.p-chips .p-chips-multiple-container .p-chips-token {
+.p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token {
     @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
 }
 
-.p-chips .p-chips-multiple-container:not(.p-disabled) {
+.p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled) {
     @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
 }
 
-.p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
+.p-inputtext .p-autocomplete-multiple-container:enabled:focus, .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
     @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
 }
 

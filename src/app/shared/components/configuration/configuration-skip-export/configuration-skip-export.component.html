@@ -52,10 +52,21 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField(1)">
-                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+                <p-datepicker formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-datepicker>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField(1)">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+                <p-autocomplete
+                  [multiple]="true"
+                  [typeahead]="false"
+                  [forceSelection]="false"
+                  styleClass="tw-w-[296px]"
+                  formControlName="value1"
+                  [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                  [suggestions]="[]"
+                  (completeMethod)="onComplete($event)"
+                  (onKeyDown)="onKeyDown($event, 1)"
+                  (onBlur)="onBlur($event, 1)">
+                </p-autocomplete>
                 <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
               </div>
               <div class="tw-w-296-px" *ngIf="showBooleanField(1)">
@@ -125,7 +136,18 @@
               <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+              <p-autocomplete
+                [multiple]="true"
+                [typeahead]="false"
+                [forceSelection]="false"
+                styleClass="tw-w-[296px]"
+                formControlName="value2"
+                [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                [suggestions]="[]"
+                (completeMethod)="onComplete($event)"
+                (onKeyDown)="onKeyDown($event, 2)"
+                (onBlur)="onBlur($event, 2)">
+              </p-autocomplete>
               <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
@@ -133,7 +155,7 @@
               </p-dropdown>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+              <p-datepicker formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-datepicker>
             </div>
             <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
               <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'configurationSkipExport.removeConditionTooltip' | transloco" (iconClick)="remCondition()"></app-svg-icon>
