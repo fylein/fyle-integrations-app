@@ -5,9 +5,10 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { DateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
-  selector: 'app-export-log-filter',
-  templateUrl: './export-log-filter.component.html',
-  styleUrls: ['./export-log-filter.component.scss']
+    selector: 'app-export-log-filter',
+    templateUrl: './export-log-filter.component.html',
+    styleUrls: ['./export-log-filter.component.scss'],
+    standalone: false
 })
 export class ExportLogFilterComponent implements OnInit, OnDestroy {
 

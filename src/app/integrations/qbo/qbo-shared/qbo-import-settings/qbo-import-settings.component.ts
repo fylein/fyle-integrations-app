@@ -21,9 +21,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
-  selector: 'app-qbo-import-settings',
-  templateUrl: './qbo-import-settings.component.html',
-  styleUrls: ['./qbo-import-settings.component.scss']
+    selector: 'app-qbo-import-settings',
+    templateUrl: './qbo-import-settings.component.html',
+    styleUrls: ['./qbo-import-settings.component.scss'],
+    standalone: false
 })
 export class QboImportSettingsComponent implements OnInit {
 

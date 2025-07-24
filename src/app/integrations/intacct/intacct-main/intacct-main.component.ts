@@ -8,9 +8,10 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-main',
-  templateUrl: './intacct-main.component.html',
-  styleUrls: ['./intacct-main.component.scss']
+    selector: 'app-intacct-main',
+    templateUrl: './intacct-main.component.html',
+    styleUrls: ['./intacct-main.component.scss'],
+    standalone: false
 })
 export class MainComponent {
 

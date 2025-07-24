@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-business-central-onboarding-done',
-  templateUrl: './business-central-onboarding-done.component.html',
-  styleUrls: ['./business-central-onboarding-done.component.scss']
+    selector: 'app-business-central-onboarding-done',
+    templateUrl: './business-central-onboarding-done.component.html',
+    styleUrls: ['./business-central-onboarding-done.component.scss'],
+    standalone: false
 })
 export class BusinessCentralOnboardingDoneComponent implements OnInit {
 

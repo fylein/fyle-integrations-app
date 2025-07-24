@@ -15,9 +15,10 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 
 @Component({
-  selector: 'app-qbo-dashboard',
-  templateUrl: './qbo-dashboard.component.html',
-  styleUrls: ['./qbo-dashboard.component.scss']
+    selector: 'app-qbo-dashboard',
+    templateUrl: './qbo-dashboard.component.html',
+    styleUrls: ['./qbo-dashboard.component.scss'],
+    standalone: false
 })
 export class QboDashboardComponent implements OnInit, OnDestroy {
 

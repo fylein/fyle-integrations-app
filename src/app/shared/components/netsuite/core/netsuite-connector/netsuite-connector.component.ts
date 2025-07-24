@@ -8,9 +8,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 
 @Component({
-  selector: 'app-netsuite-connector',
-  templateUrl: './netsuite-connector.component.html',
-  styleUrls: ['./netsuite-connector.component.scss']
+    selector: 'app-netsuite-connector',
+    templateUrl: './netsuite-connector.component.html',
+    styleUrls: ['./netsuite-connector.component.scss'],
+    standalone: false
 })
 export class NetsuiteConnectorComponent implements OnInit {
 

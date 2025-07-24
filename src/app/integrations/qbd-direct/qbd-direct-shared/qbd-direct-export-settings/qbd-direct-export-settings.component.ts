@@ -27,11 +27,10 @@ import { EmployeeSettingsService } from 'src/app/core/services/common/employee-s
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
-  selector: 'app-qbd-direct-export-settings',
-  templateUrl: './qbd-direct-export-settings.component.html',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  styleUrl: './qbd-direct-export-settings.component.scss'
+    selector: 'app-qbd-direct-export-settings',
+    templateUrl: './qbd-direct-export-settings.component.html',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    styleUrl: './qbd-direct-export-settings.component.scss'
 })
 export class QbdDirectExportSettingsComponent implements OnInit{
 

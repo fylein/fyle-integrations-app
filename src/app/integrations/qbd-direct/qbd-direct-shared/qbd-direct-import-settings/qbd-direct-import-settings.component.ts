@@ -26,11 +26,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-qbd-direct-import-settings',
-  standalone: true,
-  imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
-  templateUrl: './qbd-direct-import-settings.component.html',
-  styleUrl: './qbd-direct-import-settings.component.scss'
+    selector: 'app-qbd-direct-import-settings',
+    imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
+    templateUrl: './qbd-direct-import-settings.component.html',
+    styleUrl: './qbd-direct-import-settings.component.scss'
 })
 export class QbdDirectImportSettingsComponent implements OnInit {
 

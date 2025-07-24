@@ -5,9 +5,10 @@ import { TravelperkOnboardingService } from 'src/app/core/services/travelperk/tr
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-travelperk-onboarding-advanced-settings',
-  templateUrl: './travelperk-onboarding-advanced-settings.component.html',
-  styleUrls: ['./travelperk-onboarding-advanced-settings.component.scss']
+    selector: 'app-travelperk-onboarding-advanced-settings',
+    templateUrl: './travelperk-onboarding-advanced-settings.component.html',
+    styleUrls: ['./travelperk-onboarding-advanced-settings.component.scss'],
+    standalone: false
 })
 export class TravelperkOnboardingAdvancedSettingsComponent implements OnInit {
 

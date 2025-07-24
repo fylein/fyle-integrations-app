@@ -5,9 +5,10 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-mapping',
-  templateUrl: './qbd-mapping.component.html',
-  styleUrls: ['./qbd-mapping.component.scss']
+    selector: 'app-qbd-mapping',
+    templateUrl: './qbd-mapping.component.html',
+    styleUrls: ['./qbd-mapping.component.scss'],
+    standalone: false
 })
 export class QbdMappingComponent implements OnInit {
 

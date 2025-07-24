@@ -6,9 +6,10 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacc
 import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
 
 @Component({
-  selector: 'app-onboarding-intacct-connector',
-  templateUrl: './intacct-onboarding-connector.component.html',
-  styleUrls: ['./intacct-onboarding-connector.component.scss']
+    selector: 'app-onboarding-intacct-connector',
+    templateUrl: './intacct-onboarding-connector.component.html',
+    styleUrls: ['./intacct-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class IntacctOnboardingConnectorComponent implements OnInit {
 

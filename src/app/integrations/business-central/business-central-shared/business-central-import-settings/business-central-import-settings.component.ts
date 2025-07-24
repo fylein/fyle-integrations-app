@@ -19,9 +19,10 @@ import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-import-settings',
-  templateUrl: './business-central-import-settings.component.html',
-  styleUrls: ['./business-central-import-settings.component.scss']
+    selector: 'app-business-central-import-settings',
+    templateUrl: './business-central-import-settings.component.html',
+    styleUrls: ['./business-central-import-settings.component.scss'],
+    standalone: false
 })
 export class BusinessCentralImportSettingsComponent implements OnInit {
 

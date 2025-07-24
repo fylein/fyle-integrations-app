@@ -8,9 +8,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-skip-export',
-  templateUrl: './configuration-skip-export.component.html',
-  styleUrls: ['./configuration-skip-export.component.scss']
+    selector: 'app-configuration-skip-export',
+    templateUrl: './configuration-skip-export.component.html',
+    styleUrls: ['./configuration-skip-export.component.scss'],
+    standalone: false
 })
 export class ConfigurationSkipExportComponent implements OnInit {
 

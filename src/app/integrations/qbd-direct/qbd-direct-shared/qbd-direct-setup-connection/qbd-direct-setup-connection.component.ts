@@ -9,11 +9,10 @@ import { MessageService } from 'primeng/api';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-setup-connection',
-  standalone: true,
-  imports: [CommonModule, SharedModule, CardModule, TranslocoModule],
-  templateUrl: './qbd-direct-setup-connection.component.html',
-  styleUrl: './qbd-direct-setup-connection.component.scss'
+    selector: 'app-qbd-direct-setup-connection',
+    imports: [CommonModule, SharedModule, CardModule, TranslocoModule],
+    templateUrl: './qbd-direct-setup-connection.component.html',
+    styleUrl: './qbd-direct-setup-connection.component.scss'
 })
 export class QbdDirectSetupConnectionComponent {
 

@@ -8,9 +8,10 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-skip-export',
-  templateUrl: './skip-export.component.html',
-  styleUrls: ['./skip-export.component.scss']
+    selector: 'app-skip-export',
+    templateUrl: './skip-export.component.html',
+    styleUrls: ['./skip-export.component.scss'],
+    standalone: false
 })
 export class SkipExportComponent implements OnInit {
 
