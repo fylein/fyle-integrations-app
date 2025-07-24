@@ -87,6 +87,16 @@
     "webpack-dev-server": "^5.2.0",
     "@angular-devkit/build-angular": {
       "@babel/runtime": "^7.26.10"
+    },
+    "ng-svg-icon-sprite": {
+      "@angular/common": "^19.2.14",
+      "@angular/core": "^19.2.14"
+    },
+    "primeng": {
+      "@angular/common": "^19.2.14",
+      "@angular/core": "^19.2.14",
+      "@angular/forms": "^19.2.14",
+      "zone.js": "~0.15.1"
     }
   }
 }
