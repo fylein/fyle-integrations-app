@@ -1856,7 +1856,7 @@
     "useEmployeeClass": "Use Employee's Class in Netsuite",
     "netsuiteClassLevel": "NetSuite class level",
     "chooseNetsuiteClassLevel": "Choose NetSuite class level",
-    "optional": " \\(optional\\)",
+    "optional": " (optional)",
     "saveSuccess": "Advanced settings saved successfully",
     "saveError": "Error saving advanced settings, please try again later"
   },
