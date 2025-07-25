@@ -9,9 +9,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-mapping',
-  templateUrl: './qbo-mapping.component.html',
-  styleUrls: ['./qbo-mapping.component.scss']
+    selector: 'app-qbo-mapping',
+    templateUrl: './qbo-mapping.component.html',
+    styleUrls: ['./qbo-mapping.component.scss'],
+    standalone: false
 })
 export class QboMappingComponent implements OnInit {
 

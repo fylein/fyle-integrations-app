@@ -9,9 +9,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-mapping',
-  templateUrl: './netsuite-mapping.component.html',
-  styleUrls: ['./netsuite-mapping.component.scss']
+    selector: 'app-netsuite-mapping',
+    templateUrl: './netsuite-mapping.component.html',
+    styleUrls: ['./netsuite-mapping.component.scss'],
+    standalone: false
 })
 export class NetsuiteMappingComponent implements OnInit {
 

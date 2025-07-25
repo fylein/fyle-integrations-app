@@ -4,9 +4,10 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-configuration-connector',
-  templateUrl: './configuration-connector.component.html',
-  styleUrls: ['./configuration-connector.component.scss']
+    selector: 'app-configuration-connector',
+    templateUrl: './configuration-connector.component.html',
+    styleUrls: ['./configuration-connector.component.scss'],
+    standalone: false
 })
 export class ConfigurationConnectorComponent implements OnInit {
 

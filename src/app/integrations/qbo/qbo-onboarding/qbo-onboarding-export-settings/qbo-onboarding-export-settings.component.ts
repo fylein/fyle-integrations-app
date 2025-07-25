@@ -5,9 +5,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
-  selector: 'app-qbo-onboarding-export-settings',
-  templateUrl: './qbo-onboarding-export-settings.component.html',
-  styleUrls: ['./qbo-onboarding-export-settings.component.scss']
+    selector: 'app-qbo-onboarding-export-settings',
+    templateUrl: './qbo-onboarding-export-settings.component.html',
+    styleUrls: ['./qbo-onboarding-export-settings.component.scss'],
+    standalone: false
 })
 export class QboOnboardingExportSettingsComponent implements OnInit {
 

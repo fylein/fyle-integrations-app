@@ -16,9 +16,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TravelperkAdvancedSettingService } from 'src/app/core/services/travelperk/travelperk-advanced-settings.service';
 
 @Component({
-  selector: 'app-travelperk-advanced-settings',
-  templateUrl: './travelperk-advanced-settings.component.html',
-  styleUrls: ['./travelperk-advanced-settings.component.scss']
+    selector: 'app-travelperk-advanced-settings',
+    templateUrl: './travelperk-advanced-settings.component.html',
+    styleUrls: ['./travelperk-advanced-settings.component.scss'],
+    standalone: false
 })
 export class TravelperkAdvancedSettingsComponent implements OnInit {
 

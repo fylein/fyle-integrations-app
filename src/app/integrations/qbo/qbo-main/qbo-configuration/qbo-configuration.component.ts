@@ -4,9 +4,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-configuration',
-  templateUrl: './qbo-configuration.component.html',
-  styleUrls: ['./qbo-configuration.component.scss']
+    selector: 'app-qbo-configuration',
+    templateUrl: './qbo-configuration.component.html',
+    styleUrls: ['./qbo-configuration.component.scss'],
+    standalone: false
 })
 export class QboConfigurationComponent implements OnInit {
 

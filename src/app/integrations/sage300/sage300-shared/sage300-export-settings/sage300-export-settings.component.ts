@@ -21,9 +21,10 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 
 
 @Component({
-  selector: 'app-sage300-export-settings',
-  templateUrl: './sage300-export-settings.component.html',
-  styleUrls: ['./sage300-export-settings.component.scss']
+    selector: 'app-sage300-export-settings',
+    templateUrl: './sage300-export-settings.component.html',
+    styleUrls: ['./sage300-export-settings.component.scss'],
+    standalone: false
 })
 export class Sage300ExportSettingsComponent implements OnInit {
 

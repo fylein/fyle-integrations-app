@@ -15,9 +15,10 @@ import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-onboarding-landing',
-  templateUrl: './xero-onboarding-landing.component.html',
-  styleUrls: ['./xero-onboarding-landing.component.scss']
+    selector: 'app-xero-onboarding-landing',
+    templateUrl: './xero-onboarding-landing.component.html',
+    styleUrls: ['./xero-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
 

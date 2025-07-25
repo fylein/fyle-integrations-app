@@ -9,9 +9,10 @@ import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-c
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
-  selector: 'app-sage300-onboarding-connector',
-  templateUrl: './sage300-onboarding-connector.component.html',
-  styleUrls: ['./sage300-onboarding-connector.component.scss']
+    selector: 'app-sage300-onboarding-connector',
+    templateUrl: './sage300-onboarding-connector.component.html',
+    styleUrls: ['./sage300-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class Sage300OnboardingConnectorComponent implements OnInit {
 

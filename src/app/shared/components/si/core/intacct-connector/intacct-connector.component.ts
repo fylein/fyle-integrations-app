@@ -6,9 +6,10 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacc
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-intacct-connector',
-  templateUrl: './intacct-connector.component.html',
-  styleUrls: ['./intacct-connector.component.scss']
+    selector: 'app-intacct-connector',
+    templateUrl: './intacct-connector.component.html',
+    styleUrls: ['./intacct-connector.component.scss'],
+    standalone: false
 })
 export class IntacctConnectorComponent implements OnInit {
 

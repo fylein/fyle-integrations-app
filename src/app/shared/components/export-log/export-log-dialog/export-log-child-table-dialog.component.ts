@@ -4,9 +4,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-export-log-child-table-dialog',
-  templateUrl: './export-log-child-table-dialog.component.html',
-  styleUrls: ['./export-log-child-table-dialog.component.scss']
+    selector: 'app-export-log-child-table-dialog',
+    templateUrl: './export-log-child-table-dialog.component.html',
+    styleUrls: ['./export-log-child-table-dialog.component.scss'],
+    standalone: false
 })
 export class ExportLogChildTableDialogComponent implements OnInit {
 

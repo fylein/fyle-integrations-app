@@ -8,9 +8,10 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './qbd-main.component.html',
-  styleUrls: ['./qbd-main.component.scss']
+    selector: 'app-main',
+    templateUrl: './qbd-main.component.html',
+    styleUrls: ['./qbd-main.component.scss'],
+    standalone: false
 })
 export class QbdMainComponent implements OnInit {
 

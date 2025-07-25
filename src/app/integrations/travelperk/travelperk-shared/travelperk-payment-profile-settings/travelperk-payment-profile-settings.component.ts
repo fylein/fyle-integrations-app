@@ -15,9 +15,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TravelperkPaymentProfileSettingService } from 'src/app/core/services/travelperk/travelperk-payment-profile-settings.service';
 
 @Component({
-  selector: 'app-travelperk-payment-profile-settings',
-  templateUrl: './travelperk-payment-profile-settings.component.html',
-  styleUrls: ['./travelperk-payment-profile-settings.component.scss']
+    selector: 'app-travelperk-payment-profile-settings',
+    templateUrl: './travelperk-payment-profile-settings.component.html',
+    styleUrls: ['./travelperk-payment-profile-settings.component.scss'],
+    standalone: false
 })
 export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 

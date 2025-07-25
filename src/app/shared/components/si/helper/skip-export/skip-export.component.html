@@ -42,10 +42,22 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'skipExport.enterValue' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField1()">
-                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+                <p-datepicker formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-datepicker>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField1()">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
+                <p-autocomplete
+                  [multiple]="true"
+                  [typeahead]="false"
+                  [forceSelection]="false"
+                  styleClass="tw-w-[296px]"
+                  [(ngModel)]="valueOption1"
+                  formControlName="value1"
+                  [placeholder]="'skipExport.enterValue' | transloco"
+                  [suggestions]="[]"
+                  (completeMethod)="onComplete($event)"
+                  (onKeyDown)="onKeyDown($event, 1)"
+                  (onBlur)="onBlur($event, 1)">
+                </p-autocomplete>
                 <small class="chip-hint"><br>{{ 'skipExport.chipHint' | transloco }}</small>
               </div>
               <div class="tw-w-296-px" *ngIf="showBooleanField1()">
@@ -105,11 +117,23 @@
               <input type="text" formControlName="value2" [placeholder]="'skipExport.enterValue' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField2()" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
+              <p-autocomplete
+                [multiple]="true"
+                [typeahead]="false"
+                [forceSelection]="false"
+                styleClass="tw-w-[296px]"
+                [(ngModel)]="valueOption2"
+                formControlName="value2"
+                [placeholder]="'skipExport.enterValue' | transloco"
+                [suggestions]="[]"
+                (completeMethod)="onComplete($event)"
+                (onKeyDown)="onKeyDown($event, 2)"
+                (onBlur)="onBlur($event, 2)">
+              </p-autocomplete>
               <small class="chip-hint"><br>{{ 'skipExport.chipHint' | transloco }}</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+              <p-datepicker formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-datepicker>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField2()">
               <p-dropdown appendTo="body" formControlName="value2" [placeholder]="'skipExport.selectValue' | transloco" [options]="customCheckBoxValueOptions">

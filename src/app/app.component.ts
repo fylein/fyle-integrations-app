@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { PrimeNG } from 'primeng/config'
 import { EventsService } from './core/services/common/events.service';
 import { QboAuthService } from './core/services/qbo/qbo-core/qbo-auth.service';
 import { Token } from 'src/app/core/models/misc/token.model';
@@ -16,16 +17,17 @@ import { RedirectUriStorageService } from './core/services/misc/redirect-uri-sto
 import { IframeOriginStorageService } from './core/services/misc/iframe-origin-storage.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
 
   constructor(
     private eventsService: EventsService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig,
+    private primengConfig: PrimeNG,
     private router: Router,
     private iframeOriginStorageService: IframeOriginStorageService
   ) { }
@@ -41,6 +43,6 @@ export class AppComponent implements OnInit {
       }
     });
     this.eventsService.receiveEvent();
-    this.primengConfig.ripple = true;
+    this.primengConfig.ripple.set(true);
   }
 }

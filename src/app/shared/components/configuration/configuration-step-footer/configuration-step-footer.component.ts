@@ -3,9 +3,10 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { AppName, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-configuration-step-footer',
-  templateUrl: './configuration-step-footer.component.html',
-  styleUrls: ['./configuration-step-footer.component.scss']
+    selector: 'app-configuration-step-footer',
+    templateUrl: './configuration-step-footer.component.html',
+    styleUrls: ['./configuration-step-footer.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepFooterComponent implements OnInit {
 

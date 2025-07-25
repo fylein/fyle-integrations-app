@@ -12,9 +12,10 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-email-multi-select-field',
-  templateUrl: './email-multi-select-field.component.html',
-  styleUrls: ['./email-multi-select-field.component.scss']
+    selector: 'app-email-multi-select-field',
+    templateUrl: './email-multi-select-field.component.html',
+    styleUrls: ['./email-multi-select-field.component.scss'],
+    standalone: false
 })
 export class EmailMultiSelectFieldComponent implements OnInit {
 

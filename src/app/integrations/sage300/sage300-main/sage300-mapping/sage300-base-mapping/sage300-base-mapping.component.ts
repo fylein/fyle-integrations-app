@@ -9,9 +9,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-base-mapping',
-  templateUrl: './sage300-base-mapping.component.html',
-  styleUrls: ['./sage300-base-mapping.component.scss']
+    selector: 'app-sage300-base-mapping',
+    templateUrl: './sage300-base-mapping.component.html',
+    styleUrls: ['./sage300-base-mapping.component.scss'],
+    standalone: false
 })
 export class Sage300BaseMappingComponent implements OnInit {
 

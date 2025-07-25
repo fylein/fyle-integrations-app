@@ -21,9 +21,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-netsuite-import-settings',
-  templateUrl: './netsuite-import-settings.component.html',
-  styleUrls: ['./netsuite-import-settings.component.scss']
+    selector: 'app-netsuite-import-settings',
+    templateUrl: './netsuite-import-settings.component.html',
+    styleUrls: ['./netsuite-import-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteImportSettingsComponent implements OnInit {
 

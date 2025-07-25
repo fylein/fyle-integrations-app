@@ -9,11 +9,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-main',
-  standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-main.component.html',
-  styleUrl: './qbd-direct-main.component.scss'
+    selector: 'app-qbd-direct-main',
+    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-main.component.html',
+    styleUrl: './qbd-direct-main.component.scss'
 })
 export class QbdDirectMainComponent {
 

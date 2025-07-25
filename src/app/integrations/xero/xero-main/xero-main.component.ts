@@ -9,9 +9,10 @@ import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-hel
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-main',
-  templateUrl: './xero-main.component.html',
-  styleUrls: ['./xero-main.component.scss']
+    selector: 'app-xero-main',
+    templateUrl: './xero-main.component.html',
+    styleUrls: ['./xero-main.component.scss'],
+    standalone: false
 })
 export class XeroMainComponent {
 

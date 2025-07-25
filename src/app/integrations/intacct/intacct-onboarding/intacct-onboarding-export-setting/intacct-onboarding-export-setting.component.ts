@@ -5,9 +5,10 @@ import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-onboarding-export-setting',
-  templateUrl: './intacct-onboarding-export-setting.component.html',
-  styleUrls: ['./intacct-onboarding-export-setting.component.scss']
+    selector: 'app-intacct-onboarding-export-setting',
+    templateUrl: './intacct-onboarding-export-setting.component.html',
+    styleUrls: ['./intacct-onboarding-export-setting.component.scss'],
+    standalone: false
 })
 export class IntacctOnboardingExportSettingComponent implements OnInit {
 

@@ -5,9 +5,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss']
+    selector: 'app-error',
+    templateUrl: './error.component.html',
+    styleUrls: ['./error.component.scss'],
+    standalone: false
 })
 export class ErrorComponent implements OnInit {
 

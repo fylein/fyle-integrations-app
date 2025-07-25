@@ -19,9 +19,10 @@ import { Router } from '@angular/router';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 
 @Component({
-  selector: 'app-intacct-dashboard',
-  templateUrl: './intacct-dashboard.component.html',
-  styleUrls: ['./intacct-dashboard.component.scss']
+    selector: 'app-intacct-dashboard',
+    templateUrl: './intacct-dashboard.component.html',
+    styleUrls: ['./intacct-dashboard.component.scss'],
+    standalone: false
 })
 export class IntacctDashboardComponent implements OnInit, OnDestroy {
 

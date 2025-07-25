@@ -3,162 +3,163 @@
 // You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@import './primitives_variables';
+@use 'primitives_variables';
+@use "../co/primitives_variables" as primitives_variables2;
 
 @layer base {
   [data-theme='fyle'] {
       //brand bg
-    --bg-brand-primary: #{$brand-500};
-    --bg-brand-disable: #{$brand-300};
-    --bg-brand-muted: #{$brand-secondary-opacity-15};
+    --bg-brand-primary: #{primitives_variables.$brand-500};
+    --bg-brand-disable: #{primitives_variables.$brand-300};
+    --bg-brand-muted: #{primitives_variables.$brand-secondary-opacity-15};
     //grey bg
-    --bg-primary: #{$grey-800};
-    --bg-secondary: #{$grey-700};
-    --bg-disable: #{$grey-400};
-    --bg-tertiary: #{$grey-100};
-    --bg-white: #{$white};
-    --bg-primary-opacity: #{$primary-opacity-10};
+    --bg-primary: #{primitives_variables.$grey-800};
+    --bg-secondary: #{primitives_variables.$grey-700};
+    --bg-disable: #{primitives_variables.$grey-400};
+    --bg-tertiary: #{primitives_variables.$grey-100};
+    --bg-white: #{primitives_variables2.$white};
+    --bg-primary-opacity: #{primitives_variables.$primary-opacity-10};
     //_contextual bg
-    --bg-success: #{$green-500};
-    --bg-info: #{$blue-500};
-    --bg-warning: #{$yellow-500};
-    --bg-danger: #{$red-500};
+    --bg-success: #{primitives_variables.$green-500};
+    --bg-info: #{primitives_variables.$blue-500};
+    --bg-warning: #{primitives_variables.$yellow-500};
+    --bg-danger: #{primitives_variables.$red-500};
 
     //light bg
-    --bg-info-light: #{$blue-200};
-    --bg-danger-light: #{$red-200};
-    --bg-success-light: #{$green-100};
-    --bg-calm-light: #{$green-150};
-    --bg-highlight-light: #{$purple-200};
-    --bg-disable-light: #{$grey-100};
-    --bg-tertiary-light: #{$blue-50};
+    --bg-info-light: #{primitives_variables.$blue-200};
+    --bg-danger-light: #{primitives_variables.$red-200};
+    --bg-success-light: #{primitives_variables.$green-100};
+    --bg-calm-light: #{primitives_variables.$green-150};
+    --bg-highlight-light: #{primitives_variables.$purple-200};
+    --bg-disable-light: #{primitives_variables.$grey-100};
+    --bg-tertiary-light: #{primitives_variables.$blue-50};
 
     //lighter bg
-    --bg-info-lighter: #{$blue-100};
-    --bg-info-lightest: #{$blue-10};
-    --bg-warning-lighter: #{$yellow-100};
-    --bg-danger-lighter: #{$red-100};
-    --bg-success-lighter: #{$green-50};
-    --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: #{$blue-50};
+    --bg-info-lighter: #{primitives_variables.$blue-100};
+    --bg-info-lightest: #{primitives_variables2.$blue-10};
+    --bg-warning-lighter: #{primitives_variables.$yellow-100};
+    --bg-danger-lighter: #{primitives_variables.$red-100};
+    --bg-success-lighter: #{primitives_variables.$green-50};
+    --bg-disable-lighter: #{primitives_variables.$grey-100};
+    --bg-tertiary-lighter: #{primitives_variables.$blue-50};
 
     //border-color
-    --border-brand: #{$brand-500};
-    --border-primary: #{$grey-700};
-    --border-secondary: #{$grey-300};
-    --border-tertiary: #{$grey-200};
+    --border-brand: #{primitives_variables.$brand-500};
+    --border-primary: #{primitives_variables.$grey-700};
+    --border-secondary: #{primitives_variables.$grey-300};
+    --border-tertiary: #{primitives_variables.$grey-200};
 
-    --border-info: #{$blue-500};
-    --border-warning: #{$yellow-500};
-    --border-success: #{$green-500};
-    --border-danger: #{$red-500};
-    --border-white: #{$white};
+    --border-info: #{primitives_variables.$blue-500};
+    --border-warning: #{primitives_variables.$yellow-500};
+    --border-success: #{primitives_variables.$green-500};
+    --border-danger: #{primitives_variables.$red-500};
+    --border-white: #{primitives_variables2.$white};
 
-    --border-danger-light: #{$red-300};
-    --border-highlight-light: #{$purple-300};
-    --border-success-light: #{$green-200};
-    --border-calm-light: #{$green-300};
-    --border-info-light: #{$blue-300};
+    --border-danger-light: #{primitives_variables.$red-300};
+    --border-highlight-light: #{primitives_variables.$purple-300};
+    --border-success-light: #{primitives_variables.$green-200};
+    --border-calm-light: #{primitives_variables.$green-300};
+    --border-info-light: #{primitives_variables.$blue-300};
 
-    --border-info-lighter: #{$info-opacity-10};
-    --border-warning-lighter: #{$warning-opacity-10};
-    --border-success-lighter: #{$success-opacity-10};
-    --border-danger-lighter: #{$error-opacity-10};
-    --border-highlight-lighter: #{$purple-300}; //deprecated
-    --border-calm-lighter: #{$green-300}; //deprecated
-    --border-manate: #{$manate};
+    --border-info-lighter: #{primitives_variables.$info-opacity-10};
+    --border-warning-lighter: #{primitives_variables.$warning-opacity-10};
+    --border-success-lighter: #{primitives_variables.$success-opacity-10};
+    --border-danger-lighter: #{primitives_variables.$error-opacity-10};
+    --border-highlight-lighter: #{primitives_variables.$purple-300}; //deprecated
+    --border-calm-lighter: #{primitives_variables.$green-300}; //deprecated
+    --border-manate: #{primitives_variables.$manate};
 
     //border-radius
-    --border-radius-none: #{$size-0};
-    --border-radius-3xs: #{$size-2};
-    --border-radius-2xs: #{$size-4};
-    --border-radius-xs: #{$size-6};
-    --border-radius-sm: #{$size-8};
-    --border-radius-md: #{$size-10};
-    --border-radius-lg: #{$size-12};
-    --border-radius-xl: #{$size-14};
-    --border-radius-2xl: #{$size-16};
+    --border-radius-none: #{primitives_variables2.$size-0};
+    --border-radius-3xs: #{primitives_variables2.$size-2};
+    --border-radius-2xs: #{primitives_variables2.$size-4};
+    --border-radius-xs: #{primitives_variables2.$size-6};
+    --border-radius-sm: #{primitives_variables2.$size-8};
+    --border-radius-md: #{primitives_variables2.$size-10};
+    --border-radius-lg: #{primitives_variables2.$size-12};
+    --border-radius-xl: #{primitives_variables2.$size-14};
+    --border-radius-2xl: #{primitives_variables2.$size-16};
     --border-radius-full: 50%;
 
     //border-width
-    --border-1: #{$size-1};
-    --border-2: #{$size-2};
+    --border-1: #{primitives_variables2.$size-1};
+    --border-2: #{primitives_variables2.$size-2};
 
     //text
-    --text-brand-primary: #{$brand-500};
-    --text-brand-secondary: #{$brand-300};
-    --text-primary: #{$grey-800};
-    --text-secondary: #{$grey-700};
-    --text-tertiary: #{$grey-600};
-    --text-success: #{$green-500};
-    --text-info: #{$blue-900};
-    --text-warning: #{$yellow-500};
-    --text-danger: #{$red-500};
-    --text-highlight: #{$purple-500};
-    --text-calm: #{$green-900};
-    --text-white: #{$white};
-    --text-disable: #{$grey-400};
-    --text-placeholder: #{$grey-400};
-    --text-label: #{$grey-500};
-    --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
-    --text-muted: #{$grey-500};
+    --text-brand-primary: #{primitives_variables.$brand-500};
+    --text-brand-secondary: #{primitives_variables.$brand-300};
+    --text-primary: #{primitives_variables.$grey-800};
+    --text-secondary: #{primitives_variables.$grey-700};
+    --text-tertiary: #{primitives_variables.$grey-600};
+    --text-success: #{primitives_variables.$green-500};
+    --text-info: #{primitives_variables.$blue-900};
+    --text-warning: #{primitives_variables.$yellow-500};
+    --text-danger: #{primitives_variables.$red-500};
+    --text-highlight: #{primitives_variables.$purple-500};
+    --text-calm: #{primitives_variables.$green-900};
+    --text-white: #{primitives_variables2.$white};
+    --text-disable: #{primitives_variables.$grey-400};
+    --text-placeholder: #{primitives_variables.$grey-400};
+    --text-label: #{primitives_variables.$grey-500};
+    --text-pending: #{primitives_variables.$yellow-800}; //todo: confirmation from design team for the exact token names
+    --text-muted: #{primitives_variables.$grey-500};
 
     //link
-    --link-primary: #{$blue-600};
-    --link-visited: #{$purple-500};
+    --link-primary: #{primitives_variables.$blue-600};
+    --link-visited: #{primitives_variables.$purple-500};
 
     //icons
-    --icon-brand-primary: #{$brand-500};
-    --icon-brand-disable: #{$brand-300};
-    --icon-secondary: #{$grey-700};
-    --icon-tertiary: #{$grey-500};
-    --icon-disable: #{$grey-400};
-    --icon-white: #{$white};
-    --icon-success: #{$green-500};
-    --icon-danger: #{$red-500};
-    --icon-info: #{$blue-500};
-    --icon-warning: #{$yellow-500};
-    --icon-muted: #{$grey-400};
+    --icon-brand-primary: #{primitives_variables.$brand-500};
+    --icon-brand-disable: #{primitives_variables.$brand-300};
+    --icon-secondary: #{primitives_variables.$grey-700};
+    --icon-tertiary: #{primitives_variables.$grey-500};
+    --icon-disable: #{primitives_variables.$grey-400};
+    --icon-white: #{primitives_variables2.$white};
+    --icon-success: #{primitives_variables.$green-500};
+    --icon-danger: #{primitives_variables.$red-500};
+    --icon-info: #{primitives_variables.$blue-500};
+    --icon-warning: #{primitives_variables.$yellow-500};
+    --icon-muted: #{primitives_variables.$grey-400};
 
     //spacing
-    --spacing-0: #{$size-0};
-    --spacing-2: #{$size-2};
-    --spacing-4: #{$size-4};
-    --spacing-6: #{$size-6};
-    --spacing-8: #{$size-8};
-    --spacing-10: #{$size-10};
-    --spacing-12: #{$size-12};
-    --spacing-14: #{$size-14};
-    --spacing-16: #{$size-16};
-    --spacing-18: #{$size-18};
-    --spacing-20: #{$size-20};
-    --spacing-24: #{$size-24};
-    --spacing-28: #{$size-28};
-    --spacing-32: #{$size-32};
-    --spacing-40: #{$size-40};
-    --spacing-48: #{$size-48};
-    --spacing-56: #{$size-56};
-    --spacing-72: #{$size-72};
+    --spacing-0: #{primitives_variables2.$size-0};
+    --spacing-2: #{primitives_variables2.$size-2};
+    --spacing-4: #{primitives_variables2.$size-4};
+    --spacing-6: #{primitives_variables2.$size-6};
+    --spacing-8: #{primitives_variables2.$size-8};
+    --spacing-10: #{primitives_variables2.$size-10};
+    --spacing-12: #{primitives_variables2.$size-12};
+    --spacing-14: #{primitives_variables2.$size-14};
+    --spacing-16: #{primitives_variables2.$size-16};
+    --spacing-18: #{primitives_variables2.$size-18};
+    --spacing-20: #{primitives_variables2.$size-20};
+    --spacing-24: #{primitives_variables2.$size-24};
+    --spacing-28: #{primitives_variables2.$size-28};
+    --spacing-32: #{primitives_variables2.$size-32};
+    --spacing-40: #{primitives_variables2.$size-40};
+    --spacing-48: #{primitives_variables2.$size-48};
+    --spacing-56: #{primitives_variables2.$size-56};
+    --spacing-72: #{primitives_variables2.$size-72};
 
     //font size, dimensions
-    --size-0: #{$size-0};
-    --size-2: #{$size-2};
-    --size-4: #{$size-4};
-    --size-6: #{$size-6};
-    --size-8: #{$size-8};
-    --size-10: #{$size-10};
-    --size-12: #{$size-12};
-    --size-14: #{$size-14};
-    --size-16: #{$size-16};
-    --size-18: #{$size-18};
-    --size-20: #{$size-20};
-    --size-24: #{$size-24};
-    --size-28: #{$size-28};
-    --size-32: #{$size-32};
-    --size-40: #{$size-40};
-    --size-48: #{$size-48};
-    --size-56: #{$size-56};
-    --size-72: #{$size-72};
+    --size-0: #{primitives_variables2.$size-0};
+    --size-2: #{primitives_variables2.$size-2};
+    --size-4: #{primitives_variables2.$size-4};
+    --size-6: #{primitives_variables2.$size-6};
+    --size-8: #{primitives_variables2.$size-8};
+    --size-10: #{primitives_variables2.$size-10};
+    --size-12: #{primitives_variables2.$size-12};
+    --size-14: #{primitives_variables2.$size-14};
+    --size-16: #{primitives_variables2.$size-16};
+    --size-18: #{primitives_variables2.$size-18};
+    --size-20: #{primitives_variables2.$size-20};
+    --size-24: #{primitives_variables2.$size-24};
+    --size-28: #{primitives_variables2.$size-28};
+    --size-32: #{primitives_variables2.$size-32};
+    --size-40: #{primitives_variables2.$size-40};
+    --size-48: #{primitives_variables2.$size-48};
+    --size-56: #{primitives_variables2.$size-56};
+    --size-72: #{primitives_variables2.$size-72};
     --size-70-percent: 70%;
 
     //gradients from FDL
@@ -195,7 +196,7 @@
     
     /*TODO-clean up once figma tokens are created*/ 
     //brand gradient
-    --gradient-brand-start: #{$brand-500};
+    --gradient-brand-start: #{primitives_variables.$brand-500};
     --gradient-brand-end: #fe5196;
     --gradient-light-sm-start: #e1eeff; 
     --gradient-light-sm-end: #ffe4fb;
@@ -206,47 +207,47 @@
 
     --btn-cta-shadow: 0px 4px 4px rgba(44, 48, 78, 0.1);
 
-    --btn-primary-disable-text-color: #{$white};
+    --btn-primary-disable-text-color: #{primitives_variables2.$white};
 
     //focus
-    --secondary-outline-focus: #{$grey-100};
+    --secondary-outline-focus: #{primitives_variables.$grey-100};
 
-    --black: #{$black};
+    --black: #{primitives_variables2.$black};
 
     // Button Primary - Default
     --btn-primary-bg: linear-gradient(162deg, #ff3366 3.01%, #fe5196 111.5%);
 
     --btn-primary-hover-bg: linear-gradient(162deg, #F36 3.01%, #FE5196 111.5%);
 
-    --btn-primary-text-color: #{$white};
+    --btn-primary-text-color: #{primitives_variables2.$white};
 
-    --btn-primary-hover-text-color: #{$white};
+    --btn-primary-hover-text-color: #{primitives_variables2.$white};
 
     --btn-secondary-bg: var(--gradient-dark-xs-start);
 
-    --btn-secondary-text-color: #{$white};
+    --btn-secondary-text-color: #{primitives_variables2.$white};
 
     --btn-secondary-hover-bg: var(--gradient-dark-xs-start);
 
-    --btn-secondary-hover-text-color: #{$white};
+    --btn-secondary-hover-text-color: #{primitives_variables2.$white};
 
-    --btn-outline-secondary-bg: #{$white};
+    --btn-outline-secondary-bg: #{primitives_variables2.$white};
 
-    --btn-outline-secondary-border-color: #{$grey-300};
+    --btn-outline-secondary-border-color: #{primitives_variables.$grey-300};
 
     --btn-outline-secondary-text-color: var(--text-secondary);
 
     --btn-outline-secondary-hover-text-color: var(--text-secondary);
 
-    --btn-outline-secondary-hover-border-color: #{$grey-300};
+    --btn-outline-secondary-hover-border-color: #{primitives_variables.$grey-300};
 
-    --btn-outline-secondary-hover-bg: #{$white};
+    --btn-outline-secondary-hover-bg: #{primitives_variables2.$white};
 
     --btn-tertiary-text-color: var(--text-brand-primary);
     
     --btn-tertiary-hover-text-color: var(--text-brand-primary);
 
-    --btn-tertiary-hover-bg: #{$white};
+    --btn-tertiary-hover-bg: #{primitives_variables2.$white};
 
     --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
 
@@ -264,7 +265,7 @@
 
     --nav-tabs-active-border: var(--border-secondary);
 
-    --nav-tabs-active-bg:  #{$white};
+    --nav-tabs-active-bg:  #{primitives_variables2.$white};
 
     --nav-tabs-inactive-bg: transparent;
 

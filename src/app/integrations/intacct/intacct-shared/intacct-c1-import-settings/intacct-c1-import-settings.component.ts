@@ -19,9 +19,10 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-c1-import-settings',
-  templateUrl: './intacct-c1-import-settings.component.html',
-  styleUrls: ['./intacct-c1-import-settings.component.scss']
+    selector: 'app-intacct-c1-import-settings',
+    templateUrl: './intacct-c1-import-settings.component.html',
+    styleUrls: ['./intacct-c1-import-settings.component.scss'],
+    standalone: false
 })
 export class IntacctC1ImportSettingsComponent implements OnInit {
 

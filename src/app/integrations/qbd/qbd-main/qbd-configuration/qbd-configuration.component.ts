@@ -7,9 +7,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-configuration',
-  templateUrl: './qbd-configuration.component.html',
-  styleUrls: ['./qbd-configuration.component.scss']
+    selector: 'app-qbd-configuration',
+    templateUrl: './qbd-configuration.component.html',
+    styleUrls: ['./qbd-configuration.component.scss'],
+    standalone: false
 })
 export class QbdConfigurationComponent implements OnInit {
 

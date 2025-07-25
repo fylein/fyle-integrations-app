@@ -24,9 +24,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-qbo-advanced-settings',
-  templateUrl: './qbo-advanced-settings.component.html',
-  styleUrls: ['./qbo-advanced-settings.component.scss']
+    selector: 'app-qbo-advanced-settings',
+    templateUrl: './qbo-advanced-settings.component.html',
+    styleUrls: ['./qbo-advanced-settings.component.scss'],
+    standalone: false
 })
 export class QboAdvancedSettingsComponent implements OnInit {
 

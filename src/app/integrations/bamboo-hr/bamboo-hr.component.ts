@@ -14,9 +14,10 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-bamboo-hr',
-  templateUrl: './bamboo-hr.component.html',
-  styleUrls: ['./bamboo-hr.component.scss']
+    selector: 'app-bamboo-hr',
+    templateUrl: './bamboo-hr.component.html',
+    styleUrls: ['./bamboo-hr.component.scss'],
+    standalone: false
 })
 export class BambooHrComponent implements OnInit {
 

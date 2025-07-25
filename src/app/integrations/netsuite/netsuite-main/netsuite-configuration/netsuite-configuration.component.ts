@@ -4,9 +4,10 @@ import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-configuration',
-  templateUrl: './netsuite-configuration.component.html',
-  styleUrls: ['./netsuite-configuration.component.scss']
+    selector: 'app-netsuite-configuration',
+    templateUrl: './netsuite-configuration.component.html',
+    styleUrls: ['./netsuite-configuration.component.scss'],
+    standalone: false
 })
 export class NetsuiteConfigurationComponent implements OnInit {
 

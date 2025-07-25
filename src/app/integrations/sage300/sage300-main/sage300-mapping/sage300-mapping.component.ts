@@ -9,9 +9,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-mapping',
-  templateUrl: './sage300-mapping.component.html',
-  styleUrls: ['./sage300-mapping.component.scss']
+    selector: 'app-sage300-mapping',
+    templateUrl: './sage300-mapping.component.html',
+    styleUrls: ['./sage300-mapping.component.scss'],
+    standalone: false
 })
 export class Sage300MappingComponent implements OnInit {
 

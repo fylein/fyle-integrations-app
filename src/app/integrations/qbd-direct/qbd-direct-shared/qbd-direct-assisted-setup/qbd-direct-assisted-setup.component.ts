@@ -6,10 +6,11 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
 @Component({
-  selector: 'app-qbd-direct-assisted-setup',
-  templateUrl: './qbd-direct-assisted-setup.component.html',
-  styleUrls: ['./qbd-direct-assisted-setup.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-qbd-direct-assisted-setup',
+    templateUrl: './qbd-direct-assisted-setup.component.html',
+    styleUrls: ['./qbd-direct-assisted-setup.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 
 export class QbdDirectAssistedSetupComponent {

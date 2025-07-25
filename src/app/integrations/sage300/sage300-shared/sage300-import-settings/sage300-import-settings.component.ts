@@ -20,9 +20,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-sage300-import-settings',
-  templateUrl: './sage300-import-settings.component.html',
-  styleUrls: ['./sage300-import-settings.component.scss']
+    selector: 'app-sage300-import-settings',
+    templateUrl: './sage300-import-settings.component.html',
+    styleUrls: ['./sage300-import-settings.component.scss'],
+    standalone: false
 })
 export class Sage300ImportSettingsComponent implements OnInit {
 

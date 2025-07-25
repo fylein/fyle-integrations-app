@@ -11,9 +11,10 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-mapping-resolve',
-  templateUrl: './dashboard-mapping-resolve.component.html',
-  styleUrls: ['./dashboard-mapping-resolve.component.scss']
+    selector: 'app-dashboard-mapping-resolve',
+    templateUrl: './dashboard-mapping-resolve.component.html',
+    styleUrls: ['./dashboard-mapping-resolve.component.scss'],
+    standalone: false
 })
 export class DashboardMappingResolveComponent implements OnInit {
 

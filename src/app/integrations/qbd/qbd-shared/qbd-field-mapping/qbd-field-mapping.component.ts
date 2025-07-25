@@ -13,9 +13,10 @@ import { forkJoin } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-field-mapping',
-  templateUrl: './qbd-field-mapping.component.html',
-  styleUrls: ['./qbd-field-mapping.component.scss']
+    selector: 'app-qbd-field-mapping',
+    templateUrl: './qbd-field-mapping.component.html',
+    styleUrls: ['./qbd-field-mapping.component.scss'],
+    standalone: false
 })
 export class QbdFieldMappingComponent implements OnInit {
 

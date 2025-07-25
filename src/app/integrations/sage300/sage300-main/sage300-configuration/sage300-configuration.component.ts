@@ -4,9 +4,10 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-configuration',
-  templateUrl: './sage300-configuration.component.html',
-  styleUrls: ['./sage300-configuration.component.scss']
+    selector: 'app-sage300-configuration',
+    templateUrl: './sage300-configuration.component.html',
+    styleUrls: ['./sage300-configuration.component.scss'],
+    standalone: false
 })
 export class Sage300ConfigurationComponent implements OnInit {
 

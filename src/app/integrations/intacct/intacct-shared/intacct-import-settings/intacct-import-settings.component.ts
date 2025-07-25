@@ -25,9 +25,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-intacct-import-settings',
-  templateUrl: './intacct-import-settings.component.html',
-  styleUrls: ['./intacct-import-settings.component.scss']
+    selector: 'app-intacct-import-settings',
+    templateUrl: './intacct-import-settings.component.html',
+    styleUrls: ['./intacct-import-settings.component.scss'],
+    standalone: false
 })
 
 export class IntacctImportSettingsComponent implements OnInit {

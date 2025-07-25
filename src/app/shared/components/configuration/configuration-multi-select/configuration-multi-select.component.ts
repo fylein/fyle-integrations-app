@@ -6,9 +6,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-multi-select',
-  templateUrl: './configuration-multi-select.component.html',
-  styleUrls: ['./configuration-multi-select.component.scss']
+    selector: 'app-configuration-multi-select',
+    templateUrl: './configuration-multi-select.component.html',
+    styleUrls: ['./configuration-multi-select.component.scss'],
+    standalone: false
 })
 export class ConfigurationMultiSelectComponent implements OnInit {
 

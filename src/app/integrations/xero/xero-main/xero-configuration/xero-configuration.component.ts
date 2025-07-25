@@ -4,9 +4,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-configuration',
-  templateUrl: './xero-configuration.component.html',
-  styleUrls: ['./xero-configuration.component.scss']
+    selector: 'app-xero-configuration',
+    templateUrl: './xero-configuration.component.html',
+    styleUrls: ['./xero-configuration.component.scss'],
+    standalone: false
 })
 export class XeroConfigurationComponent implements OnInit {
 

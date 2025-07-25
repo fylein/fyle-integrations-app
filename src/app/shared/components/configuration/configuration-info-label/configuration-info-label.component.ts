@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-configuration-info-label',
-  templateUrl: './configuration-info-label.component.html',
-  styleUrls: ['./configuration-info-label.component.scss']
+    selector: 'app-configuration-info-label',
+    templateUrl: './configuration-info-label.component.html',
+    styleUrls: ['./configuration-info-label.component.scss'],
+    standalone: false
 })
 export class ConfigurationInfoLabelComponent implements OnInit {
 

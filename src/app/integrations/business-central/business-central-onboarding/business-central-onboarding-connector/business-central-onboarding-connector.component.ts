@@ -27,9 +27,10 @@ import { BusinessCentralMappingService } from 'src/app/core/services/business-ce
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-onboarding-connector',
-  templateUrl: './business-central-onboarding-connector.component.html',
-  styleUrls: ['./business-central-onboarding-connector.component.scss']
+    selector: 'app-business-central-onboarding-connector',
+    templateUrl: './business-central-onboarding-connector.component.html',
+    styleUrls: ['./business-central-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDestroy {
 

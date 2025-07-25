@@ -25,9 +25,10 @@ import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-onboarding-connector',
-  templateUrl: './xero-onboarding-connector.component.html',
-  styleUrls: ['./xero-onboarding-connector.component.scss']
+    selector: 'app-xero-onboarding-connector',
+    templateUrl: './xero-onboarding-connector.component.html',
+    styleUrls: ['./xero-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
 

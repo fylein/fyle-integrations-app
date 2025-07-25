@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-configuration-custom-field-creation-dialog',
-  templateUrl: './configuration-custom-field-creation-dialog.component.html',
-  styleUrls: ['./configuration-custom-field-creation-dialog.component.scss']
+    selector: 'app-configuration-custom-field-creation-dialog',
+    templateUrl: './configuration-custom-field-creation-dialog.component.html',
+    styleUrls: ['./configuration-custom-field-creation-dialog.component.scss'],
+    standalone: false
 })
 export class ConfigurationCustomFieldCreationDialogComponent implements OnInit {
 

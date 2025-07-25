@@ -22,9 +22,10 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { ExportSettingsService as IntacctExportSettingsService } from 'src/app/core/services/intacct/intacct-configuration/export-settings.service';
 
 @Component({
-  selector: 'app-intacct-export-settings',
-  templateUrl: './intacct-export-settings.component.html',
-  styleUrls: ['./intacct-export-settings.component.scss']
+    selector: 'app-intacct-export-settings',
+    templateUrl: './intacct-export-settings.component.html',
+    styleUrls: ['./intacct-export-settings.component.scss'],
+    standalone: false
 })
 export class IntacctExportSettingsComponent implements OnInit {
 

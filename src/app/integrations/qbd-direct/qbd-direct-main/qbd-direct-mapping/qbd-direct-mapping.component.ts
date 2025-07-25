@@ -12,11 +12,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-mapping',
-  standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-mapping.component.html',
-  styleUrl: './qbd-direct-mapping.component.scss'
+    selector: 'app-qbd-direct-mapping',
+    imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-mapping.component.html',
+    styleUrl: './qbd-direct-mapping.component.scss'
 })
 export class QbdDirectMappingComponent implements OnInit {
 

@@ -30,16 +30,16 @@
     @apply tw-text-12-px tw-mr-12-px tw-w-auto;
 }
   
-:host ::ng-deep .p-calendar .p-inputtext {
+:host ::ng-deep .p-datepicker .p-inputtext {
     @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
   
-:host ::ng-deep .p-chips-token {
+:host ::ng-deep .p-autocomplete-token {
     @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-border-line-inactive tw-shadow-chip-shadow
 }
   
   /* To remove blue hover and other styles */
-  :host ::ng-deep .p-chips input:focus {
+  :host ::ng-deep .p-autocomplete input:focus {
     // outline: none !important;
     box-shadow: none !important;
     // border-color: inherit !important;
@@ -47,7 +47,7 @@
   }
   
   /* Scrollable container */
-  :host ::ng-deep .p-chips-multiple-container {
+  :host ::ng-deep .p-autocomplete-multiple-container {
     max-height: 80px;
     overflow-y: auto;
     width: 360px !important;
@@ -58,30 +58,30 @@
     box-shadow: 1px 1px white;
   }
 
-  :host ::ng-deep .p-chips-multiple-container:enabled:focus {
+  :host ::ng-deep .p-autocomplete-multiple-container:enabled:focus {
     box-shadow: none;
     border: 1px solid var(--select-focused-border);
   }
   
   /* Change text color to black */
-  :host ::ng-deep .p-chips-token-label {
+  :host ::ng-deep .p-autocomplete-token-label {
     @apply tw-text-chips-body-text-color #{!important};
   }
   
   
-  :host ::ng-deep .p-chips-token-icon {
+  :host ::ng-deep .p-autocomplete-token-icon {
     @apply tw-text-slightly-normal-text-color #{!important};
   }
   
-  :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {
+  :host ::ng-deep .p-autocomplete-multiple-container::-webkit-scrollbar {
     background: transparent;  /* For WebKit browsers like Chrome and Safari */
   }
   
-  :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
+  :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-datepicker .p-inputtext{
     @apply tw-bg-input-read-only-bg #{!important};
   }
   
-  :host ::ng-deep .p-calendar ::placeholder {
+  :host ::ng-deep .p-datepicker ::placeholder {
     @apply tw-text-placeholder #{!important};
   }
   

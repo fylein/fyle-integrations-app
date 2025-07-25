@@ -10,9 +10,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-base-mapping',
-  templateUrl: './business-central-base-mapping.component.html',
-  styleUrls: ['./business-central-base-mapping.component.scss']
+    selector: 'app-business-central-base-mapping',
+    templateUrl: './business-central-base-mapping.component.html',
+    styleUrls: ['./business-central-base-mapping.component.scss'],
+    standalone: false
 })
 export class BusinessCentralBaseMappingComponent implements OnInit {
 

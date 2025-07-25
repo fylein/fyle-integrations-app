@@ -5,9 +5,10 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-configuration-toggle-field',
-  templateUrl: './configuration-toggle-field.component.html',
-  styleUrls: ['./configuration-toggle-field.component.scss']
+    selector: 'app-configuration-toggle-field',
+    templateUrl: './configuration-toggle-field.component.html',
+    styleUrls: ['./configuration-toggle-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 

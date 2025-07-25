@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-configuration',
-  templateUrl: './intacct-configuration.component.html',
-  styleUrls: ['./intacct-configuration.component.scss']
+    selector: 'app-intacct-configuration',
+    templateUrl: './intacct-configuration.component.html',
+    styleUrls: ['./intacct-configuration.component.scss'],
+    standalone: false
 })
 export class IntacctConfigurationComponent implements OnInit {
 

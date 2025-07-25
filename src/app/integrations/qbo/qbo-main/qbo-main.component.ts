@@ -9,9 +9,10 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-main',
-  templateUrl: './qbo-main.component.html',
-  styleUrls: ['./qbo-main.component.scss']
+    selector: 'app-qbo-main',
+    templateUrl: './qbo-main.component.html',
+    styleUrls: ['./qbo-main.component.scss'],
+    standalone: false
 })
 export class QboMainComponent implements OnInit {
 

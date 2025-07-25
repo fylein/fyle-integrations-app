@@ -4,9 +4,10 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-landing-page-body',
-  templateUrl: './app-landing-page-body.component.html',
-  styleUrls: ['./app-landing-page-body.component.scss']
+    selector: 'app-landing-page-body',
+    templateUrl: './app-landing-page-body.component.html',
+    styleUrls: ['./app-landing-page-body.component.scss'],
+    standalone: false
 })
 export class AppLandingPageBodyComponent implements OnInit {
 

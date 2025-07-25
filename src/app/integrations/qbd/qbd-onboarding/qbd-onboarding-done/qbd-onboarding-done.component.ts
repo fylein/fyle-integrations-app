@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-qbd-onboarding-done',
-  templateUrl: './qbd-onboarding-done.component.html',
-  styleUrls: ['./qbd-onboarding-done.component.scss']
+    selector: 'app-qbd-onboarding-done',
+    templateUrl: './qbd-onboarding-done.component.html',
+    styleUrls: ['./qbd-onboarding-done.component.scss'],
+    standalone: false
 })
 export class QbdOnboardingDoneComponent implements OnInit {
 

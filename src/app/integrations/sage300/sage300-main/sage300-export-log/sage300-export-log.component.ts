@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-export-log',
-  templateUrl: './sage300-export-log.component.html',
-  styleUrls: ['./sage300-export-log.component.scss']
+    selector: 'app-sage300-export-log',
+    templateUrl: './sage300-export-log.component.html',
+    styleUrls: ['./sage300-export-log.component.scss'],
+    standalone: false
 })
 export class Sage300ExportLogComponent implements OnInit {
 

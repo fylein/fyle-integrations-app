@@ -7,11 +7,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-configuration',
-  standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-configuration.component.html',
-  styleUrl: './qbd-direct-configuration.component.scss'
+    selector: 'app-qbd-direct-configuration',
+    imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-configuration.component.html',
+    styleUrl: './qbd-direct-configuration.component.scss'
 })
 export class QbdDirectConfigurationComponent {
 

@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-onboarding-done',
-  templateUrl: './onboarding-done.component.html',
-  styleUrls: ['./onboarding-done.component.scss']
+    selector: 'app-onboarding-done',
+    templateUrl: './onboarding-done.component.html',
+    styleUrls: ['./onboarding-done.component.scss'],
+    standalone: false
 })
 export class OnboardingDoneComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-travelperk-configuration',
-  templateUrl: './travelperk-configuration.component.html',
-  styleUrls: ['./travelperk-configuration.component.scss']
+    selector: 'app-travelperk-configuration',
+    templateUrl: './travelperk-configuration.component.html',
+    styleUrls: ['./travelperk-configuration.component.scss'],
+    standalone: false
 })
 export class TravelperkConfigurationComponent implements OnInit {
 

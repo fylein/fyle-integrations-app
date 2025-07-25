@@ -7,9 +7,10 @@ import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-help
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-main',
-  templateUrl: './sage300-main.component.html',
-  styleUrls: ['./sage300-main.component.scss']
+    selector: 'app-sage300-main',
+    templateUrl: './sage300-main.component.html',
+    styleUrls: ['./sage300-main.component.scss'],
+    standalone: false
 })
 export class Sage300MainComponent {
 

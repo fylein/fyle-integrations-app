@@ -7,9 +7,10 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-travelperk-main',
-  templateUrl: './travelperk-main.component.html',
-  styleUrls: ['./travelperk-main.component.scss']
+    selector: 'app-travelperk-main',
+    templateUrl: './travelperk-main.component.html',
+    styleUrls: ['./travelperk-main.component.scss'],
+    standalone: false
 })
 export class TravelperkMainComponent implements OnInit {
 

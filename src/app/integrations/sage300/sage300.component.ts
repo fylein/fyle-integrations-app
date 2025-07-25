@@ -12,9 +12,10 @@ import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-c
 import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
 
 @Component({
-  selector: 'app-sage300',
-  templateUrl: './sage300.component.html',
-  styleUrls: ['./sage300.component.scss']
+    selector: 'app-sage300',
+    templateUrl: './sage300.component.html',
+    styleUrls: ['./sage300.component.scss'],
+    standalone: false
 })
 export class Sage300Component implements OnInit {
 

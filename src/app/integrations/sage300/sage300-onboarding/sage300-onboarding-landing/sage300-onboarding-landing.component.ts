@@ -3,9 +3,10 @@ import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-sage300-onboarding-landing',
-  templateUrl: './sage300-onboarding-landing.component.html',
-  styleUrls: ['./sage300-onboarding-landing.component.scss']
+    selector: 'app-sage300-onboarding-landing',
+    templateUrl: './sage300-onboarding-landing.component.html',
+    styleUrls: ['./sage300-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class Sage300OnboardingLandingComponent implements OnInit {
 

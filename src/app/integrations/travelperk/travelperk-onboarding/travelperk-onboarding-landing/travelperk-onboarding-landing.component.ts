@@ -13,9 +13,10 @@ import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-travelperk-onboarding-landing',
-  templateUrl: './travelperk-onboarding-landing.component.html',
-  styleUrls: ['./travelperk-onboarding-landing.component.scss']
+    selector: 'app-travelperk-onboarding-landing',
+    templateUrl: './travelperk-onboarding-landing.component.html',
+    styleUrls: ['./travelperk-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class TravelperkOnboardingLandingComponent implements OnInit {
 

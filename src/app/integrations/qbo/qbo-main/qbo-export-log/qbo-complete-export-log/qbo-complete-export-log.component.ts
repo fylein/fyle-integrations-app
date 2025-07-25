@@ -18,9 +18,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-qbo-complete-export-log',
-  templateUrl: './qbo-complete-export-log.component.html',
-  styleUrls: ['./qbo-complete-export-log.component.scss']
+    selector: 'app-qbo-complete-export-log',
+    templateUrl: './qbo-complete-export-log.component.html',
+    styleUrls: ['./qbo-complete-export-log.component.scss'],
+    standalone: false
 })
 export class QboCompleteExportLogComponent implements OnInit {
 

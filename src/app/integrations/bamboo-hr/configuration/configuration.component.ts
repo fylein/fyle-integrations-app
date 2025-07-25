@@ -9,9 +9,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
-  selector: 'app-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+    selector: 'app-configuration',
+    templateUrl: './configuration.component.html',
+    styleUrls: ['./configuration.component.scss'],
+    standalone: false
 })
 export class ConfigurationComponent implements OnInit {
 

@@ -6,11 +6,10 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
-  selector: 'app-checkbox-button',
-  standalone: true,
-  imports: [ButtonModule, CommonModule, FormsModule],
-  templateUrl: './checkbox-button.component.html',
-  styleUrl: './checkbox-button.component.scss'
+    selector: 'app-checkbox-button',
+    imports: [ButtonModule, CommonModule, FormsModule],
+    templateUrl: './checkbox-button.component.html',
+    styleUrl: './checkbox-button.component.scss'
 })
 export class CheckboxButtonComponent {
 

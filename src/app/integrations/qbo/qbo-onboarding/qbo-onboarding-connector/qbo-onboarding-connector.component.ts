@@ -24,9 +24,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
-  selector: 'app-qbo-onboarding-connector',
-  templateUrl: './qbo-onboarding-connector.component.html',
-  styleUrls: ['./qbo-onboarding-connector.component.scss']
+    selector: 'app-qbo-onboarding-connector',
+    templateUrl: './qbo-onboarding-connector.component.html',
+    styleUrls: ['./qbo-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
