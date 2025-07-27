@@ -143,6 +143,7 @@ p {
 @import 'assets/scss/checkboxes';
 @import 'assets/scss/multiselect';
 @import 'assets/scss/dropdowns';
+@import 'assets/scss/datepicker';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -230,44 +231,6 @@ p {
     @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
 }
 
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
-    @apply tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title {
-    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-pr-24-px #{!important};
-}
-
-.p-datepicker .p-datepicker-header {
-    @apply tw-p-0 #{!important};
-}
-
-.p-datepicker table th {
-    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
-}
-
-.p-datepicker table td {
-    @apply tw-p-0 tw-pb-4-px #{!important};
-}
-
-.p-datepicker table td>span {
-    @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
-}
-
-.p-datepicker {
-    @apply tw-p-16-px #{!important};
-}
-
 .configuration {
     &--section {
         @apply tw-pb-100-px;
@@ -284,56 +247,6 @@ p {
 
 .unmapped {
     @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
-}
-
-.p-monthpicker-month {
-    @apply tw-w-[25%] #{!important};
-}
-
-.p-datepicker .p-monthpicker .p-monthpicker-month {
-    @apply tw-p-0 tw-mt-10-px tw-text-14-px tw-text-calendar-month-text-color tw-h-32-px #{!important};
-}
-
-.p-datepicker .p-yearpicker .p-yearpicker-year {
-    @apply tw-p-0 tw-mt-10-px tw-h-32-px tw-text-14-px #{!important};
-}
-
-.p-yearpicker-year {
-    @apply tw-w-[25%] #{!important};
-}
-
-.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-bg-calendar-month-hover-bg #{!important};
-}
-
-.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
-.p-datepicker .p-datepicker-header .p-datepicker-next:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker table td>span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
-}
-
-.p-datepicker table td>span:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker table th {
-    @apply tw-text-center #{!important};
-}
-
-.p-datepicker-touch-ui,
-.p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
 }
 
 .p-chips .p-chips-multiple-container .p-chips-token {

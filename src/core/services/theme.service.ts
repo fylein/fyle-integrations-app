@@ -59,6 +59,7 @@ export class ThemeService {
     this.applyCheckboxStyles(root, preset.components.checkbox);
     this.applyMultiselectStyles(root, preset.components.multiselect);
     this.applyDropdownStyles(root, preset.components.dropdown);
+    this.applyDatepickerStyles(root, preset.components.datepicker);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -668,6 +669,129 @@ return;
     if (dropdownStyles.filterIcon) {
       Object.entries(dropdownStyles.filterIcon).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-dropdown-filter-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyDatepickerStyles(root: HTMLElement, datepickerStyles: any): void {
+    // Base datepicker styles
+    if (datepickerStyles.padding) {
+      root.style.setProperty('--preset-datepicker-padding', datepickerStyles.padding);
+    }
+
+    // Header styles
+    if (datepickerStyles.header) {
+      Object.entries(datepickerStyles.header).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-header-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Title styles
+    if (datepickerStyles.title) {
+      const titleBaseProps = ['fontSize', 'fontFamily', 'color'];
+      titleBaseProps.forEach(prop => {
+        if (datepickerStyles.title[prop]) {
+          root.style.setProperty(`--preset-datepicker-title-${this.kebabCase(prop)}`, datepickerStyles.title[prop]);
+        }
+      });
+
+      // Title hover styles
+      if (datepickerStyles.title.hover) {
+        Object.entries(datepickerStyles.title.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-datepicker-title-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Month styles
+    if (datepickerStyles.month) {
+      Object.entries(datepickerStyles.month).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-month-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Navigation styles
+    if (datepickerStyles.nav && datepickerStyles.nav.focus) {
+      Object.entries(datepickerStyles.nav.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-nav-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Day header styles
+    if (datepickerStyles.dayHeader) {
+      Object.entries(datepickerStyles.dayHeader).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-day-header-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Cell styles
+    if (datepickerStyles.cell) {
+      Object.entries(datepickerStyles.cell).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-cell-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Date styles
+    if (datepickerStyles.date) {
+      const dateBaseProps = ['fontSize', 'color', 'height', 'width'];
+      dateBaseProps.forEach(prop => {
+        if (datepickerStyles.date[prop]) {
+          root.style.setProperty(`--preset-datepicker-date-${this.kebabCase(prop)}`, datepickerStyles.date[prop]);
+        }
+      });
+
+      // Date focus styles
+      if (datepickerStyles.date.focus) {
+        Object.entries(datepickerStyles.date.focus).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-datepicker-date-focus-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Date highlight styles
+      if (datepickerStyles.date.highlight) {
+        Object.entries(datepickerStyles.date.highlight).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-datepicker-date-highlight-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Date hover styles
+      if (datepickerStyles.date.hover) {
+        Object.entries(datepickerStyles.date.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-datepicker-date-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Month picker styles
+    if (datepickerStyles.monthpicker) {
+      Object.entries(datepickerStyles.monthpicker).forEach(([prop, value]) => {
+        if (prop === 'focus') {
+          Object.entries(value as any).forEach(([focusProp, focusValue]) => {
+            root.style.setProperty(`--preset-datepicker-monthpicker-focus-${this.kebabCase(focusProp)}`, focusValue as string);
+          });
+        } else {
+          root.style.setProperty(`--preset-datepicker-monthpicker-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+    }
+
+    // Year picker styles
+    if (datepickerStyles.yearpicker) {
+      Object.entries(datepickerStyles.yearpicker).forEach(([prop, value]) => {
+        if (prop === 'focus') {
+          Object.entries(value as any).forEach(([focusProp, focusValue]) => {
+            root.style.setProperty(`--preset-datepicker-yearpicker-focus-${this.kebabCase(focusProp)}`, focusValue as string);
+          });
+        } else {
+          root.style.setProperty(`--preset-datepicker-yearpicker-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+    }
+
+    // Touch UI styles
+    if (datepickerStyles.touchUi) {
+      Object.entries(datepickerStyles.touchUi).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-datepicker-touch-ui-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

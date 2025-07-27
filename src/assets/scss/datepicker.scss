@@ -1,0 +1,108 @@
+.p-datepicker {
+  padding: var(--preset-datepicker-padding) !important;
+}
+
+.p-datepicker .p-datepicker-header {
+  padding: var(--preset-datepicker-header-padding) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+  font-size: var(--preset-datepicker-title-font-size) !important;
+  font-family: var(--preset-datepicker-title-font-family) !important;
+  color: var(--preset-datepicker-title-color) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+  font-size: var(--preset-datepicker-title-font-size) !important;
+  font-family: var(--preset-datepicker-title-font-family) !important;
+  color: var(--preset-datepicker-title-color) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:hover,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
+  color: var(--preset-datepicker-title-hover-color) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+  padding-right: var(--preset-datepicker-month-padding-right) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
+.p-datepicker .p-datepicker-header .p-datepicker-next:focus {
+  box-shadow: var(--preset-datepicker-nav-focus-box-shadow) !important;
+}
+
+.p-datepicker table th {
+  font-size: var(--preset-datepicker-day-header-font-size) !important;
+  color: var(--preset-datepicker-day-header-color) !important;
+  padding: var(--preset-datepicker-day-header-padding) !important;
+  padding-top: var(--preset-datepicker-day-header-padding-top) !important;
+  padding-bottom: var(--preset-datepicker-day-header-padding-bottom) !important;
+  text-align: var(--preset-datepicker-day-header-text-align) !important;
+}
+
+.p-datepicker table td {
+  padding: var(--preset-datepicker-cell-padding) !important;
+  padding-bottom: var(--preset-datepicker-cell-padding-bottom) !important;
+}
+
+.p-datepicker table td>span {
+  font-size: var(--preset-datepicker-date-font-size) !important;
+  color: var(--preset-datepicker-date-color) !important;
+  height: var(--preset-datepicker-date-height) !important;
+  width: var(--preset-datepicker-date-width) !important;
+}
+
+.p-datepicker table td>span:focus {
+  box-shadow: var(--preset-datepicker-date-focus-box-shadow) !important;
+}
+
+.p-datepicker table td>span.p-highlight {
+  color: var(--preset-datepicker-date-highlight-color) !important;
+  background: var(--preset-datepicker-date-highlight-background) !important;
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+  background: var(--preset-datepicker-date-hover-background) !important;
+}
+
+.p-monthpicker-month {
+  width: var(--preset-datepicker-monthpicker-width) !important;
+}
+
+.p-datepicker .p-monthpicker .p-monthpicker-month {
+  padding: var(--preset-datepicker-monthpicker-padding) !important;
+  margin-top: var(--preset-datepicker-monthpicker-margin-top) !important;
+  font-size: var(--preset-datepicker-monthpicker-font-size) !important;
+  color: var(--preset-datepicker-monthpicker-color) !important;
+  height: var(--preset-datepicker-monthpicker-height) !important;
+}
+
+.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
+  box-shadow: var(--preset-datepicker-monthpicker-focus-box-shadow) !important;
+}
+
+.p-yearpicker-year {
+  width: var(--preset-datepicker-yearpicker-width) !important;
+}
+
+.p-datepicker .p-yearpicker .p-yearpicker-year {
+  padding: var(--preset-datepicker-yearpicker-padding) !important;
+  margin-top: var(--preset-datepicker-yearpicker-margin-top) !important;
+  height: var(--preset-datepicker-yearpicker-height) !important;
+  font-size: var(--preset-datepicker-yearpicker-font-size) !important;
+}
+
+.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
+  box-shadow: var(--preset-datepicker-yearpicker-focus-box-shadow) !important;
+}
+
+.p-datepicker-touch-ui,
+.p-calendar .p-datepicker-touch-ui {
+  min-width: var(--preset-datepicker-touch-ui-min-width) !important;
+  position: var(--preset-datepicker-touch-ui-position) !important;
+  top: var(--preset-datepicker-touch-ui-top) !important;
+  left: var(--preset-datepicker-touch-ui-left) !important;
+  transform: var(--preset-datepicker-touch-ui-transform) !important;
+} 

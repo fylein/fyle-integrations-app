@@ -623,6 +623,84 @@ export const CoPreset = {
         left: '10px',
         color: CoCSSVars.icons.secondary
       }
+    },
+    datepicker: {
+      padding: CoCSSVars.spacing[16],
+      header: {
+        padding: '0'
+      },
+      title: {
+        fontSize: '12px',
+        fontFamily: 'var(--font-primary)',
+        color: CoCSSVars.text.primary,
+        hover: {
+          color: CoCSSVars.text.primary
+        }
+      },
+      month: {
+        paddingRight: CoCSSVars.spacing[24]
+      },
+      nav: {
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      dayHeader: {
+        fontSize: '14px',
+        color: CoCSSVars.text.label,
+        padding: '0',
+        paddingTop: CoCSSVars.spacing[4],
+        paddingBottom: CoCSSVars.spacing[4],
+        textAlign: 'center'
+      },
+      cell: {
+        padding: '0',
+        paddingBottom: CoCSSVars.spacing[4]
+      },
+      date: {
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        height: '28px',
+        width: '28px',
+        focus: {
+          boxShadow: 'none'
+        },
+        highlight: {
+          color: CoCSSVars.text.white,
+          background: CoCSSVars.backgrounds.brandPrimary
+        },
+        hover: {
+          background: CoCSSVars.backgrounds.tertiary
+        }
+      },
+      monthpicker: {
+        width: '25%',
+        padding: '0',
+        marginTop: CoCSSVars.spacing[10],
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        height: '32px',
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      yearpicker: {
+        width: '25%',
+        padding: '0',
+        marginTop: CoCSSVars.spacing[10],
+        height: '32px',
+        fontSize: '14px',
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      touchUi: {
+        minWidth: 'fit-content',
+        position: 'absolute',
+        top: '36px',
+        left: '-12px',
+        transform: 'none'
+      }
     }
   }
 };

@@ -621,6 +621,84 @@ export const FylePreset = {
         left: '10px',
         color: FyleCSSVars.icons.secondary
       }
+    },
+    datepicker: {
+      padding: FyleCSSVars.spacing[16],
+      header: {
+        padding: '0'
+      },
+      title: {
+        fontSize: '12px',
+        fontFamily: 'var(--font-primary)',
+        color: FyleCSSVars.text.primary,
+        hover: {
+          color: FyleCSSVars.text.primary
+        }
+      },
+      month: {
+        paddingRight: FyleCSSVars.spacing[24]
+      },
+      nav: {
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      dayHeader: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.label,
+        padding: '0',
+        paddingTop: FyleCSSVars.spacing[4],
+        paddingBottom: FyleCSSVars.spacing[4],
+        textAlign: 'center'
+      },
+      cell: {
+        padding: '0',
+        paddingBottom: FyleCSSVars.spacing[4]
+      },
+      date: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        height: '28px',
+        width: '28px',
+        focus: {
+          boxShadow: 'none'
+        },
+        highlight: {
+          color: FyleCSSVars.text.white,
+          background: FyleCSSVars.backgrounds.brandPrimary
+        },
+        hover: {
+          background: FyleCSSVars.backgrounds.tertiary
+        }
+      },
+      monthpicker: {
+        width: '25%',
+        padding: '0',
+        marginTop: FyleCSSVars.spacing[10],
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        height: '32px',
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      yearpicker: {
+        width: '25%',
+        padding: '0',
+        marginTop: FyleCSSVars.spacing[10],
+        height: '32px',
+        fontSize: '14px',
+        focus: {
+          boxShadow: 'none'
+        }
+      },
+      touchUi: {
+        minWidth: 'fit-content',
+        position: 'absolute',
+        top: '36px',
+        left: '-12px',
+        transform: 'none'
+      }
     }
   }
 };
