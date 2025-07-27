@@ -49,7 +49,11 @@ export const FyleCSSVars = {
     tertiaryLighter: 'var(--bg-tertiary-lighter)', // #fafcff
 
     // Special backgrounds
-    tooltip: 'var(--tooltip-bg)'                 // #2c304e for Fyle
+    tooltip: 'var(--tooltip-bg)',                // #2c304e for Fyle
+
+    // Toggle backgrounds
+    toggleChecked: 'var(--bg-brand-primary)',    // #ff3366
+    toggleUnchecked: 'var(--bg-disable)'         // #a9acbc
   },
 
   // ==================== TEXT COLORS ====================
@@ -225,6 +229,16 @@ export const FyleCSSVars = {
     info: 'var(--icon-info)',                                    // #5c98e5
     warning: 'var(--icon-warning)',                              // #e1af05
     muted: 'var(--icon-muted)'                                   // #a9acbc
+  },
+
+  // ==================== TOGGLE ====================
+  toggle: {
+    textYes: 'var(--toggle-text-yes)',                           // 'Yes'
+    textNo: 'var(--toggle-text-no)',                             // 'No'
+    circleTranslate: 'var(--toggle-circle-translate)',           // 28px
+    width: '50px',                                                // Default toggle width
+    height: '20px',                                               // Default toggle height
+    circleSize: '14px'                                            // Default circle size
   }
 };
 

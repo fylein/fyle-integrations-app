@@ -137,6 +137,7 @@ p {
 @import 'assets/scss/buttons';
 @import 'assets/scss/inputs';
 @import 'assets/scss/tooltips';
+@import 'assets/scss/toggles';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -165,43 +166,43 @@ p {
 }
 
 // Toggle
-.p-inputswitch {
-    @apply tw-h-20-px tw-w-50-px #{!important};
-}
+// .p-inputswitch {
+//     @apply tw-h-20-px tw-w-50-px #{!important};
+// }
 
-.p-inputswitch .p-inputswitch-slider:before {
-    @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
-}
+// .p-inputswitch .p-inputswitch-slider:before {
+//     @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
+// }
 
-[data-theme='co'] {
-    .p-inputswitch .p-inputswitch-slider:before {
-        @apply tw-w-18-px tw-h-18-px tw-left-0 tw-mt-[-0.55rem] tw-ml-2-px #{!important};
-    }
-}
+// [data-theme='co'] {
+//     .p-inputswitch .p-inputswitch-slider:before {
+//         @apply tw-w-18-px tw-h-18-px tw-left-0 tw-mt-[-0.55rem] tw-ml-2-px #{!important};
+//     }
+// }
 
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    @apply tw-translate-x-toggle-circle-translate #{!important};
-}
+// .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+//     @apply tw-translate-x-toggle-circle-translate #{!important};
+// }
 
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
-}
+// .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+//     @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
+// }
 
-.p-inputswitch .p-inputswitch-slider {
-    @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
-}
+// .p-inputswitch .p-inputswitch-slider {
+//     @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
+// }
 
-.p-inputswitch.p-focus .p-inputswitch-slider {
-    @apply tw-shadow-none #{!important};
-}
+// .p-inputswitch.p-focus .p-inputswitch-slider {
+//     @apply tw-shadow-none #{!important};
+// }
 
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
-}
+// .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
+//     @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
+// }
 
-.p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
-}
+// .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
+//     @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+// }
 
 
 // Radio Button

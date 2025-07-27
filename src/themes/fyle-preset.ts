@@ -275,6 +275,56 @@ export const FylePreset = {
           marginTop: '-2px'
         }
       }
+    },
+    toggle: {
+      // Base dimensions
+      height: FyleCSSVars.toggle.height,
+      width: FyleCSSVars.toggle.width,
+
+      // Circle styling
+      circle: {
+        marginTop: '-0.425rem',
+        width: FyleCSSVars.toggle.circleSize,
+        height: FyleCSSVars.toggle.circleSize
+      },
+
+      // Checked state
+      checked: {
+        circle: {
+          transform: `translateX(${FyleCSSVars.toggle.circleTranslate})`
+        },
+        background: FyleCSSVars.backgrounds.toggleChecked,
+        width: FyleCSSVars.toggle.width,
+        height: FyleCSSVars.toggle.height
+      },
+
+      // Unchecked state
+      unchecked: {
+        background: FyleCSSVars.backgrounds.toggleUnchecked,
+        width: FyleCSSVars.toggle.width,
+        height: FyleCSSVars.toggle.height
+      },
+
+      // Focus state
+      focus: {
+        boxShadow: 'none'
+      },
+
+      // Text styling
+      text: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        fontSize: '12px',
+        color: 'white',
+        fontWeight: '500',
+        bottom: '0',
+        checkedContent: FyleCSSVars.toggle.textYes,
+        uncheckedContent: FyleCSSVars.toggle.textNo,
+        checkedLeft: '8px',
+        uncheckedLeft: '24px'
+      }
     }
   }
 };

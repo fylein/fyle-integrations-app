@@ -275,6 +275,58 @@ export const CoPreset = {
           marginTop: '-2px'
         }
       }
+    },
+    toggle: {
+      // Base dimensions
+      height: CoCSSVars.toggle.height,
+      width: CoCSSVars.toggle.width,
+
+      // Circle styling (Co has different sizing)
+      circle: {
+        marginTop: '-0.55rem',
+        width: CoCSSVars.toggle.circleSize,
+        height: CoCSSVars.toggle.circleSize,
+        left: '0',
+        marginLeft: '2px'
+      },
+
+      // Checked state
+      checked: {
+        circle: {
+          transform: `translateX(${CoCSSVars.toggle.circleTranslate})`
+        },
+        background: CoCSSVars.backgrounds.toggleChecked,
+        width: CoCSSVars.toggle.width,
+        height: CoCSSVars.toggle.height
+      },
+
+      // Unchecked state
+      unchecked: {
+        background: CoCSSVars.backgrounds.toggleUnchecked,
+        width: CoCSSVars.toggle.width,
+        height: CoCSSVars.toggle.height
+      },
+
+      // Focus state
+      focus: {
+        boxShadow: 'none'
+      },
+
+      // Text styling (Co theme has no text)
+      text: {
+        display: 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        fontSize: '12px',
+        color: 'white',
+        fontWeight: '500',
+        bottom: '0',
+        checkedContent: '""',
+        uncheckedContent: '""',
+        checkedLeft: '8px',
+        uncheckedLeft: '24px'
+      }
     }
   }
 };

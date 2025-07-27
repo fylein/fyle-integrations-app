@@ -49,9 +49,14 @@ export class ThemeService {
       root.style.setProperty(`--preset-${key}`, value);
     });
 
-    // Apply button component styles as CSS custom properties
-    const buttonStyles = preset.components.button;
+    // Apply component styles
+    this.applyButtonStyles(root, preset.components.button);
+    this.applyInputStyles(root, preset.components.input);
+    this.applyTooltipStyles(root, preset.components.tooltip);
+    this.applyToggleStyles(root, preset.components.toggle);
+  }
 
+  private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
     // Primary button styles
     this.applyButtonVariantStyles(root, 'primary', buttonStyles.primary);
     this.applyButtonVariantStyles(root, 'secondary', buttonStyles.secondary);
@@ -67,10 +72,9 @@ export class ThemeService {
     Object.entries(buttonStyles.text.primaryHover).forEach(([prop, value]) => {
       root.style.setProperty(`--preset-btn-text-hover-${this.kebabCase(prop)}`, value as string);
     });
+  }
 
-    // Apply input component styles as CSS custom properties
-    const inputStyles = preset.components.input;
-
+  private applyInputStyles(root: HTMLElement, inputStyles: any): void {
     // Basic input styles
     if (inputStyles.base) {
       Object.entries(inputStyles.base).forEach(([prop, value]) => {
@@ -107,43 +111,10 @@ export class ThemeService {
     }
 
     // Calendar input styles
-    if (inputStyles.calendar) {
-      Object.entries(inputStyles.calendar).forEach(([prop, value]) => {
-        if (prop !== 'focus' && prop !== 'placeholder') {
-          root.style.setProperty(`--preset-calendar-input-${this.kebabCase(prop)}`, value as string);
-        }
-      });
-
-      // Calendar input focus styles
-      if (inputStyles.calendar.focus) {
-        Object.entries(inputStyles.calendar.focus).forEach(([prop, value]) => {
-          root.style.setProperty(`--preset-calendar-input-focus-${this.kebabCase(prop)}`, value as string);
-        });
-      }
-
-      // Calendar input placeholder styles
-      if (inputStyles.calendar.placeholder) {
-        Object.entries(inputStyles.calendar.placeholder).forEach(([prop, value]) => {
-          root.style.setProperty(`--preset-calendar-input-placeholder-${this.kebabCase(prop)}`, value as string);
-        });
-      }
-    }
+    this.applyCalendarInputStyles(root, inputStyles.calendar);
 
     // Dropdown label input styles
-    if (inputStyles.dropdownLabel) {
-      Object.entries(inputStyles.dropdownLabel).forEach(([prop, value]) => {
-        if (prop !== 'input') {
-          root.style.setProperty(`--preset-dropdown-label-${this.kebabCase(prop)}`, value as string);
-        }
-      });
-
-      // Dropdown label input specific styles
-      if (inputStyles.dropdownLabel.input) {
-        Object.entries(inputStyles.dropdownLabel.input).forEach(([prop, value]) => {
-          root.style.setProperty(`--preset-dropdown-label-input-${this.kebabCase(prop)}`, value as string);
-        });
-      }
-    }
+    this.applyDropdownLabelStyles(root, inputStyles.dropdownLabel);
 
     // Chips input styles
     if (inputStyles.chips?.focus) {
@@ -165,10 +136,50 @@ export class ThemeService {
         root.style.setProperty(`--preset-dropdown-filter-${this.kebabCase(prop)}`, value as string);
       });
     }
+  }
 
-    // Apply tooltip component styles as CSS custom properties
-    const tooltipStyles = preset.components.tooltip;
+  private applyCalendarInputStyles(root: HTMLElement, calendarStyles: any): void {
+    if (!calendarStyles) return;
 
+    Object.entries(calendarStyles).forEach(([prop, value]) => {
+      if (prop !== 'focus' && prop !== 'placeholder') {
+        root.style.setProperty(`--preset-calendar-input-${this.kebabCase(prop)}`, value as string);
+      }
+    });
+
+    // Calendar input focus styles
+    if (calendarStyles.focus) {
+      Object.entries(calendarStyles.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-calendar-input-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Calendar input placeholder styles
+    if (calendarStyles.placeholder) {
+      Object.entries(calendarStyles.placeholder).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-calendar-input-placeholder-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyDropdownLabelStyles(root: HTMLElement, dropdownLabelStyles: any): void {
+    if (!dropdownLabelStyles) return;
+
+    Object.entries(dropdownLabelStyles).forEach(([prop, value]) => {
+      if (prop !== 'input') {
+        root.style.setProperty(`--preset-dropdown-label-${this.kebabCase(prop)}`, value as string);
+      }
+    });
+
+    // Dropdown label input specific styles
+    if (dropdownLabelStyles.input) {
+      Object.entries(dropdownLabelStyles.input).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-label-input-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyTooltipStyles(root: HTMLElement, tooltipStyles: any): void {
     // Tooltip text styles
     if (tooltipStyles.text) {
       Object.entries(tooltipStyles.text).forEach(([prop, value]) => {
@@ -194,6 +205,65 @@ export class ThemeService {
         } else {
           root.style.setProperty(`--preset-tooltip-bottom-${this.kebabCase(prop)}`, value as string);
         }
+      });
+    }
+  }
+
+  private applyToggleStyles(root: HTMLElement, toggleStyles: any): void {
+    // Base toggle styles
+    if (toggleStyles.height) {
+      root.style.setProperty('--preset-toggle-height', toggleStyles.height);
+    }
+    if (toggleStyles.width) {
+      root.style.setProperty('--preset-toggle-width', toggleStyles.width);
+    }
+
+    // Toggle circle styles
+    if (toggleStyles.circle) {
+      Object.entries(toggleStyles.circle).forEach(([prop, value]) => {
+        if (value !== undefined && value !== null) {
+          root.style.setProperty(`--preset-toggle-circle-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+    }
+
+    // Toggle checked state styles
+    if (toggleStyles.checked) {
+      // Handle nested circle transform
+      if (toggleStyles.checked.circle?.transform) {
+        root.style.setProperty('--preset-toggle-checked-circle-transform', toggleStyles.checked.circle.transform);
+      }
+
+      // Handle other checked properties
+      if (toggleStyles.checked.background) {
+        root.style.setProperty('--preset-toggle-checked-background', toggleStyles.checked.background);
+      }
+      if (toggleStyles.checked.width) {
+        root.style.setProperty('--preset-toggle-checked-width', toggleStyles.checked.width);
+      }
+      if (toggleStyles.checked.height) {
+        root.style.setProperty('--preset-toggle-checked-height', toggleStyles.checked.height);
+      }
+    }
+
+    // Toggle unchecked state styles
+    if (toggleStyles.unchecked) {
+      Object.entries(toggleStyles.unchecked).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toggle-unchecked-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Toggle focus styles
+    if (toggleStyles.focus) {
+      Object.entries(toggleStyles.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toggle-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Toggle text styles
+    if (toggleStyles.text) {
+      Object.entries(toggleStyles.text).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toggle-text-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

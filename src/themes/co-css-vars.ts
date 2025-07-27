@@ -51,7 +51,11 @@ export const CoCSSVars = {
     warningLighter: 'var(--bg-warning-lighter)', // #fffce6 (yellow-05)
 
     // Special backgrounds
-    tooltip: 'var(--tooltip-bg)'                 // #5a5d72 for Co
+    tooltip: 'var(--tooltip-bg)',                // #5a5d72 for Co
+
+    // Toggle backgrounds
+    toggleChecked: 'var(--bg-brand-primary)',    // #0070a8
+    toggleUnchecked: 'var(--bg-disable)'         // #d9d9d9
   },
 
   // ==================== TEXT COLORS ====================
@@ -305,6 +309,16 @@ export const CoCSSVars = {
   // ==================== ELEVATIONS ====================
   elevations: {
     overlaySubtle: 'var(--background-overlay-subtle)' // Rgba(black, 0.02)
+  },
+
+  // ==================== TOGGLE ====================
+  toggle: {
+    textYes: '"Yes"',                                             // Co doesn't have CSS var for text
+    textNo: '"No"',                                               // Co doesn't have CSS var for text
+    circleTranslate: 'var(--toggle-circle-translate)',           // 16px
+    width: 'var(--toggle-width)',                                 // 38px
+    height: 'var(--toggle-height)',                               // 22px
+    circleSize: '18px'                                            // Co circle size
   }
 };
 
