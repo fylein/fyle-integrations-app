@@ -165,9 +165,91 @@ export const FylePreset = {
     },
 
     input: {
-      border: FyleCSSVars.borders.secondary,
-      focus: FyleCSSVars.borders.primary,
-      placeholder: FyleCSSVars.text.placeholder
+      // Basic Input Text Styles
+      base: {
+        fontFamily: 'var(--font-primary)',
+        fontSize: '14px',
+        color: FyleCSSVars.text.primary,
+        background: FyleCSSVars.backgrounds.white,
+        border: '1px solid',
+        borderColor: FyleCSSVars.borders.secondary,
+        borderRadius: FyleCSSVars.borderRadius['2xs'],
+        padding: '0'
+      },
+      focusVisible: {
+        boxShadow: 'none',
+        outline: 'none'
+      },
+      focus: {
+        borderColor: FyleCSSVars.borders.primary,
+        boxShadow: 'none'
+      },
+      disabled: {
+        color: FyleCSSVars.text.placeholder,
+        background: FyleCSSVars.backgrounds.tertiary,
+        borderColor: FyleCSSVars.borders.tertiary,
+        cursor: 'not-allowed'
+      },
+      placeholder: {
+        color: FyleCSSVars.text.placeholder,
+        opacity: '1'
+      },
+      // Calendar Input Specific
+      calendar: {
+        padding: '0',
+        background: FyleCSSVars.backgrounds.white,
+        border: 'none',
+        cursor: 'pointer',
+        transition: 'none',
+        focus: {
+          boxShadow: 'none',
+          borderColor: FyleCSSVars.borders.primary
+        },
+        placeholder: {
+          color: FyleCSSVars.text.tertiary
+        }
+      },
+      // Dropdown Label Input
+      dropdownLabel: {
+        paddingX: '3px',
+        paddingY: '2px',
+        input: {
+          padding: '0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          color: FyleCSSVars.text.secondary,
+          border: 'none'
+        }
+      },
+      // Chips Input
+      chips: {
+        focus: {
+          boxShadow: 'none',
+          border: '1px solid',
+          borderColor: FyleCSSVars.borders.primary
+        }
+      },
+      // Input Container Focus
+      container: {
+        focus: {
+          boxShadow: 'none',
+          border: '1px solid',
+          borderColor: FyleCSSVars.borders.primary,
+          borderRadius: FyleCSSVars.borderRadius.sm
+        }
+      },
+      // Dropdown Filter
+      dropdownFilter: {
+        height: '32px',
+        paddingLeft: '40px',
+        paddingRight: '12px',
+        paddingTop: '12px',
+        paddingBottom: '12px',
+        borderRadius: FyleCSSVars.borderRadius['2xs'],
+        border: '1px solid',
+        borderColor: FyleCSSVars.borders.primary
+      }
     }
   }
 };

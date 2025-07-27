@@ -67,6 +67,104 @@ export class ThemeService {
     Object.entries(buttonStyles.text.primaryHover).forEach(([prop, value]) => {
       root.style.setProperty(`--preset-btn-text-hover-${this.kebabCase(prop)}`, value as string);
     });
+
+    // Apply input component styles as CSS custom properties
+    const inputStyles = preset.components.input;
+
+    // Basic input styles
+    if (inputStyles.base) {
+      Object.entries(inputStyles.base).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Input focus visible styles
+    if (inputStyles.focusVisible) {
+      Object.entries(inputStyles.focusVisible).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-focus-visible-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Input focus styles
+    if (inputStyles.focus) {
+      Object.entries(inputStyles.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Input disabled styles
+    if (inputStyles.disabled) {
+      Object.entries(inputStyles.disabled).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-disabled-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Input placeholder styles
+    if (inputStyles.placeholder) {
+      Object.entries(inputStyles.placeholder).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-placeholder-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Calendar input styles
+    if (inputStyles.calendar) {
+      Object.entries(inputStyles.calendar).forEach(([prop, value]) => {
+        if (prop !== 'focus' && prop !== 'placeholder') {
+          root.style.setProperty(`--preset-calendar-input-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      // Calendar input focus styles
+      if (inputStyles.calendar.focus) {
+        Object.entries(inputStyles.calendar.focus).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-calendar-input-focus-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Calendar input placeholder styles
+      if (inputStyles.calendar.placeholder) {
+        Object.entries(inputStyles.calendar.placeholder).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-calendar-input-placeholder-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Dropdown label input styles
+    if (inputStyles.dropdownLabel) {
+      Object.entries(inputStyles.dropdownLabel).forEach(([prop, value]) => {
+        if (prop !== 'input') {
+          root.style.setProperty(`--preset-dropdown-label-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      // Dropdown label input specific styles
+      if (inputStyles.dropdownLabel.input) {
+        Object.entries(inputStyles.dropdownLabel.input).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-label-input-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Chips input styles
+    if (inputStyles.chips?.focus) {
+      Object.entries(inputStyles.chips.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-chips-input-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Input container focus styles
+    if (inputStyles.container?.focus) {
+      Object.entries(inputStyles.container.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-input-container-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Dropdown filter styles
+    if (inputStyles.dropdownFilter) {
+      Object.entries(inputStyles.dropdownFilter).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-filter-${this.kebabCase(prop)}`, value as string);
+      });
+    }
   }
 
   /**

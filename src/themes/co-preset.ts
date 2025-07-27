@@ -165,9 +165,91 @@ export const CoPreset = {
     },
 
     input: {
-      border: CoCSSVars.borders.secondary,
-      focus: CoCSSVars.borders.primary,
-      placeholder: CoCSSVars.text.placeholder
+      // Basic Input Text Styles
+      base: {
+        fontFamily: 'var(--font-primary)',
+        fontSize: '14px',
+        color: CoCSSVars.text.primary,
+        background: CoCSSVars.backgrounds.white,
+        border: '1px solid',
+        borderColor: CoCSSVars.borders.secondary,
+        borderRadius: CoCSSVars.borderRadius['2xs'],
+        padding: '0'
+      },
+      focusVisible: {
+        boxShadow: 'none',
+        outline: 'none'
+      },
+      focus: {
+        borderColor: CoCSSVars.borders.primary,
+        boxShadow: 'none'
+      },
+      disabled: {
+        color: CoCSSVars.text.placeholder,
+        background: CoCSSVars.backgrounds.tertiary,
+        borderColor: CoCSSVars.borders.tertiary,
+        cursor: 'not-allowed'
+      },
+      placeholder: {
+        color: CoCSSVars.text.placeholder,
+        opacity: '1'
+      },
+      // Calendar Input Specific
+      calendar: {
+        padding: '0',
+        background: CoCSSVars.backgrounds.white,
+        border: 'none',
+        cursor: 'pointer',
+        transition: 'none',
+        focus: {
+          boxShadow: 'none',
+          borderColor: CoCSSVars.borders.primary
+        },
+        placeholder: {
+          color: CoCSSVars.text.tertiary
+        }
+      },
+      // Dropdown Label Input
+      dropdownLabel: {
+        paddingX: '3px',
+        paddingY: '2px',
+        input: {
+          padding: '0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          color: CoCSSVars.text.secondary,
+          border: 'none'
+        }
+      },
+      // Chips Input
+      chips: {
+        focus: {
+          boxShadow: 'none',
+          border: '1px solid',
+          borderColor: CoCSSVars.borders.primary
+        }
+      },
+      // Input Container Focus
+      container: {
+        focus: {
+          boxShadow: 'none',
+          border: '1px solid',
+          borderColor: CoCSSVars.borders.primary,
+          borderRadius: CoCSSVars.borderRadius.sm
+        }
+      },
+      // Dropdown Filter
+      dropdownFilter: {
+        height: '32px',
+        paddingLeft: '40px',
+        paddingRight: '12px',
+        paddingTop: '12px',
+        paddingBottom: '12px',
+        borderRadius: CoCSSVars.borderRadius['2xs'],
+        border: '1px solid',
+        borderColor: CoCSSVars.borders.primary
+      }
     }
   }
 };
