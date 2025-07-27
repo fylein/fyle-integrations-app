@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
         [headerText]="'qbdExportSetting.headerText' | transloco"
@@ -12,7 +12,7 @@
         <form [formGroup]="exportSettingsForm">
             <div class="tw-p-24-px">
                 <div class="tw-mb-16-px">
-                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="'qbdExportSetting.exportReimbursableExpensesLabel' | transloco"
@@ -21,7 +21,7 @@
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.get('reimbursableExpense')?.value">
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -40,7 +40,7 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" [placeholder]="(exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.enterAccountsPayableName' : 'qbdExportSetting.enterBankName') | transloco" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" [placeholder]="(exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.enterAccountsPayableName' : 'qbdExportSetting.enterBankName') | transloco" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -53,12 +53,12 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px"  pInputText formControlName="mileageAccountName" [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -69,7 +69,7 @@
                             [iconPath]="'tabs'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <div *ngIf="exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[0].value">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
@@ -95,7 +95,7 @@
                                 [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                             </div>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="'qbdExportSetting.exportCCCExpensesLabel' | transloco"
@@ -119,7 +119,7 @@
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.get('creditCardExpense')?.value">
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -138,7 +138,7 @@
                                     </div>
 
                                     <div class="tw-pl-18-px">
-                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco" [required]="exportSettingsForm.get('creditCardExpense')?.value">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco" [required]="exportSettingsForm.get('creditCardExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'qbdExportSetting.cccAccountNameError' | transloco"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <div *ngIf="exportSettingsForm.get('cccExportType')?.value === creditCardExportTypes[0].value">
                                 <app-configuration-label
                                 [label]="'qbdExportSetting.groupExpensesLabel' | transloco"
@@ -190,7 +190,7 @@
                                 [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
                             </div>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
@@ -203,7 +203,7 @@
                                 [formControllerName]="'cccExportDate'">
                             </app-configuration-select-field>
                         </div>
-                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"

@@ -7,7 +7,7 @@
   }
   
   .cancel-btn {
-    @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
+    @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-text-secondary tw-mr-16-px #{!important};
   }
   
   :host ::ng-deep .p-dropdown {

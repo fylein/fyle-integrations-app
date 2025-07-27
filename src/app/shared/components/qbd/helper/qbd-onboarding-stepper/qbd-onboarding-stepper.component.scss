@@ -11,11 +11,11 @@
 }
 
 .line-active {
-  @apply tw-border-t-2-px tw-border-dashed tw-border-line-inactive tw-w-40 tw-h-2-px ;
+  @apply tw-border-t-2-px tw-border-dashed tw-border-slightly-normal-text-color tw-w-40 tw-h-2-px ;
 }
 
 .line-inactive {
-  @apply tw-border-t-2-px tw-border-solid tw-border-success-toast tw-w-40 tw-h-2-px ;
+  @apply tw-border-t-2-px tw-border-solid tw-border-border-success tw-w-40 tw-h-2-px ;
 }
 
 .step-name-export {

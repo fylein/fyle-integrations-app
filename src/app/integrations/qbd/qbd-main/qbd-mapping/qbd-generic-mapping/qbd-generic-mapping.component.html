@@ -6,7 +6,7 @@
         <app-qbd-mapping-header-section [sourceType]="sourceType" [mappingStats]="mappingStats"></app-qbd-mapping-header-section>
     </div>
 
-    <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
+    <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-mt-16-px">
         <div class="tw-p-24-px">
             <app-mapping-filter [appName]="AppName.QBD" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
         </div>

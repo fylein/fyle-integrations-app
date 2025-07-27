@@ -6,10 +6,6 @@
     @apply tw-border-box-color #{!important};
 }
 
-:host ::ng-deep .normal-box :enabled:focus-visible {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}
-
 input.custom-focus:focus {
   outline: none;
   border: 1px solid black !important;

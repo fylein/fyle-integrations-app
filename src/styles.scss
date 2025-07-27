@@ -129,53 +129,53 @@ p {
 }
 
 // Button CTA
-.p-button {
-    @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
-}
+// .p-button {
+//     @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
+// }
 
-.p-button.p-button-raised {
-    @apply tw-justify-center #{!important};
-}
+// .p-button.p-button-raised {
+//     @apply tw-justify-center #{!important};
+// }
 
-.p-button-label {
-    @apply tw-flex-none #{!important};
-}
+// .p-button-label {
+//     @apply tw-flex-none #{!important};
+// }
 
-.p-button:enabled:hover {
-    @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
+// .p-button:enabled:hover {
+//     @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
+// }
 
-.p-button:disabled {
-    @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
-}
+// .p-button:disabled {
+//     @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
+// }
 
-.p-button.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
-}
+// .p-button.secondary-sm {
+//     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
+// }
 
-.p-button:enabled:hover.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
+// .p-button:enabled:hover.secondary-sm {
+//     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
+// }
 
-.p-button.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color tw-border #{!important};
-}
+// .p-button.outline-sm {
+//     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color tw-border #{!important};
+// }
 
-.p-button.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
+// .p-button.danger-outline {
+//     @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+// }
 
-.p-button:enabled:hover.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
+// .p-button:enabled:hover.danger-outline {
+//     @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+// }
 
-.p-button:enabled:hover.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
-}
+// .p-button:enabled:hover.outline-sm {
+//     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
+// }
 
-.p-button.primary-outline {
-    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
-}
+// .p-button.primary-outline {
+//     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
+// }
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -307,7 +307,7 @@ p {
 }
 
 .p-dropdown:disabled {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-dd-menu-item-hover-bg tw-border tw-border-select-disabled-border #{!important};
+    @apply tw-text-14-px tw-text-text-secondary tw-bg-dd-menu-item-hover-bg tw-border tw-border-select-disabled-border #{!important};
 }
 
 .p-dropdown .p-dropdown-label {
@@ -334,11 +334,11 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
-    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
+    @apply tw-text-text-secondary tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
-    @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};
+    @apply tw-bg-dd-menu-item-hover-bg tw-text-text-secondary tw-rounded-none #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
@@ -475,7 +475,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
-    @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
+    @apply tw-py-24-px tw-flex tw-justify-center tw-text-text-secondary tw-text-14-px tw-italic #{!important};
 }
 
 @mixin spinner($height, $width, $animation) {
@@ -749,7 +749,7 @@ p {
     }
 
     &--divider {
-        @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
+        @apply tw-h-1-px tw-w-[100%];
     }
 
     &--section-divider {
@@ -766,7 +766,7 @@ p {
     }
 
     &--accounting-app-open {
-        @apply tw-pl-6-px tw-pt-3-px tw-text-slightly-normal-text-color;
+        @apply tw-pl-6-px tw-pt-3-px tw-text-text-secondary;
     }
 
     &--section-heading {

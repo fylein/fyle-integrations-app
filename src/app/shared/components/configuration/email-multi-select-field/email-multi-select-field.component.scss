@@ -1,5 +1,5 @@
 :host ::ng-deep .p-multiselect.p-multiselect-chip .p-multiselect-token {
-    @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
+    @apply tw-px-3 tw-py-1 tw-text-text-secondary tw-bg-disabled-bg-color tw-rounded-xl #{!important};
 }
 
 :host ::ng-deep .p-multiselect-panel {
@@ -26,7 +26,7 @@
 }
 
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
-    @apply tw-border-slightly-normal-text-color tw-border #{!important};
+    @apply tw-border-border-neutral tw-border #{!important};
 }
 
 .cancel-btn {

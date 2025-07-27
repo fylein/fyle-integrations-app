@@ -19,7 +19,7 @@
 }
   
 .value-input-field {
-    @apply tw-border tw-border-line-inactive tw-rounded-4-px tw-py-6-px tw-px-10-px tw-inline-flex tw-items-center tw-w-296-px #{!important};
+    @apply tw-border tw-rounded-4-px tw-py-6-px tw-px-10-px tw-inline-flex tw-items-center tw-w-296-px #{!important};
 }
   
 :host ::ng-deep .joinby-field .p-dropdown {
@@ -35,7 +35,7 @@
 }
   
 :host ::ng-deep .p-chips-token {
-    @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-border-line-inactive tw-shadow-chip-shadow
+    @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-shadow-chip-shadow
 }
   
   /* To remove blue hover and other styles */
@@ -70,7 +70,7 @@
   
   
   :host ::ng-deep .p-chips-token-icon {
-    @apply tw-text-slightly-normal-text-color #{!important};
+    @apply tw-text-text-secondary #{!important};
   }
   
   :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {

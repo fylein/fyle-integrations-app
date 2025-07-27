@@ -1,7 +1,7 @@
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div class="tw-p-24-px tw-text-slightly-normal-text-color">
+<div class="tw-p-24-px tw-text-text-secondary">
     <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
                 <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
@@ -25,7 +25,7 @@
                             </app-svg-icon>
                         </a>
                     </p>
-                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
+                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-text-secondary tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
                         <p class="tw-pl-10-px">{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                     </div>

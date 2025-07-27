@@ -53,6 +53,7 @@
     --border-success: #{$green-500};
     --border-danger: #{$red-500};
     --border-white: #{$white};
+    --border-neutral: #{$grey-700};
 
     --border-danger-light: #{$red-300};
     --border-highlight-light: #{$purple-300};
@@ -102,6 +103,8 @@
     --text-label: #{$grey-500};
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
+
+    --radio-icon-hover-color: #{$grey-700};
 
     //link
     --link-primary: #{$blue-600};

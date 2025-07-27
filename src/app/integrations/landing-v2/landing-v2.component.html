@@ -1,4 +1,4 @@
-<div class="tw-text-slightly-normal-text-color tw-py-8 tw-px-6">
+<div class="tw-text-text-secondary tw-py-8 tw-px-6">
     <div class="landing-v2--container">
         <header>
             <h3 class="landing-v2--section-heading">
@@ -8,7 +8,7 @@
             <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco">
             </p>
         </header>
-        <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
+        <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-border-y tw-border-border-tertiary">
             <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
                 (click)="switchView(IntegrationsView.ALL)">
                 {{ 'landingV2.tabAll' | transloco }}

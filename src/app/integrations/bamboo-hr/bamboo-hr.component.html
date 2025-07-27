@@ -1,6 +1,6 @@
 <p-toast position="bottom-center" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
-        <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px" [ngClass]="message.severity === 'success' ? 'tw-bg-success-toast' : 'tw-bg-alert-toast'">
+        <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px" [ngClass]="message.severity === 'success' ? 'tw-bg-bg-success' : 'tw-bg-alert-toast'">
             <div class="tw-flex">
                 <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'check-circle-outline-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
                 <app-svg-icon *ngIf="message.severity !== 'success'" [svgSource]="'warning-outline'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="tw-pt-34-px tw-px-40-px" [formGroup]="bambooConnectionForm">
-            <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">{{ 'bambooHr.dialogHeader' | transloco }}</p>
+            <p class="tw-text-text-secondary tw-text-24-px tw-font-500">{{ 'bambooHr.dialogHeader' | transloco }}</p>
             <p class="tw-pt-10-px tw-text-text-muted tw-text-12-px">{{ 'bambooHr.dialogSubHeader' | transloco }}</p>
 
             <div class="tw-pt-32-px">
@@ -55,11 +55,11 @@
                 </p>
 
                 <div class="tw-flex">
-                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-text-secondary">
                         {{ 'bambooHr.subDomainPrefix' | transloco }}
                     </div>
                     <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0" pInputText [placeholder]="'bambooHr.subDomainPlaceholder' | transloco" />
-                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-text-secondary">
                         {{ 'bambooHr.subDomainSuffix' | transloco }}
                     </div>
                 </div>
@@ -77,7 +77,7 @@
 <app-configuration *ngIf="!isLoading && isBambooConnected" [isConfigurationSaveInProgress]="isConfigurationSaveInProgress" [bambooHrConfiguration]="bambooHrConfiguration" [additionalEmails]="additionalEmails" (updateConfiguration)="configurationUpdatesHandler($event)"></app-configuration>
 
 <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
-    <div *ngFor="let _ of [0,1,2,3,4,5,6]" class="tw-w-75-vw tw-h-78-px tw-border-separator tw-border-1-px tw-rounded-8-px tw-mb-18-px">
+    <div *ngFor="let _ of [0,1,2,3,4,5,6]" class="tw-w-75-vw tw-h-78-px tw-border-border-tertiary tw-border-1-px tw-rounded-8-px tw-mb-18-px">
         <div class="tw-w-14-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
             <p-skeleton shape="rectangle"></p-skeleton>
         </div>

@@ -307,12 +307,12 @@
                         [tooltipText]="'xeroCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }">
                     </app-clone-setting-field>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="(advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'xeroCloneSettings.hours' : 'xeroCloneSettings.hour') | transloco">
+                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-text-secondary" pInputText disabled [value]="(advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'xeroCloneSettings.hours' : 'xeroCloneSettings.hour') | transloco">
                     </div>
                 </div>
 
                 <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
-                    <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
+                    <p class="tw-pl-16-px tw-py-2-px tw-text-text-secondary tw-text-14-px tw-flex tw-items-center">
                         {{ 'xeroCloneSettings.sendErrorNotificationTo' | transloco }}
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'xeroCloneSettings.errorNotificationTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>

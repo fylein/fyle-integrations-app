@@ -17,20 +17,8 @@ const customColors = {
   'check-box': 'var(--check-box)',
   'info-section': 'var(--info-section)',
   'info': 'var(--info)',
-  'success-toast': 'var(--success-toast)',
   'alert-toast': 'var(--alert-toast)',
-  'cta-disabled': 'var(--cta-disabled)',
-  'line-inactive': 'var(--line-inactive)',
-  'progress-bar-bg': 'var(--progress-bar-bg)',
-  'mapped-green-border': 'var(--mapped-green-border)',
-  'mapped-green-bg': 'var(--mapped-green-bg)',
-  'unmapped-red-border': 'var(--unmapped-red-border)',
-  'unmapped-red-bg': 'var(--unmapped-red-bg)',
-  'pink': 'var(--pink)',
-  'pink-box-border': 'var(--pink-box-border)',
-  'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
-  'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
 };
 
@@ -140,6 +128,7 @@ const colors = {
   'bg-success': 'var(--bg-success)',
   'bg-info': 'var(--bg-info)',
   'bg-warning': 'var(--bg-warning)',
+  'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'bg-danger': 'var(--bg-danger)',
 
   //light bg
@@ -154,7 +143,6 @@ const colors = {
   //lighter bg
   'bg-info-lighter': 'var(--bg-info-lighter)',
   'bg-info-lightest': 'var(--bg-info-lightest)',
-  'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'bg-danger-lighter': 'var(--bg-danger-lighter)',
   'bg-success-lighter': 'var(--bg-success-lighter)',
   'bg-disable-lighter': 'var(--bg-disable-lighter)',
@@ -171,7 +159,6 @@ const colors = {
   'icon-success': 'var(--icon-success)',
   'icon-danger': 'var(--icon-danger)',
   'icon-info': 'var(--icon-info)',
-  'icon-warning': 'var(--icon-warning)',
   'icon-muted': 'var(--icon-muted)',
   'icon-link': 'var(--icon-link)',
   'icon-primary': 'var(--icon-primary)',
@@ -1320,7 +1307,6 @@ module.exports = {
         'slightly-normal-text-color': customColors['slightly-normal-text-color'],
         'check-box': customColors['check-box'],
         'disabled-bg-color': customColors['disabled-bg-color'],
-        'success-toast': customColors['success-toast'],
         'separator': customColors['separator'],
         'line-inactive': customColors['line-inactive'],
         'alert-toast': customColors['alert-toast'],
