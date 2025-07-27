@@ -48,7 +48,10 @@ export const CoCSSVars = {
     infoLightest: 'var(--bg-info-lightest)',     // #e6f2ff (blue-05)
     successLighter: 'var(--bg-success-lighter)', // #e6f7e6 (green-05)
     tertiaryLighter: 'var(--bg-tertiary-lighter)', // #f7f7f7 (grey-05)
-    warningLighter: 'var(--bg-warning-lighter)'  // #fffce6 (yellow-05)
+    warningLighter: 'var(--bg-warning-lighter)', // #fffce6 (yellow-05)
+
+    // Special backgrounds
+    tooltip: 'var(--tooltip-bg)'                 // #5a5d72 for Co
   },
 
   // ==================== TEXT COLORS ====================

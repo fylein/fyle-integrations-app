@@ -136,6 +136,7 @@ p {
 
 @import 'assets/scss/buttons';
 @import 'assets/scss/inputs';
+@import 'assets/scss/tooltips';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -161,33 +162,6 @@ p {
 .p-dialog-top-right .p-dialog {
     margin: .75rem !important;
     transform: translateZ(0) !important;
-}
-
-// Tooltip
-.p-tooltip .p-tooltip-text {
-    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
-}
-
-.p-tooltip.p-tooltip-right .p-tooltip-arrow {
-    @apply tw-border-r-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-left .p-tooltip-arrow {
-    @apply tw-border-l-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-top .p-tooltip-arrow {
-    @apply tw-border-t-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-bottom {
-    margin-top: 4px;
-}
-
-.p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
-    border: 2px solid transparent !important;
-    margin-top: -2px !important;
-    @apply tw-border-b-tooltip-bg #{!important};
 }
 
 // Toggle

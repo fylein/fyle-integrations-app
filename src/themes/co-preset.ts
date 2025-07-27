@@ -250,6 +250,31 @@ export const CoPreset = {
         border: '1px solid',
         borderColor: CoCSSVars.borders.primary
       }
+    },
+    tooltip: {
+      text: {
+        background: CoCSSVars.backgrounds.tooltip,
+        color: 'white',
+        fontSize: '12px',
+        paddingX: CoCSSVars.spacing[8],
+        paddingY: CoCSSVars.spacing[6],
+        height: 'auto',
+        wordBreak: 'break-words',
+        whiteSpace: 'normal',
+        overflow: 'visible',
+        fontWeight: '400',
+        borderRadius: CoCSSVars.borderRadius['2xs']
+      },
+      arrow: {
+        borderColor: CoCSSVars.backgrounds.tooltip
+      },
+      bottom: {
+        marginTop: '4px',
+        arrow: {
+          border: '2px solid transparent',
+          marginTop: '-2px'
+        }
+      }
     }
   }
 };

@@ -165,6 +165,37 @@ export class ThemeService {
         root.style.setProperty(`--preset-dropdown-filter-${this.kebabCase(prop)}`, value as string);
       });
     }
+
+    // Apply tooltip component styles as CSS custom properties
+    const tooltipStyles = preset.components.tooltip;
+
+    // Tooltip text styles
+    if (tooltipStyles.text) {
+      Object.entries(tooltipStyles.text).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-tooltip-text-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Tooltip arrow styles
+    if (tooltipStyles.arrow) {
+      Object.entries(tooltipStyles.arrow).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-tooltip-arrow-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Tooltip bottom specific styles
+    if (tooltipStyles.bottom) {
+      Object.entries(tooltipStyles.bottom).forEach(([prop, value]) => {
+        if (prop === 'arrow') {
+          // Handle nested arrow styles
+          Object.entries(value as any).forEach(([arrowProp, arrowValue]) => {
+            root.style.setProperty(`--preset-tooltip-bottom-arrow-${this.kebabCase(arrowProp)}`, arrowValue as string);
+          });
+        } else {
+          root.style.setProperty(`--preset-tooltip-bottom-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+    }
   }
 
   /**

@@ -250,6 +250,31 @@ export const FylePreset = {
         border: '1px solid',
         borderColor: FyleCSSVars.borders.primary
       }
+    },
+    tooltip: {
+      text: {
+        background: FyleCSSVars.backgrounds.tooltip,
+        color: 'white',
+        fontSize: '12px',
+        paddingX: FyleCSSVars.spacing[8],
+        paddingY: FyleCSSVars.spacing[6],
+        height: 'auto',
+        wordBreak: 'break-words',
+        whiteSpace: 'normal',
+        overflow: 'visible',
+        fontWeight: '400',
+        borderRadius: FyleCSSVars.borderRadius['2xs']
+      },
+      arrow: {
+        borderColor: FyleCSSVars.backgrounds.tooltip
+      },
+      bottom: {
+        marginTop: '4px',
+        arrow: {
+          border: '2px solid transparent',
+          marginTop: '-2px'
+        }
+      }
     }
   }
 };

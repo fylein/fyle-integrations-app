@@ -46,7 +46,10 @@ export const FyleCSSVars = {
     dangerLighter: 'var(--bg-danger-lighter)',   // #fbe8e9
     successLighter: 'var(--bg-success-lighter)', // #eef8f2
     disableLighter: 'var(--bg-disable-lighter)', // #f5f5f5
-    tertiaryLighter: 'var(--bg-tertiary-lighter)' // #fafcff
+    tertiaryLighter: 'var(--bg-tertiary-lighter)', // #fafcff
+
+    // Special backgrounds
+    tooltip: 'var(--tooltip-bg)'                 // #2c304e for Fyle
   },
 
   // ==================== TEXT COLORS ====================
