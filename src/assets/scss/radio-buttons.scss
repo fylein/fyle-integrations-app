@@ -1,0 +1,31 @@
+.p-radiobutton {
+  width: var(--preset-radio-width) !important;
+  height: var(--preset-radio-height) !important;
+}
+
+.p-radiobutton .p-radiobutton-box {
+  width: var(--preset-radio-box-width) !important;
+  height: var(--preset-radio-box-height) !important;
+  border: var(--preset-radio-box-border) !important;
+  border-color: var(--preset-radio-box-border-color) !important;
+  border-radius: var(--preset-radio-box-border-radius) !important;
+  background: var(--preset-radio-box-background) !important;
+}
+
+.p-radiobutton .p-radiobutton-box:hover {
+  border-color: var(--preset-radio-box-hover-border-color) !important;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight,
+.p-radiobutton .p-radiobutton-box.p-highlight:hover {
+  box-shadow: var(--preset-radio-box-highlight-box-shadow) !important;
+  border-color: var(--preset-radio-box-highlight-border-color) !important;
+  background: var(--preset-radio-box-highlight-background) !important;
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  width: var(--preset-radio-icon-width) !important;
+  height: var(--preset-radio-icon-height) !important;
+  background: var(--preset-radio-icon-background) !important;
+  border-radius: var(--preset-radio-icon-border-radius) !important;
+} 

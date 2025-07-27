@@ -327,6 +327,32 @@ export const CoPreset = {
         checkedLeft: '8px',
         uncheckedLeft: '24px'
       }
+    },
+    radio: {
+      width: 'fit-content',
+      height: '19px',
+      box: {
+        width: '16px',
+        height: '16px',
+        border: '1px solid',
+        borderColor: CoCSSVars.borders.secondary,
+        borderRadius: '50%',
+        background: CoCSSVars.backgrounds.white,
+        hover: {
+          borderColor: CoCSSVars.text.secondary
+        },
+        highlight: {
+          boxShadow: 'none',
+          borderColor: CoCSSVars.text.secondary,
+          background: CoCSSVars.backgrounds.white
+        }
+      },
+      icon: {
+        width: '10px',
+        height: '10px',
+        background: CoCSSVars.text.secondary,
+        borderRadius: '50%'
+      }
     }
   }
 };

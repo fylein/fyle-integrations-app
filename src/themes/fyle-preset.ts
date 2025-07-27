@@ -325,6 +325,32 @@ export const FylePreset = {
         checkedLeft: '8px',
         uncheckedLeft: '24px'
       }
+    },
+    radio: {
+      width: 'fit-content',
+      height: '19px',
+      box: {
+        width: '16px',
+        height: '16px',
+        border: '1px solid',
+        borderColor: FyleCSSVars.borders.secondary,
+        borderRadius: '50%',
+        background: FyleCSSVars.backgrounds.white,
+        hover: {
+          borderColor: FyleCSSVars.text.secondary
+        },
+        highlight: {
+          boxShadow: 'none',
+          borderColor: FyleCSSVars.text.secondary,
+          background: FyleCSSVars.backgrounds.white
+        }
+      },
+      icon: {
+        width: '10px',
+        height: '10px',
+        background: FyleCSSVars.text.secondary,
+        borderRadius: '50%'
+      }
     }
   }
 };

@@ -54,6 +54,7 @@ export class ThemeService {
     this.applyInputStyles(root, preset.components.input);
     this.applyTooltipStyles(root, preset.components.tooltip);
     this.applyToggleStyles(root, preset.components.toggle);
+    this.applyRadioStyles(root, preset.components.radio);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -139,7 +140,9 @@ export class ThemeService {
   }
 
   private applyCalendarInputStyles(root: HTMLElement, calendarStyles: any): void {
-    if (!calendarStyles) return;
+    if (!calendarStyles) {
+return;
+}
 
     Object.entries(calendarStyles).forEach(([prop, value]) => {
       if (prop !== 'focus' && prop !== 'placeholder') {
@@ -163,7 +166,9 @@ export class ThemeService {
   }
 
   private applyDropdownLabelStyles(root: HTMLElement, dropdownLabelStyles: any): void {
-    if (!dropdownLabelStyles) return;
+    if (!dropdownLabelStyles) {
+return;
+}
 
     Object.entries(dropdownLabelStyles).forEach(([prop, value]) => {
       if (prop !== 'input') {
@@ -264,6 +269,46 @@ export class ThemeService {
     if (toggleStyles.text) {
       Object.entries(toggleStyles.text).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-toggle-text-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyRadioStyles(root: HTMLElement, radioStyles: any): void {
+    // Base radio styles
+    if (radioStyles.width) {
+      root.style.setProperty('--preset-radio-width', radioStyles.width);
+    }
+    if (radioStyles.height) {
+      root.style.setProperty('--preset-radio-height', radioStyles.height);
+    }
+
+    // Radio box styles
+    if (radioStyles.box) {
+      Object.entries(radioStyles.box).forEach(([prop, value]) => {
+        if (prop !== 'hover' && prop !== 'highlight') {
+          root.style.setProperty(`--preset-radio-box-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      // Radio box hover styles
+      if (radioStyles.box.hover) {
+        Object.entries(radioStyles.box.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-radio-box-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Radio box highlight styles
+      if (radioStyles.box.highlight) {
+        Object.entries(radioStyles.box.highlight).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-radio-box-highlight-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Radio icon styles
+    if (radioStyles.icon) {
+      Object.entries(radioStyles.icon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-radio-icon-${this.kebabCase(prop)}`, value as string);
       });
     }
   }
