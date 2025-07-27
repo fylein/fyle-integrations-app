@@ -1,0 +1,101 @@
+.p-multiselect {
+  height: var(--preset-multiselect-height) !important;
+  display: var(--preset-multiselect-display) !important;
+  align-items: var(--preset-multiselect-align-items) !important;
+  width: var(--preset-multiselect-width) !important;
+  border: var(--preset-multiselect-border) !important;
+  border-color: var(--preset-multiselect-border-color) !important;
+  border-radius: var(--preset-multiselect-border-radius) !important;
+  padding-right: var(--preset-multiselect-padding-right) !important;
+}
+
+.p-multiselect .p-multiselect-trigger {
+  width: var(--preset-multiselect-trigger-width) !important;
+}
+
+.p-multiselect .p-multiselect-label {
+  color: var(--preset-multiselect-label-color) !important;
+  font-size: var(--preset-multiselect-label-font-size) !important;
+  padding: var(--preset-multiselect-label-padding) !important;
+}
+
+.p-multiselect:not(.p-disabled).p-focus {
+  box-shadow: var(--preset-multiselect-focus-box-shadow) !important;
+}
+
+.p-multiselect.p-focus:not(.p-disabled) {
+  box-shadow: var(--preset-multiselect-focus-enabled-box-shadow) !important;
+  border-color: var(--preset-multiselect-focus-enabled-border-color) !important;
+}
+
+.p-multiselect-panel .p-multiselect-header .p-checkbox {
+  display: var(--preset-multiselect-header-checkbox-display);
+}
+
+.p-multiselect-panel .p-multiselect-header,
+.p-multiselect-panel .p-multiselect-items {
+  padding: var(--preset-multiselect-panel-padding) !important;
+}
+
+.p-multiselect-panel .p-multiselect-header {
+  border: var(--preset-multiselect-panel-header-border) !important;
+}
+
+.p-multiselect-filter-container {
+  display: var(--preset-multiselect-filter-container-display);
+}
+
+.p-multiselect-close {
+  display: var(--preset-multiselect-close-display) !important;
+}
+
+.p-multiselect-panel {
+  width: var(--preset-multiselect-panel-width);
+}
+
+.p-multiselect .p-multiselect-label.p-placeholder {
+  color: var(--preset-multiselect-placeholder-color) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+  font-size: var(--preset-multiselect-item-font-size) !important;
+  color: var(--preset-multiselect-item-color) !important;
+  padding-left: var(--preset-multiselect-item-padding-left) !important;
+  padding-right: var(--preset-multiselect-item-padding-right) !important;
+  padding-top: var(--preset-multiselect-item-padding-top) !important;
+  padding-bottom: var(--preset-multiselect-item-padding-bottom) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
+  font-size: var(--preset-multiselect-item-highlight-font-size) !important;
+  color: var(--preset-multiselect-item-highlight-color) !important;
+  background: var(--preset-multiselect-item-highlight-background) !important;
+  border-radius: var(--preset-multiselect-item-highlight-border-radius) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+  box-shadow: var(--preset-multiselect-item-hover-box-shadow) !important;
+  background: var(--preset-multiselect-item-hover-background) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+  box-shadow: var(--preset-multiselect-item-focus-box-shadow) !important;
+  background: var(--preset-multiselect-item-focus-background) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+  box-shadow: var(--preset-multiselect-item-general-hover-box-shadow) !important;
+  background: var(--preset-multiselect-item-general-hover-background) !important;
+  border-radius: var(--preset-multiselect-item-general-hover-border-radius) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+  padding-top: var(--preset-multiselect-empty-message-padding-top) !important;
+  padding-bottom: var(--preset-multiselect-empty-message-padding-bottom) !important;
+  display: var(--preset-multiselect-empty-message-display) !important;
+  justify-content: var(--preset-multiselect-empty-message-justify-content) !important;
+  color: var(--preset-multiselect-empty-message-color) !important;
+  font-size: var(--preset-multiselect-empty-message-font-size) !important;
+  font-style: var(--preset-multiselect-empty-message-font-style) !important;
+} 

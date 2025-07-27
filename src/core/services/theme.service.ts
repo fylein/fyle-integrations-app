@@ -56,6 +56,8 @@ export class ThemeService {
     this.applyToggleStyles(root, preset.components.toggle);
     this.applyRadioStyles(root, preset.components.radio);
     this.applyDialogStyles(root, preset.components.dialog);
+    this.applyCheckboxStyles(root, preset.components.checkbox);
+    this.applyMultiselectStyles(root, preset.components.multiselect);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -356,6 +358,183 @@ return;
     if (dialogStyles.closeIcon) {
       Object.entries(dialogStyles.closeIcon).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-dialog-close-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyCheckboxStyles(root: HTMLElement, checkboxStyles: any): void {
+    // Base checkbox styles
+    if (checkboxStyles.height) {
+      root.style.setProperty('--preset-checkbox-height', checkboxStyles.height);
+    }
+    if (checkboxStyles.width) {
+      root.style.setProperty('--preset-checkbox-width', checkboxStyles.width);
+    }
+
+    // Checkbox box styles
+    if (checkboxStyles.box) {
+      Object.entries(checkboxStyles.box).forEach(([prop, value]) => {
+        if (prop !== 'hover' && prop !== 'highlight') {
+          root.style.setProperty(`--preset-checkbox-box-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      // Checkbox box hover styles
+      if (checkboxStyles.box.hover) {
+        Object.entries(checkboxStyles.box.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-checkbox-box-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Checkbox box highlight styles
+      if (checkboxStyles.box.highlight) {
+        Object.entries(checkboxStyles.box.highlight).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-checkbox-box-highlight-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Checkbox icon styles
+    if (checkboxStyles.icon) {
+      Object.entries(checkboxStyles.icon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-checkbox-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Checkbox check icon styles (for pi-check)
+    if (checkboxStyles.checkIcon) {
+      Object.entries(checkboxStyles.checkIcon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-checkbox-check-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Multiselect checkbox styles
+    if (checkboxStyles.multiselect) {
+      Object.entries(checkboxStyles.multiselect).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-checkbox-multiselect-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyMultiselectStyles(root: HTMLElement, multiselectStyles: any): void {
+    // Base multiselect styles
+    const baseProps = ['height', 'display', 'alignItems', 'width', 'border', 'borderColor', 'borderRadius', 'paddingRight'];
+    baseProps.forEach(prop => {
+      if (multiselectStyles[prop]) {
+        root.style.setProperty(`--preset-multiselect-${this.kebabCase(prop)}`, multiselectStyles[prop]);
+      }
+    });
+
+    // Trigger styles
+    if (multiselectStyles.trigger) {
+      Object.entries(multiselectStyles.trigger).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-multiselect-trigger-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Label styles
+    if (multiselectStyles.label) {
+      Object.entries(multiselectStyles.label).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-multiselect-label-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Focus styles
+    if (multiselectStyles.focus) {
+      Object.entries(multiselectStyles.focus).forEach(([prop, value]) => {
+        if (prop !== 'enabled') {
+          root.style.setProperty(`--preset-multiselect-focus-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      if (multiselectStyles.focus.enabled) {
+        Object.entries(multiselectStyles.focus.enabled).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-focus-enabled-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Panel styles
+    if (multiselectStyles.panel) {
+      Object.entries(multiselectStyles.panel).forEach(([prop, value]) => {
+        if (prop !== 'header') {
+          root.style.setProperty(`--preset-multiselect-panel-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      if (multiselectStyles.panel.header) {
+        Object.entries(multiselectStyles.panel.header).forEach(([prop, value]) => {
+          if (prop !== 'checkbox') {
+            root.style.setProperty(`--preset-multiselect-panel-header-${this.kebabCase(prop)}`, value as string);
+          }
+        });
+
+        if (multiselectStyles.panel.header.checkbox) {
+          Object.entries(multiselectStyles.panel.header.checkbox).forEach(([prop, value]) => {
+            root.style.setProperty(`--preset-multiselect-header-checkbox-${this.kebabCase(prop)}`, value as string);
+          });
+        }
+      }
+    }
+
+    // Filter container and close styles
+    ['filterContainer', 'close'].forEach(component => {
+      if (multiselectStyles[component]) {
+        Object.entries(multiselectStyles[component]).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-${this.kebabCase(component)}-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    });
+
+    // Placeholder styles
+    if (multiselectStyles.placeholder) {
+      Object.entries(multiselectStyles.placeholder).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-multiselect-placeholder-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Item styles
+    if (multiselectStyles.item) {
+      const itemBaseProps = ['fontSize', 'color', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'];
+      itemBaseProps.forEach(prop => {
+        if (multiselectStyles.item[prop]) {
+          root.style.setProperty(`--preset-multiselect-item-${this.kebabCase(prop)}`, multiselectStyles.item[prop]);
+        }
+      });
+
+      // Item highlight styles
+      if (multiselectStyles.item.highlight) {
+        Object.entries(multiselectStyles.item.highlight).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-item-highlight-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item hover styles
+      if (multiselectStyles.item.hover) {
+        Object.entries(multiselectStyles.item.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-item-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item focus styles
+      if (multiselectStyles.item.focus) {
+        Object.entries(multiselectStyles.item.focus).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-item-focus-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item general hover styles
+      if (multiselectStyles.item.generalHover) {
+        Object.entries(multiselectStyles.item.generalHover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-multiselect-item-general-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Empty message styles
+    if (multiselectStyles.emptyMessage) {
+      Object.entries(multiselectStyles.emptyMessage).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-multiselect-empty-message-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

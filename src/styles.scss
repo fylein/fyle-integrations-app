@@ -140,6 +140,8 @@ p {
 @import 'assets/scss/toggles';
 @import 'assets/scss/radio-buttons';
 @import 'assets/scss/dialogs';
+@import 'assets/scss/checkboxes';
+@import 'assets/scss/multiselect';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -207,117 +209,12 @@ p {
     @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
 }
 
-.p-multiselect {
-    @apply tw-h-40-px tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
-}
-
-.p-multiselect .p-multiselect-trigger {
-    @apply tw-w-12-px #{!important};
-}
-
-.p-multiselect .p-multiselect-label {
-    @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
-}
-
-.p-multiselect:not(.p-disabled).p-focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-multiselect.p-focus:not(.p-disabled) {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-header .p-checkbox {
-    @apply tw-hidden;
-}
-
-.p-multiselect-panel .p-multiselect-header,
-.p-multiselect-panel .p-multiselect-items {
-    @apply tw-p-0 #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-header {
-    @apply tw-border-none #{!important};
-}
-
-.p-multiselect-filter-container {
-    @apply tw-hidden;
-}
-
-.p-multiselect-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-multiselect-panel {
-    @apply tw-w-300-px;
-}
-
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
     @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
     @apply tw-text-select-default-placeholder-text #{!important};
-}
-
-.p-multiselect .p-multiselect-label.p-placeholder {
-    @apply tw-text-select-focused-placeholder-text #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-6-px #{!important};
-}
-
-.p-checkbox {
-    @apply tw-h-[revert] tw-w-[revert] #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mb-0 #{!important};
-}
-
-.p-checkbox .p-checkbox-box {
-    @apply tw-h-16-px tw-w-16-px tw-rounded-5-px tw-transition-none tw-border-[1.5px] tw-border-checkbox-icon-color #{!important};
-}
-
-.p-checkbox .p-checkbox-box .p-icon {
-    @apply tw-w-[9px] tw-text-white #{!important};
-}
-
-.p-checkbox-box {
-    @apply tw-border-[1.5px] #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight, .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
-}
-
-.pi-check:before {
-    @apply tw-font-700 tw-text-9-px tw-w-[9-px] tw-h-14-px #{!important};
-}
-
-.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-    @apply tw-border-sub-text-color #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
-    @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
 
 @mixin spinner($height, $width, $animation) {

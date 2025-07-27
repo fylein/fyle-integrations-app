@@ -387,6 +387,123 @@ export const CoPreset = {
         width: '12px',
         height: '12px'
       }
+    },
+    checkbox: {
+      height: 'revert',
+      width: 'revert',
+      box: {
+        height: '16px',
+        width: '16px',
+        borderRadius: CoCSSVars.borderRadius.xs,
+        transition: 'none',
+        border: '1.5px solid',
+        borderColor: CoCSSVars.borders.secondary,
+        background: CoCSSVars.backgrounds.white,
+        baseBorder: '1.5px solid',
+        hover: {
+          borderColor: CoCSSVars.text.secondary
+        },
+        highlight: {
+          background: CoCSSVars.icons.brandPrimary,
+          border: 'none'
+        }
+      },
+      icon: {
+        width: '9px',
+        color: CoCSSVars.text.white,
+        fontWeight: '700',
+        fontSize: '9px',
+        height: '14px'
+      },
+      checkIcon: {
+        fontWeight: '700',
+        fontSize: '9px',
+        width: '9px',
+        height: '14px'
+      },
+      multiselect: {
+        marginBottom: '0'
+      }
+    },
+    multiselect: {
+      height: '40px',
+      display: 'flex',
+      alignItems: 'center',
+      width: '300px',
+      border: '1px solid',
+      borderColor: CoCSSVars.borders.secondary,
+      borderRadius: CoCSSVars.borderRadius['2xs'],
+      paddingRight: CoCSSVars.spacing[20],
+      trigger: {
+        width: '12px'
+      },
+      label: {
+        color: CoCSSVars.text.secondary,
+        fontSize: '14px',
+        padding: '0'
+      },
+      focus: {
+        boxShadow: 'none',
+        enabled: {
+          boxShadow: 'none',
+          borderColor: CoCSSVars.borders.primary
+        }
+      },
+      panel: {
+        width: '300px',
+        padding: '0',
+        header: {
+          border: 'none',
+          checkbox: {
+            display: 'none'
+          }
+        }
+      },
+      filterContainer: {
+        display: 'none'
+      },
+      close: {
+        display: 'none'
+      },
+      placeholder: {
+        color: CoCSSVars.text.placeholder
+      },
+      item: {
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        paddingLeft: CoCSSVars.spacing[12],
+        paddingRight: CoCSSVars.spacing[12],
+        paddingTop: CoCSSVars.spacing[6],
+        paddingBottom: CoCSSVars.spacing[6],
+        highlight: {
+          fontSize: '14px',
+          color: CoCSSVars.text.secondary,
+          background: CoCSSVars.backgrounds.white,
+          borderRadius: CoCSSVars.borderRadius['2xs']
+        },
+        hover: {
+          boxShadow: 'none',
+          background: CoCSSVars.backgrounds.tertiary
+        },
+        focus: {
+          boxShadow: 'none',
+          background: CoCSSVars.backgrounds.tertiary
+        },
+        generalHover: {
+          boxShadow: 'none',
+          background: CoCSSVars.backgrounds.tertiary,
+          borderRadius: 'none'
+        }
+      },
+      emptyMessage: {
+        paddingTop: CoCSSVars.spacing[24],
+        paddingBottom: CoCSSVars.spacing[24],
+        display: 'flex',
+        justifyContent: 'center',
+        color: CoCSSVars.text.secondary,
+        fontSize: '14px',
+        fontStyle: 'italic'
+      }
     }
   }
 };

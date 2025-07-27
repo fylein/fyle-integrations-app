@@ -1,0 +1,46 @@
+.p-checkbox {
+  height: var(--preset-checkbox-height) !important;
+  width: var(--preset-checkbox-width) !important;
+}
+
+.p-checkbox .p-checkbox-box {
+  height: var(--preset-checkbox-box-height) !important;
+  width: var(--preset-checkbox-box-width) !important;
+  border-radius: var(--preset-checkbox-box-border-radius) !important;
+  transition: var(--preset-checkbox-box-transition) !important;
+  border: var(--preset-checkbox-box-border) !important;
+  border-color: var(--preset-checkbox-box-border-color) !important;
+  background: var(--preset-checkbox-box-background) !important;
+}
+
+.p-checkbox .p-checkbox-box .p-icon {
+  width: var(--preset-checkbox-icon-width) !important;
+  color: var(--preset-checkbox-icon-color) !important;
+  font-weight: var(--preset-checkbox-icon-font-weight) !important;
+  font-size: var(--preset-checkbox-icon-font-size) !important;
+  height: var(--preset-checkbox-icon-height) !important;
+}
+
+.p-checkbox-box {
+  border: var(--preset-checkbox-box-base-border) !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  background: var(--preset-checkbox-box-highlight-background) !important;
+  border: var(--preset-checkbox-box-highlight-border) !important;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: var(--preset-checkbox-box-hover-border-color) !important;
+}
+
+.pi-check:before {
+  font-weight: var(--preset-checkbox-check-icon-font-weight) !important;
+  font-size: var(--preset-checkbox-check-icon-font-size) !important;
+  width: var(--preset-checkbox-check-icon-width) !important;
+  height: var(--preset-checkbox-check-icon-height) !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+  margin-bottom: var(--preset-checkbox-multiselect-margin-bottom) !important;
+} 

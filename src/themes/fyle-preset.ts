@@ -385,6 +385,123 @@ export const FylePreset = {
         width: '12px',
         height: '12px'
       }
+    },
+    checkbox: {
+      height: 'revert',
+      width: 'revert',
+      box: {
+        height: '16px',
+        width: '16px',
+        borderRadius: FyleCSSVars.borderRadius.xs,
+        transition: 'none',
+        border: '1.5px solid',
+        borderColor: FyleCSSVars.borders.secondary,
+        background: FyleCSSVars.backgrounds.white,
+        baseBorder: '1.5px solid',
+        hover: {
+          borderColor: FyleCSSVars.text.secondary
+        },
+        highlight: {
+          background: FyleCSSVars.icons.secondary,
+          border: 'none'
+        }
+      },
+      icon: {
+        width: '9px',
+        color: FyleCSSVars.text.white,
+        fontWeight: '700',
+        fontSize: '9px',
+        height: '14px'
+      },
+      checkIcon: {
+        fontWeight: '700',
+        fontSize: '9px',
+        width: '9px',
+        height: '14px'
+      },
+      multiselect: {
+        marginBottom: '0'
+      }
+    },
+    multiselect: {
+      height: '40px',
+      display: 'flex',
+      alignItems: 'center',
+      width: '300px',
+      border: '1px solid',
+      borderColor: FyleCSSVars.borders.secondary,
+      borderRadius: FyleCSSVars.borderRadius['2xs'],
+      paddingRight: FyleCSSVars.spacing[20],
+      trigger: {
+        width: '12px'
+      },
+      label: {
+        color: FyleCSSVars.text.secondary,
+        fontSize: '14px',
+        padding: '0'
+      },
+      focus: {
+        boxShadow: 'none',
+        enabled: {
+          boxShadow: 'none',
+          borderColor: FyleCSSVars.borders.primary
+        }
+      },
+      panel: {
+        width: '300px',
+        padding: '0',
+        header: {
+          border: 'none',
+          checkbox: {
+            display: 'none'
+          }
+        }
+      },
+      filterContainer: {
+        display: 'none'
+      },
+      close: {
+        display: 'none'
+      },
+      placeholder: {
+        color: FyleCSSVars.text.placeholder
+      },
+      item: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        paddingLeft: FyleCSSVars.spacing[12],
+        paddingRight: FyleCSSVars.spacing[12],
+        paddingTop: FyleCSSVars.spacing[6],
+        paddingBottom: FyleCSSVars.spacing[6],
+        highlight: {
+          fontSize: '14px',
+          color: FyleCSSVars.text.secondary,
+          background: FyleCSSVars.backgrounds.white,
+          borderRadius: FyleCSSVars.borderRadius['2xs']
+        },
+        hover: {
+          boxShadow: 'none',
+          background: FyleCSSVars.backgrounds.tertiary
+        },
+        focus: {
+          boxShadow: 'none',
+          background: FyleCSSVars.backgrounds.tertiary
+        },
+        generalHover: {
+          boxShadow: 'none',
+          background: FyleCSSVars.backgrounds.tertiary,
+          borderRadius: 'none'
+        }
+      },
+      emptyMessage: {
+        paddingTop: FyleCSSVars.spacing[24],
+        paddingBottom: FyleCSSVars.spacing[24],
+        display: 'flex',
+        justifyContent: 'center',
+        color: FyleCSSVars.text.secondary,
+        fontSize: '14px',
+        fontStyle: 'italic'
+      }
     }
   }
 };
