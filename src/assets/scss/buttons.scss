@@ -1,0 +1,125 @@
+.p-button {
+  width: var(--preset-btn-primary-width) !important;
+  font-size: var(--preset-btn-primary-font-size) !important;
+  
+  padding-top: var(--preset-btn-primary-padding-y) !important;
+  padding-bottom: var(--preset-btn-primary-padding-y) !important;
+  padding-left: var(--preset-btn-primary-padding-x) !important;
+  padding-right: var(--preset-btn-primary-padding-x) !important;
+  
+  color: var(--preset-btn-primary-color) !important;
+  background: var(--preset-btn-primary-background) !important;
+  border: var(--preset-btn-primary-border) !important;
+  border-color: var(--preset-btn-primary-border-color) !important;
+  box-shadow: var(--preset-btn-primary-box-shadow) !important;
+}
+
+.p-button:enabled:hover {
+  color: var(--preset-btn-primary-hover-color) !important;
+  background: var(--preset-btn-primary-hover-background) !important;
+  box-shadow: var(--preset-btn-primary-hover-box-shadow) !important;
+}
+
+.p-button:disabled {
+  cursor: var(--preset-btn-primary-disabled-cursor) !important;
+  color: var(--preset-btn-primary-disabled-color) !important;
+  background: var(--preset-btn-primary-disabled-background) !important;
+}
+
+.p-button.secondary-sm {
+  padding-top: var(--preset-btn-secondary-padding-y) !important;
+  padding-bottom: var(--preset-btn-secondary-padding-y) !important;
+  padding-left: var(--preset-btn-secondary-padding-x) !important;
+  padding-right: var(--preset-btn-secondary-padding-x) !important;
+  
+  font-size: var(--preset-btn-secondary-font-size) !important;
+  
+  color: var(--preset-btn-secondary-color) !important;
+  background: var(--preset-btn-secondary-background) !important;
+}
+
+.p-button:enabled:hover.secondary-sm {
+  color: var(--preset-btn-secondary-hover-color) !important;
+  background: var(--preset-btn-secondary-hover-background) !important;
+  box-shadow: var(--preset-btn-secondary-hover-box-shadow) !important;
+}
+
+.p-button.outline-sm {
+  padding-top: var(--preset-btn-outline-padding-y) !important;
+  padding-bottom: var(--preset-btn-outline-padding-y) !important;
+  padding-left: var(--preset-btn-outline-padding-x) !important;
+  padding-right: var(--preset-btn-outline-padding-x) !important;
+  
+  font-size: var(--preset-btn-outline-font-size) !important;
+  
+  color: var(--preset-btn-outline-color) !important;
+  background: var(--preset-btn-outline-background) !important;
+  
+  border-color: var(--preset-btn-outline-border-color) !important;
+  border-style: var(--preset-btn-outline-border-style) !important;
+  border-width: var(--preset-btn-outline-border-width) !important;
+}
+
+.p-button:enabled:hover.outline-sm {
+  color: var(--preset-btn-outline-hover-color) !important;
+  background: var(--preset-btn-outline-hover-background) !important;
+  border-color: var(--preset-btn-outline-hover-border-color) !important;
+  box-shadow: var(--preset-btn-outline-hover-box-shadow) !important;
+}
+
+.p-button.primary-outline {
+  font-weight: var(--preset-btn-primary-outline-font-weight) !important;
+  font-size: var(--preset-btn-primary-outline-font-size) !important;
+  
+  padding-top: var(--preset-btn-primary-outline-padding-y) !important;
+  padding-bottom: var(--preset-btn-primary-outline-padding-y) !important;
+  padding-left: var(--preset-btn-primary-outline-padding-x) !important;
+  padding-right: var(--preset-btn-primary-outline-padding-x) !important;
+  
+  color: var(--preset-btn-primary-outline-color) !important;
+  background: var(--preset-btn-primary-outline-background) !important;
+  
+  border-color: var(--preset-btn-primary-outline-border-color) !important;
+  border-style: var(--preset-btn-primary-outline-border-style) !important;
+  border-width: var(--preset-btn-primary-outline-border-width) !important;
+}
+
+.p-button:enabled:hover.primary-outline {
+  color: var(--preset-btn-primary-outline-hover-color) !important;
+  background: var(--preset-btn-primary-outline-hover-background) !important;
+  border-color: var(--preset-btn-primary-outline-hover-border-color) !important;
+}
+
+.p-button.danger-outline {
+  padding-top: var(--preset-btn-danger-outline-padding-y) !important;
+  padding-bottom: var(--preset-btn-danger-outline-padding-y) !important;
+  padding-left: var(--preset-btn-danger-outline-padding-x) !important;
+  padding-right: var(--preset-btn-danger-outline-padding-x) !important;
+  
+  font-size: var(--preset-btn-danger-outline-font-size) !important;
+  
+  color: var(--preset-btn-danger-outline-color) !important;
+  background: var(--preset-btn-danger-outline-background) !important;
+  
+  border-color: var(--preset-btn-danger-outline-border-color) !important;
+  border-style: var(--preset-btn-danger-outline-border-style) !important;
+  border-width: var(--preset-btn-danger-outline-border-width) !important;
+}
+
+.p-button:enabled:hover.danger-outline {
+  color: var(--preset-btn-danger-outline-hover-color) !important;
+  background: var(--preset-btn-danger-outline-hover-background) !important;
+  border-color: var(--preset-btn-danger-outline-hover-border-color) !important;
+}
+
+.btn-text-primary {
+  cursor: var(--preset-btn-text-cursor);
+  color: var(--preset-btn-text-color) !important;
+  font-size: var(--preset-btn-text-font-size);
+}
+
+.btn-text-primary:hover {
+  color: var(--preset-btn-text-hover-color) !important;
+  background: var(--preset-btn-text-hover-background) !important;
+  border-radius: var(--preset-btn-text-hover-border-radius) !important;
+}

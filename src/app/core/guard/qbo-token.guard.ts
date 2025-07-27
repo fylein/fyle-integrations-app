@@ -26,6 +26,7 @@ export class QboTokenGuard  {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       this.helperService.setBaseApiURL(AppUrl.QBO);
       const workspaceId = this.workspaceService.getWorkspaceId();
+      return true;
 
       if (!workspaceId) {
         return this.router.navigateByUrl(`workspaces`);

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+// CSS Layer ordering for proper cascade control
+@layer reset, primeng, tailwind-components, tailwind-utilities, brand-overrides;
+
 // Import all the themes here
 @import 'assets/themes/theme.scss';
 @import 'assets/themes/co/c1dl.scss';
@@ -28,154 +31,110 @@ p {
     @apply tw-m-0-px;
 }
 
-.pi-times.fyle.qbd{
-    content: url('./assets/icons/cross.svg') !important;
-}
-
-.pi-times.fyle {
-    content: url('./assets/icons/cross-medium.svg') !important;
-}
-
-.pi-times.co {
-    content: url('./assets/icons/co/grv-close-medium.svg') !important;
-}
-
-[data-theme='fyle'] {
-    .pi-times-circle {
-        content: url('./assets/icons/cross-xs-small.svg') !important;
+// Brand-specific icon overrides in dedicated layer
+@layer brand-overrides {
+    .pi-times.fyle.qbd{
+        content: url('./assets/icons/cross.svg') !important;
     }
 
-    .pi-search {
-        content: url('./assets/icons/search-medium.svg') !important ;
+    .pi-times.fyle {
+        content: url('./assets/icons/cross-medium.svg') !important;
     }
 
-    .p-checkbox .p-checkbox-box .p-icon {
-        content: url('./assets/icons/check.svg') !important;
-    }
-}
-
-[data-theme='co'] {
-    .pi-times-circle {
-        content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+    .pi-times.co {
+        content: url('./assets/icons/co/grv-close-medium.svg') !important;
     }
 
-    .pi-search {
-        content: url('./assets/icons/co/grv-search-medium.svg') !important;
+    [data-theme='fyle'] {
+        .pi-times-circle {
+            content: url('./assets/icons/cross-xs-small.svg') !important;
+        }
+
+        .pi-search {
+            content: url('./assets/icons/search-medium.svg') !important ;
+        }
+
+        .p-checkbox .p-checkbox-box .p-icon {
+            content: url('./assets/icons/check.svg') !important;
+        }
     }
 
-    .p-checkbox .p-checkbox-box .p-icon, .pi-check {
-        content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
-    }
-}
+    [data-theme='co'] {
+        .pi-times-circle {
+            content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+        }
 
-[data-theme='fyle'] {
-    .p-dropdown-trigger {
+        .pi-search {
+            content: url('./assets/icons/co/grv-search-medium.svg') !important;
+        }
+
+        .p-checkbox .p-checkbox-box .p-icon, .pi-check {
+            content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
+        }
+    }
+
+    [data-theme='fyle'] {
+        .p-dropdown-trigger {
+            content: url('./assets/icons/arrow-down.svg') !important;
+        }
+    }
+
+    [data-theme='co'] {
+        .p-dropdown-trigger {
+            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+        }
+    }
+
+    [data-theme='fyle'] {
+        .pi-chevron-down {
+            content: url('./assets/icons/arrow-down.svg') !important;
+        }
+    }
+
+    [data-theme='co'] {
+        .pi-chevron-down {
+            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+        }
+    }
+
+    .pi-chevron-down.fyle {
+        padding-left: 16px !important;
         content: url('./assets/icons/arrow-down.svg') !important;
     }
-}
 
-[data-theme='co'] {
-    .p-dropdown-trigger {
+    .pi-chevron-down.co {
+        padding-left: 16px !important;
         content: url('./assets/icons/co/grv-chevron-down.svg') !important;
     }
-}
 
-[data-theme='fyle'] {
-    .pi-chevron-down {
-        content: url('./assets/icons/arrow-down.svg') !important;
+    .pi-eye.fyle {
+        content: url('./assets/icons/eye.svg') !important;
     }
-}
 
-[data-theme='co'] {
-    .pi-chevron-down {
-        content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+    .pi-eye.co {
+        top: 16px !important;
+        content: url('./assets/icons/co/grv-show.svg') !important;
     }
-}
 
-.pi-chevron-down.fyle {
-    padding-left: 16px !important;
-    content: url('./assets/icons/arrow-down.svg') !important;
-}
+    .pi-eye-slash.fyle {
+        content: url('./assets/icons/eye-slash.svg') !important;
+    }
 
-.pi-chevron-down.co {
-    padding-left: 16px !important;
-    content: url('./assets/icons/co/grv-chevron-down.svg') !important;
-}
-
-.pi-eye.fyle {
-    content: url('./assets/icons/eye.svg') !important;
-}
-
-.pi-eye.co {
-    top: 16px !important;
-    content: url('./assets/icons/co/grv-show.svg') !important;
-}
-
-.pi-eye-slash.fyle {
-    content: url('./assets/icons/eye-slash.svg') !important;
-}
-
-.pi-eye-slash.co {
-    top: 16px !important;
-    content: url('./assets/icons/co/grv-show-hide.svg') !important;
+    .pi-eye-slash.co {
+        top: 16px !important;
+        content: url('./assets/icons/co/grv-show-hide.svg') !important;
+    }
 }
 
 .pi-times:before {
-    @apply tw-text-placeholder tw-text-12-px #{!important}
+    @apply tw-text-placeholder tw-text-12-px #{!important};
 }
 
 .p-component {
     @apply tw-font-primary #{!important};
 }
 
-// Button CTA
-.p-button {
-    @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
-}
-
-.p-button.p-button-raised {
-    @apply tw-justify-center #{!important};
-}
-
-.p-button-label {
-    @apply tw-flex-none #{!important};
-}
-
-.p-button:enabled:hover {
-    @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button:disabled {
-    @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
-}
-
-.p-button.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
-}
-
-.p-button:enabled:hover.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color tw-border #{!important};
-}
-
-.p-button.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.p-button:enabled:hover.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.p-button:enabled:hover.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button.primary-outline {
-    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
-}
+@import 'assets/scss/buttons';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};

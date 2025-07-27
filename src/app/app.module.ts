@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { SharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 import { BrandingService } from './core/services/common/branding.service';
+import { ThemeService } from '../core/services/theme.service';
 import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/sage300-configuration/sage300-configuration.module';
 
 import * as Sentry from "@sentry/angular";
@@ -26,6 +27,7 @@ import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './transloco-http-loader';
 import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
 
+// PrimeNG Theming - configured via ThemeService
 
 @NgModule({ declarations: [
         AppComponent
@@ -39,6 +41,9 @@ import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat'
         IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
         Sage300ConfigurationModule], providers: [
         MessageService,
+
+        // PrimeNG theming handled by ThemeService initialization
+
         provideTransloco({
             config: {
                 availableLangs: ['en'],
@@ -82,12 +87,25 @@ import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat'
             provide: Sentry.TraceService,
             deps: [Router]
         },
+
+        // Initialize branding and theme services
         {
             provide: APP_INITIALIZER,
-            useFactory: (brandingService: BrandingService) => () => brandingService.init(),
-            deps: [BrandingService, Sentry.TraceService],
+            useFactory: (brandingService: BrandingService, themeService: ThemeService) => {
+                return () => {
+                    // Initialize branding first
+                    brandingService.init();
+
+                    // Theme service will automatically initialize based on branding config
+                    // No additional initialization needed since it reads from brandingConfig
+
+                    return Promise.resolve();
+                };
+            },
+            deps: [BrandingService, ThemeService, Sentry.TraceService],
             multi: true
         },
+
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule { }
