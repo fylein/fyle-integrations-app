@@ -7,7 +7,10 @@
   border: var(--preset-input-border) !important;
   border-color: var(--preset-input-border-color) !important;
   border-radius: var(--preset-input-border-radius) !important;
-  padding: var(--preset-input-padding) !important;
+  padding-left: var(--preset-input-padding-left) !important;
+  padding-right: var(--preset-input-padding-right) !important;
+  padding-top: var(--preset-input-padding-top) !important;
+  padding-bottom: var(--preset-input-padding-bottom) !important;
 }
 .p-inputtext:enabled:focus-visible {
   box-shadow: var(--preset-input-focus-visible-box-shadow) !important;

@@ -174,7 +174,10 @@ export const CoPreset = {
         border: '1px solid',
         borderColor: CoCSSVars.borders.secondary,
         borderRadius: CoCSSVars.borderRadius['2xs'],
-        padding: '0'
+        paddingLeft: CoCSSVars.spacing[12],
+        paddingRight: CoCSSVars.spacing[12],
+        paddingTop: CoCSSVars.spacing[8],
+        paddingBottom: CoCSSVars.spacing[8],
       },
       focusVisible: {
         boxShadow: 'none',

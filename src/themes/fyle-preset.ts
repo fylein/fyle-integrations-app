@@ -174,7 +174,10 @@ export const FylePreset = {
         border: '1px solid',
         borderColor: FyleCSSVars.borders.secondary,
         borderRadius: FyleCSSVars.borderRadius['2xs'],
-        padding: '0'
+        paddingLeft: FyleCSSVars.spacing[12],
+        paddingRight: FyleCSSVars.spacing[12],
+        paddingTop: FyleCSSVars.spacing[8],
+        paddingBottom: FyleCSSVars.spacing[8],
       },
       focusVisible: {
         boxShadow: 'none',
