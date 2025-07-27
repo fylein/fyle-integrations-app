@@ -504,6 +504,125 @@ export const CoPreset = {
         fontSize: '14px',
         fontStyle: 'italic'
       }
+    },
+    dropdown: {
+      height: '40px',
+      width: '300px',
+      transform: 'scale(1)',
+      border: '1px solid',
+      borderColor: CoCSSVars.borders.secondary,
+      paddingTop: CoCSSVars.spacing[8],
+      paddingBottom: CoCSSVars.spacing[8],
+      paddingLeft: CoCSSVars.spacing[12],
+      paddingRight: CoCSSVars.spacing[12],
+      borderRadius: CoCSSVars.borderRadius['2xs'],
+      disabled: {
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        background: CoCSSVars.backgrounds.tertiary,
+        border: '1px solid',
+        borderColor: CoCSSVars.borders.tertiary
+      },
+      trigger: {
+        width: '18px'
+      },
+      focus: {
+        boxShadow: 'none',
+        borderColor: CoCSSVars.borders.primary
+      },
+      hover: {
+        boxShadow: 'none'
+      },
+      placeholder: {
+        color: CoCSSVars.text.placeholder
+      },
+              panel: {
+          items: {
+            marginTop: '1px',
+            paddingLeft: '0',
+            paddingRight: '0',
+            paddingTop: '4px',
+            paddingBottom: '5px',
+            border: 'none',
+            borderRadius: '0 0 8px 8px'
+          },
+        header: {
+          padding: CoCSSVars.spacing[6]
+        }
+      },
+      header: {
+        background: CoCSSVars.backgrounds.tertiary,
+        padding: CoCSSVars.spacing[6]
+      },
+      item: {
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        borderRadius: CoCSSVars.borderRadius['2xs'],
+        minHeight: 'var(--dropdown-option-height)',
+        display: 'flex',
+        alignItems: 'center',
+        paddingTop: CoCSSVars.spacing[8],
+        paddingBottom: CoCSSVars.spacing[8],
+        paddingLeft: CoCSSVars.spacing[14],
+        paddingRight: CoCSSVars.spacing[14],
+        highlight: {
+          color: CoCSSVars.text.primary,
+          background: CoCSSVars.backgrounds.tertiary,
+          borderRadius: 'none',
+          minHeight: 'var(--dropdown-option-height)',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: CoCSSVars.spacing[8],
+          paddingBottom: CoCSSVars.spacing[8],
+          paddingLeft: CoCSSVars.spacing[12],
+          paddingRight: CoCSSVars.spacing[12],
+          fontSize: '14px'
+        },
+        focus: {
+          color: CoCSSVars.text.secondary,
+          background: CoCSSVars.backgrounds.white,
+          borderRadius: 'none',
+          minHeight: 'var(--dropdown-option-height)',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: CoCSSVars.spacing[8],
+          paddingBottom: CoCSSVars.spacing[8],
+          paddingLeft: CoCSSVars.spacing[12],
+          paddingRight: CoCSSVars.spacing[12],
+          fontSize: '14px'
+        },
+        hover: {
+          background: CoCSSVars.backgrounds.tertiary,
+          color: CoCSSVars.text.secondary,
+          borderRadius: 'none'
+        },
+        group: {
+          paddingLeft: CoCSSVars.spacing[12],
+          paddingRight: CoCSSVars.spacing[12],
+          paddingTop: CoCSSVars.spacing[8],
+          paddingBottom: CoCSSVars.spacing[8]
+        }
+      },
+      emptyMessage: {
+        color: CoCSSVars.text.secondary,
+        paddingTop: CoCSSVars.spacing[6],
+        paddingBottom: CoCSSVars.spacing[6],
+        paddingLeft: CoCSSVars.spacing[12],
+        paddingRight: CoCSSVars.spacing[12],
+        fontSize: '14px'
+      },
+      divider: {
+        paddingTop: CoCSSVars.spacing[4],
+        paddingBottom: CoCSSVars.spacing[4],
+        minHeight: '0'
+      },
+      calendarInput: {
+        background: CoCSSVars.backgrounds.tertiaryLighter
+      },
+      filterIcon: {
+        left: '10px',
+        color: CoCSSVars.icons.secondary
+      }
     }
   }
 };

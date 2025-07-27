@@ -502,6 +502,125 @@ export const FylePreset = {
         fontSize: '14px',
         fontStyle: 'italic'
       }
+    },
+    dropdown: {
+      height: '40px',
+      width: '300px',
+      transform: 'scale(1)',
+      border: '1px solid',
+      borderColor: FyleCSSVars.borders.secondary,
+      paddingTop: FyleCSSVars.spacing[8],
+      paddingBottom: FyleCSSVars.spacing[8],
+      paddingLeft: FyleCSSVars.spacing[12],
+      paddingRight: FyleCSSVars.spacing[12],
+      borderRadius: FyleCSSVars.borderRadius['2xs'],
+      disabled: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        background: FyleCSSVars.backgrounds.tertiary,
+        border: '1px solid',
+        borderColor: FyleCSSVars.borders.tertiary
+      },
+      trigger: {
+        width: '18px'
+      },
+      focus: {
+        boxShadow: 'none',
+        borderColor: FyleCSSVars.borders.primary
+      },
+      hover: {
+        boxShadow: 'none'
+      },
+      placeholder: {
+        color: FyleCSSVars.text.placeholder
+      },
+              panel: {
+          items: {
+            marginTop: '1px',
+            paddingLeft: '0',
+            paddingRight: '0',
+            paddingTop: '4px',
+            paddingBottom: '5px',
+            border: 'none',
+            borderRadius: '0 0 8px 8px'
+          },
+        header: {
+          padding: FyleCSSVars.spacing[6]
+        }
+      },
+      header: {
+        background: FyleCSSVars.backgrounds.tertiary,
+        padding: FyleCSSVars.spacing[6]
+      },
+      item: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        borderRadius: FyleCSSVars.borderRadius['2xs'],
+        minHeight: 'var(--dropdown-option-height)',
+        display: 'flex',
+        alignItems: 'center',
+        paddingTop: FyleCSSVars.spacing[8],
+        paddingBottom: FyleCSSVars.spacing[8],
+        paddingLeft: FyleCSSVars.spacing[14],
+        paddingRight: FyleCSSVars.spacing[14],
+        highlight: {
+          color: FyleCSSVars.text.primary,
+          background: FyleCSSVars.backgrounds.tertiary,
+          borderRadius: 'none',
+          minHeight: 'var(--dropdown-option-height)',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: FyleCSSVars.spacing[8],
+          paddingBottom: FyleCSSVars.spacing[8],
+          paddingLeft: FyleCSSVars.spacing[12],
+          paddingRight: FyleCSSVars.spacing[12],
+          fontSize: '14px'
+        },
+        focus: {
+          color: FyleCSSVars.text.secondary,
+          background: FyleCSSVars.backgrounds.white,
+          borderRadius: 'none',
+          minHeight: 'var(--dropdown-option-height)',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: FyleCSSVars.spacing[8],
+          paddingBottom: FyleCSSVars.spacing[8],
+          paddingLeft: FyleCSSVars.spacing[12],
+          paddingRight: FyleCSSVars.spacing[12],
+          fontSize: '14px'
+        },
+        hover: {
+          background: FyleCSSVars.backgrounds.tertiary,
+          color: FyleCSSVars.text.secondary,
+          borderRadius: 'none'
+        },
+        group: {
+          paddingLeft: FyleCSSVars.spacing[12],
+          paddingRight: FyleCSSVars.spacing[12],
+          paddingTop: FyleCSSVars.spacing[8],
+          paddingBottom: FyleCSSVars.spacing[8]
+        }
+      },
+      emptyMessage: {
+        color: FyleCSSVars.text.secondary,
+        paddingTop: FyleCSSVars.spacing[6],
+        paddingBottom: FyleCSSVars.spacing[6],
+        paddingLeft: FyleCSSVars.spacing[12],
+        paddingRight: FyleCSSVars.spacing[12],
+        fontSize: '14px'
+      },
+      divider: {
+        paddingTop: FyleCSSVars.spacing[4],
+        paddingBottom: FyleCSSVars.spacing[4],
+        minHeight: '0'
+      },
+      calendarInput: {
+        background: FyleCSSVars.backgrounds.tertiary
+      },
+      filterIcon: {
+        left: '10px',
+        color: FyleCSSVars.icons.secondary
+      }
     }
   }
 };

@@ -58,6 +58,7 @@ export class ThemeService {
     this.applyDialogStyles(root, preset.components.dialog);
     this.applyCheckboxStyles(root, preset.components.checkbox);
     this.applyMultiselectStyles(root, preset.components.multiselect);
+    this.applyDropdownStyles(root, preset.components.dropdown);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -535,6 +536,138 @@ return;
     if (multiselectStyles.emptyMessage) {
       Object.entries(multiselectStyles.emptyMessage).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-multiselect-empty-message-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyDropdownStyles(root: HTMLElement, dropdownStyles: any): void {
+    // Base dropdown styles
+    const baseProps = ['height', 'width', 'transform', 'border', 'borderColor', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'borderRadius'];
+    baseProps.forEach(prop => {
+      if (dropdownStyles[prop]) {
+        root.style.setProperty(`--preset-dropdown-${this.kebabCase(prop)}`, dropdownStyles[prop]);
+      }
+    });
+
+    // Disabled styles
+    if (dropdownStyles.disabled) {
+      Object.entries(dropdownStyles.disabled).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-disabled-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Trigger styles
+    if (dropdownStyles.trigger) {
+      Object.entries(dropdownStyles.trigger).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-trigger-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Focus styles
+    if (dropdownStyles.focus) {
+      Object.entries(dropdownStyles.focus).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-focus-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Hover styles
+    if (dropdownStyles.hover) {
+      Object.entries(dropdownStyles.hover).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-hover-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Placeholder styles
+    if (dropdownStyles.placeholder) {
+      Object.entries(dropdownStyles.placeholder).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-placeholder-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Panel styles
+    if (dropdownStyles.panel) {
+      if (dropdownStyles.panel.items) {
+        Object.entries(dropdownStyles.panel.items).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-panel-items-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+      if (dropdownStyles.panel.header) {
+        Object.entries(dropdownStyles.panel.header).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-panel-header-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Header styles (separate from panel.header)
+    if (dropdownStyles.header) {
+      Object.entries(dropdownStyles.header).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-header-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Item styles
+    if (dropdownStyles.item) {
+      const itemBaseProps = ['fontSize', 'color', 'borderRadius', 'minHeight', 'display', 'alignItems', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'];
+      itemBaseProps.forEach(prop => {
+        if (dropdownStyles.item[prop]) {
+          root.style.setProperty(`--preset-dropdown-item-${this.kebabCase(prop)}`, dropdownStyles.item[prop]);
+        }
+      });
+
+      // Item highlight styles
+      if (dropdownStyles.item.highlight) {
+        Object.entries(dropdownStyles.item.highlight).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-item-highlight-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item focus styles
+      if (dropdownStyles.item.focus) {
+        Object.entries(dropdownStyles.item.focus).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-item-focus-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item hover styles
+      if (dropdownStyles.item.hover) {
+        Object.entries(dropdownStyles.item.hover).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-item-hover-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Item group styles
+      if (dropdownStyles.item.group) {
+        Object.entries(dropdownStyles.item.group).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dropdown-item-group-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Empty message styles
+    if (dropdownStyles.emptyMessage) {
+      Object.entries(dropdownStyles.emptyMessage).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-empty-message-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Divider styles
+    if (dropdownStyles.divider) {
+      Object.entries(dropdownStyles.divider).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-divider-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Calendar input styles
+    if (dropdownStyles.calendarInput) {
+      Object.entries(dropdownStyles.calendarInput).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-calendar-input-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Filter icon styles
+    if (dropdownStyles.filterIcon) {
+      Object.entries(dropdownStyles.filterIcon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dropdown-filter-icon-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

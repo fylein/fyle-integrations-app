@@ -142,6 +142,7 @@ p {
 @import 'assets/scss/dialogs';
 @import 'assets/scss/checkboxes';
 @import 'assets/scss/multiselect';
+@import 'assets/scss/dropdowns';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -153,68 +154,6 @@ p {
 
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
-}
-
-// Dropdown
-.p-dropdown {
-    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
-}
-
-.p-dropdown:disabled {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-dd-menu-item-hover-bg tw-border tw-border-select-disabled-border #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items {
-    @apply tw-mt-1-px tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-rounded-4-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
-,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
-    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
-    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
-    @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-none #{!important};
-}
-
-.p-dropdown .p-dropdown-trigger {
-    @apply tw-w-18-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-header {
-    @apply tw-p-6-px #{!important};
-}
-
-.p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-dropdown:hover {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-dropdown-header {
-    @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
-}
-
-.p-dropdown .p-dropdown-label.p-placeholder {
-    @apply tw-text-select-default-placeholder-text #{!important};
 }
 
 @mixin spinner($height, $width, $animation) {
@@ -347,23 +286,6 @@ p {
     @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext,
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext {
-    @apply tw-bg-input-read-only-bg #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message {
-    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item-group {
-    @apply tw-px-12-px tw-py-8-px;
-}
-
-.p-dropdown-panel .p-element[aria-label=\[divider\]] {
-    @apply tw-py-4-px tw-min-h-0 #{!important};
-}
-
 .p-monthpicker-month {
     @apply tw-w-[25%] #{!important};
 }
@@ -412,10 +334,6 @@ p {
 .p-datepicker-touch-ui,
 .p-calendar .p-datepicker-touch-ui {
     @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
-}
-
-.p-dropdown-filter-icon {
-    @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
 }
 
 .p-chips .p-chips-multiple-container .p-chips-token {
