@@ -1,0 +1,35 @@
+.p-dialog .p-dialog-content {
+  padding: var(--preset-dialog-content-padding) !important;
+  border-radius: var(--preset-dialog-content-border-radius) !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icons .p-button,
+.p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
+  background: var(--preset-dialog-header-button-background) !important;
+  color: var(--preset-dialog-header-button-color) !important;
+  box-shadow: var(--preset-dialog-header-button-box-shadow) !important;
+  padding: var(--preset-dialog-header-button-padding) !important;
+}
+
+.p-dialog-top-right .p-dialog {
+  margin: var(--preset-dialog-top-right-margin) !important;
+  transform: var(--preset-dialog-top-right-transform) !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-size: var(--preset-dialog-title-font-size) !important;
+  font-weight: var(--preset-dialog-title-font-weight) !important;
+  color: var(--preset-dialog-title-color) !important;
+}
+
+.p-dialog .p-dialog-header {
+  border-radius: var(--preset-dialog-header-border-radius) !important;
+  background: var(--preset-dialog-header-background) !important;
+  padding: var(--preset-dialog-header-padding) !important;
+}
+
+.p-dialog-header-close-icon {
+  margin-top: var(--preset-dialog-close-icon-margin-top) !important;
+  width: var(--preset-dialog-close-icon-width) !important;
+  height: var(--preset-dialog-close-icon-height) !important;
+} 

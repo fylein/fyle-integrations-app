@@ -177,7 +177,7 @@ export const CoPreset = {
         paddingLeft: CoCSSVars.spacing[12],
         paddingRight: CoCSSVars.spacing[12],
         paddingTop: CoCSSVars.spacing[8],
-        paddingBottom: CoCSSVars.spacing[8],
+        paddingBottom: CoCSSVars.spacing[8]
       },
       focusVisible: {
         boxShadow: 'none',
@@ -355,6 +355,37 @@ export const CoPreset = {
         height: '10px',
         background: CoCSSVars.text.secondary,
         borderRadius: '50%'
+      }
+    },
+    dialog: {
+      content: {
+        padding: '0',
+        borderRadius: CoCSSVars.borderRadius['2xs']
+      },
+      header: {
+        borderRadius: 'none',
+        background: CoCSSVars.backgrounds.white,
+        padding: CoCSSVars.spacing[16],
+        title: {
+          fontSize: '20px',
+          fontWeight: '500',
+          color: CoCSSVars.text.primary
+        },
+        button: {
+          background: CoCSSVars.backgrounds.white,
+          color: CoCSSVars.text.placeholder,
+          boxShadow: 'none',
+          padding: CoCSSVars.spacing[8]
+        }
+      },
+      topRight: {
+        margin: '.75rem',
+        transform: 'translateZ(0)'
+      },
+      closeIcon: {
+        marginTop: '-3px',
+        width: '12px',
+        height: '12px'
       }
     }
   }

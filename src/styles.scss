@@ -139,6 +139,7 @@ p {
 @import 'assets/scss/tooltips';
 @import 'assets/scss/toggles';
 @import 'assets/scss/radio-buttons';
+@import 'assets/scss/dialogs';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -150,20 +151,6 @@ p {
 
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
-}
-
-// Dialog
-.p-dialog .p-dialog-content {
-    @apply tw-p-0 tw-rounded-border-radius-2xs #{!important};
-}
-
-.p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
-    @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white tw-p-8-px #{!important};
-}
-
-.p-dialog-top-right .p-dialog {
-    margin: .75rem !important;
-    transform: translateZ(0) !important;
 }
 
 // Dropdown
@@ -534,14 +521,6 @@ p {
     @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
 }
 
-.p-dialog .p-dialog-header .p-dialog-title {
-    @apply tw-text-20-px tw-font-500 #{!important};
-}
-
-.p-dialog .p-dialog-header {
-    @apply tw-rounded-none #{!important};
-}
-
 .p-chips .p-chips-multiple-container .p-chips-token {
     @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
 }
@@ -557,10 +536,6 @@ p {
 
 .preview-box {
     @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important};
-}
-
-.p-dialog-header-close-icon {
-    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
 }
 
 .landing {

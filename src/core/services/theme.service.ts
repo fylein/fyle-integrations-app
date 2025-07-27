@@ -55,6 +55,7 @@ export class ThemeService {
     this.applyTooltipStyles(root, preset.components.tooltip);
     this.applyToggleStyles(root, preset.components.toggle);
     this.applyRadioStyles(root, preset.components.radio);
+    this.applyDialogStyles(root, preset.components.dialog);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -309,6 +310,52 @@ return;
     if (radioStyles.icon) {
       Object.entries(radioStyles.icon).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-radio-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyDialogStyles(root: HTMLElement, dialogStyles: any): void {
+    // Dialog content styles
+    if (dialogStyles.content) {
+      Object.entries(dialogStyles.content).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dialog-content-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Dialog header styles
+    if (dialogStyles.header) {
+      Object.entries(dialogStyles.header).forEach(([prop, value]) => {
+        if (prop !== 'title' && prop !== 'button') {
+          root.style.setProperty(`--preset-dialog-header-${this.kebabCase(prop)}`, value as string);
+        }
+      });
+
+      // Dialog header title styles
+      if (dialogStyles.header.title) {
+        Object.entries(dialogStyles.header.title).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dialog-title-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+
+      // Dialog header button styles
+      if (dialogStyles.header.button) {
+        Object.entries(dialogStyles.header.button).forEach(([prop, value]) => {
+          root.style.setProperty(`--preset-dialog-header-button-${this.kebabCase(prop)}`, value as string);
+        });
+      }
+    }
+
+    // Dialog top-right positioning styles
+    if (dialogStyles.topRight) {
+      Object.entries(dialogStyles.topRight).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dialog-top-right-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Dialog close icon styles
+    if (dialogStyles.closeIcon) {
+      Object.entries(dialogStyles.closeIcon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-dialog-close-icon-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

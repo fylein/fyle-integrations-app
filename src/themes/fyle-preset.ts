@@ -177,7 +177,7 @@ export const FylePreset = {
         paddingLeft: FyleCSSVars.spacing[12],
         paddingRight: FyleCSSVars.spacing[12],
         paddingTop: FyleCSSVars.spacing[8],
-        paddingBottom: FyleCSSVars.spacing[8],
+        paddingBottom: FyleCSSVars.spacing[8]
       },
       focusVisible: {
         boxShadow: 'none',
@@ -353,6 +353,37 @@ export const FylePreset = {
         height: '10px',
         background: FyleCSSVars.text.secondary,
         borderRadius: '50%'
+      }
+    },
+    dialog: {
+      content: {
+        padding: '0',
+        borderRadius: FyleCSSVars.borderRadius['2xs']
+      },
+      header: {
+        borderRadius: 'none',
+        background: FyleCSSVars.backgrounds.white,
+        padding: FyleCSSVars.spacing[16],
+        title: {
+          fontSize: '20px',
+          fontWeight: '500',
+          color: FyleCSSVars.text.primary
+        },
+        button: {
+          background: FyleCSSVars.backgrounds.white,
+          color: FyleCSSVars.text.placeholder,
+          boxShadow: 'none',
+          padding: FyleCSSVars.spacing[8]
+        }
+      },
+      topRight: {
+        margin: '.75rem',
+        transform: 'translateZ(0)'
+      },
+      closeIcon: {
+        marginTop: '-3px',
+        width: '12px',
+        height: '12px'
       }
     }
   }
