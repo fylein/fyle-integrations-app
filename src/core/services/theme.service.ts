@@ -60,6 +60,7 @@ export class ThemeService {
     this.applyMultiselectStyles(root, preset.components.multiselect);
     this.applyDropdownStyles(root, preset.components.dropdown);
     this.applyDatepickerStyles(root, preset.components.datepicker);
+    this.applySkeletonStyles(root, preset.components.skeleton);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -793,6 +794,17 @@ return;
       Object.entries(datepickerStyles.touchUi).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-datepicker-touch-ui-${this.kebabCase(prop)}`, value as string);
       });
+    }
+  }
+
+  private applySkeletonStyles(root: HTMLElement, skeletonStyles: any): void {
+    if (!skeletonStyles) {
+      return;
+    }
+
+    // Apply skeleton background
+    if (skeletonStyles.background) {
+      root.style.setProperty('--preset-skeleton-background', skeletonStyles.background);
     }
   }
 

@@ -699,6 +699,9 @@ export const FylePreset = {
         left: '-12px',
         transform: 'none'
       }
+    },
+    skeleton: {
+      background: FyleCSSVars.backgrounds.disable
     }
   }
 };

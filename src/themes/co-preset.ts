@@ -701,6 +701,9 @@ export const CoPreset = {
         left: '-12px',
         transform: 'none'
       }
+    },
+    skeleton: {
+      background: CoCSSVars.backgrounds.disable
     }
   }
 };

@@ -183,10 +183,6 @@ p {
     @include spinner('30-px', '30-px', 'progress-spinner');
 }
 
-.p-skeleton {
-    @apply tw-bg-disabled-bg-color #{!important};
-}
-
 .p-toast {
     @apply tw-opacity-100 #{!important}
 }
