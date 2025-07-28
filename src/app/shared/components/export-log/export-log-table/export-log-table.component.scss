@@ -1,9 +1,3 @@
-.clickable-row:hover {
-    @apply tw-cursor-pointer;
-    &:hover {
-      @apply tw-bg-lv-table-hover-bg;
-    }
-}
 
 .truncate {
   @apply tw-w-100-px tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-block;

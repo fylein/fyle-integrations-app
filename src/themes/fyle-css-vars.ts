@@ -231,6 +231,19 @@ export const FyleCSSVars = {
     muted: 'var(--icon-muted)'                                   // #a9acbc
   },
 
+  // ==================== TABLE ====================
+  table: {
+    // Header styles
+    headerBg: 'var(--lv-table-default-bg)',                      // #f5f5f5
+    headerTextColor: 'var(--lv-table-header-text-color)',        // #2c304e
+    headerBorderColor: 'var(--lv-table-header-border-color)',    // #dfdfe2
+
+    // Body styles
+    borderColor: 'var(--lv-table-border-color)',                 // #ececee
+    hoverBg: 'var(--lv-table-hover-bg)',                         // brand-specific
+    listItemBg: 'var(--lv-table-list-item-bg)',                  // #ffffff
+  },
+
   // ==================== TOGGLE ====================
   toggle: {
     textYes: 'var(--toggle-text-yes)',                           // 'Yes'

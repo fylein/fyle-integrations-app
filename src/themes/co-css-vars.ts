@@ -298,6 +298,19 @@ export const CoCSSVars = {
     link: 'var(--icon-link)'                     // #0070a8 (blue-55)
   },
 
+  // ==================== TABLE ====================
+  table: {
+    // Header styles
+    headerBg: 'var(--lv-table-default-bg)',                      // #f7f7f7 (grey-05)
+    headerTextColor: 'var(--lv-table-header-text-color)',        // #333333 (grey-85)
+    headerBorderColor: 'var(--lv-table-header-border-color)',    // #e6e6e6 (grey-15)
+
+    // Body styles
+    borderColor: 'var(--lv-table-border-color)',                 // #f7f7f7 (grey-05)
+    hoverBg: 'var(--lv-table-hover-bg)',                         // rgba(12, 16, 19, 0.02)
+    listItemBg: 'var(--lv-table-list-item-bg)',                  // #ffffff
+  },
+
   // ==================== LINKS ====================
   links: {
     primary: 'var(--link-primary)',              // #0070a8 (blue-55)
