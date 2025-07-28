@@ -144,6 +144,8 @@ p {
 @import 'assets/scss/multiselect';
 @import 'assets/scss/dropdowns';
 @import 'assets/scss/datepicker';
+@import 'assets/scss/skeleton';
+@import 'assets/scss/spinner';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -155,32 +157,6 @@ p {
 
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
-}
-
-@mixin spinner($height, $width, $animation) {
-    &.p-progress-spinner {
-        @apply tw-h-#{$height} tw-w-#{$width};
-    }
-
-    .p-progress-spinner-circle {
-        @apply tw-animate-#{$animation} #{!important};
-    }
-}
-
-.spinner-16 {
-    @include spinner('16-px', '16-px', 'progress-spinner');
-}
-
-.spinner-16-white {
-    @include spinner('16-px', '16-px', 'progress-spinner-cta');
-}
-
-.spinner-default {
-    @include spinner('100-px', '100-px', 'progress-spinner');
-}
-
-.spinner-30 {
-    @include spinner('30-px', '30-px', 'progress-spinner');
 }
 
 .p-toast {

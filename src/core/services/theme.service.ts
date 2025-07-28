@@ -61,6 +61,7 @@ export class ThemeService {
     this.applyDropdownStyles(root, preset.components.dropdown);
     this.applyDatepickerStyles(root, preset.components.datepicker);
     this.applySkeletonStyles(root, preset.components.skeleton);
+    this.applySpinnerStyles(root, preset.components.spinner);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -805,6 +806,40 @@ return;
     // Apply skeleton background
     if (skeletonStyles.background) {
       root.style.setProperty('--preset-skeleton-background', skeletonStyles.background);
+    }
+  }
+
+  private applySpinnerStyles(root: HTMLElement, spinnerStyles: any): void {
+    if (!spinnerStyles) {
+      return;
+    }
+
+    // Apply spinner-16 styles
+    if (spinnerStyles.spinner16) {
+      Object.entries(spinnerStyles.spinner16).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-16-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-16-white styles
+    if (spinnerStyles.spinner16White) {
+      Object.entries(spinnerStyles.spinner16White).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-16-white-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-default styles
+    if (spinnerStyles.spinnerDefault) {
+      Object.entries(spinnerStyles.spinnerDefault).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-default-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-30 styles
+    if (spinnerStyles.spinner30) {
+      Object.entries(spinnerStyles.spinner30).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-30-${this.kebabCase(prop)}`, value as string);
+      });
     }
   }
 

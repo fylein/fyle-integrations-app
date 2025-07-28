@@ -704,6 +704,28 @@ export const CoPreset = {
     },
     skeleton: {
       background: CoCSSVars.backgrounds.disable
+    },
+    spinner: {
+      spinner16: {
+        height: 'var(--size-16)',
+        width: 'var(--size-16)',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      },
+      spinner16White: {
+        height: 'var(--size-16)',
+        width: 'var(--size-16)',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite'
+      },
+      spinnerDefault: {
+        height: '100px',
+        width: '100px',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      },
+      spinner30: {
+        height: '30px',
+        width: '30px',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      }
     }
   }
 };
