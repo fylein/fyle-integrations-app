@@ -7,7 +7,7 @@
             <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">{{ 'mappingFilter.statusLabel' | transloco }}</p>
         </div>
         <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
-            <p-dropdown appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
+            <p-select appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
                 [placeholder]="'mapping.filterPlaceholder' | transloco" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.get('filterOption')?.value}">
                 <ng-template let-item pTemplate="item">
                     <div [ngClass]="getSelectedFilter(item.value)">{{ item.label }}</div>
@@ -16,7 +16,7 @@
                     <p [ngClass]="getSelectedFilter(form.controls.filterOption.value.value)">{{ form.controls.filterOption.value.label }}</p>
                     <app-svg-icon [svgSource]="'cross-medium-large'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter()" [height]="'18px'" [width]="'18px'"></app-svg-icon>
                 </ng-template>
-            </p-dropdown>
+            </p-select>
         </div>
     </div>
     <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-12-px tw-text-14-px tw-items-center tw-justify-center">

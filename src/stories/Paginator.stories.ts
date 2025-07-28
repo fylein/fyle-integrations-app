@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { PaginatorComponent } from 'src/app/shared/components/helper/paginator/paginator.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -17,7 +17,7 @@ const meta: Meta<PaginatorComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, DropdownModule, BrowserAnimationsModule, SharedModule]
+      imports: [CommonModule, SelectModule, BrowserAnimationsModule, SharedModule]
     })
   ],
   argTypes: {

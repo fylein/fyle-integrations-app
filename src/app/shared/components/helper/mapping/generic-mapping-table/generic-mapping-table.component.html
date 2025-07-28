@@ -15,7 +15,7 @@
                 </div>
             </td>
             <td>
-                <p-dropdown #destinationAttributes
+                <p-select #destinationAttributes
                     appendTo="body"
                     (onShow)="tableDropdownWidth()"
                     [ngModel]="getDropdownValue(mapping)"
@@ -54,7 +54,7 @@
                     <ng-template pTemplate="filtericon">
                         <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
-                </p-dropdown>
+                </p-select>
             </td>
             <td *ngIf="!isDashboardMappingResolve">
                 <p *ngIf="getDropdownValue(mapping)" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('genericMappingTable.mappedStatusUpper' | transloco): ('genericMappingTable.mappedStatusLower' | transloco)}}</p>
