@@ -726,6 +726,45 @@ export const CoPreset = {
         width: '30px',
         animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
       }
+    },
+    toast: {
+      opacity: '1',
+      success: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.success,
+        color: CoCSSVars.text.white
+      },
+      error: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.danger,
+        color: CoCSSVars.text.white
+      },
+      info: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.info,
+        color: CoCSSVars.text.white
+      },
+      warn: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.warning,
+        color: CoCSSVars.text.white
+      },
+      content: {
+        border: '0',
+        padding: '0',
+        color: CoCSSVars.text.white,
+        background: 'transparent',
+        borderRadius: CoCSSVars.borderRadius['2xs'],
+        fontSize: '14px',
+        fontWeight: '400'
+      },
+      closeIcon: {
+        display: 'none'
+      },
+      closeIconIcon: {
+        display: 'none'
+      },
+      messageContentDisplay: 'block'
     }
   }
 };

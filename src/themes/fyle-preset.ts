@@ -724,6 +724,45 @@ export const FylePreset = {
         width: '30px',
         animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
       }
+    },
+    toast: {
+      opacity: '1',
+      success: {
+        border: 'none',
+        background: FyleCSSVars.backgrounds.success,
+        color: FyleCSSVars.text.white
+      },
+      error: {
+        border: 'none',
+        background: FyleCSSVars.backgrounds.danger,
+        color: FyleCSSVars.text.white
+      },
+      info: {
+        border: 'none',
+        background: FyleCSSVars.backgrounds.info,
+        color: FyleCSSVars.text.white
+      },
+      warn: {
+        border: 'none',
+        background: FyleCSSVars.backgrounds.warning,
+        color: FyleCSSVars.text.white
+      },
+      content: {
+        border: '0',
+        padding: '0',
+        color: FyleCSSVars.text.white,
+        background: 'transparent',
+        borderRadius: FyleCSSVars.borderRadius['2xs'],
+        fontSize: '14px',
+        fontWeight: '400'
+      },
+      closeIcon: {
+        display: 'none'
+      },
+      closeIconIcon: {
+        display: 'none'
+      },
+      messageContentDisplay: 'block'
     }
   }
 };

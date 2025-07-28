@@ -146,6 +146,7 @@ p {
 @import 'assets/scss/datepicker';
 @import 'assets/scss/skeleton';
 @import 'assets/scss/spinner';
+@import 'assets/scss/toasts';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -157,38 +158,6 @@ p {
 
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
-}
-
-.p-toast {
-    @apply tw-opacity-100 #{!important}
-}
-
-.p-toast .p-toast-message.p-toast-message-success {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-error {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-info {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-message-content {
-    @apply tw-border-0 tw-p-0 tw-text-white #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-icon-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-icon-close-icon {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-message-content {
-    @apply tw-block #{!important};
 }
 
 .p-datatable .p-datatable-thead>tr>th {
