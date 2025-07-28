@@ -699,6 +699,24 @@ export const FylePreset = {
         left: '-12px',
         transform: 'none'
       }
+    },
+    chips: {
+      token: {
+        background: FyleCSSVars.backgrounds.white,
+        paddingX: FyleCSSVars.spacing[8],
+        paddingY: '2px',
+        borderRadius: '50px',
+        border: `1px solid ${FyleCSSVars.borders.secondary}`,
+        boxShadow: 'none'
+      },
+      
+      container: {
+        enabled: {
+          border: `1px solid ${FyleCSSVars.borders.secondary}`,
+          paddingLeft: FyleCSSVars.spacing[14],
+          paddingRight: FyleCSSVars.spacing[12]
+        }
+      }
     }
   }
 };

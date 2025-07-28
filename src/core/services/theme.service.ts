@@ -60,6 +60,7 @@ export class ThemeService {
     this.applyMultiselectStyles(root, preset.components.multiselect);
     this.applyDropdownStyles(root, preset.components.dropdown);
     this.applyDatepickerStyles(root, preset.components.datepicker);
+    this.applyChipsStyles(root, preset.components.chips);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -792,6 +793,27 @@ return;
     if (datepickerStyles.touchUi) {
       Object.entries(datepickerStyles.touchUi).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-datepicker-touch-ui-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+
+  private applyChipsStyles(root: HTMLElement, chipsStyles: any): void {
+    if (!chipsStyles) {
+      return;
+    }
+
+    // Apply chips token styles
+    if (chipsStyles.token) {
+      Object.entries(chipsStyles.token).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-chips-token-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply chips container enabled styles (for :not(.p-disabled))
+    if (chipsStyles.container?.enabled) {
+      Object.entries(chipsStyles.container.enabled).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-chips-container-${this.kebabCase(prop)}`, value as string);
       });
     }
   }

@@ -701,6 +701,24 @@ export const CoPreset = {
         left: '-12px',
         transform: 'none'
       }
+    },
+    chips: {
+      token: {
+        background: CoCSSVars.backgrounds.white,
+        paddingX: CoCSSVars.spacing[8],
+        paddingY: '2px',
+        borderRadius: '50px',
+        border: `1px solid ${CoCSSVars.borders.secondary}`,
+        boxShadow: 'none'
+      },
+      
+      container: {
+        enabled: {
+          border: `1px solid ${CoCSSVars.borders.secondary}`,
+          paddingLeft: CoCSSVars.spacing[14],
+          paddingRight: CoCSSVars.spacing[12]
+        }
+      }
     }
   }
 };
