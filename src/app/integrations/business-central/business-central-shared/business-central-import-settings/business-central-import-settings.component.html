@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'businessCentralImportSettings.headerText' | transloco"
             [contentText]="'businessCentralImportSettings.contentText' | transloco:{ brandName: brandingConfig.brandName }"
@@ -12,7 +12,7 @@
     <div>
         <form [formGroup]="importSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'businessCentralImportSettings.importChartOfAccountsLabel' | transloco:{ brandName: brandingConfig.brandName }"
@@ -24,7 +24,7 @@
 
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0 tw-pb-24-px" *ngIf="importSettingForm.get('importCategories')?.value">
                         <div class="tw-flex tw-justify-between tw-items-center">
-                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-text-secondary tw-text-14-px !tw-font-500">
                                 {{ 'businessCentralImportSettings.selectAccountsLabel' | transloco:{ appName: appName, brandName: brandingConfig.brandName } }}
                                 <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                                     {{ 'businessCentralImportSettings.selectAccountsDescription' | transloco }}
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-16-px">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'businessCentralImportSettings.importVendorLabel' | transloco:{ brandName: brandingConfig.brandName }"

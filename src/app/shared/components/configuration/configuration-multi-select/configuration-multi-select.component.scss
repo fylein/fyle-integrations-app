@@ -6,7 +6,3 @@
 :host ::ng-deep .error-box .p-multiselect {
     @apply tw-border-alert-toast #{!important};
 }
-
-:host ::ng-deep .normal-box .p-multiselect.p-focus {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}

@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
-                <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
+                <div class="tw-w-24-px tw-h-24-px tw-bg-bg-success tw-rounded-full tw-flex tw-items-center tw-justify-center">
                     <app-svg-icon svgSource="check-small" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white'"></app-svg-icon>
                 </div>
             </div>
@@ -57,7 +57,7 @@
         </div>
         <div *ngIf="!isLoading && showDownloadLink && !isStepCompleted" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px] tw-text-center">
             <div class="tw-text-center">
-                <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+                <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-success'"></app-svg-icon>
             </div>
             <div>
                 <p class="tw-text-text-tertiary tw-text-16-px tw-font-500 tw-py-4-px">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>

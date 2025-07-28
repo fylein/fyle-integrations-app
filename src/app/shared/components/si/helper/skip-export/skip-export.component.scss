@@ -57,12 +57,12 @@
 
 /* Change text color to black */
 :host ::ng-deep .p-chips-token-label {
-  @apply tw-text-slightly-normal-text-color #{!important};
+  @apply tw-text-text-secondary #{!important};
 }
 
 
 :host ::ng-deep .p-chips-token-icon {
-  @apply tw-text-slightly-normal-text-color #{!important};
+  @apply tw-text-text-secondary #{!important};
 }
 
 :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {

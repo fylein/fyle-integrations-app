@@ -2,7 +2,7 @@
 .landing-v2 {
     &--container {
         @apply tw-p-6 tw-flex tw-flex-col tw-gap-6;
-        @apply tw-rounded-8-px tw-border tw-border-solid tw-border-separator tw-bg-white;
+        @apply tw-rounded-8-px tw-border tw-border-solid tw-border-border-tertiary tw-bg-white;
     }
 
     &--active-tag {
@@ -14,7 +14,7 @@
     }
 
     &--divider {
-        @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
+        @apply tw-h-1-px tw-w-[100%];
     }
 
     &--section-divider {
@@ -23,7 +23,7 @@
     }
 
     &--accounting-app {
-        @apply tw-h-full tw-flex tw-flex-col tw-p-4 tw-gap-4 tw-justify-evenly tw-cursor-pointer tw-rounded-8-px tw-border tw-border-separator tw-bg-white;
+        @apply tw-h-full tw-flex tw-flex-col tw-p-4 tw-gap-4 tw-justify-evenly tw-cursor-pointer tw-rounded-8-px tw-border tw-border-border-tertiary tw-bg-white;
         @apply tw-transition-shadow;
 
         img {

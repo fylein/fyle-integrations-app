@@ -2,7 +2,7 @@
     <app-loader></app-loader>
 </div>
 
-<div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator" [ngClass]="brandingStyle.common.mainComponentShadow">
+<div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
     <div>
         <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
             [exportLogForm]="skipExportLogForm"

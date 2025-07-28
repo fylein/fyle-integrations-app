@@ -11,7 +11,7 @@
 }
 
 .p-inputtext {
-    @apply tw-w-full tw-h-40-px tw-py-10-px tw-pl-14-px tw-text-slightly-normal-text-color tw-border tw-border-solid tw-rounded-4-px #{!important};
+    @apply tw-w-full tw-h-40-px tw-py-10-px tw-pl-14-px tw-text-text-secondary tw-border tw-border-solid tw-rounded-4-px #{!important};
 }
 
 :host ::ng-deep .p-dropdown {

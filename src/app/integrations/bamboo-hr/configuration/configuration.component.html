@@ -1,12 +1,12 @@
 <div [formGroup]="cofigurationForm" class="tw-pt-70-px tw-flex tw-justify-center tw-items-center tw-flex-col">
-    <div class="tw-w-75-vw tw-rounded-12-px tw-border-1-px tw-border-separator tw-shadow-app-card">
+    <div class="tw-w-75-vw tw-rounded-12-px tw-border-1-px tw-border-border-tertiary tw-shadow-app-card">
         <div class="tw-p-24-px">
             <p class="tw-text-18-px">{{ 'configuration.header' | transloco }}</p>
             <p class="tw-pt-8-px tw-text-14-px tw-text-sub-text-color">
                 {{ 'configuration.description' | transloco: { brandName: brandingConfig.brandName} }}
             </p>
         </div>
-        <div class="tw-p-24-px tw-border-y tw-border-separator">
+        <div class="tw-p-24-px tw-border-y tw-border-border-tertiary">
             <div class="tw-rounded-12-px tw-border-1-px tw-border-disabled-bg-color">
                 <app-email-multi-select-field
                     [form]="cofigurationForm"
@@ -24,7 +24,7 @@
         </div>
         <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
-                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()" [disabled]="isConfigurationSaveInProgress">
+                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-bg-brand-disable !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()" [disabled]="isConfigurationSaveInProgress">
                     {{ (isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco }}
                     <app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>

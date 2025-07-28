@@ -55,7 +55,7 @@
             </ng-template>
             <ng-template let-option pTemplate="item">
                 @if (option.label === "[divider]") {
-                    <div class="tw-border-t tw-border-separator tw-w-full"></div>
+                    <div class="tw-border-t tw-border-border-tertiary tw-w-full"></div>
                 } @else {
                     <span [class]="{
                         'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),

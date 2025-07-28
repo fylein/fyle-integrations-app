@@ -6,12 +6,12 @@
 </div>
 
 <div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
-    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-border-tertiary">
         <div class="tw-p-24-px">
             <div *ngIf="exportPresent" class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-3/5">
-                    <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">{{ 'qbdDashboard.downloadExpensesTitle' | transloco: { brandName: brandingConfig.brandName } }}</h3>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">{{ 'qbdDashboard.iifFileGenerationInfo' | transloco }}</h5>
+                    <h3 class="tw-text-18-px tw-font-500 tw-text-text-secondary">{{ 'qbdDashboard.downloadExpensesTitle' | transloco: { brandName: brandingConfig.brandName } }}</h3>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-2-px">{{ 'qbdDashboard.iifFileGenerationInfo' | transloco }}</h5>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
@@ -45,7 +45,7 @@
             <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false'></p-progressBar>
         </div>
     </div>
-    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-border-tertiary">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
             <div>
                 <h4 class="tw-font-500">{{ 'qbdDashboard.iifFileLogsTitle' | transloco }}</h4>

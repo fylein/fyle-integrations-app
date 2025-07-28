@@ -4,10 +4,10 @@
             <div class="tw-flex tw-justify-between tw-items-center">
                 <div class="tw-flex tw-items-center">
                     <div *ngIf="appName!==AppName.QBD_DIRECT" class="tw-p-8-px tw-bg-bg-warning-lighter tw-mr-10-px">
-                        <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-warning'" [isTextColorAllowed]="true"></app-svg-icon>
                     </div>
                     <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-p-8-px tw-bg-bg-danger-lighter tw-rounded-border-radius-2xs tw-mr-10-px">
-                        <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast'" [isTextColorAllowed]="true"></app-svg-icon>
                     </div>
                     <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{headerText}}</p>
                 </div>

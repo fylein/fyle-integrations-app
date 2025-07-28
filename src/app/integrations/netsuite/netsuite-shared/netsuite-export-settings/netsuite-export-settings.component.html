@@ -83,7 +83,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
                             <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
                                 <app-configuration-select-field
@@ -379,7 +379,7 @@
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
+                    <div class="tw-text-14-px tw-text-text-secondary tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
                     <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">{{ 'netsuiteExportSettings.autoSelectedBasedOnExportModule' | transloco }}</span>
                 </div>
             </div>

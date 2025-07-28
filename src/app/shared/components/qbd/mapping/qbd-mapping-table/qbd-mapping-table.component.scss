@@ -11,7 +11,7 @@ td {
 }
 
 .p-inputtext {
-    @apply tw-w-220-px tw-h-40-px tw-py-10-px tw-text-slightly-normal-text-color tw-border tw-pl-12-px #{!important}
+    @apply tw-w-220-px tw-h-40-px tw-py-10-px tw-text-text-secondary tw-border tw-pl-12-px #{!important}
 }
 
 :host ::ng-deep .tooltip-main {

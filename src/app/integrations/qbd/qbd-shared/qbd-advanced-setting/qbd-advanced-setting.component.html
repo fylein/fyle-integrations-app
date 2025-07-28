@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
         [headerText]="'qbdAdvancedSetting.title' | transloco"
@@ -10,7 +10,7 @@
     <div>
         <form [formGroup]="advancedSettingsForm">
             <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-my-16-px">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-configuration-bg tw-my-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
                         [label]="'qbdAdvancedSetting.scheduleExportLabel' | transloco"
@@ -19,7 +19,7 @@
                     </app-configuration-toggle-field>
                 </div>
                 <div *ngIf="advancedSettingsForm.get('exportSchedule')?.value">
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="advancedSettingsForm"
                         [isFieldMandatory]="true"
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-email-multi-select-field
                             [form]="advancedSettingsForm"
                             [appName]="AppName.QBD"
@@ -83,7 +83,7 @@
                         </app-email-multi-select-field>
                     </div>
                 </div>
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                     <app-configuration-select-field
                     [form]="advancedSettingsForm"
                     [label]="'qbdAdvancedSetting.topMemoLabel' | transloco"
@@ -95,7 +95,7 @@
                     [placeholder]="'qbdAdvancedSetting.topMemoPlaceholder' | transloco"
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                     <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"

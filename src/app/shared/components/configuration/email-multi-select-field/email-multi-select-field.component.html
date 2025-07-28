@@ -13,11 +13,11 @@
 	    display="chip" [filter]="true" [filterBy]="'email,name'" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId" >
             <ng-template let-value pTemplate="selectedItems">
                 <div *ngIf="selectedEmail"
-                    class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
+                    class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-text-secondary tw-border-1-px tw-border-box-color tw-bg-white">
                     <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px tw-max-w-[150px] tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis">{{ selectedEmail }}</p>
                     <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
                     <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
-                        [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
+                        [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-text-secondary'"></app-svg-icon>
                 </div>
                 <div *ngIf="selectedEmail && form.get('email')?.value.length > 1" class="tw-pl-8-px">
                     <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px">
@@ -56,12 +56,12 @@
         </div>
         <div>
             <div class="tw-flex tw-pt-18-px">
-                <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">{{ 'emailMultiSelectField.or' | transloco }}</p>
+                <p class="tw-text-text-secondary tw-text-14-px tw-pr-12-px">{{ 'emailMultiSelectField.or' | transloco }}</p>
                 <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
                     <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'"
                         [styleClasses]="'tw-text-mandatory-field-color'">
                     </app-svg-icon>
-                    <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">{{ 'emailMultiSelectField.addNewEmailAddressLink' | transloco }}</p>
+                    <p class="tw-pl-6-px tw-text-text-secondary tw-text-14-px">{{ 'emailMultiSelectField.addNewEmailAddressLink' | transloco }}</p>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
     <div [formGroup]="addEmailForm">
         <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
-                <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">{{ 'emailMultiSelectField.addNewEmailAddressTitle' | transloco }}</p>
+                <p class="tw-text-text-secondary tw-text-20-px tw-font-500">{{ 'emailMultiSelectField.addNewEmailAddressTitle' | transloco }}</p>
                 <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
