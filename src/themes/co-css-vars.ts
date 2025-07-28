@@ -307,8 +307,8 @@ export const CoCSSVars = {
 
     // Body styles
     borderColor: 'var(--lv-table-border-color)',                 // #f7f7f7 (grey-05)
-    hoverBg: 'var(--lv-table-hover-bg)',                         // rgba(12, 16, 19, 0.02)
-    listItemBg: 'var(--lv-table-list-item-bg)',                  // #ffffff
+    hoverBg: 'var(--lv-table-hover-bg)',                         // Rgba(12, 16, 19, 0.02)
+    listItemBg: 'var(--lv-table-list-item-bg)'                  // #ffffff
   },
 
   // ==================== LINKS ====================

@@ -711,7 +711,7 @@ export const CoPreset = {
         border: `1px solid ${CoCSSVars.borders.secondary}`,
         boxShadow: 'none'
       },
-      
+
       container: {
         enabled: {
           border: `1px solid ${CoCSSVars.borders.primary}`,
@@ -794,4 +794,4 @@ export const CoPreset = {
   }
 };
 
-export default CoPreset; 
+export default CoPreset;

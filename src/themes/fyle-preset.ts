@@ -709,7 +709,7 @@ export const FylePreset = {
         border: `1px solid ${FyleCSSVars.borders.secondary}`,
         boxShadow: 'none'
       },
-      
+
       container: {
         enabled: {
           border: `1px solid ${FyleCSSVars.borders.primary}`,

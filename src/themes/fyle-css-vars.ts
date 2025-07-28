@@ -240,8 +240,8 @@ export const FyleCSSVars = {
 
     // Body styles
     borderColor: 'var(--lv-table-border-color)',                 // #ececee
-    hoverBg: 'var(--lv-table-hover-bg)',                         // brand-specific
-    listItemBg: 'var(--lv-table-list-item-bg)',                  // #ffffff
+    hoverBg: 'var(--lv-table-hover-bg)',                         // Brand-specific
+    listItemBg: 'var(--lv-table-list-item-bg)'                  // #ffffff
   },
 
   // ==================== TOGGLE ====================
