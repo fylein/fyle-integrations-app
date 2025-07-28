@@ -712,7 +712,7 @@ export const FylePreset = {
       
       container: {
         enabled: {
-          border: `1px solid ${FyleCSSVars.borders.secondary}`,
+          border: `1px solid ${FyleCSSVars.borders.primary}`,
           paddingLeft: FyleCSSVars.spacing[14],
           paddingRight: FyleCSSVars.spacing[12]
         }
