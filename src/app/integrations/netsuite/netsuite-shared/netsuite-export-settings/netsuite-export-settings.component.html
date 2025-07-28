@@ -176,7 +176,7 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
-                        <div *ngIf="exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
+                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
