@@ -3,15 +3,15 @@
     @apply tw-text-placeholder #{!important};
 }
 
-:host ::ng-deep .mappingFilterDropdown .p-dropdown {
+:host ::ng-deep .mappingFilterDropdown .p-select {
     @apply tw-w-200-px #{!important}
 }
 
-:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+:host ::ng-deep .selectedItem  .p-select-trigger {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .filterDropdown  .p-dropdown-trigger {
+:host ::ng-deep .filterDropdown  .p-select-trigger {
     @apply tw-block #{!important};
 }
 

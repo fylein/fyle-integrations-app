@@ -2,34 +2,34 @@
     @apply tw-text-input-read-only-text tw-bg-disabled-bg-color tw-border tw-opacity-100 #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-label .p-placeholder .p-dropdown-trigger {
+:host ::ng-deep .p-select .p-select-label .p-placeholder .p-select-trigger {
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger{
+:host ::ng-deep .p-disabled .p-select-trigger, :host ::ng-deep .showClearIcon .p-select-trigger{
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger {
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-trigger, :host ::ng-deep .filterDropdown .p-select-trigger {
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .hide-chevron .p-dropdown-trigger {
+:host ::ng-deep .hide-chevron .p-select-trigger {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .error-box .p-dropdown {
+:host ::ng-deep .error-box .p-select {
     @apply tw-border-select-error-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown {
+:host ::ng-deep .normal-box .p-select {
     @apply tw-border-select-default-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-focus {
+:host ::ng-deep .normal-box .p-select.p-focus {
     @apply tw-border-select-focused-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-disabled {
+:host ::ng-deep .normal-box .p-select.p-disabled {
     @apply tw-border-select-disabled-border tw-border-solid #{!important};
 }

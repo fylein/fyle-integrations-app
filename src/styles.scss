@@ -74,13 +74,13 @@ p {
     }
 
     [data-theme='fyle'] {
-        .p-dropdown-trigger {
+        .p-select-trigger {
             content: url('./assets/icons/arrow-down.svg') !important;
         }
     }
 
     [data-theme='co'] {
-        .p-dropdown-trigger {
+        .p-select-trigger {
             content: url('./assets/icons/co/grv-chevron-down.svg') !important;
         }
     }

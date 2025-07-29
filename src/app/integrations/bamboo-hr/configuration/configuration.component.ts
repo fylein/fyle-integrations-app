@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DropdownFilterOptions } from 'primeng/dropdown';
+import { SelectFilterOptions } from 'primeng/select';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -48,7 +48,7 @@ export class ConfigurationComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  clearSearch(options: DropdownFilterOptions): void {
+  clearSearch(options: SelectFilterOptions): void {
     if (options.reset) {
       options.reset();
     }

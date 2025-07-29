@@ -75,8 +75,8 @@
             </span>
         </div>
         <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible">
-            <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" [placeholder]="'intacctImportSettings.selectTaxGroupPlaceholder' | transloco">
-            </p-dropdown>
+            <p-select appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" [placeholder]="'intacctImportSettings.selectTaxGroupPlaceholder' | transloco">
+            </p-select>
         </div>
         <div class="tw-p-24-px">
             <div class="container">
@@ -103,8 +103,8 @@
                 <div class="tw-pt-32-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
                         <div>
-                            <p-dropdown appendTo="body" [options]="sageIntacctFields | excludeSelectedOptions:expenseFieldsGetter:i:'destination_field'" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
-                            optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                            <p-select appendTo="body" [options]="sageIntacctFields | excludeSelectedOptions:expenseFieldsGetter:i:'destination_field'" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
+                            optionLabel="display_name" optionValue="attribute_type"></p-select>
                             <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
                             </p>
@@ -113,7 +113,7 @@
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
-                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
+                                <p-select (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -131,7 +131,7 @@
                                         <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(expenseField)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
 
                                     </ng-template>
-                              </p-dropdown>
+                              </p-select>
                               <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field') || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{ 'intacctImportSettings.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                                 </p>
@@ -152,7 +152,7 @@
                             <div class="tw-pt-16-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
+                            <p-select appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -161,7 +161,7 @@
                                         {{ option.display_name }}
                                     </div>
                                 </ng-template>
-                            </p-dropdown>
+                            </p-select>
                             <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-inputSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
@@ -171,7 +171,7 @@
                             <div class="tw-pt-16-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
+                            <p-select appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -179,7 +179,7 @@
                                         </div>
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
-                            </p-dropdown>
+                            </p-select>
                             <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-inputSwitch>
                         </div>
                     </div>

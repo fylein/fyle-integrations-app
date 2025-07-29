@@ -337,4 +337,36 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.setupComponentOptions();
     this.setupSkipExportForm(this.expenseFilter, []);
   }
+
+  // Methods for p-autocomplete functionality (replacing p-autocomplete)
+  onKeyDown(event: any, fieldNumber: number): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const target = keyboardEvent.target as HTMLInputElement;
+    // Handle comma and Enter key to add chips (replaces separator="," functionality)
+    if ((keyboardEvent.key === ',' || keyboardEvent.key === 'Enter') && target.value.trim()) {
+      keyboardEvent.preventDefault();
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  onBlur(event: any, fieldNumber: number): void {
+    const target = event.target as HTMLInputElement;
+    // Replaces [addOnBlur]="true" functionality
+    if (target.value.trim()) {
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  private addChip(value: string, inputElement: HTMLInputElement, fieldNumber: number): void {
+    const formControlName = fieldNumber === 1 ? 'value1' : 'value2';
+    const currentValues = this.skipExportForm.get(formControlName)?.value || [];
+
+    // Avoid duplicates
+    if (!currentValues.includes(value)) {
+      const newValues = [...currentValues, value];
+      this.skipExportForm.get(formControlName)?.setValue(newValues);
+      inputElement.value = ''; // Clear input after adding
+    }
+}
+
 }

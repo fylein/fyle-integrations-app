@@ -26,8 +26,10 @@ import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './transloco-http-loader';
 import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Lara from '@primeng/themes/lara';
 
-// PrimeNG Theming - configured via ThemeService
 
 @NgModule({ declarations: [
         AppComponent
@@ -43,7 +45,16 @@ import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat'
         MessageService,
 
         // PrimeNG theming handled by ThemeService initialization
-
+        provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Lara,
+                options: {
+                    darkModeSelector: false,
+                    cssLayer: false,
+                    },
+                }
+        }),
         provideTransloco({
             config: {
                 availableLangs: ['en'],

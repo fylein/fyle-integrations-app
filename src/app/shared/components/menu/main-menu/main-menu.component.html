@@ -36,7 +36,7 @@
             </div>
         </span>
 
-        <p-dropdown
+        <p-select
             *ngIf="showMoreDropdown"
             [(ngModel)]="dropdownValue"
             (onChange)="handleDropdownChange($event)"
@@ -65,6 +65,6 @@
                     </span>
                 }
             </ng-template>
-        </p-dropdown>
+        </p-select>
     </div>
 </div>

@@ -182,7 +182,7 @@
             <div class="tw-pt-28-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.location' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                    <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
+                    <p-select appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
                     formControlName="defaultLocation" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <p>
@@ -190,7 +190,7 @@
                             </p>
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </ng-template>
-                    </p-dropdown>
+                    </p-select>
                     <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeLocation' | transloco }}</label>
@@ -201,7 +201,7 @@
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.department' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
+                  <p-select appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
                   formControlName="defaultDepartment" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
                             <p>
@@ -220,7 +220,7 @@
                                 <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
                             </div>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                     <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeDepartment' | transloco }}</label>
@@ -231,7 +231,7 @@
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.project' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
+                  <p-select appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
                   formControlName="defaultProject" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
@@ -239,14 +239,14 @@
                             </div>
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                 </div>
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.class' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
+                  <p-select appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
                   formControlName="defaultClass" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
@@ -254,14 +254,14 @@
                             </div>
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                 </div>
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.item' | transloco}}</label><app-optional-field class="tw-text-14-px" *ngIf="!isAsterikAllowed"></app-optional-field></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
+                  <p-select appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
                   formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
                         <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                             <div>
@@ -269,7 +269,7 @@
                             </div>
                             <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                 </div>
               </div>
         </div>

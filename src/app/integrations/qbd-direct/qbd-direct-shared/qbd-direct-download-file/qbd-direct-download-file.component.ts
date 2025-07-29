@@ -6,11 +6,12 @@ import { AppName, ConfigurationCta, QBDDirectInteractionType } from 'src/app/cor
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-qbd-direct-download-file',
   standalone: true,
-  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule],
+  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule, ButtonModule],
   templateUrl: './qbd-direct-download-file.component.html',
   styleUrl: './qbd-direct-download-file.component.scss'
 })
