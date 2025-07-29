@@ -9,9 +9,10 @@ import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-c
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-main',
-  templateUrl: './netsuite-main.component.html',
-  styleUrls: ['./netsuite-main.component.scss']
+    selector: 'app-netsuite-main',
+    templateUrl: './netsuite-main.component.html',
+    styleUrls: ['./netsuite-main.component.scss'],
+    standalone: false
 })
 export class NetsuiteMainComponent {
 

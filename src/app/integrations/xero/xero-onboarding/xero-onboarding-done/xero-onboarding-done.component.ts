@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-xero-onboarding-done',
-  templateUrl: './xero-onboarding-done.component.html',
-  styleUrls: ['./xero-onboarding-done.component.scss']
+    selector: 'app-xero-onboarding-done',
+    templateUrl: './xero-onboarding-done.component.html',
+    styleUrls: ['./xero-onboarding-done.component.scss'],
+    standalone: false
 })
 export class XeroOnboardingDoneComponent implements OnInit {
 

@@ -9,9 +9,10 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-business-central-mapping',
-  templateUrl: './business-central-mapping.component.html',
-  styleUrls: ['./business-central-mapping.component.scss']
+    selector: 'app-business-central-mapping',
+    templateUrl: './business-central-mapping.component.html',
+    styleUrls: ['./business-central-mapping.component.scss'],
+    standalone: false
 })
 export class BusinessCentralMappingComponent implements OnInit {
 

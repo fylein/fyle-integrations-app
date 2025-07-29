@@ -4,9 +4,10 @@ import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-card-mapping-header',
-  templateUrl: './mapping-card-header.component.html',
-  styleUrls: ['./mapping-card-header.component.scss']
+    selector: 'app-card-mapping-header',
+    templateUrl: './mapping-card-header.component.html',
+    styleUrls: ['./mapping-card-header.component.scss'],
+    standalone: false
 })
 export class MappingCardHeaderComponent implements OnInit {
 

@@ -32,9 +32,10 @@ import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configura
 import { XeroCloneSettingService } from 'src/app/core/services/xero/xero-configuration/xero-clone-settings.service';
 
 @Component({
-  selector: 'app-xero-clone-settings',
-  templateUrl: './xero-clone-settings.component.html',
-  styleUrls: ['./xero-clone-settings.component.scss']
+    selector: 'app-xero-clone-settings',
+    templateUrl: './xero-clone-settings.component.html',
+    styleUrls: ['./xero-clone-settings.component.scss'],
+    standalone: false
 })
 export class XeroCloneSettingsComponent implements OnInit {
 

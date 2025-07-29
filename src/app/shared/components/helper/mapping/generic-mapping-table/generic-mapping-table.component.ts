@@ -15,9 +15,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-  selector: 'app-generic-mapping-table',
-  templateUrl: './generic-mapping-table.component.html',
-  styleUrls: ['./generic-mapping-table.component.scss']
+    selector: 'app-generic-mapping-table',
+    templateUrl: './generic-mapping-table.component.html',
+    styleUrls: ['./generic-mapping-table.component.scss'],
+    standalone: false
 })
 export class GenericMappingTableComponent implements OnInit {
 

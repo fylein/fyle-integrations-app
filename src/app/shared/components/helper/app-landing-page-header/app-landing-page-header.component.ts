@@ -7,9 +7,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-landing-page-header',
-  templateUrl: './app-landing-page-header.component.html',
-  styleUrls: ['./app-landing-page-header.component.scss']
+    selector: 'app-landing-page-header',
+    templateUrl: './app-landing-page-header.component.html',
+    styleUrls: ['./app-landing-page-header.component.scss'],
+    standalone: false
 })
 export class AppLandingPageHeaderComponent implements OnInit {
 

@@ -3,7 +3,7 @@
 // You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@import "./primitives_variables.scss";
+@use "primitives_variables.scss";
 
 @layer base {
   [data-theme="co"] {
@@ -11,81 +11,81 @@
     --background-overlay-subtle: rgba($black, 0.02);
 
     // Text
-    --text-brand-hover: #{$blue-65};
-    --text-brand-pressed: #{$blue-75};
-    --text-brand-primary: #{$blue-55};
-    --text-brand-secondary: #{$blue-55};
-    --text-calm: #{$green-55};
-    --text-danger: #{$red-55};
-    --text-disable: #{$grey-20};
-    --text-highlight: #{$green-55};
-    --text-info: #{$blue-55};
-    --text-label: #{$grey-85};
-    --text-muted: #{$grey-55};
-    --text-muted-light: #{$grey-45};
-    --text-placeholder: #{$grey-55};
-    --text-primary: #{$grey-95};
-    --text-secondary: #{$grey-95};
-    --text-success: #{$green-55};
-    --text-tertiary: #{$grey-55};
-    --text-warning: #{$yellow-55};
-    --text-white: #{$white};
+    --text-brand-hover: #{primitives_variables.$blue-65};
+    --text-brand-pressed: #{primitives_variables.$blue-75};
+    --text-brand-primary: #{primitives_variables.$blue-55};
+    --text-brand-secondary: #{primitives_variables.$blue-55};
+    --text-calm: #{primitives_variables.$green-55};
+    --text-danger: #{primitives_variables.$red-55};
+    --text-disable: #{primitives_variables.$grey-20};
+    --text-highlight: #{primitives_variables.$green-55};
+    --text-info: #{primitives_variables.$blue-55};
+    --text-label: #{primitives_variables.$grey-85};
+    --text-muted: #{primitives_variables.$grey-55};
+    --text-muted-light: #{primitives_variables.$grey-45};
+    --text-placeholder: #{primitives_variables.$grey-55};
+    --text-primary: #{primitives_variables.$grey-95};
+    --text-secondary: #{primitives_variables.$grey-95};
+    --text-success: #{primitives_variables.$green-55};
+    --text-tertiary: #{primitives_variables.$grey-55};
+    --text-warning: #{primitives_variables.$yellow-55};
+    --text-white: #{primitives_variables.$white};
 
     // Icon
-    --icon-brand-disable: #{$blue-10};
-    --icon-brand-primary: #{$blue-55};
-    --icon-brand-secondary: #{$blue-35};
-    --icon-danger: #{$red-55};
-    --icon-disable: #{$grey-20};
-    --icon-info: #{$blue-55};
-    --icon-link: #{$blue-55};
-    --icon-muted: #{$grey-20};
-    --icon-primary: #{$grey-95};
-    --icon-secondary: #{$grey-85};
-    --icon-success: #{$green-55};
-    --icon-tertiary: #{$grey-55};
-    --icon-warning: #{$yellow-55};
-    --icon-white: #{$white};
+    --icon-brand-disable: #{primitives_variables.$blue-10};
+    --icon-brand-primary: #{primitives_variables.$blue-55};
+    --icon-brand-secondary: #{primitives_variables.$blue-35};
+    --icon-danger: #{primitives_variables.$red-55};
+    --icon-disable: #{primitives_variables.$grey-20};
+    --icon-info: #{primitives_variables.$blue-55};
+    --icon-link: #{primitives_variables.$blue-55};
+    --icon-muted: #{primitives_variables.$grey-20};
+    --icon-primary: #{primitives_variables.$grey-95};
+    --icon-secondary: #{primitives_variables.$grey-85};
+    --icon-success: #{primitives_variables.$green-55};
+    --icon-tertiary: #{primitives_variables.$grey-55};
+    --icon-warning: #{primitives_variables.$yellow-55};
+    --icon-white: #{primitives_variables.$white};
 
     // Border Radius
-    --border-radius-2xl: #{$size-12};
-    --border-radius-2xs: #{$size-4};
-    --border-radius-3xs: #{$size-2};
+    --border-radius-2xl: #{primitives_variables.$size-12};
+    --border-radius-2xs: #{primitives_variables.$size-4};
+    --border-radius-3xs: #{primitives_variables.$size-2};
     --border-radius-full: 9999px;
-    --border-radius-lg: #{$size-12};
-    --border-radius-md: #{$size-12};
-    --border-radius-none: #{$size-0};
-    --border-radius-sm: #{$size-8};
-    --border-radius-xl: #{$size-12};
-    --border-radius-xs: #{$size-6};
+    --border-radius-lg: #{primitives_variables.$size-12};
+    --border-radius-md: #{primitives_variables.$size-12};
+    --border-radius-none: #{primitives_variables.$size-0};
+    --border-radius-sm: #{primitives_variables.$size-8};
+    --border-radius-xl: #{primitives_variables.$size-12};
+    --border-radius-xs: #{primitives_variables.$size-6};
 
     // Border Width
     --border-1: 1px;
     --border-2: 2px;
 
     // Border Colors
-    --border-brand: #{$blue-55};
-    --border-brand-hover: #{$blue-65};
-    --border-brand-pressed: #{$blue-75};
-    --border-calm-light: #{$green-10};
-    --border-danger: #{$red-55};
-    --border-danger-light: #{$red-15};
-    --border-danger-lighter: #{$red-10};
-    --border-disable: #{$grey-20};
-    --border-highlight-light: #{$green-15};
-    --border-info: #{$blue-55};
-    --border-info-light: #{$blue-15};
-    --border-info-lighter: #{$blue-10};
-    --border-neutral: #{$grey-95};
-    --border-primary: #{$grey-55};
-    --border-secondary: #{$grey-15};
-    --border-success: #{$green-55};
-    --border-success-light: #{$green-10};
-    --border-success-lighter: #{$green-05};
-    --border-tertiary: #{$grey-05};
-    --border-warning: #{$yellow-55};
-    --border-warning-lighter: #{$yellow-05};
-    --border-white: #{$white};
+    --border-brand: #{primitives_variables.$blue-55};
+    --border-brand-hover: #{primitives_variables.$blue-65};
+    --border-brand-pressed: #{primitives_variables.$blue-75};
+    --border-calm-light: #{primitives_variables.$green-10};
+    --border-danger: #{primitives_variables.$red-55};
+    --border-danger-light: #{primitives_variables.$red-15};
+    --border-danger-lighter: #{primitives_variables.$red-10};
+    --border-disable: #{primitives_variables.$grey-20};
+    --border-highlight-light: #{primitives_variables.$green-15};
+    --border-info: #{primitives_variables.$blue-55};
+    --border-info-light: #{primitives_variables.$blue-15};
+    --border-info-lighter: #{primitives_variables.$blue-10};
+    --border-neutral: #{primitives_variables.$grey-95};
+    --border-primary: #{primitives_variables.$grey-55};
+    --border-secondary: #{primitives_variables.$grey-15};
+    --border-success: #{primitives_variables.$green-55};
+    --border-success-light: #{primitives_variables.$green-10};
+    --border-success-lighter: #{primitives_variables.$green-05};
+    --border-tertiary: #{primitives_variables.$grey-05};
+    --border-warning: #{primitives_variables.$yellow-55};
+    --border-warning-lighter: #{primitives_variables.$yellow-05};
+    --border-white: #{primitives_variables.$white};
 
     // Spacing
     --spacing-0: 0px;
@@ -108,69 +108,69 @@
     --spacing-72: 72px;
 
     // Sizes
-    --size-0: #{$size-0};
-    --size-2: #{$size-2};
-    --size-4: #{$size-4};
-    --size-6: #{$size-6};
-    --size-8: #{$size-8};
-    --size-10: #{$size-10};
-    --size-12: #{$size-12};
-    --size-14: #{$size-14};
-    --size-16: #{$size-16};
-    --size-18: #{$size-18};
-    --size-20: #{$size-20};
-    --size-24: #{$size-24};
-    --size-28: #{$size-28};
-    --size-32: #{$size-32};
-    --size-40: #{$size-40};
-    --size-48: #{$size-48};
-    --size-56: #{$size-56};
-    --size-72: #{$size-72};
+    --size-0: #{primitives_variables.$size-0};
+    --size-2: #{primitives_variables.$size-2};
+    --size-4: #{primitives_variables.$size-4};
+    --size-6: #{primitives_variables.$size-6};
+    --size-8: #{primitives_variables.$size-8};
+    --size-10: #{primitives_variables.$size-10};
+    --size-12: #{primitives_variables.$size-12};
+    --size-14: #{primitives_variables.$size-14};
+    --size-16: #{primitives_variables.$size-16};
+    --size-18: #{primitives_variables.$size-18};
+    --size-20: #{primitives_variables.$size-20};
+    --size-24: #{primitives_variables.$size-24};
+    --size-28: #{primitives_variables.$size-28};
+    --size-32: #{primitives_variables.$size-32};
+    --size-40: #{primitives_variables.$size-40};
+    --size-48: #{primitives_variables.$size-48};
+    --size-56: #{primitives_variables.$size-56};
+    --size-72: #{primitives_variables.$size-72};
 
     // Background - Light
-    --bg-calm-light: #{$green-05};
-    --bg-danger-light: #{$red-10};
-    --bg-disable-light: #{$grey-10};
-    --bg-highlight-light: #{$green-05};
-    --bg-info-light: #{$blue-05};
-    --bg-success-light: #{$green-05};
-    --bg-tertiary-light: #{$grey-10};
+    --bg-calm-light: #{primitives_variables.$green-05};
+    --bg-danger-light: #{primitives_variables.$red-10};
+    --bg-disable-light: #{primitives_variables.$grey-10};
+    --bg-highlight-light: #{primitives_variables.$green-05};
+    --bg-info-light: #{primitives_variables.$blue-05};
+    --bg-success-light: #{primitives_variables.$green-05};
+    --bg-tertiary-light: #{primitives_variables.$grey-10};
 
     // Background - Lighter
-    --bg-danger-lighter: #{$red-05};
-    --bg-disable-lighter: #{$grey-05};
-    --bg-info-lighter: #{$blue-10};
-    --bg-success-lighter: #{$green-05};
-    --bg-tertiary-lighter: #{$grey-05};
-    --bg-warning-lighter: #{$yellow-05};
-    --bg-info-lightest: #{$blue-05};
+    --bg-danger-lighter: #{primitives_variables.$red-05};
+    --bg-disable-lighter: #{primitives_variables.$grey-05};
+    --bg-info-lighter: #{primitives_variables.$blue-10};
+    --bg-success-lighter: #{primitives_variables.$green-05};
+    --bg-tertiary-lighter: #{primitives_variables.$grey-05};
+    --bg-warning-lighter: #{primitives_variables.$yellow-05};
+    --bg-info-lightest: #{primitives_variables.$blue-05};
 
     // Background - Grey
-    --bg-disable: #{$grey-15};
-    --bg-primary: #{$grey-95};
+    --bg-disable: #{primitives_variables.$grey-15};
+    --bg-primary: #{primitives_variables.$grey-95};
     --bg-primary-opacity: rgba($blue-95, 0.1);
-    --bg-secondary: #{$grey-10};
-    --bg-tertiary: #{$grey-05};
-    --bg-white: #{$white};
+    --bg-secondary: #{primitives_variables.$grey-10};
+    --bg-tertiary: #{primitives_variables.$grey-05};
+    --bg-white: #{primitives_variables.$white};
 
     // Background - Brand
     --bg-brand-disable: var(--bg-disable-lighter);
-    --bg-brand-hover: #{$blue-65};
-    --bg-brand-muted: #{rgba($blue-55, 0.15)};
-    --bg-brand-pressed: #{$blue-75};
-    --bg-brand-primary: #{$blue-55};
+    --bg-brand-hover: #{primitives_variables.$blue-65};
+    --bg-brand-muted: #{rgba(primitives_variables.$blue-55, 0.15)};
+    --bg-brand-pressed: #{primitives_variables.$blue-75};
+    --bg-brand-primary: #{primitives_variables.$blue-55};
 
     // Background - Contextual
-    --bg-danger: #{$red-55};
-    --bg-info: #{$blue-45};
-    --bg-success: #{$green-45};
-    --bg-warning: #{$yellow-20};
+    --bg-danger: #{primitives_variables.$red-55};
+    --bg-info: #{primitives_variables.$blue-45};
+    --bg-success: #{primitives_variables.$green-45};
+    --bg-warning: #{primitives_variables.$yellow-20};
 
     // Link
-    --link-hover: #{$blue-65};
-    --link-pressed: #{$blue-75};
-    --link-primary: #{$blue-55};
-    --link-visited: #{$purple-55};
+    --link-hover: #{primitives_variables.$blue-65};
+    --link-pressed: #{primitives_variables.$blue-75};
+    --link-primary: #{primitives_variables.$blue-55};
+    --link-visited: #{primitives_variables.$purple-55};
 
     // Button Primary - Default
     --btn-primary-bg: var(--bg-brand-primary);
@@ -183,9 +183,9 @@
     --btn-primary-text-color: var(--text-white);
 
     // Button Primary - Outline
-    --btn-outline-primary-bg: #{$opacity-0};
+    --btn-outline-primary-bg: #{primitives_variables.$opacity-0};
     --btn-outline-primary-border-color: var(--border-brand);
-    --btn-outline-primary-disable-border-color: #{$grey-25};
+    --btn-outline-primary-disable-border-color: #{primitives_variables.$grey-25};
     --btn-outline-primary-disable-text-color: var(--text-disable);
     --btn-outline-primary-hover-bg: var(--bg-info-lightest);
     --btn-outline-primary-hover-border-color: var(--border-brand-hover);
@@ -217,62 +217,62 @@
     --btn-secondary-bg: var(--bg-primary);
     --btn-secondary-disable-bg: var(--bg-disable-lighter);
     --btn-secondary-disable-text-color: var(--text-disable);
-    --btn-secondary-hover-bg: #{$grey-85};
+    --btn-secondary-hover-bg: #{primitives_variables.$grey-85};
     --btn-secondary-hover-text-color: var(--text-white);
-    --btn-secondary-pressed-bg: #{$grey-75};
+    --btn-secondary-pressed-bg: #{primitives_variables.$grey-75};
     --btn-secondary-pressed-text-color: var(--text-white);
     --btn-secondary-text-color: var(--text-white);
 
     // Button Secondary - Outline
     --btn-outline-secondary-bg: var(--bg-white);
     --btn-outline-secondary-border-color: var(--border-neutral);
-    --btn-outline-secondary-disable-border-color: #{$grey-25};
+    --btn-outline-secondary-disable-border-color: #{primitives_variables.$grey-25};
     --btn-outline-secondary-disable-text-color: var(--text-disable);
     --btn-outline-secondary-hover-bg: var(--bg-tertiary);
-    --btn-outline-secondary-hover-border-color: #{$grey-85};
-    --btn-outline-secondary-hover-text-color: #{$grey-85};
+    --btn-outline-secondary-hover-border-color: #{primitives_variables.$grey-85};
+    --btn-outline-secondary-hover-text-color: #{primitives_variables.$grey-85};
     --btn-outline-secondary-pressed-bg: var(--bg-tertiary-light);
-    --btn-outline-secondary-pressed-border-color: #{$grey-75};
-    --btn-outline-secondary-pressed-text-color: #{$grey-75};
+    --btn-outline-secondary-pressed-border-color: #{primitives_variables.$grey-75};
+    --btn-outline-secondary-pressed-text-color: #{primitives_variables.$grey-75};
     --btn-outline-secondary-text-color: var(--text-primary);
 
     // Button Secondary - Text Only
     --btn-tertiary-neutral-disable-text-color: var(--text-disable);
     --btn-tertiary-neutral-hover-bg: var(--bg-tertiary-lighter);
-    --btn-tertiary-neutral-hover-text-color: #{$grey-85};
+    --btn-tertiary-neutral-hover-text-color: #{primitives_variables.$grey-85};
     --btn-tertiary-neutral-pressed-bg: var(--bg-tertiary-light);
-    --btn-tertiary-neutral-pressed-text-color: #{$grey-75};
+    --btn-tertiary-neutral-pressed-text-color: #{primitives_variables.$grey-75};
     --btn-tertiary-neutral-text-color: var(--text-primary);
 
     // Button Danger - Default
     --btn-danger-bg: var(--bg-danger);
     --btn-danger-disable-bg: var(--bg-disable-lighter);
     --btn-danger-disable-text-color: var(--text-disable);
-    --btn-danger-hover-bg: #{$red-65};
+    --btn-danger-hover-bg: #{primitives_variables.$red-65};
     --btn-danger-hover-text-color: var(--text-white);
-    --btn-danger-pressed-bg: #{$red-75};
+    --btn-danger-pressed-bg: #{primitives_variables.$red-75};
     --btn-danger-pressed-text-color: var(--text-white);
     --btn-danger-text-color: var(--text-white);
 
     // Button Danger - Outline
     --btn-danger-outline-bg: var(--bg-white);
     --btn-danger-outline-border-color: var(--bg-danger);
-    --btn-danger-outline-disable-border-color: #{$grey-25};
+    --btn-danger-outline-disable-border-color: #{primitives_variables.$grey-25};
     --btn-danger-outline-disable-text-color: var(--text-disable);
     --btn-danger-outline-hover-bg: var(--border-danger-lighter);
-    --btn-danger-outline-hover-border-color: #{$red-65};
-    --btn-danger-outline-hover-text-color: #{$red-65};
+    --btn-danger-outline-hover-border-color: #{primitives_variables.$red-65};
+    --btn-danger-outline-hover-text-color: #{primitives_variables.$red-65};
     --btn-danger-outline-pressed-bg: var(--bg-danger-light);
-    --btn-danger-outline-pressed-border-color: #{$red-75};
-    --btn-danger-outline-pressed-text-color: #{$red-75};
+    --btn-danger-outline-pressed-border-color: #{primitives_variables.$red-75};
+    --btn-danger-outline-pressed-text-color: #{primitives_variables.$red-75};
     --btn-danger-outline-text-color: var(--text-danger);
 
     // Button Danger - Text Only
     --btn-tertiary-danger-disable-text-color: var(--text-disable);
-    --btn-tertiary-danger-hover-bg: #{$red-05};
-    --btn-tertiary-danger-hover-text-color: #{$red-65};
-    --btn-tertiary-danger-pressed-bg: #{$red-10};
-    --btn-tertiary-danger-pressed-text-color: #{$red-75};
+    --btn-tertiary-danger-hover-bg: #{primitives_variables.$red-05};
+    --btn-tertiary-danger-hover-text-color: #{primitives_variables.$red-65};
+    --btn-tertiary-danger-pressed-bg: #{primitives_variables.$red-10};
+    --btn-tertiary-danger-pressed-text-color: #{primitives_variables.$red-75};
     --btn-tertiary-danger-text-color: var(--text-danger);
 
     // Datepicker - Default
@@ -337,9 +337,9 @@
     // Checkbox
     --checkbox-icon-color: var(--icon-tertiary);
     --checkbox-icon-disabled-color: var(--icon-disable);
-    --checkbox-icon-hover-color: #{$blue-65};
+    --checkbox-icon-hover-color: #{primitives_variables.$blue-65};
     --checkbox-icon-selected-color: var(--icon-brand-primary);
-    --checkbox-icon-selected-disabled-color: #{$grey-05};
+    --checkbox-icon-selected-disabled-color: #{primitives_variables.$grey-05};
     --checkbox-label-disabled: var(--text-disable);
     --checkbox-label-hover: var(--text-primary);
     --checkbox-label-text: var(--text-primary);
@@ -402,7 +402,7 @@
     --input-add-on-text: var(--text-primary);
 
     // Input - Textarea
-    --textarea-char-count: #{$grey-55};
+    --textarea-char-count: #{primitives_variables.$grey-55};
     --textarea-default-bg: var(--bg-white);
     --textarea-default-border: var(--border-primary);
     --textarea-disable-bg: var(--bg-disable-lighter);
@@ -427,9 +427,9 @@
     // Radio
     --radio-icon-color: var(--icon-tertiary);
     --radio-icon-disabled-color: var(--icon-disable);
-    --radio-icon-hover-color: #{$blue-65};
+    --radio-icon-hover-color: #{primitives_variables.$blue-65};
     --radio-icon-selected-color: var(--icon-brand-primary);
-    --radio-icon-selected-disabled-color: #{$grey-05};
+    --radio-icon-selected-disabled-color: #{primitives_variables.$grey-05};
     --radio-label-disabled-color: var(--text-disable);
     --radio-label-hover-color: var(--text-primary);
     --radio-label-text-color: var(--text-primary);
@@ -522,7 +522,7 @@
     --form-auto-extracted-icon-color: var(--icon-brand-primary);
 
     // Alerts
-    --alerts-close-icon-color: #{$grey-95};
+    --alerts-close-icon-color: #{primitives_variables.$grey-95};
     --alerts-text-color: var(--text-secondary);
 
     // Alerts - Success
@@ -686,7 +686,7 @@
 
     // Tabs - Nav Tabs (Secondary)
     --nav-tabs-active: var(--text-primary);
-    --nav-tabs-active-bg: #{$white};
+    --nav-tabs-active-bg: #{primitives_variables.$white};
     --nav-tabs-active-border: var(--border-secondary);
     --nav-tabs-inactive-text-color: var(--text-primary);
     --nav-tabs-inactive-bg: var(--bg-disable-lighter);
@@ -724,7 +724,7 @@
 
     // Toast
     --toast-text-color: var(--text-secondary);
-    --toast-close-icon-color: #{$grey-95};
+    --toast-close-icon-color: #{primitives_variables.$grey-95};
 
     // Toast - Success
     --toast-success-bg: var(--bg-success-lighter);

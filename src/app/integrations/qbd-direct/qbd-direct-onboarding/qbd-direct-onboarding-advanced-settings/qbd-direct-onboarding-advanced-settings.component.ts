@@ -9,11 +9,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-advanced-settings',
-  standalone: true,
-  imports: [CommonModule, QbdDirectSharedModule, SharedModule, QbdDirectAdvancedSettingsComponent],
-  templateUrl: './qbd-direct-onboarding-advanced-settings.component.html',
-  styleUrl: './qbd-direct-onboarding-advanced-settings.component.scss'
+    selector: 'app-qbd-direct-onboarding-advanced-settings',
+    imports: [CommonModule, QbdDirectSharedModule, SharedModule, QbdDirectAdvancedSettingsComponent],
+    templateUrl: './qbd-direct-onboarding-advanced-settings.component.html',
+    styleUrl: './qbd-direct-onboarding-advanced-settings.component.scss'
 })
 export class QbdDirectOnboardingAdvancedSettingsComponent implements OnInit {
 

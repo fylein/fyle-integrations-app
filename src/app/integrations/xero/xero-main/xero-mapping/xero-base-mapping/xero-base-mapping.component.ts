@@ -11,9 +11,10 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-base-mapping',
-  templateUrl: './xero-base-mapping.component.html',
-  styleUrls: ['./xero-base-mapping.component.scss']
+    selector: 'app-xero-base-mapping',
+    templateUrl: './xero-base-mapping.component.html',
+    styleUrls: ['./xero-base-mapping.component.scss'],
+    standalone: false
 })
 export class XeroBaseMappingComponent implements OnInit {
   isLoading: boolean = true;

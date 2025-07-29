@@ -7,9 +7,10 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-main',
-  templateUrl: './business-central-main.component.html',
-  styleUrls: ['./business-central-main.component.scss']
+    selector: 'app-business-central-main',
+    templateUrl: './business-central-main.component.html',
+    styleUrls: ['./business-central-main.component.scss'],
+    standalone: false
 })
 export class BusinessCentralMainComponent {
 

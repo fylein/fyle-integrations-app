@@ -37,7 +37,7 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/configuration/configuration-label/configuration-label.component';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { QbdMappingTableComponent } from './components/qbd/mapping/qbd-mapping-table/qbd-mapping-table.component';
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
@@ -46,7 +46,7 @@ import { TableModule } from 'primeng/table';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import { ChipsModule } from 'primeng/chips';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
@@ -202,8 +202,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     MultiSelectModule,
     DragDropModule,
     ProgressBarModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
+    AutoCompleteModule,
     TableModule,
     TabMenuModule,
     IconFieldModule,
@@ -235,10 +235,11 @@ import { TranslocoModule } from '@jsverse/transloco';
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     DropdownModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
+    AutoCompleteModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
+    TooltipModule,
     IntacctConnectorComponent,
     NetsuiteConnectorComponent,
     NetsuiteSubsidiaryMappingComponent,

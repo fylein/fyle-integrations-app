@@ -11,9 +11,10 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-export-summary-section',
-  templateUrl: './dashboard-export-summary-section.component.html',
-  styleUrls: ['./dashboard-export-summary-section.component.scss']
+    selector: 'app-dashboard-export-summary-section',
+    templateUrl: './dashboard-export-summary-section.component.html',
+    styleUrls: ['./dashboard-export-summary-section.component.scss'],
+    standalone: false
 })
 export class DashboardExportSummarySectionComponent implements OnInit {
 

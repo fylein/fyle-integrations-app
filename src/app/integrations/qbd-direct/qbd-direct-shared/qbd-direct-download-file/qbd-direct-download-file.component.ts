@@ -8,11 +8,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-download-file',
-  standalone: true,
-  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule],
-  templateUrl: './qbd-direct-download-file.component.html',
-  styleUrl: './qbd-direct-download-file.component.scss'
+    selector: 'app-qbd-direct-download-file',
+    imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule],
+    templateUrl: './qbd-direct-download-file.component.html',
+    styleUrl: './qbd-direct-download-file.component.scss'
 })
 export class QbdDirectDownloadFileComponent {
 

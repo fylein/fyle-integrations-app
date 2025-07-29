@@ -4,9 +4,10 @@ import { InputText } from 'primeng/inputtext';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+    selector: 'app-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss'],
+    standalone: false
 })
 export class SearchComponent implements OnInit {
 

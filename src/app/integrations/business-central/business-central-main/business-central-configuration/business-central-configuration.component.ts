@@ -3,9 +3,10 @@ import { MenuItem } from 'primeng/api';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-configuration',
-  templateUrl: './business-central-configuration.component.html',
-  styleUrls: ['./business-central-configuration.component.scss']
+    selector: 'app-business-central-configuration',
+    templateUrl: './business-central-configuration.component.html',
+    styleUrls: ['./business-central-configuration.component.scss'],
+    standalone: false
 })
 export class BusinessCentralConfigurationComponent implements OnInit {
 

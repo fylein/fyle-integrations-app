@@ -8,9 +8,10 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-skip-export',
-  templateUrl: './skip-export.component.html',
-  styleUrls: ['./skip-export.component.scss']
+    selector: 'app-skip-export',
+    templateUrl: './skip-export.component.html',
+    styleUrls: ['./skip-export.component.scss'],
+    standalone: false
 })
 export class SkipExportComponent implements OnInit {
 
@@ -605,5 +606,44 @@ export class SkipExportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
+  }
+
+  // Methods for p-autocomplete functionality (replacing p-chips)
+  onComplete(event: any): void {
+    // Empty implementation since we're not using typeahead functionality
+  }
+
+  onKeyDown(event: any, fieldNumber: number): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const target = keyboardEvent.target as HTMLInputElement;
+    
+    // Handle comma and Enter key to add chips (replaces separator="," functionality)
+    if ((keyboardEvent.key === ',' || keyboardEvent.key === 'Enter') && target.value.trim()) {
+      keyboardEvent.preventDefault();
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  onBlur(event: any, fieldNumber: number): void {
+    const target = event.target as HTMLInputElement;
+    
+    // Replaces [addOnBlur]="true" functionality
+    if (target.value.trim()) {
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  private addChip(value: string, inputElement: HTMLInputElement, fieldNumber: number): void {
+    const currentValues = fieldNumber === 1 ? this.valueOption1 || [] : this.valueOption2 || [];
+    
+    // Avoid duplicates
+    if (!currentValues.includes(value)) {
+      if (fieldNumber === 1) {
+        this.valueOption1 = [...currentValues, value];
+      } else {
+        this.valueOption2 = [...currentValues, value];
+      }
+      inputElement.value = ''; // Clear input after adding
+    }
   }
 }
