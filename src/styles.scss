@@ -144,6 +144,8 @@ p {
 @import 'assets/scss/multiselect';
 @import 'assets/scss/dropdowns';
 @import 'assets/scss/datepicker';
+@import 'assets/scss/chips';
+@import 'assets/scss/table.scss';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -219,17 +221,6 @@ p {
     @apply tw-block #{!important};
 }
 
-.p-datatable .p-datatable-thead>tr>th {
-    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}
-}
-
-.p-datatable .p-datatable-thead>tr>th:last-child {
-    @apply tw-border-r-0 #{!important};
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-    @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
-}
 
 .configuration {
     &--section {
@@ -240,23 +231,6 @@ p {
         @apply tw-overflow-hidden tw-border tw-border-border-tertiary tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px #{!important};
     }
 }
-
-.mapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important}
-}
-
-.unmapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
-}
-
-.p-chips .p-chips-multiple-container .p-chips-token {
-    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
-}
-
-.p-chips .p-chips-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
-}
-
 
 .preview-text {
     @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 #{!important};

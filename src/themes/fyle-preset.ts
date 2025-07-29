@@ -699,6 +699,95 @@ export const FylePreset = {
         left: '-12px',
         transform: 'none'
       }
+    },
+    chips: {
+      token: {
+        background: FyleCSSVars.backgrounds.white,
+        paddingX: FyleCSSVars.spacing[8],
+        paddingY: '2px',
+        borderRadius: '50px',
+        border: `1px solid ${FyleCSSVars.borders.secondary}`,
+        boxShadow: 'none'
+      },
+
+      container: {
+        enabled: {
+          border: `1px solid ${FyleCSSVars.borders.secondary}`,
+          paddingLeft: FyleCSSVars.spacing[14],
+          paddingRight: FyleCSSVars.spacing[12]
+        }
+      }
+    },
+
+    table: {
+      // Header styles (.p-datatable-thead > tr > th)
+      header: {
+        fontSize: '12px',
+        color: FyleCSSVars.table.headerTextColor,
+        fontWeight: '500',
+        paddingY: FyleCSSVars.spacing[12],
+        paddingX: FyleCSSVars.spacing[24],
+        background: FyleCSSVars.table.headerBg,
+        border: '1px solid',
+        borderColor: FyleCSSVars.table.headerBorderColor,
+        borderLeft: 'none'
+      },
+
+      // Header last column specific styles
+      headerLastColumn: {
+        borderRight: 'none'
+      },
+
+      // Body cell styles (.p-datatable-tbody > tr > td)
+      body: {
+        fontSize: '14px',
+        color: FyleCSSVars.text.secondary,
+        paddingY: FyleCSSVars.spacing[14],
+        paddingX: '22px',
+        borderTop: '1px solid',
+        borderTopColor: FyleCSSVars.table.borderColor,
+        borderBottom: 'none'
+      },
+
+      // Row hover styles
+      row: {
+        hover: {
+          background: FyleCSSVars.table.hoverBg
+        }
+      },
+
+      // Clickable row styles
+      clickableRow: {
+        cursor: 'pointer'
+      },
+
+      // Status badge styles (mapped/unmapped)
+      status: {
+        mapped: {
+          fontSize: '12px',
+          fontWeight: '500',
+          borderRadius: '50px',
+          border: '1px solid',
+          borderColor: FyleCSSVars.borders.successLight,
+          background: FyleCSSVars.backgrounds.successLight,
+          paddingY: FyleCSSVars.spacing[4],
+          paddingX: FyleCSSVars.spacing[10],
+          color: FyleCSSVars.text.success,
+          width: 'fit-content'
+        },
+        unmapped: {
+          fontSize: '12px',
+          fontWeight: '500',
+          borderRadius: '50px',
+          border: '1px solid',
+          borderColor: FyleCSSVars.borders.dangerLight,
+          background: FyleCSSVars.backgrounds.dangerLight,
+          paddingY: FyleCSSVars.spacing[4],
+          paddingX: FyleCSSVars.spacing[10],
+          color: FyleCSSVars.text.danger,
+          width: 'fit-content'
+        }
+      }
     }
   }
 };
