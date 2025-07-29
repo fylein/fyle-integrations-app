@@ -7,8 +7,8 @@ import { setupStoryBookFormGroup } from './utility';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { DropdownModule } from 'primeng/dropdown';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { SelectModule } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TooltipModule } from 'primeng/tooltip';
@@ -27,7 +27,7 @@ const meta: Meta<CloneSettingFieldComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, SharedModule, RippleModule, InputSwitchModule, FormsModule, ReactiveFormsModule, DropdownModule, MultiSelectModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }), TooltipModule]
+      imports: [CommonModule, BrowserAnimationsModule, SharedModule, RippleModule, ToggleSwitchModule, FormsModule, ReactiveFormsModule, SelectModule, MultiSelectModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }), TooltipModule]
     })
   ],
   argTypes: {

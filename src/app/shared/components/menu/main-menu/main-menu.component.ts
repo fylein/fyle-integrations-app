@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, viewChild } from '@angu
 import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { MenuItem } from 'primeng/api';
-import { Dropdown } from 'primeng/dropdown';
+import { Select } from 'primeng/select';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { Integration } from 'src/app/core/models/integrations/integrations.model';
@@ -42,7 +42,7 @@ export class MainMenuComponent implements OnInit {
 
   @Output() disconnectClick = new EventEmitter();
 
-  private pDropdown = viewChild(Dropdown);
+  private pDropdown = viewChild(Select);
 
   isMenuDisabled: boolean = false;
 

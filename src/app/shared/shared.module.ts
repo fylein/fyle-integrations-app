@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppLandingPageHeaderComponent } from './components/helper/app-landing-page-header/app-landing-page-header.component';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -46,7 +46,7 @@ import { TableModule } from 'primeng/table';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import { ChipsModule } from 'primeng/chips';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
@@ -193,19 +193,19 @@ import { ThemeDemoComponent } from './components/theme-demo/theme-demo.component
     ButtonModule,
     TooltipModule,
     SkeletonModule,
-    InputSwitchModule,
+    ToggleSwitchModule,
     RadioButtonModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     DialogModule,
     MultiSelectModule,
     DragDropModule,
     ProgressBarModule,
     CalendarModule,
-    ChipsModule,
+    AutoCompleteModule,
     TableModule,
     TabMenuModule,
     IconFieldModule,
@@ -236,9 +236,9 @@ import { ThemeDemoComponent } from './components/theme-demo/theme-demo.component
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
-    DropdownModule,
+    SelectModule,
     CalendarModule,
-    ChipsModule,
+    AutoCompleteModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,

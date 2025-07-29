@@ -1,17 +1,17 @@
 @import 'src/assets/scss/tab-primary.scss';
 
-:host ::ng-deep .p-dropdown {
+:host ::ng-deep .p-select {
     @apply tw-w-fit tw-h-32-px #{!important};
 }
 
-:host ::ng-deep .p-dropdown-label {
+:host ::ng-deep .p-select-label {
     @apply tw-flex tw-flex-none tw-w-auto #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+:host ::ng-deep .p-select .p-select-trigger {
     @apply tw-ml-8-px tw-w-14-px tw-text-sub-text-color #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+:host ::ng-deep .p-select .p-select-label.p-inputtext {
     @apply tw-text-slightly-normal-text-color tw-rounded-none #{!important};
 }

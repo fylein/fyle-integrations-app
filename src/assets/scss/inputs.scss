@@ -44,7 +44,7 @@
 .p-calendar ::placeholder {
   color: var(--preset-calendar-input-placeholder-color) !important;
 }
-.p-dropdown .p-dropdown-label {
+.p-select .p-select-label {
   &.p-inputtext {
     padding-left: var(--preset-dropdown-label-padding-x) !important;
     padding-right: var(--preset-dropdown-label-padding-x) !important;
@@ -54,15 +54,15 @@
   }
 }
 
-.p-dropdown .p-dropdown-label.p-inputtext {
+.p-select .p-select-label.p-inputtext {
   padding: var(--preset-dropdown-label-input-padding) !important;
   display: var(--preset-dropdown-label-input-display) !important;
   align-items: var(--preset-dropdown-label-input-align-items) !important;
   justify-content: var(--preset-dropdown-label-input-justify-content) !important;
   color: var(--preset-dropdown-label-input-color) !important;
 }
-.p-inputtext .p-chips-multiple-container:enabled:focus, 
-.p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
+.p-inputtext .p-autocomplete-multiple-container:enabled:focus, 
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
   box-shadow: var(--preset-chips-input-focus-box-shadow) !important;
   border: var(--preset-chips-input-focus-border) !important;
   border-color: var(--preset-chips-input-focus-border-color) !important;
@@ -73,7 +73,7 @@
   border-color: var(--preset-input-container-focus-border-color) !important;
   border-radius: var(--preset-input-container-focus-border-radius) !important;
 }
-.p-dropdown-filter {
+.p-select-filter {
   height: var(--preset-dropdown-filter-height) !important;
   padding-left: var(--preset-dropdown-filter-padding-left) !important;
   padding-right: var(--preset-dropdown-filter-padding-right) !important;

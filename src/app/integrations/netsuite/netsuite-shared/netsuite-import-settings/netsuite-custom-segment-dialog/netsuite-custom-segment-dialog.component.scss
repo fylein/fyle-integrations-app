@@ -1,12 +1,12 @@
-.error-box, :host ::ng-deep .error-box .p-dropdown {
+.error-box, :host ::ng-deep .error-box .p-select {
     @apply tw-border-alert-toast #{!important};
 }
 
-.normal-box, :host ::ng-deep .normal-box .p-dropdown  {
+.normal-box, :host ::ng-deep .normal-box .p-select  {
     @apply tw-border-box-color #{!important};
 }
 
-.normal-box :enabled:focus-visible, :host ::ng-deep .normal-box .p-dropdown :enabled:focus-visible {
+.normal-box :enabled:focus-visible, :host ::ng-deep .normal-box .p-select :enabled:focus-visible {
     @apply tw-border-faded-text-color #{!important};
 }
 
@@ -14,7 +14,7 @@
     @apply tw-w-full tw-h-40-px tw-py-10-px tw-pl-14-px tw-text-slightly-normal-text-color tw-border tw-border-solid tw-rounded-4-px #{!important};
 }
 
-:host ::ng-deep .p-dropdown {
+:host ::ng-deep .p-select {
     @apply tw-w-full #{!important};
 }
 

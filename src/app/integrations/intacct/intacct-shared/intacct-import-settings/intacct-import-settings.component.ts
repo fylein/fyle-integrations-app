@@ -457,7 +457,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   onDropdownChange(event: any, index: number) {
-    // Get the selected value from the <p-dropdown>
+    // Get the selected value from the <p-select>
     const selectedValue = event.value;
 
     // Find the selected field in 'fyleFields' based on the selected value

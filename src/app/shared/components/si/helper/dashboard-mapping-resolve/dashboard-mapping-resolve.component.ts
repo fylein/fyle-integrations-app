@@ -45,7 +45,7 @@ export class DashboardMappingResolveComponent implements OnInit {
   ) { }
 
   tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    const element = document.querySelector('.p-select-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
       element.style.width = '300px';
     }

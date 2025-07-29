@@ -8,11 +8,10 @@ import { IntacctExportSettingsComponent } from './intacct-export-settings/intacc
 import { IntacctImportSettingsComponent } from './intacct-import-settings/intacct-import-settings.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
 import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings/intacct-advanced-settings.component';
 import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/intacct-c1-import-settings.component';
 
@@ -31,7 +30,7 @@ import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/i
     MultiSelectModule,
     TooltipModule,
     DialogModule,
-    InputSwitchModule
+    ToggleSwitchModule
   ],
   exports: [
     IntacctExportSettingsComponent,
