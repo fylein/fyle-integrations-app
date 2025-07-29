@@ -702,6 +702,70 @@ export const CoPreset = {
         transform: 'none'
       }
     },
+    skeleton: {
+      background: CoCSSVars.backgrounds.disable
+    },
+    spinner: {
+      spinner16: {
+        height: 'var(--size-16)',
+        width: 'var(--size-16)',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      },
+      spinner16White: {
+        height: 'var(--size-16)',
+        width: 'var(--size-16)',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite'
+      },
+      spinnerDefault: {
+        height: '100px',
+        width: '100px',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      },
+      spinner30: {
+        height: '30px',
+        width: '30px',
+        animation: 'p-progress-spinner-dash 1.5s ease-in-out infinite'
+      }
+    },
+    toast: {
+      opacity: '1',
+      success: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.success,
+        color: CoCSSVars.text.white
+      },
+      error: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.danger,
+        color: CoCSSVars.text.white
+      },
+      info: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.info,
+        color: CoCSSVars.text.white
+      },
+      warn: {
+        border: 'none',
+        background: CoCSSVars.backgrounds.warning,
+        color: CoCSSVars.text.white
+      },
+      content: {
+        border: '0',
+        padding: '0',
+        color: CoCSSVars.text.white,
+        background: 'transparent',
+        borderRadius: CoCSSVars.borderRadius['2xs'],
+        fontSize: '14px',
+        fontWeight: '400'
+      },
+      closeIcon: {
+        display: 'none'
+      },
+      closeIconIcon: {
+        display: 'none'
+      },
+      messageContentDisplay: 'block'
+    },
     chips: {
       token: {
         background: CoCSSVars.backgrounds.white,

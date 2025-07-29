@@ -144,6 +144,9 @@ p {
 @import 'assets/scss/multiselect';
 @import 'assets/scss/dropdowns';
 @import 'assets/scss/datepicker';
+@import 'assets/scss/skeleton';
+@import 'assets/scss/spinner';
+@import 'assets/scss/toasts';
 @import 'assets/scss/chips';
 @import 'assets/scss/table.scss';
 
@@ -158,69 +161,6 @@ p {
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
 }
-
-@mixin spinner($height, $width, $animation) {
-    &.p-progress-spinner {
-        @apply tw-h-#{$height} tw-w-#{$width};
-    }
-
-    .p-progress-spinner-circle {
-        @apply tw-animate-#{$animation} #{!important};
-    }
-}
-
-.spinner-16 {
-    @include spinner('16-px', '16-px', 'progress-spinner');
-}
-
-.spinner-16-white {
-    @include spinner('16-px', '16-px', 'progress-spinner-cta');
-}
-
-.spinner-default {
-    @include spinner('100-px', '100-px', 'progress-spinner');
-}
-
-.spinner-30 {
-    @include spinner('30-px', '30-px', 'progress-spinner');
-}
-
-.p-skeleton {
-    @apply tw-bg-disabled-bg-color #{!important};
-}
-
-.p-toast {
-    @apply tw-opacity-100 #{!important}
-}
-
-.p-toast .p-toast-message.p-toast-message-success {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-error {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-info {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-message-content {
-    @apply tw-border-0 tw-p-0 tw-text-white #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-icon-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-icon-close-icon {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-message-content {
-    @apply tw-block #{!important};
-}
-
 
 .configuration {
     &--section {

@@ -1,0 +1,79 @@
+@keyframes p-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes p-progress-spinner-color {
+  0% {
+    stroke: var(--mandatory-field-color);
+  }
+  100% {
+    stroke: var(--mandatory-field-color);
+  }
+}
+
+@keyframes p-progress-spinner-cta-color {
+  0% {
+    stroke: #ffffff;
+  }
+  100% {
+    stroke: #ffffff;
+  }
+}
+
+.spinner-16 {
+  &.p-progress-spinner {
+    height: var(--preset-spinner-16-height) !important;
+    width: var(--preset-spinner-16-width) !important;
+  }
+
+  .p-progress-spinner-circle {
+    animation: var(--preset-spinner-16-animation) !important;
+    stroke-linecap: round !important;
+    stroke: var(--mandatory-field-color) !important;
+  }
+}
+
+.spinner-16-white {
+  &.p-progress-spinner {
+    height: var(--preset-spinner-16-white-height) !important;
+    width: var(--preset-spinner-16-white-width) !important;
+  }
+
+  .p-progress-spinner-circle {
+    animation: var(--preset-spinner-16-white-animation) !important;
+    stroke-linecap: round !important;
+    stroke: #ffffff !important;
+  }
+}
+
+.spinner-default {
+  .p-progress-spinner-circle {
+    animation: var(--preset-spinner-default-animation) !important;
+    stroke-linecap: round !important;
+    stroke: var(--mandatory-field-color) !important;
+  }
+}
+
+.spinner-30 {
+  &.p-progress-spinner {
+    height: var(--preset-spinner-30-height) !important;
+    width: var(--preset-spinner-30-width) !important;
+  }
+
+  .p-progress-spinner-circle {
+    animation: var(--preset-spinner-30-animation) !important;
+    stroke-linecap: round !important;
+    stroke: var(--mandatory-field-color) !important;
+  }
+} 

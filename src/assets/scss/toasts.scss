@@ -1,0 +1,49 @@
+.p-toast {
+  opacity: var(--preset-toast-opacity) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  border: var(--preset-toast-success-border) !important;
+  background: var(--preset-toast-success-background) !important;
+  color: var(--preset-toast-success-color) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+  border: var(--preset-toast-error-border) !important;
+  background: var(--preset-toast-error-background) !important;
+  color: var(--preset-toast-error-color) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  border: var(--preset-toast-info-border) !important;
+  background: var(--preset-toast-info-background) !important;
+  color: var(--preset-toast-info-color) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-warn {
+  border: var(--preset-toast-warn-border) !important;
+  background: var(--preset-toast-warn-background) !important;
+  color: var(--preset-toast-warn-color) !important;
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+  border: var(--preset-toast-content-border) !important;
+  padding: var(--preset-toast-content-padding) !important;
+  color: var(--preset-toast-content-color) !important;
+  background: var(--preset-toast-content-background) !important;
+  border-radius: var(--preset-toast-content-border-radius) !important;
+  font-size: var(--preset-toast-content-font-size) !important;
+  font-weight: var(--preset-toast-content-font-weight) !important;
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+  display: var(--preset-toast-close-icon-display) !important;
+}
+
+.p-toast-icon-close-icon {
+  display: var(--preset-toast-close-icon-icon-display) !important;
+}
+
+.p-toast-message-content {
+  display: var(--preset-toast-message-content-display) !important;
+} 

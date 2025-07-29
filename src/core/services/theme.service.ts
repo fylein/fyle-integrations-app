@@ -60,6 +60,9 @@ export class ThemeService {
     this.applyMultiselectStyles(root, preset.components.multiselect);
     this.applyDropdownStyles(root, preset.components.dropdown);
     this.applyDatepickerStyles(root, preset.components.datepicker);
+    this.applySkeletonStyles(root, preset.components.skeleton);
+    this.applySpinnerStyles(root, preset.components.spinner);
+    this.applyToastStyles(root, preset.components.toast);
     this.applyChipsStyles(root, preset.components.chips);
     this.applyTableStyles(root, preset.components.table);
   }
@@ -798,6 +801,52 @@ return;
     }
   }
 
+
+  private applySkeletonStyles(root: HTMLElement, skeletonStyles: any): void {
+    if (!skeletonStyles) {
+      return;
+    }
+
+    // Apply skeleton background
+    if (skeletonStyles.background) {
+      root.style.setProperty('--preset-skeleton-background', skeletonStyles.background);
+    }
+  }
+
+  private applySpinnerStyles(root: HTMLElement, spinnerStyles: any): void {
+    if (!spinnerStyles) {
+      return;
+    }
+
+    // Apply spinner-16 styles
+    if (spinnerStyles.spinner16) {
+      Object.entries(spinnerStyles.spinner16).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-16-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-16-white styles
+    if (spinnerStyles.spinner16White) {
+      Object.entries(spinnerStyles.spinner16White).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-16-white-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-default styles
+    if (spinnerStyles.spinnerDefault) {
+      Object.entries(spinnerStyles.spinnerDefault).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-default-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply spinner-30 styles
+    if (spinnerStyles.spinner30) {
+      Object.entries(spinnerStyles.spinner30).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-spinner-30-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
   private applyTableStyles(root: HTMLElement, tableStyles: any): void {
     if (!tableStyles) {
       return;
@@ -849,6 +898,71 @@ return;
       Object.entries(tableStyles.status.unmapped).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-table-status-unmapped-${this.kebabCase(prop)}`, value as string);
       });
+    }
+  }
+
+  private applyToastStyles(root: HTMLElement, toastStyles: any): void {
+    if (!toastStyles) {
+      return;
+    }
+
+    // Apply toast opacity
+    if (toastStyles.opacity) {
+      root.style.setProperty('--preset-toast-opacity', toastStyles.opacity);
+    }
+
+    // Apply toast success styles
+    if (toastStyles.success) {
+      Object.entries(toastStyles.success).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-success-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast error styles
+    if (toastStyles.error) {
+      Object.entries(toastStyles.error).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-error-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast info styles
+    if (toastStyles.info) {
+      Object.entries(toastStyles.info).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-info-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast warn styles
+    if (toastStyles.warn) {
+      Object.entries(toastStyles.warn).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-warn-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast content styles
+    if (toastStyles.content) {
+      Object.entries(toastStyles.content).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-content-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast close icon styles
+    if (toastStyles.closeIcon) {
+      Object.entries(toastStyles.closeIcon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-close-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast close icon icon styles
+    if (toastStyles.closeIconIcon) {
+      Object.entries(toastStyles.closeIconIcon).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-toast-close-icon-icon-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply toast message content display
+    if (toastStyles.messageContentDisplay) {
+      root.style.setProperty('--preset-toast-message-content-display', toastStyles.messageContentDisplay);
     }
   }
 
