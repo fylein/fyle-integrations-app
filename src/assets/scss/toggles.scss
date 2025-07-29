@@ -1,0 +1,61 @@
+.p-inputswitch {
+  height: var(--preset-toggle-height) !important;
+  width: var(--preset-toggle-width) !important;
+}
+
+.p-inputswitch .p-inputswitch-slider:before {
+  margin-top: var(--preset-toggle-circle-margin-top) !important;
+  width: var(--preset-toggle-circle-width) !important;
+  height: var(--preset-toggle-circle-height) !important;
+}
+
+[data-theme='co'] .p-inputswitch .p-inputswitch-slider:before {
+  left: var(--preset-toggle-circle-left) !important;
+  margin-left: var(--preset-toggle-circle-margin-left) !important;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  transform: var(--preset-toggle-checked-circle-transform) !important;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: var(--preset-toggle-checked-background) !important;
+  width: var(--preset-toggle-checked-width) !important;
+  height: var(--preset-toggle-checked-height) !important;
+}
+
+.p-inputswitch .p-inputswitch-slider {
+  background: var(--preset-toggle-unchecked-background) !important;
+  width: var(--preset-toggle-unchecked-width) !important;
+  height: var(--preset-toggle-unchecked-height) !important;
+}
+
+.p-inputswitch.p-focus .p-inputswitch-slider {
+  box-shadow: var(--preset-toggle-focus-box-shadow) !important;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
+  content: var(--preset-toggle-text-checked-content) !important;
+  display: var(--preset-toggle-text-display) !important;
+  justify-content: var(--preset-toggle-text-justify-content) !important;
+  align-items: var(--preset-toggle-text-align-items) !important;
+  position: var(--preset-toggle-text-position) !important;
+  font-size: var(--preset-toggle-text-font-size) !important;
+  color: var(--preset-toggle-text-color) !important;
+  font-weight: var(--preset-toggle-text-font-weight) !important;
+  left: var(--preset-toggle-text-checked-left) !important;
+  bottom: var(--preset-toggle-text-bottom) !important;
+}
+
+.p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
+  content: var(--preset-toggle-text-unchecked-content) !important;
+  display: var(--preset-toggle-text-display) !important;
+  justify-content: var(--preset-toggle-text-justify-content) !important;
+  align-items: var(--preset-toggle-text-align-items) !important;
+  position: var(--preset-toggle-text-position) !important;
+  font-size: var(--preset-toggle-text-font-size) !important;
+  color: var(--preset-toggle-text-color) !important;
+  font-weight: var(--preset-toggle-text-font-weight) !important;
+  left: var(--preset-toggle-text-unchecked-left) !important;
+  bottom: var(--preset-toggle-text-bottom) !important;
+} 

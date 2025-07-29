@@ -1,0 +1,71 @@
+/* Table Preset Styles - Following the same pattern as buttons.scss */
+
+.p-datatable .p-datatable-thead > tr > th {
+  font-size: var(--preset-table-header-font-size) !important;
+  color: var(--preset-table-header-color) !important;
+  font-weight: var(--preset-table-header-font-weight) !important;
+  padding-top: var(--preset-table-header-padding-y) !important;
+  padding-bottom: var(--preset-table-header-padding-y) !important;
+  padding-left: var(--preset-table-header-padding-x) !important;
+  padding-right: var(--preset-table-header-padding-x) !important;
+  background: var(--preset-table-header-background) !important;
+  border: var(--preset-table-header-border) !important;
+  border-color: var(--preset-table-header-border-color) !important;
+  border-left: var(--preset-table-header-border-left) !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th:last-child {
+  border-right: var(--preset-table-header-last-column-border-right) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  font-size: var(--preset-table-body-font-size) !important;
+  color: var(--preset-table-body-color) !important;
+  padding-top: var(--preset-table-body-padding-y) !important;
+  padding-bottom: var(--preset-table-body-padding-y) !important;
+  padding-left: var(--preset-table-body-padding-x) !important;
+  padding-right: var(--preset-table-body-padding-x) !important;
+  border-top: var(--preset-table-body-border-top) !important;
+  border-top-color: var(--preset-table-body-border-top-color) !important;
+  border-bottom: var(--preset-table-body-border-bottom) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: var(--preset-table-row-hover-background) !important;
+}
+
+.clickable-row {
+  cursor: var(--preset-table-clickable-row-cursor) !important;
+}
+
+.mapped {
+  font-size: var(--preset-table-status-mapped-font-size) !important;
+  font-weight: var(--preset-table-status-mapped-font-weight) !important;
+  border-radius: var(--preset-table-status-mapped-border-radius) !important;
+  border: var(--preset-table-status-mapped-border) !important;
+  border-color: var(--preset-table-status-mapped-border-color) !important;
+  background: var(--preset-table-status-mapped-background) !important;
+  padding-top: var(--preset-table-status-mapped-padding-y) !important;
+  padding-bottom: var(--preset-table-status-mapped-padding-y) !important;
+  padding-left: var(--preset-table-status-mapped-padding-x) !important;
+  padding-right: var(--preset-table-status-mapped-padding-x) !important;
+  color: var(--preset-table-status-mapped-color) !important;
+  width: var(--preset-table-status-mapped-width) !important;
+  display: inline-block;
+}
+
+.unmapped {
+  font-size: var(--preset-table-status-unmapped-font-size) !important;
+  font-weight: var(--preset-table-status-unmapped-font-weight) !important;
+  border-radius: var(--preset-table-status-unmapped-border-radius) !important;
+  border: var(--preset-table-status-unmapped-border) !important;
+  border-color: var(--preset-table-status-unmapped-border-color) !important;
+  background: var(--preset-table-status-unmapped-background) !important;
+  padding-top: var(--preset-table-status-unmapped-padding-y) !important;
+  padding-bottom: var(--preset-table-status-unmapped-padding-y) !important;
+  padding-left: var(--preset-table-status-unmapped-padding-x) !important;
+  padding-right: var(--preset-table-status-unmapped-padding-x) !important;
+  color: var(--preset-table-status-unmapped-color) !important;
+  width: var(--preset-table-status-unmapped-width) !important;
+  display: inline-block;
+} 

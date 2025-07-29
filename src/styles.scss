@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+// CSS Layer ordering for proper cascade control
+@layer reset, primeng, tailwind-components, tailwind-utilities, brand-overrides;
+
 // Import all the themes here
 @import 'assets/themes/theme.scss';
 @import 'assets/themes/co/c1dl.scss';
@@ -28,154 +31,124 @@ p {
     @apply tw-m-0-px;
 }
 
-.pi-times.fyle.qbd{
-    content: url('./assets/icons/cross.svg') !important;
-}
-
-.pi-times.fyle {
-    content: url('./assets/icons/cross-medium.svg') !important;
-}
-
-.pi-times.co {
-    content: url('./assets/icons/co/grv-close-medium.svg') !important;
-}
-
-[data-theme='fyle'] {
-    .pi-times-circle {
-        content: url('./assets/icons/cross-xs-small.svg') !important;
+// Brand-specific icon overrides in dedicated layer
+@layer brand-overrides {
+    .pi-times.fyle.qbd{
+        content: url('./assets/icons/cross.svg') !important;
     }
 
-    .pi-search {
-        content: url('./assets/icons/search-medium.svg') !important ;
+    .pi-times.fyle {
+        content: url('./assets/icons/cross-medium.svg') !important;
     }
 
-    .p-checkbox .p-checkbox-box .p-icon {
-        content: url('./assets/icons/check.svg') !important;
-    }
-}
-
-[data-theme='co'] {
-    .pi-times-circle {
-        content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+    .pi-times.co {
+        content: url('./assets/icons/co/grv-close-medium.svg') !important;
     }
 
-    .pi-search {
-        content: url('./assets/icons/co/grv-search-medium.svg') !important;
+    [data-theme='fyle'] {
+        .pi-times-circle {
+            content: url('./assets/icons/cross-xs-small.svg') !important;
+        }
+
+        .pi-search {
+            content: url('./assets/icons/search-medium.svg') !important ;
+        }
+
+        .p-checkbox .p-checkbox-box .p-icon {
+            content: url('./assets/icons/check.svg') !important;
+        }
     }
 
-    .p-checkbox .p-checkbox-box .p-icon, .pi-check {
-        content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
-    }
-}
+    [data-theme='co'] {
+        .pi-times-circle {
+            content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+        }
 
-[data-theme='fyle'] {
-    .p-dropdown-trigger {
+        .pi-search {
+            content: url('./assets/icons/co/grv-search-medium.svg') !important;
+        }
+
+        .p-checkbox .p-checkbox-box .p-icon, .pi-check {
+            content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
+        }
+    }
+
+    [data-theme='fyle'] {
+        .p-dropdown-trigger {
+            content: url('./assets/icons/arrow-down.svg') !important;
+        }
+    }
+
+    [data-theme='co'] {
+        .p-dropdown-trigger {
+            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+        }
+    }
+
+    [data-theme='fyle'] {
+        .pi-chevron-down {
+            content: url('./assets/icons/arrow-down.svg') !important;
+        }
+    }
+
+    [data-theme='co'] {
+        .pi-chevron-down {
+            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+        }
+    }
+
+    .pi-chevron-down.fyle {
+        padding-left: 16px !important;
         content: url('./assets/icons/arrow-down.svg') !important;
     }
-}
 
-[data-theme='co'] {
-    .p-dropdown-trigger {
+    .pi-chevron-down.co {
+        padding-left: 16px !important;
         content: url('./assets/icons/co/grv-chevron-down.svg') !important;
     }
-}
 
-[data-theme='fyle'] {
-    .pi-chevron-down {
-        content: url('./assets/icons/arrow-down.svg') !important;
+    .pi-eye.fyle {
+        content: url('./assets/icons/eye.svg') !important;
     }
-}
 
-[data-theme='co'] {
-    .pi-chevron-down {
-        content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+    .pi-eye.co {
+        top: 16px !important;
+        content: url('./assets/icons/co/grv-show.svg') !important;
     }
-}
 
-.pi-chevron-down.fyle {
-    padding-left: 16px !important;
-    content: url('./assets/icons/arrow-down.svg') !important;
-}
+    .pi-eye-slash.fyle {
+        content: url('./assets/icons/eye-slash.svg') !important;
+    }
 
-.pi-chevron-down.co {
-    padding-left: 16px !important;
-    content: url('./assets/icons/co/grv-chevron-down.svg') !important;
-}
-
-.pi-eye.fyle {
-    content: url('./assets/icons/eye.svg') !important;
-}
-
-.pi-eye.co {
-    top: 16px !important;
-    content: url('./assets/icons/co/grv-show.svg') !important;
-}
-
-.pi-eye-slash.fyle {
-    content: url('./assets/icons/eye-slash.svg') !important;
-}
-
-.pi-eye-slash.co {
-    top: 16px !important;
-    content: url('./assets/icons/co/grv-show-hide.svg') !important;
+    .pi-eye-slash.co {
+        top: 16px !important;
+        content: url('./assets/icons/co/grv-show-hide.svg') !important;
+    }
 }
 
 .pi-times:before {
-    @apply tw-text-placeholder tw-text-12-px #{!important}
+    @apply tw-text-placeholder tw-text-12-px #{!important};
 }
 
 .p-component {
     @apply tw-font-primary #{!important};
 }
 
-// Button CTA
-.p-button {
-    @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
-}
-
-.p-button.p-button-raised {
-    @apply tw-justify-center #{!important};
-}
-
-.p-button-label {
-    @apply tw-flex-none #{!important};
-}
-
-.p-button:enabled:hover {
-    @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button:disabled {
-    @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
-}
-
-.p-button.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
-}
-
-.p-button:enabled:hover.secondary-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color tw-border #{!important};
-}
-
-.p-button.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.p-button:enabled:hover.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.p-button:enabled:hover.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
-}
-
-.p-button.primary-outline {
-    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
-}
+@import 'assets/scss/buttons';
+@import 'assets/scss/inputs';
+@import 'assets/scss/tooltips';
+@import 'assets/scss/toggles';
+@import 'assets/scss/radio-buttons';
+@import 'assets/scss/dialogs';
+@import 'assets/scss/checkboxes';
+@import 'assets/scss/multiselect';
+@import 'assets/scss/dropdowns';
+@import 'assets/scss/datepicker';
+@import 'assets/scss/skeleton';
+@import 'assets/scss/spinner';
+@import 'assets/scss/toasts';
+@import 'assets/scss/chips';
+@import 'assets/scss/table.scss';
 
 .primary-outline:hover {
     @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
@@ -189,407 +162,6 @@ p {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
 }
 
-// Dialog
-.p-dialog .p-dialog-content {
-    @apply tw-p-0 tw-rounded-border-radius-2xs #{!important};
-}
-
-.p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
-    @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white tw-p-8-px #{!important};
-}
-
-.p-dialog-top-right .p-dialog {
-    margin: .75rem !important;
-    transform: translateZ(0) !important;
-}
-
-// Input text
-.p-inputtext {
-    @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};
-}
-
-.p-inputtext:enabled:focus-visible {
-    @apply tw-shadow-none #{!important};
-}
-
-// Tooltip
-.p-tooltip .p-tooltip-text {
-    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
-}
-
-.p-tooltip.p-tooltip-right .p-tooltip-arrow {
-    @apply tw-border-r-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-left .p-tooltip-arrow {
-    @apply tw-border-l-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-top .p-tooltip-arrow {
-    @apply tw-border-t-tooltip-bg #{!important};
-}
-
-.p-tooltip.p-tooltip-bottom {
-    margin-top: 4px;
-}
-
-.p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
-    border: 2px solid transparent !important;
-    margin-top: -2px !important;
-    @apply tw-border-b-tooltip-bg #{!important};
-}
-
-// Toggle
-.p-inputswitch {
-    @apply tw-h-20-px tw-w-50-px #{!important};
-}
-
-.p-inputswitch .p-inputswitch-slider:before {
-    @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
-}
-
-[data-theme='co'] {
-    .p-inputswitch .p-inputswitch-slider:before {
-        @apply tw-w-18-px tw-h-18-px tw-left-0 tw-mt-[-0.55rem] tw-ml-2-px #{!important};
-    }
-}
-
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    @apply tw-translate-x-toggle-circle-translate #{!important};
-}
-
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
-}
-
-.p-inputswitch .p-inputswitch-slider {
-    @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
-}
-
-.p-inputswitch.p-focus .p-inputswitch-slider {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
-}
-
-.p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
-}
-
-
-// Radio Button
-.p-radiobutton {
-    @apply tw-w-fit tw-h-19-px #{!important};
-}
-
-.p-radiobutton .p-radiobutton-box {
-    @apply tw-w-16-px tw-h-16-px tw-border #{!important};
-}
-
-.p-radiobutton .p-radiobutton-box:hover {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}
-
-.p-radiobutton .p-radiobutton-box.p-highlight,
-.p-radiobutton .p-radiobutton-box.p-highlight:hover {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
-}
-
-.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
-}
-
-// Dropdown
-.p-dropdown {
-    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
-}
-
-.p-dropdown:disabled {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-dd-menu-item-hover-bg tw-border tw-border-select-disabled-border #{!important};
-}
-
-.p-dropdown .p-dropdown-label {
-    &.p-inputtext {
-        @apply tw-px-3 tw-py-2 #{!important};
-    }
-}
-
-.p-dropdown .p-dropdown-label.p-inputtext {
-    @apply tw-p-0 tw-flex tw-items-center tw-justify-between tw-text-select-default-text #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items {
-    @apply tw-mt-1-px tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-rounded-4-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
-,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
-    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
-    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
-    @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-none #{!important};
-}
-
-.p-dropdown .p-dropdown-trigger {
-    @apply tw-w-18-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-header {
-    @apply tw-p-6-px #{!important};
-}
-
-.p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-dropdown:hover {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-dropdown-header {
-    @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
-}
-
-.p-multiselect {
-    @apply tw-h-40-px tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
-}
-
-.p-multiselect .p-multiselect-trigger {
-    @apply tw-w-12-px #{!important};
-}
-
-.p-multiselect .p-multiselect-label {
-    @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
-}
-
-.p-multiselect:not(.p-disabled).p-focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-multiselect.p-focus:not(.p-disabled) {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-header .p-checkbox {
-    @apply tw-hidden;
-}
-
-.p-multiselect-panel .p-multiselect-header,
-.p-multiselect-panel .p-multiselect-items {
-    @apply tw-p-0 #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-header {
-    @apply tw-border-none #{!important};
-}
-
-.p-multiselect-filter-container {
-    @apply tw-hidden;
-}
-
-.p-multiselect-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-multiselect-panel {
-    @apply tw-w-300-px;
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
-}
-
-.p-dropdown .p-dropdown-label.p-placeholder {
-    @apply tw-text-select-default-placeholder-text #{!important};
-}
-
-.p-multiselect .p-multiselect-label.p-placeholder {
-    @apply tw-text-select-focused-placeholder-text #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-6-px #{!important};
-}
-
-.p-checkbox {
-    @apply tw-h-[revert] tw-w-[revert] #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mb-0 #{!important};
-}
-
-.p-checkbox .p-checkbox-box {
-    @apply tw-h-16-px tw-w-16-px tw-rounded-5-px tw-transition-none tw-border-[1.5px] tw-border-checkbox-icon-color #{!important};
-}
-
-.p-checkbox .p-checkbox-box .p-icon {
-    @apply tw-w-[9px] tw-text-white #{!important};
-}
-
-.p-checkbox-box {
-    @apply tw-border-[1.5px] #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight, .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
-    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
-}
-
-.pi-check:before {
-    @apply tw-font-700 tw-text-9-px tw-w-[9-px] tw-h-14-px #{!important};
-}
-
-.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-    @apply tw-border-sub-text-color #{!important};
-}
-
-.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
-    @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
-}
-
-@mixin spinner($height, $width, $animation) {
-    &.p-progress-spinner {
-        @apply tw-h-#{$height} tw-w-#{$width};
-    }
-
-    .p-progress-spinner-circle {
-        @apply tw-animate-#{$animation} #{!important};
-    }
-}
-
-.spinner-16 {
-    @include spinner('16-px', '16-px', 'progress-spinner');
-}
-
-.spinner-16-white {
-    @include spinner('16-px', '16-px', 'progress-spinner-cta');
-}
-
-.spinner-default {
-    @include spinner('100-px', '100-px', 'progress-spinner');
-}
-
-.spinner-30 {
-    @include spinner('30-px', '30-px', 'progress-spinner');
-}
-
-.p-skeleton {
-    @apply tw-bg-disabled-bg-color #{!important};
-}
-
-.p-toast {
-    @apply tw-opacity-100 #{!important}
-}
-
-.p-toast .p-toast-message.p-toast-message-success {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-error {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message.p-toast-message-info {
-    @apply tw-border-none #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-message-content {
-    @apply tw-border-0 tw-p-0 tw-text-white #{!important};
-}
-
-.p-toast .p-toast-message .p-toast-icon-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-icon-close-icon {
-    @apply tw-hidden #{!important};
-}
-
-.p-toast-message-content {
-    @apply tw-block #{!important};
-}
-
-.p-datatable .p-datatable-thead>tr>th {
-    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}
-}
-
-.p-datatable .p-datatable-thead>tr>th:last-child {
-    @apply tw-border-r-0 #{!important};
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-    @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
-    @apply tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title {
-    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-pr-24-px #{!important};
-}
-
-.p-datepicker .p-datepicker-header {
-    @apply tw-p-0 #{!important};
-}
-
-.p-datepicker table th {
-    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
-}
-
-.p-datepicker table td {
-    @apply tw-p-0 tw-pb-4-px #{!important};
-}
-
-.p-datepicker table td>span {
-    @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
-}
-
-.p-datepicker {
-    @apply tw-p-16-px #{!important};
-}
-
 .configuration {
     &--section {
         @apply tw-pb-100-px;
@@ -600,143 +172,12 @@ p {
     }
 }
 
-.mapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important}
-}
-
-.unmapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
-}
-
-.p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
-}
-
-.p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext,
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext {
-    @apply tw-bg-input-read-only-bg #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message {
-    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item-group {
-    @apply tw-px-12-px tw-py-8-px;
-}
-
-.p-dropdown-panel .p-element[aria-label=\[divider\]] {
-    @apply tw-py-4-px tw-min-h-0 #{!important};
-}
-
-.p-calendar ::placeholder {
-    @apply tw-text-sub-text-color #{!important};
-}
-
-.p-monthpicker-month {
-    @apply tw-w-[25%] #{!important};
-}
-
-.p-datepicker .p-monthpicker .p-monthpicker-month {
-    @apply tw-p-0 tw-mt-10-px tw-text-14-px tw-text-calendar-month-text-color tw-h-32-px #{!important};
-}
-
-.p-datepicker .p-yearpicker .p-yearpicker-year {
-    @apply tw-p-0 tw-mt-10-px tw-h-32-px tw-text-14-px #{!important};
-}
-
-.p-yearpicker-year {
-    @apply tw-w-[25%] #{!important};
-}
-
-.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-bg-calendar-month-hover-bg #{!important};
-}
-
-.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
-.p-datepicker .p-datepicker-header .p-datepicker-next:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker table td>span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
-}
-
-.p-datepicker table td>span:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker table th {
-    @apply tw-text-center #{!important};
-}
-
-.p-datepicker-touch-ui,
-.p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
-}
-
-.p-dropdown-filter {
-    @apply tw-h-32-px;
-}
-
-.p-dropdown-filter {
-    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important}
-}
-
-.p-inputtext:enabled:focus {
-    @apply tw-border-border-primary #{!important};
-}
-
-.p-dropdown-filter-icon {
-    @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
-}
-
-.p-dialog .p-dialog-header .p-dialog-title {
-    @apply tw-text-20-px tw-font-500 #{!important};
-}
-
-.p-dialog .p-dialog-header {
-    @apply tw-rounded-none #{!important};
-}
-
-.p-chips .p-chips-multiple-container .p-chips-token {
-    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
-}
-
-.p-chips .p-chips-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
-}
-
-.p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
-    @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
-}
-
-.input1 .p-focus {
-    @apply tw-shadow-none tw-border tw-border-select-focused-border tw-rounded-8-px #{!important};
-}
-
 .preview-text {
     @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 #{!important};
 }
 
 .preview-box {
     @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important};
-}
-
-.p-dialog-header-close-icon {
-    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
 }
 
 .landing {

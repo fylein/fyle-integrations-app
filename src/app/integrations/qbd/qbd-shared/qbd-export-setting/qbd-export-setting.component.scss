@@ -1,9 +1,9 @@
 :host ::ng-deep .error-box {
-    @apply tw-border-alert-toast #{!important};
+    @apply tw-border-alert-toast tw-px-10-px tw-py-8-px #{!important};
 }
 
 :host ::ng-deep .normal-box  {
-    @apply tw-border-box-color #{!important};
+    @apply tw-border-box-color tw-px-10-px tw-py-8-px #{!important};
 }
 
 :host ::ng-deep .normal-box :enabled:focus-visible {

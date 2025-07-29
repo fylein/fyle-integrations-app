@@ -1,0 +1,15 @@
+/* P-Chips Component Styling */
+
+.p-chips .p-chips-multiple-container .p-chips-token {
+  background: var(--preset-chips-token-background) !important;
+  padding: var(--preset-chips-token-padding-y) var(--preset-chips-token-padding-x) !important;
+  border-radius: var(--preset-chips-token-border-radius) !important;
+  border: var(--preset-chips-token-border) !important;
+  box-shadow: var(--preset-chips-token-box-shadow) !important;
+}
+
+.p-chips .p-chips-multiple-container:not(.p-disabled) {
+  border: var(--preset-chips-container-border) !important;
+  padding-left: var(--preset-chips-container-padding-left) !important;
+  padding-right: var(--preset-chips-container-padding-right) !important;
+} 

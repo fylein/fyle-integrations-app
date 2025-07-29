@@ -15,6 +15,5 @@
 }
 
 :host ::ng-deep .error-box {
-    @apply tw-border tw-border-alert-toast #{!important};
+    @apply tw-border tw-border-alert-toast tw-px-12-px tw-py-8-px #{!important};
 }
-
