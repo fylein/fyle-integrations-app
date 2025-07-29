@@ -20,7 +20,7 @@
             <div class="tw-flex dropdown-row tw-pb-24-px">
               <p class="tw-text-14-px tw-text-form-label-text-color">{{ 'configurationSkipExport.whereLabel' | transloco }}</p>
               <div class="tw-ml-80-px tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
+                <p-select appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
                   For options
                   <ng-template let-option pTemplate="item">
                     <span *ngIf="option.field_name !== 'claim_number'">
@@ -39,12 +39,12 @@
                       {{ 'configurationSkipExport.reportNumber' | transloco }}
                     </span>
                   </ng-template>
-                </p-dropdown>                               
+                </p-select>                               
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               </div>
               <div class="tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-dropdown>
+                <p-select appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-select>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
                 [customErrorMessage]="'configurationSkipExport.selectOperatorError' | transloco"></app-mandatory-error-message>
               </div>
@@ -55,12 +55,23 @@
                 <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField(1)">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+                <p-autocomplete
+                  [multiple]="true"
+                  [typeahead]="false"
+                  [forceSelection]="false"
+                  styleClass="tw-w-[296px]"
+                  formControlName="value1"
+                  [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                  [suggestions]="[]"
+                  (completeMethod)="onComplete($event)"
+                  (onKeyDown)="onKeyDown($event, 1)"
+                  (onBlur)="onBlur($event, 1)">
+                </p-autocomplete>
                 <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
               </div>
               <div class="tw-w-296-px" *ngIf="showBooleanField(1)">
-                <p-dropdown appendTo="body" formControlName="value1" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
-                </p-dropdown>
+                <p-select appendTo="body" formControlName="value1" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
+                </p-select>
               </div>
         </div>
   
@@ -81,17 +92,17 @@
           </div>
           <div class="tw-flex">
             <div class="joinby-field">
-              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" [placeholder]="'configurationSkipExport.joinByPlaceholder' | transloco">
+              <p-select appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" [placeholder]="'configurationSkipExport.joinByPlaceholder' | transloco">
                 <ng-template let-selectedValue pTemplate="selectedItem" >
                   {{ selectedValue.value }}
                 </ng-template>
                 <ng-template let-value pTemplate="item">
                   {{ value.value }}
                 </ng-template>
-              </p-dropdown>
+              </p-select>
             </div>
             <div class="tw-ml-24-px tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
+              <p-select appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
                 For options
                 <ng-template let-option pTemplate="item">
                   <span *ngIf="option.field_name !== 'claim_number'">
@@ -110,14 +121,14 @@
                     {{ 'configurationSkipExport.reportNumber' | transloco }}
                   </span>
                 </ng-template>
-              </p-dropdown>                            
+              </p-select>                            
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               <app-mandatory-error-message *ngIf="checkValidationCondition()"
               [customErrorMessage]="'configurationSkipExport.distinctConditionError' | transloco"></app-mandatory-error-message>
             </div>
             <div class="tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-dropdown>
+              <p-select appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-select>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
               [customErrorMessage]="'configurationSkipExport.selectOperatorError' | transloco"></app-mandatory-error-message>
             </div>
@@ -125,12 +136,23 @@
               <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+              <p-autocomplete
+                [multiple]="true"
+                [typeahead]="false"
+                [forceSelection]="false"
+                styleClass="tw-w-[296px]"
+                formControlName="value2"
+                [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                [suggestions]="[]"
+                (completeMethod)="onComplete($event)"
+                (onKeyDown)="onKeyDown($event, 2)"
+                (onBlur)="onBlur($event, 2)">
+              </p-autocomplete>
               <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
-              <p-dropdown appendTo="body" formControlName="value2" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
-              </p-dropdown>
+              <p-select appendTo="body" formControlName="value2" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
+              </p-select>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>

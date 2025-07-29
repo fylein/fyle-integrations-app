@@ -10,7 +10,7 @@
     @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
   }
   
-  :host ::ng-deep .p-dropdown {
+  :host ::ng-deep .p-select {
     @apply tw-scale-90 #{!important};
   }
   
@@ -112,7 +112,7 @@
     @apply tw-text-14-px #{!important};
   }
   
-  :host ::ng-deep .selectedItem  .p-dropdown-trigger {
+  :host ::ng-deep .selectedItem  .p-select-trigger {
     @apply tw-hidden #{!important};
   }
   

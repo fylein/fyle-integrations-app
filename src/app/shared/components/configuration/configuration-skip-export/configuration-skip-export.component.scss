@@ -1,12 +1,12 @@
-:host ::ng-deep .error-box .p-dropdown {
+:host ::ng-deep .error-box .p-select {
   @apply tw-border-select-error-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown {
+:host ::ng-deep .normal-box .p-select {
   @apply tw-border-select-default-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-focus {
+:host ::ng-deep .normal-box .p-select.p-focus {
   @apply tw-border-select-focused-border #{!important};
 }
 
@@ -22,11 +22,11 @@
     @apply tw-border tw-border-line-inactive tw-rounded-4-px tw-py-6-px tw-px-10-px tw-inline-flex tw-items-center tw-w-296-px #{!important};
 }
   
-:host ::ng-deep .joinby-field .p-dropdown {
+:host ::ng-deep .joinby-field .p-select {
     @apply tw-w-98-px tw-h-38-px #{!important} ;
 }
   
-:host ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
+:host ::ng-deep .p-select .p-select-trigger-icon {
     @apply tw-text-12-px tw-mr-12-px tw-w-auto;
 }
   
@@ -34,12 +34,12 @@
     @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
   
-:host ::ng-deep .p-chips-token {
+:host ::ng-deep .p-autocomplete-token {
     @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-border-line-inactive tw-shadow-chip-shadow
 }
   
   /* To remove blue hover and other styles */
-  :host ::ng-deep .p-chips input:focus {
+  :host ::ng-deep .p-autocomplete input:focus {
     // outline: none !important;
     box-shadow: none !important;
     // border-color: inherit !important;
@@ -47,7 +47,7 @@
   }
   
   /* Scrollable container */
-  :host ::ng-deep .p-chips-multiple-container {
+  :host ::ng-deep .p-autocomplete-multiple-container {
     max-height: 80px;
     overflow-y: auto;
     width: 360px !important;
@@ -58,26 +58,26 @@
     box-shadow: 1px 1px white;
   }
 
-  :host ::ng-deep .p-chips-multiple-container:enabled:focus {
+  :host ::ng-deep .p-autocomplete-multiple-container:enabled:focus {
     box-shadow: none;
     border: 1px solid var(--select-focused-border);
   }
   
   /* Change text color to black */
-  :host ::ng-deep .p-chips-token-label {
+  :host ::ng-deep .p-autocomplete-token-label {
     @apply tw-text-chips-body-text-color #{!important};
   }
   
   
-  :host ::ng-deep .p-chips-token-icon {
+  :host ::ng-deep .p-autocomplete-token-icon {
     @apply tw-text-slightly-normal-text-color #{!important};
   }
   
-  :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {
+  :host ::ng-deep .p-autocomplete-multiple-container::-webkit-scrollbar {
     background: transparent;  /* For WebKit browsers like Chrome and Safari */
   }
   
-  :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
+  :host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-calendar .p-inputtext{
     @apply tw-bg-input-read-only-bg #{!important};
   }
   
@@ -89,7 +89,7 @@
     @apply tw-text-12-px tw-text-form-default-help-text-color #{!important};
   }
   
-  :host ::ng-deep .p-dropdown {
+  :host ::ng-deep .p-select {
     transform: scale(0.9);
     width: 180px !important;
   }

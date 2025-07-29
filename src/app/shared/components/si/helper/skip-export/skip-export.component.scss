@@ -16,12 +16,12 @@
   width: 296px !important;
 }
 
-:host ::ng-deep .joinby-field .p-dropdown {
+:host ::ng-deep .joinby-field .p-select {
   width: 98px !important;
   height: 38px !important;
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
+:host ::ng-deep .p-select .p-select-trigger-icon {
   @apply tw-text-12-px tw-mr-12-px tw-w-auto;
 }
 
@@ -29,7 +29,7 @@
   @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px tw-border #{!important};
 }
 
-:host ::ng-deep .p-chips-token {
+:host ::ng-deep .p-autocomplete-token {
   height: 24px;  /* Reduced height */
   align-items: center;  /* Center content */
   background-color: white !important;  /* Change background color to white */
@@ -38,14 +38,14 @@
 }
 
 /* To remove blue hover and other styles */
-:host ::ng-deep .p-chips input:focus {
+:host ::ng-deep .p-autocomplete input:focus {
   outline: none !important;
   box-shadow: none !important;
   border-color: inherit !important;
 }
 
 /* Scrollable container */
-:host ::ng-deep .p-chips-multiple-container {
+:host ::ng-deep .p-autocomplete-multiple-container {
   max-height: 80px;
   overflow-y: auto;
   width: 360px !important;
@@ -56,20 +56,20 @@
 }
 
 /* Change text color to black */
-:host ::ng-deep .p-chips-token-label {
+:host ::ng-deep .p-autocomplete-token-label {
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
 
-:host ::ng-deep .p-chips-token-icon {
+:host ::ng-deep .p-autocomplete-token-icon {
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
-:host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {
+:host ::ng-deep .p-autocomplete-multiple-container::-webkit-scrollbar {
   background: transparent;  /* For WebKit browsers like Chrome and Safari */
 }
 
-:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
+:host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-calendar .p-inputtext{
   @apply tw-bg-input-read-only-bg #{!important};
 }
 
@@ -82,7 +82,7 @@
   color: grey !important;
 }
 
-:host ::ng-deep .p-dropdown {
+:host ::ng-deep .p-select {
   transform: scale(0.9);
   width: 180px !important;
 }

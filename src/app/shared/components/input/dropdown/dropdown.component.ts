@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-dropdown',
+  selector: 'app-select',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss']
 })

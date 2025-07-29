@@ -1,36 +1,36 @@
-:host ::ng-deep .dropdown-time-alone .p-dropdown {
+:host ::ng-deep .dropdown-time-alone .p-select {
     @apply tw-w-150-px #{!important};
 }
 
-:host ::ng-deep .dropdown-time .p-dropdown {
+:host ::ng-deep .dropdown-time .p-select {
     @apply tw-w-120-px #{!important};
 }
 
-:host ::ng-deep .dropdown-monthy .p-dropdown {
+:host ::ng-deep .dropdown-monthy .p-select {
     @apply lg:tw-w-176-px md:tw-w-120-px #{!important};
 }
 
-:host ::ng-deep .error-box .p-dropdown {
+:host ::ng-deep .error-box .p-select {
     @apply tw-border-select-error-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown {
+:host ::ng-deep .normal-box .p-select {
     @apply tw-border-select-default-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-focus {
+:host ::ng-deep .normal-box .p-select.p-focus {
     @apply tw-border-select-focused-border #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-disabled {
+:host ::ng-deep .normal-box .p-select.p-disabled {
     @apply tw-bg-input-read-only-bg tw-border-input-read-only-border tw-border-solid #{!important};
 }
 
-:host ::ng-deep .normal-box .p-dropdown.p-disabled .p-dropdown-label {
+:host ::ng-deep .normal-box .p-select.p-disabled .p-select-label {
     @apply tw-text-input-read-only-text #{!important};
 }
 
-:host ::ng-deep  .dropdown-size-schedule .p-dropdown {
+:host ::ng-deep  .dropdown-size-schedule .p-select {
     @apply tw-w-70-px #{!important};
 }
 
@@ -46,19 +46,19 @@
     @apply tw-text-14-px tw-font-400 ;
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-label .p-placeholder .p-dropdown-trigger {
+:host ::ng-deep .p-select .p-select-label .p-placeholder .p-select-trigger {
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger{
+:host ::ng-deep .p-disabled .p-select-trigger, :host ::ng-deep .showClearIcon .p-select-trigger{
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger{
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-trigger, :host ::ng-deep .filterDropdown .p-select-trigger{
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .hide-chevron .p-dropdown-trigger {
+:host ::ng-deep .hide-chevron .p-select-trigger {
     @apply tw-hidden #{!important};
 }
 

@@ -3,27 +3,27 @@
     @apply tw-text-placeholder #{!important};
 }
 
-:host ::ng-deep .mappingFilterDropdown .p-dropdown {
+:host ::ng-deep .mappingFilterDropdown .p-select {
     @apply tw-w-200-px tw-h-40-px #{!important}
 }
 
-:host ::ng-deep .mapping-filter-applied .p-dropdown {
+:host ::ng-deep .mapping-filter-applied .p-select {
     @apply tw-py-0 #{!important}
 }
 
-:host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {
+:host ::ng-deep .filterDropdown .p-select .p-select-label.p-inputtext {
     @apply tw-py-10-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-dropdown .p-dropdown-label.p-inputtext {
+:host ::ng-deep .selectedItem  .p-select .p-select-label.p-inputtext {
     @apply tw-py-5-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+:host ::ng-deep .selectedItem  .p-select-trigger {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .filterDropdown  .p-dropdown-trigger {
+:host ::ng-deep .filterDropdown  .p-select-trigger {
     @apply tw-block #{!important};
 }
 
