@@ -63,6 +63,8 @@ export class ThemeService {
     this.applySkeletonStyles(root, preset.components.skeleton);
     this.applySpinnerStyles(root, preset.components.spinner);
     this.applyToastStyles(root, preset.components.toast);
+    this.applyChipsStyles(root, preset.components.chips);
+    this.applyTableStyles(root, preset.components.table);
   }
 
   private applyButtonStyles(root: HTMLElement, buttonStyles: any): void {
@@ -799,6 +801,7 @@ return;
     }
   }
 
+
   private applySkeletonStyles(root: HTMLElement, skeletonStyles: any): void {
     if (!skeletonStyles) {
       return;
@@ -840,6 +843,60 @@ return;
     if (spinnerStyles.spinner30) {
       Object.entries(spinnerStyles.spinner30).forEach(([prop, value]) => {
         root.style.setProperty(`--preset-spinner-30-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+  }
+
+  private applyTableStyles(root: HTMLElement, tableStyles: any): void {
+    if (!tableStyles) {
+      return;
+    }
+
+    // Table header styles
+    if (tableStyles.header) {
+      Object.entries(tableStyles.header).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-header-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Table header last column styles
+    if (tableStyles.headerLastColumn) {
+      Object.entries(tableStyles.headerLastColumn).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-header-last-column-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Table body styles
+    if (tableStyles.body) {
+      Object.entries(tableStyles.body).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-body-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Table row styles
+    if (tableStyles.row?.hover) {
+      Object.entries(tableStyles.row.hover).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-row-hover-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Clickable row styles
+    if (tableStyles.clickableRow) {
+      Object.entries(tableStyles.clickableRow).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-clickable-row-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Status badge styles
+    if (tableStyles.status?.mapped) {
+      Object.entries(tableStyles.status.mapped).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-status-mapped-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    if (tableStyles.status?.unmapped) {
+      Object.entries(tableStyles.status.unmapped).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-table-status-unmapped-${this.kebabCase(prop)}`, value as string);
       });
     }
   }
@@ -906,6 +963,26 @@ return;
     // Apply toast message content display
     if (toastStyles.messageContentDisplay) {
       root.style.setProperty('--preset-toast-message-content-display', toastStyles.messageContentDisplay);
+    }
+  }
+
+  private applyChipsStyles(root: HTMLElement, chipsStyles: any): void {
+    if (!chipsStyles) {
+      return;
+    }
+
+    // Apply chips token styles
+    if (chipsStyles.token) {
+      Object.entries(chipsStyles.token).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-chips-token-${this.kebabCase(prop)}`, value as string);
+      });
+    }
+
+    // Apply chips container enabled styles (for :not(.p-disabled))
+    if (chipsStyles.container?.enabled) {
+      Object.entries(chipsStyles.container.enabled).forEach(([prop, value]) => {
+        root.style.setProperty(`--preset-chips-container-${this.kebabCase(prop)}`, value as string);
+      });
     }
   }
 

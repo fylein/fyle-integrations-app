@@ -765,6 +765,95 @@ export const CoPreset = {
         display: 'none'
       },
       messageContentDisplay: 'block'
+    },
+    chips: {
+      token: {
+        background: CoCSSVars.backgrounds.white,
+        paddingX: CoCSSVars.spacing[8],
+        paddingY: '2px',
+        borderRadius: '50px',
+        border: `1px solid ${CoCSSVars.borders.secondary}`,
+        boxShadow: 'none'
+      },
+
+      container: {
+        enabled: {
+          border: `1px solid ${CoCSSVars.borders.secondary}`,
+          paddingLeft: CoCSSVars.spacing[14],
+          paddingRight: CoCSSVars.spacing[12]
+        }
+      }
+    },
+
+    table: {
+      // Header styles (.p-datatable-thead > tr > th)
+      header: {
+        fontSize: '12px',
+        color: CoCSSVars.table.headerTextColor,
+        fontWeight: '500',
+        paddingY: CoCSSVars.spacing[12],
+        paddingX: CoCSSVars.spacing[24],
+        background: CoCSSVars.table.headerBg,
+        border: '1px solid',
+        borderColor: CoCSSVars.table.headerBorderColor,
+        borderLeft: 'none'
+      },
+
+      // Header last column specific styles
+      headerLastColumn: {
+        borderRight: 'none'
+      },
+
+      // Body cell styles (.p-datatable-tbody > tr > td)
+      body: {
+        fontSize: '14px',
+        color: CoCSSVars.text.secondary,
+        paddingY: CoCSSVars.spacing[14],
+        paddingX: '22px',
+        borderTop: '1px solid',
+        borderTopColor: CoCSSVars.table.borderColor,
+        borderBottom: 'none'
+      },
+
+      // Row hover styles
+      row: {
+        hover: {
+          background: CoCSSVars.table.hoverBg
+        }
+      },
+
+      // Clickable row styles
+      clickableRow: {
+        cursor: 'pointer'
+      },
+
+      // Status badge styles (mapped/unmapped)
+      status: {
+        mapped: {
+          fontSize: '12px',
+          fontWeight: '500',
+          borderRadius: '50px',
+          border: '1px solid',
+          borderColor: CoCSSVars.borders.successLight,
+          background: CoCSSVars.backgrounds.successLight,
+          paddingY: CoCSSVars.spacing[4],
+          paddingX: CoCSSVars.spacing[10],
+          color: CoCSSVars.text.success,
+          width: 'fit-content'
+        },
+        unmapped: {
+          fontSize: '12px',
+          fontWeight: '500',
+          borderRadius: '50px',
+          border: '1px solid',
+          borderColor: CoCSSVars.borders.dangerLight,
+          background: CoCSSVars.backgrounds.dangerLight,
+          paddingY: CoCSSVars.spacing[4],
+          paddingX: CoCSSVars.spacing[10],
+          color: CoCSSVars.text.danger,
+          width: 'fit-content'
+        }
+      }
     }
   }
 };
