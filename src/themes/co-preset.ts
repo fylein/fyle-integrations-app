@@ -714,7 +714,7 @@ export const CoPreset = {
 
       container: {
         enabled: {
-          border: `1px solid ${CoCSSVars.borders.primary}`,
+          border: `1px solid ${CoCSSVars.borders.secondary}`,
           paddingLeft: CoCSSVars.spacing[14],
           paddingRight: CoCSSVars.spacing[12]
         }
