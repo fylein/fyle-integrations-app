@@ -4,7 +4,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdMappingRoutingModule } from './qbd-mapping-routing.module';
 
 import { TableModule } from 'primeng/table';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { TabsModule } from 'primeng/tabs';
+
 import { QbdGenericMappingComponent } from './qbd-generic-mapping/qbd-generic-mapping.component';
 
 
@@ -15,7 +16,7 @@ import { QbdGenericMappingComponent } from './qbd-generic-mapping/qbd-generic-ma
   imports: [
     CommonModule,
     TableModule,
-    TabMenuModule,
+    TabsModule,
     SharedModule,
     QbdMappingRoutingModule
   ]

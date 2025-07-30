@@ -8,11 +8,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-export-settings',
-  standalone: true,
-  imports: [QbdDirectExportSettingsComponent, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-export-settings.component.html',
-  styleUrl: './qbd-direct-onboarding-export-settings.component.scss'
+    selector: 'app-qbd-direct-onboarding-export-settings',
+    imports: [QbdDirectExportSettingsComponent, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-export-settings.component.html',
+    styleUrl: './qbd-direct-onboarding-export-settings.component.scss'
 })
 export class QbdDirectOnboardingExportSettingsComponent implements OnInit {
 

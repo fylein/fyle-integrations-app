@@ -14,9 +14,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
-  selector: 'app-main-menu',
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.scss']
+    selector: 'app-main-menu',
+    templateUrl: './main-menu.component.html',
+    styleUrls: ['./main-menu.component.scss'],
+    standalone: false
 })
 export class MainMenuComponent implements OnInit {
 
@@ -51,6 +52,8 @@ export class MainMenuComponent implements OnInit {
   isDisabled: boolean = false;
 
   showMoreDropdown: boolean;
+
+  activeTabValue: string = '0';
 
   readonly brandingConfig = brandingConfig;
 
@@ -96,10 +99,41 @@ export class MainMenuComponent implements OnInit {
     this.refreshDimensionClick.emit(true);
   }
 
+  navigateToModule(module: MenuItem): void {
+    if (module.routerLink && !module.disabled) {
+      if (Array.isArray(module.routerLink)) {
+        this.router.navigate(module.routerLink);
+      } else {
+        this.router.navigateByUrl(module.routerLink);
+      }
+    }
+  }
+
   isCurrentIntegration(integrationName: InAppIntegration) {
     return this.router.url.includes(
       this.integrationsService.inAppIntegrationUrlMap[integrationName]
     );
+  }
+
+  private calculateActiveTab(): void {
+    if (this.modules && this.modules.length > 0) {
+      const currentUrl = this.router.url;
+
+      // Find the active tab based on the current route
+      const activeIndex = this.modules.findIndex(module => {
+        if (module.routerLink) {
+          // Handle array of route segments
+          if (Array.isArray(module.routerLink)) {
+            return currentUrl.includes(module.routerLink.join('/'));
+          }
+          // Handle string route
+          return currentUrl.includes(module.routerLink);
+        }
+        return false;
+      });
+
+      this.activeTabValue = activeIndex >= 0 ? activeIndex.toString() : '0';
+    }
   }
 
   private addDropdownOptions(integrations: Integration[]) {
@@ -176,7 +210,14 @@ export class MainMenuComponent implements OnInit {
         ...item,
         disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
       }));
-
     }
+
+    // Calculate the active tab based on current route
+    this.calculateActiveTab();
+
+    // Listen to route changes to update active tab
+    this.router.events.subscribe(() => {
+      this.calculateActiveTab();
+    });
   }
 }

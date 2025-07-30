@@ -22,7 +22,7 @@
                     <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" value="{{ defaultField.source_field | snakeCaseToSpaceCase | sentenceCase }}" disabled>
                 </div>
                 <div class="input-toggle-section tw-w-10-vw tw-pt-10-px">
-                    <p-inputSwitch [formControlName]="defaultField.formController" (onChange)="onImportToFyleToggleChange($event, defaultField.destination_field)"></p-inputSwitch>
+                    <p-toggleSwitch [formControlName]="defaultField.formController" (onChange)="onImportToFyleToggleChange($event, defaultField.destination_field)"></p-toggleSwitch>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                       </div>
                     </div>
                     <div class="configuration--input-toggle-section">
-                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
+                      <p-toggleSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleSwitch>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                         {{ 'configurationImportField.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                       </p>
                     </div>
-                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
+                <p-toggleSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-toggleSwitch>
             </div>
             <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
@@ -143,9 +143,9 @@
                             </div>
                         </div>
                         @if (uiExposedAppName === AppName.INTACCT) {
-                            <p-inputSwitch class="input-toggle-section tw-pt-24-px" [formControlName]="dependentField.formController + 'ImportToggle'"></p-inputSwitch>
+                            <p-toggleSwitch class="input-toggle-section tw-pt-24-px" [formControlName]="dependentField.formController + 'ImportToggle'"></p-toggleSwitch>
                         } @else {
-                            <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-inputSwitch>
+                            <p-toggleSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-toggleSwitch>
                         }
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">

@@ -9,9 +9,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-mapping',
-  templateUrl: './xero-mapping.component.html',
-  styleUrls: ['./xero-mapping.component.scss']
+    selector: 'app-xero-mapping',
+    templateUrl: './xero-mapping.component.html',
+    styleUrls: ['./xero-mapping.component.scss'],
+    standalone: false
 })
 export class XeroMappingComponent implements OnInit {
 

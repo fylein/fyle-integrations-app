@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-export-log',
-  templateUrl: './qbo-export-log.component.html',
-  styleUrls: ['./qbo-export-log.component.scss']
+    selector: 'app-qbo-export-log',
+    templateUrl: './qbo-export-log.component.html',
+    styleUrls: ['./qbo-export-log.component.scss'],
+    standalone: false
 })
 export class QboExportLogComponent implements OnInit {
 

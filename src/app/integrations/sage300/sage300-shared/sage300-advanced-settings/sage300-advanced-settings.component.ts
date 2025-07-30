@@ -20,9 +20,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-sage300-advanced-settings',
-  templateUrl: './sage300-advanced-settings.component.html',
-  styleUrls: ['./sage300-advanced-settings.component.scss']
+    selector: 'app-sage300-advanced-settings',
+    templateUrl: './sage300-advanced-settings.component.html',
+    styleUrls: ['./sage300-advanced-settings.component.scss'],
+    standalone: false
 })
 export class Sage300AdvancedSettingsComponent implements OnInit {
 

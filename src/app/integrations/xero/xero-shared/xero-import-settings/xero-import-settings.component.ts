@@ -22,9 +22,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-xero-import-settings',
-  templateUrl: './xero-import-settings.component.html',
-  styleUrls: ['./xero-import-settings.component.scss']
+    selector: 'app-xero-import-settings',
+    templateUrl: './xero-import-settings.component.html',
+    styleUrls: ['./xero-import-settings.component.scss'],
+    standalone: false
 })
 export class XeroImportSettingsComponent implements OnInit {
 

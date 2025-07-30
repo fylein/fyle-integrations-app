@@ -15,9 +15,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-configuration-import-field',
-  templateUrl: './configuration-import-field.component.html',
-  styleUrls: ['./configuration-import-field.component.scss']
+    selector: 'app-configuration-import-field',
+    templateUrl: './configuration-import-field.component.html',
+    styleUrls: ['./configuration-import-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationImportFieldComponent implements OnInit {
 

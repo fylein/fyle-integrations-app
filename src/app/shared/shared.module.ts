@@ -47,7 +47,7 @@ import { IntacctConnectorComponent } from './components/si/core/intacct-connecto
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { TabsModule } from 'primeng/tabs';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
@@ -207,7 +207,7 @@ import { ThemeDemoComponent } from './components/theme-demo/theme-demo.component
     CalendarModule,
     AutoCompleteModule,
     TableModule,
-    TabMenuModule,
+    TabsModule,
     IconFieldModule,
     InputIconModule,
     CheckboxButtonComponent,
@@ -241,6 +241,7 @@ import { ThemeDemoComponent } from './components/theme-demo/theme-demo.component
     AutoCompleteModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
+    TabsModule,
     IntacctConnectorComponent,
     NetsuiteConnectorComponent,
     NetsuiteSubsidiaryMappingComponent,

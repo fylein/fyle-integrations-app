@@ -1,4 +1,4 @@
-@import 'src/assets/scss/tab-primary.scss';
+@use 'src/assets/scss/tab-primary.scss' as *;
 
 :host ::ng-deep .p-select {
     @apply tw-w-fit tw-h-32-px #{!important};

@@ -5,9 +5,10 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-netsuite-custom-segment-dialog',
-  templateUrl: './netsuite-custom-segment-dialog.component.html',
-  styleUrls: ['./netsuite-custom-segment-dialog.component.scss']
+    selector: 'app-netsuite-custom-segment-dialog',
+    templateUrl: './netsuite-custom-segment-dialog.component.html',
+    styleUrls: ['./netsuite-custom-segment-dialog.component.scss'],
+    standalone: false
 })
 export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 

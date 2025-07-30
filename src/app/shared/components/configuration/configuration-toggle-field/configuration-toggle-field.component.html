@@ -22,13 +22,13 @@
       </div>
     </div>
     <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
-      <p-inputSwitch
+      <p-toggleSwitch
         [formControlName]="formControllerName"
         [tooltipPosition]="'top'"
         [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''"
         [attr.aria-label]="label"
         role="switch"
         [attr.aria-checked]="form.get(formControllerName)?.value"
-      ></p-inputSwitch>
+      ></p-toggleSwitch>
     </div>
   </div>

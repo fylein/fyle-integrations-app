@@ -1,3 +1,15 @@
 <div class="tw-mb-16-px">
-    <p-tabMenu [model]="modules" [activeItem]="activeModule"></p-tabMenu>
+    <p-tabs [value]="activeTabValue">
+        <p-tablist>
+            <p-tab 
+                *ngFor="let module of modules; let i = index" 
+                [value]="i.toString()"
+                [disabled]="module.disabled"
+                (click)="navigateToModule(module)"
+                class="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
+                <i *ngIf="module.icon" [class]="module.icon"></i>
+                <span>{{ module.label }}</span>
+            </p-tab>
+        </p-tablist>
+    </p-tabs>
 </div>
