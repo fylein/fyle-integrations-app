@@ -28,39 +28,7 @@ import { TranslocoHttpLoader } from './transloco-http-loader';
 import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { definePreset } from '@primeng/themes';
-import Lara from '@primeng/themes/aura';
-
-const sagePreset = definePreset(Lara, {
-  semantic: {
-    primary: {
-      50: '#f2f9f6',
-      100: '#cce6da',
-      200: '#bsd9c8',
-      300: '#008146',
-      400: '#008146',
-      500: '#008146',
-      600: '#006738',
-      700: '#004d2a',
-      800: '#004d2a',
-      900: '#004d2a',
-      950: '#004d2a'
-    }
-  },
-  components: {
-    button: {
-      root: {
-        primary: {
-          background: '#008146',
-          color: '#fff'
-        },
-        borderRadius: '24px',
-        paddingY: '16px',
-        paddingX: '8px'
-      }
-    }
-  }
-});
+import Aura from '@primeng/themes/aura';
 
 @NgModule({ declarations: [
         AppComponent
@@ -79,7 +47,7 @@ const sagePreset = definePreset(Lara, {
         provideAnimationsAsync(),
         providePrimeNG({
             theme: {
-                preset: Lara,
+                preset: Aura,
                 options: {
                     darkModeSelector: false,
                     cssLayer: false

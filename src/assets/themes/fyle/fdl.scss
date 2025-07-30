@@ -405,6 +405,42 @@
 
     --input-default-placeholder-text: var(--text-placeholder);
 
+    --slightly-normal-text-color: var(--text-secondary);
+    --mandatory-field-color: #{$brand-500};
+    --box-color: #{$grey-300};
+
+    // PrimeNG Select Component Variables
+    --p-select-background: var(--bg-white) !important;
+    --p-select-disabled-background: var(--select-disabled-bg) !important;
+    --p-select-filled-background: var(--bg-tertiary) !important;
+    --p-select-filled-hover-background: var(--bg-disable-light) !important;
+    --p-select-filled-focus-background: var(--bg-tertiary) !important;
+    --p-select-border-color: var(--select-default-border) !important;
+    --p-select-hover-border-color: var(--border-primary) !important;
+    --p-select-focus-border-color: var(--select-focused-border) !important;
+    --p-select-invalid-border-color: var(--select-error-border) !important;
+    --p-select-color: var(--select-default-text) !important;
+    --p-select-disabled-color: var(--input-read-only-text) !important;
+    --p-select-placeholder-color: var(--select-default-placeholder-text) !important;
+    --p-select-font-size: 14px !important;
+    --p-select-shadow: none !important;
+    --p-select-padding-x: var(--spacing-12) !important;
+    --p-select-padding-y: var(--spacing-8) !important;
+    --p-select-border-radius: var(--border-radius-xs) !important;
+    --p-select-focus-ring-width: 0 !important;
+    --p-select-option-focus-background: var(--dd-menu-item-hover-bg) !important;
+    --p-select-option-selected-background: var(--dd-menu-item-hover-bg) !important;
+    --p-select-option-selected-focus-background: var(--dd-menu-item-hover-bg) !important;
+    --p-select-option-color: var(--dd-menu-item-default-text-color) !important;
+    --p-select-option-focus-color: var(--slightly-normal-text-color) !important;
+    --p-select-option-selected-color: var(--mandatory-field-color) !important;
+    --p-select-option-selected-focus-color: var(--mandatory-field-color) !important;
+    --p-select-clear-icon-color: var(--select-clear-icon) !important;
+    --p-select-checkmark-color: var(--icon-brand-primary) !important;
+    --p-select-checkmark-gutter-start: var(--spacing-8) !important;
+    --p-select-checkmark-gutter-end: var(--spacing-8) !important;
+    --p-select-empty-message-padding: var(--spacing-12) !important;
+
     // Badge
     --badge-brand-bg: var(--bg-brand-primary);
     --badge-brand-text-color: var(--text-white);
