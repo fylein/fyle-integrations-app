@@ -3,8 +3,8 @@ import { ThemeService } from 'src/core/services/theme.service';
 import { SupportedBrand } from 'src/themes';
 
 @Component({
-  selector: 'app-theme-demo',
-  template: `
+    selector: 'app-theme-demo',
+    template: `
     <div class="theme-demo">
       <h2>Theme Switching Demo</h2>
 
@@ -109,7 +109,7 @@ import { SupportedBrand } from 'src/themes';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .theme-demo {
       padding: 2rem;
       max-width: 800px;
@@ -244,7 +244,8 @@ import { SupportedBrand } from 'src/themes';
       display: flex;
       align-items: center;
     }
-  `]
+  `],
+    standalone: false
 })
 export class ThemeDemoComponent {
   showVars = false;

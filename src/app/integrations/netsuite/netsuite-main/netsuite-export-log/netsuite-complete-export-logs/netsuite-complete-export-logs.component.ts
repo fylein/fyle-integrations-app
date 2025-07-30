@@ -16,9 +16,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-  selector: 'app-netsuite-complete-export-logs',
-  templateUrl: './netsuite-complete-export-logs.component.html',
-  styleUrls: ['./netsuite-complete-export-logs.component.scss']
+    selector: 'app-netsuite-complete-export-logs',
+    templateUrl: './netsuite-complete-export-logs.component.html',
+    styleUrls: ['./netsuite-complete-export-logs.component.scss'],
+    standalone: false
 })
 export class NetsuiteCompleteExportLogsComponent implements OnInit {
 

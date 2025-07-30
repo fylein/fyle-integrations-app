@@ -1,16 +1,30 @@
+// Import all the themes and SCSS partials using @use (must be first)
+@use 'assets/themes/theme.scss' as *;
+@use 'assets/themes/co/c1dl.scss' as *;
+@use 'assets/themes/fyle/fdl.scss' as *;
+
+@use 'assets/scss/buttons' as *;
+@use 'assets/scss/inputs' as *;
+@use 'assets/scss/tooltips' as *;
+@use 'assets/scss/toggles' as *;
+@use 'assets/scss/radio-buttons' as *;
+@use 'assets/scss/dialogs' as *;
+@use 'assets/scss/checkboxes' as *;
+@use 'assets/scss/multiselect' as *;
+@use 'assets/scss/dropdowns' as *;
+@use 'assets/scss/datepicker' as *;
+@use 'assets/scss/skeleton' as *;
+@use 'assets/scss/spinner' as *;
+@use 'assets/scss/toasts' as *;
+@use 'assets/scss/chips' as *;
+@use 'assets/scss/table.scss' as *;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 // CSS Layer ordering for proper cascade control
 @layer reset, primeng, tailwind-components, tailwind-utilities, brand-overrides;
-
-// Import all the themes here
-@import 'assets/themes/theme.scss';
-@import 'assets/themes/co/c1dl.scss';
-@import 'assets/themes/fyle/fdl.scss';
-
-
 
 @font-face {
     font-family: "Optimist";
@@ -127,31 +141,15 @@ p {
 }
 
 .pi-times:before {
-    @apply tw-text-placeholder tw-text-12-px #{!important};
+    @apply tw-text-placeholder tw-text-12-px !important;
 }
 
 .p-component {
-    @apply tw-font-primary #{!important};
+    @apply tw-font-primary !important;
 }
 
-@import 'assets/scss/buttons';
-@import 'assets/scss/inputs';
-@import 'assets/scss/tooltips';
-@import 'assets/scss/toggles';
-@import 'assets/scss/radio-buttons';
-@import 'assets/scss/dialogs';
-@import 'assets/scss/checkboxes';
-@import 'assets/scss/multiselect';
-@import 'assets/scss/dropdowns';
-@import 'assets/scss/datepicker';
-@import 'assets/scss/skeleton';
-@import 'assets/scss/spinner';
-@import 'assets/scss/toasts';
-@import 'assets/scss/chips';
-@import 'assets/scss/table.scss';
-
 .primary-outline:hover {
-    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color !important;
 }
 
 .btn-text-primary {
@@ -168,16 +166,16 @@ p {
     }
 
     &--contents {
-        @apply tw-overflow-hidden tw-border tw-border-border-tertiary tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px #{!important};
+        @apply tw-overflow-hidden tw-border tw-border-border-tertiary tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px !important;
     }
 }
 
 .preview-text {
-    @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 #{!important};
+    @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 !important;
 }
 
 .preview-box {
-    @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important};
+    @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px !important;
 }
 
 .landing {

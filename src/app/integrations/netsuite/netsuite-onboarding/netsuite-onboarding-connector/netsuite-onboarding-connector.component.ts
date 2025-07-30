@@ -6,9 +6,10 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
 import { NetsuiteOnboardingService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-onboarding.service';
 
 @Component({
-  selector: 'app-netsuite-onboarding-connector',
-  templateUrl: './netsuite-onboarding-connector.component.html',
-  styleUrls: ['./netsuite-onboarding-connector.component.scss']
+    selector: 'app-netsuite-onboarding-connector',
+    templateUrl: './netsuite-onboarding-connector.component.html',
+    styleUrls: ['./netsuite-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class NetsuiteOnboardingConnectorComponent implements OnInit {
 

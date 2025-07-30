@@ -8,11 +8,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-export-log',
-  standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-export-log.component.html',
-  styleUrl: './qbd-direct-export-log.component.scss'
+    selector: 'app-qbd-direct-export-log',
+    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-export-log.component.html',
+    styleUrl: './qbd-direct-export-log.component.scss'
 })
 export class QbdDirectExportLogComponent implements OnInit {
 

@@ -14,9 +14,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-  selector: 'app-skipped-export-log',
-  templateUrl: './skipped-export-log.component.html',
-  styleUrls: ['./skipped-export-log.component.scss']
+    selector: 'app-skipped-export-log',
+    templateUrl: './skipped-export-log.component.html',
+    styleUrls: ['./skipped-export-log.component.scss'],
+    standalone: false
 })
 export class SkippedExportLogComponent implements OnInit {
   isLoading: boolean = true;

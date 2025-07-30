@@ -12,9 +12,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-  selector: 'app-business-central',
-  templateUrl: './business-central.component.html',
-  styleUrls: ['./business-central.component.scss']
+    selector: 'app-business-central',
+    templateUrl: './business-central.component.html',
+    styleUrls: ['./business-central.component.scss'],
+    standalone: false
 })
 export class BusinessCentralComponent implements OnInit {
 

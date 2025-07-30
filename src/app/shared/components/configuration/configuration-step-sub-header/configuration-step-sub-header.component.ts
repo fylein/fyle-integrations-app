@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-configuration-step-sub-header',
-  templateUrl: './configuration-step-sub-header.component.html',
-  styleUrls: ['./configuration-step-sub-header.component.scss']
+    selector: 'app-configuration-step-sub-header',
+    templateUrl: './configuration-step-sub-header.component.html',
+    styleUrls: ['./configuration-step-sub-header.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepSubHeaderComponent implements OnInit {
 

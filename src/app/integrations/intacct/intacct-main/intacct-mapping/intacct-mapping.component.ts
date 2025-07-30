@@ -11,9 +11,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-mapping',
-  templateUrl: './intacct-mapping.component.html',
-  styleUrls: ['./intacct-mapping.component.scss']
+    selector: 'app-intacct-mapping',
+    templateUrl: './intacct-mapping.component.html',
+    styleUrls: ['./intacct-mapping.component.scss'],
+    standalone: false
 })
 export class IntacctMappingComponent implements OnInit {
 

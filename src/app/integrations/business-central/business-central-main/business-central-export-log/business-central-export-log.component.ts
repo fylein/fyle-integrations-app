@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-export-log',
-  templateUrl: './business-central-export-log.component.html',
-  styleUrls: ['./business-central-export-log.component.scss']
+    selector: 'app-business-central-export-log',
+    templateUrl: './business-central-export-log.component.html',
+    styleUrls: ['./business-central-export-log.component.scss'],
+    standalone: false
 })
 export class BusinessCentralExportLogComponent implements OnInit {
 

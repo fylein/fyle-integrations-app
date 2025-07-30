@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api/menuitem';
+import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
@@ -8,9 +8,10 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './qbd-main.component.html',
-  styleUrls: ['./qbd-main.component.scss']
+    selector: 'app-main',
+    templateUrl: './qbd-main.component.html',
+    styleUrls: ['./qbd-main.component.scss'],
+    standalone: false
 })
 export class QbdMainComponent implements OnInit {
 

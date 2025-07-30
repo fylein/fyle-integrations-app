@@ -16,9 +16,10 @@ import { Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sage300-complete-export-log',
-  templateUrl: './sage300-complete-export-log.component.html',
-  styleUrls: ['./sage300-complete-export-log.component.scss']
+    selector: 'app-sage300-complete-export-log',
+    templateUrl: './sage300-complete-export-log.component.html',
+    styleUrls: ['./sage300-complete-export-log.component.scss'],
+    standalone: false
 })
 export class Sage300CompleteExportLogComponent implements OnInit {
 

@@ -5,9 +5,10 @@ import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-export-log',
-  templateUrl: './netsuite-export-log.component.html',
-  styleUrls: ['./netsuite-export-log.component.scss']
+    selector: 'app-netsuite-export-log',
+    templateUrl: './netsuite-export-log.component.html',
+    styleUrls: ['./netsuite-export-log.component.scss'],
+    standalone: false
 })
 export class NetsuiteExportLogComponent implements OnInit {
 

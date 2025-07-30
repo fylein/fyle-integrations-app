@@ -5,9 +5,10 @@ import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'sr
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-export-section',
-  templateUrl: './dashboard-export-section.component.html',
-  styleUrls: ['./dashboard-export-section.component.scss']
+    selector: 'app-dashboard-export-section',
+    templateUrl: './dashboard-export-section.component.html',
+    styleUrls: ['./dashboard-export-section.component.scss'],
+    standalone: false
 })
 export class DashboardExportSectionComponent implements OnInit {
 

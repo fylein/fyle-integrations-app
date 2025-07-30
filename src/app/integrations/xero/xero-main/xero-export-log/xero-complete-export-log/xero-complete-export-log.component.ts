@@ -20,9 +20,10 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-xero-complete-export-log',
-  templateUrl: './xero-complete-export-log.component.html',
-  styleUrls: ['./xero-complete-export-log.component.scss']
+    selector: 'app-xero-complete-export-log',
+    templateUrl: './xero-complete-export-log.component.html',
+    styleUrls: ['./xero-complete-export-log.component.scss'],
+    standalone: false
 })
 export class XeroCompleteExportLogComponent implements OnInit {
 

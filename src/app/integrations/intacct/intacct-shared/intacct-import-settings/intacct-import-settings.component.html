@@ -43,7 +43,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.categoryLabel' | transloco" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories" [attr.aria-label]="'intacctImportSettings.importCategoriesAriaLabel' | transloco: { intacctCategoryDestinationLabel: intacctCategoryDestinationLabel }" role="switch" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-inputSwitch>
+                <p-toggleSwitch formControlName="importCategories" [attr.aria-label]="'intacctImportSettings.importCategoriesAriaLabel' | transloco: { intacctCategoryDestinationLabel: intacctCategoryDestinationLabel }" role="switch" (onChange)="addImportCodeField($event, intacctCategoryDestination)"></p-toggleSwitch>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
@@ -57,7 +57,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.merchantLabel' | transloco" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importVendorAsMerchant" [attr.aria-label]="'intacctImportSettings.importVendorAriaLabel' | transloco" role="switch"></p-inputSwitch>
+                <p-toggleSwitch formControlName="importVendorAsMerchant" [attr.aria-label]="'intacctImportSettings.importVendorAriaLabel' | transloco" role="switch"></p-toggleSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px" *ngIf="isImportTaxVisible">
@@ -71,7 +71,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxGroupLabel' | transloco" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importTaxCodes" [attr.aria-label]="'intacctImportSettings.importTaxCodesAriaLabel' | transloco" role="switch"></p-inputSwitch>
+                <p-toggleSwitch formControlName="importTaxCodes" [attr.aria-label]="'intacctImportSettings.importTaxCodesAriaLabel' | transloco" role="switch"></p-toggleSwitch>
             </span>
         </div>
         <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible">
@@ -136,7 +136,7 @@
                                 {{ 'intacctImportSettings.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                                 </p>
                             </div>
-                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('intacctImportSettings.cannotImportDependentFieldsTooltip' | transloco) : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                        <p-toggleSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('intacctImportSettings.cannotImportDependentFieldsTooltip' | transloco) : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-toggleSwitch>
                     </div>
                     <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field === 'PROJECT' && expenseField.value.destination_field === 'PROJECT' && expenseField.value.import_to_fyle" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
@@ -162,7 +162,7 @@
                                     </div>
                                 </ng-template>
                             </p-select>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-inputSwitch>
+                            <p-toggleSwitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
                             <div>
@@ -180,7 +180,7 @@
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-select>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-inputSwitch>
+                            <p-toggleSwitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleSwitch>
                         </div>
                     </div>
                 </div>

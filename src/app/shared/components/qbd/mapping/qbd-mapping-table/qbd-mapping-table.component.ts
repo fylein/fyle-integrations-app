@@ -1,21 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { QBDMapping, QBDMappingModel, QBDMappingPost } from 'src/app/core/models/qbd/db/qbd-mapping.model';
-import { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
-import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-mapping-table',
-  templateUrl: './qbd-mapping-table.component.html',
-  styleUrls: ['./qbd-mapping-table.component.scss']
+    selector: 'app-qbd-mapping-table',
+    templateUrl: './qbd-mapping-table.component.html',
+    styleUrls: ['./qbd-mapping-table.component.scss'],
+    standalone: false
 })
 export class QbdMappingTableComponent implements OnInit {
 
-  @Input() mappings!: QBDMapping[] | EmployeeMapping[];
+  @Input() mappings!: QBDMapping[];
 
   @Input() destinationFieldType: FieldType;
 

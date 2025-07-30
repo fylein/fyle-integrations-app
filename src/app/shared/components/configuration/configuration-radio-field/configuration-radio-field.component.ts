@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Component({
-  selector: 'app-configuration-radio-field',
-  templateUrl: './configuration-radio-field.component.html',
-  styleUrls: ['./configuration-radio-field.component.scss']
+    selector: 'app-configuration-radio-field',
+    templateUrl: './configuration-radio-field.component.html',
+    styleUrls: ['./configuration-radio-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationRadioFieldComponent implements OnInit {
 

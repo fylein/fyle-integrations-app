@@ -3,7 +3,7 @@
 // You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@import './primitives_variables';
+@use './primitives_variables' as *;
 
 @layer base {
   [data-theme='fyle'] {

@@ -5,9 +5,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-export-log',
-  templateUrl: './intacct-export-log.component.html',
-  styleUrls: ['./intacct-export-log.component.scss']
+    selector: 'app-intacct-export-log',
+    templateUrl: './intacct-export-log.component.html',
+    styleUrls: ['./intacct-export-log.component.scss'],
+    standalone: false
 })
 export class IntacctExportLogComponent implements OnInit {
 

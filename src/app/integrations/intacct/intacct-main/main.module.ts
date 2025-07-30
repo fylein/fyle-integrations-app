@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './intacct-main-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { TabsModule } from 'primeng/tabs';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
   ],
   imports: [
     CommonModule,
-    TabMenuModule,
+    TabsModule,
     ButtonModule,
     MainRoutingModule,
     SharedModule

@@ -1,5 +1,17 @@
 <div class="tw-flex tw-items-center tw-justify-between tw-bg-white">
-    <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
+    <p-tabs [value]="activeTabValue">
+        <p-tablist>
+            <p-tab 
+                *ngFor="let module of modules; let i = index" 
+                [value]="i.toString()"
+                [disabled]="module.disabled"
+                (click)="navigateToModule(module)"
+                class="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
+                <i *ngIf="module.icon" [class]="module.icon"></i>
+                <span>{{ module.label }}</span>
+            </p-tab>
+        </p-tablist>
+    </p-tabs>
 
     <div class="tw-flex tw-items-center">
         <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
