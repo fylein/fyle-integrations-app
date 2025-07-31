@@ -78,7 +78,7 @@
     @apply tw-text-14-px #{!important};
   }
   
-  :host ::ng-deep .selectedItem  .p-select-trigger, :host ::ng-deep .selectedAccItem .p-select-trigger{
+  :host ::ng-deep .selectedItem  .p-select-dropdown, :host ::ng-deep .selectedAccItem .p-select-dropdown{
     @apply tw-hidden #{!important};
   }
 

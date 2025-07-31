@@ -7,11 +7,11 @@
     @apply tw-w-200-px #{!important}
 }
 
-:host ::ng-deep .selectedItem  .p-select-trigger {
+:host ::ng-deep .selectedItem  .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .filterDropdown  .p-select-trigger {
+:host ::ng-deep .filterDropdown  .p-select-dropdown {
     @apply tw-block #{!important};
 }
 

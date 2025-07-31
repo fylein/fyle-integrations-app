@@ -1,139 +1,23 @@
 .p-select {
-  height: var(--preset-dropdown-height) !important;
-  width: var(--preset-dropdown-width) !important;
-  transform: var(--preset-dropdown-transform) !important;
-  border: var(--preset-dropdown-border) !important;
-  border-color: var(--preset-dropdown-border-color) !important;
-  padding-top: var(--preset-dropdown-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-padding-bottom) !important;
-  padding-left: var(--preset-dropdown-padding-left) !important;
-  padding-right: var(--preset-dropdown-padding-right) !important;
-  border-radius: var(--preset-dropdown-border-radius) !important;
+  @apply tw-h-40-px !important;
 }
 
-.p-select:disabled {
-  font-size: var(--preset-dropdown-disabled-font-size) !important;
-  color: var(--preset-dropdown-disabled-color) !important;
-  background: var(--preset-dropdown-disabled-background) !important;
-  border: var(--preset-dropdown-disabled-border) !important;
-  border-color: var(--preset-dropdown-disabled-border-color) !important;
+.p-select, .p-select-option, .p-select-empty-message {
+  @apply tw-text-14-px !important;
 }
 
-.p-select-panel .p-select-items {
-  margin-top: var(--preset-dropdown-panel-items-margin-top) !important;
-  padding-left: var(--preset-dropdown-panel-items-padding-left) !important;
-  padding-right: var(--preset-dropdown-panel-items-padding-right) !important;
-  padding-top: var(--preset-dropdown-panel-items-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-panel-items-padding-bottom) !important;
-  border: var(--preset-dropdown-panel-items-border) !important;
-  border-color: var(--preset-dropdown-panel-items-border-color) !important;
-  border-radius: var(--preset-dropdown-panel-items-border-radius) !important;
+.p-select-list {
+  @apply tw-p-0 !important;
 }
 
-.p-select-panel .p-select-items .p-select-item {
-  font-size: var(--preset-dropdown-item-font-size) !important;
-  color: var(--preset-dropdown-item-color) !important;
-  border-radius: var(--preset-dropdown-item-border-radius) !important;
-  min-height: var(--preset-dropdown-item-min-height) !important;
-  display: var(--preset-dropdown-item-display) !important;
-  align-items: var(--preset-dropdown-item-align-items) !important;
-  padding-top: var(--preset-dropdown-item-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-item-padding-bottom) !important;
-  padding-left: var(--preset-dropdown-item-padding-left) !important;
-  padding-right: var(--preset-dropdown-item-padding-right) !important;
+.p-inputicon {
+  @apply tw-left-10-px !important;
 }
 
-.p-select-panel .p-select-items .p-select-item.p-highlight,
-.p-select-panel .p-select-items .p-select-item .p-highlight .p-focus,
-.p-select-panel .p-select-items .p-select-item.p-highlight:hover {
-  color: var(--preset-dropdown-item-highlight-color) !important;
-  background: var(--preset-dropdown-item-highlight-background) !important;
-  border-radius: var(--preset-dropdown-item-highlight-border-radius) !important;
-  min-height: var(--preset-dropdown-item-highlight-min-height) !important;
-  display: var(--preset-dropdown-item-highlight-display) !important;
-  align-items: var(--preset-dropdown-item-highlight-align-items) !important;
-  padding-top: var(--preset-dropdown-item-highlight-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-item-highlight-padding-bottom) !important;
-  padding-left: var(--preset-dropdown-item-highlight-padding-left) !important;
-  padding-right: var(--preset-dropdown-item-highlight-padding-right) !important;
-  font-size: var(--preset-dropdown-item-highlight-font-size) !important;
+.p-select-label {
+  @apply tw-flex tw-items-center tw-justify-between !important;
 }
 
-.p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus {
-  color: var(--preset-dropdown-item-focus-color) !important;
-  background: var(--preset-dropdown-item-focus-background) !important;
-  border-radius: var(--preset-dropdown-item-focus-border-radius) !important;
-  min-height: var(--preset-dropdown-item-focus-min-height) !important;
-  display: var(--preset-dropdown-item-focus-display) !important;
-  align-items: var(--preset-dropdown-item-focus-align-items) !important;
-  padding-top: var(--preset-dropdown-item-focus-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-item-focus-padding-bottom) !important;
-  padding-left: var(--preset-dropdown-item-focus-padding-left) !important;
-  padding-right: var(--preset-dropdown-item-focus-padding-right) !important;
-  font-size: var(--preset-dropdown-item-focus-font-size) !important;
+.p-select-dropdown {
+  @apply tw-mr-12-px !important;
 }
-
-.p-select-panel .p-select-items .p-select-item:hover,
-.p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus:hover {
-  background: var(--preset-dropdown-item-hover-background) !important;
-  color: var(--preset-dropdown-item-hover-color) !important;
-  border-radius: var(--preset-dropdown-item-hover-border-radius) !important;
-}
-
-.p-select .p-select-trigger {
-  width: var(--preset-dropdown-trigger-width) !important;
-}
-
-.p-select-panel .p-select-header {
-  padding: var(--preset-dropdown-panel-header-padding) !important;
-}
-
-.p-select.p-focus {
-  box-shadow: var(--preset-dropdown-focus-box-shadow) !important;
-  border-color: var(--preset-dropdown-focus-border-color) !important;
-}
-
-.p-select:hover {
-  box-shadow: var(--preset-dropdown-hover-box-shadow) !important;
-}
-
-.p-select-header {
-  background: var(--preset-dropdown-header-background) !important;
-  padding: var(--preset-dropdown-header-padding) !important;
-}
-
-.p-select .p-select-label.p-placeholder {
-  color: var(--preset-dropdown-placeholder-color) !important;
-}
-
-.p-select-panel .p-select-items .p-select-empty-message {
-  color: var(--preset-dropdown-empty-message-color) !important;
-  padding-top: var(--preset-dropdown-empty-message-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-empty-message-padding-bottom) !important;
-  padding-left: var(--preset-dropdown-empty-message-padding-left) !important;
-  padding-right: var(--preset-dropdown-empty-message-padding-right) !important;
-  font-size: var(--preset-dropdown-empty-message-font-size) !important;
-}
-
-.p-select-panel .p-select-items .p-select-item-group {
-  padding-left: var(--preset-dropdown-item-group-padding-left) !important;
-  padding-right: var(--preset-dropdown-item-group-padding-right) !important;
-  padding-top: var(--preset-dropdown-item-group-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-item-group-padding-bottom) !important;
-}
-
-.p-select-panel .p-element[aria-label=\[divider\]] {
-  padding-top: var(--preset-dropdown-divider-padding-top) !important;
-  padding-bottom: var(--preset-dropdown-divider-padding-bottom) !important;
-  min-height: var(--preset-dropdown-divider-min-height) !important;
-}
-
-.p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-calendar .p-inputtext,
-.p-select-panel .p-select-items .p-select-item.p-highlight .p-calendar .p-inputtext {
-  background: var(--preset-dropdown-calendar-input-background) !important;
-}
-
-.p-select-filter-icon {
-  left: var(--preset-dropdown-filter-icon-left) !important;
-  color: var(--preset-dropdown-filter-icon-color) !important;
-} 

@@ -208,7 +208,7 @@
                                 <span *ngIf="value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
                                 {{ value?.value }}
                             </p>
-                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                            <app-svg-icon class="tw-text-select-clear-icon" [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                         <ng-template let-options pTemplate="item">
                             <div #textElement

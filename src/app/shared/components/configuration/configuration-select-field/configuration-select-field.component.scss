@@ -46,19 +46,19 @@
     @apply tw-text-14-px tw-font-400 ;
 }
 
-:host ::ng-deep .p-select .p-select-label .p-placeholder .p-select-trigger {
+:host ::ng-deep .p-select .p-select-label .p-placeholder .p-select-dropdown {
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .p-disabled .p-select-trigger, :host ::ng-deep .showClearIcon .p-select-trigger{
+:host ::ng-deep .p-disabled .p-select-dropdown, :host ::ng-deep .showClearIcon .p-select-dropdown{
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-trigger, :host ::ng-deep .filterDropdown .p-select-trigger{
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-dropdown, :host ::ng-deep .filterDropdown .p-select-dropdown{
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .hide-chevron .p-select-trigger {
+:host ::ng-deep .hide-chevron .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 

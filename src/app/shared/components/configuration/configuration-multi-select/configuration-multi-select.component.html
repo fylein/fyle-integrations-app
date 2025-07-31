@@ -9,16 +9,13 @@
         </div>
     </div>
     <div class="tw-pl-34-px">
-        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder"
+        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [placeholder]="placeholder"
         [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']"
         [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
         (onChange)="onMultiSelectChange()">
             <ng-template let-value pTemplate="selectedItems" >
                 <div *ngIf="form.get(formControllerName)?.value?.length>0" class="tw-flex">
                     <p *ngFor="let name of value;let i = index">{{ getMemo(name) }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
-                </div>
-                <div *ngIf="form.get(formControllerName)?.value?.length === 0" class="tw-text-placeholder">
-                    {{ placeholder }}
                 </div>
             </ng-template>
             <ng-template let-memo let-index="index" pTemplate="item">

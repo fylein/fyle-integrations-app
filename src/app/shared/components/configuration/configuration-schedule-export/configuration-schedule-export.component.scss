@@ -18,7 +18,7 @@
     @apply tw-opacity-100 tw-border-select-disabled-border;
 }
 
-:host ::ng-deep .selectedItem .p-select-trigger {
+:host ::ng-deep .selectedItem .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 

@@ -87,7 +87,7 @@
                             <span class="selected-item-text">
                                 {{ (item.label | sentenceCase) }}
                             </span>
-                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" class="tw-cursor-pointer" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                         </div>
                     </ng-template>
                 </p-select>
@@ -177,7 +177,7 @@
                         <p>
                             {{ (item.name | sentenceCase) }}
                         </p>
-                        <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                        <app-svg-icon *ngIf="showClearIcon && !isDisabled" class="tw-cursor-pointer" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>
                 </p-select>
             </div>
