@@ -15,7 +15,7 @@
 }
 
 [data-theme='co'] {
-    :host ::ng-deep .p-select .p-select-trigger {
+    :host ::ng-deep .p-select .p-select-dropdown {
         content: url('/assets/icons/co/grv-chevron-down-small.svg') !important;
         @apply tw-w-12-px #{!important};
     }

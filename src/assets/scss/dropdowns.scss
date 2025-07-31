@@ -1,15 +1,23 @@
+.p-select {
+  @apply tw-h-40-px !important;
+}
+
 .p-select, .p-select-option, .p-select-empty-message {
-  font-size: 14px !important;
+  @apply tw-text-14-px !important;
 }
 
 .p-select-list {
-  padding: 0px !important;
-}
-
-.p-dropdown-filter {
-  height: 32px !important;
+  @apply tw-p-0 !important;
 }
 
 .p-inputicon {
-  left: 10px !important;
+  @apply tw-left-10-px !important;
+}
+
+.p-select-label {
+  @apply tw-flex tw-items-center tw-justify-between !important;
+}
+
+.p-select-dropdown {
+  @apply tw-mr-12-px !important;
 }

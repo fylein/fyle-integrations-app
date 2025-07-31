@@ -409,7 +409,7 @@
     --mandatory-field-color: #{$brand-500};
     --box-color: #{$grey-300};
 
-    // PrimeNG Select Component Variables
+    // PrimeNG Select Component Variables (v19)
     --p-select-background: var(--bg-white) !important;
     --p-select-disabled-background: var(--select-disabled-bg) !important;
     --p-select-filled-background: var(--bg-tertiary) !important;
@@ -420,14 +420,35 @@
     --p-select-focus-border-color: var(--select-focused-border) !important;
     --p-select-invalid-border-color: var(--select-error-border) !important;
     --p-select-color: var(--select-default-text) !important;
-    --p-select-disabled-color: var(--input-read-only-text) !important;
+    --p-select-disabled-color: var(--select-disabled-text) !important;
     --p-select-placeholder-color: var(--select-default-placeholder-text) !important;
-    --p-select-font-size: 14px !important;
+    --p-select-invalid-placeholder-color: var(--select-error-border) !important;
     --p-select-shadow: none !important;
-    --p-select-padding-x: var(--spacing-12) !important;
-    --p-select-padding-y: var(--spacing-8) !important;
+    --p-select-padding-x: 12px !important;
+    --p-select-padding-y: 6px !important;
     --p-select-border-radius: var(--border-radius-xs) !important;
     --p-select-focus-ring-width: 0 !important;
+    --p-select-focus-ring-style: solid !important;
+    --p-select-focus-ring-color: var(--border-brand) !important;
+    --p-select-focus-ring-offset: var(--spacing-0) !important;
+    --p-select-focus-ring-shadow: none !important;
+    --p-select-transition-duration: 0.2s !important;
+    --p-select-sm-font-size: 12px !important;
+    --p-select-sm-padding-x: var(--spacing-10) !important;
+    --p-select-sm-padding-y: var(--spacing-6) !important;
+    --p-select-lg-font-size: 16px !important;
+    --p-select-lg-padding-x: var(--spacing-14) !important;
+    --p-select-lg-padding-y: var(--spacing-10) !important;
+    --p-select-dropdown-width: var(--spacing-32) !important;
+    --p-select-dropdown-color: var(--text-secondary) !important;
+    --p-select-overlay-background: var(--bg-white) !important;
+    --p-select-overlay-border-color: var(--box-color) !important;
+    --p-select-overlay-border-radius: var(--border-radius-sm) !important;
+    --p-select-overlay-color: var(--text-secondary) !important;
+    --p-select-overlay-shadow: 0px 4px 16px var(--dropdown-shadow) !important;
+    --p-select-list-padding: var(--spacing-4) !important;
+    --p-select-list-gap: var(--spacing-2) !important;
+    --p-select-list-header-padding: var(--spacing-6) !important;
     --p-select-option-focus-background: var(--dd-menu-item-hover-bg) !important;
     --p-select-option-selected-background: var(--dd-menu-item-hover-bg) !important;
     --p-select-option-selected-focus-background: var(--dd-menu-item-hover-bg) !important;
@@ -435,11 +456,19 @@
     --p-select-option-focus-color: var(--slightly-normal-text-color) !important;
     --p-select-option-selected-color: var(--mandatory-field-color) !important;
     --p-select-option-selected-focus-color: var(--mandatory-field-color) !important;
+    --p-select-option-padding: var(--spacing-8) !important;
+    --p-select-option-border-radius: var(--border-radius-xs) !important;
+    --p-select-option-group-background: var(--bg-tertiary) !important;
+    --p-select-option-group-color: var(--text-label) !important;
+    --p-select-option-group-font-weight: 600 !important;
+    --p-select-option-group-padding: var(--spacing-8) !important;
     --p-select-clear-icon-color: var(--select-clear-icon) !important;
     --p-select-checkmark-color: var(--icon-brand-primary) !important;
     --p-select-checkmark-gutter-start: var(--spacing-8) !important;
     --p-select-checkmark-gutter-end: var(--spacing-8) !important;
     --p-select-empty-message-padding: var(--spacing-12) !important;
+
+    --p-multiselect-option-selected-focus-background: var(--bg-tertiary) !important;
 
     // Badge
     --badge-brand-bg: var(--bg-brand-primary);

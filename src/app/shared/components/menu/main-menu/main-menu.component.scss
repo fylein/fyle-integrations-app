@@ -8,7 +8,7 @@
     @apply tw-flex tw-flex-none tw-w-auto #{!important};
 }
 
-:host ::ng-deep .p-select .p-select-trigger {
+:host ::ng-deep .p-select .p-select-dropdown {
     @apply tw-ml-8-px tw-w-14-px tw-text-sub-text-color #{!important};
 }
 

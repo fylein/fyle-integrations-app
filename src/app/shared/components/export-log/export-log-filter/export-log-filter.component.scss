@@ -10,7 +10,7 @@
     @apply tw-w-200-px tw-h-30-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-select-trigger {
+:host ::ng-deep .selectedItem  .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 

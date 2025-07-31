@@ -34,14 +34,14 @@
     @apply tw-text-text-muted tw-text-12-px ;
 }
 
-:host ::ng-deep .selectedItem .p-select-trigger {
+:host ::ng-deep .selectedItem .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-trigger {
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-select-dropdown {
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .hide-chevron .p-select-trigger {
+:host ::ng-deep .hide-chevron .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
