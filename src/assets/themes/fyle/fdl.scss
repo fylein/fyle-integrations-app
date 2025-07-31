@@ -40,7 +40,7 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: #{$blue-50};
+    --bg-tertiary-lighter: var(--bg-tertiary);
 
     //border-color
     --border-brand: #{$brand-500};
