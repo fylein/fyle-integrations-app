@@ -14,6 +14,28 @@
     src: url('./assets/fonts/Optimist.woff2') format('woff2');
 }
 
+// Sage UI font family
+@font-face {
+    font-family: "Sage UI";
+    src: url('./assets/fonts/SageUI-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Sage UI";
+    src: url('./assets/fonts/SageUI-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Sage UI";
+    src: url('./assets/fonts/SageUI-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 html,
 body {
     @apply tw-h-[100%] tw-leading-app;
