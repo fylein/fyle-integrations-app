@@ -91,6 +91,7 @@ const borderRadius = {
 const borderWidth = {
   'border-1': 'var(--border-1)',
   'border-2': 'var(--border-2)',
+  'toggle-border-width': 'var(--toggle-border-width)',
 };
 
 const borderColors = {
@@ -570,6 +571,14 @@ const componentVariables = {
   'form-switch-label-text': 'var(--form-switch-label-text)',
   'switch-group-border-color': 'var(--switch-group-border-color)',
 
+
+  // Toggle
+  'toggle-enabled-bg': 'var(--toggle-enabled-bg)',
+  'toggle-disabled-bg': 'var(--toggle-disabled-bg)',
+  'toggle-enabled-text-color': 'var(--toggle-enabled-text-color)',
+  'toggle-disabled-text-color': 'var(--toggle-disabled-text-color)',
+  'toggle-border': 'var(--toggle-border)',
+
   // Upload
   'upload-filedrop-bg': 'var(--upload-filedrop-bg)',
   'upload-filedrop-border-color': 'var(--upload-filedrop-border-color)',
@@ -960,6 +969,7 @@ module.exports = {
     },
     fontSize: {
       '9-px':'9px',
+      '10-px':'10px',
       '11-px': '11px',
       '12-px': '12px',
       '14-px': '14px',
