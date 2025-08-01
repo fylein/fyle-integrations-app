@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    @if(shouldShowQBDAssistedSetup){
+    @if(shouldShowQBDAssistedSetup && brandingFeatureConfig.hasAssistedSetupSupport){
     <div class="tw-flex tw-w-full tw-self-start">
         <app-qbd-direct-assisted-setup [interactionType]="qbdDirectInteractionType"></app-qbd-direct-assisted-setup>
     </div>
