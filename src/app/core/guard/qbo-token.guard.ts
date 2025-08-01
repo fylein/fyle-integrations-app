@@ -30,7 +30,6 @@ export class QboTokenGuard  {
       if (!workspaceId) {
         return this.router.navigateByUrl(`workspaces`);
       }
-      return true;
 
       return this.qboConnectorService.checkQBOTokenHealth().pipe(
         map(() => true),
