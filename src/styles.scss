@@ -16,24 +16,27 @@
 
 // Sage UI font family
 @font-face {
-    font-family: "Sage UI";
-    src: url('./assets/fonts/SageUI-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-regular.otf') format("opentype")
 }
 
 @font-face {
-    font-family: "Sage UI";
-    src: url('./assets/fonts/SageUI-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-medium.otf') format("opentype")
 }
 
 @font-face {
-    font-family: "Sage UI";
-    src: url('./assets/fonts/SageUI-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-bold.otf') format("opentype")
 }
 
 html,
