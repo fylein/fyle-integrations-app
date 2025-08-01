@@ -1,6 +1,6 @@
-<app-outlined-icon-button 
-  [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco" 
-  [svgSource]="'headset'" 
+<app-outlined-icon-button
+  [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco"
+  [svgSource]="'headset'"
   (buttonClick)="toggleAssistedSetupDialog()"
   [pTooltip]="isAssistedSetupSlotBooked ? ('qbdDirectAssistedSetup.requestReceivedTooltip' | transloco) : ''"
   tooltipPosition="bottom"
@@ -8,7 +8,7 @@
   [disabled]="isAssistedSetupSlotBooked">
 </app-outlined-icon-button>
 
-<p-dialog 
+<p-dialog
   [visible]="isAssistedSetupDialogVisible"
   [showHeader]="false"
   [modal]="true"
@@ -25,7 +25,7 @@
           </div>
         }
         <p class="tw-text-20-px tw-font-medium tw-text-text-primary tw-leading-6">
-          {{  (isQuerySubmitted ? 'qbdDirectAssistedSetup.requestReceivedSuccessfullyTitle' 
+          {{  (isQuerySubmitted ? 'qbdDirectAssistedSetup.requestReceivedSuccessfullyTitle'
             : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.qbdIntegrationSupportTitle' : 'qbdDirectAssistedSetup.howCanWeHelpTitle')) | transloco
           }}
         </p>
@@ -47,26 +47,26 @@
             <div class="tw-font-500">
               {{ 'qbdDirectAssistedSetup.learnToConnectText' | transloco }}{{brandingConfig.brandName}}
             </div>
-            
+
             <div class="tw-flex tw-flex-row tw-gap-1 tw-items-center">
               <span class="tw-flex tw-items-center tw-gap-1">
                 <img src="assets/{{brandingConfig.brandId}}/favicon.svg" width="16px" height="16px" />
-                <span class="tw-text-hyperlink-color tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1">
+                <span class="link tw-text-12-px tw-font-400 tw-flex tw-items-center tw-gap-1">
                   {{ 'qbdDirectAssistedSetup.viewArticle' | transloco }}
-                  <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+                  <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
                 </span>
               </span>
             </div>
           </div>
         </div>
-      } @else if(!isQuerySubmitted){ 
+      } @else if(!isQuerySubmitted){
         <div class="tw-flex tw-flex-col tw-mb-2">
             <div class="tw-flex tw-items-center tw-mb-2">
               <span class="tw-text-text-label tw-text-14-px tw-font-400">{{ 'qbdDirectAssistedSetup.describeIssueLabel' | transloco }}</span>
               <span class="tw-text-mandatory-field-color tw-text-14-px tw-font-500 tw-ml-1">*</span>
             </div>
-              <textarea 
-                class="tw-w-full tw-h-64-px tw-bg-white tw-border tw-border-border-secondary tw-rounded-4 tw-flex tw-py-2 tw-px-3 tw-flex-col tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-leading-6 focus:tw-border-border-secondary focus:tw-outline-none" 
+              <textarea
+                class="tw-w-full tw-h-64-px tw-bg-white tw-border tw-border-border-secondary tw-rounded-4 tw-flex tw-py-2 tw-px-3 tw-flex-col tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-leading-6 focus:tw-border-border-secondary focus:tw-outline-none"
                 [placeholder]="'qbdDirectAssistedSetup.issueTextareaPlaceholder' | transloco"
                 [(ngModel)]="issueDescription"></textarea>
           </div>
@@ -82,7 +82,7 @@
         }
 
         <button type="button" pButton (click)="onRequestAssistedSetup()" class="submit-btn" [disabled]="isButtonDisabled" [ngClass]="interactionType === 'BOOK_SLOT' && isAssistedSetupSlotBooked || isQuerySubmitted ? 'tw-max-w-66-px' : (interactionType === 'BOOK_SLOT' ? 'tw-max-w-104-px' : 'tw-max-w-144-px')">
-          {{ 
+          {{
             (isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco
           }}
         </button>

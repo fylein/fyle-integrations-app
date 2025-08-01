@@ -79,7 +79,7 @@
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start">
                                     <p>{{ error.error_detail }}
-                                        <a *ngIf="error.article_link && brandingFeatureConfig.allowIntacctHelperDoc" class=" tw-pr-4-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                                        <a *ngIf="error.article_link && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
                                             (click)="windowService.openInNewTab(error.article_link)">
                                             {{ helper.sentenseCaseConversion('Read More') }}
                                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -109,7 +109,7 @@
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{uiExposedAppName}} {{'dashboard.qboErrorDialogHeaderText' | transloco}}</p>
             <h3 class="dialog-sub-header">
                 <p>{{ errorDetail }}.
-                    <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class=" tw-pr-4-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                    <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
                         (click)="windowService.openInNewTab(errorArticle)">
                         {{ helper.sentenseCaseConversion('Read More') }}
                         <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
