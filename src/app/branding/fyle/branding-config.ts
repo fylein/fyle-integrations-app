@@ -8,7 +8,7 @@ const brandingConfig = config as BrandingConfiguration;
 
 export const fyleFeatureConfig: FeatureConfiguration[string] = {
     illustrationsAllowed: true,
-    isGradientAllowed: true,
+    isGradientAllowed: false,
     isIconsInsideButtonAllowed: true,
     exposeC1Apps: false,
     isBackgroundColorAllowed: false,
