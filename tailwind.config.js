@@ -2,10 +2,12 @@
 
 const customColors = {
   white: 'var(--white)',
+  green: 'var(--bg-green)',
   placeholder: 'var(--placeholder)',
   separator: 'var(--separator)',
   'normal-text-color': 'var(--normal-text-color)',
   'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'green-text-color': 'var(--mandatory-field-color)',
   'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
   'sub-text-color': 'var(--sub-text-color)',
   'faded-text-color': 'var(--faded-text-color)',
@@ -119,6 +121,7 @@ const borderColors = {
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
+  'border-green': 'var(--bg-green)'
 };
 
 const colors = {
@@ -134,6 +137,7 @@ const colors = {
   'bg-disable': 'var(--bg-disable)',
   'bg-tertiary': 'var(--bg-tertiary)',
   'bg-white': 'var(--bg-white)',
+  'bg-green': 'var(--bg-green)',
   'bg-primary-opacity': 'var(--bg-primary-opacity)',
   //regular bg'
   'bg-success': 'var(--bg-success)',
@@ -1294,6 +1298,7 @@ module.exports = {
         '12-px': '12px',
         '16-px': '16px',
         '20-px': '20px',
+        '32-px': '32px',
         '48-px': '48px',
         '99-px': '99px',
         '50': '50%',
