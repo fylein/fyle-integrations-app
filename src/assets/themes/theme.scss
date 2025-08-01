@@ -10,7 +10,7 @@
         --faded-text-color: #5A5D72;
         --box-color: #DFDFE2;
         --hyperlink-color: #0062FF;
-        --mandatory-field-color: #FF3366;
+        --mandatory-field-color: #007E45;
         --disabled-bg-color: #F5F5F5;
         --configuration-bg: #FAFCFF;
         --check-box: #ced4da;
@@ -20,7 +20,7 @@
         --alert-toast: #DA1E28;
         --cta-disabled: #FFC2D6;
         --line-inactive: #CCCDD7;
-        --progress-bar-bg: #FFF0F5;
+        --progress-bar-bg: #ccd6dbff;
         --mapped-green-border: #D9EBE1;
         --mapped-green-bg: #EEF8F2;
         --unmapped-red-border: #F5C0C3;
@@ -29,14 +29,11 @@
         --icon-warning: #E1AF05;
 
         --pink: #D23669;
-        --gradient-vibrant-lg-start: #ff3366;
-        --gradient-vibrant-lg-end: #fe5196;
-
         --pink-box-border: rgba(255, 51, 102, 0.16);
 
         --bg-tertiary-lighter: var(--white);
 
-        --font-primary: "aktiv-grotesk", sans-serif;
+        --font-primary: "sage-ui", sans-serif;
     }
     [data-theme='co'] {
         --mandatory-field-color: #0070a8;
@@ -69,9 +66,6 @@
         --cta-disabled: #0070A8;
 
         --pink: #0070A8;
-        --gradient-vibrant-lg-start: #ff3366;
-        --gradient-vibrant-lg-end: #0070A8;
-
         --check-box: #ced4da;
 
         --bg-tertiary-lighter: #f4f4f4;

@@ -39,11 +39,11 @@
   }
   
   .sub-text {
-    @apply tw-rounded-8-px tw-border tw-border-border-tertiary tw-bg-configuration-bg tw-p-24-px tw-items-start tw-flex-col tw-gap-4;
+    @apply tw-rounded-8-px tw-border tw-border-border-tertiary tw-bg-bg-tertiary-lighter tw-p-24-px tw-items-start tw-flex-col tw-gap-4;
   }
   
   .sub-text-note {
-    @apply tw-flex tw-bg-info-section tw-p-16-px tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-text-text-muted tw-not-italic
+    @apply tw-flex tw-bg-bg-tertiary-lighter tw-p-16-px tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-text-text-muted tw-not-italic
   }
   
   .fields-header {
