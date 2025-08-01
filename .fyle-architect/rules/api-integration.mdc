@@ -1,0 +1,274 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# API Integration Patterns
+
+## Service Architecture
+
+The Fyle Integrations App uses a layered API service approach:
+
+1. **Base API Service**: Common HTTP methods and error handling
+2. **Integration Services**: Extend base service with integration-specific endpoints
+3. **Feature Services**: For specific functionality (mapping, export, etc.)
+
+## Core Service Patterns
+
+### Base API Service
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class BaseApiService {
+  constructor(
+    protected http: HttpClient,
+    protected apiService: ApiService
+  ) {}
+  
+  protected get<T>(endpoint: string, params?: HttpParams): Observable<T> {
+    return this.http.get<T>(`${this.apiService.baseUrl}${endpoint}`, { params })
+      .pipe(catchError(error => this.handleError(error)));
+  }
+  
+  protected post<T>(endpoint: string, data: any): Observable<T> {
+    return this.http.post<T>(`${this.apiService.baseUrl}${endpoint}`, data)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+  
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    return throwError(() => error);
+  }
+}
+```
+
+### Integration-Specific Service
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class QboApiService extends BaseApiService {
+  constructor(http: HttpClient, apiService: ApiService) {
+    super(http, apiService);
+  }
+  
+  @Cacheable({ maxAge: 5 * 60 * 1000 })
+  getQboAccounts(): Observable<QboAccount[]> {
+    return this.get<QboAccount[]>('/qbo/accounts/');
+  }
+  
+  @CacheEvict({ isAll: true })
+  syncQboData(): Observable<SyncResponse> {
+    return this.post<SyncResponse>('/qbo/sync/', {});
+  }
+}
+```
+
+## Authentication
+
+### JWT Interceptor
+
+```typescript
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+  
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.authService.getToken();
+    
+    if (token) {
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
+      });
+    }
+    
+    return next.handle(request).pipe(
+      catchError(error => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          this.authService.logout();
+          this.router.navigate(['/auth/login']);
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+}
+```
+
+### Authentication Service
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private tokenKey = 'access_token';
+  private refreshTokenKey = 'refresh_token';
+  
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  
+  login(credentials: { email: string; password: string }): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>('/api/auth/login', credentials)
+      .pipe(tap(response => {
+        this.setToken(response.access_token);
+        this.setRefreshToken(response.refresh_token);
+      }));
+  }
+  
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.refreshTokenKey);
+  }
+  
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+}
+```
+
+## State Management
+
+### Observable Data Service
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private _data = new BehaviorSubject<any[]>([]);
+  private _loading = new BehaviorSubject<boolean>(false);
+  
+  data$ = this._data.asObservable();
+  loading$ = this._loading.asObservable();
+  
+  loadData(): void {
+    this._loading.next(true);
+    
+    this.apiService.getData()
+      .pipe(finalize(() => this._loading.next(false)))
+      .subscribe({
+        next: (data) => this._data.next(data),
+        error: (err) => console.error('Error loading data', err)
+      });
+  }
+  
+  addItem(item: any): void {
+    this._loading.next(true);
+    
+    this.apiService.addItem(item)
+      .pipe(finalize(() => this._loading.next(false)))
+      .subscribe({
+        next: (newItem) => {
+          const currentItems = this._data.getValue();
+          this._data.next([...currentItems, newItem]);
+        }
+      });
+  }
+}
+```
+
+## API Response Caching
+
+```typescript
+// GET with caching
+@Cacheable({ maxAge: 5 * 60 * 1000 })
+getConfiguration(): Observable<Configuration> {
+  return this.get<Configuration>('/configuration/');
+}
+
+// POST with cache invalidation
+@CacheEvict({ isAll: true })
+updateConfiguration(configuration: Configuration): Observable<Configuration> {
+  return this.post<Configuration>('/configuration/', configuration);
+}
+```
+
+## Common Patterns
+
+### Request Parameters
+
+```typescript
+getItems(filters: Filters): Observable<Item[]> {
+  let params = new HttpParams();
+  
+  if (filters.category) {
+    params = params.set('category', filters.category);
+  }
+  
+  if (filters.status) {
+    params = params.set('status', filters.status);
+  }
+  
+  return this.get<Item[]>('/items/', params);
+}
+```
+
+### Pagination
+
+```typescript
+// Service method
+getPagedItems(page: number, limit: number): Observable<PaginatedResponse<Item>> {
+  const params = new HttpParams()
+    .set('limit', limit.toString())
+    .set('offset', ((page - 1) * limit).toString());
+    
+  return this.get<PaginatedResponse<Item>>('/items/', params);
+}
+```
+
+### Error Handling
+
+```typescript
+loadData(): void {
+  this.isLoading = true;
+  this.apiService.getData()
+    .pipe(
+      catchError(error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load data'
+        });
+        return of([]);
+      }),
+      finalize(() => this.isLoading = false)
+    )
+    .subscribe(data => this.data = data);
+}
+```
+
+### Subscription Management
+
+```typescript
+export class SearchComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  
+  ngOnInit(): void {
+    this.searchForm.controls.query.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(query => this.searchService.search(query)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(results => this.results = results);
+  }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
+```
+
+## Best Practices
+
+1. **Use Typed Responses**: Always define interfaces for API responses
+2. **Handle Loading States**: Show loading indicators during API calls
+3. **Implement Error Handling**: Both global and local error strategies
+4. **Cancel Pending Requests**: Use takeUntil on component destruction
+5. **Use Cache Decorators**: For performance optimization
