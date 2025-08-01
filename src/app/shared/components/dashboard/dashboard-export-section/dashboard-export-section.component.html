@@ -37,7 +37,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="triggerExport()" [ngClass]="!exportableAccountingExportIds.length || isExportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="isExportInProgress || !exportableAccountingExportIds.length">
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color p-button-raised" pButton (click)="triggerExport()" [ngClass]="[!exportableAccountingExportIds.length || isExportInProgress ? 'btn-disabled' : 'btn-enabled', brandingStyle.dashboard.dashboardExportBtn]" [disabled]="isExportInProgress || !exportableAccountingExportIds.length">
                             <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!isExportInProgress">{{ 'dashboardExportSection.exportButtonText' | transloco }}
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
                             </p>

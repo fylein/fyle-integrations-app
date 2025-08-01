@@ -18,6 +18,17 @@ export const c1Styles = {
         searchIconFocus: 'tw-text-search-focused-filled-border'
     },
     dashboard: {
-        dashboardErrorResolveBtnText: 'p-button primary-outline'
+        dashboardErrorResolveBtnText: 'p-button primary-outline',
+        dashboardExportBtn: 'tw-rounded-4-px'
+    },
+    buttons: {
+        outlined: {
+           class: 'tw-px-4',
+           active: 'hover:tw-shadow-md tw-text-size-14 tw-bg-white tw-border tw-border-grey-300 tw-font-500 tw-cursor-pointer',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           iconColorActive: 'tw-text-text-secondary',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        }
     }
 };
