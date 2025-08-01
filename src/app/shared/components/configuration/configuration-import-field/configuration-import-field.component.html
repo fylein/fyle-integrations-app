@@ -103,8 +103,8 @@
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
                         <ng-container *ngIf="uiExposedAppName === AppName.INTACCT; else elseBlock">{{ 'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName } }}</ng-container>
-                        <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }}</ng-template>
-                        <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                        <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }} </ng-template>
+                        <a *ngIf="uiExposedAppName === AppName.SAGE300" class="link tw-w-fit tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             {{ 'configurationImportField.readMore' | transloco }}
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -150,7 +150,7 @@
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
-                            <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                            <a class="link tw-w-fit tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
                                 {{ 'configurationImportField.readMore' | transloco }}
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"

@@ -17,7 +17,7 @@
                     <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-text-14-px tw-font-400 tw-text-pretty">
                         {{ appDescription }}
                         <a *ngIf="redirectLink"
-                            class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center tw-pl-2-px"
+                            class="link tw-w-fit tw-inline-flex tw-items-center tw-pl-2-px"
                             (click)="windowService.openInNewTab(redirectLink)">
                             {{ 'common.readMoreText' | transloco}}
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -46,7 +46,7 @@
                         <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
                         <app-outlined-icon-button [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
-                    
+
                     <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)" pButton type="button" class="p-button-raised" (click)="connect()">
                         {{buttonText}}
                         <app-svg-icon *ngIf="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) && brandingFeatureConfig.isIconsInsideButtonAllowed && !isConnectionInProgress" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
