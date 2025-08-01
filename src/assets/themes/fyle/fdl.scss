@@ -10,7 +10,7 @@
       //brand bg
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
-    --bg-brand-muted: #{$brand-secondary-opacity-15};
+    --bg-brand-muted: #B3D9C8;
     //grey bg
     --bg-primary: #{$grey-800};
     --bg-secondary: #{$grey-700};
@@ -40,7 +40,7 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: #{$blue-50};
+    --bg-tertiary-lighter: var(--bg-tertiary);
 
     //border-color
     --border-brand: #{$brand-500};
@@ -168,12 +168,6 @@
     --gradient-light-transparent-start: rgba(225, 238, 255, 0.52);
     --gradient-light-transparent-end: rgba(255, 228, 251, 0.22);
 
-    --gradient-vibrant-sm-start: #ff758c;
-    --gradient-vibrant-sm-end: #ff7eb3;
-
-    --gradient-vibrant-lg-start: #ff3366;
-    --gradient-vibrant-lg-end: #fe5196;
-
     --gradient-cool-md-start: #c1f4ff;
     --gradient-cool-md-end: #5b86e5;
 
@@ -214,9 +208,9 @@
     --black: #{$black};
 
     // Button Primary - Default
-    --btn-primary-bg: linear-gradient(162deg, #ff3366 3.01%, #fe5196 111.5%);
+    --btn-primary-bg: #{$brand-500};
 
-    --btn-primary-hover-bg: linear-gradient(162deg, #F36 3.01%, #FE5196 111.5%);
+    --btn-primary-hover-bg: #{$brand-300};
 
     --btn-primary-text-color: #{$white};
 
@@ -290,7 +284,7 @@
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
-    --checkbox-icon-selected-color: var(--icon-secondary);
+    --checkbox-icon-selected-color: var(--bg-brand-primary);
 
     --checkbox-icon-color: var(--icon-disable);
 

@@ -29,7 +29,6 @@ const customColors = {
   'pink': 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
-  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
 };
@@ -248,8 +247,6 @@ const gradient = {
   'gradient-light-xs': 'linear-gradient(94deg, var(--gradient-light-start) 1.03%, var(--gradient-light-end) 100.37%)',
   'gradient-light-sm': 'linear-gradient(97deg, var(--gradient-light-end) 26.8%, var(--gradient-light-start) 97.18%)',
   'gradient-light-transparent': 'linear-gradient(143deg, var(--gradient-light-transparent-start) 20.72%, var(--gradient-light-transparent-end) 75.82%',
-  'gradient-vibrant-sm': 'linear-gradient(90deg, var(--gradient-vibrant-sm-start) 0%, var(--gradient-vibrant-sm-end) 100%)',
-  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
   'gradient-cool-md': 'linear-gradient(94deg, var(--gradient-cool-md-start) 0%, var(--gradient-cool-md-end) 98.63%)',
   'gradient-dark-xs': 'linear-gradient(314deg, var(--gradient-dark-xs-start) 45.19%,  var(--gradient-dark-xs-end) 153.45%)',
   'gradient-dark-sm': 'linear-gradient(267deg, var(--gradient-dark-sm-start) 0%, var(--gradient-dark-sm-end) 100%)',
@@ -1330,7 +1327,7 @@ module.exports = {
         ...componentVariables
       },
       backgroundImage: {
-        'btn-cta': 'linear-gradient(162.38deg, var(--mandatory-field-color) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
+        'btn-cta': 'var(--mandatory-field-color)',
         'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)',
         'btn-primary-bg': 'var(--btn-primary-bg)',

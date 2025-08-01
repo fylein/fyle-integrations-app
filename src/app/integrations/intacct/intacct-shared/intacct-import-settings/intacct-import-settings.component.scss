@@ -55,7 +55,7 @@
   .sub-text {
       border-radius: 8px;
       border: 1px solid var(--grayscale-light-border, #ECECEE);
-      background: var(--grayscale-background, #FAFCFF);
+      background: var(--bg-tertiary-lighter);
       padding: 24px;
       flex-direction: column;
       align-items: flex-start;
@@ -69,7 +69,7 @@
       align-items: flex-start;
       align-self: stretch;
       border-radius: 4px;
-      background: var(--shades-info, #EFF5FC);
+      background: var(--bg-tertiary-lighter);
       font-size: 0.84em;
       font-weight: 400;
       color: #5a5d72;
