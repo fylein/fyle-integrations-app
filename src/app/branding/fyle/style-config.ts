@@ -18,6 +18,17 @@ export const fyleStyles = {
         searchIconFocus: 'tw-text-search-focused-search-icon'
     },
     dashboard: {
-        dashboardErrorResolveBtnText: 'p-button secondary-sm'
+        dashboardErrorResolveBtnText: 'p-button secondary-sm',
+        dashboardExportBtn: 'tw-rounded-32-px'
+    },
+    buttons: {
+        outlined: {
+           class: 'tw-px-24-px',
+           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-size-14-px tw-font-primary tw-text-green-text-color tw-bg-white tw-border-2 tw-rounded-32-px tw-border-mandatory-field-color',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed tw-border-2 tw-rounded-32-px',
+           iconColorActive: 'tw-text-green-text-color',
+           iconColorHover: 'tw-text-white',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        }
     }
 };
