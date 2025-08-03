@@ -10,6 +10,7 @@ export type FeatureConfiguration = {
         showMoreDropdownInMainMenu: boolean;
         loginRedirectUri: boolean;
         loginToAllConnectedApps: boolean;
+        isDashboardButtonOutlined: boolean;
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

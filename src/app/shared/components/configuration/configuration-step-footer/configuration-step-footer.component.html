@@ -21,15 +21,6 @@
     }
     
     <div>
-        <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
-            <span>
-                {{ ctaText | sentenceCase}}
-            </span>
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save' && AppName !== appName.QBD_DIRECT" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
-        </button>
-        <button *ngIf="ctaText === 'Saving' || ctaText === 'Syncing'" pButton type="button" class="p-button-raised" disabled>
-            {{ ctaText }}
-            <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-transparent tw-border-r-transparent tw-border-l-transparent tw-border-t-border-tertiary tw-rounded-full tw-animate-spin"></div>
-        </button>
+        <app-primary-button [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [styleClasses]="'tw-px-16-px tw-py-8-px'" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-primary-button>
     </div>
 </div>

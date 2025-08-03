@@ -19,7 +19,8 @@ export const c1Styles = {
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
-        dashboardExportBtn: 'tw-rounded-4-px'
+        dashboardExportBtn: 'tw-rounded-4-px',
+        dashboardMainMenu: ''
     },
     buttons: {
         outlined: {
@@ -27,6 +28,15 @@ export const c1Styles = {
            active: 'hover:tw-shadow-md tw-text-size-14 tw-bg-white tw-border tw-border-grey-300 tw-font-500 tw-cursor-pointer',
            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
            iconColorActive: 'tw-text-text-secondary',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        primary: {
+           class: 'p-button p-button-raised',
+           active: 'tw-bg-primary',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           iconColorActive: 'tw-text-white',
            iconColorHover: '',
            iconColorDisabled: 'tw-text-text-placeholder'
         }

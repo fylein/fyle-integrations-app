@@ -32,6 +32,7 @@ const customColors = {
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
+  'bg-grey-primary': 'var(--bg-grey-primary)',
 };
 
 const spacings = {

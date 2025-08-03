@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { brandingStyle } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-outlined-icon-button',
@@ -15,9 +15,15 @@ export class OutlinedIconButtonComponent {
 
   @Input() isIconLeftSide?: boolean;
 
+  @Input() styleClasses?: string = '';
+
+  @Input() iconSize?: string;
+
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
   readonly brandingStyle = brandingStyle;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   iconColor: string = brandingStyle.buttons.outlined.iconColorActive;
 

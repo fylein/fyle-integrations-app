@@ -17,6 +17,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
+    isDashboardButtonOutlined: true,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
