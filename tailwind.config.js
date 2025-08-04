@@ -146,6 +146,7 @@ const colors = {
   'bg-info-light': 'var(--bg-info-light)',
   'bg-danger-light': 'var(--bg-danger-light)',
   'bg-success-light': 'var(--bg-success-light)',
+  'bg-success-dark': 'var(--bg-success-dark)',
   'bg-calm-light': 'var(--bg-calm-light)',
   'bg-highlight-light': 'var(--bg-highlight-light)',
   'bg-disable-light': 'var(--bg-disable-light)',
