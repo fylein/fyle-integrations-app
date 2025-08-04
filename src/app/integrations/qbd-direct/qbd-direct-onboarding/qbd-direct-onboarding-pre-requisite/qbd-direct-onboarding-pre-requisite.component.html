@@ -21,7 +21,7 @@
                             </div>
                             <div class="tw-ml-16-px">
                                 <h4 class="tw-text-14-px tw-font-500" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-secondary'">{{step.label}}</h4>
-                                
+
                                 <p class="tw-text-12-px tw-pt-4-px tw-font-400" [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-tertiary'">
                                     <span [innerHTML]="step.caption"></span>
                                     @if(step.externalLink){
@@ -29,7 +29,7 @@
                                             [href]="step.externalLink"
                                             target="_blank"
                                             class="tw-cursor-pointer tw-ml-4-px tw-inline-flex tw-items-center"
-                                            [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-hyperlink-color'"
+                                            [ngClass]="step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'link'"
                                         >
                                             {{ 'qbdDirectOnboardingPreRequisite.learnMore' | transloco }}
                                             <app-svg-icon

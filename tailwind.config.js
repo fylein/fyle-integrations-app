@@ -10,7 +10,6 @@ const customColors = {
   'sub-text-color': 'var(--sub-text-color)',
   'faded-text-color': 'var(--faded-text-color)',
   'box-color': 'var(--box-color)',
-  'hyperlink-color': 'var(--hyperlink-color)',
   'mandatory-field-color': 'var(--mandatory-field-color)',
   'disabled-bg-color': 'var(--disabled-bg-color)',
   'configuration-bg': 'var(--configuration-bg)',
@@ -1283,7 +1282,7 @@ module.exports = {
         '250-px': '250px',
         '300-px': '300px',
         ...dimensions
-      }, 
+      },
       maxWidth: {
         '20-px': '20px',
         '66-px': '66px',
