@@ -1,0 +1,22 @@
+    <div style="background: rgba(0, 0, 0, 0); justify-content: flex-start; align-items: center; display: inline-flex">
+  <div data-focus="false" data-has-left-icon="false" data-has-right-icon="false" data-importance="primary" style="height: 40px; padding-top: 5px; padding-bottom: 6px; padding-left: 24px; padding-right: 24px; background: #007E45; border-top-left-radius: 32px; border-bottom-left-radius: 32px; outline: 2px rgba(0, 0, 0, 0) solid; outline-offset: -2px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+    <div style="justify-content: center; display: flex; flex-direction: column; color: white; font-size: 14px; font-family: Sage UI; font-weight: 500; line-height: 21px; word-wrap: break-word">More</div>
+  </div>
+  <div data-focus="false" data-importance="Primary" data-size="M" data-state="default" style="width: 40px; height: 40px; position: relative; background: rgba(0, 0, 0, 0)">
+    <div style="width: 40px; height: 40px; left: 0px; top: 0px; position: absolute; background: #007E45; border-top-right-radius: 32px; border-bottom-right-radius: 32px; outline: 2px rgba(0, 0, 0, 0) solid; outline-offset: -2px; justify-content: center; align-items: center; display: inline-flex">
+      <div style="width: 20px; height: 20px; position: relative">
+        <div style="width: 8px; height: 6px; left: 6px; top: 7px; position: absolute; background: white"></div>
+      </div>
+    </div>
+    <div style="width: 40px; height: 2px; left: 2px; top: 0px; position: absolute; transform: rotate(90deg); transform-origin: top left; background: white"></div>
+  </div>
+</div>
+
+
+  @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
+  <app-svg-icon
+    [svgSource]="svgSource" 
+    [width]="iconSize || '18px'"
+    [height]="iconSize || '18px'"
+    [ngClass]="disabled ? brandingStyle.buttons.primary.iconColorDisabled : iconColor">
+  </app-svg-icon>  }

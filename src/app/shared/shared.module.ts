@@ -103,6 +103,7 @@ import { OutlinedIconButtonComponent } from './components/input/outlined-icon-bu
 import { PrimaryButtonComponent } from './components/input/primary-button/primary-button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
 
 @NgModule({
   declarations: [
@@ -184,6 +185,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
     PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
   ],
@@ -295,6 +297,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
     PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
     TranslocoModule
