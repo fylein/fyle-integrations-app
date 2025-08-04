@@ -57,8 +57,8 @@
                 </p-dropdown>
             </td>
             <td *ngIf="!isDashboardMappingResolve">
-                <p *ngIf="getDropdownValue(mapping)" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('genericMappingTable.mappedStatusUpper' | transloco): ('genericMappingTable.mappedStatusLower' | transloco)}}</p>
-                <p *ngIf="!getDropdownValue(mapping)" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('genericMappingTable.unmappedStatusUpper' | transloco): ('genericMappingTable.unmappedStatusLower' | transloco)}}</p>
+                <p *ngIf="getDropdownValue(mapping)" class="mapped" [ngClass]="brandingStyle.primeNg.pills.mappedPillClass">{{ ('genericMappingTable.mappedStatusLower' | transloco) }}</p>
+                <p *ngIf="!getDropdownValue(mapping)" class="unmapped" [ngClass]="brandingStyle.primeNg.pills.unmappedPillClass">{{ ('genericMappingTable.unmappedStatusLower' | transloco) }}</p>
             </td>
         </tr>
         <ng-container *ngTemplateOutlet="shimmers"></ng-container>

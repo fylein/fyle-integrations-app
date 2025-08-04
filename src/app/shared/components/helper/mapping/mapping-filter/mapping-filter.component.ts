@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
@@ -44,11 +44,11 @@ export class MappingFilterComponent implements OnInit {
     private translocoService: TranslocoService
   ) { }
 
-  getSelectedFilter(item: string): string {
+  getSelectedFilterClass(item: string): string {
     if (item === MappingState.MAPPED) {
-      return 'mapped';
+      return `mapped ${brandingStyle.primeNg.pills.mappedPillClass}`;
     }
-    return 'unmapped';
+    return `unmapped ${brandingStyle.primeNg.pills.unmappedPillClass}`;
   }
 
   removeFilter(): void {

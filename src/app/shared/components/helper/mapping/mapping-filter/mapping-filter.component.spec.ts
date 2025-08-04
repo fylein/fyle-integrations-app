@@ -44,10 +44,10 @@ xdescribe('MappingFilterComponent', () => {
     };
   });
 
-  it('getSelectedFilter function check', () => {
-    expect(component.getSelectedFilter(MappingState.UNMAPPED)).toBe(MappingState.UNMAPPED.toLowerCase());
-    expect(component.getSelectedFilter(MappingState.MAPPED)).toBe(MappingState.MAPPED.toLowerCase());
-    expect(component.getSelectedFilter(MappingState.ALL)).toBe(MappingState.UNMAPPED.toLowerCase());
+  it('getSelectedFilterClass function check', () => {
+    expect(component.getSelectedFilterClass(MappingState.UNMAPPED)).toContain(MappingState.UNMAPPED.toLowerCase());
+    expect(component.getSelectedFilterClass(MappingState.MAPPED)).toContain(MappingState.MAPPED.toLowerCase());
+    expect(component.getSelectedFilterClass(MappingState.ALL)).toContain(MappingState.UNMAPPED.toLowerCase());
   });
 
   it('filterChanges function check', () => {

@@ -19,5 +19,11 @@ export const c1Styles = {
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline'
+    },
+    primeNg: {
+      pills: {
+        mappedPillClass: 'mapped-pill-c1',
+        unmappedPillClass: 'unmapped-pill-c1'
+      }
     }
 };

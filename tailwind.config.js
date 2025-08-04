@@ -119,6 +119,7 @@ const borderColors = {
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
+  'border-orange': 'var(--border-orange)'
 };
 
 const colors = {
@@ -189,6 +190,7 @@ const textColors = {
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
+  'text-black': 'var(--text-black)',
   'text-disable': 'var(--text-disable)',
   'text-placeholder': 'var(--text-placeholder)',
   'text-label': 'var(--text-label)',
@@ -1273,7 +1275,7 @@ module.exports = {
         '250-px': '250px',
         '300-px': '300px',
         ...dimensions
-      }, 
+      },
       maxWidth: {
         '20-px': '20px',
         '66-px': '66px',

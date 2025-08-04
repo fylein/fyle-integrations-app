@@ -13,12 +13,12 @@
                 <td>
                     <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)" *ngIf="destinationFieldType === fieldType.TEXT">
                         <i *ngIf="focussedMappingId === mapping.id" class="pi pi-check tooltip" (click)="postTextFieldValue(mapping)" [pTooltip]="getToolTipText()" [escape]="false"  tooltipPosition="top"></i>
-                        <input type="text" pInputText [placeholder]="getPlaceholder()" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">        
-                    </span>  
+                        <input type="text" pInputText [placeholder]="getPlaceholder()" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">
+                    </span>
                 </td>
                 <td>
-                    <p *ngIf="mapping.destination_value" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('qbdMappingTable.mappedCaps' | transloco) : ('qbdMappingTable.mapped' | transloco)}}</p>
-                    <p *ngIf="!mapping.destination_value" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('qbdMappingTable.unmappedCaps' | transloco) : ('qbdMappingTable.unmapped' | transloco)}}</p>
+                    <p *ngIf="mapping.destination_value" class="mapped" [ngClass]="brandingStyle.primeNg.pills.mappedPillClass">{{ ('qbdMappingTable.mapped' | transloco)}}</p>
+                    <p *ngIf="!mapping.destination_value" class="unmapped" [ngClass]="brandingStyle.primeNg.pills.unmappedPillClass">{{ ('qbdMappingTable.unmapped' | transloco)}}</p>
                 </td>
             </tr>
         </ng-template>

@@ -1,6 +1,6 @@
 // Declare the Token Name from Common element library figma file here
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
 @import './primitives_variables';
@@ -38,6 +38,7 @@
     --bg-info-lightest: #{$blue-10};
     --bg-warning-lighter: #{$yellow-100};
     --bg-danger-lighter: #{$red-100};
+    --bg-success: #{$brand-400};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
     --bg-tertiary-lighter: var(--bg-tertiary);
@@ -67,6 +68,7 @@
     --border-highlight-lighter: #{$purple-300}; //deprecated
     --border-calm-lighter: #{$green-300}; //deprecated
     --border-manate: #{$manate};
+    --border-orange: #{$orange-500};
 
     //border-radius
     --border-radius-none: #{$size-0};
@@ -97,6 +99,7 @@
     --text-highlight: #{$purple-500};
     --text-calm: #{$green-900};
     --text-white: #{$white};
+    --text-black: #{$black};
     --text-disable: #{$grey-400};
     --text-placeholder: #{$grey-400};
     --text-label: #{$grey-500};
@@ -181,17 +184,17 @@
     --gradient-dark-lg-center: #242c42;
     --gradient-dark-lg-end: #05091c;
 
-    --gradient-white-xs-start: rgba(255, 255, 255, 0.90); 
+    --gradient-white-xs-start: rgba(255, 255, 255, 0.90);
     --gradient-white-xs-end: rgba(255, 255, 255, 0.24);
 
     --gradient-white-fade-xs-start: rgba(255, 255, 255, 0.00);
     --gradient-white-fade-xs-end: #f5f5f5;
-    
-    /*TODO-clean up once figma tokens are created*/ 
+
+    /*TODO-clean up once figma tokens are created*/
     //brand gradient
     --gradient-brand-start: #{$brand-500};
     --gradient-brand-end: #fe5196;
-    --gradient-light-sm-start: #e1eeff; 
+    --gradient-light-sm-start: #e1eeff;
     --gradient-light-sm-end: #ffe4fb;
 
     //dropdown shadow
@@ -237,7 +240,7 @@
     --btn-outline-secondary-hover-bg: #{$white};
 
     --btn-tertiary-text-color: var(--text-brand-primary);
-    
+
     --btn-tertiary-hover-text-color: var(--text-brand-primary);
 
     --btn-tertiary-hover-bg: #{$white};
@@ -352,7 +355,7 @@
     --input-focused-border: var(--bg-secondary);
 
     --modal-header-text-color: var(--bg-primary);
-    
+
     --lv-pagination-icon-active-color: var(--icon-tertiary);
 
     --lv-pagination-icon-disable-color: var(--icon-disable);

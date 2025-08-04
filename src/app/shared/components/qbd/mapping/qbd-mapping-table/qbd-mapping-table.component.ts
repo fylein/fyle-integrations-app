@@ -4,7 +4,7 @@ import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model'
 import { QBDMapping, QBDMappingModel, QBDMappingPost } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
 import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -36,6 +36,8 @@ export class QbdMappingTableComponent implements OnInit {
   fieldType = FieldType;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     public route: ActivatedRoute,

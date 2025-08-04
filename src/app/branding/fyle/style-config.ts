@@ -19,5 +19,11 @@ export const fyleStyles = {
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm'
+    },
+    primeNg: {
+      pills: {
+        mappedPillClass: 'mapped-pill-fyl',
+        unmappedPillClass: 'unmapped-pill-fyl'
+      }
     }
 };
