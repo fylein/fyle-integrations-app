@@ -873,5 +873,13 @@
     --scrollbar-track: #eaeaea;
 
     --scrollbar-thumb-hover: #aaa;
+
+    // Toggle
+    --toggle-enabled-bg: #{$blue-55};
+    --toggle-disabled-bg: var(--form-switch-bg);
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$white};
+    --toggle-border: none;
+    --toggle-border-width: 0px;
   }
 }
