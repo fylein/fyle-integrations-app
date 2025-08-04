@@ -959,7 +959,8 @@ module.exports = {
     backgroundColor: {
       ...customColors,
       ...componentVariables,
-      ...colors
+      ...colors,
+      'bg-brand': 'var(--bg-brand)',
     },
     fontSize: {
       '9-px':'9px',

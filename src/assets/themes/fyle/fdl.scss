@@ -7,7 +7,8 @@
 
 @layer base {
   [data-theme='fyle'] {
-      //brand bg
+    //brand bg
+    --bg-brand: #{$utility-major-25};
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #B3D9C8;
@@ -259,7 +260,7 @@
 
     --nav-tabs-active-border: var(--border-secondary);
 
-    --nav-tabs-active-bg:  #{$white};
+    --nav-tabs-active-bg:  var(--bg-brand);
 
     --nav-tabs-inactive-bg: transparent;
 
