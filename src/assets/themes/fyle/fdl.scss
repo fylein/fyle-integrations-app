@@ -41,7 +41,7 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: var(--bg-tertiary);
+    --bg-tertiary-lighter: #{$grey-02};
 
     //border-color
     --border-brand: #{$brand-500};
@@ -299,8 +299,8 @@
 
     --select-error-border: var(--border-danger);
 
-    --toggle-text-yes: 'Yes';
-    --toggle-text-no: 'No';
+    --toggle-text-yes: 'ON';
+    --toggle-text-no: 'OFF';
 
     --toggle-circle-translate: 28px;
 
@@ -408,5 +408,13 @@
     --badge-light-bg: var(--bg-white);
     --badge-light-border-color: var(--border-tertiary);
     --badge-light-text-color: var(--text-tertiary);
+
+    // Toggle
+    --toggle-enabled-bg: #{$grey-650};
+    --toggle-disabled-bg: #{$white};
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$slate-500};
+    --toggle-border: var(--toggle-enabled-bg);
+    --toggle-border-width: 1px;
   }
 }
