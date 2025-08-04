@@ -34,11 +34,15 @@ export const fyleStyles = {
         primary: {
            class: 'tw-rounded-32-px tw-text-14-px',
            active: 'hover:tw-bg-bg-green tw-font-primary tw-text-green-text-color tw-text-white tw-text-sm tw-bg-btn-primary-bg',
-           disabled: 'tw-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
-           progress: 'tw-bg-bg-green tw-text-white tw-cursor-not-allowed',
+           disabled: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
+           loader: 'tw-border-t-border-brand',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
            iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        dialog: {
+            cancel: 'tw-px-16-px tw-py-8-px'
         }
     }
 };

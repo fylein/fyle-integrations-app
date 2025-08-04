@@ -36,9 +36,13 @@ export const c1Styles = {
            active: 'tw-bg-primary',
            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
            progress: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
            iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        dialog: {
+            cancel: 'tw-px-16-px tw-py-8-px outline-sm'
         }
     }
 };

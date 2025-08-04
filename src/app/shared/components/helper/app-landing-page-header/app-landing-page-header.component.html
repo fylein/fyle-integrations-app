@@ -32,14 +32,14 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
-                <button *ngIf="!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button-raised" (click)="connect()" [disabled]="isConnectionInProgress">
-                    {{ (isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco }}
-                    <app-svg-icon *ngIf="!isConnectionInProgress && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
-                    <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
-                </button>
-                <button *ngIf="isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button danger-outline" (click)="disconnect()">
-                    {{ (isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco }}
-                </button>
+
+                @if(!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
+                    <app-primary-button [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [styleClasses]="'tw-px-24-px tw-py-8-px'" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-primary-button>
+                }
+
+                @if(isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
+                <app-primary-button [styleClasses]="'tw-px-24-px tw-py-8-px'" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco"  (buttonClick)="disconnect()"></app-primary-button>
+                }
 
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
                     @if (appName.includes('QuickBooks Desktop ')) {
@@ -47,11 +47,9 @@
                         <app-outlined-icon-button [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
 
-                    <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)" pButton type="button" class="p-button-raised" (click)="connect()">
-                        {{buttonText}}
-                        <app-svg-icon *ngIf="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) && brandingFeatureConfig.isIconsInsideButtonAllowed && !isConnectionInProgress" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
-                        <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
-                    </button>
+                    @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){
+                    <app-primary-button  (buttonClick)="connect()" [styleClasses]="'tw-px-24-px tw-py-8-px'" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-primary-button>
+                    }
                 </div>
                 <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px"></iframe>
                 <div *ngIf="showQBOButton" class="tw-cursor-pointer">
