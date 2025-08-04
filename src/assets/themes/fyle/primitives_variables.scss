@@ -1,6 +1,6 @@
 /* stylelint-disable scss/no-dollar-variables */
 
-// Only Add those variables in this file which are added as premitives in figma common element library,
+// Only Add those variables in this file which are added as primitives in figma common element library,
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
 // You can view all the list of primitives by clicking on Local Variables button on right side menu, you need edit access to view this.
 
@@ -14,7 +14,7 @@ $brand-primary-opacity-80: rgba(#ff3366, 0.8);
 $brand-secondary-opacity-15: rgba(#ff3366, 0.15);
 $primary-opacity-10: rgba(#161528, 0.1);
 
-//Color Premitives
+//Color Primitives
 //Base Colors
 $white: #ffffff;
 $black: 0 0 0;
@@ -30,6 +30,7 @@ $grey-800: #161528;
 
 //brand shades
 $brand-300: #006738ff;
+$brand-400: #008A21;
 $brand-500: #007E45;
 
 // utility/major - This base colour is used to create our grayscale tints/shades used throughout our applications.
@@ -49,6 +50,9 @@ $blue-900: #556ef2;
 $yellow-100: #fcf7e6;
 $yellow-500: #e1af05;
 $yellow-800: #d88600;
+
+// Orange
+$orange-500: #F28533;
 
 //green
 $green-50: #eef8f2;

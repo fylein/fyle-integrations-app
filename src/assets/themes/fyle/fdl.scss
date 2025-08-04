@@ -39,6 +39,7 @@
     --bg-info-lightest: #{$blue-10};
     --bg-warning-lighter: #{$yellow-100};
     --bg-danger-lighter: #{$red-100};
+    --bg-success-dark: #{$brand-400};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
     --bg-tertiary-lighter: var(--bg-tertiary);
@@ -68,6 +69,7 @@
     --border-highlight-lighter: #{$purple-300}; //deprecated
     --border-calm-lighter: #{$green-300}; //deprecated
     --border-manate: #{$manate};
+    --border-orange: #{$orange-500};
 
     //border-radius
     --border-radius-none: #{$size-0};
@@ -98,6 +100,7 @@
     --text-highlight: #{$purple-500};
     --text-calm: #{$green-900};
     --text-white: #{$white};
+    --text-black: #{$black};
     --text-disable: #{$grey-400};
     --text-placeholder: #{$grey-400};
     --text-label: #{$grey-500};

@@ -44,9 +44,21 @@
     .link {
         @apply tw-text-link-primary tw-cursor-pointer;
     }
+    .mapped {
+      @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important}
+    }
+    .unmapped {
+        @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
+    }
     [data-theme='fyle'] {
         .link {
             @apply tw-underline;
+        }
+        .mapped {
+          @apply tw-rounded-sm tw-border-2 tw-border-transparent tw-bg-bg-success tw-pt-0 tw-pb-2-px tw-px-8-px tw-text-text-white #{!important}
+        }
+        .unmapped {
+          @apply tw-rounded-sm tw-border-2 tw-border-border-orange tw-bg-bg-white tw-pt-0 tw-pb-2-px tw-px-8-px tw-text-text-black #{!important}
         }
     }
 }
@@ -635,14 +647,6 @@ p {
     &--contents {
         @apply tw-overflow-hidden tw-border tw-border-border-tertiary tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px #{!important};
     }
-}
-
-.mapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important}
-}
-
-.unmapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
 .p-calendar .p-inputtext {

@@ -118,6 +118,7 @@ const borderColors = {
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
+  'border-orange': 'var(--border-orange)'
 };
 
 const colors = {
@@ -144,6 +145,7 @@ const colors = {
   'bg-info-light': 'var(--bg-info-light)',
   'bg-danger-light': 'var(--bg-danger-light)',
   'bg-success-light': 'var(--bg-success-light)',
+  'bg-success-dark': 'var(--bg-success-dark)',
   'bg-calm-light': 'var(--bg-calm-light)',
   'bg-highlight-light': 'var(--bg-highlight-light)',
   'bg-disable-light': 'var(--bg-disable-light)',
@@ -188,6 +190,7 @@ const textColors = {
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
+  'text-black': 'var(--text-black)',
   'text-disable': 'var(--text-disable)',
   'text-placeholder': 'var(--text-placeholder)',
   'text-label': 'var(--text-label)',
