@@ -4,17 +4,18 @@
   (mouseenter)="onHover(true)"
   (mouseleave)="onHover(false)"
   [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 tw-py-10-px ' + brandingStyle.buttons.outlined.class"
-  [ngClass]="[disabled ? brandingStyle.buttons.outlined.disabled : brandingStyle.buttons.outlined.active]"
+  [ngClass]="[disabled ? brandingStyle.buttons.outlined.disabled : brandingStyle.buttons.outlined.active, styleClasses]"
   (click)="!disabled && onClick()">
   @if(!isIconLeftSide){
     {{ buttonText }}
   }
+  @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
   <app-svg-icon
     [svgSource]="svgSource" 
-    [width]="'18px'"
-    [height]="'18px'"
+    [width]="iconSize || '18px'"
+    [height]="iconSize || '18px'"
     [ngClass]="disabled ? brandingStyle.buttons.outlined.iconColorDisabled : iconColor">
-  </app-svg-icon>
+  </app-svg-icon> }
   @if(isIconLeftSide){
     {{ buttonText }}
   }
