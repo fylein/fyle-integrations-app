@@ -14,6 +14,43 @@
     src: url('./assets/fonts/Optimist.woff2') format('woff2');
 }
 
+// Sage UI font family
+@font-face {
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-regular.otf') format("opentype")
+}
+
+@font-face {
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-medium.otf') format("opentype")
+}
+
+@font-face {
+  font-family: sage-ui;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/sage-ui-bold.otf') format("opentype")
+}
+
+
+@layer base {
+    .link {
+        @apply tw-text-link-primary tw-cursor-pointer;
+    }
+    [data-theme='fyle'] {
+        .link {
+            @apply tw-underline;
+        }
+    }
+}
+
 html,
 body {
     @apply tw-h-[100%] tw-leading-app;
@@ -21,7 +58,7 @@ body {
 }
 
 body {
-    @apply tw-m-0-px tw-text-normal-text-color tw-font-primary tw-text-16-px;
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-primary tw-text-16-px tw-bg-bg-brand;
 }
 
 p {
@@ -51,6 +88,14 @@ p {
 
     .p-checkbox .p-checkbox-box .p-icon {
         content: url('./assets/icons/check.svg') !important;
+    }
+
+    .main-menu-tabs {
+      @apply tw-pt-2;
+    }
+
+    .main-menu-tab-btns {
+      @apply tw-pb-2;
     }
 }
 
@@ -217,6 +262,12 @@ p {
     @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
 }
 
+[data-theme='fyle'] {
+  .p-tooltip .p-tooltip-text{
+    @apply tw-py-8-px tw-px-12-px tw-text-14-px #{!important}
+  }
+}
+
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
     @apply tw-border-r-tooltip-bg #{!important};
 }
@@ -245,7 +296,7 @@ p {
 }
 
 .p-inputswitch .p-inputswitch-slider:before {
-    @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
+    @apply tw-bg-toggle-disabled-text-color tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
 }
 
 [data-theme='co'] {
@@ -255,15 +306,15 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    @apply tw-translate-x-toggle-circle-translate #{!important};
+    @apply tw-bg-toggle-enabled-text-color tw-translate-x-toggle-circle-translate #{!important};
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
+    @apply tw-bg-toggle-enabled-bg tw-w-toggle-width tw-h-toggle-height #{!important};
 }
 
 .p-inputswitch .p-inputswitch-slider {
-    @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
+    @apply tw-bg-toggle-disabled-bg tw-border-toggle-border tw-border-solid tw-border-toggle-border-width tw-w-toggle-width tw-h-toggle-height #{!important};
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
@@ -271,11 +322,11 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] #{!important};
 }
 
 .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
 }
 
 

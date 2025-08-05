@@ -2,15 +2,16 @@
 
 const customColors = {
   white: 'var(--white)',
+  green: 'var(--bg-green)',
   placeholder: 'var(--placeholder)',
   separator: 'var(--separator)',
   'normal-text-color': 'var(--normal-text-color)',
   'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'green-text-color': 'var(--mandatory-field-color)',
   'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
   'sub-text-color': 'var(--sub-text-color)',
   'faded-text-color': 'var(--faded-text-color)',
   'box-color': 'var(--box-color)',
-  'hyperlink-color': 'var(--hyperlink-color)',
   'mandatory-field-color': 'var(--mandatory-field-color)',
   'disabled-bg-color': 'var(--disabled-bg-color)',
   'configuration-bg': 'var(--configuration-bg)',
@@ -29,9 +30,9 @@ const customColors = {
   'pink': 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
-  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
+  'bg-grey-primary': 'var(--bg-grey-primary)',
 };
 
 const spacings = {
@@ -92,6 +93,7 @@ const borderRadius = {
 const borderWidth = {
   'border-1': 'var(--border-1)',
   'border-2': 'var(--border-2)',
+  'toggle-border-width': 'var(--toggle-border-width)',
 };
 
 const borderColors = {
@@ -120,6 +122,7 @@ const borderColors = {
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
+  'border-green': 'var(--bg-green)'
 };
 
 const colors = {
@@ -135,6 +138,7 @@ const colors = {
   'bg-disable': 'var(--bg-disable)',
   'bg-tertiary': 'var(--bg-tertiary)',
   'bg-white': 'var(--bg-white)',
+  'bg-green': 'var(--bg-green)',
   'bg-primary-opacity': 'var(--bg-primary-opacity)',
   //regular bg'
   'bg-success': 'var(--bg-success)',
@@ -248,8 +252,6 @@ const gradient = {
   'gradient-light-xs': 'linear-gradient(94deg, var(--gradient-light-start) 1.03%, var(--gradient-light-end) 100.37%)',
   'gradient-light-sm': 'linear-gradient(97deg, var(--gradient-light-end) 26.8%, var(--gradient-light-start) 97.18%)',
   'gradient-light-transparent': 'linear-gradient(143deg, var(--gradient-light-transparent-start) 20.72%, var(--gradient-light-transparent-end) 75.82%',
-  'gradient-vibrant-sm': 'linear-gradient(90deg, var(--gradient-vibrant-sm-start) 0%, var(--gradient-vibrant-sm-end) 100%)',
-  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
   'gradient-cool-md': 'linear-gradient(94deg, var(--gradient-cool-md-start) 0%, var(--gradient-cool-md-end) 98.63%)',
   'gradient-dark-xs': 'linear-gradient(314deg, var(--gradient-dark-xs-start) 45.19%,  var(--gradient-dark-xs-end) 153.45%)',
   'gradient-dark-sm': 'linear-gradient(267deg, var(--gradient-dark-sm-start) 0%, var(--gradient-dark-sm-end) 100%)',
@@ -572,6 +574,14 @@ const componentVariables = {
   'form-switch-disabled-label-text': 'var(--form-switch-disabled-label-text)',
   'form-switch-label-text': 'var(--form-switch-label-text)',
   'switch-group-border-color': 'var(--switch-group-border-color)',
+
+
+  // Toggle
+  'toggle-enabled-bg': 'var(--toggle-enabled-bg)',
+  'toggle-disabled-bg': 'var(--toggle-disabled-bg)',
+  'toggle-enabled-text-color': 'var(--toggle-enabled-text-color)',
+  'toggle-disabled-text-color': 'var(--toggle-disabled-text-color)',
+  'toggle-border': 'var(--toggle-border)',
 
   // Upload
   'upload-filedrop-bg': 'var(--upload-filedrop-bg)',
@@ -959,10 +969,12 @@ module.exports = {
     backgroundColor: {
       ...customColors,
       ...componentVariables,
-      ...colors
+      ...colors,
+      'bg-brand': 'var(--bg-brand)',
     },
     fontSize: {
       '9-px':'9px',
+      '10-px':'10px',
       '11-px': '11px',
       '12-px': '12px',
       '14-px': '14px',
@@ -1276,7 +1288,7 @@ module.exports = {
         '250-px': '250px',
         '300-px': '300px',
         ...dimensions
-      }, 
+      },
       maxWidth: {
         '20-px': '20px',
         '66-px': '66px',
@@ -1297,6 +1309,7 @@ module.exports = {
         '12-px': '12px',
         '16-px': '16px',
         '20-px': '20px',
+        '32-px': '32px',
         '48-px': '48px',
         '99-px': '99px',
         '50': '50%',
@@ -1330,7 +1343,7 @@ module.exports = {
         ...componentVariables
       },
       backgroundImage: {
-        'btn-cta': 'linear-gradient(162.38deg, var(--mandatory-field-color) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
+        'btn-cta': 'var(--mandatory-field-color)',
         'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)',
         'btn-primary-bg': 'var(--btn-primary-bg)',

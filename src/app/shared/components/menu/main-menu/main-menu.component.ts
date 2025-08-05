@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
@@ -55,6 +55,8 @@ export class MainMenuComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

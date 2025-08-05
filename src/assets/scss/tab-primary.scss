@@ -32,4 +32,8 @@
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
     @apply tw-border-none tw-px-24-px tw-pt-16-px tw-pb-0;
+
+    [data-theme='fyle'] & {
+      @apply tw-px-16-px tw-pt-12-px #{!important};
+    }
 }

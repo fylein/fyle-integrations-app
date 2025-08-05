@@ -1,23 +1,26 @@
 // Declare the Token Name from Common element library figma file here
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
 @import './primitives_variables';
 
 @layer base {
   [data-theme='fyle'] {
-      //brand bg
+    //brand bg
+    --bg-brand: #{$utility-major-25};
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
-    --bg-brand-muted: #{$brand-secondary-opacity-15};
-    //grey bg
+    --bg-brand-muted: #B3D9C8;
+    //colors bg
     --bg-primary: #{$grey-800};
     --bg-secondary: #{$grey-700};
     --bg-disable: #{$grey-400};
     --bg-tertiary: #{$grey-100};
     --bg-white: #{$white};
+    --bg-green: #{$brand-600};
     --bg-primary-opacity: #{$primary-opacity-10};
+    --bg-grey-primary: #{$grey-50};
     //_contextual bg
     --bg-success: #{$green-500};
     --bg-info: #{$blue-500};
@@ -40,7 +43,7 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: #{$blue-50};
+    --bg-tertiary-lighter: #{$grey-02};
 
     //border-color
     --border-brand: #{$brand-500};
@@ -104,7 +107,7 @@
     --text-muted: #{$grey-500};
 
     //link
-    --link-primary: #{$blue-600};
+    --link-primary: #{$green-700};
     --link-visited: #{$purple-500};
 
     //icons
@@ -168,12 +171,6 @@
     --gradient-light-transparent-start: rgba(225, 238, 255, 0.52);
     --gradient-light-transparent-end: rgba(255, 228, 251, 0.22);
 
-    --gradient-vibrant-sm-start: #ff758c;
-    --gradient-vibrant-sm-end: #ff7eb3;
-
-    --gradient-vibrant-lg-start: #ff3366;
-    --gradient-vibrant-lg-end: #fe5196;
-
     --gradient-cool-md-start: #c1f4ff;
     --gradient-cool-md-end: #5b86e5;
 
@@ -187,17 +184,17 @@
     --gradient-dark-lg-center: #242c42;
     --gradient-dark-lg-end: #05091c;
 
-    --gradient-white-xs-start: rgba(255, 255, 255, 0.90); 
+    --gradient-white-xs-start: rgba(255, 255, 255, 0.90);
     --gradient-white-xs-end: rgba(255, 255, 255, 0.24);
 
     --gradient-white-fade-xs-start: rgba(255, 255, 255, 0.00);
     --gradient-white-fade-xs-end: #f5f5f5;
-    
-    /*TODO-clean up once figma tokens are created*/ 
+
+    /*TODO-clean up once figma tokens are created*/
     //brand gradient
     --gradient-brand-start: #{$brand-500};
     --gradient-brand-end: #fe5196;
-    --gradient-light-sm-start: #e1eeff; 
+    --gradient-light-sm-start: #e1eeff;
     --gradient-light-sm-end: #ffe4fb;
 
     //dropdown shadow
@@ -214,9 +211,9 @@
     --black: #{$black};
 
     // Button Primary - Default
-    --btn-primary-bg: linear-gradient(162deg, #ff3366 3.01%, #fe5196 111.5%);
+    --btn-primary-bg: #{$brand-500};
 
-    --btn-primary-hover-bg: linear-gradient(162deg, #F36 3.01%, #FE5196 111.5%);
+    --btn-primary-hover-bg: #{$brand-300};
 
     --btn-primary-text-color: #{$white};
 
@@ -243,7 +240,7 @@
     --btn-outline-secondary-hover-bg: #{$white};
 
     --btn-tertiary-text-color: var(--text-brand-primary);
-    
+
     --btn-tertiary-hover-text-color: var(--text-brand-primary);
 
     --btn-tertiary-hover-bg: #{$white};
@@ -256,19 +253,19 @@
 
     --nav-tabs-hover-bg: transparent;
 
-    --nav-link-active-border: var(--bg-primary);
+    --nav-link-active-border: #{$brand-500};
 
     --nav-link-font-weight: 500;
 
     --nav-tabs-active: var(--text-disable);
 
-    --nav-tabs-active-border: var(--border-secondary);
+    --nav-tabs-active-border: #{$grey-350};
 
-    --nav-tabs-active-bg:  #{$white};
+    --nav-tabs-active-bg:  var(--bg-brand);
 
     --nav-tabs-inactive-bg: transparent;
 
-    --nav-tabs-inactive-text-color: var(--text-disable);
+    --nav-tabs-inactive-text-color: #{$grey-900};
 
     --search-default-filled-text: var(--text-primary);
 
@@ -290,7 +287,7 @@
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
-    --checkbox-icon-selected-color: var(--icon-secondary);
+    --checkbox-icon-selected-color: var(--bg-brand-primary);
 
     --checkbox-icon-color: var(--icon-disable);
 
@@ -304,8 +301,8 @@
 
     --select-error-border: var(--border-danger);
 
-    --toggle-text-yes: 'Yes';
-    --toggle-text-no: 'No';
+    --toggle-text-yes: 'ON';
+    --toggle-text-no: 'OFF';
 
     --toggle-circle-translate: 28px;
 
@@ -343,7 +340,7 @@
 
     --calendar-date-default-text-color: var(--text-secondary);
 
-    --tooltip-bg: var(--bg-secondary);
+    --tooltip-bg: #{$grey-675};
 
     --date-picker-filled-icon-color: var(--icon-muted);
 
@@ -358,7 +355,7 @@
     --input-focused-border: var(--bg-secondary);
 
     --modal-header-text-color: var(--bg-primary);
-    
+
     --lv-pagination-icon-active-color: var(--icon-tertiary);
 
     --lv-pagination-icon-disable-color: var(--icon-disable);
@@ -413,5 +410,13 @@
     --badge-light-bg: var(--bg-white);
     --badge-light-border-color: var(--border-tertiary);
     --badge-light-text-color: var(--text-tertiary);
+
+    // Toggle
+    --toggle-enabled-bg: #{$grey-650};
+    --toggle-disabled-bg: #{$white};
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$slate-500};
+    --toggle-border: var(--toggle-enabled-bg);
+    --toggle-border-width: 1px;
   }
 }

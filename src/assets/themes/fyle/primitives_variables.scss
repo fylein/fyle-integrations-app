@@ -1,6 +1,6 @@
 /* stylelint-disable scss/no-dollar-variables */
 
-// Only Add those variables in this file which are added as premitives in figma common element library, 
+// Only Add those variables in this file which are added as premitives in figma common element library,
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
 // You can view all the list of primitives by clicking on Local Variables button on right side menu, you need edit access to view this.
 
@@ -19,18 +19,31 @@ $primary-opacity-10: rgba(#161528, 0.1);
 $white: #ffffff;
 $black: 0 0 0;
 //grey shades
+$grey-02: #F3F6FA;
+$grey-50: #E6EBED;
 $grey-100: #f5f5f5;
 $grey-200: #ececee;
 $grey-300: #dfdfe2;
+$grey-350: #E6EBED;
 $grey-400: #a9acbc;
 $grey-500: #5a5d72;
 $grey-600: #414562;
+$grey-650: #3C5B6E;
+$grey-675: #335B70;
 $grey-700: #2c304e;
 $grey-800: #161528;
+$grey-900: #1a1a1a;
 
 //brand shades
-$brand-300: #ffc2d6;
-$brand-500: #ff3366;
+$brand-300: #006738ff;
+$brand-500: #007E45;
+$brand-600: #006738;
+
+//slate shades
+$slate-500: #6C8493;
+
+// utility/major - This base colour is used to create our grayscale tints/shades used throughout our applications.
+$utility-major-25: #F2F5F6;
 
 //blue shades
 $blue-10: #f6faff;
@@ -55,6 +68,7 @@ $green-200: #d9ebe1;
 $green-300: #c9e1e4;
 $green-450: #55b07d;
 $green-500: #24a148;
+$green-700: #0C713F;
 $green-900: #077e8c;
 
 //red

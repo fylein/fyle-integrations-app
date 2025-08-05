@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">{{ 'intacctImportSettings.importDimensionsTitle' | transloco }}</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.importDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.importDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="link">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-12-px sub-text-note tw-flex">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
                         <span class="tw-text-14-px tw-pl-6-px">{{ 'intacctImportSettings.defaultMappingNote' | transloco }}</span>
@@ -82,7 +82,7 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500">{{ 'intacctImportSettings.mapDimensionsTitle' | transloco }}</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.mapDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.mapDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="link">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-4 sub-text-note">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
                         <span class="tw-pl-6-px">
@@ -198,7 +198,7 @@
 
         <div class="tw-p-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && this.importSettingsForm.get('importCodeFields')?.value.length > 0 ">
             <div>
-                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
                             {{ 'intacctImportSettings.configureImportMethodTitle' | transloco }}
@@ -293,13 +293,17 @@
                 </div>
               </div>
 
-            <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+            <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px tw-gap-2">
+                <!-- to be removed, can ignore for now --> <!--    
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     {{ 'intacctImportSettings.cancel' | transloco }}
                 </button>
-                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
+                <button type="button" class="save-btn" pButton  (click)="saveCustomField()">
                     {{ 'intacctImportSettings.createAndSave' | transloco }}
-                </button>
+                </button> -->
+                
+                <app-primary-button (buttonClick)="closeModel()" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-primary-button>
+                <app-primary-button [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (buttonClick)="saveCustomField()" [buttonText]="'intacctImportSettings.createAndSave' | transloco"></app-primary-button>
             </div>
         </div>
     </div>

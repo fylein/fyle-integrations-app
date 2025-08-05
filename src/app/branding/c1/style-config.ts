@@ -18,6 +18,31 @@ export const c1Styles = {
         searchIconFocus: 'tw-text-search-focused-filled-border'
     },
     dashboard: {
-        dashboardErrorResolveBtnText: 'p-button primary-outline'
+        dashboardErrorResolveBtnText: 'p-button primary-outline',
+        dashboardExportBtn: 'tw-rounded-4-px',
+        dashboardMainMenu: ''
+    },
+    buttons: {
+        outlined: {
+           class: 'tw-px-4',
+           active: 'hover:tw-shadow-md tw-text-size-14 tw-bg-white tw-border tw-border-grey-300 tw-font-500 tw-cursor-pointer',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           iconColorActive: 'tw-text-text-secondary',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        primary: {
+           class: 'p-button p-button-raised',
+           active: 'tw-bg-primary',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           loader: 'tw-border-t-border-tertiary',
+           iconColorActive: 'tw-text-white',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        dialog: {
+            cancel: 'tw-px-16-px tw-py-8-px outline-sm'
+        }
     }
 };

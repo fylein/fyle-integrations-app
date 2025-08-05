@@ -2,8 +2,11 @@ import { OnboardingStepper } from "../../../models/misc/onboarding-stepper.model
 import { XeroOnboardingState } from "../../../models/enum/enum.model";
 import { XeroOnboardingStepperMap } from "../../../models/xero/xero-configuration/xero-onboarding.model";
 import { TranslocoService } from "@jsverse/transloco";
-import { inject } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class XeroOnboardingService {
 
   private onboardingSteps: OnboardingStepper[] = [];
