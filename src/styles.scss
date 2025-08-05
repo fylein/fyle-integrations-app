@@ -50,13 +50,30 @@
         }
 
         // Dropdowns
+        .p-dropdown {
+            @apply tw-h-32-px tw-py-5-px #{!important};
+        }
+
+        .p-dropdown-trigger {
+            content: url('./assets/icons/caret-large-down.svg') !important;
+        }
+
+        .p-dropdown .p-dropdown-trigger {
+            @apply tw-w-20-px tw-h-20-px #{!important};
+        }
+
+        // Dropdown panel
         .p-dropdown-panel .p-dropdown-items {
-            @apply tw-mt-1-px tw-px-0 tw-py-12-px tw-border tw-border-box-color tw-rounded-b-8-px tw-relative tw-top-[7px] tw-border-none #{!important};
+            @apply tw-mt-1-px tw-px-0 tw-py-12-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
         }
 
         .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
+        ,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
             @apply tw-text-white tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-2-px tw-pl-12-px tw-text-14-px #{!important};
+
+            p {
+                @apply tw-text-utility-major-50;
+            }
         }
 
         .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
@@ -69,6 +86,30 @@
 
         .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
             @apply tw-min-h-dropdown-option-height tw-py-2-px tw-px-12-px #{!important};
+        }
+
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
+            @apply tw-text-utility-major-400;
+        }
+
+        .p-dropdown-panel {
+            @apply tw-relative tw-top-[7px] tw-shadow-base-shadow;
+        }
+
+        // Error state
+        .error-box .p-dropdown {
+            @apply tw-border-border-danger-dark tw-border-2 #{!important};
+        }
+    }
+
+    [data-theme='co'] {
+        // Dropdowns
+        .p-dropdown-trigger {
+            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+        }
+
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
+            @apply tw-text-text-muted;
         }
     }
 }
@@ -132,18 +173,6 @@ p {
 
     .p-checkbox .p-checkbox-box .p-icon, .pi-check {
         content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
-    }
-}
-
-[data-theme='fyle'] {
-    .p-dropdown-trigger {
-        content: url('./assets/icons/arrow-down.svg') !important;
-    }
-}
-
-[data-theme='co'] {
-    .p-dropdown-trigger {
-        content: url('./assets/icons/co/grv-chevron-down.svg') !important;
     }
 }
 
