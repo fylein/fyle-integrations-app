@@ -24,9 +24,13 @@
                                     <p>{{ 'dashboardErrorSection.mapEmployeesDescription' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
+                                @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                                    <app-outlined-icon-button (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-outlined-icon-button>
+                                } @else {
                                     <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'dashboardErrorSection.resolveButtonText' | transloco }}
                                     </span>
+                                }
                                 </div>
                                 <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>

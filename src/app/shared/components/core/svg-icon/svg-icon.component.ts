@@ -5,6 +5,7 @@ const ICON_MAPPING = {
   'arrow-down': 'grv-chevron-down',
   'arrow-line': 'arrow-line',
   'arrow-rotate-sync': 'grv-recurring-small',
+  'arrow-rotate-sync-medium': 'grv-recurring-small',
   'arrow-rotate': 'grv-recurring',
   'arrow-tail-down-medium': 'grv-arrow-down-medium',
   'arrow-tail-down': 'grv-arrow-down',
