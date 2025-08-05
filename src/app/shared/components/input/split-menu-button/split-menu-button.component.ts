@@ -1,7 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
   selector: 'app-split-menu-button',
@@ -34,6 +37,10 @@ export class SplitMenuButtonComponent {
 
   iconColor: string = brandingStyle.buttons.primary.iconColorActive;
 
+  constructor(private integrationsService: IntegrationsService, private router: Router){
+
+  }
+
   onClick(): void {
     if (!this.disabled && !this.isLoading){
     this.buttonClick.emit();
@@ -47,12 +54,6 @@ export class SplitMenuButtonComponent {
       this.iconColor = brandingStyle.buttons.primary.iconColorActive;
     }
   }
-
-  menuOptions = [
-    { label: 'Menu button label 1', value: 1 },
-    { label: 'Menu button label 2', value: 2 },
-    { label: 'Menu button label 3', value: 3 }
-  ];
 
   toggleDropdown(event: MouseEvent, dropdown: any): void {
   if (dropdown.overlayVisible) {
@@ -88,4 +89,10 @@ export class SplitMenuButtonComponent {
     dropdown.show(fakeEvent as unknown as MouseEvent);
   }
 }
+
+  isCurrentIntegration(integrationName: InAppIntegration) {
+    return this.router.url.includes(
+      this.integrationsService.inAppIntegrationUrlMap[integrationName]
+    );
+  }
 }
