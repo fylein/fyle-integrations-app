@@ -290,7 +290,7 @@ p {
 }
 
 .p-inputswitch .p-inputswitch-slider:before {
-    @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
+    @apply tw-bg-toggle-disabled-text-color tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
 }
 
 [data-theme='co'] {
@@ -300,15 +300,15 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    @apply tw-translate-x-toggle-circle-translate #{!important};
+    @apply tw-bg-toggle-enabled-text-color tw-translate-x-toggle-circle-translate #{!important};
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
+    @apply tw-bg-toggle-enabled-bg tw-w-toggle-width tw-h-toggle-height #{!important};
 }
 
 .p-inputswitch .p-inputswitch-slider {
-    @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
+    @apply tw-bg-toggle-disabled-bg tw-border-toggle-border tw-border-solid tw-border-toggle-border-width tw-w-toggle-width tw-h-toggle-height #{!important};
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
@@ -316,11 +316,11 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] #{!important};
 }
 
 .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
 }
 
 

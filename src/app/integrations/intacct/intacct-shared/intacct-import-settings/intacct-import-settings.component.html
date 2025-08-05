@@ -293,13 +293,17 @@
                 </div>
               </div>
 
-            <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+            <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px tw-gap-2">
+                <!-- to be removed, can ignore for now --> <!--    
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     {{ 'intacctImportSettings.cancel' | transloco }}
                 </button>
-                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
+                <button type="button" class="save-btn" pButton  (click)="saveCustomField()">
                     {{ 'intacctImportSettings.createAndSave' | transloco }}
-                </button>
+                </button> -->
+                
+                <app-primary-button (buttonClick)="closeModel()" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-primary-button>
+                <app-primary-button [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (buttonClick)="saveCustomField()" [buttonText]="'intacctImportSettings.createAndSave' | transloco"></app-primary-button>
             </div>
         </div>
     </div>

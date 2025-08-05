@@ -2,10 +2,12 @@
 
 const customColors = {
   white: 'var(--white)',
+  green: 'var(--bg-green)',
   placeholder: 'var(--placeholder)',
   separator: 'var(--separator)',
   'normal-text-color': 'var(--normal-text-color)',
   'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'green-text-color': 'var(--mandatory-field-color)',
   'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
   'sub-text-color': 'var(--sub-text-color)',
   'faded-text-color': 'var(--faded-text-color)',
@@ -30,6 +32,7 @@ const customColors = {
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
+  'bg-grey-primary': 'var(--bg-grey-primary)',
 };
 
 const spacings = {
@@ -90,6 +93,7 @@ const borderRadius = {
 const borderWidth = {
   'border-1': 'var(--border-1)',
   'border-2': 'var(--border-2)',
+  'toggle-border-width': 'var(--toggle-border-width)',
 };
 
 const borderColors = {
@@ -118,6 +122,7 @@ const borderColors = {
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
+  'border-green': 'var(--bg-green)'
 };
 
 const colors = {
@@ -133,6 +138,7 @@ const colors = {
   'bg-disable': 'var(--bg-disable)',
   'bg-tertiary': 'var(--bg-tertiary)',
   'bg-white': 'var(--bg-white)',
+  'bg-green': 'var(--bg-green)',
   'bg-primary-opacity': 'var(--bg-primary-opacity)',
   //regular bg'
   'bg-success': 'var(--bg-success)',
@@ -569,6 +575,14 @@ const componentVariables = {
   'form-switch-label-text': 'var(--form-switch-label-text)',
   'switch-group-border-color': 'var(--switch-group-border-color)',
 
+
+  // Toggle
+  'toggle-enabled-bg': 'var(--toggle-enabled-bg)',
+  'toggle-disabled-bg': 'var(--toggle-disabled-bg)',
+  'toggle-enabled-text-color': 'var(--toggle-enabled-text-color)',
+  'toggle-disabled-text-color': 'var(--toggle-disabled-text-color)',
+  'toggle-border': 'var(--toggle-border)',
+
   // Upload
   'upload-filedrop-bg': 'var(--upload-filedrop-bg)',
   'upload-filedrop-border-color': 'var(--upload-filedrop-border-color)',
@@ -960,6 +974,7 @@ module.exports = {
     },
     fontSize: {
       '9-px':'9px',
+      '10-px':'10px',
       '11-px': '11px',
       '12-px': '12px',
       '14-px': '14px',
@@ -1294,6 +1309,7 @@ module.exports = {
         '12-px': '12px',
         '16-px': '16px',
         '20-px': '20px',
+        '32-px': '32px',
         '48-px': '48px',
         '99-px': '99px',
         '50': '50%',

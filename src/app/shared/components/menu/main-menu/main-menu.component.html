@@ -1,16 +1,25 @@
-<div class="tw-flex tw-items-center tw-justify-between tw-bg-white main-menu-tabs">
+<div class="tw-flex tw-items-center tw-justify-between tw-bg-white main-menu-tabs" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
-    <div class="tw-flex tw-items-center main-menu-tab-btns">
+    <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
+
+        @if(brandingFeatureConfig.isDashboardButtonOutlined){
+            <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
+        } @else {
         <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
             <span class="tw-text-14-px">
                 {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
             </span>
         </button>
+        }
 
         <span *ngIf="isSyncVisible">
-            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed"
-            [pTooltip]="toolTipText"
+            @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
+            @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (buttonClick)="refreshDimensions()" [iconSize]="'14px'" [svgSource]="'arrow-rotate-sync'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
+            } @else {
+            <button
+            [pTooltip]="toolTipText" 
             [disabled]="isMenuDisabled"
             (click)="refreshDimensions()"
             [ngClass]="{
@@ -28,12 +37,18 @@
             <span class="tw-text-14-px">
                 {{ 'mainMenu.sync' | transloco }}
             </span>
-        </button>
+        </button>  }
+    } @else {
+        @if(!brandingFeatureConfig.isDashboardButtonOutlined){
             <div class="tw-mr-22-px">
                 <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
                     {{ 'mainMenu.refreshData' | transloco }}
                 </span>
             </div>
+        } @else { 
+            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
+            }
+        }
         </span>
 
         <p-dropdown
