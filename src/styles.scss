@@ -89,6 +89,14 @@ p {
     .p-checkbox .p-checkbox-box .p-icon {
         content: url('./assets/icons/check.svg') !important;
     }
+
+    .main-menu-tabs {
+      @apply tw-pt-2;
+    }
+
+    .main-menu-tab-btns {
+      @apply tw-pb-2;
+    }
 }
 
 [data-theme='co'] {
@@ -252,6 +260,12 @@ p {
 // Tooltip
 .p-tooltip .p-tooltip-text {
     @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
+}
+
+[data-theme='fyle'] {
+  .p-tooltip .p-tooltip-text{
+    @apply tw-py-8-px tw-px-12-px tw-text-14-px #{!important}
+  }
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
