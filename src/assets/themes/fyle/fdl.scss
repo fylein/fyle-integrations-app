@@ -340,7 +340,7 @@
 
     --calendar-date-default-text-color: var(--text-secondary);
 
-    --tooltip-bg: var(--bg-secondary);
+    --tooltip-bg: #{$grey-675};
 
     --date-picker-filled-icon-color: var(--icon-muted);
 
