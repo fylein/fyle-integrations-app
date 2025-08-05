@@ -1,7 +1,7 @@
-<div class="tw-flex tw-items-center tw-justify-between tw-bg-white" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
+<div class="tw-flex tw-items-center tw-justify-between tw-bg-white main-menu-tabs" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
-    <div class="tw-flex tw-items-center tw-gap-10-px">
+    <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
 
         @if(brandingFeatureConfig.isDashboardButtonOutlined){
             <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
@@ -27,13 +27,13 @@
                 'tw-bg-gray-200 tw-text-menu-inactive-text-color': isMenuDisabled
             }"
             class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-            
-            <app-svg-icon [svgSource]="'arrow-rotate-sync'" 
-                [width]="'14px'" 
-                [height]="'14px'" 
+
+            <app-svg-icon [svgSource]="'arrow-rotate-sync'"
+                [width]="'14px'"
+                [height]="'14px'"
                 [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'">
             </app-svg-icon>
-        
+
             <span class="tw-text-14-px">
                 {{ 'mainMenu.sync' | transloco }}
             </span>

@@ -253,19 +253,19 @@
 
     --nav-tabs-hover-bg: transparent;
 
-    --nav-link-active-border: var(--bg-primary);
+    --nav-link-active-border: #{$brand-500};
 
     --nav-link-font-weight: 500;
 
     --nav-tabs-active: var(--text-disable);
 
-    --nav-tabs-active-border: var(--border-secondary);
+    --nav-tabs-active-border: #{$grey-350};
 
     --nav-tabs-active-bg:  var(--bg-brand);
 
     --nav-tabs-inactive-bg: transparent;
 
-    --nav-tabs-inactive-text-color: var(--text-disable);
+    --nav-tabs-inactive-text-color: #{$grey-900};
 
     --search-default-filled-text: var(--text-primary);
 
