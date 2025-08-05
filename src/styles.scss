@@ -54,7 +54,7 @@
             @apply tw-h-32-px tw-py-5-px #{!important};
         }
 
-        .p-dropdown-trigger {
+        .p-dropdown-trigger, .p-dropdown-trigger > *, .pi-chevron-down.fyle {
             content: url('./assets/icons/caret-large-down.svg') !important;
         }
 
@@ -185,25 +185,13 @@ p {
     }
 }
 
-[data-theme='fyle'] {
-    .pi-chevron-down {
-        content: url('./assets/icons/arrow-down.svg') !important;
-    }
-}
-
 [data-theme='co'] {
     .pi-chevron-down {
         content: url('./assets/icons/co/grv-chevron-down.svg') !important;
     }
 }
 
-.pi-chevron-down.fyle {
-    padding-left: 16px !important;
-    content: url('./assets/icons/arrow-down.svg') !important;
-}
-
 .pi-chevron-down.co {
-    padding-left: 16px !important;
     content: url('./assets/icons/co/grv-chevron-down.svg') !important;
 }
 
