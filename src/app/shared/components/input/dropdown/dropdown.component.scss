@@ -11,7 +11,7 @@
 }
 
 :host ::ng-deep .error-box .p-dropdown {
-    @apply tw-border-select-error-border #{!important};
+    @apply tw-border-border-danger-dark #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown {
