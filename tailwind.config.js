@@ -33,6 +33,30 @@ const customColors = {
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
   'bg-grey-primary': 'var(--bg-grey-primary)',
+
+  // Action/Major colors (Jade theme for major actions)
+  'action-major-25': 'var(--action-major-25)',
+  'action-major-150': 'var(--action-major-150)',
+  'action-major-350': 'var(--action-major-350)',
+  'action-major-450': 'var(--action-major-450)',
+  'action-major-500': 'var(--action-major-500)',
+  'action-major-600': 'var(--action-major-600)',
+  'action-major-700': 'var(--action-major-700)',
+
+  // Utility/Major colors (grayscale tints/shades)
+  'utility-major-10': 'var(--utility-major-10)',
+  'utility-major-25': 'var(--utility-major-25)',
+  'utility-major-40': 'var(--utility-major-40)',
+  'utility-major-50': 'var(--utility-major-50)',
+  'utility-major-75': 'var(--utility-major-75)',
+  'utility-major-100': 'var(--utility-major-100)',
+  'utility-major-150': 'var(--utility-major-150)',
+  'utility-major-200': 'var(--utility-major-200)',
+  'utility-major-300': 'var(--utility-major-300)',
+  'utility-major-400': 'var(--utility-major-400)',
+  'utility-major-450': 'var(--utility-major-450)',
+  'utility-major-500': 'var(--utility-major-500)',
+  'utility-major-800': 'var(--utility-major-800)',
 };
 
 const spacings = {
@@ -549,6 +573,9 @@ const componentVariables = {
   'select-error-icon': 'var(--select-error-icon)',
   'select-error-placeholder-text': 'var(--select-error-placeholder-text)',
   'select-error-text': 'var(--select-error-text)',
+
+  // Select Menu
+  'select-menu-item-active-bg': 'var(--select-menu-item-active-bg)',
 
   // Search - Default
   'search-default-border': 'var(--search-default-border)',

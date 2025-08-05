@@ -277,11 +277,9 @@
 
     --select-focused-border: var(--border-primary);
 
-    --select-default-border: var(--border-secondary);
-
     --select-default-placeholder-text: var(--text-placeholder);
 
-    --dropdown-option-height: 32px;
+    --dropdown-option-height: 25px;
 
     --dd-menu-item-default-text-color: var(--text-secondary);
 
@@ -418,5 +416,33 @@
     --toggle-disabled-text-color: #{$slate-500};
     --toggle-border: var(--toggle-enabled-bg);
     --toggle-border-width: 1px;
+
+    // Select
+    --select-default-border: #{$utility-major-300};
+    --select-menu-item-active-bg: #{$action-major-500};
+
+    // Action/Major - Primary theme colour for major actions (Jade)
+    --action-major-25: #{$action-major-25};
+    --action-major-150: #{$action-major-150};
+    --action-major-350: #{$action-major-350};
+    --action-major-450: #{$action-major-450};
+    --action-major-500: #{$action-major-500};
+    --action-major-600: #{$action-major-600};
+    --action-major-700: #{$action-major-700};
+
+    // Utility/Major - Base colour for grayscale tints/shades
+    --utility-major-10: #{$utility-major-10};
+    --utility-major-25: #{$utility-major-25};
+    --utility-major-40: #{$utility-major-40};
+    --utility-major-50: #{$utility-major-50};
+    --utility-major-75: #{$utility-major-75};
+    --utility-major-100: #{$utility-major-100};
+    --utility-major-150: #{$utility-major-150};
+    --utility-major-200: #{$utility-major-200};
+    --utility-major-300: #{$utility-major-300};
+    --utility-major-400: #{$utility-major-400};
+    --utility-major-450: #{$utility-major-450};
+    --utility-major-500: #{$utility-major-500};
+    --utility-major-800: #{$utility-major-800};
   }
 }

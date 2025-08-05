@@ -42,9 +42,6 @@ $brand-600: #006738;
 //slate shades
 $slate-500: #6C8493;
 
-// utility/major - This base colour is used to create our grayscale tints/shades used throughout our applications.
-$utility-major-25: #F2F5F6;
-
 //blue shades
 $blue-10: #f6faff;
 $blue-50: #fafcff;
@@ -83,3 +80,28 @@ $purple-300: #dbc5ff;
 $purple-500: #8e46ff;
 
 $manate: #8c8fa6;
+
+// Component colours (theme) - This is the primary theme colour used in various components to convey major actions.
+// Jade - action/major
+$action-major-25: #f2f9f6ff;
+$action-major-150: #b3d9c8ff;
+$action-major-350: #4da77eff;
+$action-major-450: #198e59ff;
+$action-major-500: #007e45ff;
+$action-major-600: #006738ff;
+$action-major-700: #004d2aff;
+
+// utility/major - This base colour is used to create our grayscale tints/shades
+$utility-major-10: #fafbfbff;
+$utility-major-25: #f2f5f6ff;
+$utility-major-40: #edf1f2ff;
+$utility-major-50: #e6ebedff;
+$utility-major-75: #d9e0e4ff;
+$utility-major-100: #ccd6dbff;
+$utility-major-150: #b3c2c9ff;
+$utility-major-200: #99adb7ff;
+$utility-major-300: #668494ff;
+$utility-major-400: #335b70ff;
+$utility-major-450: #19475eff;
+$utility-major-500: #00324cff;
+$utility-major-800: #00141eff;
