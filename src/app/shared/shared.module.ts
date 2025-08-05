@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -214,7 +215,8 @@ import { SplitMenuButtonComponent } from './components/input/split-menu-button/s
     InputIconModule,
     CheckboxButtonComponent,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    TranslocoModule
+    TranslocoModule,
+    SplitButtonModule
   ],
   exports: [
     LoaderComponent,
