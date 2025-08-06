@@ -96,13 +96,23 @@
             @apply tw-translate-y-[7px] tw-shadow-base-shadow;
         }
 
-        // Error state
+        // Dropdown - Error state
         .error-box .p-dropdown {
             @apply tw-border-2 #{!important};
         }
 
         .mandatory-error-message {
             @apply tw-text-text-danger-dark tw-text-14-px #{!important};
+        }
+
+        // Text inputs
+
+        input[type="text"], input[type="password"] {
+            @apply tw-h-32-px tw-py-5-px tw-border-utility-major-300 tw-text-14-px #{!important};
+        }
+
+        input[type="text"]:disabled, input[type="password"]:disabled {
+            @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
         }
     }
 
