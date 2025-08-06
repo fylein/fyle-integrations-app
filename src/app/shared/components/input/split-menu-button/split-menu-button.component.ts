@@ -41,8 +41,11 @@ export class SplitMenuButtonComponent {
     }
   }
 
-  setLastItemClasses(isLast: boolean): string {
+  setItemClasses(isFirst: boolean, isLast: boolean): string {
     const baseClasses = [];
+    if(isFirst) {
+      baseClasses.push('tw-rounded-tr-lg tw-rounded-tl-lg');
+    }
     if (isLast) {
       baseClasses.push('tw-rounded-br-lg tw-rounded-bl-lg');
     }
