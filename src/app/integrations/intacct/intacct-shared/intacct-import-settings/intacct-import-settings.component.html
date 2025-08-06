@@ -93,8 +93,8 @@
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-pl-14-px tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
-                    <div class="fields-header-text tw-w-30-vw tw-pl-14-px tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
+                    <div class="fields-header-text tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+                    <div class="fields-header-text tw-w-30-vw tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
                     <div class="fields-header-text tw-flex tw-whitespace-nowrap">
                         {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>

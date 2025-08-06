@@ -15,6 +15,6 @@
 }
 
 :host ::ng-deep .error-box {
-    @apply tw-border tw-border-alert-toast #{!important};
+    @apply tw-border tw-border-border-danger-dark #{!important};
 }
 

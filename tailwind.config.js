@@ -33,6 +33,30 @@ const customColors = {
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
   'bg-grey-primary': 'var(--bg-grey-primary)',
+
+  // Action/Major colors (Jade theme for major actions)
+  'action-major-25': 'var(--action-major-25)',
+  'action-major-150': 'var(--action-major-150)',
+  'action-major-350': 'var(--action-major-350)',
+  'action-major-450': 'var(--action-major-450)',
+  'action-major-500': 'var(--action-major-500)',
+  'action-major-600': 'var(--action-major-600)',
+  'action-major-700': 'var(--action-major-700)',
+
+  // Utility/Major colors (grayscale tints/shades)
+  'utility-major-10': 'var(--utility-major-10)',
+  'utility-major-25': 'var(--utility-major-25)',
+  'utility-major-40': 'var(--utility-major-40)',
+  'utility-major-50': 'var(--utility-major-50)',
+  'utility-major-75': 'var(--utility-major-75)',
+  'utility-major-100': 'var(--utility-major-100)',
+  'utility-major-150': 'var(--utility-major-150)',
+  'utility-major-200': 'var(--utility-major-200)',
+  'utility-major-300': 'var(--utility-major-300)',
+  'utility-major-400': 'var(--utility-major-400)',
+  'utility-major-450': 'var(--utility-major-450)',
+  'utility-major-500': 'var(--utility-major-500)',
+  'utility-major-800': 'var(--utility-major-800)',
 };
 
 const spacings = {
@@ -105,6 +129,7 @@ const borderColors = {
   'border-warning': 'var(--border-warning)',
   'border-success': 'var(--border-success)',
   'border-danger': 'var(--border-danger)',
+  'border-danger-dark': 'var(--border-danger-dark)',
   'border-white': 'var(--border-white)',
   'border-danger-light': 'var(--border-danger-light)',
   'border-highlight-light': 'var(--border-highlight-light)',
@@ -145,6 +170,7 @@ const colors = {
   'bg-info': 'var(--bg-info)',
   'bg-warning': 'var(--bg-warning)',
   'bg-danger': 'var(--bg-danger)',
+  'bg-danger-dark': 'var(--bg-danger-dark)',
 
   //light bg
   'bg-info-light': 'var(--bg-info-light)',
@@ -174,6 +200,7 @@ const colors = {
   'icon-tertiary': 'var(--icon-tertiary)',
   'icon-success': 'var(--icon-success)',
   'icon-danger': 'var(--icon-danger)',
+  'icon-danger-dark': 'var(--icon-danger-dark)',
   'icon-info': 'var(--icon-info)',
   'icon-warning': 'var(--icon-warning)',
   'icon-muted': 'var(--icon-muted)',
@@ -191,6 +218,7 @@ const textColors = {
   'text-info': 'var(--text-info)',
   'text-warning': 'var(--text-warning)',
   'text-danger': 'var(--text-danger)',
+  'text-danger-dark': 'var(--text-danger-dark)',
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
@@ -246,6 +274,7 @@ const shadow = {
   'shadow-level-1-inverse': '0px -1px 4px 0px rgba(0, 0, 0, 0.20);',
   'shadow-level-2-inverse': '0px -2px 8px 0px rgba(0, 0, 0, 0.20);',
   'shadow-level-3-inverse': '0px -4px 16px 0px rgba(0, 0, 0, 0.20);',
+  'base-shadow': '0 1px 6px 0 rgba(0, 0, 0, 0.20)',
 };
 
 const gradient = {
@@ -549,6 +578,9 @@ const componentVariables = {
   'select-error-icon': 'var(--select-error-icon)',
   'select-error-placeholder-text': 'var(--select-error-placeholder-text)',
   'select-error-text': 'var(--select-error-text)',
+
+  // Select Menu
+  'select-menu-item-active-bg': 'var(--select-menu-item-active-bg)',
 
   // Search - Default
   'search-default-border': 'var(--search-default-border)',
