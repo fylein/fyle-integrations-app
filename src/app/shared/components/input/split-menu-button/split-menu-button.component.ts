@@ -34,7 +34,7 @@ export class SplitMenuButtonComponent {
     }
   }
 
-  handleOptionClick(option: any): void {
+  handleOptionClick(option: { handler?: () => void; disabled?: boolean }): void {
     if (option.handler && !option.disabled) {
       option.handler();
       this.isDropdownVisible = false;
