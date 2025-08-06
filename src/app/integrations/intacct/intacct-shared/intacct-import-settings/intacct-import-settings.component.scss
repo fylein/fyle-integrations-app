@@ -10,9 +10,6 @@
     @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
   }
 
-  :host ::ng-deep .p-dropdown {
-    @apply tw-scale-90 #{!important};
-  }
 
   .form-input-disabled {
     padding: 11px 0px 11px 14px;
