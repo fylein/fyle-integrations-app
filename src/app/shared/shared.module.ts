@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -103,6 +104,7 @@ import { OutlinedIconButtonComponent } from './components/input/outlined-icon-bu
 import { PrimaryButtonComponent } from './components/input/primary-button/primary-button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
 
 @NgModule({
   declarations: [
@@ -184,6 +186,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
     PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
   ],
@@ -212,7 +215,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     InputIconModule,
     CheckboxButtonComponent,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    TranslocoModule
+    TranslocoModule,
+    SplitButtonModule
   ],
   exports: [
     LoaderComponent,
@@ -295,6 +299,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
     PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
     TranslocoModule
