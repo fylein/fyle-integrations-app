@@ -3,20 +3,22 @@
 
     <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
 
-        @if(brandingFeatureConfig.isDashboardButtonOutlined){
-            <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
-        } @else {
-        <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
-            <span class="tw-text-14-px">
-                {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
-            </span>
-        </button>
+        @if (isDisconnectRequired && !showMoreDropdown && !isMenuDisabled) {
+            @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
+            } @else {
+            <button class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+                <span class="tw-text-14-px">
+                    {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
+                </span>
+            </button>
+            }
         }
 
         <span *ngIf="isSyncVisible">
             @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
             @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (buttonClick)="refreshDimensions()" [iconSize]="'14px'" [svgSource]="'arrow-rotate-sync'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
+                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
             } @else {
             <button
             [pTooltip]="toolTipText" 
@@ -46,7 +48,7 @@
                 </span>
             </div>
         } @else { 
-            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
+            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
             }
         }
         </span>
