@@ -78,7 +78,7 @@
                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
                             <span>
                             {{ (option.label | sentenceCase) }}</span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
+                            <p *ngIf="isMultiLineOption" class="tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
 

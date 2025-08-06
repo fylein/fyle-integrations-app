@@ -26,6 +26,7 @@
     --bg-info: #{$blue-500};
     --bg-warning: #{$yellow-500};
     --bg-danger: #{$red-500};
+    --bg-danger-dark: #{$red-600};
 
     //light bg
     --bg-info-light: #{$blue-200};
@@ -55,6 +56,7 @@
     --border-warning: #{$yellow-500};
     --border-success: #{$green-500};
     --border-danger: #{$red-500};
+    --border-danger-dark: #{$red-600};
     --border-white: #{$white};
 
     --border-danger-light: #{$red-300};
@@ -97,6 +99,7 @@
     --text-info: #{$blue-900};
     --text-warning: #{$yellow-500};
     --text-danger: #{$red-500};
+    --text-danger-dark: #{$red-600};
     --text-highlight: #{$purple-500};
     --text-calm: #{$green-900};
     --text-white: #{$white};
@@ -119,6 +122,7 @@
     --icon-white: #{$white};
     --icon-success: #{$green-500};
     --icon-danger: #{$red-500};
+    --icon-danger-dark: #{$red-600};
     --icon-info: #{$blue-500};
     --icon-warning: #{$yellow-500};
     --icon-muted: #{$grey-400};

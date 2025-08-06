@@ -129,6 +129,7 @@ const borderColors = {
   'border-warning': 'var(--border-warning)',
   'border-success': 'var(--border-success)',
   'border-danger': 'var(--border-danger)',
+  'border-danger-dark': 'var(--border-danger-dark)',
   'border-white': 'var(--border-white)',
   'border-danger-light': 'var(--border-danger-light)',
   'border-highlight-light': 'var(--border-highlight-light)',
@@ -169,6 +170,7 @@ const colors = {
   'bg-info': 'var(--bg-info)',
   'bg-warning': 'var(--bg-warning)',
   'bg-danger': 'var(--bg-danger)',
+  'bg-danger-dark': 'var(--bg-danger-dark)',
 
   //light bg
   'bg-info-light': 'var(--bg-info-light)',
@@ -198,6 +200,7 @@ const colors = {
   'icon-tertiary': 'var(--icon-tertiary)',
   'icon-success': 'var(--icon-success)',
   'icon-danger': 'var(--icon-danger)',
+  'icon-danger-dark': 'var(--icon-danger-dark)',
   'icon-info': 'var(--icon-info)',
   'icon-warning': 'var(--icon-warning)',
   'icon-muted': 'var(--icon-muted)',
@@ -215,6 +218,7 @@ const textColors = {
   'text-info': 'var(--text-info)',
   'text-warning': 'var(--text-warning)',
   'text-danger': 'var(--text-danger)',
+  'text-danger-dark': 'var(--text-danger-dark)',
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
@@ -270,6 +274,7 @@ const shadow = {
   'shadow-level-1-inverse': '0px -1px 4px 0px rgba(0, 0, 0, 0.20);',
   'shadow-level-2-inverse': '0px -2px 8px 0px rgba(0, 0, 0, 0.20);',
   'shadow-level-3-inverse': '0px -4px 16px 0px rgba(0, 0, 0, 0.20);',
+  'base-shadow': '0 1px 6px 0 rgba(0, 0, 0, 0.20)',
 };
 
 const gradient = {
