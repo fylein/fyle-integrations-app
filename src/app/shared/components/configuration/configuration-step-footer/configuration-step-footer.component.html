@@ -1,8 +1,8 @@
-<div class="tw-flex tw-py-16-px tw-px-24-px tw-border-t tw-border-t-border-tertiary" [ngClass]="[!showBackButton ? 'tw-justify-end': 'tw-justify-between']">
+<div class="tw-flex tw-items-center tw-py-16-px tw-px-24-px tw-border-t tw-border-t-border-tertiary" [ngClass]="[!showBackButton ? 'tw-justify-end': 'tw-justify-between']">
     <div class="tw-flex" *ngIf="showBackButton">
         <div>
             @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                <app-outlined-icon-button [styleClasses]="'tw-py-8-px !tw-px-[16px]'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="'configurationStepFooter.back' | transloco"></app-outlined-icon-button>
+                <app-outlined-icon-button [styleClasses]="'tw-px-24-px tw-py-8-px tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="'configurationStepFooter.back' | transloco"></app-outlined-icon-button>
             } @else {
             <button type="button" class="p-button outline-sm" (click)="navigate()">
                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-left-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pr-10-px tw-text-12-px tw-text-btn-cta'"></app-svg-icon>
@@ -24,5 +24,5 @@
     }
     
 
-    <app-primary-button [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [styleClasses]="'tw-px-16-px tw-py-8-px'" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-primary-button>
+    <app-primary-button [styleClasses]="'tw-px-24-px tw-py-8-px tw-text-14-px'" [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-primary-button>
 </div>

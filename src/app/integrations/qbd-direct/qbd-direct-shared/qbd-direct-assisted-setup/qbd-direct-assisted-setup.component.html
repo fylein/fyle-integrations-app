@@ -1,6 +1,7 @@
 <app-outlined-icon-button
   [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco"
   [svgSource]="'headset'"
+  [styleClasses]="'tw-py-10-px tw-px-24-px'"
   (buttonClick)="toggleAssistedSetupDialog()"
   [pTooltip]="isAssistedSetupSlotBooked ? ('qbdDirectAssistedSetup.requestReceivedTooltip' | transloco) : ''"
   tooltipPosition="bottom"

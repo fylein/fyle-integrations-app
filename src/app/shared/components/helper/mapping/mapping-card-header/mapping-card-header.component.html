@@ -22,7 +22,4 @@
             </div>
         </div>
     </div>
-    <div *ngIf="showAutoMapEmployee && sourceField==='EMPLOYEE'" class="tw-mt-24-px">
-        <app-primary-button [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" [buttonText]="('common.autoMap' | transloco) + ' ' + (sourceField | lowercase)" (buttonClick)="triggerAutoMapEmployees()"></app-primary-button>
-    </div>
 </div>
