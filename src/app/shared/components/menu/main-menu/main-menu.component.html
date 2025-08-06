@@ -53,12 +53,12 @@
         }
         </span>
 
-        @if(showMoreDropdown){
+        @if(brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown){
         <app-split-menu-button [dropdownOptions]="dropdownOptions" [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"></app-split-menu-button>
         }
 
         <p-dropdown
-            *ngIf="false"
+            *ngIf="!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown"
             [(ngModel)]="dropdownValue"
             (onChange)="handleDropdownChange($event)"
             (onClick)="handleDropdownClick()"

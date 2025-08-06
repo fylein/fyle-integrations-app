@@ -1390,6 +1390,7 @@ module.exports = {
         'btn-cta-shadow': 'var(--btn-cta-shadow)',
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
         'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
+        'navbar-menu': '0px 5px 5px 0px rgba(0, 20, 30, 0.2), 0px 10px 10px 0px rgba(0, 20, 30, 0.1)',
         ...shadow
       },
       dropShadow: {

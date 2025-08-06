@@ -1,55 +1,31 @@
-<p-dropdown
+<div 
   #dropdownRef
-  [options]="dropdownOptions"
-  optionLabel="label"
-  appendTo="body"
-  [autoZIndex]="true"
-  [group]="true"
-  class="tw-opacity-0 tw-absolute tw-w-0 tw-h-0 tw-pointer-events-none"
->
-    <ng-template let-group pTemplate="group">
-                <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
-                    <span>{{group.label}}</span>
-                </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-                @if (option.label === "[divider]") {
-                    <div class="tw-border-t tw-border-separator tw-w-full"></div>
-                } @else {
-                    <span [class]="{
-                        'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
-                        'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
-                    }">
-                        {{option.label}}
-                    </span>
-                }
-            </ng-template>
-</p-dropdown>
-
-<app-outlined-icon-button [svgSource]="'arrow-down'" [buttonText]="'More'" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (click)="toggleDropdown($event, dropdownRef)"></app-outlined-icon-button>
-
-<!-- 
-<div class="tw-bg-transparent tw-font-primary tw-text-sm tw-cursor-pointer tw-text-white tw-inline-flex tw-items-center tw-justify-start"  #buttonWrapper>
-
-  <div class="tw-h-[40px] tw-py-[5px] tw-px-[24px] tw-bg-btn-primary-bg tw-rounded-l-[32px] tw-outline tw-outline-2 tw-outline-transparent tw-outline-offset-[-2px] tw-flex tw-items-center tw-justify-start tw-gap-[8px]">
-    <div class="tw-leading-[21px]">
-      {{ buttonText }}
-    </div>
-  </div>
-
-  <div class="tw-w-[40px] tw-h-[40px] tw-relative tw-bg-transparent" (click)="toggleDropdown($event, dropdownRef)">
-    <div class="tw-w-[40px] tw-h-[40px] tw-absolute tw-left-0 tw-top-0 tw-bg-btn-primary-bg tw-rounded-r-[32px] tw-outline tw-outline-2 tw-outline-transparent tw-outline-offset-[-2px] tw-inline-flex tw-items-center tw-justify-center">
-      <div class="tw-w-[20px] tw-h-[20px] tw-relative">
-        <app-svg-icon
-          [svgSource]="'arrow-down'"
-          [width]="'20px'"
-          [height]="'20px'"
-          [styleClasses]="'tw-text-alerts-success-icon-color'"
-        ></app-svg-icon>
+  *ngIf="isDropdownVisible"
+  class="tw-font-primary tw-text-14-px tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-gap-0 tw-items-start tw-justify-start tw-absolute tw-z-50 tw-min-w-48 tw-top-12 tw-right-0 tw-mr-[10px] tw-mt-8-px tw-shadow-navbar-menu">
+  
+  @for (group of dropdownOptions; track group.label) {
+    <div class="tw-rounded-tl-lg tw-rounded-tr-lg tw-border-solid tw-border-transparent tw-border-2 tw-pt-2 tw-pr-4 tw-pb-2 tw-pl-4 tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-h-8 tw-relative">
+      <div class="tw-text-text-label tw-text-left tw-text-14-px tw-leading-normal tw-relative tw-flex tw-items-center tw-justify-start">
+        {{ group.label }}
       </div>
     </div>
-
-    <div class="tw-w-[40px] tw-h-[2px] tw-absolute tw-left-[2px] tw-top-0 tw-rotate-90 tw-origin-top-left tw-bg-white"></div>
-  </div>
+    
+    @for (option of group.items; track option.label; let isLast = $last) {
+      @if (option.label === "[divider]") {
+        <div class="tw-border-t tw-border-separator tw-w-full tw-mx-4 tw-self-center"></div>
+      } @else {
+        <div 
+          (click)="handleOptionClick(option)"
+          [class]="setLastItemClasses(isLast)"
+          class="hover:tw-text-white hover:tw-bg-action-major-600 tw-text-action-major-500 tw-border-solid tw-border-transparent tw-border-2 tw-pt-2 tw-pr-4 tw-pb-2 tw-pl-4 tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-h-8 tw-relative tw-cursor-pointer tw-transition-colors tw-duration-200">
+          <div 
+            class="tw-text-left tw-text-14-px tw-leading-normal tw-relative tw-flex tw-items-center tw-justify-start">
+            {{ option.label }}
+          </div>
+        </div>
+      }
+    }
+  }
 </div>
--->
+
+<app-outlined-icon-button [svgSource]="'arrow-down'" [buttonText]="buttonText" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" (click)="toggleDropdown($event)"></app-outlined-icon-button>
