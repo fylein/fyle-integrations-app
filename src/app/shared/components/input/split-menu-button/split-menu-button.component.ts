@@ -28,7 +28,7 @@ export class SplitMenuButtonComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (this.isDropdownVisible && this.dropdownElement && 
+    if (this.isDropdownVisible && this.dropdownElement &&
         !this.dropdownElement.nativeElement.contains(event.target)) {
       this.isDropdownVisible = false;
     }
@@ -46,7 +46,7 @@ export class SplitMenuButtonComponent {
     if (isLast) {
       baseClasses.push('tw-rounded-br-lg tw-rounded-bl-lg');
     }
-    
+
     return baseClasses.join(' ');
   }
 
