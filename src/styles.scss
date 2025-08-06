@@ -93,7 +93,7 @@
         }
 
         .p-dropdown-panel {
-            @apply tw-relative tw-top-[7px] tw-shadow-base-shadow;
+            @apply tw-translate-y-[7px] tw-shadow-base-shadow;
         }
 
         // Error state
