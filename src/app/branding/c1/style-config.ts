@@ -43,11 +43,6 @@ export const c1Styles = {
         },
         dialog: {
             cancel: 'tw-px-16-px tw-py-8-px outline-sm'
-        },
-        split_menu: {
-            class: '',
-            active: '',
-            disabled: ''
         }
     }
 };

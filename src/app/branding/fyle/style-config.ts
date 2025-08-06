@@ -43,11 +43,6 @@ export const fyleStyles = {
         },
         dialog: {
             cancel: 'tw-px-16-px tw-py-8-px'
-        },
-        split_menu: {
-            class: 'tw-font-primary tw-text-sm ',
-            active: 'hover:tw-bg-bg-green tw-bg-btn-primary-bg tw-text-white ',
-            disabled: ''
         }
     }
 };

@@ -6,7 +6,7 @@
   [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons.primary.class"
   [ngClass]="[disabled && !isLoading ? brandingStyle.buttons.primary.disabled : (isLoading ? brandingStyle.buttons.primary.progress : brandingStyle.buttons.primary.active), styleClasses]"
   (click)="!disabled && onClick()">
-  @if(!isIconLeftSide && buttonText){
+  @if(!isIconLeftSide){
     {{ buttonText }}
   }
   @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
@@ -19,7 +19,7 @@
   </app-svg-icon>  } @else { 
   <div class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-transparent tw-border-r-transparent tw-border-l-transparent tw-rounded-full tw-animate-spin" [ngClass]="brandingStyle.buttons.primary.loader"></div> }
     }
-  @if(isIconLeftSide && buttonText){
+  @if(isIconLeftSide){
     {{ buttonText }}
 }
 </button>

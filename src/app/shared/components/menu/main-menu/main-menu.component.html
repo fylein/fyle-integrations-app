@@ -53,39 +53,40 @@
         }
         </span>
 
-        @if(brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown){
-        <app-split-menu-button [dropdownOptions]="dropdownOptions" [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"></app-split-menu-button>
+        @if (brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
+            <app-split-menu-button [dropdownOptions]="dropdownOptions" [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"></app-split-menu-button>
         }
 
-        <p-dropdown
-            *ngIf="!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown"
-            [(ngModel)]="dropdownValue"
-            (onChange)="handleDropdownChange($event)"
-            (onClick)="handleDropdownClick()"
-            appendTo="body"
-            class="tw-mr-26-px tw-w-fit"
-            [options]="dropdownOptions"
-            [placeholder]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
-            [group]="true"
-            [disabled]="isDisabled"
-        >
-            <ng-template let-group pTemplate="group">
-                <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
-                    <span>{{group.label}}</span>
-                </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-                @if (option.label === "[divider]") {
-                    <div class="tw-border-t tw-border-separator tw-w-full"></div>
-                } @else {
-                    <span [class]="{
-                        'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
-                        'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
-                    }">
-                        {{option.label}}
-                    </span>
-                }
-            </ng-template>
-        </p-dropdown>
+        @if (!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
+            <p-dropdown
+                [(ngModel)]="dropdownValue"
+                (onChange)="handleDropdownChange($event)"
+                (onClick)="handleDropdownClick()"
+                appendTo="body"
+                class="tw-mr-26-px tw-w-fit"
+                [options]="dropdownOptions"
+                [placeholder]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
+                [group]="true"
+                [disabled]="isDisabled"
+            >
+                <ng-template let-group pTemplate="group">
+                    <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
+                        <span>{{group.label}}</span>
+                    </div>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                    @if (option.label === "[divider]") {
+                        <div class="tw-border-t tw-border-separator tw-w-full"></div>
+                    } @else {
+                        <span [class]="{
+                            'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
+                            'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
+                        }">
+                            {{option.label}}
+                        </span>
+                    }
+                </ng-template>
+            </p-dropdown> 
+        }
     </div>
 </div>
