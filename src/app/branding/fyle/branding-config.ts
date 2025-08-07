@@ -8,7 +8,7 @@ const brandingConfig = config as BrandingConfiguration;
 
 export const fyleFeatureConfig: FeatureConfiguration[string] = {
     illustrationsAllowed: true,
-    isGradientAllowed: true,
+    isGradientAllowed: false,
     isIconsInsideButtonAllowed: true,
     exposeC1Apps: false,
     isBackgroundColorAllowed: false,
@@ -17,6 +17,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
+    isDashboardButtonOutlined: true,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,

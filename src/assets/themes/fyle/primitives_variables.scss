@@ -1,6 +1,6 @@
 /* stylelint-disable scss/no-dollar-variables */
 
-// Only Add those variables in this file which are added as premitives in figma common element library, 
+// Only Add those variables in this file which are added as premitives in figma common element library,
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
 // You can view all the list of primitives by clicking on Local Variables button on right side menu, you need edit access to view this.
 
@@ -19,18 +19,28 @@ $primary-opacity-10: rgba(#161528, 0.1);
 $white: #ffffff;
 $black: 0 0 0;
 //grey shades
+$grey-02: #F3F6FA;
+$grey-50: #E6EBED;
 $grey-100: #f5f5f5;
 $grey-200: #ececee;
 $grey-300: #dfdfe2;
+$grey-350: #E6EBED;
 $grey-400: #a9acbc;
 $grey-500: #5a5d72;
 $grey-600: #414562;
+$grey-650: #3C5B6E;
+$grey-675: #335B70;
 $grey-700: #2c304e;
 $grey-800: #161528;
+$grey-900: #1a1a1a;
 
 //brand shades
-$brand-300: #ffc2d6;
-$brand-500: #ff3366;
+$brand-300: #006738ff;
+$brand-500: #007E45;
+$brand-600: #006738;
+
+//slate shades
+$slate-500: #6C8493;
 
 //blue shades
 $blue-10: #f6faff;
@@ -55,6 +65,7 @@ $green-200: #d9ebe1;
 $green-300: #c9e1e4;
 $green-450: #55b07d;
 $green-500: #24a148;
+$green-700: #0C713F;
 $green-900: #077e8c;
 
 //red
@@ -62,6 +73,7 @@ $red-100: #fbe8e9;
 $red-200: #fce9ea;
 $red-300: #f5c0c3;
 $red-500: #da1e28;
+$red-600: #cb374a;
 
 //purple
 $purple-200: #f4edff;
@@ -69,3 +81,28 @@ $purple-300: #dbc5ff;
 $purple-500: #8e46ff;
 
 $manate: #8c8fa6;
+
+// Component colours (theme) - This is the primary theme colour used in various components to convey major actions.
+// Jade - action/major
+$action-major-25: #f2f9f6ff;
+$action-major-150: #b3d9c8ff;
+$action-major-350: #4da77eff;
+$action-major-450: #198e59ff;
+$action-major-500: #007e45ff;
+$action-major-600: #006738ff;
+$action-major-700: #004d2aff;
+
+// utility/major - This base colour is used to create our grayscale tints/shades
+$utility-major-10: #fafbfbff;
+$utility-major-25: #f2f5f6ff;
+$utility-major-40: #edf1f2ff;
+$utility-major-50: #e6ebedff;
+$utility-major-75: #d9e0e4ff;
+$utility-major-100: #ccd6dbff;
+$utility-major-150: #b3c2c9ff;
+$utility-major-200: #99adb7ff;
+$utility-major-300: #668494ff;
+$utility-major-400: #335b70ff;
+$utility-major-450: #19475eff;
+$utility-major-500: #00324cff;
+$utility-major-800: #00141eff;

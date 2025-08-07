@@ -24,9 +24,13 @@
                                     <p>{{ 'dashboardErrorSection.mapEmployeesDescription' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
+                                @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                                    <app-outlined-icon-button (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-outlined-icon-button>
+                                } @else {
                                     <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'dashboardErrorSection.resolveButtonText' | transloco }}
                                     </span>
+                                }
                                 </div>
                                 <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
@@ -48,9 +52,12 @@
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>{{ 'dashboardErrorSection.mapCategoriesDescription' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
+                                    @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                                    <app-outlined-icon-button (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-outlined-icon-button>
+                                    } @else {
                                     <span type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'dashboardErrorSection.resolveButtonText' | transloco }}
-                                    </span>
+                                    </span> }
                                 </div>
                                 <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
@@ -79,7 +86,7 @@
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start">
                                     <p>{{ error.error_detail }}
-                                        <a *ngIf="error.article_link && brandingFeatureConfig.allowIntacctHelperDoc" class=" tw-pr-4-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                                        <a *ngIf="error.article_link && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
                                             (click)="windowService.openInNewTab(error.article_link)">
                                             {{ helper.sentenseCaseConversion('Read More') }}
                                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -89,9 +96,12 @@
                                     </p>
                                 </h5>
                                 <div>
+                                    @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                                        <app-outlined-icon-button (buttonClick)="showErrorDialog(error)" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'common.viewExpenseText' | transloco"></app-outlined-icon-button>
+                                    } @else { 
                                     <span type="button" (click)="showErrorDialog(error)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'common.viewExpenseText' | transloco}}
-                                    </span>
+                                    </span> }
                                 </div>
                             </div>
                         </div>
@@ -109,7 +119,7 @@
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{uiExposedAppName}} {{'dashboard.qboErrorDialogHeaderText' | transloco}}</p>
             <h3 class="dialog-sub-header">
                 <p>{{ errorDetail }}.
-                    <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class=" tw-pr-4-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                    <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
                         (click)="windowService.openInNewTab(errorArticle)">
                         {{ helper.sentenseCaseConversion('Read More') }}
                         <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"

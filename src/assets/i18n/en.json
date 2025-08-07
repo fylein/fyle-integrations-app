@@ -62,7 +62,7 @@
     "preview": "Preview",
     "exportModule": "Export module",
     "previewOfExport": "Preview of a {{exportType}} exported to {{appName}}",
-    "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandingConfig.brandName}}.",
+    "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandName}}.",
     "click": "Click",
     "here": "here",
     "forMoreDetails": "for more details.",
@@ -262,10 +262,9 @@
     "locationEntity": "Location Entity"
   },
   "intacctConnector": {
-    "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
-    "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again",
-    "connectionErrorToast": "Error while connecting, please try again later.",
-    "headerText": "Connect to Sage Intacct",
+    "headerText": "Connect to Sage Intacct"
+  },
+  "intacctConnectionForm": {
     "companyIdLabel": "Company ID",
     "enterCompanyIdPlaceholder": "Enter {{companyId}}",
     "invalidCompanyIdError": "Invalid {{companyId}}. Enter valid {{companyId}}.",
@@ -321,11 +320,10 @@
     "syncTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export"
   },
   "netsuiteConnector": {
-    "connectionReconnectedToast": "Reconnected to NetSuite successfully.",
-    "connectionExpiredToast": "Oops! Your NetSuite connection expired, please connect again",
-    "connectionErrorToast": "Error while connecting, please try again later.",
     "headerText": "Connect to NetSuite",
-    "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account.",
+    "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account."
+  },
+  "netsuiteConnectionForm": {
     "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
     "accountIdLabel": "Account ID",
     "accountIdPlaceholder": "Enter account ID",
@@ -390,7 +388,7 @@
   "zeroState": {
     "zeroStateAltText": "Zero state"
   },
-  "onboardingSteppers": {
+  "onboardingStepper": {
     "configureSettingsDescription": "Configure these settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
@@ -467,7 +465,7 @@
     "travelSectionCaption": "If your company uses any of the Travel Management Systems below, you can easily integrate your {{brandName}} account with it.",
     "travelperkAppName": "TravelPerk",
     "lookingForSomethingElseTitle": "Looking for something else?",
-    "lookingForSomethingElseCaption": "We are looking forward to building integrations with a few other applications in the market, as listed below. If you have a use case to integrate with these, we would love to hear them at <span class=\"tw-text-link-primary\">{{supportEmail}}</span>"
+    "lookingForSomethingElseCaption": "We are looking forward to building integrations with a few other applications in the market, as listed below. If you have a use case to integrate with these, we would love to hear them at <span class=\"link\">{{supportEmail}}</span>"
   },
   "travelperkAdvancedSettings": {
     "headerText": "Advanced settings",
@@ -770,7 +768,7 @@
     "reimbursableExpenseType": "reimbursable",
     "creditCardExpenseType": "credit card"
   },
-  "main": {
+  "intacctMain": {
     "dashboardLabel": "Dashboard",
     "mappingLabel": "Mapping",
     "configurationLabel": "Configuration",
@@ -1101,12 +1099,7 @@
     "headlineText": "Guide to setup your integrations",
     "headerText": "A set up through to help you set up the integration quick and easy."
   },
-  "sage300Connector": {
-    "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
-    "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again",
-    "connectionErrorToast": "Error while connecting, please try again later.",
-    "headerText": "Connect to your Sage 300 CRE account",
-    "contentText": "To connect your Sage 300 CRE database to your {{brandName}} account, you need to set up the HH2 sync. Click here for details or contact your {{brandName}} implementation specialist for help with the setup.",
+  "sage300ConnectionForm": {
     "identifierError": "Please enter a valid identifier.",
     "identifierLabel": "Identifier",
     "identifierPlaceholder": "Enter identifier",
@@ -1116,6 +1109,10 @@
     "passwordError": "Incorrect password. Please enter correct password",
     "passwordLabel": "User password",
     "passwordPlaceholder": "Enter user password"
+  },
+  "sage300OnboardingConnector": {
+    "headerText": "Connect to your Sage 300 CRE account",
+    "contentText": "To connect your Sage 300 CRE database to your {{brandName}} account, you need to set up the HH2 sync. Click here for details or contact your {{brandName}} implementation specialist for help with the setup."
   },
   "sage300OnboardingExportSettings": {
     "onboardingStepName": "EXPORT SETTINGS"
@@ -1128,7 +1125,7 @@
     "headerText": "Import settings",
     "contentText": "In this section, you can choose the fields required to be imported from Sage 300 CRE to {{brandName}}. ",
     "importDimensionsTitle": "Import / map Sage 300 CRE dimensions",
-    "importDimensionsDescription": "The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandName}} field of your preference, or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandName}} will make the values available as a dropdown in the expense form for your employees to choose from. ",
+    "importDimensionsDescription": "The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandName}} field of your preference, or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandName}} will make the values available as a dropdown in the expense form for your employees to choose from.",
     "clickHere": "Click here",
     "toPreview": " to preview.",
     "infoText": "If you'd like to use only selective data from Sage 300 CRE, map a Sage 300 CRE dimension to a field in {{brandName}} and turn off the import, as importing the data will sync in all the active values in Sage 300 CRE. You can add the required values in {{brandName}} and map them later in the integration mapping section.",
@@ -1859,7 +1856,7 @@
     "useEmployeeClass": "Use Employee's Class in Netsuite",
     "netsuiteClassLevel": "NetSuite class level",
     "chooseNetsuiteClassLevel": "Choose NetSuite class level",
-    "optional": " \\(optional\\)",
+    "optional": " (optional)",
     "saveSuccess": "Advanced settings saved successfully",
     "saveError": "Error saving advanced settings, please try again later"
   },
@@ -1920,7 +1917,7 @@
   },
   "landingV2": {
     "integrationsList": "List of integrations",
-    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"tw-text-link-primary\" href=\"mailto:support@fylehq.com\">support{{'@'}}fylehq.com</a>",
+    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support{{'@'}}fylehq.com</a>",
     "tabAll": "All",
     "tabAccounting": "Accounting",
     "tabHRMS": "HRMS",
@@ -2067,6 +2064,21 @@
       "paymentProfileSettings": "Payment profile settings",
       "advancedSettings": "Advanced settings"
     },
+    "netsuiteConnector": {
+      "connectionReconnectedToast": "Reconnected to NetSuite successfully.",
+      "connectionErrorToast": "Error while connecting, please try again later.",
+      "connectionExpiredToast": "Oops! Your NetSuite connection expired, please connect again"
+    },
+    "sage300Connector": {
+      "connectionReconnectedToast": "Reconnected to Sage300 successfully.",
+      "connectionErrorToast": "Error while connecting, please try again later.",
+      "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
+    },
+    "intacctConnector": {
+      "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
+      "connectionErrorToast": "Error while connecting, please try again later.",
+      "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again"
+    },
     "qboAuth": {
       "failedToConnect": "Failed to connect to QuickBooks Online. Please try again",
       "somethingWentWrong": "Something went wrong, please try again."
@@ -2114,12 +2126,12 @@
     "qbdDirectHelper": {
       "syncDataDimensionsToast": "Syncing data dimensions from QuickBooks Desktop"
     },
-    "travelperkPaymentProfileSetting": {
+    "travelperkPaymentProfileSettings": {
       "booker": "Booker",
       "cardHolder": "Card holder",
       "traveller": "Traveller"
     },
-    "travelperkAdvancedSetting": {
+    "travelperkAdvancedSettings": {
       "cars": "Cars",
       "flights": "Flights",
       "hotels": "Hotels",

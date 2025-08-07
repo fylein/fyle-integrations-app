@@ -65,9 +65,7 @@
                 </div>
 
                 <div class="tw-flex tw-items-center tw-pt-24-px tw-pb-40-px">
-                    <button pButton type="button" class="p-button-raised" [disabled]="!bambooConnectionForm.valid" (click)="connectBambooHR()">
-                        {{ 'bambooHr.connectButtonText' | transloco }}
-                    </button>
+                    <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" [disabled]="!bambooConnectionForm.valid" (buttonClick)="connectBambooHR()" [buttonText]="'bambooHr.connectButtonText' | transloco"></app-primary-button>
                 </div>
             </div>
         </div>

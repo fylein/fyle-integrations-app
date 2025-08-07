@@ -1,6 +1,6 @@
 // Declare the token name from common element library figma file here
 // Refer: https://www.figma.com/file/4UeThUEsAVURfLUoozuzJY/Capital_One_Design_Lang?type=design&node-id=0-1&mode=design&t=7Wgc9cpl8fnb5Lrg-0
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
 @import "./primitives_variables.scss";
@@ -69,6 +69,7 @@
     --border-brand-pressed: #{$blue-75};
     --border-calm-light: #{$green-10};
     --border-danger: #{$red-55};
+    --border-danger-dark: #{$red-55};
     --border-danger-light: #{$red-15};
     --border-danger-lighter: #{$red-10};
     --border-disable: #{$grey-20};
@@ -328,7 +329,7 @@
     --calendar-year-selected-bg: var(--bg-brand-primary);
     --calendar-year-selected-text-color: var(--text-white);
     --calendar-year-text-color: var(--text-secondary);
-  
+
     // Calendar - Other
     --calendar-day-text-color: var(--text-label);
     --calendar-header-hover-text-color: var(--text-brand-primary);
@@ -873,5 +874,13 @@
     --scrollbar-track: #eaeaea;
 
     --scrollbar-thumb-hover: #aaa;
+
+    // Toggle
+    --toggle-enabled-bg: #{$blue-55};
+    --toggle-disabled-bg: var(--form-switch-bg);
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$white};
+    --toggle-border: none;
+    --toggle-border-width: 0px;
   }
 }

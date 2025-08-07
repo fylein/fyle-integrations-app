@@ -8,8 +8,7 @@
 }
 
 .sub-text-container {
-    @apply tw-border-solid tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
-    background: var(--grayscale-background, #FAFCFF);
+    @apply tw-border-solid tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4 tw-bg-bg-tertiary-lighter;
     max-width: auto;
 }
 

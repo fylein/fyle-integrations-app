@@ -2,7 +2,7 @@
     <img src="assets/illustrations/error.svg">
     <p class="tw-pt-24-px">{{ 'error.errorMessage' | transloco }}</p>
     <p class="tw-pt-8-px tw-text-14-px tw-text-text-muted">{{ 'error.supportMessage' | transloco }}</p>
-    <div class="tw-flex tw-cursor-pointer tw-text-14-px tw-text-link-primary tw-pt-12-px">
+    <div class="link tw-flex tw-text-14-px tw-pt-12-px">
         <p (click)="emailSupport()">{{brandingConfig.supportEmail}}</p>
         <app-svg-icon [svgSource]="'duplicate'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-link-primary tw-ml-10-px tw-mt-2-px'" (iconClick)="copyToClipboard()"></app-svg-icon>
     </div>

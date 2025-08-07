@@ -43,7 +43,6 @@
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                           {{ 'configurationImportField.importedDestinationFieldInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) } }}
-                          <span> will be an available field when creating an expense.</span>
                         </h5>
                       </div>
                     </div>
@@ -77,7 +76,7 @@
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
-                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'configurationImportField.chooseExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField) | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'configurationImportField.chooseExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.uiExposedAppName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -104,8 +103,8 @@
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
                         <ng-container *ngIf="uiExposedAppName === AppName.INTACCT; else elseBlock">{{ 'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName } }}</ng-container>
-                        <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }}</ng-template>
-                        <a *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                        <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }} </ng-template>
+                        <a *ngIf="uiExposedAppName === AppName.SAGE300" class="link tw-w-fit tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             {{ 'configurationImportField.readMore' | transloco }}
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -151,7 +150,7 @@
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
-                            <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                            <a class="link tw-w-fit tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
                                 {{ 'configurationImportField.readMore' | transloco }}
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
@@ -178,7 +177,7 @@
     </div>
     <div *ngIf="uiExposedAppName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
         <div class="tw-pt-24-px">
-            <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+            <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                 <div>
                     <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
                         {{ 'configurationImportField.configureImportMethodTitle' | transloco }}

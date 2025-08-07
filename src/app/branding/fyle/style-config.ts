@@ -18,6 +18,31 @@ export const fyleStyles = {
         searchIconFocus: 'tw-text-search-focused-search-icon'
     },
     dashboard: {
-        dashboardErrorResolveBtnText: 'p-button secondary-sm'
+        dashboardErrorResolveBtnText: 'p-button secondary-sm',
+        dashboardExportBtn: 'tw-rounded-32-px',
+        dashboardMainMenu: 'tw-pt-8-px tw-pr-6 tw-pl-0'
+    },
+    buttons: {
+        outlined: {
+           class: 'tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
+           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           iconColorActive: 'tw-text-green-text-color',
+           iconColorHover: 'tw-text-white',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        primary: {
+           class: 'tw-rounded-32-px tw-font-primary tw-text-14-px',
+           active: 'hover:tw-bg-bg-green tw-text-green-text-color tw-text-white tw-text-sm tw-bg-btn-primary-bg',
+           disabled: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
+           loader: 'tw-border-t-border-brand',
+           iconColorActive: 'tw-text-white',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        dialog: {
+            cancel: 'tw-px-16-px tw-py-8-px'
+        }
     }
 };
