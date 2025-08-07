@@ -1,4 +1,4 @@
-<div class="tw-flex tw-items-center tw-justify-between tw-bg-white main-menu-tabs" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
+<div class="tw-flex tw-items-end tw-justify-between tw-bg-white main-menu-tabs" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
@@ -21,7 +21,7 @@
                 <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
             } @else {
             <button
-            [pTooltip]="toolTipText" 
+            [pTooltip]="toolTipText"
             [disabled]="isMenuDisabled"
             (click)="refreshDimensions()"
             [ngClass]="{
@@ -47,7 +47,7 @@
                     {{ 'mainMenu.refreshData' | transloco }}
                 </span>
             </div>
-        } @else { 
+        } @else {
             <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
             }
         }
@@ -86,7 +86,7 @@
                         </span>
                     }
                 </ng-template>
-            </p-dropdown> 
+            </p-dropdown>
         }
     </div>
 </div>
