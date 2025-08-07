@@ -1,0 +1,121 @@
+$size-map: (
+  'horizontal-sm': 20px,
+  'vertical-sm': 32px,
+  'vertical-md': 56px,
+  'vertical-lg': 80px,
+  'vertical-xl': 104px
+);
+
+$margin-map: (
+  'horizontal-sm': 8px,
+  'vertical-sm': 12px,
+  'vertical-md': 16px,
+  'vertical-lg': 22px,
+  'vertical-xl': 26px
+);
+
+.loader {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &.no-label .title {
+    display: none;
+  }
+
+  @each $key, $val in $size-map {
+    &.#{$key} {
+      .spinner {
+        width: $val;
+        height: $val;
+      }
+
+      .title {
+        font-size: 14px
+      }
+
+      @if str-index($key, 'horizontal') {
+        flex-direction: row;
+      }
+    }
+  }
+
+  @each $key, $val in $margin-map {
+    &.#{$key} {
+      .title {
+        margin-top: $val
+      }
+
+      @if str-index($key, 'horizontal') {
+        .title {
+          margin-left: $val;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  // Variants
+  &.neutral {
+    .spinner-track {
+      stroke: #CCE6DA;
+    }
+
+    .spinner-segment {
+      stroke: #007E45;
+    }
+  }
+
+  &.action {
+    .spinner-track {
+      stroke: #d4dde1;
+    }
+
+    .spinner-segment {
+      stroke: #335b70;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+    transform: rotate(180deg);
+  }
+
+  100% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: -124px;
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  position: relative;
+}
+
+.spinner svg {
+  width: 100%;
+  height: 100%;
+}
+
+.spinner-track {
+  fill: none;
+  stroke-width: 6;
+}
+
+.spinner-segment {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-origin: 25px 25px;
+  animation: spin 2s linear infinite;
+}
