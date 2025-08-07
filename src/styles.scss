@@ -105,14 +105,24 @@
             @apply tw-text-text-danger-dark tw-text-14-px #{!important};
         }
 
-        // Text inputs
 
+        // Text inputs
         input[type="text"], input[type="password"] {
             @apply tw-h-32-px tw-py-5-px tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
         input[type="text"]:disabled, input[type="password"]:disabled {
             @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
+        }
+
+
+        // Checkboxes
+        .p-button:enabled:hover {
+            @apply tw-shadow-none #{!important};
+        }
+
+        .p-button:enabled input[type="checkbox"] {
+            @apply tw-rounded-full #{!important};
         }
     }
 
@@ -129,6 +139,17 @@
         // Error state
         .mandatory-error-message {
             @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
+        }
+
+        // Checkboxes
+
+        // C1 QBD checkboxes
+        .checkedText {
+            @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+        }
+
+        .unCheckedText {
+            @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
         }
     }
 }
