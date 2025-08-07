@@ -83,18 +83,24 @@
                     </div>
                 </div>
                 <div class="tw-p-24-px tw-border-t tw-border-t-border-tertiary">
-                    <div class="tw-flex tw-justify-end tw-text-14-px">
+                    <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px">
                         <div class="tw-mr-16-px">
-                            <button type="button" class="p-button outline-sm" (click)="close()">
-                                {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
-                            </button>
+                            @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+                                <app-outlined-icon-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.isDialogCancelButtonRightSide }"  [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-outlined-icon-button>
+                            } @else {
+                                <button type="button" class="p-button outline-sm" (click)="close()">
+                                    {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
+                                </button>
+                            }
                         </div>
-                        <button *ngIf="stepNumber < 3" type="button" pButton [disabled]="isDisabled()" (click)="proceedToNextStep(stepNumber)">
-                            {{ 'netsuiteCustomSegmentDialog.next' | transloco }}
-                        </button>
-                        <button *ngIf="stepNumber === 3" type="button" pButton [disabled]="form.invalid" (click)="save()">
-                            {{ 'netsuiteCustomSegmentDialog.save' | transloco }}
-                        </button>
+
+                        @if (stepNumber < 3) {
+                            <app-primary-button [styleClasses]="'tw-h-10 tw-px-16-px tw-py-8-px'" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-primary-button>
+                        }
+
+                        @if (stepNumber === 3) {
+                            <app-primary-button [styleClasses]="'tw-h-10 tw-px-16-px tw-py-8-px'" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-primary-button>
+                        }
                     </div>
                 </div>
             </div>
