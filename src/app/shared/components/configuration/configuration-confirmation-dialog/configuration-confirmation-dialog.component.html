@@ -37,7 +37,7 @@
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
             <div class="tw-mr-16-px">
                 @if (showSecondaryCTA || true) {
-                <app-primary-button [ngClass]="{ 'tw-order-3': isCancelButtonRight }" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-primary-button>
+                <app-primary-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-primary-button>
                 }
             </div>
             <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-primary-button>

@@ -27,10 +27,6 @@ export class ConfigurationCustomFieldCreationDialogComponent implements OnInit {
 
   constructor() { }
 
-  isCancelButtonRight(): boolean {
-    return this.brandingFeatureConfig.cancelButtonPosition === 'right';
-  }
-
   saveCustomField() {
     this.saveCustomFieldFn.emit();
   }

@@ -37,10 +37,6 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   constructor() { }
 
-  isCancelButtonRight(): boolean {
-    return this.brandingFeatureConfig.cancelButtonPosition === 'right';
-  }
-
   save() {
     this.saveClick.emit();
   }

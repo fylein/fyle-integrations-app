@@ -126,10 +126,6 @@ export class IntacctImportSettingsComponent implements OnInit {
     private importSettingsService: ImportSettingsService
   ) { }
 
-  isCancelButtonRight(): boolean {
-    return this.brandingFeatureConfig.cancelButtonPosition === 'right';
-  }
-
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
   }
