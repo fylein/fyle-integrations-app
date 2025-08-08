@@ -19,6 +19,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: false,
     isDashboardButtonOutlined: false,
     cancelButtonPosition: 'left',
+    isPrimengLoaderEnabled: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,

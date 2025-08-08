@@ -12,6 +12,7 @@ export type FeatureConfiguration = {
         loginToAllConnectedApps: boolean;
         isDashboardButtonOutlined: boolean;
         cancelButtonPosition: 'left' | 'right';
+        isPrimengLoaderEnabled: boolean;
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

@@ -1,1 +1,13 @@
-<p-progressSpinner [styleClass]="styleClass"></p-progressSpinner>
+@if (brandingFeatureConfig.isPrimengLoaderEnabled) {
+  <p-progressSpinner [styleClass]="styleClass"></p-progressSpinner>
+} @else {
+  <div [ngClass]="hostClasses">
+    <div [ngClass]="spinnerClasses">
+      <svg [ngClass]="svgClasses" viewBox="0 0 50 50">
+        <circle [ngClass]="spinnerTrackClasses" cx="25" cy="25" r="20"></circle>
+        <circle [ngClass]="spinnerSegmentClasses" cx="25" cy="25" r="20"></circle>
+      </svg>
+    </div>
+    <div [ngClass]="titleClasses" *ngIf="showSpinnerLabel">{{ spinnerLabel }}</div>
+  </div>
+}
