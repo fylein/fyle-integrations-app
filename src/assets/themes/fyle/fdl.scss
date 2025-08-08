@@ -448,5 +448,11 @@
     --utility-major-450: #{$utility-major-450};
     --utility-major-500: #{$utility-major-500};
     --utility-major-800: #{$utility-major-800};
+
+    // Loader colors
+    --loader-neutral: #{$brand-500};
+    --loader-neutral-track: #{$loader-neutral-track};
+    --loader-action: #{$utility-major-400};
+    --loader-action-track: #{$loader-action-track};
   }
 }

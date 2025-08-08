@@ -59,10 +59,10 @@ const customColors = {
   'utility-major-800': 'var(--utility-major-800)',
 
   // Loader colors
-  'loader-neutral': '#007E45',
-  'loader-neutral-track': '#CCE6DA',
-  'loader-action': '#335b70',
-  'loader-action-track': '#d4dde1',
+  'loader-neutral': 'var(--loader-neutral)',
+  'loader-neutral-track': 'var(--loader-neutral-track)',
+  'loader-action': 'var(--loader-action)',
+  'loader-action-track': 'var(--loader-action-track)',
 };
 
 const spacings = {
