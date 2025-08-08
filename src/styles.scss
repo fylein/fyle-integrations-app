@@ -370,11 +370,11 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] #{!important};
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] tw-leading-[18.5px] #{!important};
 }
 
 .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 tw-leading-[18.5px] #{!important};
 }
 
 
