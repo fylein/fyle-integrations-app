@@ -4,7 +4,7 @@
 }
 
 :host ::ng-deep .mappingFilterDropdown .p-dropdown {
-    @apply tw-w-200-px tw-h-40-px #{!important}
+    @apply tw-w-200-px tw-h-input-height #{!important}
 }
 
 :host ::ng-deep .mapping-filter-applied .p-dropdown {

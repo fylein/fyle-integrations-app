@@ -421,6 +421,13 @@
     --toggle-border: var(--toggle-enabled-bg);
     --toggle-border-width: 1px;
 
+    // Inputs
+    --input-height: 32px;
+
+    // Input - Disabled
+    --input-disabled-bg: #{$utility-major-25};
+    --input-disabled-border: #{$utility-major-100};
+
     // Select
     --select-default-border: #{$utility-major-300};
     --select-menu-item-active-bg: #{$action-major-500};
@@ -448,5 +455,11 @@
     --utility-major-450: #{$utility-major-450};
     --utility-major-500: #{$utility-major-500};
     --utility-major-800: #{$utility-major-800};
+
+    // Loader colors
+    --loader-neutral: #{$brand-500};
+    --loader-neutral-track: #{$loader-neutral-track};
+    --loader-action: #{$utility-major-400};
+    --loader-action-track: #{$loader-action-track};
   }
 }
