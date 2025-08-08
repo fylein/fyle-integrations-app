@@ -105,14 +105,36 @@
             @apply tw-text-text-danger-dark tw-text-14-px #{!important};
         }
 
-        // Text inputs
 
+        // Text inputs
         input[type="text"], input[type="password"] {
             @apply tw-h-32-px tw-py-5-px tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
         input[type="text"]:disabled, input[type="password"]:disabled {
             @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
+        }
+
+
+        // Checkboxes
+
+        // QBD Prerequisites
+        .p-button:enabled:hover {
+            @apply tw-shadow-none #{!important};
+        }
+
+        .p-button:enabled input[type="checkbox"] {
+            @apply tw-rounded-full #{!important};
+        }
+
+        // All other checkboxes
+        input[type="checkbox"] {
+            @apply tw-appearance-none tw-w-16-px tw-h-16-px tw-inline-flex tw-content-center tw-justify-center tw-p-[1px] tw-border-1-px tw-border-utility-major-300 tw-rounded-[2px] tw-relative #{!important};
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: url('./assets/icons/carbon-tick.svg');
+            @apply tw-absolute tw-top-[-4px];
         }
     }
 
@@ -129,6 +151,17 @@
         // Error state
         .mandatory-error-message {
             @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
+        }
+
+        // Checkboxes
+
+        // C1 QBD checkboxes
+        .checkedText {
+            @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+        }
+
+        .unCheckedText {
+            @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
         }
     }
 }
@@ -540,7 +573,7 @@ p {
 }
 
 .p-multiselect {
-    @apply tw-h-40-px tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
+    @apply tw-h-input-height tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
 }
 
 .p-multiselect .p-multiselect-trigger {
