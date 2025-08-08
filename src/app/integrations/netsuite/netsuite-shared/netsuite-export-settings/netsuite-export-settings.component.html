@@ -378,8 +378,10 @@
                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco }}</h5>
                     </div>
                 </div>
-                <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
-                    <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
+                <div>
+                    <div class="tw-h-input-height tw-flex tw-items-center tw-w-300-px tw-bg-input-disabled-bg tw-border-input-disabled-border tw-border radius">
+                        <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
+                    </div>
                     <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">{{ 'netsuiteExportSettings.autoSelectedBasedOnExportModule' | transloco }}</span>
                 </div>
             </div>
