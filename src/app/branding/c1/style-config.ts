@@ -20,7 +20,7 @@ export const c1Styles = {
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
         dashboardExportBtn: 'tw-rounded-4-px',
-        dashboardMainMenu: ''
+        dashboardMainMenu: 'tw-items-center'
     },
     buttons: {
         outlined: {

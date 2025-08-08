@@ -17,7 +17,7 @@ const customColors = {
   'configuration-bg': 'var(--configuration-bg)',
   'check-box': 'var(--check-box)',
   'info-section': 'var(--info-section)',
-  'info': 'var(--info)',
+  info: 'var(--info)',
   'success-toast': 'var(--success-toast)',
   'alert-toast': 'var(--alert-toast)',
   'cta-disabled': 'var(--cta-disabled)',
@@ -27,7 +27,7 @@ const customColors = {
   'mapped-green-bg': 'var(--mapped-green-bg)',
   'unmapped-red-border': 'var(--unmapped-red-border)',
   'unmapped-red-bg': 'var(--unmapped-red-bg)',
-  'pink': 'var(--pink)',
+  pink: 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'icon-warning': 'var(--icon-warning)',
@@ -57,6 +57,12 @@ const customColors = {
   'utility-major-450': 'var(--utility-major-450)',
   'utility-major-500': 'var(--utility-major-500)',
   'utility-major-800': 'var(--utility-major-800)',
+
+  // Loader colors
+  'loader-neutral': 'var(--loader-neutral)',
+  'loader-neutral-track': 'var(--loader-neutral-track)',
+  'loader-action': 'var(--loader-action)',
+  'loader-action-track': 'var(--loader-action-track)',
 };
 
 const spacings = {
@@ -281,13 +287,18 @@ const shadow = {
 const gradient = {
   'gradient-light-xs': 'linear-gradient(94deg, var(--gradient-light-start) 1.03%, var(--gradient-light-end) 100.37%)',
   'gradient-light-sm': 'linear-gradient(97deg, var(--gradient-light-end) 26.8%, var(--gradient-light-start) 97.18%)',
-  'gradient-light-transparent': 'linear-gradient(143deg, var(--gradient-light-transparent-start) 20.72%, var(--gradient-light-transparent-end) 75.82%',
+  'gradient-light-transparent':
+    'linear-gradient(143deg, var(--gradient-light-transparent-start) 20.72%, var(--gradient-light-transparent-end) 75.82%',
   'gradient-cool-md': 'linear-gradient(94deg, var(--gradient-cool-md-start) 0%, var(--gradient-cool-md-end) 98.63%)',
-  'gradient-dark-xs': 'linear-gradient(314deg, var(--gradient-dark-xs-start) 45.19%,  var(--gradient-dark-xs-end) 153.45%)',
+  'gradient-dark-xs':
+    'linear-gradient(314deg, var(--gradient-dark-xs-start) 45.19%,  var(--gradient-dark-xs-end) 153.45%)',
   'gradient-dark-sm': 'linear-gradient(267deg, var(--gradient-dark-sm-start) 0%, var(--gradient-dark-sm-end) 100%)',
-  'gradient-dark-lg': 'linear-gradient(185deg, var(--gradient-dark-lg-start) 0%, var(--gradient-dark-lg-center) 54.02%, var(--gradient-dark-lg-end) 100.69%)',
-  'gradient-white-xs': 'linear-gradient(112deg, var(--gradient-white-xs-start) 1.65%, var(--gradient-white-xs-end) 100%)',
-  'gradient-white-fade-xs': ' linear-gradient(180deg, var(--gradient-white-fade-xs-start) 0%, var(--gradient-white-fade-xs-end) 100%)'
+  'gradient-dark-lg':
+    'linear-gradient(185deg, var(--gradient-dark-lg-start) 0%, var(--gradient-dark-lg-center) 54.02%, var(--gradient-dark-lg-end) 100.69%)',
+  'gradient-white-xs':
+    'linear-gradient(112deg, var(--gradient-white-xs-start) 1.65%, var(--gradient-white-xs-end) 100%)',
+  'gradient-white-fade-xs':
+    ' linear-gradient(180deg, var(--gradient-white-fade-xs-start) 0%, var(--gradient-white-fade-xs-end) 100%)',
 };
 
 const componentVariables = {
@@ -607,7 +618,6 @@ const componentVariables = {
   'form-switch-disabled-label-text': 'var(--form-switch-disabled-label-text)',
   'form-switch-label-text': 'var(--form-switch-label-text)',
   'switch-group-border-color': 'var(--switch-group-border-color)',
-
 
   // Toggle
   'toggle-enabled-bg': 'var(--toggle-enabled-bg)',
@@ -988,16 +998,13 @@ const componentVariables = {
 
 module.exports = {
   prefix: 'tw-',
-  content: [
-    "./src/**/*.{html,ts}",
-    "./src/assets/i18n/**/*.json"
-  ],
+  content: ['./src/**/*.{html,ts}', './src/assets/i18n/**/*.json'],
   theme: {
     textColor: {
       ...customColors,
       ...textColors,
       ...componentVariables,
-      ...colors
+      ...colors,
     },
     backgroundColor: {
       ...customColors,
@@ -1005,9 +1012,13 @@ module.exports = {
       ...colors,
       'bg-brand': 'var(--bg-brand)',
     },
+    stroke: {
+      ...customColors,
+      ...colors,
+    },
     fontSize: {
-      '9-px':'9px',
-      '10-px':'10px',
+      '9-px': '9px',
+      '10-px': '10px',
       '11-px': '11px',
       '12-px': '12px',
       '14-px': '14px',
@@ -1018,16 +1029,16 @@ module.exports = {
       '36-px': '36px',
       '40-px': '40px',
       'label-text-size': 'var(--label-text-size)',
-      ...fontSizes
+      ...fontSizes,
     },
     fontWeight: {
-      '100': '100',
-      '200': '200',
-      '300': '300',
-      '400': '400',
-      '500': '500',
-      '600': '600',
-      '700': '700',
+      100: '100',
+      200: '200',
+      300: '300',
+      400: '400',
+      500: '500',
+      600: '600',
+      700: '700',
       'nav-link-font-weight': 'var(--nav-link-font-weight)',
     },
     letterSpacing: {
@@ -1036,34 +1047,54 @@ module.exports = {
       '1.6-px': '1.6px',
     },
     lineHeight: {
-      'normal': 'normal',
-      'app': 'var(--app-line-height)',
-      '1.14': '1.14',
-      '1.2': '1.2',
-      '1.4': '1.4',
-      '1.5': '1.5',
-      '1.6': '1.6',
-      '1.7': '1.7',
-      '1.8': '1.8',
-      '19': '19.6px'
+      normal: 'normal',
+      app: 'var(--app-line-height)',
+      1.14: '1.14',
+      1.2: '1.2',
+      1.4: '1.4',
+      1.5: '1.5',
+      1.6: '1.6',
+      1.7: '1.7',
+      1.8: '1.8',
+      19: '19.6px',
     },
     extend: {
       animation: {
-        'progress-spinner': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite',
-        'progress-spinner-cta': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite'
+        'progress-spinner':
+          'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite',
+        'progress-spinner-cta':
+          'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite',
+        'loader-spin': 'loader-spin 2s linear infinite',
       },
       keyframes: {
         'p-progress-spinner-color': {
-          '0%': { 'stroke': 'var(--mandatory-field-color)'},
-          '100%': { 'stroke': 'var(--mandatory-field-color)'}
+          '0%': { stroke: 'var(--mandatory-field-color)' },
+          '100%': { stroke: 'var(--mandatory-field-color)' },
         },
         'p-progress-spinner-cta-color': {
-          '0%': { 'stroke': '#ffffff'},
-          '100%': { 'stroke': '#ffffff'}
-        }
+          '0%': { stroke: '#ffffff' },
+          '100%': { stroke: '#ffffff' },
+        },
+        'loader-spin': {
+          '0%': {
+            'stroke-dasharray': '1, 200',
+            'stroke-dashoffset': '0',
+            transform: 'rotate(0deg)',
+          },
+          '50%': {
+            'stroke-dasharray': '89, 200',
+            'stroke-dashoffset': '-35px',
+            transform: 'rotate(180deg)',
+          },
+          '100%': {
+            'stroke-dasharray': '1, 200',
+            'stroke-dashoffset': '-124px',
+            transform: 'rotate(360deg)',
+          },
+        },
       },
       zIndex: {
-        '1': '1',
+        1: '1',
       },
       padding: {
         '2-px': '2px',
@@ -1112,7 +1143,7 @@ module.exports = {
         '130-px': '130px',
         '168-px': '168px',
         'checkbox-marked-icon-spacing': 'var(--checkbox-marked-icon-spacing)',
-        ...spacings
+        ...spacings,
       },
       margin: {
         '0-px': '0px',
@@ -1153,7 +1184,7 @@ module.exports = {
         '130-px': '130px',
         '260-px': '260px',
         '282-px': '282px',
-        ...spacings
+        ...spacings,
       },
       height: {
         '1-px': '1px',
@@ -1205,24 +1236,25 @@ module.exports = {
         '100-vh': '100vh',
         'dropdown-option-height': 'var(--dropdown-option-height)',
         'toggle-height': 'var(--toggle-height)',
+        'input-height': 'var(--input-height)',
         ...dimensions
       },
       minHeight: {
         '70-px': '70px',
         '228-px': '228px',
         'dropdown-option-height': 'var(--dropdown-option-height)',
-        ...dimensions
+        ...dimensions,
       },
       maxHeight: {
         '20-px': '20px',
         '36-px': '36px',
         'dropdown-option-height': 'var(--dropdown-option-height)',
-        ...dimensions
+        ...dimensions,
       },
       lineHeight: {
-        'normal': 'normal',
-        '19': '19.6px',
-        '20': '20px'
+        normal: 'normal',
+        19: '19.6px',
+        20: '20px',
       },
       width: {
         '1-px': '1px',
@@ -1320,7 +1352,7 @@ module.exports = {
         '160-px': '160px',
         '250-px': '250px',
         '300-px': '300px',
-        ...dimensions
+        ...dimensions,
       },
       maxWidth: {
         '20-px': '20px',
@@ -1330,7 +1362,7 @@ module.exports = {
         '296-px': '296px',
         '300-px': '300px',
         '600-px': '600px',
-        ...dimensions
+        ...dimensions,
       },
       borderRadius: {
         '0-px': '0px',
@@ -1345,8 +1377,8 @@ module.exports = {
         '32-px': '32px',
         '48-px': '48px',
         '99-px': '99px',
-        '50': '50%',
-        ...borderRadius
+        50: '50%',
+        ...borderRadius,
       },
       borderWidth: {
         '0-px': '0px',
@@ -1358,7 +1390,7 @@ module.exports = {
         '6-px': '6px',
         '8-px': '8px',
         '12-px': '12px',
-        ...borderWidth
+        ...borderWidth,
       },
       borderColor: {
         'box-color': customColors['box-color'],
@@ -1367,13 +1399,13 @@ module.exports = {
         'check-box': customColors['check-box'],
         'disabled-bg-color': customColors['disabled-bg-color'],
         'success-toast': customColors['success-toast'],
-        'separator': customColors['separator'],
+        separator: customColors['separator'],
         'line-inactive': customColors['line-inactive'],
         'alert-toast': customColors['alert-toast'],
         'sub-text-color': customColors['sub-text-color'],
         ...customColors,
         ...borderColors,
-        ...componentVariables
+        ...componentVariables,
       },
       backgroundImage: {
         'btn-cta': 'var(--mandatory-field-color)',
@@ -1381,10 +1413,10 @@ module.exports = {
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)',
         'btn-primary-bg': 'var(--btn-primary-bg)',
         ...gradient,
-        ...componentVariables
+        ...componentVariables,
       },
       fontFamily: {
-        'primary': 'var(--font-primary)',
+        primary: 'var(--font-primary)',
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
@@ -1392,13 +1424,12 @@ module.exports = {
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
         'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
         'navbar-menu': '0px 5px 5px 0px rgba(0, 20, 30, 0.2), 0px 10px 10px 0px rgba(0, 20, 30, 0.1)',
-        ...shadow
+        ...shadow,
       },
-      dropShadow: {
-      },
+      dropShadow: {},
       screens: {
-        'max-xl': {'max': '1440px'},
-        'max-lg': {'max': '1024px'}
+        'max-xl': { max: '1440px' },
+        'max-lg': { max: '1024px' },
       },
       spacing: {
         '2-px': '2px',
@@ -1414,27 +1445,37 @@ module.exports = {
         'toggle-circle-translate': 'var(--toggle-circle-translate)',
       },
       top: {
-        '70': '70%'
+        70: '70%',
       },
       lineHeight: {
-        '16-px': '16px'
+        '16-px': '16px',
       },
       content: {
-        'no': "'No'",
-        'yes': "'Yes'",
-        'empty': "''",
+        no: "'No'",
+        yes: "'Yes'",
+        empty: "''",
         'toggle-text-yes': 'var(--toggle-text-yes)',
         'toggle-text-no': 'var(--toggle-text-no)',
       },
       left: {
         '5px': '5px',
-        '2': '0.5rem',
-        '6': '1.5rem'
+        2: '0.5rem',
+        6: '1.5rem',
       },
       bottom: {
-        '0': '0',
-      }
+        0: '0',
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    // Custom plugin to add stroke-linecap utilities
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.stroke-round': {
+          'stroke-linecap': 'round',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
+};
