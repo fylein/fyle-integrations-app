@@ -18,7 +18,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: true,
     loginToAllConnectedApps: false,
     isDashboardButtonOutlined: false,
-    isCancelButtonPositionRightSide: false,
+    cancelButtonPosition: 'left',
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,

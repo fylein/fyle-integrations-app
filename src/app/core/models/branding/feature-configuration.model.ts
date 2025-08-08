@@ -11,7 +11,7 @@ export type FeatureConfiguration = {
         loginRedirectUri: boolean;
         loginToAllConnectedApps: boolean;
         isDashboardButtonOutlined: boolean;
-        isCancelButtonPositionRightSide: boolean;
+        cancelButtonPosition: 'left' | 'right';
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

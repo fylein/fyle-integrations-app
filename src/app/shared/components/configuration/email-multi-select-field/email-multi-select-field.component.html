@@ -94,9 +94,9 @@
             <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-gap-8-px">
                 
                 @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                    <app-outlined-icon-button (buttonClick)="closeModel()" [ngClass]="{ 'tw-order-3 tw-ml-8-px': brandingFeatureConfig.isDialogCancelButtonRightSide }" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-outlined-icon-button>
+                    <app-outlined-icon-button (buttonClick)="closeModel()" [ngClass]="{ 'tw-order-3 tw-ml-8-px': isCancelButtonRight }" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-outlined-icon-button>
                 } @else {
-                <button type="button" class="cancel-btn" [ngClass]="{ 'tw-order-3 tw-ml-8-px': brandingFeatureConfig.isDialogCancelButtonRightSide }" (click)="closeModel()">
+                <button type="button" class="cancel-btn" [ngClass]="{ 'tw-order-3 tw-ml-8-px': isCancelButtonRight }" (click)="closeModel()">
                     {{ 'emailMultiSelectField.cancelButton' | transloco }}
                 </button> }
 

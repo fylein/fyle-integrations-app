@@ -18,7 +18,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
     isDashboardButtonOutlined: true,
-    isCancelButtonPositionRightSide: true,
+    cancelButtonPosition: 'right',
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,

@@ -54,9 +54,9 @@
                 <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-text-14-px">
                     <div class="tw-mr-16-px">
                         @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                            <app-outlined-icon-button (buttonClick)="closeModel()" [ngClass]="{ 'tw-order-3': brandingFeatureConfig.isDialogCancelButtonRightSide }" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'configurationCustomFieldCreationDialog.cancel' | transloco"></app-outlined-icon-button>
+                            <app-outlined-icon-button (buttonClick)="closeModel()" [ngClass]="{ 'tw-order-3': isCancelButtonRight }" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'configurationCustomFieldCreationDialog.cancel' | transloco"></app-outlined-icon-button>
                         } @else {
-                            <button type="button" [ngClass]="{ 'tw-order-3': brandingFeatureConfig.isDialogCancelButtonRightSide }" class="p-button outline-sm" (click)="closeModel()">
+                            <button type="button" [ngClass]="{ 'tw-order-3': isCancelButtonRight }" class="p-button outline-sm" (click)="closeModel()">
                                 {{ 'configurationCustomFieldCreationDialog.cancel' | transloco }}
                             </button>
                         }

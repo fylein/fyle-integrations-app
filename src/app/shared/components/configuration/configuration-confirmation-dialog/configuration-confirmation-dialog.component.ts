@@ -47,6 +47,10 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
     private windowService: WindowService
   ) { }
 
+  isCancelButtonRight(): boolean {
+    return this.brandingFeatureConfig.cancelButtonPosition === 'right';
+  }
+
   acceptWarning(isWarningAccepted: boolean) {
     this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
   }

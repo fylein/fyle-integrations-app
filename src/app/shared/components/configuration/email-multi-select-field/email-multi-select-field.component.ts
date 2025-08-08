@@ -68,6 +68,10 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     private translocoService: TranslocoService
   ) { }
 
+  isCancelButtonRight(): boolean {
+    return this.brandingFeatureConfig.cancelButtonPosition === 'right';
+  }
+
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
