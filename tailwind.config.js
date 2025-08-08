@@ -117,7 +117,7 @@ const borderRadius = {
   'border-radius-lg': 'var(--border-radius-lg)',
   'border-radius-xl': 'var(--border-radius-xl)',
   'border-radius-2xl': 'var(--border-radius-2xl)',
-  'border-radius-full': 'var(--border-radius-full)',
+  'border-radius-full': 'var(--border-radius-full)'
 };
 
 const borderWidth = {
@@ -154,6 +154,7 @@ const borderColors = {
   'border-neutral': 'var(--border-neutral)',
   'border-date-picker-border': 'var(--border-date-picker-border)',
   'border-green': 'var(--bg-green)',
+  'border-focus': 'var(--border-focus)',
 };
 
 const colors = {
