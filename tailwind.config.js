@@ -1235,7 +1235,8 @@ module.exports = {
         '100-vh': '100vh',
         'dropdown-option-height': 'var(--dropdown-option-height)',
         'toggle-height': 'var(--toggle-height)',
-        ...dimensions,
+        'input-height': 'var(--input-height)',
+        ...dimensions
       },
       minHeight: {
         '70-px': '70px',
