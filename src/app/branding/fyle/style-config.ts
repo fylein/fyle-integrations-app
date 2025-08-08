@@ -25,7 +25,7 @@ export const fyleStyles = {
     buttons: {
         outlined: {
            class: 'tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
-           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color',
+           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color focus:tw-border-3-px focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
            iconColorActive: 'tw-text-green-text-color',
            iconColorHover: 'tw-text-white',
@@ -33,7 +33,7 @@ export const fyleStyles = {
         },
         primary: {
            class: 'tw-rounded-32-px tw-font-primary tw-text-14-px',
-           active: 'hover:tw-bg-bg-green tw-text-green-text-color tw-text-white tw-text-sm tw-bg-btn-primary-bg',
+           active: 'hover:tw-bg-bg-green tw-text-green-text-color tw-text-white tw-text-sm tw-bg-btn-primary-bg tw-border-3-px tw-border-transparent focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
            disabled: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
            progress: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
            loader: 'tw-border-t-border-brand',
