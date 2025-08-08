@@ -33,7 +33,7 @@ export const fyleStyles = {
         },
         primary: {
            class: 'tw-rounded-32-px tw-font-primary tw-text-14-px',
-           active: 'hover:tw-bg-bg-green tw-text-green-text-color tw-text-white tw-text-sm tw-bg-btn-primary-bg tw-border-3-px tw-border-transparent focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
+           active: 'hover:tw-bg-bg-green tw-text-white tw-text-sm tw-bg-btn-primary-bg tw-border-3-px tw-border-transparent focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
            disabled: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
            progress: 'tw-bg-bg-grey-primary tw-text-text-placeholder tw-cursor-not-allowed',
            loader: 'tw-border-t-border-brand',
