@@ -56,13 +56,13 @@
 
         // Focused borders
         .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
-        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input),
+        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input),
+        .p-chips.p-focus>ul,
         input[type="password"]:focus,
         .custom-search-field-focus,
         input[type="checkbox"]:hover, input[type="checkbox"]:focus {
             @apply tw-shadow-focused #{!important};
         }
-
 
         /* ========================= *\
         |* COMPONENT-SPECIFIC STYLES *|
@@ -939,7 +939,7 @@ p {
 }
 
 .p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
-    @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
+    @apply tw-border tw-border-select-focused-border #{!important};
 }
 
 .input1 .p-focus {
