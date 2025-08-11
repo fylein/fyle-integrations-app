@@ -522,25 +522,51 @@ p {
 
 
 // Radio Button
-.p-radiobutton {
-    @apply tw-w-fit tw-h-19-px #{!important};
+[data-theme='fyle'] {
+    .p-radiobutton {
+        @apply tw-w-fit tw-h-19-px #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box {
+        @apply tw-w-16-px tw-h-16-px tw-border-1-px tw-border-utility-major-300 #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-shadow-none tw-border-utility-major-300 tw-bg-white #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-focus,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-ring-2 tw-ring-black tw-border-2-px tw-border-border-focus #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+        @apply tw-w-8-px tw-h-8-px tw-bg-colors-utility-yin-090 #{!important};
+    }
 }
 
-.p-radiobutton .p-radiobutton-box {
-    @apply tw-w-16-px tw-h-16-px tw-border #{!important};
-}
+[data-theme='co'] {
+    .p-radiobutton {
+        @apply tw-w-fit tw-h-19-px #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box:hover {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}
+    .p-radiobutton .p-radiobutton-box {
+        @apply tw-w-16-px tw-h-16-px tw-border #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box.p-highlight,
-.p-radiobutton .p-radiobutton-box.p-highlight:hover {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
-}
+    .p-radiobutton .p-radiobutton-box:hover {
+        @apply tw-border-slightly-normal-text-color #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
+    .p-radiobutton .p-radiobutton-box.p-highlight,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+        @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
+    }
 }
 
 // Dropdown
