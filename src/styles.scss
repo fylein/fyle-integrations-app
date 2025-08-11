@@ -297,19 +297,19 @@ p {
     .p-dialog {
         @apply tw-rounded-2xl tw-overflow-hidden #{!important};
     }
-    
+
     .p-dialog .p-dialog-header {
         @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-content {
         @apply tw-p-0 tw-rounded-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-footer {
         @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
         @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
     }
@@ -327,23 +327,23 @@ p {
     .p-dialog {
         @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
     }
-    
+
     .p-dialog .p-dialog-header {
         @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-content {
         @apply tw-p-0 tw-rounded-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-footer {
         @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
         @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
         @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
     }
@@ -741,7 +741,7 @@ p {
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-pr-24-px #{!important};
+    @apply tw-pr-6-px #{!important};
 }
 
 .p-datepicker .p-datepicker-header {
