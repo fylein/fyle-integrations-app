@@ -34,6 +34,9 @@ const customColors = {
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
   'bg-grey-primary': 'var(--bg-grey-primary)',
 
+  // Colors Utility
+  'colors-utility-yin-090': 'var(--colors-utility-yin-090)',
+  
   // Action/Major colors (Jade theme for major actions)
   'action-major-25': 'var(--action-major-25)',
   'action-major-150': 'var(--action-major-150)',
