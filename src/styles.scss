@@ -45,9 +45,28 @@
         @apply tw-text-link-primary tw-cursor-pointer;
     }
     [data-theme='fyle'] {
+
+        /* ============= *\
+        |* GLOBAL STYLES *|
+        \* ============= */
+
         .link {
             @apply tw-underline;
         }
+
+        // Focused borders
+        .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
+        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input),
+        .p-chips.p-focus>ul,
+        input[type="password"]:focus,
+        .custom-search-field-focus,
+        input[type="checkbox"]:hover, input[type="checkbox"]:focus {
+            @apply tw-shadow-focused #{!important};
+        }
+
+        /* ========================= *\
+        |* COMPONENT-SPECIFIC STYLES *|
+        \* ========================= */
 
         // Dropdowns
         .p-dropdown {
@@ -108,17 +127,20 @@
 
         // Text inputs
         input[type="text"], input[type="password"] {
-            @apply tw-h-32-px tw-py-5-px tw-border-utility-major-300 tw-text-14-px #{!important};
+            @apply tw-h-32-px tw-py-5-px tw-px-14-px tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
         input[type="text"]:disabled, input[type="password"]:disabled {
             @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
         }
 
+        // Text inputs - Error state
+        input[type="text"].error-box, input[type="password"].error-box {
+            @apply tw-border-border-danger-dark #{!important};
+        }
 
-        // Checkboxes
 
-        // QBD Prerequisites
+        // Checkboxes - QBD Prerequisites
         .p-button:enabled:hover {
             @apply tw-shadow-none #{!important};
         }
@@ -140,6 +162,14 @@
 
     [data-theme='co'] {
         // Dropdowns
+        .p-dropdown.p-focus {
+            @apply tw-shadow-none tw-border-select-focused-border #{!important};
+        }
+
+        .p-dropdown:hover {
+            @apply tw-shadow-none #{!important};
+        }
+
         .p-dropdown-trigger {
             content: url('./assets/icons/co/grv-chevron-down.svg') !important;
         }
@@ -148,14 +178,13 @@
             @apply tw-text-text-muted;
         }
 
-        // Error state
+        // Dropdowns - Error state
         .mandatory-error-message {
             @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
         }
 
-        // Checkboxes
 
-        // C1 QBD checkboxes
+        // Checkboxes - C1 QBD checkboxes
         .checkedText {
             @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
         }
@@ -163,6 +192,12 @@
         .unCheckedText {
             @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
         }
+
+        // Multiselects
+        .p-multiselect:not(.p-disabled).p-focus {
+            @apply tw-shadow-none #{!important};
+        }
+
     }
 }
 
@@ -330,19 +365,19 @@ p {
     .p-dialog {
         @apply tw-rounded-2xl tw-overflow-hidden #{!important};
     }
-    
+
     .p-dialog .p-dialog-header {
         @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-content {
         @apply tw-p-0 tw-rounded-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-footer {
         @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
         @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
     }
@@ -360,23 +395,23 @@ p {
     .p-dialog {
         @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
     }
-    
+
     .p-dialog .p-dialog-header {
         @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-content {
         @apply tw-p-0 tw-rounded-none #{!important};
     }
-    
+
     .p-dialog .p-dialog-footer {
         @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
         @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
     }
-    
+
     .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
         @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
     }
@@ -586,14 +621,6 @@ p {
     @apply tw-p-6-px #{!important};
 }
 
-.p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-dropdown:hover {
-    @apply tw-shadow-none #{!important};
-}
-
 .p-dropdown-header {
     @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
 }
@@ -610,12 +637,8 @@ p {
     @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
 }
 
-.p-multiselect:not(.p-disabled).p-focus {
-    @apply tw-shadow-none #{!important};
-}
-
 .p-multiselect.p-focus:not(.p-disabled) {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
+    @apply tw-border-select-focused-border #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-header .p-checkbox {
@@ -947,7 +970,7 @@ p {
 }
 
 .p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
-    @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
+    @apply tw-border tw-border-select-focused-border #{!important};
 }
 
 .input1 .p-focus {

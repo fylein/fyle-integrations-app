@@ -24,10 +24,7 @@
         </div>
         <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
-                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()" [disabled]="isConfigurationSaveInProgress">
-                    {{ (isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco }}
-                    <app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
-                </button>
+                <app-primary-button (buttonClick)="saveSettings()" [styleClasses]="'tw-px-24-px tw-py-8-px tw-text-14-px'" [disabled]="!cofigurationForm.valid" [isLoading]="isConfigurationSaveInProgress" [buttonText]="(isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco"></app-primary-button>
             </div>
         </div>
     </div>
