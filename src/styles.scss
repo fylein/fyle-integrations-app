@@ -127,11 +127,16 @@
 
         // Text inputs
         input[type="text"], input[type="password"] {
-            @apply tw-h-32-px tw-py-5-px tw-border-utility-major-300 tw-text-14-px #{!important};
+            @apply tw-h-32-px tw-py-5-px tw-px-14-px tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
         input[type="text"]:disabled, input[type="password"]:disabled {
             @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
+        }
+
+        // Text inputs - Error state
+        input[type="text"].error-box, input[type="password"].error-box {
+            @apply tw-border-border-danger-dark #{!important};
         }
 
 
