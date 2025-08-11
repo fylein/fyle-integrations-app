@@ -501,8 +501,13 @@ p {
         @apply tw-shadow-none tw-border-utility-major-300 tw-bg-white #{!important};
     }
 
+    .p-radiobutton .p-radiobutton-box.p-focus,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-ring-2 tw-ring-black tw-border-2-px tw-border-border-focus #{!important};
+    }
+
     .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-        @apply tw-w-10-px tw-h-10-px tw-bg-colors-utility-yin-090 #{!important};
+        @apply tw-w-8-px tw-h-8-px tw-bg-colors-utility-yin-090 #{!important};
     }
 }
 
