@@ -57,9 +57,6 @@ $yellow-100: #fcf7e6;
 $yellow-500: #e1af05;
 $yellow-800: #d88600;
 
-//focus shades
-$focus-100: #ffbc19;
-
 //green
 $green-50: #eef8f2;
 $green-100: #e9f6ed;
@@ -109,6 +106,9 @@ $utility-major-400: #335b70ff;
 $utility-major-450: #19475eff;
 $utility-major-500: #00324cff;
 $utility-major-800: #00141eff;
+
+// Semantics colors - UI semantic colors denote standard states. Each color has the same meaning in all contexts.
+$semantic-focus-500: #ffbc19;
 
 // Loader colors
 $loader-neutral-track: #CCE6DA;
