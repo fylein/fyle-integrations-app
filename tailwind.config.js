@@ -6,7 +6,7 @@ const customColors = {
   placeholder: 'var(--placeholder)',
   separator: 'var(--separator)',
   'normal-text-color': 'var(--normal-text-color)',
-  'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'slightly-normal-text-color': 'var(--text-secondary)',
   'green-text-color': 'var(--mandatory-field-color)',
   'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
   'sub-text-color': 'var(--sub-text-color)',
@@ -36,7 +36,7 @@ const customColors = {
 
   // Colors Utility
   'colors-utility-yin-090': 'var(--colors-utility-yin-090)',
-  
+
   // Action/Major colors (Jade theme for major actions)
   'action-major-25': 'var(--action-major-25)',
   'action-major-150': 'var(--action-major-150)',
