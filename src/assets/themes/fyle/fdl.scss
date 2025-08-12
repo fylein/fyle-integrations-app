@@ -84,7 +84,7 @@
     --border-radius-xl: #{$size-14};
     --border-radius-2xl: #{$size-16};
     --border-radius-full: 50%;
-    --border-focus: #{$focus-100};
+    --border-focus: #{$semantic-focus-500};
 
     //border-width
     --border-1: #{$size-1};
@@ -433,6 +433,9 @@
     --select-default-border: #{$utility-major-300};
     --select-menu-item-active-bg: #{$action-major-500};
 
+    // Colors Utility
+    --colors-utility-yin-090: #{$colors-utility-yin-090};
+
     // Action/Major - Primary theme colour for major actions (Jade)
     --action-major-25: #{$action-major-25};
     --action-major-150: #{$action-major-150};
@@ -456,6 +459,9 @@
     --utility-major-450: #{$utility-major-450};
     --utility-major-500: #{$utility-major-500};
     --utility-major-800: #{$utility-major-800};
+
+    // Semantics colors - UI semantic colors denote standard states. Each color has the same meaning in all contexts.
+    --semantic-focus-500: #{$semantic-focus-500};
 
     // Loader colors
     --loader-neutral: #{$brand-500};

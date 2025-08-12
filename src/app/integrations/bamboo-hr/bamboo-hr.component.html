@@ -13,17 +13,17 @@
     </ng-template>
 </p-toast>
 
-<app-landing-page-header 
-    [iconPath]="'assets/logos/bamboo-hr-logo.svg'" 
-    [appName]="'bambooHr.appName' | transloco" 
-    [appDescription]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" 
-    [isLoading]="isLoading" 
-    [hideRefreshIcon]="hideRefreshIcon" 
-    [showErrorScreen]="showErrorScreen" 
-    [isIntegrationSetupInProgress]="isBambooSetupInProgress" 
-    [isIntegrationConnected]="isBambooConnected" 
+<app-landing-page-header
+    [iconPath]="'assets/logos/bamboo-hr-logo.svg'"
+    [appName]="'bambooHr.appName' | transloco"
+    [appDescription]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }"
+    [isLoading]="isLoading"
+    [hideRefreshIcon]="hideRefreshIcon"
+    [showErrorScreen]="showErrorScreen"
+    [isIntegrationSetupInProgress]="isBambooSetupInProgress"
+    [isIntegrationConnected]="isBambooConnected"
     (connectIntegration)="openDialog()"
-    (disconnectIntegration)="disconnectBambooHr()" 
+    (disconnectIntegration)="disconnectBambooHr()"
     (syncEmployees)="syncEmployees()"
 ></app-landing-page-header>
 
@@ -55,11 +55,11 @@
                 </p>
 
                 <div class="tw-flex">
-                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
                         {{ 'bambooHr.subDomainPrefix' | transloco }}
                     </div>
-                    <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0" pInputText [placeholder]="'bambooHr.subDomainPlaceholder' | transloco" />
-                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
+                    <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0 tw-z-50" pInputText [placeholder]="'bambooHr.subDomainPlaceholder' | transloco" />
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
                         {{ 'bambooHr.subDomainSuffix' | transloco }}
                     </div>
                 </div>
