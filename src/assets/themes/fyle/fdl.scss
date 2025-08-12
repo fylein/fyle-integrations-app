@@ -7,11 +7,39 @@
 
 @layer base {
   [data-theme='fyle'] {
+    //Colors
+    --white: #{$white};
+    --placeholder: #{$grey-400};
+    --separator: #{$grey-200};
+    --normal-text-color: #{$grey-800};
+    --menu-inactive-text-color: #{$grey-400};
+    --sub-text-color: #{$grey-600};
+    --faded-text-color: #{$grey-500};
+    --box-color: #{$grey-300};
+    --mandatory-field-color: #{$brand-500};
+    --disabled-bg-color: #{$grey-100};
+    --info: #{$blue-500};
+    --alert-toast: #{$red-500};
+    --line-inactive: #{$grey-55};
+    --mapped-green-border: #{$green-200};
+    --mapped-green-bg: #{$green-50};
+    --unmapped-red-border: #{$red-300};
+    --unmapped-red-bg: #{$red-200};
+    --cta-disabled: #{$red-200};
+    --pink: #{$pink-400};
+    --check-box: #{$grey-120};
+    --pink-box-border: #{$pink-opacity-16};
+    --configuration-bg: #{$blue-50};
+    --info-section: #{$blue-100};
+    --success-toast: #{$green-500};
+    --progress-bar-bg: #{$green-350};
+
     //brand bg
     --bg-brand: #{$utility-major-25};
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #B3D9C8;
+
     //colors bg
     --bg-primary: #{$grey-800};
     --bg-secondary: #{$grey-700};
@@ -266,7 +294,7 @@
 
     --nav-tabs-active-border: #{$grey-350};
 
-    --nav-tabs-active-bg:  var(--bg-brand);
+    --nav-tabs-active-bg: var(--bg-brand);
 
     --nav-tabs-inactive-bg: transparent;
 
@@ -468,5 +496,8 @@
     --loader-neutral-track: #{$loader-neutral-track};
     --loader-action: #{$utility-major-400};
     --loader-action-track: #{$loader-action-track};
+
+    // Font family
+    --font-primary: "sage-ui", sans-serif;
   }
 }
