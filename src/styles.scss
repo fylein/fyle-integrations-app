@@ -123,7 +123,7 @@
 
 
         // Text inputs
-        input[type="text"], input[type="password"] {
+        input[type="text"]:not(.p-chips-input-token > input), input[type="password"] {
             @apply tw-h-32-px tw-py-5-px tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
