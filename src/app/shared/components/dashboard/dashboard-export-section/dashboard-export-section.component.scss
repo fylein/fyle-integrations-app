@@ -3,7 +3,7 @@
 }
 
 :host ::ng-deep .p-progressbar .p-progressbar-value {
-    @apply tw-bg-mandatory-field-color tw-rounded-50  #{!important};
+    @apply tw-bg-mandatory-field-color tw-rounded-md  #{!important};
 }
 
 :host ::ng-deep .p-progressbar-determinate .p-progressbar-value {

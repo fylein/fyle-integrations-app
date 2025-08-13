@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 
@@ -32,6 +32,8 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
   stepNumber: number = 1;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
 

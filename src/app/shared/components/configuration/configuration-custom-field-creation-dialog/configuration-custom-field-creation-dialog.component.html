@@ -51,15 +51,18 @@
                     </div>
                   </div>
 
-                <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+                <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-text-14-px">
                     <div class="tw-mr-16-px">
-                        <button type="button" class="p-button outline-sm" (click)="closeModel()">
-                            {{ 'configurationCustomFieldCreationDialog.cancel' | transloco }}
-                        </button>
+                        @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+                            <app-outlined-icon-button (buttonClick)="closeModel()" [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'configurationCustomFieldCreationDialog.cancel' | transloco"></app-outlined-icon-button>
+                        } @else {
+                            <button type="button" [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }" class="p-button outline-sm" (click)="closeModel()">
+                                {{ 'configurationCustomFieldCreationDialog.cancel' | transloco }}
+                            </button>
+                        }
                     </div>
-                    <button type="button" class="p-button-raised" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
-                        {{'common.customFieldCreateandSave' | transloco}}
-                    </button>
+
+                    <app-primary-button  [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" [buttonText]="'common.customFieldCreateandSave' | transloco" (buttonClick)="saveCustomField()"></app-primary-button>
                 </div>
             </div>
         </div>

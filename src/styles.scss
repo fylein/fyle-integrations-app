@@ -3,11 +3,8 @@
 @tailwind utilities;
 
 // Import all the themes here
-@import 'assets/themes/theme.scss';
 @import 'assets/themes/co/c1dl.scss';
 @import 'assets/themes/fyle/fdl.scss';
-
-
 
 @font-face {
     font-family: "Optimist";
@@ -45,9 +42,28 @@
         @apply tw-text-link-primary tw-cursor-pointer;
     }
     [data-theme='fyle'] {
+
+        /* ============= *\
+        |* GLOBAL STYLES *|
+        \* ============= */
+
         .link {
             @apply tw-underline;
         }
+
+        // Focused borders
+        .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
+        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input),
+        .p-chips.p-focus>ul,
+        input[type="password"]:focus,
+        .custom-search-field-focus,
+        input[type="checkbox"]:hover, input[type="checkbox"]:focus {
+            @apply tw-shadow-focused #{!important};
+        }
+
+        /* ========================= *\
+        |* COMPONENT-SPECIFIC STYLES *|
+        \* ========================= */
 
         // Dropdowns
         .p-dropdown {
@@ -96,7 +112,7 @@
             @apply tw-translate-y-[7px] tw-shadow-base-shadow;
         }
 
-        // Error state
+        // Dropdown - Error state
         .error-box .p-dropdown {
             @apply tw-border-2 #{!important};
         }
@@ -104,10 +120,57 @@
         .mandatory-error-message {
             @apply tw-text-text-danger-dark tw-text-14-px #{!important};
         }
+
+
+        // Text inputs
+        input[type="text"], input[type="password"] {
+            @apply tw-h-32-px tw-py-5-px tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
+        }
+
+        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input) {
+            @apply tw-px-14-px #{!important};
+        }
+
+        input[type="text"]:disabled, input[type="password"]:disabled {
+            @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
+        }
+
+        // Text inputs - Error state
+        input[type="text"].error-box, input[type="password"].error-box {
+            @apply tw-border-border-danger-dark #{!important};
+        }
+
+
+        // Checkboxes - QBD Prerequisites
+        .p-button:enabled:hover {
+            @apply tw-shadow-none #{!important};
+        }
+
+        .p-button:enabled input[type="checkbox"] {
+            @apply tw-rounded-full #{!important};
+        }
+
+        // All other checkboxes
+        input[type="checkbox"] {
+            @apply tw-appearance-none tw-w-16-px tw-h-16-px tw-inline-flex tw-content-center tw-justify-center tw-p-[1px] tw-border-1-px tw-border-utility-major-300 tw-rounded-[2px] tw-relative #{!important};
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: url('./assets/icons/carbon-tick.svg');
+            @apply tw-absolute tw-top-[-4px];
+        }
     }
 
     [data-theme='co'] {
         // Dropdowns
+        .p-dropdown.p-focus {
+            @apply tw-shadow-none tw-border-select-focused-border #{!important};
+        }
+
+        .p-dropdown:hover {
+            @apply tw-shadow-none #{!important};
+        }
+
         .p-dropdown-trigger {
             content: url('./assets/icons/co/grv-chevron-down.svg') !important;
         }
@@ -116,10 +179,26 @@
             @apply tw-text-text-muted;
         }
 
-        // Error state
+        // Dropdowns - Error state
         .mandatory-error-message {
             @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
         }
+
+
+        // Checkboxes - C1 QBD checkboxes
+        .checkedText {
+            @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+        }
+
+        .unCheckedText {
+            @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+        }
+
+        // Multiselects
+        .p-multiselect:not(.p-disabled).p-focus {
+            @apply tw-shadow-none #{!important};
+        }
+
     }
 }
 
@@ -283,8 +362,69 @@ p {
 }
 
 // Dialog
-.p-dialog .p-dialog-content {
-    @apply tw-p-0 tw-rounded-border-radius-2xs #{!important};
+[data-theme='fyle'] {
+    .p-dialog {
+        @apply tw-rounded-2xl tw-overflow-hidden #{!important};
+    }
+
+    .p-dialog .p-dialog-header {
+        @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog .p-dialog-content {
+        @apply tw-p-0 tw-rounded-none #{!important};
+    }
+
+    .p-dialog .p-dialog-footer {
+        @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
+        @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-2xl #{!important};
+    }
+}
+
+[data-theme='co'] {
+    .p-dialog {
+        @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
+    }
+
+    .p-dialog .p-dialog-header {
+        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog .p-dialog-content {
+        @apply tw-p-0 tw-rounded-none #{!important};
+    }
+
+    .p-dialog .p-dialog-footer {
+        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
+        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-border-radius-2xs #{!important};
+    }
+}
+
+
+.p-dialog-header-close-icon {
+    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
@@ -294,6 +434,10 @@ p {
 .p-dialog-top-right .p-dialog {
     margin: .75rem !important;
     transform: translateZ(0) !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+    @apply tw-text-20-px tw-font-500 #{!important};
 }
 
 // Input text
@@ -370,34 +514,60 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] #{!important};
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-[-1] tw-leading-[18.5px] #{!important};
 }
 
 .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-bottom-0 tw-leading-[18.5px] #{!important};
 }
 
 
 // Radio Button
-.p-radiobutton {
-    @apply tw-w-fit tw-h-19-px #{!important};
+[data-theme='fyle'] {
+    .p-radiobutton {
+        @apply tw-w-fit tw-h-19-px #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box {
+        @apply tw-w-16-px tw-h-16-px tw-border-1-px tw-border-utility-major-300 #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-shadow-none tw-border-utility-major-300 tw-bg-white #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-focus,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-ring-2 tw-ring-black tw-border-2-px tw-border-border-focus #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+        @apply tw-w-8-px tw-h-8-px tw-bg-colors-utility-yin-090 #{!important};
+    }
 }
 
-.p-radiobutton .p-radiobutton-box {
-    @apply tw-w-16-px tw-h-16-px tw-border #{!important};
-}
+[data-theme='co'] {
+    .p-radiobutton {
+        @apply tw-w-fit tw-h-19-px #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box:hover {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}
+    .p-radiobutton .p-radiobutton-box {
+        @apply tw-w-16-px tw-h-16-px tw-border #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box.p-highlight,
-.p-radiobutton .p-radiobutton-box.p-highlight:hover {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
-}
+    .p-radiobutton .p-radiobutton-box:hover {
+        @apply tw-border-slightly-normal-text-color #{!important};
+    }
 
-.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
+    .p-radiobutton .p-radiobutton-box.p-highlight,
+    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+        @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
+    }
+
+    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+        @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
+    }
 }
 
 // Dropdown
@@ -452,20 +622,12 @@ p {
     @apply tw-p-6-px #{!important};
 }
 
-.p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
-}
-
-.p-dropdown:hover {
-    @apply tw-shadow-none #{!important};
-}
-
 .p-dropdown-header {
     @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
 }
 
 .p-multiselect {
-    @apply tw-h-40-px tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
+    @apply tw-h-input-height tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
 }
 
 .p-multiselect .p-multiselect-trigger {
@@ -476,12 +638,8 @@ p {
     @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
 }
 
-.p-multiselect:not(.p-disabled).p-focus {
-    @apply tw-shadow-none #{!important};
-}
-
 .p-multiselect.p-focus:not(.p-disabled) {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
+    @apply tw-border-select-focused-border #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-header .p-checkbox {
@@ -666,7 +824,7 @@ p {
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-pr-24-px #{!important};
+    @apply tw-pr-6-px #{!important};
 }
 
 .p-datepicker .p-datepicker-header {
@@ -802,13 +960,7 @@ p {
     @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
 }
 
-.p-dialog .p-dialog-header .p-dialog-title {
-    @apply tw-text-20-px tw-font-500 #{!important};
-}
 
-.p-dialog .p-dialog-header {
-    @apply tw-rounded-none #{!important};
-}
 
 .p-chips .p-chips-multiple-container .p-chips-token {
     @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
@@ -819,7 +971,7 @@ p {
 }
 
 .p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
-    @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
+    @apply tw-border tw-border-select-focused-border #{!important};
 }
 
 .input1 .p-focus {
@@ -832,10 +984,6 @@ p {
 
 .preview-box {
     @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important};
-}
-
-.p-dialog-header-close-icon {
-    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
 }
 
 .landing {

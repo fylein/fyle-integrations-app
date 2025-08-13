@@ -7,6 +7,33 @@
 
 @layer base {
   [data-theme="co"] {
+    // Colors
+    --white: #{$white};
+    --placeholder: #{$grey-40};
+    --separator: #{$grey-22};
+    --normal-text-color: #{$grey-82};
+    --menu-inactive-text-color: #{$grey-40};
+    --sub-text-color: #{$grey-60};
+    --faded-text-color: #{$grey-55};
+    --box-color: #{$grey-30};
+    --mandatory-field-color: #{$blue-55};
+    --disabled-bg-color: #{$grey-07};
+    --info: #{$blue-50};
+    --alert-toast: #{$red-50};
+    --line-inactive: #{$grey-17};
+    --mapped-green-border: #{$green-02};
+    --mapped-green-bg: #{$green-03};
+    --unmapped-red-border: #{$red-30};
+    --unmapped-red-bg: #{$red-07};
+    --cta-disabled: #{$blue-55};
+    --pink: #{$blue-55};
+    --check-box: #{$grey-12};
+    --pink-box-border: #{$pink-opacity-16};
+    --configuration-bg: var(--bg-tertiary-lighter);
+    --info-section: var(--bg-tertiary-lighter);
+    --success-toast: var(--text-success);
+    --progress-bar-bg: var(--white);
+
     // Elevation
     --background-overlay-subtle: rgba($black, 0.02);
 
@@ -365,6 +392,9 @@
     --dd-menu-item-section-header-text-color: var(--text-disable);
     --dd-menu-item-drag-icon-color: var(--icon-disable);
     --dd-search-default-bg: var(--bg-tertiary);
+
+    // Input
+    --input-height: 40px;
 
     // Input - Default
     --input-default-bg: var(--bg-white);
@@ -882,5 +912,9 @@
     --toggle-disabled-text-color: #{$white};
     --toggle-border: none;
     --toggle-border-width: 0px;
+
+
+    // Font family
+    --font-primary: "Optimist";
   }
 }
