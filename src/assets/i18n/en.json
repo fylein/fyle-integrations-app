@@ -1917,7 +1917,7 @@
   },
   "landingV2": {
     "integrationsList": "List of integrations",
-    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support{{'@'}}fylehq.com</a>",
+    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support@fylehq.com</a>",
     "tabAll": "All",
     "tabAccounting": "Accounting",
     "tabHRMS": "HRMS",
