@@ -36,23 +36,22 @@ export class XeroTokenGuard  {
         map(() => true),
         catchError(error => {
           if (error.status === 400) {
-          globalCacheBusterNotifier.next();
+            globalCacheBusterNotifier.next();
 
-          const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
-          if (onboardingState !== XeroOnboardingState.COMPLETE) {
-            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your xero connection expired, please connect again');
-            return this.router.navigateByUrl('integrations/xero/onboarding/connector');
-          }
+            const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
+            if (onboardingState !== XeroOnboardingState.COMPLETE) {
+              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your xero connection expired, please connect again');
+              return this.router.navigateByUrl('integrations/xero/onboarding/connector');
+            }
 
-          if (error.error.message === "Xero connection expired"){
+            if (error.error.message === "Xero disconnected"){
+              return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
+            }
+
+            // Treat fallback as token expired
             return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
           }
 
-          if (error.error.message === "Xero disconnected"){
-            return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
-          }
-
-          }
           return throwError(error);
         })
       );

@@ -36,9 +36,8 @@ export class Sage300TokenGuard  {
           if (error.status === 400) {
             globalCacheBusterNotifier.next();
 
-            if (error.error.message === "Sage300 connection expired"){
-              return this.router.navigateByUrl('integrations/sage300/token_expired/dashboard');
-            }
+            // Treat fallback as token expired
+            return this.router.navigateByUrl('integrations/sage300/token_expired/dashboard');
           }
           return throwError(error);
         })
