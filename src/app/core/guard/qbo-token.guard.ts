@@ -43,13 +43,12 @@ export class QboTokenGuard  {
               return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
             }
 
-            if (error.error.message === "Quickbooks Online connection expired") {
-              return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
-            }
-
             if (error.error.message === "Quickbooks Online disconnected") {
               return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
             }
+
+            // Treat fallback as token expired
+            return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
           }
 
           return throwError(error);
