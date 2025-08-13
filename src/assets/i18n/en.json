@@ -33,7 +33,7 @@
     "validNameError": "Enter a valid name",
     "emailAddressLabel": "Email Address",
     "enterEmailPlaceholder": "Enter email",
-    "validEmailError": "Enter a valid e-mail",
+    "validEmailError": "Enter a valid email",
     "cancelButton": "Cancel",
     "addAndSaveButton": "Add and save"
   },
@@ -890,7 +890,7 @@
     "creditCard": "credit card",
     "expense": "Expense",
     "report": "Report",
-    "emailIdMapping": "Based on employee e-mail ID",
+    "emailIdMapping": "Based on employee email ID",
     "nameMapping": "Based on employee name",
     "employeeCodeMapping": "Based on employee code",
     "expenseReport": "Expense report",
@@ -2201,7 +2201,7 @@
       "employee": "Employee",
       "vendor": "Vendor",
       "merchant": "Merchant",
-      "basedOnEmployeeEmailID": "Based on employee e-mail ID",
+      "basedOnEmployeeEmailID": "Based on employee email ID",
       "basedOnEmployeeName": "Based on employee name"
     },
     "businessCentralImportSettings": {
@@ -2319,7 +2319,7 @@
       "approved": "Approved",
       "employee": "Employee",
       "vendor": "Vendor",
-      "basedOnEmployeeEmailId": "Based on employee e-mail ID",
+      "basedOnEmployeeEmailId": "Based on employee email ID",
       "basedOnEmployeeName": "Based on employee name",
       "basedOnEmployeeCode": "Based on employee code",
       "creditCardCharge": "Credit card charge",
