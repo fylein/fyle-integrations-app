@@ -272,7 +272,7 @@
     "enterUserIdPlaceholder": "Enter {{userId}}",
     "invalidUserIdError": "Invalid {{userId}}. Enter valid {{userId}}.",
     "enterUserPasswordPlaceholder": "Enter {{userPassword}}",
-    "incorrectPasswordError": "Incorrect {{password}}. Enter correct {{password}}."
+    "invalidPasswordError": "Invalid {{password}}. Enter valid {{password}}."
   },
   "dashboardIntacctErrors": {
     "expenseId": "Expense ID",

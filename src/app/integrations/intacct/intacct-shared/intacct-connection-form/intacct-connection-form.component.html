@@ -19,7 +19,7 @@
                <p for="userPassword" class="tw-text-form-label-text-color tw-text-14-px tw-pb-8-px tw-pt-16-px">{{'intacct.common.userPassword' | transloco}}<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
                <input [placeholder]="'intacctConnectionForm.enterUserPasswordPlaceholder' | transloco: { userPassword: ('intacct.common.userPassword' | transloco | lowercase) }" type="password" formControlName="userPassword" [ngClass]="isReconnecting ? '' : 'tw-w-400-px'" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2" [ngClass]="[connectIntacctForm.controls.userPassword.invalid && connectIntacctForm.controls.userPassword.touched ? 'error-box' : 'normal-box', isReconnecting ? 'tw-w-full' : 'tw-w-400-px']">
                <div *ngIf="connectIntacctForm.controls.userPassword.invalid && connectIntacctForm.controls.userPassword.touched" class="incorrect-credential tw-pt-2-px">
-                  {{ 'intacctConnectionForm.incorrectPasswordError' | transloco: { password: 'intacct.common.password' | transloco } }}
+                  {{ 'intacctConnectionForm.invalidPasswordError' | transloco: { password: 'intacct.common.password' | transloco } }}
                 </div>
              </div>
             <div [ngClass]="isReconnecting ? 'tw-pt-16-px' : 'tw-w-400-px'">
