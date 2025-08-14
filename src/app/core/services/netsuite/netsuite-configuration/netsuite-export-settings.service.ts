@@ -84,12 +84,12 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
       },
       {
-        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
-        value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-      },
-      {
         label: this.translocoService.translate('services.netsuiteExportSettings.expenseReport'),
         value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+      },
+      {
+        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
+        value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
     if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {

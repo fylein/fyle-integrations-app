@@ -19,12 +19,12 @@
             </p-dropdown>
         </div>
     </div>
-    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-12-px tw-text-14-px tw-items-center tw-justify-center">
+    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-py-6-px tw-text-14-px tw-items-center tw-justify-center">
         <div class="tw-flex">
-            <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
+            <p class="tw-px-6-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
                 {{ 'mappingFilter.allFilter' | transloco }}
             </p>
-            <p class="tw-pr-8-px tw-cursor-pointer" *ngFor="let option of filterOptions" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
+            <p class="tw-px-6-px tw-cursor-pointer" *ngFor="let option of filterOptions" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-text-secondary tw-border-b-2 tw-border-nav-link-active-border': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
         </div>
     </div>
 </div>

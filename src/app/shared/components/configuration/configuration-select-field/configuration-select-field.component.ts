@@ -170,8 +170,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.meridiemOption = [this.translocoService.translate('configurationSelectField.am'), this.translocoService.translate('configurationSelectField.pm')];
     this.exportTableData = [
-      { exportModule: this.translocoService.translate('configurationSelectField.expenseReport'), employeeMapping: this.translocoService.translate('configurationSelectField.employee'), chartOfAccounts: this.translocoService.translate('configurationSelectField.expenseTypes'), sageIntacctModule: this.translocoService.translate('configurationSelectField.timeAndExpense') },
       { exportModule: this.translocoService.translate('configurationSelectField.bill'), employeeMapping: this.translocoService.translate('configurationSelectField.vendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.accountsPayable') },
+      { exportModule: this.translocoService.translate('configurationSelectField.expenseReport'), employeeMapping: this.translocoService.translate('configurationSelectField.employee'), chartOfAccounts: this.translocoService.translate('configurationSelectField.expenseTypes'), sageIntacctModule: this.translocoService.translate('configurationSelectField.timeAndExpense') },
       { exportModule: this.translocoService.translate('configurationSelectField.journalEntry'), employeeMapping: this.translocoService.translate('configurationSelectField.employeeVendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.generalLedger') }
     ];
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;

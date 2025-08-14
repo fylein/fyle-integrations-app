@@ -40,6 +40,10 @@ export class MappingCardHeaderComponent implements OnInit {
     return sourceField + 's';
   }
 
+  getSingularOfSourceField(sourceField: string): string{
+    return new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
+  }
+
   triggerAutoMapEmployees() {
     this.triggerAutoMapEmployee.emit(true);
   }

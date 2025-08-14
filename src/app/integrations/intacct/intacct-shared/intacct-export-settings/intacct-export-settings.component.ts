@@ -164,12 +164,12 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     this.reimbursableExportTypes = [
       {
-        label: this.translocoService.translate('intacctExportSettings.expenseReport'),
-        value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
-      },
-      {
         label: this.translocoService.translate('intacctExportSettings.bill'),
         value: IntacctReimbursableExpensesObject.BILL
+      },
+      {
+        label: this.translocoService.translate('intacctExportSettings.expenseReport'),
+        value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
       },
       {
         label: this.translocoService.translate('intacctExportSettings.journalEntry'),
