@@ -18,7 +18,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
     isDashboardButtonOutlined: true,
-    cancelButtonPosition: 'right',
     isPrimengLoaderEnabled: false,
     featureFlags: {
         cloneSettings: true,

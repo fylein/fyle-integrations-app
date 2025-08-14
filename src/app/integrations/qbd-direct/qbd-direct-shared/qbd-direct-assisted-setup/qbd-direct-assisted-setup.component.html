@@ -77,7 +77,7 @@
     <!-- Footer -->
     <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-4">
         @if(interactionType === 'QUERY' && !isQuerySubmitted || true){
-        <app-outlined-icon-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }"  [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-outlined-icon-button>
+        <app-outlined-icon-button [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-outlined-icon-button>
         }
 
         <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [disabled]="isButtonDisabled" (buttonClick)="onRequestAssistedSetup()" [buttonText]="(isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco"></app-primary-button>
