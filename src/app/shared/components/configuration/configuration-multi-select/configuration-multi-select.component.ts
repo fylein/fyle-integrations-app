@@ -59,6 +59,14 @@ export class ConfigurationMultiSelectComponent implements OnInit {
     return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
   }
 
+  // Helper to join selected item labels into a single string for template rendering
+  getSelectedItemsText(value: string[] | null | undefined): string {
+    if (!value || value.length === 0) {
+      return '';
+    }
+    return value.map((name: string) => this.getMemo(name)).join(', ');
+  }
+
 //   DragStart(memo: string) {
 //     This.currentlyDragging = memo;
 // }
