@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, AppUrl, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -37,6 +37,8 @@ export class BambooHrComponent implements OnInit {
   isConfigurationSaveInProgress: boolean;
 
   bambooHrData: BambooHr;
+
+  readonly brandingStyle = brandingStyle;
 
   org: Org = this.orgService.getCachedOrg();
 

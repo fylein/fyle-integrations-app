@@ -174,6 +174,7 @@ const colors = {
   'bg-tertiary': 'var(--bg-tertiary)',
   'bg-white': 'var(--bg-white)',
   'bg-green': 'var(--bg-green)',
+  'bg-toast-grey': 'var(--bg-toast-grey)',
   'bg-primary-opacity': 'var(--bg-primary-opacity)',
   //regular bg'
   'bg-success': 'var(--bg-success)',
@@ -239,6 +240,7 @@ const textColors = {
   'text-brand-pressed': 'var(--text-brand-pressed)',
   'text-muted-light': 'var(--text-muted-light)',
   'text-muted': 'var(--text-muted)',
+  'text-toast-color': 'var(--text-toast-color)',
 
   //link
   'link-primary': 'var(--link-primary)',
