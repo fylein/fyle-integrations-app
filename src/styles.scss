@@ -116,7 +116,7 @@
 
 
         // Text inputs
-        input[type="text"]:not(.p-chips-input-token > input), input[type="password"] {
+        input[type="text"]:not(.p-chips-input-token > input):not(.custom-search-field > input), input[type="password"] {
             @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 

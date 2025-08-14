@@ -65,7 +65,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             expenseType: false
         },
         mappings: {
-            employeeMapping: false
+            employeeMapping: false,
+            allowExpandableSearch: true
         },
         dashboard: {
             disconnectButton: false,
