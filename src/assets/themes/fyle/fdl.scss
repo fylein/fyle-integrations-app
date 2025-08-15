@@ -39,6 +39,9 @@
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #B3D9C8;
+    
+    //toast bg
+    --bg-toast-grey: #{$grey-675};
 
     //colors bg
     --bg-primary: #{$grey-800};
@@ -137,6 +140,7 @@
     --text-label: #{$grey-500};
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
+    --text-toast-color: #{$grey-90};
 
     //link
     --link-primary: #{$green-700};
@@ -341,12 +345,15 @@
 
     --alerts-success-icon-color: var(--text-white);
 
-    --toast-success-bg: var(--bg-success);
+    --toast-success-bg: #{$green-950};
+
+    --toast-error: #{$red-650};
+
+    --toast-info-bg: #{$slate-500};
 
     --toast-text-color: var(--text-white);
 
     --alerts-error-icon-color: var(--bg-danger);
-
     --toast-error-bg: var(--bg-danger);
 
     --chips-border-color: var(--border-secondary);

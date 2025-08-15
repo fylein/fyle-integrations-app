@@ -64,7 +64,10 @@ const ICON_MAPPING = {
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
-  'user-one': 'grv-person'
+  'user-one': 'grv-person',
+  'toast-success': 'toast-success',
+  'toast-info': 'toast-info',
+  'toast-cross': 'toast-cross'
 };
 
 @Component({
