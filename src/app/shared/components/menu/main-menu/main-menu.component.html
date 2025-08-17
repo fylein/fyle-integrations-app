@@ -41,15 +41,9 @@
             </span>
         </button>  }
     } @else {
-        @if(!brandingFeatureConfig.isDashboardButtonOutlined){
             <div class="tw-mr-22-px">
-                <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
-                    {{ 'mainMenu.refreshData' | transloco }}
-                </span>
+                <app-outlined-icon-button [styleClasses]="'tw-py-8-px tw-px-16-px tw-text-14-px'" [pTooltip]="toolTipText" tooltipPosition="bottom" (buttonClick)="refreshDimensions()" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
             </div>
-        } @else {
-            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
-            }
         }
         </span>
 

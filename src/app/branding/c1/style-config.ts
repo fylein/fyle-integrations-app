@@ -24,8 +24,8 @@ export const c1Styles = {
     },
     buttons: {
         outlined: {
-           class: 'tw-px-4',
-           active: 'hover:tw-shadow-md tw-text-size-14 tw-bg-white tw-border tw-border-grey-300 tw-font-500 tw-cursor-pointer',
+           class: 'tw-h-38-px tw-rounded-4-px tw-border tw-text-text-brand-primary tw-font-nav-link-font-weight tw-border-solid tw-border-btn-outline-primary-border-color',
+           active: 'hover:tw-text-btn-outline-primary-hover-text-color hover:tw-bg-btn-outline-primary-hover-bg tw-text-size-14 tw-bg-btn-outline-primary-bg tw-border-grey-300 tw-font-500 tw-cursor-pointer',
            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
            iconColorActive: 'tw-text-text-secondary',
            iconColorHover: '',
