@@ -323,13 +323,7 @@
         </div>
     </div>
     <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px tw-border-t-1-px tw-p-24-px tw-gap-8-px">
-            @if (!brandingFeatureConfig.isDashboardButtonOutlined) {
-                <button type="button" class="cancel-btn" (click)="acceptDependentFieldWarning(false)">
-                    {{ 'intacctImportSettings.cancel' | transloco }}
-                </button>
-            } @else {
-                <app-outlined-icon-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }"  [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="acceptDependentFieldWarning(false)" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-outlined-icon-button>
-            }
+            <app-outlined-icon-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }"  [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="acceptDependentFieldWarning(false)" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-outlined-icon-button>
 
             <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="acceptDependentFieldWarning(true)" [buttonText]="'intacctImportSettings.continueButton' | transloco"></app-primary-button>
     </div>
