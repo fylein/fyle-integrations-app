@@ -86,7 +86,7 @@
                     <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px">
                         <div class="tw-mr-16-px">
                             @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                                <app-outlined-icon-button [ngClass]="{ 'tw-order-3': brandingFeatureConfig.cancelButtonPosition === 'right' }"  [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-outlined-icon-button>
+                                <app-outlined-icon-button [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-outlined-icon-button>
                             } @else {
                                 <button type="button" class="p-button outline-sm" (click)="close()">
                                     {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
