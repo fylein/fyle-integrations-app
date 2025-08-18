@@ -1,8 +1,9 @@
-<div *ngIf="!mappings" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
-    <app-loader></app-loader>
-</div>
-
-<div>
+@if (!mappings) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <app-loader></app-loader>
+    </div>
+} @else {
+    <div>
         <div>
             <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceFieldDisplayName ?? sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
         </div>
@@ -28,9 +29,10 @@
                         ('mapping.mappingSearchZeroStateSubHeaderText' | transloco) + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffix' | transloco) :
                         ('mapping.mappingSearchZeroStateSubHeaderText' | transloco)
                     ">
-                  </app-zero-state-with-illustration>
+                    </app-zero-state-with-illustration>
                 </div>
             </div>
 
         </div>
-</div>
+    </div>
+}
