@@ -18,7 +18,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
     isDashboardButtonOutlined: true,
-    cancelButtonPosition: 'right',
     isPrimengLoaderEnabled: false,
     featureFlags: {
         cloneSettings: true,
@@ -65,7 +64,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             expenseType: true
         },
         mappings: {
-            employeeMapping: true
+            employeeMapping: true,
+            allowExpandableSearch: false
         },
         dashboard: {
             disconnectButton: true,
