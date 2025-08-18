@@ -172,6 +172,7 @@
     --bg-tertiary-lighter: #{$grey-05};
     --bg-warning-lighter: #{$yellow-05};
     --bg-info-lightest: #{$blue-05};
+    --bg-link-muted: var(--text-muted);
 
     // Background - Grey
     --bg-disable: #{$grey-15};
@@ -199,6 +200,7 @@
     --link-pressed: #{$blue-75};
     --link-primary: #{$blue-55};
     --link-visited: #{$purple-55};
+    --link-muted: var(--text-muted);
 
     // Button Primary - Default
     --btn-primary-bg: var(--bg-brand-primary);

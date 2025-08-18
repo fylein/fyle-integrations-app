@@ -66,6 +66,9 @@ const customColors = {
   'loader-neutral-track': 'var(--loader-neutral-track)',
   'loader-action': 'var(--loader-action)',
   'loader-action-track': 'var(--loader-action-track)',
+
+  // Backgrounds
+  'bg-link-muted': 'var(--bg-link-muted)'
 };
 
 const spacings = {
@@ -247,6 +250,7 @@ const textColors = {
   'link-visited': 'var(--link-visited)',
   'link-hover': 'var(--link-hover)',
   'link-pressed': 'var(--link-pressed)',
+  'link-muted': 'var(--link-muted)',
 
   'border-secondary': 'var(--border-secondary)',
 };
