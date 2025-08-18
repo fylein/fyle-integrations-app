@@ -12,13 +12,12 @@ jobs:
       name: ${{ github.event.label.name == 'c1_qa_deploy' && 'QA' || 'Staging' }}
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive
       - name: push to dockerhub
         uses: fylein/docker-release-action@master
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           IMAGE_NAME: fyle_integrations-app
 
       - name: Install kustomize
