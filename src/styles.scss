@@ -53,7 +53,7 @@
 
         // Focused borders
         .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
-        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input),
+        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input),
         .p-chips.p-focus>ul,
         input[type="password"]:focus,
         .custom-search-field-focus,
@@ -116,11 +116,11 @@
 
 
         // Text inputs
-        input[type="text"]:not(.p-chips-input-token > input), input[type="password"] {
+        input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input), input[type="password"] {
             @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
-        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input) {
+        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input) {
             @apply tw-px-14-px #{!important};
         }
 
