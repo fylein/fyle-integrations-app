@@ -15,7 +15,7 @@
         (onChange)="onMultiSelectChange()">
             <ng-template let-value pTemplate="selectedItems" >
                 <div *ngIf="form.get(formControllerName)?.value?.length>0" class="tw-flex">
-                    <p *ngFor="let name of value;let i = index">{{ getMemo(name) }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
+                    <p class="tw-overflow-hidden tw-text-ellipsis">{{ getSelectedItemsText(value) }}</p>
                 </div>
                 <div *ngIf="form.get(formControllerName)?.value?.length === 0" class="tw-text-placeholder">
                     {{ placeholder }}
