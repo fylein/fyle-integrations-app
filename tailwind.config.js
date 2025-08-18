@@ -177,6 +177,7 @@ const colors = {
   'bg-tertiary': 'var(--bg-tertiary)',
   'bg-white': 'var(--bg-white)',
   'bg-green': 'var(--bg-green)',
+  'bg-toast-grey': 'var(--bg-toast-grey)',
   'bg-primary-opacity': 'var(--bg-primary-opacity)',
   //regular bg'
   'bg-success': 'var(--bg-success)',
@@ -242,6 +243,7 @@ const textColors = {
   'text-brand-pressed': 'var(--text-brand-pressed)',
   'text-muted-light': 'var(--text-muted-light)',
   'text-muted': 'var(--text-muted)',
+  'text-toast-color': 'var(--text-toast-color)',
 
   //link
   'link-primary': 'var(--link-primary)',
@@ -1072,6 +1074,11 @@ module.exports = {
         'progress-spinner-cta':
           'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite',
         'loader-spin': 'loader-spin 2s linear infinite',
+      },
+      outlineColor: {
+        'toast-success': 'var(--toast-success-bg)',
+        'toast-info': 'var(--toast-info-bg)',
+        'toast-error': 'var(--toast-error-bg)',
       },
       keyframes: {
         'p-progress-spinner-color': {
