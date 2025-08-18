@@ -758,6 +758,42 @@ p {
     @apply tw-bg-disabled-bg-color #{!important};
 }
 
+[data-theme='fyle'] {
+.p-toast {
+    @apply tw-opacity-100 #{!important}
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    @apply tw-rounded-8-px tw-p-0 tw-text-white #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-icon-close-icon {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-message-content {
+    @apply tw-block #{!important};
+}
+
+}
+
+[data-theme='co'] {
 .p-toast {
     @apply tw-opacity-100 #{!important}
 }
@@ -789,6 +825,9 @@ p {
 .p-toast-message-content {
     @apply tw-block #{!important};
 }
+
+}
+
 
 .p-datatable .p-datatable-thead>tr>th {
     @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}
