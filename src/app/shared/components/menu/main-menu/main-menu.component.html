@@ -54,7 +54,11 @@
         </span>
 
         @if (brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
-            <app-split-menu-button [dropdownOptions]="dropdownOptions" [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"></app-split-menu-button>
+            <app-split-menu-button
+                [dropdownOptions]="dropdownOptions"
+                [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
+                [currentIntegration]="getCurrentIntegrationName()">
+            </app-split-menu-button>
         }
 
         @if (!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
