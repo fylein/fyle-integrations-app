@@ -22,8 +22,8 @@
     <div>
       @if(showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed){
         @if(brandingFeatureConfig.isDashboardButtonOutlined){
-            <app-outlined-icon-button (buttonClick)="refreshDimensions()"  tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }" [isIconLeftSide]="true" [iconSize]="'14px'" [svgSource]="'arrow-rotate-sync'" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'configurationStepHeader.syncButtonText' | transloco"></app-outlined-icon-button>
-            } @else { 
+            <app-outlined-icon-button (buttonClick)="refreshDimensions()"  tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }" [isIconLeftSide]="true" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6'" [buttonText]="'configurationStepHeader.syncButtonText' | transloco"></app-outlined-icon-button>
+            } @else {
       <button
         [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }"
         (click)="refreshDimensions()" tooltipPosition="bottom"
@@ -36,7 +36,7 @@
       </button> } }
 
 
-      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed){ 
+      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed){
         @if(!brandingFeatureConfig.isDashboardButtonOutlined){
       <div tooltipPosition="bottom"
         [pTooltip]="'configurationStepHeader.refreshDataTooltip' | transloco: { appName: appName }">

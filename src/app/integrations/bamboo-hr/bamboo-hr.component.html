@@ -1,18 +1,3 @@
-<p-toast position="bottom-center" [baseZIndex]="5000">
-    <ng-template let-message pTemplate="message">
-        <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px" [ngClass]="message.severity === 'success' ? 'tw-bg-success-toast' : 'tw-bg-alert-toast'">
-            <div class="tw-flex">
-                <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'check-circle-outline-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
-                <app-svg-icon *ngIf="message.severity !== 'success'" [svgSource]="'warning-outline'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
-                {{ message.summary }}
-            </div>
-            <div class="tw-flex tw-items-center tw-cursor-pointer">
-                <app-svg-icon (iconClick)="closeToast()" [svgSource]="'cross-medium'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-pr-22-px tw-text-white'"></app-svg-icon>
-            </div>
-        </div>
-    </ng-template>
-</p-toast>
-
 <app-landing-page-header
     [iconPath]="'assets/logos/bamboo-hr-logo.svg'"
     [appName]="'bambooHr.appName' | transloco"
