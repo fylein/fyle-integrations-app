@@ -58,6 +58,7 @@ export type FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: boolean;
+                allowExpandableSearch: boolean;
             },
             dashboard: {
                 disconnectButton: boolean;
