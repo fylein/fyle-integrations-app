@@ -12,6 +12,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 
 @Component({
   selector: 'app-bamboo-hr',
@@ -67,20 +68,13 @@ export class BambooHrComponent implements OnInit {
     private orgService: OrgService,
     private trackingService: TrackingService,
     private authService: AuthService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private toastService: IntegrationsToastService
   ) { }
 
   openDialog(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.CONNECT_BAMBOO_HR);
     this.showDialog = true;
-  }
-
-  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
-    this.messageService.add({
-      severity,
-      summary,
-      life
-    });
   }
 
   connectBambooHR(): void {
@@ -90,11 +84,11 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnected = true;
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
-      this.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.connectionSuccessMessage'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.connectionSuccessMessage'));
       this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.BAMBOO_HR_LANDING, this.sessionStartTime);
       this.sessionStartTime = new Date();
     }, () => {
-      this.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.connectionFailedMessage'), 5000);
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.connectionFailedMessage'), 5000);
       this.isBambooConnectionInProgress = false;
     });
   }
@@ -110,7 +104,7 @@ export class BambooHrComponent implements OnInit {
       this.bambooHrConfiguration = updatedConfiguration;
       this.hideRefreshIcon = false;
       this.isConfigurationSaveInProgress = false;
-      this.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.configurationSuccessMessage'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.configurationSuccessMessage'));
       this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
     });
   }
@@ -118,7 +112,7 @@ export class BambooHrComponent implements OnInit {
   syncEmployees(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
     this.hideRefreshIcon = true;
-    this.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.syncStartMessage'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.syncStartMessage'));
     this.bambooHrService.syncEmployees().subscribe(() => {
       this.hideRefreshIcon = false;
     });
@@ -128,7 +122,7 @@ export class BambooHrComponent implements OnInit {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.DISCONNECT_BAMBOO_HR);
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
-      this.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.disconnectSuccessMessage'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.disconnectSuccessMessage'));
       this.isBambooConnected = false;
       this.isLoading = false;
     });
@@ -169,7 +163,7 @@ export class BambooHrComponent implements OnInit {
         this.bambooHrData = bambooHrData;
       } else if (this.isBambooConnected) {
         this.isBambooConnected = false;
-        this.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.tokenExpiredMessage'), 6000);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.tokenExpiredMessage'), 6000);
       }
 
     }, () => {

@@ -63,9 +63,9 @@ export const fyleStyles = {
             iconStyleClasses: 'tw-text-bg-toast-grey'
         },
         backgroundClass: {
-            success: 'tw-bg-white tw-border-1-px tw-border-toast-success-bg',
-            error: 'tw-bg-white tw-border-1-px tw-border-toast-error-bg',
-            info: 'tw-bg-white tw-border-1-px tw-border-toast-info-bg'
+            success: 'tw-bg-white',
+            error: 'tw-bg-white',
+            info: 'tw-bg-white'
         }
     }
 };

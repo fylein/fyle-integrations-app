@@ -1071,6 +1071,11 @@ module.exports = {
           'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite',
         'loader-spin': 'loader-spin 2s linear infinite',
       },
+      outlineColor: {
+        'toast-success': 'var(--toast-success-bg)',
+        'toast-info': 'var(--toast-info-bg)',
+        'toast-error': 'var(--toast-error-bg)',
+      },
       keyframes: {
         'p-progress-spinner-color': {
           '0%': { stroke: 'var(--mandatory-field-color)' },
