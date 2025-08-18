@@ -332,8 +332,8 @@
 
     --select-error-border: var(--border-danger);
 
-    --toggle-text-yes: 'ON';
-    --toggle-text-no: 'OFF';
+    --toggle-text-yes: 'Yes';
+    --toggle-text-no: 'No';
 
     --toggle-circle-translate: 28px;
 
@@ -498,6 +498,6 @@
     --loader-action-track: #{$loader-action-track};
 
     // Font family
-    --font-primary: "sage-ui", sans-serif;
+    --font-primary: "sage-ui", "Helvetica Neue", Roboto, Segoe UI, Arial;
   }
 }
