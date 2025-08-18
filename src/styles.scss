@@ -47,6 +47,16 @@
         |* GLOBAL STYLES *|
         \* ============= */
 
+        .page-layout-container,
+        app-intacct-onboarding > *:not(router-outlet) {
+            @apply tw-h-full tw-flex tw-flex-col;
+        }
+
+        .router-outlet-container,
+        app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
+            @apply tw-flex-grow;
+        }
+
         .link {
             @apply tw-underline;
         }
