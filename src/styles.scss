@@ -764,15 +764,15 @@ p {
 }
 
 .p-toast .p-toast-message.p-toast-message-success {
-    @apply tw-outline tw-outline-2 tw-outline-toast-success tw-rounded-8-px #{!important};
+    @apply tw-outline tw-outline-1 tw-outline-toast-success tw-rounded-8-px #{!important};
 }
 
 .p-toast .p-toast-message.p-toast-message-error {
-    @apply tw-outline tw-outline-2 tw-outline-toast-error tw-rounded-8-px #{!important};
+    @apply tw-outline tw-outline-1 tw-outline-toast-error tw-rounded-8-px #{!important};
 }
 
 .p-toast .p-toast-message.p-toast-message-info {
-    @apply tw-outline tw-outline-2 tw-outline-toast-info tw-rounded-8-px #{!important};
+    @apply tw-outline tw-outline-1 tw-outline-toast-info tw-rounded-8-px #{!important};
 }
 
 .p-toast .p-toast-message .p-toast-message-content {
