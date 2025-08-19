@@ -1,9 +1,9 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
             [headerText]="'qbd_direct.configuration.advancedSettings.stepName' | transloco"
             [contentText]="'qbd_direct.configuration.advancedSettings.contentText' | transloco"
             [showSyncButton]="isOnboarding"
@@ -22,14 +22,14 @@
                     </app-configuration-step-sub-header>
                 </div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-my-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco" 
+                        [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [iconPath]="'calendar'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
-                
+
                     <div *ngIf="advancedSettingsForm.value.exportSchedule">
                         <app-configuration-schedule-export
                             [form]="advancedSettingsForm"
@@ -56,7 +56,7 @@
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"
-                        [label]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)" 
+                        [label]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)"
                         [iconPath]="'user-plus'"
                         [subLabel]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnititySubLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)"
                         [formControllerName]="'autoCreateReimbursableEnitity'">
@@ -118,7 +118,7 @@
                 <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-my-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco" 
+                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco"
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'">

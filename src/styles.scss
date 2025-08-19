@@ -38,9 +38,24 @@
 
 
 @layer base {
+
+    // Make all pages take up the full screen height
+    .page-layout-container,
+    app-netsuite-onboarding > *:not(router-outlet), app-netsuite-onboarding > *:not(router-outlet) > div,
+    app-intacct-onboarding > *:not(router-outlet) {
+        @apply tw-h-full tw-flex tw-flex-col;
+    }
+
+    .router-outlet-container,
+    app-netsuite-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers),
+    app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
+        @apply tw-flex-grow;
+    }
+
     .link {
         @apply tw-text-link-primary tw-cursor-pointer;
     }
+
     [data-theme='fyle'] {
 
         /* ============= *\
