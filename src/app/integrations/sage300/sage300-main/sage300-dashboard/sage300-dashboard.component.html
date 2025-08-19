@@ -4,7 +4,7 @@
 }
 
 @if(isLoading){
-<div class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 }
@@ -14,25 +14,25 @@
         (export)="export()"
         [loaderType]="LoaderType.INDETERMINATE"
         [appName]="appName"
-        [isImportInProgress]="isImportInProgress" 
+        [isImportInProgress]="isImportInProgress"
         [isExportInProgress]="isExportInProgress"
         [exportableAccountingExportIds]="exportableAccountingExportIds"
-        [failedExpenseGroupCount]="failedExpenseGroupCount" 
-        [exportProgressPercentage]="exportProgressPercentage" 
-        [accountingExportSummary]="accountingExportSummary" 
+        [failedExpenseGroupCount]="failedExpenseGroupCount"
+        [exportProgressPercentage]="exportProgressPercentage"
+        [accountingExportSummary]="accountingExportSummary"
         [processedCount]="processedCount"
         [reimbursableImportState]="reimbursableImportState"
         [cccImportState]="cccImportState">
     </app-dashboard-export-section>
-    
+
     @if(!accountingExportSummary && !exportableAccountingExportIds.length){
-    <app-zero-state 
+    <app-zero-state
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
         [headerText]="'sage300Dashboard.zeroStateHeaderText' | transloco"
         [subHeaderText]="'sage300Dashboard.zeroStateSubHeaderText' | transloco">
     </app-zero-state>
     }
-    
+
     @if(exportableAccountingExportIds.length || accountingExportSummary){
     <app-dashboard-export-summary-section
         [appName]="appName"
@@ -41,11 +41,11 @@
         [isRealTimeExportEnabled]="isRealTimeExportEnabled">
     </app-dashboard-export-summary-section>
     }
-    
+
     @if(errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length){
     <app-dashboard-error-section
-        [appName]="appName" 
-        [errors]="errors" 
+        [appName]="appName"
+        [errors]="errors"
         [groupedErrorStat]="groupedErrorStat"
         [destinationFieldMap]="destinationFieldMap"
         [exportKey]="'accounting_export'"
