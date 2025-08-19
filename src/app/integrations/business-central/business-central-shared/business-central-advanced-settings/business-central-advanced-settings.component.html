@@ -1,9 +1,9 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
             [headerText]="'businessCentralAdvancedSettings.headerText' | transloco"
             [contentText]="'businessCentralAdvancedSettings.contentText' | transloco"
             [redirectLink]="supportArticleLink"
@@ -23,10 +23,10 @@
                 </div>
                 <div class="tw-mb-16-px">
                     <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                        <app-configuration-toggle-field 
+                        <app-configuration-toggle-field
                             [form]="advancedSettingForm"
-                            [label]="'businessCentralAdvancedSettings.scheduleExportLabel' | transloco" 
-                            [subLabel]="'businessCentralAdvancedSettings.scheduleExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
+                            [label]="'businessCentralAdvancedSettings.scheduleExportLabel' | transloco"
+                            [subLabel]="'businessCentralAdvancedSettings.scheduleExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                             [formControllerName]="'scheduleEnabled'"
                             [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
@@ -72,10 +72,10 @@
                     </div>
                 </div>
                 <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="advancedSettingForm"
-                        [label]="'businessCentralAdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }" 
-                        [subLabel]="'businessCentralAdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
+                        [label]="'businessCentralAdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [subLabel]="'businessCentralAdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'"
                         [redirectLink]="skipExportRedirectLink">
@@ -92,11 +92,11 @@
                     </div>
                 </div>
             </div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid"
-                (save)="save()" 
+                (save)="save()"
                 (navigateToPreviousStep)="navigateBack()">
             </app-configuration-step-footer>
         </form>

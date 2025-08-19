@@ -1,9 +1,9 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header 
+        <app-configuration-step-header
             [headerText]="'sage300AdvancedSettings.headerText' | transloco"
             [contentText]="'sage300AdvancedSettings.contentText' | transloco"
             [redirectLink]="supportArticleLink"
@@ -22,10 +22,10 @@
             </div>
             <div class="tw-mb-16-px">
                 <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="advancedSettingForm"
-                        [label]="'sage300AdvancedSettings.scheduleAutomaticExportLabel' | transloco" 
-                        [subLabel]="'sage300AdvancedSettings.scheduleAutomaticExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
+                        [label]="'sage300AdvancedSettings.scheduleAutomaticExportLabel' | transloco"
+                        [subLabel]="'sage300AdvancedSettings.scheduleAutomaticExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                         [formControllerName]="'scheduleEnabled'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -70,10 +70,10 @@
                 </div>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-toggle-field 
+                <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [label]="'sage300AdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }" 
-                    [subLabel]="'sage300AdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }" 
+                    [label]="'sage300AdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [subLabel]="'sage300AdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
@@ -90,9 +90,9 @@
                 </div>
             </div>
         </div>
-        <app-configuration-step-footer 
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-        (save)="save()" 
+        <app-configuration-step-footer
+        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        (save)="save()"
         [showBackButton] = "isOnboarding"
         (navigateToPreviousStep)="navigateBack()"
         [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid"></app-configuration-step-footer>
