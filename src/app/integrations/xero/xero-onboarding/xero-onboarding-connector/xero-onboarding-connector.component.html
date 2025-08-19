@@ -1,7 +1,7 @@
-<div class="tw-pb-48-px">
+<div class="tw-pb-48-px page-layout-container">
     <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
-    <div>
-        <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+    <div class="tw-flex-grow">
+        <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
             <app-loader></app-loader>
         </div>
         <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
