@@ -14,4 +14,7 @@
     &--dependent-field {
         @apply tw-pt-24-px;
     }
+    &--field-container {
+        @apply tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white;
+    }
 }
