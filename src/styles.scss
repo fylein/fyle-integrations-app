@@ -325,7 +325,7 @@ p {
     @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
 }
 
-.p-button:disabled {
+.p-button.p-disabled {
     @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
 }
 

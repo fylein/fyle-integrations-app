@@ -34,8 +34,8 @@ export const c1Styles = {
         primary: {
            class: 'p-button p-button-raised',
            active: 'tw-bg-primary',
-           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
-           progress: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
            loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
