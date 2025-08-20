@@ -25,8 +25,8 @@
                             </app-svg-icon>
                         </a>
                     </p>
-                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
-                        <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-items-center tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
+                        <app-loader [showSpinnerLabel]="false" size="vertical-sm" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
                         <p class="tw-pl-10-px">{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                     </div>
                 </div>
