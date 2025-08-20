@@ -72,7 +72,8 @@
         .p-chips.p-focus>ul,
         input[type="password"]:focus,
         .custom-search-field-focus,
-        input[type="checkbox"]:hover, input[type="checkbox"]:focus {
+        input[type="checkbox"]:hover, input[type="checkbox"]:focus,
+        .p-inputswitch.p-focus .p-inputswitch-slider {
             @apply tw-shadow-focused #{!important};
         }
 
