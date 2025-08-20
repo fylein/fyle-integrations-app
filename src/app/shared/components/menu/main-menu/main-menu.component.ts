@@ -104,6 +104,11 @@ export class MainMenuComponent implements OnInit {
     );
   }
 
+  getCurrentIntegrationName(): string | undefined {
+    const integrations = Object.keys(this.integrationsService.inAppIntegrationUrlMap) as InAppIntegration[];
+    return integrations.find(integration => this.isCurrentIntegration(integration));
+  }
+
   private addDropdownOptions(integrations: Integration[]) {
     const options: MainMenuDropdownGroup[] = [
       {

@@ -44,5 +44,28 @@ export const fyleStyles = {
         dialog: {
             cancel: 'tw-px-16-px tw-py-8-px'
         }
+    },
+    toast: {
+        class: 'tw-flex tw-items-stretch tw-bg-white tw-rounded-8-px',
+        leftIcon: {
+            class: 'tw-flex tw-items-center tw-justify-center tw-w-32-px tw-rounded-tl-4-px tw-rounded-bl-4-px',
+            iconSize: '17px',
+            background: {
+                success: 'tw-bg-toast-success-bg',
+                error: 'tw-bg-toast-error-bg',
+                info: 'tw-bg-toast-info-bg'
+            }
+        },
+        message: 'tw-text-text-toast-color tw-pl-16-px',
+        close: {
+            class: 'tw-flex tw-items-center tw-justify-center tw-bg-white tw-cursor-pointer tw-px-4 tw-rounded-8-px',
+            iconSize: '27px',
+            iconStyleClasses: 'tw-text-bg-toast-grey'
+        },
+        backgroundClass: {
+            success: 'tw-bg-white tw-outline-toast-success',
+            error: 'tw-bg-white tw-outline-toast-error',
+            info: 'tw-bg-white tw-outline-toast-info'
+        }
     }
 };

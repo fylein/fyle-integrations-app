@@ -18,7 +18,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: true,
     loginToAllConnectedApps: false,
     isDashboardButtonOutlined: false,
-    cancelButtonPosition: 'left',
     isPrimengLoaderEnabled: true,
     featureFlags: {
         cloneSettings: false,
@@ -65,7 +64,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             expenseType: false
         },
         mappings: {
-            employeeMapping: false
+            employeeMapping: false,
+            allowExpandableSearch: true
         },
         dashboard: {
             disconnectButton: false,

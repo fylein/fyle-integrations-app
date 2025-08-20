@@ -38,9 +38,24 @@
 
 
 @layer base {
+
+    // Make all pages take up the full screen height
+    .page-layout-container,
+    app-netsuite-onboarding > *:not(router-outlet), app-netsuite-onboarding > *:not(router-outlet) > div,
+    app-intacct-onboarding > *:not(router-outlet) {
+        @apply tw-h-full tw-flex tw-flex-col;
+    }
+
+    .router-outlet-container,
+    app-netsuite-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers),
+    app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
+        @apply tw-flex-grow;
+    }
+
     .link {
         @apply tw-text-link-primary tw-cursor-pointer;
     }
+
     [data-theme='fyle'] {
 
         /* ============= *\
@@ -53,11 +68,12 @@
 
         // Focused borders
         .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
-        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input),
+        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input),
         .p-chips.p-focus>ul,
         input[type="password"]:focus,
         .custom-search-field-focus,
-        input[type="checkbox"]:hover, input[type="checkbox"]:focus {
+        input[type="checkbox"]:hover, input[type="checkbox"]:focus,
+        .p-inputswitch.p-focus .p-inputswitch-slider {
             @apply tw-shadow-focused #{!important};
         }
 
@@ -116,11 +132,11 @@
 
 
         // Text inputs
-        input[type="text"]:not(.p-chips-input-token > input), input[type="password"] {
+        input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input):not(.custom-search-field > input), input[type="password"] {
             @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
         }
 
-        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input) {
+        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input) {
             @apply tw-px-14-px #{!important};
         }
 
@@ -310,7 +326,7 @@ p {
     @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
 }
 
-.p-button:disabled {
+.p-button.p-disabled {
     @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
 }
 
@@ -758,6 +774,42 @@ p {
     @apply tw-bg-disabled-bg-color #{!important};
 }
 
+[data-theme='fyle'] {
+.p-toast {
+    @apply tw-opacity-100 #{!important}
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+    @apply tw-outline tw-outline-1 tw-rounded-8-px #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    @apply tw-rounded-8-px tw-p-0 tw-text-white #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-icon-close-icon {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-message-content {
+    @apply tw-block #{!important};
+}
+
+}
+
+[data-theme='co'] {
 .p-toast {
     @apply tw-opacity-100 #{!important}
 }
@@ -789,6 +841,9 @@ p {
 .p-toast-message-content {
     @apply tw-block #{!important};
 }
+
+}
+
 
 .p-datatable .p-datatable-thead>tr>th {
     @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}

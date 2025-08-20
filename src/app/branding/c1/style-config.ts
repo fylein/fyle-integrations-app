@@ -34,8 +34,8 @@ export const c1Styles = {
         primary: {
            class: 'p-button p-button-raised',
            active: 'tw-bg-primary',
-           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
-           progress: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
            loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
@@ -43,6 +43,29 @@ export const c1Styles = {
         },
         dialog: {
             cancel: 'tw-px-16-px tw-py-8-px outline-sm'
+        }
+    },
+    toast: {
+        class: 'tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px tw-p-12-px',
+        leftIcon: {
+            class: 'tw-inline-flex tw-items-center',
+            iconSize: '20px',
+            background: {
+                success: '',
+                error: '',
+                info: ''
+            }
+        },
+        message: 'tw-text-toast-text-color tw-pl-8-px',
+        close: {
+            class: 'tw-inline-flex tw-items-center tw-cursor-pointer',
+            iconSize: '20px',
+            iconStyleClasses: 'tw-text-toast-text-color'
+        },
+        backgroundClass: {
+            success: 'tw-bg-toast-success-bg',
+            error: 'tw-bg-toast-error-bg',
+            info: 'tw-bg-bg-info'
         }
     }
 };

@@ -7,7 +7,7 @@ import { IframeOrigin, InAppIntegration, IntegrationAppKey } from './core/models
 import { SiAuthService } from './core/services/si/si-core/si-auth.service';
 import { XeroAuthService } from './core/services/xero/xero-core/xero-auth.service';
 import { NetsuiteAuthService } from './core/services/netsuite/netsuite-core/netsuite-auth.service';
-import { brandingFeatureConfig } from './branding/branding-config';
+import { brandingStyle } from './branding/branding-config';
 import { Tokens } from './core/models/misc/integration-tokens-map';
 import { AuthService } from './core/services/common/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -21,6 +21,8 @@ import { IframeOriginStorageService } from './core/services/misc/iframe-origin-s
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private eventsService: EventsService,

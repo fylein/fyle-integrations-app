@@ -39,6 +39,9 @@
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #B3D9C8;
+    
+    //toast bg
+    --bg-toast-grey: #{$grey-675};
 
     //colors bg
     --bg-primary: #{$grey-800};
@@ -64,6 +67,7 @@
     --bg-highlight-light: #{$purple-200};
     --bg-disable-light: #{$grey-100};
     --bg-tertiary-light: #{$blue-50};
+    --bg-link-muted: #{$grey-250};
 
     //lighter bg
     --bg-info-lighter: #{$blue-100};
@@ -137,10 +141,12 @@
     --text-label: #{$grey-500};
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
+    --text-toast-color: #{$grey-90};
 
     //link
     --link-primary: #{$green-700};
     --link-visited: #{$purple-500};
+    --link-muted: #{$grey-550};
 
     //icons
     --icon-brand-primary: #{$brand-500};
@@ -304,7 +310,7 @@
 
     --search-focused-placeholder-text: var(--text-placeholder);
 
-    --search-default-border: var(--border-secondary);
+    --search-default-border: var(--utility-major-300);
 
     --search-focused-filled-border: var(--btn-secondary-hover-bg);
 
@@ -332,8 +338,8 @@
 
     --select-error-border: var(--border-danger);
 
-    --toggle-text-yes: 'ON';
-    --toggle-text-no: 'OFF';
+    --toggle-text-yes: 'Yes';
+    --toggle-text-no: 'No';
 
     --toggle-circle-translate: 28px;
 
@@ -341,12 +347,15 @@
 
     --alerts-success-icon-color: var(--text-white);
 
-    --toast-success-bg: var(--bg-success);
+    --toast-success-bg: #{$green-950};
+
+    --toast-error: #{$red-650};
+
+    --toast-info-bg: #{$slate-500};
 
     --toast-text-color: var(--text-white);
 
     --alerts-error-icon-color: var(--bg-danger);
-
     --toast-error-bg: var(--bg-danger);
 
     --chips-border-color: var(--border-secondary);
@@ -498,6 +507,6 @@
     --loader-action-track: #{$loader-action-track};
 
     // Font family
-    --font-primary: "sage-ui", sans-serif;
+    --font-primary: "sage-ui", "Helvetica Neue", Roboto, Segoe UI, Arial;
   }
 }
