@@ -168,6 +168,22 @@
             content: url('./assets/icons/carbon-tick.svg');
             @apply tw-absolute tw-top-[-4px];
         }
+
+        // Dialogs
+        .p-dialog {
+            @apply tw-rounded-2xl tw-overflow-hidden #{!important};
+        }
+
+        .p-dialog .p-dialog-content {
+            @apply tw-p-0
+        }
+
+        // Drawer dialogs - only left corners are rounded since drawers open from the right
+        p-dialog[ng-reflect-position="topright"] {
+            .p-dialog, .p-dialog-header, .p-dialog-content {
+                @apply tw-rounded-r-none #{!important};
+            }
+        }
     }
 
     [data-theme='co'] {
@@ -208,6 +224,34 @@
             @apply tw-shadow-none #{!important};
         }
 
+        // Dialogs
+        .p-dialog {
+            @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
+        }
+
+        .p-dialog .p-dialog-header {
+            @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+        }
+
+        .p-dialog .p-dialog-content {
+            @apply tw-p-0 tw-rounded-none #{!important};
+        }
+
+        .p-dialog .p-dialog-footer {
+            @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+        }
+
+        .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
+            @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+        }
+
+        .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
+            @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+        }
+
+        .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
+            @apply tw-rounded-border-radius-2xs #{!important};
+        }
     }
 }
 
@@ -369,68 +413,6 @@ p {
 .btn-text-primary:hover {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
 }
-
-// Dialog
-[data-theme='fyle'] {
-    .p-dialog {
-        @apply tw-rounded-2xl tw-overflow-hidden #{!important};
-    }
-
-    .p-dialog .p-dialog-header {
-        @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
-    }
-
-    .p-dialog .p-dialog-content {
-        @apply tw-p-0 tw-rounded-none #{!important};
-    }
-
-    .p-dialog .p-dialog-footer {
-        @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
-        @apply tw-rounded-t-2xl tw-rounded-b-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
-        @apply tw-rounded-b-2xl tw-rounded-t-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
-        @apply tw-rounded-2xl #{!important};
-    }
-}
-
-[data-theme='co'] {
-    .p-dialog {
-        @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
-    }
-
-    .p-dialog .p-dialog-header {
-        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
-    }
-
-    .p-dialog .p-dialog-content {
-        @apply tw-p-0 tw-rounded-none #{!important};
-    }
-
-    .p-dialog .p-dialog-footer {
-        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
-        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
-        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
-    }
-
-    .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
-        @apply tw-rounded-border-radius-2xs #{!important};
-    }
-}
-
 
 .p-dialog-header-close-icon {
     @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
