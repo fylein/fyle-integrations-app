@@ -322,7 +322,7 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
-                            [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
+                            [isDisabled]="[QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(exportSettingForm.get('creditCardExportType')?.value)"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
                     </div>
