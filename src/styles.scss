@@ -175,7 +175,7 @@
         }
 
         .p-dialog .p-dialog-content {
-            @apply tw-p-0
+            @apply tw-p-0;
         }
 
         // Drawer dialogs - only left corners are rounded since drawers open from the right
