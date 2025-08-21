@@ -25,14 +25,12 @@
                             </app-svg-icon>
                         </a>
                     </p>
-                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
-                        <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
+                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-items-center tw-text-slightly-normal-text-color tw-text-14-px tw-pt-4-px tw-pb-18-px">
+                        <p>{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
                     </div>
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
-
                 @if(!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
                     <app-primary-button  [styleClasses]="'tw-px-24-px tw-py-8-px'"  [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-primary-button>
                 }
@@ -64,6 +62,22 @@
                         [src]="xeroConnectButtonSource"
                         (click)="initiateOAuth()">
                 </div>
+            </div>
+
+            <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-items-center">
+              <div
+                class="tw-flex tw-items-center tw-h-48-px tw-px-8 tw-rounded-4-px tw-text-white tw-gap-2 tw-text-18-px tw-opacity-70 tw-pointer-events-none tw-cursor-not-allowed tw-select-none"
+                [ngClass]="{
+                  'tw-bg-bg-qbo-btn': showQBOButton,
+                  'tw-bg-bg-xero-btn': showXeroButton
+                }"
+                role="status"
+                aria-live="polite"
+                aria-busy="true"
+              >
+                <p class="tw-m-0">{{'appLandingPageHeader.connectingButton' | transloco}}</p>
+                <app-loader [variant]='showQBOButton ? "neutral" : "action"' size="horizontal-sm" [showSpinnerLabel]="false" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+              </div>
             </div>
         </div>
 </div>
