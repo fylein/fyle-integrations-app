@@ -179,7 +179,7 @@
         }
 
         // Drawer dialogs - only left corners are rounded since drawers open from the right
-        p-dialog[ng-reflect-position="topright"] {
+        .p-dialog-top-right {
             .p-dialog, .p-dialog-header, .p-dialog-content {
                 @apply tw-rounded-r-none #{!important};
             }
