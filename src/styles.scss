@@ -93,10 +93,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     // Dropdown panel
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
     ,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
-        @apply tw-text-white tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
+        @apply tw-text-dd-menu-item-default-text-color tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
 
         p {
-            @apply tw-text-utility-major-50;
+            @apply tw-text-yin-065;
         }
     }
 
@@ -105,7 +105,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     }
 
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
-        @apply tw-bg-utility-major-25 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
+        @apply tw-bg-utility-major-100 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
     }
 
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
@@ -118,6 +118,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
 
     .p-dropdown-panel {
         @apply tw-translate-y-[7px] tw-shadow-base-shadow;
+    }
+
+    .p-dropdown-header {
+        @apply tw-bg-white #{!important}
     }
 
     // Dropdown - Error state
@@ -537,7 +541,7 @@ p {
     }
 
     .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-        @apply tw-w-8-px tw-h-8-px tw-bg-colors-utility-yin-090 #{!important};
+        @apply tw-w-8-px tw-h-8-px tw-bg-yin-090 #{!important};
     }
 }
 
