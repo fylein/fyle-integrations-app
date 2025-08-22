@@ -14,6 +14,8 @@ export class SplitMenuButtonComponent {
 
   @Input() currentIntegration?: string;
 
+  @Input() isDisconnectRequired?: boolean;
+
   isDropdownVisible: boolean = false;
 
   toggleDropdown(event: MouseEvent): void {
@@ -56,6 +58,10 @@ export class SplitMenuButtonComponent {
     }
     if (isLast) {
       baseClasses.push('tw-rounded-br-lg tw-rounded-bl-lg');
+    }
+
+    if (isLast && this.isDisconnectRequired) {
+      baseClasses.push('hover:tw-bg-bg-red hover:tw-text-white tw-text-text-red');
     }
 
     return baseClasses.join(' ');

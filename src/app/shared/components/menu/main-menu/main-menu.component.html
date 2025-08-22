@@ -56,6 +56,7 @@
         @if (brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
             <app-split-menu-button
                 [dropdownOptions]="dropdownOptions"
+                [isDisconnectRequired]="isDisconnectRequired"
                 [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
                 [currentIntegration]="getCurrentIntegrationName()">
             </app-split-menu-button>
