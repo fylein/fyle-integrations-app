@@ -183,6 +183,11 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
             @apply tw-rounded-r-none #{!important};
         }
     }
+
+    // Tables
+    .p-datatable .p-datatable-thead > tr > th {
+        @apply tw-py-0 tw-h-40-px tw-bg-bg-brand #{!important};
+    }
 }
 
 [data-theme='co'] {
