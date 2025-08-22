@@ -33,6 +33,8 @@ const customColors = {
   'icon-warning': 'var(--icon-warning)',
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
   'bg-grey-primary': 'var(--bg-grey-primary)',
+  'bg-qbo-btn': 'var(--bg-qbo-btn)',
+  'bg-xero-btn': 'var(--bg-xero-btn)',
 
   // Colors Utility
   'colors-utility-yin-090': 'var(--colors-utility-yin-090)',
