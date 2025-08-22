@@ -37,221 +37,219 @@
 }
 
 
-@layer base {
 
-    // Make all pages take up the full screen height
-    .page-layout-container,
-    app-netsuite-onboarding > *:not(router-outlet), app-netsuite-onboarding > *:not(router-outlet) > div,
-    app-intacct-onboarding > *:not(router-outlet) {
-        @apply tw-h-full tw-flex tw-flex-col;
-    }
+// Make all pages take up the full screen height
+.page-layout-container,
+app-netsuite-onboarding > *:not(router-outlet), app-netsuite-onboarding > *:not(router-outlet) > div,
+app-intacct-onboarding > *:not(router-outlet) {
+    @apply tw-h-full tw-flex tw-flex-col;
+}
 
-    .router-outlet-container,
-    app-netsuite-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers),
-    app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
-        @apply tw-flex-grow;
-    }
+.router-outlet-container,
+app-netsuite-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers),
+app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
+    @apply tw-flex-grow;
+}
+
+.link {
+    @apply tw-text-link-primary tw-cursor-pointer;
+}
+
+[data-theme='fyle'] {
+
+    /* ============= *\
+    |* GLOBAL STYLES *|
+    \* ============= */
 
     .link {
-        @apply tw-text-link-primary tw-cursor-pointer;
+        @apply tw-underline;
     }
 
-    [data-theme='fyle'] {
+    // Focused borders
+    .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
+    input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input),
+    .p-chips.p-focus>ul,
+    input[type="password"]:focus,
+    .custom-search-field-focus,
+    input[type="checkbox"]:hover, input[type="checkbox"]:focus,
+    .p-inputswitch.p-focus .p-inputswitch-slider {
+        @apply tw-shadow-focused #{!important};
+    }
 
-        /* ============= *\
-        |* GLOBAL STYLES *|
-        \* ============= */
+    /* ========================= *\
+    |* COMPONENT-SPECIFIC STYLES *|
+    \* ========================= */
 
-        .link {
-            @apply tw-underline;
-        }
+    // Dropdowns
+    .p-dropdown {
+        @apply tw-h-input-height #{!important};
+    }
 
-        // Focused borders
-        .p-dropdown.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
-        input[type="text"]:focus:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input),
-        .p-chips.p-focus>ul,
-        input[type="password"]:focus,
-        .custom-search-field-focus,
-        input[type="checkbox"]:hover, input[type="checkbox"]:focus,
-        .p-inputswitch.p-focus .p-inputswitch-slider {
-            @apply tw-shadow-focused #{!important};
-        }
-
-        /* ========================= *\
-        |* COMPONENT-SPECIFIC STYLES *|
-        \* ========================= */
-
-        // Dropdowns
-        .p-dropdown {
-            @apply tw-h-input-height #{!important};
-        }
-
-        .p-dropdown-trigger, .p-dropdown-trigger > *, .pi-chevron-down.fyle {
-            content: url('./assets/icons/caret-large-down.svg') !important;
-        }
+    .p-dropdown-trigger, .p-dropdown-trigger > *, .pi-chevron-down.fyle {
+        content: url('./assets/icons/caret-large-down.svg') !important;
+    }
 
 
-        // Dropdown panel
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
-        ,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
-            @apply tw-text-white tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
+    // Dropdown panel
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight, .p-dropdown-panel .p-dropdown-items .p-dropdown-item .p-highlight .p-focus
+    ,.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight:hover {
+        @apply tw-text-white tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
 
-            p {
-                @apply tw-text-utility-major-50;
-            }
-        }
-
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
-            @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
-        }
-
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
-            @apply tw-bg-utility-major-25 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
-        }
-
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-            @apply tw-min-h-dropdown-option-height #{!important};
-        }
-
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
-            @apply tw-text-utility-major-400;
-        }
-
-        .p-dropdown-panel {
-            @apply tw-translate-y-[7px] tw-shadow-base-shadow;
-        }
-
-        // Dropdown - Error state
-        .error-box .p-dropdown {
-            @apply tw-border-2 #{!important};
-        }
-
-        .mandatory-error-message {
-            @apply tw-text-text-danger-dark tw-text-14-px #{!important};
-        }
-
-
-        // Text inputs
-        input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input):not(.custom-search-field > input), input[type="password"] {
-            @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
-        }
-
-        input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input) {
-            @apply tw-px-14-px #{!important};
-        }
-
-        input[type="text"]:not(.p-chips-input-token > input):disabled, input[type="password"]:disabled {
-            @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
-        }
-
-        // Text inputs - Error state
-        input[type="text"].error-box, input[type="password"].error-box {
-            @apply tw-border-border-danger-dark #{!important};
-        }
-
-
-        // Checkboxes - QBD Prerequisites
-        .p-button:enabled:hover {
-            @apply tw-shadow-none #{!important};
-        }
-
-        .p-button:enabled input[type="checkbox"] {
-            @apply tw-rounded-full #{!important};
-        }
-
-        // All other checkboxes
-        input[type="checkbox"] {
-            @apply tw-appearance-none tw-w-16-px tw-h-16-px tw-inline-flex tw-content-center tw-justify-center tw-p-[1px] tw-border-1-px tw-border-utility-major-300 tw-rounded-[2px] tw-relative #{!important};
-        }
-
-        input[type="checkbox"]:checked::after {
-            content: url('./assets/icons/carbon-tick.svg');
-            @apply tw-absolute tw-top-[-4px];
-        }
-
-        // Dialogs
-        .p-dialog {
-            @apply tw-rounded-2xl tw-overflow-hidden #{!important};
-        }
-
-        .p-dialog .p-dialog-content {
-            @apply tw-p-0;
-        }
-
-        // Drawer dialogs - only left corners are rounded since drawers open from the right
-        .p-dialog-top-right {
-            .p-dialog, .p-dialog-header, .p-dialog-content {
-                @apply tw-rounded-r-none #{!important};
-            }
+        p {
+            @apply tw-text-utility-major-50;
         }
     }
 
-    [data-theme='co'] {
-        // Dropdowns
-        .p-dropdown.p-focus {
-            @apply tw-shadow-none tw-border-select-focused-border #{!important};
-        }
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus {
+        @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
+    }
 
-        .p-dropdown:hover {
-            @apply tw-shadow-none #{!important};
-        }
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover, .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight).p-focus:hover{
+        @apply tw-bg-utility-major-25 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
+    }
 
-        .p-dropdown-trigger {
-            content: url('./assets/icons/co/grv-chevron-down.svg') !important;
-        }
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+        @apply tw-min-h-dropdown-option-height #{!important};
+    }
 
-        .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
-            @apply tw-text-text-muted;
-        }
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
+        @apply tw-text-utility-major-400;
+    }
 
-        // Dropdowns - Error state
-        .mandatory-error-message {
-            @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
-        }
+    .p-dropdown-panel {
+        @apply tw-translate-y-[7px] tw-shadow-base-shadow;
+    }
+
+    // Dropdown - Error state
+    .error-box .p-dropdown {
+        @apply tw-border-2 #{!important};
+    }
+
+    .mandatory-error-message {
+        @apply tw-text-text-danger-dark tw-text-14-px #{!important};
+    }
 
 
-        // Checkboxes - C1 QBD checkboxes
-        .checkedText {
-            @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
-        }
+    // Text inputs
+    input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input):not(.custom-search-field > input), input[type="password"] {
+        @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
+    }
 
-        .unCheckedText {
-            @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
-        }
+    input[type="text"]:not(.p-dropdown-filter-container > input):not(.custom-search-field > input):not(.p-chips-input-token > input):not(.p-multiselect-chip input):not(p-calendar input) {
+        @apply tw-px-14-px #{!important};
+    }
 
-        // Multiselects
-        .p-multiselect:not(.p-disabled).p-focus {
-            @apply tw-shadow-none #{!important};
-        }
+    input[type="text"]:not(.p-chips-input-token > input):disabled, input[type="password"]:disabled {
+        @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
+    }
 
-        // Dialogs
-        .p-dialog {
-            @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
-        }
+    // Text inputs - Error state
+    input[type="text"].error-box, input[type="password"].error-box {
+        @apply tw-border-border-danger-dark #{!important};
+    }
 
-        .p-dialog .p-dialog-header {
-            @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
-        }
 
-        .p-dialog .p-dialog-content {
-            @apply tw-p-0 tw-rounded-none #{!important};
-        }
+    // Checkboxes - QBD Prerequisites
+    .p-button:enabled:hover {
+        @apply tw-shadow-none #{!important};
+    }
 
-        .p-dialog .p-dialog-footer {
-            @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
-        }
+    .p-button:enabled input[type="checkbox"] {
+        @apply tw-rounded-full #{!important};
+    }
 
-        .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
-            @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
-        }
+    // All other checkboxes
+    input[type="checkbox"] {
+        @apply tw-appearance-none tw-w-16-px tw-h-16-px tw-inline-flex tw-content-center tw-justify-center tw-p-[1px] tw-border-1-px tw-border-utility-major-300 tw-rounded-[2px] tw-relative #{!important};
+    }
 
-        .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
-            @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
-        }
+    input[type="checkbox"]:checked::after {
+        content: url('./assets/icons/carbon-tick.svg');
+        @apply tw-absolute tw-top-[-4px];
+    }
 
-        .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
-            @apply tw-rounded-border-radius-2xs #{!important};
+    // Dialogs
+    .p-dialog {
+        @apply tw-rounded-2xl tw-overflow-hidden #{!important};
+    }
+
+    .p-dialog .p-dialog-content {
+        @apply tw-p-0;
+    }
+
+    // Drawer dialogs - only left corners are rounded since drawers open from the right
+    .p-dialog-top-right {
+        .p-dialog, .p-dialog-header, .p-dialog-content {
+            @apply tw-rounded-r-none #{!important};
         }
+    }
+}
+
+[data-theme='co'] {
+    // Dropdowns
+    .p-dropdown.p-focus {
+        @apply tw-shadow-none tw-border-select-focused-border #{!important};
+    }
+
+    .p-dropdown:hover {
+        @apply tw-shadow-none #{!important};
+    }
+
+    .p-dropdown-trigger {
+        content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item p {
+        @apply tw-text-text-muted;
+    }
+
+    // Dropdowns - Error state
+    .mandatory-error-message {
+        @apply tw-text-form-error-help-text-color tw-text-12-px #{!important};
+    }
+
+
+    // Checkboxes - C1 QBD checkboxes
+    .checkedText {
+        @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+    }
+
+    .unCheckedText {
+        @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
+    }
+
+    // Multiselects
+    .p-multiselect:not(.p-disabled).p-focus {
+        @apply tw-shadow-none #{!important};
+    }
+
+    // Dialogs
+    .p-dialog {
+        @apply tw-rounded-border-radius-2xs tw-overflow-hidden #{!important};
+    }
+
+    .p-dialog .p-dialog-header {
+        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog .p-dialog-content {
+        @apply tw-p-0 tw-rounded-none #{!important};
+    }
+
+    .p-dialog .p-dialog-footer {
+        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)) .p-dialog-content {
+        @apply tw-rounded-t-border-radius-2xs tw-rounded-b-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-b-border-radius-2xs tw-rounded-t-none #{!important};
+    }
+
+    .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
+        @apply tw-rounded-border-radius-2xs #{!important};
     }
 }
 
