@@ -1,19 +1,22 @@
-<div class="tw-pt-80-px tw-flex tw-justify-center tw-text-center tw-flex-col">
-    <p *ngIf="!headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">{{ 'appLandingPageBody.simpleTutorial' | transloco }}</p>
-    <p *ngIf="headlineText" class="tw-text-text-primary tw-text-20-px tw-font-500">{{ headlineText }}</p>
-    <p class="tw-text-text-muted tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
-        {{headerText}}
-        <a *ngIf="redirectLink"
-            class="link tw-w-fit tw-font-500 tw-inline-flex tw-items-center tw-pl-2-px"
-            (click)="windowService.openInNewTab(redirectLink)">
-                {{ 'common.readMoreText' | transloco}}
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit"></app-svg-icon>
-        </a>
-    </p>
+<div class="tw-pt-80-px tw-flex tw-justify-center tw-text-center tw-flex-col tw-bg-white">
+    @if (brandingFeatureConfig.shouldShowOnboardingYouTubeVideo) {
+      <p *ngIf="!headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">{{ 'appLandingPageBody.simpleTutorial' | transloco }}</p>
+      <p *ngIf="headlineText" class="tw-text-text-primary tw-text-20-px tw-font-500">{{ headlineText }}</p>
+      <p class="tw-text-text-tertiary tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
+          {{headerText}}
+          <a *ngIf="redirectLink"
+              class="link tw-w-fit tw-font-500 tw-inline-flex tw-items-center tw-pl-2-px"
+              (click)="windowService.openInNewTab(redirectLink)">
+                  {{ 'common.readMoreText' | transloco}}
+              <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit"></app-svg-icon>
+          </a>
+      </p>
 
-    <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-24-px">
-        <iframe class= "tw-rounded-8-px" width="720" height="420" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0"></iframe>
-    </div>
+      <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-24-px">
+          <iframe class= "tw-rounded-8-px" width="720" height="420" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0"></iframe>
+      </div>
+    }
+    
     <div *ngIf="!embedVideo && embedImage" class="tw-flex tw-justify-center tw-pt-24-px">
         <img src="{{embedImage}}" class= "tw-rounded-8-px" width="720" height="420">
     </div>

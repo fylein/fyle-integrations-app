@@ -36,8 +36,13 @@ const customColors = {
   'bg-qbo-btn': 'var(--bg-qbo-btn)',
   'bg-xero-btn': 'var(--bg-xero-btn)',
 
-  // Colors Utility
-  'colors-utility-yin-090': 'var(--colors-utility-yin-090)',
+  // Black - yin (Font colors)
+  'yin-100': 'var(--yin-100)',
+  'yin-090': 'var(--yin-090)',
+  'yin-075': 'var(--yin-075)',
+  'yin-065': 'var(--yin-065)',
+  'yin-055': 'var(--yin-055)',
+  'yin-030': 'var(--yin-030)',
 
   // Action/Major colors (Jade theme for major actions)
   'action-major-25': 'var(--action-major-25)',
@@ -171,6 +176,7 @@ const colors = {
   'bg-brand-muted': 'var(--bg-brand-muted)',
   'bg-brand-pressed': 'var(--bg-brand-pressed)',
   'bg-brand-hover': 'var(--bg-brand-hover)',
+  'bg-red': 'var(--bg-red)',
 
   //grey bg
   'bg-primary': 'var(--bg-primary)',
@@ -238,6 +244,7 @@ const textColors = {
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
+  'text-red': 'var(--text-red)',
   'text-disable': 'var(--text-disable)',
   'text-placeholder': 'var(--text-placeholder)',
   'text-label': 'var(--text-label)',

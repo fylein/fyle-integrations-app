@@ -38,6 +38,7 @@ $grey-650: #3C5B6E;
 $grey-675: #335B70;
 $grey-700: #2c304e;
 $grey-800: #161528;
+$grey-850: #181919;
 $grey-900: #1a1a1a;
 
 //brand shades
@@ -87,6 +88,7 @@ $red-350: #FFC2D6;
 $red-500: #da1e28;
 $red-600: #cb374a;
 $red-650: #CB374A;
+$red-660: #A22C3B;
 
 //purple
 $purple-200: #f4edff;
@@ -108,8 +110,6 @@ $action-major-500: #007e45ff;
 $action-major-600: #006738ff;
 $action-major-700: #004d2aff;
 
-$colors-utility-yin-090: rgba(0, 0, 0, 0.90);
-
 // utility/major - This base colour is used to create our grayscale tints/shades
 $utility-major-10: #fafbfbff;
 $utility-major-25: #f2f5f6ff;
@@ -124,6 +124,15 @@ $utility-major-400: #335b70ff;
 $utility-major-450: #19475eff;
 $utility-major-500: #00324cff;
 $utility-major-800: #00141eff;
+
+// Font colors
+// Black - yin
+$yin-100: #000000;
+$yin-090: #1A1A1A;
+$yin-075: #404040;
+$yin-065: #595959;
+$yin-055: #737373;
+$yin-030: #B3B3B3;
 
 // Semantics colors - UI semantic colors denote standard states. Each color has the same meaning in all contexts.
 $semantic-focus-500: #ffbc19;

@@ -14,6 +14,8 @@ export class SplitMenuButtonComponent {
 
   @Input() currentIntegration?: string;
 
+  @Input() isDisconnectRequired?: boolean;
+
   isDropdownVisible: boolean = false;
 
   toggleDropdown(event: MouseEvent): void {

@@ -10,9 +10,9 @@
     //Colors
     --white: #{$white};
     --placeholder: #{$grey-400};
-    --separator: #{$grey-200};
+    --separator: #{$grey-50};
     --normal-text-color: #{$grey-800};
-    --menu-inactive-text-color: #{$grey-400};
+    --menu-inactive-text-color: var(--text-primary);
     --sub-text-color: #{$grey-600};
     --faded-text-color: #{$grey-500};
     --box-color: #{$grey-300};
@@ -54,6 +54,8 @@
     --bg-green: #{$brand-600};
     --bg-primary-opacity: #{$primary-opacity-10};
     --bg-grey-primary: #{$grey-50};
+    --bg-red: #{$red-660};
+
     //_contextual bg
     --bg-success: #{$green-500};
     --bg-info: #{$blue-500};
@@ -78,13 +80,13 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: #{$grey-02};
+    --bg-tertiary-lighter: #{$grey-50};
 
     //border-color
     --border-brand: #{$brand-500};
     --border-primary: #{$grey-700};
     --border-secondary: #{$grey-300};
-    --border-tertiary: #{$grey-200};
+    --border-tertiary: #{$grey-50};
 
     --border-info: #{$blue-500};
     --border-warning: #{$yellow-500};
@@ -127,9 +129,9 @@
     //text
     --text-brand-primary: #{$brand-500};
     --text-brand-secondary: #{$brand-300};
-    --text-primary: #{$grey-800};
-    --text-secondary: #{$grey-700};
-    --text-tertiary: #{$grey-600};
+    --text-primary: #{$grey-900};
+    --text-secondary: #{$yin-075};
+    --text-tertiary: #{$yin-065};
     --text-success: #{$green-500};
     --text-info: #{$blue-900};
     --text-warning: #{$yellow-500};
@@ -139,11 +141,12 @@
     --text-calm: #{$green-900};
     --text-white: #{$white};
     --text-disable: #{$grey-400};
-    --text-placeholder: #{$grey-400};
-    --text-label: #{$grey-500};
+    --text-placeholder: #{$grey-550};
+    --text-label: #{$grey-850};
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
     --text-toast-color: #{$grey-90};
+    --text-red: #{$red-650};
 
     //link
     --link-primary: #{$green-700};
@@ -322,7 +325,7 @@
 
     --dropdown-option-height: 32px;
 
-    --dd-menu-item-default-text-color: var(--text-secondary);
+    --dd-menu-item-default-text-color: var(--text-primary);
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
@@ -470,10 +473,15 @@
 
     // Select
     --select-default-border: #{$utility-major-300};
-    --select-menu-item-active-bg: #{$action-major-500};
+    --select-menu-item-active-bg: #{$utility-major-200};
 
-    // Colors Utility
-    --colors-utility-yin-090: #{$colors-utility-yin-090};
+    // Yin - Dark font colors
+    --yin-100: #{$yin-100};
+    --yin-090: #{$yin-090};
+    --yin-075: #{$yin-075};
+    --yin-065: #{$yin-065};
+    --yin-055: #{$yin-055};
+    --yin-030: #{$yin-030};
 
     // Action/Major - Primary theme colour for major actions (Jade)
     --action-major-25: #{$action-major-25};

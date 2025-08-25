@@ -1,4 +1,4 @@
-<div class="tw-flex tw-justify-between tw-bg-white main-menu-tabs" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
+<div class="tw-flex tw-justify-between tw-bg-white main-menu-tabs tw-border-b-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
@@ -50,6 +50,7 @@
         @if (brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
             <app-split-menu-button
                 [dropdownOptions]="dropdownOptions"
+                [isDisconnectRequired]="isDisconnectRequired"
                 [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
                 [currentIntegration]="getCurrentIntegrationName()">
             </app-split-menu-button>
