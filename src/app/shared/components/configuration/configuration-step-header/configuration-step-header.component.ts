@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -29,6 +29,10 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   constructor(
     public windowService: WindowService

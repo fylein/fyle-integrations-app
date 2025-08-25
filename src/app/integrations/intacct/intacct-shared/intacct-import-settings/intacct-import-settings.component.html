@@ -294,9 +294,9 @@
               </div>
 
             <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-text-14-px tw-gap-8-px">
-                <app-button [buttonSize]="'small'" [buttonType]="'secondary'" (buttonClick)="closeModel()" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-button>
+                <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" (buttonClick)="closeModel()" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-button>
 
-                <app-button [buttonSize]="'small'" [buttonType]="'primary'" [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (buttonClick)="saveCustomField()" [buttonText]="'intacctImportSettings.createAndSave' | transloco"></app-button>
+                <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (buttonClick)="saveCustomField()" [buttonText]="'intacctImportSettings.createAndSave' | transloco"></app-button>
             </div>
         </div>
     </div>
@@ -323,9 +323,9 @@
         </div>
     </div>
     <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px tw-border-t-1-px tw-p-24-px tw-gap-8-px">
-            <app-button [buttonSize]="'small'" [buttonType]="'secondary'" (buttonClick)="acceptDependentFieldWarning(false)" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-button>
+            <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" (buttonClick)="acceptDependentFieldWarning(false)" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-button>
 
-            <app-button [buttonSize]="'small'" [buttonType]="'primary'" (buttonClick)="acceptDependentFieldWarning(true)" [buttonText]="'intacctImportSettings.continueButton' | transloco"></app-button>
+            <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" (buttonClick)="acceptDependentFieldWarning(true)" [buttonText]="'intacctImportSettings.continueButton' | transloco"></app-button>
     </div>
 </p-dialog>
 

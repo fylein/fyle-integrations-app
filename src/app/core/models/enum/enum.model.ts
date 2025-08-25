@@ -954,3 +954,13 @@ export enum QBDDirectInteractionType {
   BOOK_SLOT = 'BOOK_SLOT',
   QUERY = 'QUERY'
 }
+
+export enum ButtonSize {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+}
+
+export enum ButtonType {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+}

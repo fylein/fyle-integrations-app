@@ -1,8 +1,8 @@
 <app-button
   [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco"
   [svgSource]="'headset'"
-  [buttonSize]="'medium'"
-  [buttonType]="'secondary'"
+  [buttonSize]="buttonSize.MEDIUM"
+  [buttonType]="buttonType.SECONDARY"
   [styleClasses]="'tw-py-10-px tw-text-14-px'"
   (buttonClick)="toggleAssistedSetupDialog()"
   [pTooltip]="isAssistedSetupSlotBooked ? ('qbdDirectAssistedSetup.requestReceivedTooltip' | transloco) : ''"
@@ -79,10 +79,10 @@
     <!-- Footer -->
     <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-4">
         @if(interactionType === 'QUERY' && !isQuerySubmitted || true){
-        <app-button [buttonSize]="'small'" [buttonType]="'secondary'" [styleClasses]="'tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-button>
+        <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-button>
         }
 
-        <app-button [buttonSize]="'small'" [buttonType]="'primary'" [styleClasses]="'tw-text-14-px'" [disabled]="isButtonDisabled" (buttonClick)="onRequestAssistedSetup()" [buttonText]="(isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco"></app-button>
+        <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [disabled]="isButtonDisabled" (buttonClick)="onRequestAssistedSetup()" [buttonText]="(isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco"></app-button>
 
     </div>
   </div>

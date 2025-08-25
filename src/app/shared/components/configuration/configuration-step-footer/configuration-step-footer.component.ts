@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-configuration-step-footer',
@@ -30,6 +30,10 @@ export class ConfigurationStepFooterComponent implements OnInit {
   @Output() navigateToPreviousStep = new EventEmitter();
 
   appName = AppName;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 

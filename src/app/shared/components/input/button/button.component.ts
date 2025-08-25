@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-button',
@@ -9,9 +10,9 @@ import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-
 export class ButtonComponent implements OnInit{
   @Input() buttonText: string = '';
 
-  @Input() buttonSize: 'small' | 'medium' = 'small';
+  @Input() buttonSize: ButtonSize;
 
-  @Input() buttonType: 'primary' | 'secondary' = 'primary';
+  @Input() buttonType: ButtonType;
 
   @Input() svgSource: string;
 
