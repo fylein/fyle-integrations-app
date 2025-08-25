@@ -24,7 +24,7 @@
 
 [data-theme='fyle'] {
     :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-        @apply tw-border tw-border-3-px  #{!important}; // tw-p-4-px
+        @apply tw-border tw-border-3-px  #{!important};
     }
 }
 
