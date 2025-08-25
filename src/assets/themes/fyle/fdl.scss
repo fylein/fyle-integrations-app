@@ -472,8 +472,13 @@
     --select-default-border: #{$utility-major-300};
     --select-menu-item-active-bg: #{$utility-major-200};
 
-    // Colors Utility
+    // Yin - Dark font colors
+    --yin-100: #{$yin-100};
     --yin-090: #{$yin-090};
+    --yin-075: #{$yin-075};
+    --yin-065: #{$yin-065};
+    --yin-055: #{$yin-055};
+    --yin-030: #{$yin-030};
 
     // Action/Major - Primary theme colour for major actions (Jade)
     --action-major-25: #{$action-major-25};
