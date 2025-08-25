@@ -1,4 +1,5 @@
 <div class="tw-pt-80-px tw-flex tw-justify-center tw-text-center tw-flex-col">
+    @if (brandingFeatureConfig.shouldShowOnboardingYouTubeVideo) {
     <p *ngIf="!headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">{{ 'appLandingPageBody.simpleTutorial' | transloco }}</p>
     <p *ngIf="headlineText" class="tw-text-text-primary tw-text-20-px tw-font-500">{{ headlineText }}</p>
     <p class="tw-text-text-muted tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
@@ -14,6 +15,8 @@
     <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-24-px">
         <iframe class= "tw-rounded-8-px" width="720" height="420" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0"></iframe>
     </div>
+    }
+    
     <div *ngIf="!embedVideo && embedImage" class="tw-flex tw-justify-center tw-pt-24-px">
         <img src="{{embedImage}}" class= "tw-rounded-8-px" width="720" height="420">
     </div>

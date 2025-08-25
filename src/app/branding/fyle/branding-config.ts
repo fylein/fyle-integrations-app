@@ -19,6 +19,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: true,
     isDashboardButtonOutlined: true,
     isPrimengLoaderEnabled: false,
+    shouldShowOnboardingYouTubeVideo: false,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
