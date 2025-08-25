@@ -888,6 +888,10 @@ p {
     }
 }
 
+.p-datepicker table td > span:focus {
+    @apply tw-relative tw-ring-2-px tw-ring-black tw-ring tw-border-2-px tw-border-border-focus #{!important};
+}
+
 .p-datepicker {
     @apply tw-p-16-px #{!important};
 }
