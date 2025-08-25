@@ -45,10 +45,11 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     this.isLoading = true;
     this.connectorService.connectSage300(this.connectSage300Form).subscribe(({sage300SetupForm, isSage300Connected}) => {
         this.connectSage300Form = sage300SetupForm;
-        this.isLoading = false;
         if (isSage300Connected === true){
         this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
         this.router.navigate([this.onboardingSteps[1].route]);
+        } else {
+          this.isLoading = false;
         }
       });
   }
