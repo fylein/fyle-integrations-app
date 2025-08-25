@@ -54,6 +54,8 @@
     --bg-green: #{$brand-600};
     --bg-primary-opacity: #{$primary-opacity-10};
     --bg-grey-primary: #{$grey-50};
+    --bg-red: #{$red-660};
+
     //_contextual bg
     --bg-success: #{$green-500};
     --bg-info: #{$blue-500};
@@ -144,6 +146,7 @@
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
     --text-toast-color: #{$grey-90};
+    --text-red: #{$red-650};
 
     //link
     --link-primary: #{$green-700};

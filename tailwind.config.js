@@ -176,6 +176,7 @@ const colors = {
   'bg-brand-muted': 'var(--bg-brand-muted)',
   'bg-brand-pressed': 'var(--bg-brand-pressed)',
   'bg-brand-hover': 'var(--bg-brand-hover)',
+  'bg-red': 'var(--bg-red)',
 
   //grey bg
   'bg-primary': 'var(--bg-primary)',
@@ -243,6 +244,7 @@ const textColors = {
   'text-highlight': 'var(--text-highlight)',
   'text-calm': 'var(--text-calm)',
   'text-white': 'var(--text-white)',
+  'text-red': 'var(--text-red)',
   'text-disable': 'var(--text-disable)',
   'text-placeholder': 'var(--text-placeholder)',
   'text-label': 'var(--text-label)',
