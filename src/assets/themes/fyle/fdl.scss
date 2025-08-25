@@ -325,7 +325,7 @@
 
     --dropdown-option-height: 32px;
 
-    --dd-menu-item-default-text-color: var(--text-secondary);
+    --dd-menu-item-default-text-color: var(--text-primary);
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
@@ -473,10 +473,15 @@
 
     // Select
     --select-default-border: #{$utility-major-300};
-    --select-menu-item-active-bg: #{$action-major-500};
+    --select-menu-item-active-bg: #{$utility-major-200};
 
-    // Colors Utility
-    --colors-utility-yin-090: #{$colors-utility-yin-090};
+    // Yin - Dark font colors
+    --yin-100: #{$yin-100};
+    --yin-090: #{$yin-090};
+    --yin-075: #{$yin-075};
+    --yin-065: #{$yin-065};
+    --yin-055: #{$yin-055};
+    --yin-030: #{$yin-030};
 
     // Action/Major - Primary theme colour for major actions (Jade)
     --action-major-25: #{$action-major-25};
