@@ -39,7 +39,7 @@
                       {{ 'configurationSkipExport.reportNumber' | transloco }}
                     </span>
                   </ng-template>
-                </p-dropdown>                               
+                </p-dropdown>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               </div>
@@ -52,7 +52,7 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField(1)">
-                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+                <p-calendar [firstDayOfWeek]="1" formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField(1)">
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
@@ -63,7 +63,7 @@
                 </p-dropdown>
               </div>
         </div>
-  
+
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
           <div class="tw-flex tw-ml-120-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
@@ -110,7 +110,7 @@
                     {{ 'configurationSkipExport.reportNumber' | transloco }}
                   </span>
                 </ng-template>
-              </p-dropdown>                            
+              </p-dropdown>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               <app-mandatory-error-message *ngIf="checkValidationCondition()"
@@ -133,7 +133,7 @@
               </p-dropdown>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+              <p-calendar [firstDayOfWeek]="1" formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
             </div>
             <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
               <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'configurationSkipExport.removeConditionTooltip' | transloco" (iconClick)="remCondition()"></app-svg-icon>
@@ -149,4 +149,3 @@
       </form>
     </div>
 </div>
-  

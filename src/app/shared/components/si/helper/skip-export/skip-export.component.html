@@ -29,7 +29,7 @@
                   <ng-template let-selectedOption pTemplate="selectedItem">
                     {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                   </ng-template>
-                </p-dropdown>                               
+                </p-dropdown>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'skipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               </div>
@@ -42,7 +42,7 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'skipExport.enterValue' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField1()">
-                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+                <p-calendar [firstDayOfWeek]="1" formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField1()">
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
@@ -53,7 +53,7 @@
                 </p-dropdown>
               </div>
         </div>
-  
+
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
           <div class="tw-flex tw-ml-120-px tw-mt-8-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
@@ -90,7 +90,7 @@
                 <ng-template let-selectedOption pTemplate="selectedItem">
                   {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
                 </ng-template>
-              </p-dropdown>                            
+              </p-dropdown>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'skipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               <app-mandatory-error-message *ngIf="checkValidationCondition()"
@@ -109,7 +109,7 @@
               <small class="chip-hint"><br>{{ 'skipExport.chipHint' | transloco }}</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+              <p-calendar [firstDayOfWeek]="1" formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField2()">
               <p-dropdown appendTo="body" formControlName="value2" [placeholder]="'skipExport.selectValue' | transloco" [options]="customCheckBoxValueOptions">
