@@ -22,6 +22,12 @@
     @apply tw-border-white tw-border-solid tw-border-b-2-px #{!important};
 }
 
+[data-theme='fyle'] {
+    :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+        @apply tw-border tw-border-3-px  #{!important}; // tw-p-4-px
+    }
+}
+
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:hover {
     @apply tw-border-nav-tabs-hover-bg tw-border-solid tw-border-b-2-px #{!important};
 }
@@ -43,6 +49,14 @@
 
     [data-theme='fyle'] & {
       @apply tw-px-16-px tw-pt-12-px #{!important};
+
+        &:focus {
+            @apply tw-relative tw-border-3-px tw-border-black tw-rounded-t-xl tw-ring-4-px tw-ring-ring-focus tw-ring-inset #{!important};
+            
+        &::before {
+            @apply tw-absolute tw-bg-bg-brand-primary tw-h-2-px tw-content-empty tw-bottom-[4px] tw-left-1/2 tw-w-[80%] tw--translate-x-1/2 tw-z-10 tw-rounded-t-sm #{!important};
+         }
+        }
     }
 }
 
