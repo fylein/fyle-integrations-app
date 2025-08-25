@@ -1089,6 +1089,12 @@ module.exports = {
         'toast-info': 'var(--toast-info-bg)',
         'toast-error': 'var(--toast-error-bg)',
       },
+      ringColor: {
+        'ring-focus': 'var(--border-focus)',
+      },
+      ringWidth: {
+        '4-px': '4px',
+      },
       keyframes: {
         'p-progress-spinner-color': {
           '0%': { stroke: 'var(--mandatory-field-color)' },

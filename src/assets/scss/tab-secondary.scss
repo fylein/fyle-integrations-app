@@ -38,3 +38,15 @@
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
     @apply tw-shadow-none;
 }
+
+[data-theme='fyle'] {
+    :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
+        @apply tw-p-4-px tw-border-b-2 #{!important};
+    }
+    
+    :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+        &:focus {
+            @apply tw-bg-bg-grey-primary tw-relative tw-border-3-px tw-border-black tw-rounded-t-xl tw-ring-4-px tw-ring-ring-focus tw-ring-inset #{!important};
+        }
+    }
+}

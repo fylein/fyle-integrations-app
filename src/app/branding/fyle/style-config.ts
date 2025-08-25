@@ -20,7 +20,7 @@ export const fyleStyles = {
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm',
         dashboardExportBtn: 'tw-rounded-32-px',
-        dashboardMainMenu: 'tw-pt-8-px tw-pr-6 tw-pl-0 tw-items-end'
+        dashboardMainMenu: 'tw-pr-6 tw-pl-0 tw-items-end'
     },
     buttons: {
         outlined: {
