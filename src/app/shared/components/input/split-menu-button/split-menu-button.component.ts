@@ -60,10 +60,6 @@ export class SplitMenuButtonComponent {
       baseClasses.push('tw-rounded-br-lg tw-rounded-bl-lg');
     }
 
-    if (isLast && this.isDisconnectRequired) {
-      baseClasses.push('hover:tw-bg-bg-red hover:tw-text-white tw-text-text-red');
-    }
-
     return baseClasses.join(' ');
   }
 
