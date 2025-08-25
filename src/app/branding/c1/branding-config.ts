@@ -19,6 +19,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: false,
     isDashboardButtonOutlined: false,
     isPrimengLoaderEnabled: true,
+    shouldShowOnboardingYouTubeVideo: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
