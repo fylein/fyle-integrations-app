@@ -12,6 +12,7 @@ export type FeatureConfiguration = {
         loginToAllConnectedApps: boolean;
         isDashboardButtonOutlined: boolean;
         isPrimengLoaderEnabled: boolean;
+        shouldShowOnboardingYouTubeVideo: boolean,
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
