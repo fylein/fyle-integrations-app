@@ -1,13 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-primary-button',
-  templateUrl: './primary-button.component.html',
-  styleUrl: './primary-button.component.scss'
+  selector: 'app-button',
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss'
 })
-export class PrimaryButtonComponent {
+export class ButtonComponent implements OnInit{
   @Input() buttonText: string = '';
+
+  @Input() buttonSize: 'small' | 'medium' = 'small';
+
+  @Input() buttonType: 'primary' | 'secondary' = 'primary';
 
   @Input() svgSource: string;
 
@@ -27,7 +31,7 @@ export class PrimaryButtonComponent {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  iconColor: string = brandingStyle.buttons.primary.iconColorActive;
+  iconColor: string;
 
   onClick(): void {
     if (!this.disabled && !this.isLoading){
@@ -37,10 +41,14 @@ export class PrimaryButtonComponent {
 
   onHover(onHover: boolean){
     if (onHover){
-      this.iconColor = brandingStyle.buttons.primary.iconColorHover;
+      this.iconColor = brandingStyle.buttons[this.buttonType].iconColorHover;
     } else {
-      this.iconColor = brandingStyle.buttons.primary.iconColorActive;
+      this.iconColor = brandingStyle.buttons[this.buttonType].iconColorActive;
     }
+  }
+
+  ngOnInit(): void {
+    this.iconColor = brandingStyle.buttons[this.buttonType].iconColorActive;
   }
 
 }

@@ -23,14 +23,6 @@ export const c1Styles = {
         dashboardMainMenu: 'tw-items-center'
     },
     buttons: {
-        outlined: {
-           class: 'tw-h-38-px tw-rounded-4-px tw-border tw-text-text-brand-primary tw-font-nav-link-font-weight tw-border-solid tw-border-btn-outline-primary-border-color',
-           active: 'hover:tw-text-btn-outline-primary-hover-text-color hover:tw-bg-btn-outline-primary-hover-bg tw-text-size-14 tw-bg-btn-outline-primary-bg tw-border-grey-300 tw-font-500 tw-cursor-pointer',
-           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
-           iconColorActive: 'tw-text-text-secondary',
-           iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder'
-        },
         primary: {
            class: 'p-button p-button-raised',
            active: 'tw-bg-primary',
@@ -39,10 +31,28 @@ export const c1Styles = {
            loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder'
+           iconColorDisabled: 'tw-text-text-placeholder',
+           size: {
+            small: 'tw-px-16-px tw-py-8-px',
+            medium: 'tw-px-24-px tw-py-8-px'
+           }
+        },
+        secondary: {
+           class: 'tw-h-38-px tw-rounded-4-px tw-border tw-text-text-brand-primary tw-font-nav-link-font-weight tw-border-solid tw-border-btn-outline-primary-border-color',
+           active: 'hover:tw-text-btn-outline-primary-hover-text-color hover:tw-bg-btn-outline-primary-hover-bg tw-text-size-14 tw-bg-btn-outline-primary-bg tw-border-grey-300 tw-font-500 tw-cursor-pointer',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: '',
+           loader: '',
+           iconColorActive: 'tw-text-text-secondary',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder',
+           size: {
+            small: 'tw-px-16-px tw-py-8-px',
+            medium: 'tw-px-24-px tw-py-8-px'
+           }
         },
         dialog: {
-            cancel: 'tw-px-16-px tw-py-8-px outline-sm'
+            cancel: 'outline-sm'
         }
     },
     toast: {

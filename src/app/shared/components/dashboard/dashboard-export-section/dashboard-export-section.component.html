@@ -37,7 +37,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div class="tw-flex tw-justify-end tw-items-center">
-                        <app-primary-button [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" (buttonClick)="triggerExport()" [disabled]="isExportInProgress || !exportableAccountingExportIds.length" [svgSource]="'arrow-tail-right-medium'" [buttonText]="isExportInProgress ? ('dashboardExportSection.exportingButtonText' | transloco) : ('dashboardExportSection.exportButtonText' | transloco)"></app-primary-button>
+                        <app-button  [buttonSize]="'medium'" [buttonType]="'primary'" [styleClasses]="'tw-h-10'" (buttonClick)="triggerExport()" [disabled]="isExportInProgress || !exportableAccountingExportIds.length" [svgSource]="'arrow-tail-right-medium'" [buttonText]="isExportInProgress ? ('dashboardExportSection.exportingButtonText' | transloco) : ('dashboardExportSection.exportButtonText' | transloco)"></app-button>
                         <br>
                     </div>
                 </div>

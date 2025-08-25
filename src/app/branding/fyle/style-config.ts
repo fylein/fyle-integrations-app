@@ -23,14 +23,6 @@ export const fyleStyles = {
         dashboardMainMenu: 'tw-pt-8-px tw-pr-6 tw-pl-0 tw-items-end'
     },
     buttons: {
-        outlined: {
-           class: 'tw-h-10 tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
-           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color focus:tw-border-3-px focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
-           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
-           iconColorActive: 'tw-text-green-text-color',
-           iconColorHover: 'tw-text-white',
-           iconColorDisabled: 'tw-text-text-placeholder'
-        },
         primary: {
            class: 'tw-rounded-32-px tw-font-primary tw-text-14-px',
            active: 'hover:tw-bg-bg-green tw-text-white tw-text-sm tw-bg-btn-primary-bg tw-border-3-px tw-border-transparent focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
@@ -39,10 +31,28 @@ export const fyleStyles = {
            loader: 'tw-border-t-border-brand',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder'
+           iconColorDisabled: 'tw-text-text-placeholder',
+           size: {
+            small: 'tw-px-16-px tw-py-8-px',
+            medium: 'tw-px-24-px tw-py-8-px'
+           }
+        },
+        secondary: {
+           class: 'tw-h-10 tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
+           active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color focus:tw-border-3-px focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: '',
+           loader: '',
+           iconColorActive: 'tw-text-green-text-color',
+           iconColorHover: 'tw-text-white',
+           iconColorDisabled: 'tw-text-text-placeholder',
+           size: {
+            small: 'tw-px-16-px tw-py-8-px',
+            medium: 'tw-px-24-px tw-py-8-px'
+           }
         },
         dialog: {
-            cancel: 'tw-px-16-px tw-py-8-px'
+            cancel: ''
         }
     },
     toast: {

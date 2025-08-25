@@ -86,7 +86,7 @@
                     <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px">
                         <div class="tw-mr-16-px">
                             @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                                <app-outlined-icon-button [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-outlined-icon-button>
+                                <app-button [buttonSize]="'small'" [buttonType]="'secondary'" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-button>
                             } @else {
                                 <button type="button" class="p-button outline-sm" (click)="close()">
                                     {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
@@ -95,11 +95,11 @@
                         </div>
 
                         @if (stepNumber < 3) {
-                            <app-primary-button [styleClasses]="'tw-h-10 tw-px-16-px tw-py-8-px'" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-primary-button>
+                            <app-button  [buttonSize]="'small'" [buttonType]="'primary'" [styleClasses]="'tw-h-10'" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-button>
                         }
 
                         @if (stepNumber === 3) {
-                            <app-primary-button [styleClasses]="'tw-h-10 tw-px-16-px tw-py-8-px'" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-primary-button>
+                            <app-button  [buttonSize]="'small'" [buttonType]="'primary'" [styleClasses]="'tw-h-10'" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-button>
                         }
                     </div>
                 </div>

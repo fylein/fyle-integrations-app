@@ -37,10 +37,10 @@
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
             <div class="tw-mr-16-px">
                 @if (showSecondaryCTA || true) {
-                <app-primary-button [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-primary-button>
+                <app-button [buttonSize]="'small'" [buttonType]="'primary'" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-button>
                 }
             </div>
-            <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-primary-button>
+            <app-button [buttonSize]="'small'" [buttonType]="'primary'" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-button>
         </div>
     </p-dialog>
 </div>

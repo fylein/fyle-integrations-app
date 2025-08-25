@@ -10,7 +10,7 @@
       <h2 class="tw-text-normal-text-color !tw-font-bold !tw-text-18-px">{{ 'qbdOnboardingDone.congratulationsMessage' | transloco }}</h2>
     </div>
     <div class="tw-flex tw-justify-center tw-py-24-px">
-        <app-primary-button [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" [buttonText]="'qbdOnboardingDone.launchButtonText' | transloco " (buttonClick)="navigateToDashboard()"></app-primary-button>
+        <app-button  [buttonSize]="'medium'" [buttonType]="'primary'" [styleClasses]="'tw-h-10'" [buttonText]="'qbdOnboardingDone.launchButtonText' | transloco " (buttonClick)="navigateToDashboard()"></app-button>
     </div>
     <div class="tw-py-24-px">
       <h5 class="tw-text-text-muted tw-text-center tw-text-14-px" [innerHTML]="'qbdOnboardingDone.reconfigureMessage' | transloco">

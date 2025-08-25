@@ -1,13 +1,15 @@
-<app-outlined-icon-button
+<app-button
   [buttonText]="(interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.requestAssistedSetup' : 'qbdDirectAssistedSetup.needHelpWithSetup') | transloco"
   [svgSource]="'headset'"
-  [styleClasses]="'tw-py-10-px tw-px-24-px tw-text-14-px'"
+  [buttonSize]="'medium'"
+  [buttonType]="'secondary'"
+  [styleClasses]="'tw-py-10-px tw-text-14-px'"
   (buttonClick)="toggleAssistedSetupDialog()"
   [pTooltip]="isAssistedSetupSlotBooked ? ('qbdDirectAssistedSetup.requestReceivedTooltip' | transloco) : ''"
   tooltipPosition="bottom"
   tooltipStyleClass="assisted-setup-tooltip"
   [disabled]="isAssistedSetupSlotBooked">
-</app-outlined-icon-button>
+</app-button>
 
 <p-dialog
   [visible]="isAssistedSetupDialogVisible"
@@ -77,10 +79,10 @@
     <!-- Footer -->
     <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-4">
         @if(interactionType === 'QUERY' && !isQuerySubmitted || true){
-        <app-outlined-icon-button [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-outlined-icon-button>
+        <app-button [buttonSize]="'small'" [buttonType]="'secondary'" [styleClasses]="'tw-text-14-px'" (buttonClick)="toggleAssistedSetupDialog()" [buttonText]="'qbdDirectAssistedSetup.cancel' | transloco"></app-button>
         }
 
-        <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [disabled]="isButtonDisabled" (buttonClick)="onRequestAssistedSetup()" [buttonText]="(isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco"></app-primary-button>
+        <app-button [buttonSize]="'small'" [buttonType]="'primary'" [styleClasses]="'tw-text-14-px'" [disabled]="isButtonDisabled" (buttonClick)="onRequestAssistedSetup()" [buttonText]="(isQuerySubmitted ? 'qbdDirectAssistedSetup.okay' : (interactionType === 'BOOK_SLOT' ? 'qbdDirectAssistedSetup.bookASlot' : 'qbdDirectAssistedSetup.submitARequest')) | transloco"></app-button>
 
     </div>
   </div>
