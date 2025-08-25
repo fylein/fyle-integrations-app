@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 
 @Component({
@@ -15,6 +16,10 @@ export class SplitMenuButtonComponent {
   @Input() currentIntegration?: string;
 
   @Input() isDisconnectRequired?: boolean;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   isDropdownVisible: boolean = false;
 

@@ -4,7 +4,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ButtonSize, ButtonType, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -57,6 +57,10 @@ export class DashboardErrorSectionComponent implements OnInit {
   @Input() exportableExpenseGroupIds: number[];
 
   @Input() accountingExportSummary: any;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   uiExposedAppName: string;
 

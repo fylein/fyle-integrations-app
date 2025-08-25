@@ -100,8 +100,7 @@ import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsui
 import { IntacctConnectionFormComponent } from '../integrations/intacct/intacct-shared/intacct-connection-form/intacct-connection-form.component';
 import { Sage300ConnectionFormComponent } from '../integrations/sage300/sage300-shared/sage300-connection-form/sage300-connection-form.component';
 import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
-import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
-import { PrimaryButtonComponent } from './components/input/primary-button/primary-button.component';
+import { ButtonComponent } from './components/input/button/button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
@@ -184,8 +183,7 @@ import { SplitMenuButtonComponent } from './components/input/split-menu-button/s
     NetsuiteConnectionFormComponent,
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
-    OutlinedIconButtonComponent,
-    PrimaryButtonComponent,
+    ButtonComponent,
     SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
@@ -297,8 +295,7 @@ import { SplitMenuButtonComponent } from './components/input/split-menu-button/s
     NetsuiteConnectionFormComponent,
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
-    OutlinedIconButtonComponent,
-    PrimaryButtonComponent,
+    ButtonComponent,
     SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
