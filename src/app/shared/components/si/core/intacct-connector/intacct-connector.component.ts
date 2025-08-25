@@ -47,9 +47,11 @@ export class IntacctConnectorComponent implements OnInit {
     this.intacctConnectorService.connectSageIntacct(this.connectSageIntacctForm)
     .subscribe((response) => {
       this.connectSageIntacctForm = response.intacctSetupForm;
+      this.setupConnectionStatus.emit(response.isIntacctConnected);
+      if (!response.isIntacctConnected){
       this.isLoading = false;
       this.saveInProgress = false;
-      this.setupConnectionStatus.emit(response.isIntacctConnected);
+      }
     });
   }
 
