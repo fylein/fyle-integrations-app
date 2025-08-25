@@ -36,8 +36,13 @@ const customColors = {
   'bg-qbo-btn': 'var(--bg-qbo-btn)',
   'bg-xero-btn': 'var(--bg-xero-btn)',
 
-  // Colors Utility
-  'colors-utility-yin-090': 'var(--colors-utility-yin-090)',
+  // Black - yin (Font colors)
+  'yin-100': 'var(--yin-100)',
+  'yin-090': 'var(--yin-090)',
+  'yin-075': 'var(--yin-075)',
+  'yin-065': 'var(--yin-065)',
+  'yin-055': 'var(--yin-055)',
+  'yin-030': 'var(--yin-030)',
 
   // Action/Major colors (Jade theme for major actions)
   'action-major-25': 'var(--action-major-25)',
