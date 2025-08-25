@@ -162,8 +162,27 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-rounded-full #{!important};
     }
 
+    // Multiselect checkboxes
+    .p-checkbox-box.p-highlight {
+        @apply tw-bg-white;
+    }
+
+    .p-checkbox-box.p-highlight .p-element.p-icon-wrapper {
+        @apply tw-relative tw-top-[-1.5px];
+    }
+
+    // Custom multiselect checkbox icon
+    .p-checkbox-box.p-highlight .p-element.p-icon-wrapper::before {
+        content: url('./assets/icons/carbon-tick.svg');
+    }
+
+    // Hide the default checkbox icon in multiselect
+    .p-checkbox-box.p-highlight .p-icon-wrapper svg {
+        @apply tw-hidden;
+    }
+
     // All other checkboxes
-    input[type="checkbox"] {
+    input[type="checkbox"], .p-checkbox .p-checkbox-box {
         @apply tw-appearance-none tw-w-16-px tw-h-16-px tw-inline-flex tw-content-center tw-justify-center tw-p-[1px] tw-border-1-px tw-border-utility-major-300 tw-rounded-[2px] tw-relative #{!important};
     }
 
@@ -259,6 +278,12 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
 
     .p-dialog:not(:has(.p-dialog-header)):not(:has(.p-dialog-footer)) .p-dialog-content {
         @apply tw-rounded-border-radius-2xs #{!important};
+    }
+
+    // Checkboxes - in multiselects
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+        @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
     }
 }
 
@@ -715,10 +740,6 @@ p {
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
 }
 
 .pi-check:before {
