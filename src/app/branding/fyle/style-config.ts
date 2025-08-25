@@ -10,7 +10,7 @@ export const fyleStyles = {
         mappingHeaderBoxShadow: 'tw-shadow-stats-box'
     },
     configuration: {
-        importSvgPadding: 'tw-pt-14-px',
+        importSvgPadding: 'tw-pt-[17px]',
         importFieldDependentField: '',
         importFieldDependentFieldSvg: 'tw-pt-46-px',
         importFieldDropDownText: '!tw-font-400 tw-text-14-px',
