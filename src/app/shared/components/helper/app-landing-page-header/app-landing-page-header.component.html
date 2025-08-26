@@ -41,12 +41,20 @@
 
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
                     @if (appName.includes('QuickBooks Desktop ')) {
+                        @if(brandingFeatureConfig.hasAssistedSetupSupport){
                         <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
-                        <app-outlined-icon-button [styleClasses]="'tw-py-10-px tw-px-24-px'" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+ <!-- <<<<<<< feat_qbd-direct-c1-support -->
+                        }
+                        <app-outlined-icon-button [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+<!-- ================== -->
+                         <!-- styleClasses not for c1 needs to be taken care below -->
+                        <app-outlined-icon-button [styleClasses]="'tw-py-10-px tw-px-24-px'" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/> 
                     }
 
                     @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){
                     <app-primary-button [styleClasses]="'tw-px-24-px tw-py-8-px'" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-primary-button>
+
+<!-- >>>>>>> master -->
                     }
                 </div>
                 <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px"></iframe>

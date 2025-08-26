@@ -10,6 +10,7 @@ export type FeatureConfiguration = {
         showMoreDropdownInMainMenu: boolean;
         loginRedirectUri: boolean;
         loginToAllConnectedApps: boolean;
+        hasAssistedSetupSupport: boolean;
         isDashboardButtonOutlined: boolean;
         isPrimengLoaderEnabled: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
