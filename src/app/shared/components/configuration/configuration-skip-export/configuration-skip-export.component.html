@@ -52,7 +52,7 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField(1)">
-                <p-calendar [firstDayOfWeek]="1" formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField(1)">
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
@@ -92,7 +92,7 @@
             </div>
             <div class="tw-ml-24-px tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
-                For options
+                <!-- For options -->
                 <ng-template let-option pTemplate="item">
                   <span *ngIf="option.field_name !== 'claim_number'">
                     {{ option.field_name | snakeCaseToSpaceCase | sentenceCase }}
@@ -101,7 +101,7 @@
                     {{ 'configurationSkipExport.reportNumber' | transloco }}
                   </span>
                 </ng-template>
-                For selected option
+                <!-- For selected option -->
                 <ng-template let-selectedOption pTemplate="selectedItem">
                   <span *ngIf="selectedOption.field_name !== 'claim_number'">
                     {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
@@ -133,7 +133,7 @@
               </p-dropdown>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
-              <p-calendar [firstDayOfWeek]="1" formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
             </div>
             <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
               <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'configurationSkipExport.removeConditionTooltip' | transloco" (iconClick)="remCondition()"></app-svg-icon>

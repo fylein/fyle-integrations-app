@@ -42,7 +42,7 @@
                 <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'skipExport.enterValue' | transloco">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField1()">
-                <p-calendar [firstDayOfWeek]="1" formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField1()">
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
@@ -109,7 +109,7 @@
               <small class="chip-hint"><br>{{ 'skipExport.chipHint' | transloco }}</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
-              <p-calendar [firstDayOfWeek]="1" formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
+              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'skipExport.selectDate' | transloco"></p-calendar>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField2()">
               <p-dropdown appendTo="body" formControlName="value2" [placeholder]="'skipExport.selectValue' | transloco" [options]="customCheckBoxValueOptions">
