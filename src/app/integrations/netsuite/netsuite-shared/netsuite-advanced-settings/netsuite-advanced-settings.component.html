@@ -1,4 +1,4 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -24,7 +24,7 @@
                 <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
-                        [label]="'netsuiteAdvancedSettings.scheduleAutomaticExport' | transloco" 
+                        [label]="'netsuiteAdvancedSettings.scheduleAutomaticExport' | transloco"
                         [subLabel]="'netsuite.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
@@ -95,7 +95,7 @@
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants" 
+                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateMerchantLabel()"
@@ -143,7 +143,7 @@
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [label]="'netsuiteAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }" 
+                    [label]="'netsuiteAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [subLabel]="'netsuiteAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
@@ -179,7 +179,7 @@
 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeLocation' | transloco))}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeLocation' | transloco))}}</label>
                     </div>
                 </div>
 
@@ -204,10 +204,10 @@
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
-                
+
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeDepartment' | transloco))}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeDepartment' | transloco))}}</label>
                     </div>
                 </div>
 
@@ -232,10 +232,10 @@
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
-                
+
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeClass' | transloco))}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeClass' | transloco))}}</label>
                     </div>
                 </div>
 

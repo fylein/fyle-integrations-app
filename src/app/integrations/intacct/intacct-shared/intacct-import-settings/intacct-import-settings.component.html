@@ -1,4 +1,4 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">{{ 'intacctImportSettings.importDimensionsTitle' | transloco }}</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.importDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.importDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="link">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-12-px sub-text-note tw-flex">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
                         <span class="tw-text-14-px tw-pl-6-px">{{ 'intacctImportSettings.defaultMappingNote' | transloco }}</span>
@@ -27,16 +27,16 @@
         <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
             <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
             <div class="fields-header-text tw-w-30-vw">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
-            <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
+            <div class="fields-header-text tw-flex tw-items-center tw-w-[10vw] tw-whitespace-nowrap">
                 {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
-                <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
+                <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
             <div class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="intacctCategoryDestinationLabel" disabled>
             </div>
-            <div class="tw-pt-16-px ">
+            <div class="tw-pt-14-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <div class="tw-w-30-vw">
@@ -50,7 +50,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.vendorLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-16-px ">
+            <div class="tw-pt-14-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -64,7 +64,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxDetailLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-16-px ">
+            <div class="tw-pt-14-px ">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -82,7 +82,7 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500">{{ 'intacctImportSettings.mapDimensionsTitle' | transloco }}</h4>
-                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.mapDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="tw-text-link-primary tw-cursor-pointer">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
+                    <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-pb-12-px">{{ 'intacctImportSettings.mapDimensionsDescription' | transloco: { brandName: brandingConfig.brandName } }}<a (click)="showPreviewDialog(true)" class="link">{{ 'intacctImportSettings.clickHere' | transloco }}</a>{{ 'intacctImportSettings.toPreview' | transloco }}</h5>
                     <div class="tw-pt-4 sub-text-note">
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
                         <span class="tw-pl-6-px">
@@ -93,27 +93,27 @@
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-pl-14-px tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
-                    <div class="fields-header-text tw-w-30-vw tw-pl-14-px tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
-                    <div class="fields-header-text tw-flex tw-whitespace-nowrap">
+                    <div class="fields-header-text tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+                    <div class="fields-header-text tw-w-30-vw tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
+                    <div class="fields-header-text tw-flex tw-items-center tw-whitespace-nowrap">
                         {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
-                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                 </div>
                 <div class="tw-pt-32-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
                         <div>
-                            <p-dropdown appendTo="body" [options]="sageIntacctFields" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
+                            <p-dropdown appendTo="body" [options]="sageIntacctFields | excludeSelectedOptions:expenseFieldsGetter:i:'destination_field'" [placeholder]="'intacctImportSettings.chooseSageIntacctFieldPlaceholder' | transloco" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
                             <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
                             </p>
                         </div>
-                            <div class="tw-pt-16-px ">
+                            <div class="tw-pt-14-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
-                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
+                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -149,7 +149,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costCodeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-16-px ">
+                            <div class="tw-pt-14-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
@@ -168,7 +168,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costTypeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-16-px ">
+                            <div class="tw-pt-14-px ">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
@@ -198,7 +198,7 @@
 
         <div class="tw-p-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && this.importSettingsForm.get('importCodeFields')?.value.length > 0 ">
             <div>
-                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
                             {{ 'intacctImportSettings.configureImportMethodTitle' | transloco }}
@@ -293,13 +293,10 @@
                 </div>
               </div>
 
-            <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
-                <button type="button" class="cancel-btn" (click)="closeModel()">
-                    {{ 'intacctImportSettings.cancel' | transloco }}
-                </button>
-                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
-                    {{ 'intacctImportSettings.createAndSave' | transloco }}
-                </button>
+            <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-text-14-px tw-gap-8-px">
+                <app-outlined-icon-button  [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="closeModel()" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-outlined-icon-button>
+
+                <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (buttonClick)="saveCustomField()" [buttonText]="'intacctImportSettings.createAndSave' | transloco"></app-primary-button>
             </div>
         </div>
     </div>
@@ -325,15 +322,16 @@
             {{ 'intacctImportSettings.continueConfirmation' | transloco }}
         </div>
     </div>
-    <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px">
-        <div class="tw-px-24-px tw-py-16-px">
-            <button type="button" class="cancel-btn" (click)="acceptDependentFieldWarning(false)">
-                {{ 'intacctImportSettings.cancel' | transloco }}
-            </button>
-            <button type="button" class="save-btn" pButton (click)="acceptDependentFieldWarning(true)">
-                {{ 'intacctImportSettings.continueButton' | transloco }}
-            </button>
-        </div>
+    <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px tw-border-t-1-px tw-p-24-px tw-gap-8-px">
+            @if (!brandingFeatureConfig.isDashboardButtonOutlined) {
+                <button type="button" class="cancel-btn" (click)="acceptDependentFieldWarning(false)">
+                    {{ 'intacctImportSettings.cancel' | transloco }}
+                </button>
+            } @else {
+                <app-outlined-icon-button [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="acceptDependentFieldWarning(false)" [buttonText]="'intacctImportSettings.cancel' | transloco"></app-outlined-icon-button>
+            }
+
+            <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" (buttonClick)="acceptDependentFieldWarning(true)" [buttonText]="'intacctImportSettings.continueButton' | transloco"></app-primary-button>
     </div>
 </p-dialog>
 

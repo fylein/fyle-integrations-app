@@ -1,14 +1,22 @@
 <button
   type="button" 
   [disabled]="disabled"
-  [class]="'tw-flex tw-justify-center tw-items-center tw-text-size-14 tw-font-500 tw-bg-white tw-px-4 tw-py-2.5 tw-gap-2 tw-rounded-4-px tw-border tw-border-grey-300'"
-  [ngClass]="disabled ? 'tw-text-text-placeholder tw-cursor-not-allowed' : 'tw-text-text-secondary tw-cursor-pointer hover:tw-shadow-md'"
+  (mouseenter)="onHover(true)"
+  (mouseleave)="onHover(false)"
+  [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons.outlined.class"
+  [ngClass]="[disabled ? brandingStyle.buttons.outlined.disabled : brandingStyle.buttons.outlined.active, styleClasses]"
   (click)="!disabled && onClick()">
-  {{ buttonText }}
+  @if(!isIconLeftSide){
+    {{ buttonText }}
+  }
+  @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
   <app-svg-icon
     [svgSource]="svgSource" 
-    [width]="'18px'"
-    [height]="'18px'"
-    [ngClass]="disabled ? 'tw-text-text-placeholder' : 'tw-text-text-secondary'">
-  </app-svg-icon>
+    [width]="iconSize || '18px'"
+    [height]="iconSize || '18px'"
+    [ngClass]="disabled ? brandingStyle.buttons.outlined.iconColorDisabled : iconColor">
+  </app-svg-icon> }
+  @if(isIconLeftSide){
+    {{ buttonText }}
+  }
 </button>

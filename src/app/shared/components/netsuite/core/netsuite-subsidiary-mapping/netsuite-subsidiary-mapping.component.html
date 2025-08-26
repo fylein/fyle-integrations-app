@@ -1,31 +1,29 @@
-<div class="tw-pb-48-px">
-  <div>
-      <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
-          <app-loader></app-loader>
-      </div>
-      <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
-          <div>
-            <app-configuration-step-header 
-              [headerText]="'netsuiteSubsidiaryMapping.headerText' | transloco"
-              [contentText]="'netsuiteSubsidiaryMapping.contentText' | transloco:{ brandName: brandingConfig.brandName }"
-              [redirectLink]="redirectLink">
-            </app-configuration-step-header>
-          </div>
-          <div class="tw-px-24-px tw-pb-24-px">
-              <app-configuration-connector
-                  [accountingAppTitle]="appName"
-                  [appName]="appName"
-                  [subLabel]="'netsuiteSubsidiaryMapping.subLabel' | transloco"
-                  [placeholder]="'netsuiteSubsidiaryMapping.placeholder' | transloco"
-                  [accountingCompanyName]="netsuiteSubsdiaryName"
-                  [accountingCompanyList] = "netsuiteSubsidiaryOptions"
-                  [fyleOrgName]="fyleOrgName"
-                  [accountingCompanyConnectionInProgress]="saveInProgress"
-                  (connectCompany)="connectNetsuiteSubsdiary($event)">
-              </app-configuration-connector>
-          </div>
-          <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="isContinueDisabled"></app-configuration-step-footer>
-          <app-configuration-step-footer *ngIf="netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
-      </div>
-  </div>
+<div class="tw-pb-48-px tw-h-full">
+    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <app-loader></app-loader>
+    </div>
+    <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+        <div>
+          <app-configuration-step-header
+            [headerText]="'netsuiteSubsidiaryMapping.headerText' | transloco"
+            [contentText]="'netsuiteSubsidiaryMapping.contentText' | transloco:{ brandName: brandingConfig.brandName }"
+            [redirectLink]="redirectLink">
+          </app-configuration-step-header>
+        </div>
+        <div class="tw-px-24-px tw-pb-24-px">
+            <app-configuration-connector
+                [accountingAppTitle]="appName"
+                [appName]="appName"
+                [subLabel]="'netsuiteSubsidiaryMapping.subLabel' | transloco"
+                [placeholder]="'netsuiteSubsidiaryMapping.placeholder' | transloco"
+                [accountingCompanyName]="netsuiteSubsdiaryName"
+                [accountingCompanyList] = "netsuiteSubsidiaryOptions"
+                [fyleOrgName]="fyleOrgName"
+                [accountingCompanyConnectionInProgress]="saveInProgress"
+                (connectCompany)="connectNetsuiteSubsdiary($event)">
+            </app-configuration-connector>
+        </div>
+        <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="isContinueDisabled"></app-configuration-step-footer>
+        <app-configuration-step-footer *ngIf="netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
+    </div>
 </div>

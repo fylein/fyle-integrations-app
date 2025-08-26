@@ -29,7 +29,7 @@
                   <ng-template let-selectedOption pTemplate="selectedItem">
                     {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                   </ng-template>
-                </p-dropdown>                               
+                </p-dropdown>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'skipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               </div>
@@ -53,7 +53,7 @@
                 </p-dropdown>
               </div>
         </div>
-  
+
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
           <div class="tw-flex tw-ml-120-px tw-mt-8-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
@@ -90,7 +90,7 @@
                 <ng-template let-selectedOption pTemplate="selectedItem">
                   {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
                 </ng-template>
-              </p-dropdown>                            
+              </p-dropdown>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'skipExport.selectConditionError' | transloco"></app-mandatory-error-message>
               <app-mandatory-error-message *ngIf="checkValidationCondition()"

@@ -1,16 +1,27 @@
-<div class="tw-flex tw-items-center tw-justify-between tw-bg-white">
+<div class="tw-flex tw-justify-between tw-bg-white main-menu-tabs tw-border-b-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.dashboard.dashboardMainMenu">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
-    <div class="tw-flex tw-items-center">
-        <button *ngIf="isDisconnectRequired && !showMoreDropdown && !isMenuDisabled" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
-            <span class="tw-text-14-px">
-                {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
-            </span>
-        </button>
+    <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
+
+        @if (isDisconnectRequired && !showMoreDropdown && !isMenuDisabled) {
+            @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
+            } @else {
+            <button class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+                <span class="tw-text-14-px">
+                    {{ (isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.disconnect') | transloco }}
+                </span>
+            </button>
+            }
+        }
 
         <span *ngIf="isSyncVisible">
-            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" 
-            [pTooltip]="toolTipText" 
+            @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
+            @if(brandingFeatureConfig.isDashboardButtonOutlined){
+                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
+            } @else {
+            <button
+            [pTooltip]="toolTipText"
             [disabled]="isMenuDisabled"
             (click)="refreshDimensions()"
             [ngClass]="{
@@ -18,53 +29,69 @@
                 'tw-bg-gray-200 tw-text-menu-inactive-text-color': isMenuDisabled
             }"
             class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-            
-            <app-svg-icon [svgSource]="'arrow-rotate-sync'" 
-                [width]="'14px'" 
-                [height]="'14px'" 
+
+            <app-svg-icon [svgSource]="'arrow-rotate-sync'"
+                [width]="'14px'"
+                [height]="'14px'"
                 [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'">
             </app-svg-icon>
-        
+
             <span class="tw-text-14-px">
                 {{ 'mainMenu.sync' | transloco }}
             </span>
-        </button>        
+        </button>  }
+    } @else {
+        @if(!brandingFeatureConfig.isDashboardButtonOutlined){
             <div class="tw-mr-22-px">
                 <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
                     {{ 'mainMenu.refreshData' | transloco }}
                 </span>
             </div>
+        } @else {
+            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
+            }
+        }
         </span>
 
-        <p-dropdown
-            *ngIf="showMoreDropdown"
-            [(ngModel)]="dropdownValue"
-            (onChange)="handleDropdownChange($event)"
-            (onClick)="handleDropdownClick()"
-            appendTo="body"
-            class="tw-mr-26-px tw-w-fit"
-            [options]="dropdownOptions"
-            [placeholder]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
-            [group]="true"
-            [disabled]="isDisabled"
-        >
-            <ng-template let-group pTemplate="group">
-                <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
-                    <span>{{group.label}}</span>
-                </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-                @if (option.label === "[divider]") {
-                    <div class="tw-border-t tw-border-separator tw-w-full"></div>
-                } @else {
-                    <span [class]="{
-                        'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
-                        'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
-                    }">
-                        {{option.label}}
-                    </span>
-                }
-            </ng-template>
-        </p-dropdown>
+        @if (brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
+            <app-split-menu-button
+                [dropdownOptions]="dropdownOptions"
+                [isDisconnectRequired]="isDisconnectRequired"
+                [buttonText]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
+                [currentIntegration]="getCurrentIntegrationName()">
+            </app-split-menu-button>
+        }
+
+        @if (!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
+            <p-dropdown
+                [(ngModel)]="dropdownValue"
+                (onChange)="handleDropdownChange($event)"
+                (onClick)="handleDropdownClick()"
+                appendTo="body"
+                class="tw-mr-26-px tw-w-fit"
+                [options]="dropdownOptions"
+                [placeholder]="(isConnectionInProgress ? 'mainMenu.disconnecting' : 'mainMenu.more') | transloco"
+                [group]="true"
+                [disabled]="isDisabled"
+            >
+                <ng-template let-group pTemplate="group">
+                    <div class="tw-flex tw-font-500 tw-text-12-px tw-text-menu-inactive-text-color">
+                        <span>{{group.label}}</span>
+                    </div>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                    @if (option.label === "[divider]") {
+                        <div class="tw-border-t tw-border-separator tw-w-full"></div>
+                    } @else {
+                        <span [class]="{
+                            'tw-text-text-danger': option.label === ('mainMenu.disconnect' | transloco),
+                            'tw-text-mandatory-field-color': isCurrentIntegration(option.label),
+                        }">
+                            {{option.label}}
+                        </span>
+                    }
+                </ng-template>
+            </p-dropdown>
+        }
     </div>
 </div>

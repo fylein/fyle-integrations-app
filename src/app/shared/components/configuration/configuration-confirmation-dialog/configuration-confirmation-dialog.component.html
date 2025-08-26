@@ -36,13 +36,11 @@
         </div>
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
             <div class="tw-mr-16-px">
-                <button *ngIf="showSecondaryCTA" type="button" class="p-button outline-sm" (click)="acceptWarning(false)">
-                    {{ 'configurationConfirmationDialog.cancel' | transloco }}
-                </button>
+                @if (showSecondaryCTA || true) {
+                <app-primary-button [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-primary-button>
+                }
             </div>
-            <button type="button" class="p-button-raised" pButton (click)="acceptWarning(true)">
-                {{confirmBtnText}}
-            </button>
+            <app-primary-button [styleClasses]="'tw-px-16-px tw-py-8-px'" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-primary-button>
         </div>
     </p-dialog>
 </div>

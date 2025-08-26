@@ -2,7 +2,7 @@
     <p-dialog [header]="header" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isPreviewDialogVisible" (onHide)="close()" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
         <ng-template pTemplate="header">
             <div class="">
-               <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{helper.sentenseCaseConversion(header)}}</span> 
+               <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{ header }}</span> 
             </div>
         </ng-template>
         <div class="tw-flex tw-items-center tw-justify-center tw-p-24-px tw-border-t tw-border-t-border-tertiary">

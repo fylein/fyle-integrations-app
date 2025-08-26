@@ -5,6 +5,7 @@ const ICON_MAPPING = {
   'arrow-down': 'grv-chevron-down',
   'arrow-line': 'arrow-line',
   'arrow-rotate-sync': 'grv-recurring-small',
+  'arrow-rotate-sync-medium': 'grv-recurring-small',
   'arrow-rotate': 'grv-recurring',
   'arrow-tail-down-medium': 'grv-arrow-down-medium',
   'arrow-tail-down': 'grv-arrow-down',
@@ -63,7 +64,10 @@ const ICON_MAPPING = {
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
-  'user-one': 'grv-person'
+  'user-one': 'grv-person',
+  'toast-success': 'toast-success',
+  'toast-info': 'toast-info',
+  'toast-cross': 'toast-cross'
 };
 
 @Component({

@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -89,6 +90,7 @@ import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/n
 import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
+import { ExcludeSelectedOptionsPipe } from './pipes/exclude-selected-options.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
@@ -99,8 +101,10 @@ import { IntacctConnectionFormComponent } from '../integrations/intacct/intacct-
 import { Sage300ConnectionFormComponent } from '../integrations/sage300/sage300-shared/sage300-connection-form/sage300-connection-form.component';
 import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
 import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
+import { PrimaryButtonComponent } from './components/input/primary-button/primary-button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +114,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
+    ExcludeSelectedOptionsPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -180,6 +185,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
+    PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent
   ],
@@ -208,7 +215,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     InputIconModule,
     CheckboxButtonComponent,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    TranslocoModule
+    TranslocoModule,
+    SplitButtonModule
   ],
   exports: [
     LoaderComponent,
@@ -218,6 +226,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
+    ExcludeSelectedOptionsPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -289,6 +298,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
     OutlinedIconButtonComponent,
+    PrimaryButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
     TranslocoModule

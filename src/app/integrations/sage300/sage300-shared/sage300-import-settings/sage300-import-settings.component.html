@@ -1,4 +1,4 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -12,14 +12,14 @@
     <div>
         <form [formGroup]="importSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
                             {{ 'sage300ImportSettings.importDimensionsTitle' | transloco }}
                         </h4>
                         <p class="tw-text-14-px tw-text-text-muted">
                             {{ 'sage300ImportSettings.importDimensionsDescription' | transloco:{ brandName: brandingConfig.brandName } }}<a
-                                class="tw-text-link-primary tw-pl-4-px tw-w-fit tw-cursor-pointer"
+                                class="link tw-pl-4-px tw-w-fit tw-cursor-pointer"
                                 (click)="showPreviewDialog(true)">{{ 'sage300ImportSettings.clickHere' | transloco }}</a>{{ 'sage300ImportSettings.toPreview' | transloco }}
                         </p>
                     </div>

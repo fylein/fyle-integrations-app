@@ -84,12 +84,12 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
       },
       {
-        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
-        value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-      },
-      {
         label: this.translocoService.translate('services.netsuiteExportSettings.expenseReport'),
         value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+      },
+      {
+        label: this.translocoService.translate('services.netsuiteExportSettings.journalEntry'),
+        value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
     if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
@@ -275,7 +275,13 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
 
     static constructPayload(exportSettingsForm: FormGroup): NetSuiteExportSettingPost {
       const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
-      const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
+
+      let nameInJournalEntry;
+      if (brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+        nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
+      } else {
+        nameInJournalEntry = NameInJournalEntry.MERCHANT;
+      }
 
       if (brandingFeatureConfig.featureFlags.exportSettings.isEmployeeMappingFixed) {
         exportSettingsForm.controls.creditCardExpense.patchValue(true);

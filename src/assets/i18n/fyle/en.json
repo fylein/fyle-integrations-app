@@ -483,6 +483,9 @@
     "customFieldPlaceholderName": "Placeholder name",
     "customFieldType": "Field type",
     "customFieldCreateandSave": "Create and save",
-    "currentDate": "Export date"
+    "currentDate": "Export date",
+    "loader": {
+      "defaultLabel" : "Loading..."
+    }
   }
 }

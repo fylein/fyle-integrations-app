@@ -11,7 +11,7 @@
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="isExportInProgress"> {{ 'dashboardExportSection.exportingExpensesToApp' | transloco: { processedCount: processedCount, totalCount: exportableAccountingExportIds.length, appName: uiExposedAppName } }}</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && exportableAccountingExportIds.length"> {{ 'dashboardExportSection.expensesReadyToExport' | transloco: { count: exportableAccountingExportIds.length } }}</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">{{ 'dashboard.exportHeaderZeroStateText' | transloco}}</h3>
-                        <app-svg-icon *ngIf="brandingConfig.brandId !== 'co'" [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px'" [tooltipText]="'dashboardExportSection.exportTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
+                        <app-svg-icon *ngIf="brandingConfig.brandId !== 'co'" [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px tw-text-text-brand-primary'" [tooltipText]="'dashboardExportSection.exportTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary && brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
                         {{ 'dashboardExportSection.noNewExpensesToExportV1Prefix' | transloco }}
@@ -36,15 +36,9 @@
                     </div>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
-                    <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="triggerExport()" [ngClass]="!exportableAccountingExportIds.length || isExportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="isExportInProgress || !exportableAccountingExportIds.length">
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!isExportInProgress">{{ 'dashboardExportSection.exportButtonText' | transloco }}
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
-                            </p>
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="isExportInProgress">{{ 'dashboardExportSection.exportingButtonText' | transloco }}
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
-                            </p>
-                        </button><br>
+                    <div class="tw-flex tw-justify-end tw-items-center">
+                        <app-primary-button [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" (buttonClick)="triggerExport()" [disabled]="isExportInProgress || !exportableAccountingExportIds.length" [svgSource]="'arrow-tail-right-medium'" [buttonText]="isExportInProgress ? ('dashboardExportSection.exportingButtonText' | transloco) : ('dashboardExportSection.exportButtonText' | transloco)"></app-primary-button>
+                        <br>
                     </div>
                 </div>
             </div>
