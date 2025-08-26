@@ -1094,6 +1094,7 @@ module.exports = {
       },
       ringWidth: {
         '4-px': '4px',
+        '2-px': '2px',
       },
       keyframes: {
         'p-progress-spinner-color': {
