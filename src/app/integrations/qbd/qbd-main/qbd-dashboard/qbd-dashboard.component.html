@@ -1,7 +1,7 @@
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 
@@ -15,13 +15,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerExports()" [disabled]="exportInProgress || disableQBDExportButton" >
-                            <p class="tw-flex tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="!exportInProgress">{{ 'qbdDashboard.exportIifFileButton' | transloco }}
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
-                            </p>
-                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">{{ 'qbdDashboard.exportingButton' | transloco }}
-                            </p>
-                        </button><br>
+                        <app-primary-button (buttonClick)="triggerExports()" [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" [svgSource]="'arrow-tail-right-medium'" [disabled]="exportInProgress || disableQBDExportButton" [buttonText]="!exportInProgress ? ('qbdDashboard.exportIifFileButton' | transloco) : ('qbdDashboard.exportingButton' | transloco)"></app-primary-button>
                         <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
                     </div>
                 </div>

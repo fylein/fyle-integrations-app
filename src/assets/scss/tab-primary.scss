@@ -4,6 +4,10 @@
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text {
     @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px;
+
+    [data-theme='fyle'] & {
+      @apply tw-leading-[21px] #{!important};
+    }
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text:hover {
@@ -11,7 +15,7 @@
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-text {
-    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-14-px tw-border-nav-link-active-border tw-border-solid tw-border-b-2-px;
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-14-px;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
@@ -28,8 +32,20 @@
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):hover {
     @apply tw-bg-nav-tabs-hover-bg tw-rounded-0-px;
+
+    [data-theme='fyle'] & {
+      @apply tw-rounded-0-px tw-rounded-t-xl tw-bg-bg-grey-primary #{!important};
+    }
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-border-none tw-px-24-px tw-pt-16-px tw-pb-0;
+    @apply tw-px-24-px tw-pt-16-px tw-pb-0 #{!important};
+
+    [data-theme='fyle'] & {
+      @apply tw-px-16-px tw-pt-12-px #{!important};
+    }
+}
+
+:host ::ng-deep .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    @apply tw-border-nav-link-active-border tw-border-solid tw-border-b-2-px #{!important};
 }

@@ -10,6 +10,9 @@ export type FeatureConfiguration = {
         showMoreDropdownInMainMenu: boolean;
         loginRedirectUri: boolean;
         loginToAllConnectedApps: boolean;
+        isDashboardButtonOutlined: boolean;
+        isPrimengLoaderEnabled: boolean;
+        shouldShowOnboardingYouTubeVideo: boolean,
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
@@ -56,6 +59,7 @@ export type FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: boolean;
+                allowExpandableSearch: boolean;
             },
             dashboard: {
                 disconnectButton: boolean;

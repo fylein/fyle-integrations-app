@@ -1,16 +1,16 @@
 
 .landing-v2 {
     &--container {
-        @apply tw-p-6 tw-flex tw-flex-col tw-gap-6;
+        @apply tw-p-4 tw-flex tw-flex-col tw-gap-6;
         @apply tw-rounded-8-px tw-border tw-border-solid tw-border-separator tw-bg-white;
     }
 
     &--active-tag {
-        @apply tw-bg-slightly-normal-text-color tw-h-2-px tw-w-[100%] tw-rounded-tr-4-px tw-rounded-tl-4-px tw-mt-4;
+        @apply tw-bg-nav-link-active-border tw-h-2-px tw-w-[100%] tw-rounded-tr-4-px tw-rounded-tl-4-px tw-mt-4;
     }
 
     &--tab {
-        @apply tw-flex tw-flex-col tw-justify-between tw-items-center tw-cursor-pointer tw-pt-4 tw-px-6;
+        @apply tw-flex tw-flex-col tw-text-text-primary tw-justify-between tw-items-center tw-cursor-pointer tw-pt-4 tw-px-4 tw-min-w-72-px;
     }
 
     &--divider {

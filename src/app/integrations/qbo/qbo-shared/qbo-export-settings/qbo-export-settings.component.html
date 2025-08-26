@@ -1,5 +1,5 @@
-<div>
-    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+<div class="tw-h-full">
+    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
         <app-loader></app-loader>
     </div>
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -322,7 +322,7 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
-                            [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
+                            [isDisabled]="[QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(exportSettingForm.get('creditCardExportType')?.value)"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
                     </div>

@@ -1,4 +1,4 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -12,7 +12,7 @@
         <form [formGroup]="exportSettingsForm">
             <div class="tw-p-24-px">
                 <div class="tw-mb-16-px">
-                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="'qbdExportSetting.exportReimbursableExpensesLabel' | transloco"
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                         [form]="exportSettingsForm"
                         [label]="'qbdExportSetting.exportCCCExpensesLabel' | transloco"
@@ -144,7 +144,7 @@
                                 </div>
 
                                 <div class="tw-pl-16 tw-pr-24-px">
-                                    <div class="tw-p-12-px tw-bg-info-section tw-rounded-4-px tw-flex tw-flex-row tw-items-start">
+                                    <div class="tw-p-12-px tw-bg-bg-tertiary-lighter tw-rounded-4-px tw-flex tw-flex-row tw-items-start">
                                         <div class="tw-mr-6-px tw-mt-2-px">
                                             <div class="tw-w-4 tw-h-4 tw-rounded-full tw-bg-info tw-flex tw-items-center tw-justify-center">
                                                 <strong class="tw-text-white tw-text-12-px tw-font-bold">i</strong>
@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="tw-text-14-px tw-text-400 tw-text-text-muted">
                                             <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoOnboarding' | transloco }}</span>
-                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoPostOnboardingPart1' | transloco }}<a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">{{ 'qbdExportSetting.mappingSectionLink' | transloco }}</a>.</span>
+                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoPostOnboardingPart1' | transloco }}<a class="link" (click)="navigateToMapping()">{{ 'qbdExportSetting.mappingSectionLink' | transloco }}</a>.</span>
                                         </div>
                                     </div>
                                 </div>

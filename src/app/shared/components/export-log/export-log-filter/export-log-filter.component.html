@@ -1,9 +1,14 @@
-<div [formGroup]="exportLogForm" class="tw-flex tw-items-center" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
+<div [formGroup]="exportLogForm" class="tw-flex tw-items-end" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
     <app-search class="tw-pt-22-px" *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'exportLog.searchPlaceholder' | transloco" [width]="'300-px'" [height]="'40-px'"></app-search>
     <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
+
+    @if (!hideCalendar && isSimpleSearchRequired) {
+        <div [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px tw-h-input-height': isSimpleSearchRequired}">
+        </div>
+    }
     <div *ngIf="!hideCalendar">
         <div *ngIf="isSimpleSearchRequired" class="tw-text-form-label-text-color tw-text-12-px tw-pb-8-px tw-pl-16-px tw-font-nav-link-font-weight">{{ 'exportLogFilter.dateOfExportLabel' | transloco }}</div>
-        <div #calendarContainer [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px': isSimpleSearchRequired}" class="tw-flex tw-items-center" (click)="showCalendar($event)">
+        <div #calendarContainer class="tw-flex tw-items-center tw-rounded-4-px" [ngClass]="{'tw-shadow-focused': isDateFilterFocused}" (click)="showCalendar($event)">
             <p-calendar #calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" [placeholder]="'exportLogFilter.dateRangePlaceholder' | transloco" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
                 <ng-template pTemplate="header">
                     <div class="tw-flex tw-items-center tw-justify-between">
@@ -30,13 +35,11 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
                         <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
                             {{ 'exportLog.dateRangeLabel' | transloco}}
                         </span>
                     </div>
-
                     <div class="tw-pt-16-px tw-pb-8-px tw-w-218-px">
                         <div class="tw-whitespace-nowrap tw-text-12-px tw-flex tw-items-center tw-justify-between tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
                             <p>{{exportLogForm.get('start')?.value[0] ? (exportLogForm.get('start')?.value[0] | date): ('exportLogFilter.startDatePlaceholder' | transloco)}}</p>

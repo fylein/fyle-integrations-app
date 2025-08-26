@@ -1,5 +1,5 @@
-<div>
-    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+<div class="tw-h-full">
+    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
         <app-loader></app-loader>
     </div>
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="'xero.configuration.exportSetting.headerText' | transloco"
