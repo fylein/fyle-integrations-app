@@ -21,6 +21,8 @@ export class OutlinedIconButtonComponent {
 
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
+  readonly brandingConfig = brandingConfig;
+  
   readonly brandingStyle = brandingStyle;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;

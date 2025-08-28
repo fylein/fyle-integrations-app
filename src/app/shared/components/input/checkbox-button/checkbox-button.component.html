@@ -1,8 +1,8 @@
-<div [ngClass]="isCheckboxSelected ? 'checkedText' : 'unCheckedText'" (click)="onCheckBoxClick()">
+<div [ngClass]="brandingConfig.brandId === 'fyle' ? (isCheckboxSelected ? 'checkedText' : 'unCheckedText') : ''" (click)="onCheckBoxClick()">
     <p-button>
         <ng-template pTemplate="content">
-                <input type="checkbox" [(ngModel)]="isCheckboxSelected"/>
+                <input type="checkbox" [(ngModel)]="isCheckboxSelected" [ngClass]="brandingConfig.brandId === 'co' ? 'co-checkbox' : 'fyle-checkbox'"/>
                 {{ isCheckboxSelected ? checkedText : unCheckedText}}
         </ng-template>
-    </p-button>      
+    </p-button>
 </div>
