@@ -1,3 +1,108 @@
+// New enhanced dropdown container styling
+.app-dropdown-container {
+  position: relative;
+  display: inline-block;
+
+  // Size variants based on actual usage patterns
+  &.app-dropdown-small {
+    :host ::ng-deep .p-dropdown {
+      @apply tw-h-input-height tw-w-200-px #{!important};
+
+      .p-dropdown-label {
+        @apply tw-text-14-px #{!important};
+      }
+    }
+  }
+
+  &.app-dropdown-medium {
+    :host ::ng-deep .p-dropdown {
+      @apply tw-h-input-height tw-w-300-px #{!important};
+    }
+  }
+
+  &.app-dropdown-large {
+    :host ::ng-deep .p-dropdown {
+      @apply tw-h-input-height tw-w-400-px #{!important};
+
+      .p-dropdown-label {
+        @apply tw-text-14-px #{!important};
+      }
+    }
+  }
+
+  // Error state
+  &.app-dropdown-error {
+    :host ::ng-deep .p-dropdown {
+      @apply tw-border-border-danger-dark #{!important};
+    }
+  }
+
+  // Loading state
+  &.app-dropdown-loading {
+    :host ::ng-deep .p-dropdown-trigger {
+      @apply tw-pointer-events-none #{!important};
+    }
+  }
+}
+
+// Clear icon styling
+.clear-icon {
+  @apply tw-cursor-pointer tw-ml-auto tw-opacity-60 tw-transition-opacity;
+
+  &:hover {
+    @apply tw-opacity-100;
+  }
+}
+
+// Item styling
+.dropdown-item {
+  @apply tw-flex tw-flex-col;
+
+  .item-text {
+    @apply tw-text-14-px tw-text-text-secondary;
+  }
+
+  .item-subtext {
+    @apply tw-text-12-px tw-text-text-muted tw-mt-2-px;
+  }
+}
+
+// Selected item styling
+.selected-item-container {
+  @apply tw-flex tw-items-center tw-justify-between tw-w-full;
+
+  .selected-text {
+    @apply tw-flex-1 tw-truncate;
+  }
+}
+
+.placeholder-text {
+  @apply tw-text-placeholder;
+}
+
+// Search styling
+.dropdown-search {
+  @apply tw-w-full tw-h-dropdown-option-height tw-bg-white;
+}
+
+.search-icon {
+  @apply tw-text-search-focused-search-icon;
+}
+
+// Brand-specific overrides
+:host ::ng-deep {
+  .p-dropdown-trigger {
+    &.fyle {
+      content: url('/src//assets/icons/caret-large-down.svg') !important;
+    }
+
+    &.co {
+      content: url('/src/assets/icons/co/grv-chevron-down.svg') !important;
+    }
+  }
+}
+
+// Legacy compatibility classes (maintain existing behavior)
 :host ::ng-deep .dropdown-time-alone .p-dropdown {
     @apply tw-w-150-px #{!important};
 }

@@ -105,6 +105,7 @@
     "supportMessage": "Connect our support team to get it resolved"
   },
   "dropdown": {
+    "noResultsFound": "No results found",
     "subLabelSuffix": "o"
   },
   "skippedExportLogTable": {
