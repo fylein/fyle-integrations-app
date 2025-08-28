@@ -18,6 +18,54 @@ export const c1Styles = {
         searchIconFocus: 'tw-text-search-focused-filled-border'
     },
     dashboard: {
-        dashboardErrorResolveBtnText: 'p-button primary-outline'
+        dashboardErrorResolveBtnText: 'p-button primary-outline',
+        dashboardExportBtn: 'tw-rounded-4-px',
+        dashboardMainMenu: 'tw-items-center'
+    },
+    buttons: {
+        outlined: {
+           class: 'tw-px-4',
+           active: 'hover:tw-shadow-md tw-text-size-14 tw-bg-white tw-border tw-border-grey-300 tw-font-500 tw-cursor-pointer',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           iconColorActive: 'tw-text-text-secondary',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        primary: {
+           class: 'p-button p-button-raised',
+           active: 'tw-bg-primary',
+           disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
+           progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
+           loader: 'tw-border-t-border-tertiary',
+           iconColorActive: 'tw-text-white',
+           iconColorHover: '',
+           iconColorDisabled: 'tw-text-text-placeholder'
+        },
+        dialog: {
+            cancel: 'tw-px-16-px tw-py-8-px outline-sm'
+        }
+    },
+    toast: {
+        class: 'tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px tw-p-12-px',
+        leftIcon: {
+            class: 'tw-inline-flex tw-items-center',
+            iconSize: '20px',
+            background: {
+                success: '',
+                error: '',
+                info: ''
+            }
+        },
+        message: 'tw-text-toast-text-color tw-pl-8-px',
+        close: {
+            class: 'tw-inline-flex tw-items-center tw-cursor-pointer',
+            iconSize: '20px',
+            iconStyleClasses: 'tw-text-toast-text-color'
+        },
+        backgroundClass: {
+            success: 'tw-bg-toast-success-bg',
+            error: 'tw-bg-toast-error-bg',
+            info: 'tw-bg-bg-info'
+        }
     }
 };

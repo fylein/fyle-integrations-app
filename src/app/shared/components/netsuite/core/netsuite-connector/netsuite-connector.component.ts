@@ -48,8 +48,10 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.connectorService.connectNetsuite(this.connectNetsuiteForm)
     .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
       this.connectNetsuiteForm = netsuiteSetupForm;
-      this.isLoading = false;
       this.setupConnectionStatus.emit(isNetsuiteConnected);
+      if (!isNetsuiteConnected){
+        this.isLoading = false;
+      }
     });
   }
 

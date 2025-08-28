@@ -5,6 +5,7 @@ const ICON_MAPPING = {
   'arrow-down': 'grv-chevron-down',
   'arrow-line': 'arrow-line',
   'arrow-rotate-sync': 'grv-recurring-small',
+  'arrow-rotate-sync-medium': 'grv-recurring-small',
   'arrow-rotate': 'grv-recurring',
   'arrow-tail-down-medium': 'grv-arrow-down-medium',
   'arrow-tail-down': 'grv-arrow-down',
@@ -67,7 +68,10 @@ const ICON_MAPPING = {
   'user-one': 'grv-person',
   'download-medium': 'grv-download-medium',
   'expand': 'grv-expand',
-  'folder': 'grv-folder'
+  'folder': 'grv-folder',
+  'toast-success': 'toast-success',
+  'toast-info': 'toast-info',
+  'toast-cross': 'toast-cross'
 };
 
 @Component({

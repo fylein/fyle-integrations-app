@@ -333,7 +333,9 @@
         "scheduleSubLabel": "Set up a schedule to automate the export of expenses from {{brandName}} to Sage Intacct.",
         "accountingPeriodSubLabel": "If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.",
         "memoStructureSubLabel": "Choose from a list of available data points that you'd like to export to the description field in Sage Intacct.",
-        "customizeSectionSubLabel": "Customize the data that you'd like to export from {{brandName}} to Sage Intacct by choosing which data points need to be exported."
+        "customizeSectionSubLabel": "Customize the data that you'd like to export from {{brandName}} to Sage Intacct by choosing which data points need to be exported.",
+        "singleCreditLineJELabel": "Create a single itemized offset credit entry for journal",
+        "singleCreditLineJESubLabel": "Merge all credits in a journal to create a single entry."
       },
       "done": {
         "ctaText": "",

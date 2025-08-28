@@ -52,16 +52,16 @@ export class ExportSettingsService {
                 value: IntacctReimbursableExpensesObject.BILL
               },
               {
+                label: this.translocoService.translate('services.exportSettings.chargeCardTransaction'),
+                value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
+              },
+              {
                 label: this.translocoService.translate('services.exportSettings.expenseReport'),
                 value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
               },
               {
                 label: this.translocoService.translate('services.exportSettings.journalEntry'),
                 value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-              },
-              {
-                label: this.translocoService.translate('services.exportSettings.chargeCardTransaction'),
-                value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
               }
             ];
       }

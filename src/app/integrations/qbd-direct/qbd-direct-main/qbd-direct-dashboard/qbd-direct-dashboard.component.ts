@@ -115,7 +115,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
         ).length > 0, true
       )
     ).subscribe((res: QbdDirectTaskResponse) => {
-      this.processedCount = res.results.filter((task: { status: TaskLogState; }) => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
+      this.processedCount = res.results.filter((task: { status: TaskLogState; }) => (task.status && task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter((task: { status: TaskLogState; }) => (this.exportLogProcessingStates.includes(task.status))).length === 0) {

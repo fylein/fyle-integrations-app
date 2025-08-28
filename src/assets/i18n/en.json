@@ -33,7 +33,7 @@
     "validNameError": "Enter a valid name",
     "emailAddressLabel": "Email Address",
     "enterEmailPlaceholder": "Enter email",
-    "validEmailError": "Enter a valid e-mail",
+    "validEmailError": "Enter a valid email",
     "cancelButton": "Cancel",
     "addAndSaveButton": "Add and save"
   },
@@ -62,7 +62,7 @@
     "preview": "Preview",
     "exportModule": "Export module",
     "previewOfExport": "Preview of a {{exportType}} exported to {{appName}}",
-    "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandingConfig.brandName}}.",
+    "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandName}}.",
     "click": "Click",
     "here": "here",
     "forMoreDetails": "for more details.",
@@ -272,7 +272,7 @@
     "enterUserIdPlaceholder": "Enter {{userId}}",
     "invalidUserIdError": "Invalid {{userId}}. Enter valid {{userId}}.",
     "enterUserPasswordPlaceholder": "Enter {{userPassword}}",
-    "incorrectPasswordError": "Incorrect {{password}}. Enter correct {{password}}."
+    "invalidPasswordError": "Invalid {{password}}. Enter valid {{password}}."
   },
   "dashboardIntacctErrors": {
     "expenseId": "Expense ID",
@@ -465,7 +465,7 @@
     "travelSectionCaption": "If your company uses any of the Travel Management Systems below, you can easily integrate your {{brandName}} account with it.",
     "travelperkAppName": "TravelPerk",
     "lookingForSomethingElseTitle": "Looking for something else?",
-    "lookingForSomethingElseCaption": "We are looking forward to building integrations with a few other applications in the market, as listed below. If you have a use case to integrate with these, we would love to hear them at <span class=\"tw-text-link-primary\">{{supportEmail}}</span>"
+    "lookingForSomethingElseCaption": "We are looking forward to building integrations with a few other applications in the market, as listed below. If you have a use case to integrate with these, we would love to hear them at <span class=\"link\">{{supportEmail}}</span>"
   },
   "travelperkAdvancedSettings": {
     "headerText": "Advanced settings",
@@ -890,7 +890,7 @@
     "creditCard": "credit card",
     "expense": "Expense",
     "report": "Report",
-    "emailIdMapping": "Based on employee e-mail ID",
+    "emailIdMapping": "Based on employee email ID",
     "nameMapping": "Based on employee name",
     "employeeCodeMapping": "Based on employee code",
     "expenseReport": "Expense report",
@@ -1125,7 +1125,7 @@
     "headerText": "Import settings",
     "contentText": "In this section, you can choose the fields required to be imported from Sage 300 CRE to {{brandName}}. ",
     "importDimensionsTitle": "Import / map Sage 300 CRE dimensions",
-    "importDimensionsDescription": "The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandName}} field of your preference, or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandName}} will make the values available as a dropdown in the expense form for your employees to choose from. ",
+    "importDimensionsDescription": "The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandName}} field of your preference, or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandName}} will make the values available as a dropdown in the expense form for your employees to choose from.",
     "clickHere": "Click here",
     "toPreview": " to preview.",
     "infoText": "If you'd like to use only selective data from Sage 300 CRE, map a Sage 300 CRE dimension to a field in {{brandName}} and turn off the import, as importing the data will sync in all the active values in Sage 300 CRE. You can add the required values in {{brandName}} and map them later in the integration mapping section.",
@@ -1856,7 +1856,7 @@
     "useEmployeeClass": "Use Employee's Class in Netsuite",
     "netsuiteClassLevel": "NetSuite class level",
     "chooseNetsuiteClassLevel": "Choose NetSuite class level",
-    "optional": " \\(optional\\)",
+    "optional": " (optional)",
     "saveSuccess": "Advanced settings saved successfully",
     "saveError": "Error saving advanced settings, please try again later"
   },
@@ -1917,7 +1917,7 @@
   },
   "landingV2": {
     "integrationsList": "List of integrations",
-    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"tw-text-link-primary\" href=\"mailto:support@fylehq.com\">support{{'@'}}fylehq.com</a>",
+    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support@fylehq.com</a>",
     "tabAll": "All",
     "tabAccounting": "Accounting",
     "tabHRMS": "HRMS",
@@ -2201,7 +2201,7 @@
       "employee": "Employee",
       "vendor": "Vendor",
       "merchant": "Merchant",
-      "basedOnEmployeeEmailID": "Based on employee e-mail ID",
+      "basedOnEmployeeEmailID": "Based on employee email ID",
       "basedOnEmployeeName": "Based on employee name"
     },
     "businessCentralImportSettings": {
@@ -2319,7 +2319,7 @@
       "approved": "Approved",
       "employee": "Employee",
       "vendor": "Vendor",
-      "basedOnEmployeeEmailId": "Based on employee e-mail ID",
+      "basedOnEmployeeEmailId": "Based on employee email ID",
       "basedOnEmployeeName": "Based on employee name",
       "basedOnEmployeeCode": "Based on employee code",
       "creditCardCharge": "Credit card charge",

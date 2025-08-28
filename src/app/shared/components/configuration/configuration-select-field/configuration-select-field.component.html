@@ -9,10 +9,10 @@
                 <h5 class="tw-text-text-secondary tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
                 <h5 *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="brandingStyle.common.inputLabelTextStyle" [innerHTML]="subLabel"></h5>
                 <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                    {{ 'configurationSelectField.transactionRecordInfo' | transloco: { uiExposedAppName: uiExposedAppName, brandName: brandingConfig.brandName } }} <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">{{ 'configurationSelectField.click' | transloco }}<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> {{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forMoreDetails' | transloco }}</span>
+                    {{ 'configurationSelectField.transactionRecordInfo' | transloco: { uiExposedAppName: uiExposedAppName, brandName: brandingConfig.brandName } }} <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">{{ 'configurationSelectField.click' | transloco }} <a (click)="showExportTable()" class="link">{{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forMoreDetails' | transloco }}</span>
                 </h5>
-                <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">{{ 'configurationSelectField.click' | transloco }}<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> {{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forPreview' | transloco }}</span></h5>
-                <h5 *ngIf="formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{ 'configurationSelectField.sageIntacctTransactionInfo' | transloco }} <span class="tw-pl-4-px">{{ 'configurationSelectField.learn' | transloco }}<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-link-primary"> {{ 'configurationSelectField.more' | transloco }}</a> {{ 'configurationSelectField.aboutExporting' | transloco }}</span></h5>
+                <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">{{ 'configurationSelectField.click' | transloco }} <a (click)="showExportTable()" class="link">{{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forPreview' | transloco }}</span></h5>
+                <h5 *ngIf="formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{ 'configurationSelectField.sageIntacctTransactionInfo' | transloco }} <span class="tw-pl-4-px">{{ 'configurationSelectField.learn' | transloco }}<a (click)="showExportTable()" class="link"> {{ 'configurationSelectField.more' | transloco }}</a> {{ 'configurationSelectField.aboutExporting' | transloco }}</span></h5>
             </div>
         </div>
         <div>
@@ -78,7 +78,7 @@
                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
                             <span>
                             {{ (option.label | sentenceCase) }}</span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
+                            <p *ngIf="isMultiLineOption" class="tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
 
@@ -92,7 +92,7 @@
                     </ng-template>
                 </p-dropdown>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
-                        <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
+                        <a class="link !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
                         <span> {{ 'configurationSelectField.inApp' | transloco: {uiExposedAppName: uiExposedAppName} }}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">

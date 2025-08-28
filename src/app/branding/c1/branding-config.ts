@@ -18,6 +18,9 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginRedirectUri: true,
     loginToAllConnectedApps: false,
     hasAssistedSetupSupport: false,
+    isDashboardButtonOutlined: false,
+    isPrimengLoaderEnabled: true,
+    shouldShowOnboardingYouTubeVideo: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
@@ -63,7 +66,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             expenseType: false
         },
         mappings: {
-            employeeMapping: false
+            employeeMapping: false,
+            allowExpandableSearch: true
         },
         dashboard: {
             disconnectButton: false,

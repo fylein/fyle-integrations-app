@@ -7,7 +7,7 @@
 
   @if (!isConnectionInProgress) {
   <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
-    
+
     <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired' | transloco}} </p>
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
@@ -19,13 +19,13 @@
         <span class="tw-mt-8-px tw-block"> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedExtendedDescription' | transloco }} </span>
         <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
           {{ 'dashboardTokenExpired.tutorialStep1Text' | transloco}}
-             <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> 
+             <span class="link tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()">
               {{ 'dashboardTokenExpired.tutorialStep1Context' | transloco:{ appName: appName } }}
-             <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+             <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
            </span>
         </span>
 
-        <span> {{ 'dashboardTokenExpired.tutorialStep2Text' | transloco}} {{ 'dashboardTokenExpired.tutorialStep2Context' | transloco}} </span> 
+        <span> {{ 'dashboardTokenExpired.tutorialStep2Text' | transloco}} {{ 'dashboardTokenExpired.tutorialStep2Context' | transloco}} </span>
       </p> }
     } @else {
       <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
@@ -49,7 +49,7 @@
 
   @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
-        <button pButton (click)="toggleIntegrationReconnectDialog()"> {{'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco}}</button>
+        <app-primary-button [styleClasses]="'tw-px-24-px tw-py-8-px'" [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco" (buttonClick)="toggleIntegrationReconnectDialog()"></app-primary-button>
       </div>
   }
 }
@@ -72,7 +72,7 @@
 </app-configuration-confirmation-dialog>
 }
 
-<p-dialog 
+<p-dialog
   [visible]="isIntegrationReconnectDialogVisible"
   [showHeader]="false"
   [modal]="true"
@@ -107,9 +107,7 @@
 
   <!-- Footer -->
   <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
-    <button type="button" (click)="reconnectToIntegration()" class="connect-btn" pButton>
-      {{ 'dashboardTokenExpired.reconnectButton' | transloco}}
-    </button>
+    <app-primary-button [styleClasses]="'tw-px-24-px tw-py-8-px'" [buttonText]="'dashboardTokenExpired.reconnectButton' | transloco" (buttonClick)="reconnectToIntegration()"></app-primary-button>
   </div>
 
 </p-dialog>

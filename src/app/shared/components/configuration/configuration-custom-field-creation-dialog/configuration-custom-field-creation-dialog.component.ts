@@ -21,6 +21,8 @@ export class ConfigurationCustomFieldCreationDialogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
   constructor() { }

@@ -333,7 +333,9 @@
         "scheduleSubLabel": "Set up a schedule to frequently automate the export of expenses from {{brandName}} to Sage Intacct.",
         "accountingPeriodSubLabel": "If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.",
         "memoStructureSubLabel": "Select the datapoints you'd like to export to Sage Intacct's line-item level memo field when exporting expenses from {{brandName}}.",
-        "customizeSectionSubLabel": "In this section, you can customize the data that you'd like to export from {{brandName}} to Sage Intacct. You can choose what data points need to be exported and what shouldn't be."
+        "customizeSectionSubLabel": "In this section, you can customize the data that you'd like to export from {{brandName}} to Sage Intacct. You can choose what data points need to be exported and what shouldn't be.",
+        "singleCreditLineJELabel": "Create a single itemized offset credit entry for journal",
+        "singleCreditLineJESubLabel": "Merge all credits in a journal to create a single entry."
       },
       "done": {
         "ctaText": "",
@@ -481,6 +483,9 @@
     "customFieldPlaceholderName": "Placeholder name",
     "customFieldType": "Field type",
     "customFieldCreateandSave": "Create and save",
-    "currentDate": "Export date"
+    "currentDate": "Export date",
+    "loader": {
+      "defaultLabel" : "Loading..."
+    }
   }
 }

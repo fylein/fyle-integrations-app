@@ -1,12 +1,41 @@
 // Declare the token name from common element library figma file here
 // Refer: https://www.figma.com/file/4UeThUEsAVURfLUoozuzJY/Capital_One_Design_Lang?type=design&node-id=0-1&mode=design&t=7Wgc9cpl8fnb5Lrg-0
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
 @import "./primitives_variables.scss";
 
 @layer base {
   [data-theme="co"] {
+    // Colors
+    --white: #{$white};
+    --placeholder: #{$grey-40};
+    --separator: #{$grey-22};
+    --normal-text-color: #{$grey-82};
+    --menu-inactive-text-color: #{$grey-40};
+    --sub-text-color: #{$grey-60};
+    --faded-text-color: #{$grey-55};
+    --box-color: #{$grey-30};
+    --mandatory-field-color: #{$blue-55};
+    --disabled-bg-color: #{$grey-07};
+    --info: #{$blue-50};
+    --alert-toast: #{$red-50};
+    --line-inactive: #{$grey-17};
+    --mapped-green-border: #{$green-02};
+    --mapped-green-bg: #{$green-03};
+    --unmapped-red-border: #{$red-30};
+    --unmapped-red-bg: #{$red-07};
+    --cta-disabled: #{$blue-55};
+    --pink: #{$blue-55};
+    --check-box: #{$grey-12};
+    --pink-box-border: #{$pink-opacity-16};
+    --configuration-bg: var(--bg-tertiary-lighter);
+    --info-section: var(--bg-tertiary-lighter);
+    --success-toast: var(--text-success);
+    --progress-bar-bg: var(--white);
+    --bg-xero-btn: #{$blue-xero};
+    --bg-qbo-btn: #{$green-qbo};
+
     // Elevation
     --background-overlay-subtle: rgba($black, 0.02);
 
@@ -69,6 +98,7 @@
     --border-brand-pressed: #{$blue-75};
     --border-calm-light: #{$green-10};
     --border-danger: #{$red-55};
+    --border-danger-dark: #{$red-55};
     --border-danger-light: #{$red-15};
     --border-danger-lighter: #{$red-10};
     --border-disable: #{$grey-20};
@@ -144,6 +174,7 @@
     --bg-tertiary-lighter: #{$grey-05};
     --bg-warning-lighter: #{$yellow-05};
     --bg-info-lightest: #{$blue-05};
+    --bg-link-muted: var(--text-muted);
 
     // Background - Grey
     --bg-disable: #{$grey-15};
@@ -171,6 +202,7 @@
     --link-pressed: #{$blue-75};
     --link-primary: #{$blue-55};
     --link-visited: #{$purple-55};
+    --link-muted: var(--text-muted);
 
     // Button Primary - Default
     --btn-primary-bg: var(--bg-brand-primary);
@@ -328,7 +360,7 @@
     --calendar-year-selected-bg: var(--bg-brand-primary);
     --calendar-year-selected-text-color: var(--text-white);
     --calendar-year-text-color: var(--text-secondary);
-  
+
     // Calendar - Other
     --calendar-day-text-color: var(--text-label);
     --calendar-header-hover-text-color: var(--text-brand-primary);
@@ -364,6 +396,9 @@
     --dd-menu-item-section-header-text-color: var(--text-disable);
     --dd-menu-item-drag-icon-color: var(--icon-disable);
     --dd-search-default-bg: var(--bg-tertiary);
+
+    // Input
+    --input-height: 40px;
 
     // Input - Default
     --input-default-bg: var(--bg-white);
@@ -873,5 +908,17 @@
     --scrollbar-track: #eaeaea;
 
     --scrollbar-thumb-hover: #aaa;
+
+    // Toggle
+    --toggle-enabled-bg: #{$blue-55};
+    --toggle-disabled-bg: var(--form-switch-bg);
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$white};
+    --toggle-border: none;
+    --toggle-border-width: 0px;
+
+
+    // Font family
+    --font-primary: "Optimist";
   }
 }
