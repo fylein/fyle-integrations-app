@@ -3,7 +3,7 @@
   position: relative;
   display: inline-block;
 
-  // Size variants based on actual usage patterns
+  // Size variants
   &.app-dropdown-small {
     :host ::ng-deep .p-dropdown {
       @apply tw-h-input-height tw-w-200-px #{!important};

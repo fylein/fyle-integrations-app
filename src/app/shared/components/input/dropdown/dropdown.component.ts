@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, ViewChild, forwardRef, 
 import { FormGroup, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { Dropdown } from 'primeng/dropdown';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-dropdown',
@@ -9,6 +10,7 @@ import { Dropdown } from 'primeng/dropdown';
   styleUrls: ['./dropdown.component.scss'],
 
   // Registers DropdownComponent as a ControlValueAccessor for Angular forms.
+  // Used for creating forms dynamically, validation, two-way binding, etc.
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -31,6 +33,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   @Input() formControllerName: string;
 
+  // Used in template-driven p-dropdowns
   @Input() displayKey: string = 'label';
 
   @Input() isDisabled: boolean = false;
@@ -58,17 +61,16 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   @Input() customClass: string = '';
 
-  @Input() optionLabel: string = 'label';
+  // Used in reactive p-dropdowns
+  @Input() optionLabel: string;
 
-  @Input() optionValue: string = 'value';
+  @Input() optionValue: string;
 
   @Input() tooltipEnabled: boolean = true;
 
   @Input() multiLine: boolean = false;
 
   @Input() appendTo: string = 'body';
-
-  @Input() brandId: string = 'fyle';
 
   // Events
   @Output() selectionChange = new EventEmitter<any>();
@@ -95,7 +97,6 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.setupFormValidation();
-    this.applyBrandStyling();
   }
 
   private setupFormValidation() {
@@ -107,10 +108,6 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
         });
       }
     }
-  }
-
-  private applyBrandStyling() {
-    // Brand-specific styling logic can be extended here
   }
 
   onSelectionChange(event: any) {
@@ -168,7 +165,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
     if (this.loading) {
       return 'pi pi-spinner pi-spin';
     }
-    return `pi pi-chevron-down ${this.brandId}`;
+    return `pi pi-chevron-down ${brandingConfig.brandId}`;
   }
 
   isOverflowing(element: HTMLElement, option: any): boolean {

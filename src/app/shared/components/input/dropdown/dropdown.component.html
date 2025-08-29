@@ -1,83 +1,85 @@
 <div class="app-dropdown-container" [ngClass]="getDropdownContainerClasses()">
+  @if(form && formControllerName) {
   <!-- Form-integrated dropdown -->
-  <form [formGroup]="form" *ngIf="form && formControllerName; else standaloneDropdown">
-    <p-dropdown
-      #dropdown
-      [appendTo]="appendTo"
-      [options]="options"
-      [placeholder]="placeholder"
-      [disabled]="isDisabled"
-      [loading]="loading"
-      [filter]="showFilter"
-      [filterFields]="filterFields.length > 0 ? filterFields : [displayKey]"
-      [emptyFilterMessage]="emptyMessage"
-      [dropdownIcon]="getDropdownIcon()"
-      [optionLabel]="displayKey"
-      [optionValue]="optionValue"
-      [ngClass]="customClass"
-      [style.width]="width"
-      [formControlName]="formControllerName"
-      (onChange)="onSelectionChange($event)"
-      (onFilter)="onFilter($event)"
-      (onShow)="onDropdownShow()"
-      (onHide)="onDropdownHide()">
+    <form [formGroup]="form">
+      <p-dropdown
+        #dropdown
+        [appendTo]="appendTo"
+        [options]="options"
+        [placeholder]="placeholder"
+        [disabled]="isDisabled"
+        [loading]="loading"
+        [filter]="showFilter"
+        [filterFields]="filterFields.length > 0 ? filterFields : [displayKey]"
+        [emptyFilterMessage]="emptyMessage"
+        [dropdownIcon]="getDropdownIcon()"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [ngClass]="customClass"
+        [style.width]="width"
+        [formControlName]="formControllerName"
+        (onChange)="onSelectionChange($event)"
+        (onFilter)="onFilter($event)"
+        (onShow)="onDropdownShow()"
+        (onHide)="onDropdownHide()">
 
-      <!-- Item Template -->
-      <ng-template let-option pTemplate="item">
-        <div class="dropdown-item"
-             #textElement
-             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-             [pTooltip]="isOverflowing(textElement, option) ? option[displayKey] : null"
-             tooltipPosition="top">
-          <span class="item-text">{{ option[displayKey] }}</span>
-          <p *ngIf="multiLine && option.subLabel"
-             class="item-subtext">{{ option.subLabel }}</p>
-          <p *ngIf="isMultiLineOption && option['subLabel']"
-             class="tw-text-text-muted tw-text-12-px">{{ option['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}</p>
-        </div>
-      </ng-template>
+        <!-- Item Template -->
+        <ng-template let-option pTemplate="item">
+          <div class="dropdown-item"
+              #textElement
+              [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+              [pTooltip]="isOverflowing(textElement, option) ? option[displayKey] : null"
+              tooltipPosition="top">
+            <span class="item-text">{{ option[displayKey] }}</span>
+            <p *ngIf="multiLine && option.subLabel"
+              class="item-subtext">{{ option.subLabel }}</p>
+            <p *ngIf="isMultiLineOption && option['subLabel']"
+              class="tw-text-text-muted tw-text-12-px">{{ option['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}</p>
+          </div>
+        </ng-template>
 
-      <!-- Selected Item Template -->
-      <ng-template let-item pTemplate="selectedItem">
-        <div class="selected-item-container" *ngIf="item">
-          <span class="selected-text">{{ item[displayKey] }}</span>
+        <!-- Selected Item Template -->
+        <ng-template let-item pTemplate="selectedItem">
+          <div class="selected-item-container" *ngIf="item">
+            <span class="selected-text">{{ item[displayKey] }}</span>
+            <app-svg-icon
+              *ngIf="showClearIcon && !isDisabled"
+              [svgSource]="'cross-medium'"
+              [c1SvgSource]="'grv-cross-filled-medium'"
+              (click)="clearDropdown()"
+              [height]="'18px'"
+              [width]="'18px'"
+              [styleClasses]="'clear-icon'">
+            </app-svg-icon>
+          </div>
+          <div *ngIf="!item" class="placeholder-text">{{ placeholder }}</div>
+        </ng-template>
+
+        <!-- Filter Template -->
+        <ng-template pTemplate="filter" let-options="options" *ngIf="showFilter">
+          <app-search
+            [placeholder]="'Search...'"
+            [styleClasses]="'dropdown-search'"
+            (handleSimpleSearch)="onFilter($event)"
+            (searchFocused)="onSearchFocus($event)">
+          </app-search>
+        </ng-template>
+
+        <!-- Filter Icon Template -->
+        <ng-template pTemplate="filtericon">
           <app-svg-icon
-            *ngIf="showClearIcon && !isDisabled"
-            [svgSource]="'cross-medium'"
-            [c1SvgSource]="'grv-cross-filled-medium'"
-            (click)="clearDropdown()"
-            [height]="'18px'"
+            [svgSource]="'search-medium'"
             [width]="'18px'"
-            [styleClasses]="'clear-icon'">
+            [height]="'18px'"
+            [styleClasses]="'search-icon'">
           </app-svg-icon>
-        </div>
-        <div *ngIf="!item" class="placeholder-text">{{ placeholder }}</div>
-      </ng-template>
+        </ng-template>
+      </p-dropdown>
+    </form>
 
-      <!-- Filter Template -->
-      <ng-template pTemplate="filter" let-options="options" *ngIf="showFilter">
-        <app-search
-          [placeholder]="'Search...'"
-          [styleClasses]="'dropdown-search'"
-          (handleSimpleSearch)="onFilter($event)"
-          (searchFocused)="onSearchFocus($event)">
-        </app-search>
-      </ng-template>
 
-      <!-- Filter Icon Template -->
-      <ng-template pTemplate="filtericon">
-        <app-svg-icon
-          [svgSource]="'search-medium'"
-          [width]="'18px'"
-          [height]="'18px'"
-          [styleClasses]="'search-icon'">
-        </app-svg-icon>
-      </ng-template>
-    </p-dropdown>
-  </form>
-
+  } @else {
   <!-- Standalone dropdown (without form) -->
-  <ng-template #standaloneDropdown>
     <p-dropdown
       #dropdown
       [appendTo]="appendTo"
@@ -151,5 +153,5 @@
         </app-svg-icon>
       </ng-template>
     </p-dropdown>
-  </ng-template>
+  }
 </div>
