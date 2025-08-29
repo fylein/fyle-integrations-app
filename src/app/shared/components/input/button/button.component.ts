@@ -40,14 +40,6 @@ export class ButtonComponent implements OnInit{
     }
   }
 
-  onHover(onHover: boolean){
-    if (onHover){
-      this.iconColor = brandingStyle.buttons[this.buttonType].iconColorHover;
-    } else {
-      this.iconColor = brandingStyle.buttons[this.buttonType].iconColorActive;
-    }
-  }
-
   ngOnInit(): void {
     this.iconColor = brandingStyle.buttons[this.buttonType].iconColorActive;
   }

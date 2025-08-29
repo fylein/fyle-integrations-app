@@ -1,8 +1,8 @@
 <button
   type="button" 
   [disabled]="disabled"
-  (mouseenter)="onHover(true)"
-  (mouseleave)="onHover(false)"
+  (mouseenter)="iconColor = brandingStyle.buttons[this.buttonType].iconColorHover"
+  (mouseleave)="iconColor = brandingStyle.buttons[this.buttonType].iconColorActive"
   [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons[buttonType].class"
   [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[buttonType].progress : brandingStyle.buttons[buttonType].active), brandingStyle.buttons[buttonType].size[buttonSize] , styleClasses]"
   (click)="!disabled && onClick()">
