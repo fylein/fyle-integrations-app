@@ -17,47 +17,35 @@
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
-                    [formControlName]="formControllerName"
+                <app-dropdown
+                    [options]="destinationAttributes"
+                    [optionLabel]="optionLabel"
+                    [displayKey]="optionLabel"
+                    [formControllerName]="formControllerName"
+                    [form]="form"
                     [placeholder]="placeholder"
-                    [ngClass]="{
-                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused,
-                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused)}"
-                    [filter]="true"
-                    (onFilter)="searchOptions($event)"
-                    (onHide)="clearSearch()"
+                    [showFilter]="true"
                     [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
-                    [resetFilterOnHide]="true"
                     [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
-                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
-                    <ng-template let-options pTemplate="item">
-                        <div #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
-                            <span>
-                                {{options[optionLabel]}}
-                            </span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
-                        </div>
-                    </ng-template>
-                    <ng-template let-value pTemplate="selectedItem">
-                        <div *ngIf="value">
-                            <p>
-                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}: </span>
-                                {{ value[optionLabel] }}
-                            </p>
-                        </div>
-                        <div *ngIf="!value" class="tw-text-placeholder">
-                           {{placeholder}}
-                        </div>
-                    </ng-template>
+                    [isMultiLineOption]="isMultiLineOption"
+                    subLabel="code"
+                    [errorState]="form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused"
+                    size="large"
+                    (filterChange)="searchOptions($event)">
+
+                    <!-- Custom filter template - handles filter differently based on isAdvanceSearchEnabled -->
+                    <!-- Specific to the case where destinationAttributes is present and advanced search is disabled -->
                     <ng-template *ngIf="!isAdvanceSearchEnabled" pTemplate="filter" let-dropdownOptions="options">
-                        <app-search [form]="form" [isDropdown]="true" [placeholder]="'configurationSelectField.searchPlaceholder' | transloco" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="simpleSearch($event)" (searchFocused)="onSearchFocus($event)"></app-search>
+                        <app-search
+                            [form]="form"
+                            [isDropdown]="true"
+                            [placeholder]="'configurationSelectField.searchPlaceholder' | transloco"
+                            [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'"
+                            (handleSimpleSearch)="simpleSearch($event)"
+                            (searchFocused)="onSearchFocus($event)">
+                        </app-search>
                     </ng-template>
-                    <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
-                    </ng-template>
-                </p-dropdown>
+                </app-dropdown>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">

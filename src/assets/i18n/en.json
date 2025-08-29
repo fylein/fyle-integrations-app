@@ -106,7 +106,7 @@
   },
   "dropdown": {
     "noResultsFound": "No results found",
-    "subLabelSuffix": "o"
+    "searchPlaceholder": "Search"
   },
   "skippedExportLogTable": {
     "employee": "Employee",

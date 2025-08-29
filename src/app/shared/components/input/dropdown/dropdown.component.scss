@@ -36,13 +36,6 @@
       @apply tw-border-border-danger-dark #{!important};
     }
   }
-
-  // Loading state
-  &.app-dropdown-loading {
-    :host ::ng-deep .p-dropdown-trigger {
-      @apply tw-pointer-events-none #{!important};
-    }
-  }
 }
 
 // Clear icon styling
@@ -56,14 +49,14 @@
 
 // Item styling
 .dropdown-item {
-  @apply tw-flex tw-flex-col;
+  @apply tw-flex tw-flex-col tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-max-w-[16rem];
 
   .item-text {
     @apply tw-text-14-px tw-text-text-secondary;
   }
 
   .item-subtext {
-    @apply tw-text-12-px tw-text-text-muted tw-mt-2-px;
+    @apply tw-text-12-px tw-text-text-muted;
   }
 }
 
