@@ -614,7 +614,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
-            display_name: field.display_name
+            display_name: field.display_name.charAt(0).toUpperCase() + field.display_name.slice(1)
           };
         });
         this.fyleFields = fyleFields;
