@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -43,6 +43,10 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   @Input() isCloneSettingView: boolean;
 
   @Input() appName: AppName;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],

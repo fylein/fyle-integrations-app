@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ToastSeverity, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import { ToastSeverity, QBDDirectInteractionType, ButtonType, ButtonSize } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
@@ -18,6 +18,10 @@ export class QbdDirectAssistedSetupComponent {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingKbArticles = brandingKbArticles;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   @Input() interactionType: QBDDirectInteractionType | undefined;
 

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-qbd-onboarding-done',
@@ -10,6 +11,10 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class QbdOnboardingDoneComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   constructor(
     private router: Router

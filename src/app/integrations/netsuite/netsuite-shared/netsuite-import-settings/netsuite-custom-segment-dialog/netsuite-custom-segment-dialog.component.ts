@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
+import { ButtonSize, ButtonType, NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-netsuite-custom-segment-dialog',
@@ -22,6 +22,10 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
   @Output() saveClick = new EventEmitter();
 
   @Output() closeDialog = new EventEmitter();
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   isCustomTypeSelectionActive: boolean = true;
 

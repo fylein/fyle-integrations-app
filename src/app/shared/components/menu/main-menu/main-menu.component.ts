@@ -4,7 +4,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { MenuItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
@@ -43,6 +43,10 @@ export class MainMenuComponent implements OnInit {
   @Output() disconnectClick = new EventEmitter();
 
   private pDropdown = viewChild(Dropdown);
+
+  buttonType = ButtonType;
+
+  buttonSize = ButtonSize;
 
   isMenuDisabled: boolean = false;
 
