@@ -18,18 +18,18 @@
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
                 <app-dropdown
+                    [form]="form"
+                    [formControllerName]="formControllerName"
                     [options]="destinationAttributes"
                     [optionLabel]="optionLabel"
                     [displayKey]="optionLabel"
-                    [formControllerName]="formControllerName"
-                    [form]="form"
+                    subLabelKey="code"
                     [placeholder]="placeholder"
-                    [showSearchFilter]="true"
                     [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
                     [isLoading]="isOptionSearchInProgress"
                     [isMultiLineOption]="isMultiLineOption"
-                    subLabel="code"
                     [isFieldMandatory]="isFieldMandatory"
+                    [showSearchFilter]="true"
                     size="large"
                     (filterChange)="searchOptions($event)">
 
@@ -49,36 +49,18 @@
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                    <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
-                    [formControlName]="formControllerName" [placeholder]="placeholder"
-                    [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-                    [ngClass]="{
-                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
-                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
-                        'selectedItem': form.controls[formControllerName].value && !isMultiLineOption,
-                        'filterDropdown': !form.controls[formControllerName].value,
-                        'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
-                    }" [disabled]="isDisabled">
-
-                    <ng-template let-option pTemplate="item">
-                        <div #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            <span>
-                            {{ (option.label | sentenceCase) }}</span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-12-px">{{ option.subLabel}}</p>
-                        </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="selectedItem" let-item>
-                        <div class="selected-item-container">
-                            <span class="selected-item-text">
-                                {{ (item.label | sentenceCase) }}
-                            </span>
-                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                    <app-dropdown
+                        [form]="form"
+                        [formControllerName]="formControllerName"
+                        [options]="options"
+                        displayKey="label"
+                        subLabelKey="subLabel"
+                        [placeholder]="placeholder"
+                        [isMultiLineOption]="isMultiLineOption"
+                        [isDisabled]="isDisabled"
+                        [isFieldMandatory]="isFieldMandatory"
+                        [showClearIcon]="showClearIcon"
+                    ></app-dropdown>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="link !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
                         <span> {{ 'configurationSelectField.inApp' | transloco: {uiExposedAppName: uiExposedAppName} }}</span>

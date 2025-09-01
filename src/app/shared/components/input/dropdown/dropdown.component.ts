@@ -25,7 +25,6 @@ export class DropdownComponent implements ControlValueAccessor {
   // Available only to template
   protected brandingConfig = brandingConfig;
 
-  // Core inputs (existing)
   @Input() options: any[] = [];
 
   @Input() placeholder: string = '';
@@ -41,7 +40,6 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() additionalClasses: string = '';
 
-  // New enhanced inputs
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   @Input() errorState: boolean = false;
@@ -65,7 +63,7 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() isMultiLineOption: boolean = false;
 
-  @Input() subLabel: string;
+  @Input() subLabelKey: string;
 
   @Input() appendTo: string = 'body';
 
@@ -103,7 +101,7 @@ export class DropdownComponent implements ControlValueAccessor {
   }
 
   protected get isInvalid(): boolean {
-    return this.form.controls[this.formControllerName].invalid && this.isFieldMandatory && this.form.controls[this.formControllerName].touched && !this.isSearchFocused;
+    return this.form.controls?.[this.formControllerName]?.invalid && this.isFieldMandatory && this.form.controls?.[this.formControllerName]?.touched && !this.isSearchFocused;
   }
 
   getDropdownContainerClasses(): string {
@@ -116,7 +114,13 @@ export class DropdownComponent implements ControlValueAccessor {
   }
 
   getDropdownClasses(): string {
-    return this.isInvalid ? 'error-box' : 'normal-box';
+    const styles = [ this.isInvalid ? 'error-box' : 'normal-box' ];
+
+    if (this.showClearIcon && !this.isDisabled && this.form.controls?.[this.formControllerName]?.value) {
+      styles.push('showClearIcon');
+    }
+
+    return styles.join(' ');
   }
 
   onSelectionChange(event: any) {
@@ -151,7 +155,7 @@ export class DropdownComponent implements ControlValueAccessor {
     this.dropdownHide.emit();
   }
 
-  isOverflowing(element: HTMLElement, option: any): boolean {
+  isOverflowing(element: HTMLElement): boolean {
     if (!this.tooltipEnabled || !element) {
       return false;
     }
