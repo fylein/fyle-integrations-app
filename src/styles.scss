@@ -301,12 +301,8 @@ p {
         content: url('./assets/icons/check.svg') !important;
     }
 
-    .main-menu-tabs {
-      @apply tw-pt-2;
-    }
-
     .main-menu-tab-btns {
-      @apply tw-pb-2;
+      @apply tw-self-center;
     }
 }
 
@@ -848,7 +844,7 @@ p {
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
+    @apply tw-text-16-px tw-font-700 tw-text-text-primary #{!important};
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
@@ -870,6 +866,10 @@ p {
 
 .p-datepicker table th {
     @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
+
+    [data-theme='fyle'] & {
+      @apply tw-text-utility-major-300 #{!important};
+    }
 }
 
 .p-datepicker table td {
@@ -878,6 +878,14 @@ p {
 
 .p-datepicker table td>span {
     @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+
+    [data-theme='fyle'] & {
+      @apply tw-text-text-primary #{!important};
+    }
+}
+
+.p-datepicker table td > span:focus {
+    @apply tw-relative tw-ring-2-px tw-ring-black tw-ring tw-border-2-px tw-border-border-focus #{!important};
 }
 
 .p-datepicker {
