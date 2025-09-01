@@ -27,11 +27,11 @@
         <ng-template let-option pTemplate="item">
           <div class="dropdown-item"
               #textElement
-              [pTooltip]="isOverflowing(textElement) ? option[displayKey] : null"
+              [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
               tooltipPosition="top">
-            <span class="item-text">{{ option[displayKey] }}</span>
+            <span class="item-text">{{ getDisplayText(option) }}</span>
             @if (isMultiLineOption && subLabelKey) {
-              <p class="item-subtext">{{ option[subLabelKey] || '--'}}</p>
+              <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
             }
           </div>
         </ng-template>
@@ -44,7 +44,7 @@
                 @if (subLabelKey === 'code' && item[subLabelKey]) {
                   <span>{{ item[subLabelKey] }}: </span>
                 }
-                {{ item[displayKey] }}
+                {{ getDisplayText(item) }}
               </span>
               @if (showClearIcon && !isDisabled) {
                 <app-svg-icon
@@ -104,11 +104,11 @@
       <ng-template let-option pTemplate="item">
         <div class="dropdown-item"
              #textElement
-             [pTooltip]="isOverflowing(textElement) ? option[displayKey] : null"
+             [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
              tooltipPosition="top">
-          <span class="item-text">{{ option[displayKey] }}</span>
+          <span class="item-text">{{ getDisplayText(option) }}</span>
           @if (isMultiLineOption && subLabelKey) {
-            <p class="item-subtext">{{ option[subLabelKey] || '--'}}</p>
+            <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
           }
         </div>
       </ng-template>
@@ -121,7 +121,7 @@
               @if (subLabelKey === 'code' && item[subLabelKey]) {
                 <span>{{ item[subLabelKey] }}: </span>
               }
-              {{ item[displayKey] }}
+              {{ getDisplayText(item) }}
             </span>
             @if (showClearIcon && !isDisabled) {
               <app-svg-icon

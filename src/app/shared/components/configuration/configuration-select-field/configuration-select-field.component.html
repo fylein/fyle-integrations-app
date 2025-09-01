@@ -76,32 +76,41 @@
                 <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
                     <div *ngIf="formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-                            <ng-template let-value pTemplate="selectedItem" >
-                                <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                                    <p>{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
-                                </div>
-                                <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
-                                    {{ placeholder }}
-                                </div>
-                            </ng-template>
-                            <ng-template let-day pTemplate="item">
-                                <div>
-                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | snakeCaseToSpaceCase | sentenceCase }}</p>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            [formControllerName]="formControllerName"
+                            [options]="options"
+                            [placeholder]="placeholder"
+                            [convertOptionsToSentenceCase]="true"
+                        ></app-dropdown>
                     </div>
                     <div *ngIf="formControllerName === 'dayOfMonth'" class="p-field-checkbox tw-mr-20-px tw-pl-34-px">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" class="dropdown-monthy" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            [formControllerName]="formControllerName"
+                            [options]="options"
+                            displayKey="label"
+                            [placeholder]="placeholder"
+                            customClasses="dropdown-monthy"
+                        ></app-dropdown>
                     </div>
                     <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.timeLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco" ></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            formControllerName="timeOfDay"
+                            [options]="timeOption"
+                            [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco"
+                        ></app-dropdown>
                     </div>
                     <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
-                        <p-dropdown appendTo="body" [options]="meridiemOption" formControlName="meridiem" [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco" ></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            formControllerName="meridiem"
+                            [options]="meridiemOption"
+                            [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco"
+                        ></app-dropdown>
                     </div>
                 </div>
             </div>
