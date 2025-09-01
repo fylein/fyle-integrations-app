@@ -22,10 +22,6 @@ import { brandingConfig } from 'src/app/branding/branding-config';
   ]
 })
 export class DropdownComponent implements ControlValueAccessor {
-  @ViewChild('dropdown') dropdown!: Dropdown;
-
-  private translocoService: TranslocoService = inject(TranslocoService);
-
   // Available only to template
   protected brandingConfig = brandingConfig;
 
@@ -50,13 +46,15 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() errorState: boolean = false;
 
-  @Input() showFilter: boolean = false;
+  @Input() showSearchFilter: boolean = false;
 
   @Input() filterFields: string[] = [];
 
-  @Input() emptyFilterMessage: string = this.translocoService.translate('dropdown.noResultsFound');
+  @Input() isLoading: boolean = false;
 
   @Input() showClearIcon: boolean = false;
+
+  @Input() isFieldMandatory: boolean = false;
 
   // Used in reactive p-dropdowns
   @Input() optionLabel: string;
@@ -82,10 +80,12 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Output() dropdownHide = new EventEmitter<void>();
 
+  private isSearchFocused: boolean = false;
+
+  private translocoService: TranslocoService = inject(TranslocoService);
+
   // Internal state
   protected value: any;
-
-  private isSearchFocused: boolean = false;
 
   // ControlValueAccessor implementation
   private onChange = (value: any) => {};
@@ -93,6 +93,31 @@ export class DropdownComponent implements ControlValueAccessor {
   private onTouched = () => {};
 
   constructor() { }
+
+  // Helper methods for templates
+  protected get emptyFilterMessage(): string {
+    if (this.isLoading) {
+      return this.translocoService.translate('dropdown.searching');
+    }
+    return this.translocoService.translate('dropdown.noResultsFound');
+  }
+
+  protected get isInvalid(): boolean {
+    return this.form.controls[this.formControllerName].invalid && this.isFieldMandatory && this.form.controls[this.formControllerName].touched && !this.isSearchFocused;
+  }
+
+  getDropdownContainerClasses(): string {
+    const classes = ['app-dropdown'];
+    classes.push(`app-dropdown-${this.size}`);
+    if (this.additionalClasses) {
+      classes.push(this.additionalClasses);
+    }
+    return classes.join(' ');
+  }
+
+  getDropdownClasses(): string {
+    return this.isInvalid ? 'error-box' : 'normal-box';
+  }
 
   onSelectionChange(event: any) {
     this.value = event.value;
@@ -124,20 +149,6 @@ export class DropdownComponent implements ControlValueAccessor {
 
   onDropdownHide() {
     this.dropdownHide.emit();
-  }
-
-  // Helper methods for templates
-  getDropdownContainerClasses(): string {
-    const classes = ['app-dropdown'];
-    classes.push(`app-dropdown-${this.size}`);
-    if (this.additionalClasses) {
-      classes.push(this.additionalClasses);
-    }
-    return classes.join(' ');
-  }
-
-  getDropdownClasses(): string {
-    return this.errorState ? 'error-box' : 'normal-box';
   }
 
   isOverflowing(element: HTMLElement, option: any): boolean {

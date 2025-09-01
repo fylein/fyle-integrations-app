@@ -24,12 +24,12 @@
                     [formControllerName]="formControllerName"
                     [form]="form"
                     [placeholder]="placeholder"
-                    [showFilter]="true"
+                    [showSearchFilter]="true"
                     [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
-                    [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+                    [isLoading]="isOptionSearchInProgress"
                     [isMultiLineOption]="isMultiLineOption"
                     subLabel="code"
-                    [errorState]="form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused"
+                    [isFieldMandatory]="isFieldMandatory"
                     size="large"
                     (filterChange)="searchOptions($event)">
 
