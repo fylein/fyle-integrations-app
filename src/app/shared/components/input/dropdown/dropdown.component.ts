@@ -43,8 +43,6 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
-  @Input() errorState: boolean = false;
-
   @Input() showSearchFilter: boolean = false;
 
   @Input() filterFields: string[] = [];
