@@ -39,8 +39,8 @@ export class IntacctTokenGuard  {
             if (error.error.message === "Intacct connection expired"){
               return this.router.navigateByUrl('integrations/intacct/token_expired/dashboard');
             }
-            // Treat fallback as token expired
-            return this.router.navigateByUrl('integrations/intacct/token_expired/dashboard');
+
+            return of(true);
           }
           return of(true);
         })

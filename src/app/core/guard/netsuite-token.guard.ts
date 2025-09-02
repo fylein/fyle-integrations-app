@@ -39,8 +39,8 @@ export class NetsuiteTokenGuard  {
             if (error.error.message === "Netsuite connection expired"){
               return this.router.navigateByUrl('integrations/netsuite/token_expired/dashboard');
             }
-            // Treat fallback as token expired
-            return this.router.navigateByUrl('integrations/netsuite/token_expired/dashboard');
+
+            return of(true);
           }
           return of(true);
         })
