@@ -94,13 +94,13 @@
             <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-gap-8-px">
                 
                 @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                    <app-outlined-icon-button (buttonClick)="closeModel()" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-outlined-icon-button>
+                    <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="closeModel()" [styleClasses]="'tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-button>
                 } @else {
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     {{ 'emailMultiSelectField.cancelButton' | transloco }}
                 </button> }
 
-                <app-primary-button [styleClasses]="'tw-ml-4 tw-px-16-px tw-py-8-px'" [disabled]="!addEmailForm.valid" (buttonClick)="addEmail()" [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"></app-primary-button>
+                <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [styleClasses]="'tw-ml-4'" [disabled]="!addEmailForm.valid" (buttonClick)="addEmail()" [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"></app-button>
             </div>
         </div>
     </div>

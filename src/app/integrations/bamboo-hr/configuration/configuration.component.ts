@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -22,6 +22,10 @@ export class ConfigurationComponent implements OnInit {
   @Input() isConfigurationSaveInProgress: boolean;
 
   @Output() updateConfiguration = new EventEmitter<BambooHRConfigurationPost>();
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   emails: EmailOption[];
 

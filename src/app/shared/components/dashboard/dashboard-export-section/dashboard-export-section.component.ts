@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
@@ -34,6 +34,10 @@ export class DashboardExportSectionComponent implements OnInit {
   @Input() cccImportState: CCCImportState | null;
 
   @Output() export = new EventEmitter<boolean>();
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   readonly brandingConfig = brandingConfig;
 
