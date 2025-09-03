@@ -3,8 +3,8 @@
   [disabled]="disabled"
   (mouseenter)="iconColor = brandingStyle.buttons[this.buttonType].iconColorHover"
   (mouseleave)="iconColor = brandingStyle.buttons[this.buttonType].iconColorActive"
-  [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons[this.buttonType].class"
-  [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[this.buttonType].progress : brandingStyle.buttons[this.buttonType].active), buttonSize === ButtonSize.SMALL ? 'tw-py-8-px tw-px-16-px' : 'tw-py-8-px tw-px-24-px', styleClasses]"
+  [class]="'tw-flex tw-justify-center tw-items-center tw-py-8-px tw-gap-2 ' + brandingStyle.buttons[this.buttonType].class"
+  [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[this.buttonType].progress : brandingStyle.buttons[this.buttonType].active), buttonSize === ButtonSize.SMALL ? 'tw-px-16-px' : 'tw-px-24-px', styleClasses]"
   (click)="!disabled && onClick()">
   @if(!isIconLeftSide){
     {{ buttonText }}
