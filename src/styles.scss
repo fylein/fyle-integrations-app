@@ -52,7 +52,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
 }
 
 .link {
-    @apply tw-text-link-primary tw-cursor-pointer;
+    @apply tw-cursor-pointer tw-text-action-major-500 hover:tw-text-action-major-600;
 }
 
 [data-theme='fyle'] {
