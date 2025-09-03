@@ -39,9 +39,9 @@ export class BambooHrComponent implements OnInit {
 
   bambooHrData: BambooHr;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   readonly brandingStyle = brandingStyle;
 

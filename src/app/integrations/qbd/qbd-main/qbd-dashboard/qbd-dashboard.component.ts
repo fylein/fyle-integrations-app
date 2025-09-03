@@ -61,9 +61,9 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
   currentPage: number = 1;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   readonly brandingConfig = brandingConfig;
 

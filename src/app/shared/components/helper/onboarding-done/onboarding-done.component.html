@@ -20,7 +20,7 @@
     </div>
     <div class="tw-flex tw-justify-center tw-py-20-px">
       <div>
-        <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" (buttonClick)="navigateToDashboard()" [buttonText]="'configuration.done.ctaText' | transloco "></app-button>
+        <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="navigateToDashboard()" [buttonText]="'configuration.done.ctaText' | transloco "></app-button>
       </div>
     </div>
     <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'" class="tw-py-20-px">

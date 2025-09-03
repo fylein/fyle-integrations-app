@@ -31,11 +31,7 @@ export const c1Styles = {
            loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder',
-           size: {
-            small: 'tw-px-16-px tw-py-8-px',
-            medium: 'tw-px-24-px tw-py-8-px'
-           }
+           iconColorDisabled: 'tw-text-text-placeholder'
         },
         secondary: {
            class: 'tw-h-38-px tw-rounded-4-px tw-border tw-text-text-brand-primary tw-font-nav-link-font-weight tw-border-solid tw-border-btn-outline-primary-border-color',
@@ -45,11 +41,7 @@ export const c1Styles = {
            loader: '',
            iconColorActive: 'tw-text-text-secondary',
            iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder',
-           size: {
-            small: 'tw-px-16-px tw-py-8-px',
-            medium: 'tw-px-24-px tw-py-8-px'
-           }
+           iconColorDisabled: 'tw-text-text-placeholder'
         },
         dialog: {
             cancel: 'outline-sm'

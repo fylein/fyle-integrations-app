@@ -86,7 +86,7 @@
                     <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px">
                         <div class="tw-mr-16-px">
                             @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                                <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-button>
+                                <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-button>
                             } @else {
                                 <button type="button" class="p-button outline-sm" (click)="close()">
                                     {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
@@ -95,11 +95,11 @@
                         </div>
 
                         @if (stepNumber < 3) {
-                            <app-button  [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" [styleClasses]="'tw-h-10'" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-button>
+                            <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-button>
                         }
 
                         @if (stepNumber === 3) {
-                            <app-button  [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" [styleClasses]="'tw-h-10'" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-button>
+                            <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-button>
                         }
                     </div>
                 </div>

@@ -44,9 +44,9 @@ export class MainMenuComponent implements OnInit {
 
   private pDropdown = viewChild(Dropdown);
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   isMenuDisabled: boolean = false;
 

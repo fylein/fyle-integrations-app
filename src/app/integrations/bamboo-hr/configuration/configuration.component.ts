@@ -23,9 +23,9 @@ export class ConfigurationComponent implements OnInit {
 
   @Output() updateConfiguration = new EventEmitter<BambooHRConfigurationPost>();
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   emails: EmailOption[];
 

@@ -39,9 +39,9 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   AppName = AppName;
 

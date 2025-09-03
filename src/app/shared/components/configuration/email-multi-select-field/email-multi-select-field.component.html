@@ -94,13 +94,13 @@
             <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-gap-8-px">
                 
                 @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                    <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" (buttonClick)="closeModel()" [styleClasses]="'tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-button>
+                    <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="closeModel()" [styleClasses]="'tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-button>
                 } @else {
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     {{ 'emailMultiSelectField.cancelButton' | transloco }}
                 </button> }
 
-                <app-button  [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.PRIMARY" [styleClasses]="'tw-ml-4'" [disabled]="!addEmailForm.valid" (buttonClick)="addEmail()" [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"></app-button>
+                <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [styleClasses]="'tw-ml-4'" [disabled]="!addEmailForm.valid" (buttonClick)="addEmail()" [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"></app-button>
             </div>
         </div>
     </div>

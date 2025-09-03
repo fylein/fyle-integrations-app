@@ -44,9 +44,9 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() appName: AppName;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],

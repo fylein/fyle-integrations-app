@@ -34,6 +34,8 @@ export class ButtonComponent implements OnInit{
 
   iconColor: string;
 
+  ButtonSize = ButtonSize;
+
   onClick(): void {
     if (!this.disabled && !this.isLoading){
     this.buttonClick.emit();

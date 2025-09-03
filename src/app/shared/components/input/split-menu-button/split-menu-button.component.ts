@@ -17,9 +17,9 @@ export class SplitMenuButtonComponent {
 
   @Input() isDisconnectRequired?: boolean;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   isDropdownVisible: boolean = false;
 

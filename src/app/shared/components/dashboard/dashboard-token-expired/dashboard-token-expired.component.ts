@@ -32,9 +32,9 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   @Input() appName: string;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   isIncorrectAccountSelected: boolean;
 

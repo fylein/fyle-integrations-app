@@ -65,9 +65,9 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() isAssistedSetupSlotBooked?: boolean;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 

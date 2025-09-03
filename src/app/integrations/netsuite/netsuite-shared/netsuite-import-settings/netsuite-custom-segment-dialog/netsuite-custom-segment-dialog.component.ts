@@ -23,9 +23,9 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   @Output() closeDialog = new EventEmitter();
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   isCustomTypeSelectionActive: boolean = true;
 

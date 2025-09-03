@@ -25,7 +25,7 @@
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
                                 @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                                    <app-button [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [styleClasses]="'tw-h-10 tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [styleClasses]="'tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
                                 } @else {
                                     <span type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'dashboardErrorSection.resolveButtonText' | transloco }}
@@ -53,7 +53,7 @@
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
                                     @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                                    <app-button [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [styleClasses]="'tw-h-10 tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [styleClasses]="'tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
                                     } @else {
                                     <span type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'dashboardErrorSection.resolveButtonText' | transloco }}
@@ -97,7 +97,7 @@
                                 </h5>
                                 <div>
                                     @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                                        <app-button [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [styleClasses]="'tw-h-10 tw-text-14-px'" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [styleClasses]="'tw-text-14-px'" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
                                     } @else { 
                                     <span type="button" (click)="showErrorDialog(error)" [ngClass]="brandingStyle.dashboard.dashboardErrorResolveBtnText">
                                         {{ 'common.viewExpenseText' | transloco}}

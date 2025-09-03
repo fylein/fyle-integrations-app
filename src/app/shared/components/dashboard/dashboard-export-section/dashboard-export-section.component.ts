@@ -35,9 +35,9 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Output() export = new EventEmitter<boolean>();
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   readonly brandingConfig = brandingConfig;
 

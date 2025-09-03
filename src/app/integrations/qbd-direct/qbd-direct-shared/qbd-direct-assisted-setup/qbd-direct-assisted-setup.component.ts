@@ -19,9 +19,9 @@ export class QbdDirectAssistedSetupComponent {
 
   readonly brandingKbArticles = brandingKbArticles;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   @Input() interactionType: QBDDirectInteractionType | undefined;
 

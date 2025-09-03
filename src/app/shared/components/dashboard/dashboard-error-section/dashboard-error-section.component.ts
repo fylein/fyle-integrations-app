@@ -58,9 +58,9 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() accountingExportSummary: any;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   uiExposedAppName: string;
 

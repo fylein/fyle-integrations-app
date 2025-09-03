@@ -3,21 +3,21 @@
   [disabled]="disabled"
   (mouseenter)="iconColor = brandingStyle.buttons[this.buttonType].iconColorHover"
   (mouseleave)="iconColor = brandingStyle.buttons[this.buttonType].iconColorActive"
-  [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons[buttonType].class"
-  [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[buttonType].progress : brandingStyle.buttons[buttonType].active), brandingStyle.buttons[buttonType].size[buttonSize] , styleClasses]"
+  [class]="'tw-flex tw-justify-center tw-items-center tw-gap-2 ' + brandingStyle.buttons[this.buttonType].class"
+  [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[this.buttonType].progress : brandingStyle.buttons[this.buttonType].active), buttonSize === ButtonSize.SMALL ? 'tw-py-8-px tw-px-16-px' : 'tw-py-8-px tw-px-24-px', styleClasses]"
   (click)="!disabled && onClick()">
   @if(!isIconLeftSide){
     {{ buttonText }}
   }
   @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
-    @if(!isLoading || buttonType === 'secondary'){
+    @if(!isLoading || this.buttonType === 'secondary'){
   <app-svg-icon
     [svgSource]="svgSource" 
     [width]="iconSize || '18px'"
     [height]="iconSize || '18px'"
-    [ngClass]="disabled ? brandingStyle.buttons[buttonType].iconColorDisabled : iconColor">
+    [ngClass]="disabled ? brandingStyle.buttons[this.buttonType].iconColorDisabled : iconColor">
   </app-svg-icon>  } @else { 
-  <div class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-transparent tw-border-r-transparent tw-border-l-transparent tw-rounded-full tw-animate-spin" [ngClass]="brandingStyle.buttons[buttonType].loader"></div> }
+  <div class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-transparent tw-border-r-transparent tw-border-l-transparent tw-rounded-full tw-animate-spin" [ngClass]="brandingStyle.buttons[this.buttonType].loader"></div> }
     }
   @if(isIconLeftSide){
     {{ buttonText }}

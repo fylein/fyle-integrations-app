@@ -5,7 +5,7 @@
 
         @if (isDisconnectRequired && !showMoreDropdown && !isMenuDisabled) {
             @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                <app-button [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" [styleClasses]="'tw-h-10 tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-button>
+                <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-button>
             } @else {
             <button class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
                 <span class="tw-text-14-px">
@@ -18,7 +18,7 @@
         <span *ngIf="isSyncVisible">
             @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
             @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" [styleClasses]="'tw-h-10 tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-button>
+                <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-button>
             } @else {
             <button
             [pTooltip]="toolTipText"
@@ -42,7 +42,7 @@
         </button>  }
     } @else {
             <div class="tw-mr-22-px">
-                <app-button [buttonSize]="buttonSize.SMALL" [buttonType]="buttonType.SECONDARY" [styleClasses]="'tw-text-14-px'" [pTooltip]="toolTipText" tooltipPosition="bottom" (buttonClick)="refreshDimensions()" [buttonText]="'mainMenu.refreshData' | transloco"></app-button>
+                <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" [pTooltip]="toolTipText" tooltipPosition="bottom" (buttonClick)="refreshDimensions()" [buttonText]="'mainMenu.refreshData' | transloco"></app-button>
             </div>
         }
         </span>

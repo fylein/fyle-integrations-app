@@ -32,21 +32,21 @@
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
                 @if(!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
-                    <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-button>
+                    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-button>
                 }
 
                 @if(isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
-                <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco"  (buttonClick)="disconnect()"></app-button>
+                <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco"  (buttonClick)="disconnect()"></app-button>
                 }
 
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
                     @if (appName.includes('QuickBooks Desktop ')) {
                         <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
-                        <app-button [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.SECONDARY" [styleClasses]="'tw-py-10-px tw-text-14-px'" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+                        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
 
                     @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){
-                    <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-button>
+                    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-button>
                     }
                 </div>
                 <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px"></iframe>

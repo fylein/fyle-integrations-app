@@ -31,9 +31,9 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   appName = AppName;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 

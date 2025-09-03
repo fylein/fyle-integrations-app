@@ -49,7 +49,7 @@
 
   @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
-        <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco" (buttonClick)="toggleIntegrationReconnectDialog()"></app-button>
+        <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco" (buttonClick)="toggleIntegrationReconnectDialog()"></app-button>
       </div>
   }
 }
@@ -107,7 +107,7 @@
 
   <!-- Footer -->
   <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
-    <app-button  [buttonSize]="buttonSize.MEDIUM" [buttonType]="buttonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectButton' | transloco" (buttonClick)="reconnectToIntegration()"></app-button>
+    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectButton' | transloco" (buttonClick)="reconnectToIntegration()"></app-button>
   </div>
 
 </p-dialog>

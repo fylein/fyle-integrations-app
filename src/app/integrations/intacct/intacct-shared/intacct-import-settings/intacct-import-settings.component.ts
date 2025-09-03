@@ -96,9 +96,9 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   importCodeField: FormGroup[] = [];
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
 

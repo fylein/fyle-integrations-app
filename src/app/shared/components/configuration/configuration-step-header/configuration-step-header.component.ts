@@ -30,9 +30,9 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  buttonType = ButtonType;
+  ButtonType = ButtonType;
 
-  buttonSize = ButtonSize;
+  ButtonSize = ButtonSize;
 
   constructor(
     public windowService: WindowService

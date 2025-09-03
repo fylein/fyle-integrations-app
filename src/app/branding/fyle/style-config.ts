@@ -31,11 +31,7 @@ export const fyleStyles = {
            loader: 'tw-border-t-border-brand',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
-           iconColorDisabled: 'tw-text-text-placeholder',
-           size: {
-            small: 'tw-px-16-px tw-py-8-px',
-            medium: 'tw-px-24-px tw-py-8-px'
-           }
+           iconColorDisabled: 'tw-text-text-placeholder'
         },
         secondary: {
            class: 'tw-h-10 tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
@@ -45,11 +41,7 @@ export const fyleStyles = {
            loader: '',
            iconColorActive: 'tw-text-green-text-color',
            iconColorHover: 'tw-text-white',
-           iconColorDisabled: 'tw-text-text-placeholder',
-           size: {
-            small: 'tw-px-16-px tw-py-8-px',
-            medium: 'tw-px-24-px tw-py-8-px'
-           }
+           iconColorDisabled: 'tw-text-text-placeholder'
         },
         dialog: {
             cancel: ''
