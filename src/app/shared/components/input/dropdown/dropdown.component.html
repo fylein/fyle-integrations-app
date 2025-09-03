@@ -7,7 +7,6 @@
         [appendTo]="appendTo"
         [options]="options"
         [placeholder]="placeholder"
-        [disabled]="isDisabled"
         [filter]="showSearchFilter"
         [filterFields]="filterFields.length > 0 ? filterFields : [displayKey]"
         [emptyFilterMessage]="emptyFilterMessage"
@@ -17,6 +16,7 @@
         [optionValue]="optionValue"
         [ngClass]="getDropdownClasses()"
         [formControlName]="formControllerName"
+        [disabled]="isDisabled"
         (onChange)="onSelectionChange($event)"
         (onFilter)="onFilter($event)"
         (onShow)="onDropdownShow()"
@@ -24,13 +24,16 @@
 
         <!-- Item Template -->
         <ng-template let-option pTemplate="item">
-          <div class="dropdown-item"
+          <div class="dropdown-item">
+            <span class="item-text"
               #textElement
-              [pTooltip]="isOverflowing(textElement, option) ? option[displayKey] : null"
-              tooltipPosition="top">
-            <span class="item-text">{{ option[displayKey] }}</span>
-            @if (isMultiLineOption && subLabel) {
-              <p class="item-subtext">{{ option[subLabel] || '--'}}</p>
+              [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
+              tooltipPosition="top"
+            >
+              {{ getDisplayText(option) }}
+            </span>
+            @if (isMultiLineOption && subLabelKey) {
+              <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
             }
           </div>
         </ng-template>
@@ -40,10 +43,10 @@
           @if (item) {
             <div class="selected-item-container">
               <span class="selected-text">
-                @if (subLabel === 'code' && item[subLabel]) {
-                  <span>{{ item[subLabel] }}: </span>
+                @if (subLabelKey === 'code' && item[subLabelKey]) {
+                  <span>{{ item[subLabelKey] }}: </span>
                 }
-                {{ item[displayKey] }}
+                {{ getDisplayText(item) }}
               </span>
               @if (showClearIcon && !isDisabled) {
                 <app-svg-icon
@@ -100,13 +103,16 @@
 
       <!-- Item Template -->
       <ng-template let-option pTemplate="item">
-        <div class="dropdown-item"
-             #textElement
-             [pTooltip]="isOverflowing(textElement, option) ? option[displayKey] : null"
-             tooltipPosition="top">
-          <span class="item-text">{{ option[displayKey] }}</span>
-          @if (isMultiLineOption && subLabel) {
-            <p class="item-subtext">{{ option[subLabel] || '--'}}</p>
+        <div class="dropdown-item">
+          <span class="item-text"
+            #textElement
+            [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
+            tooltipPosition="top"
+          >
+            {{ getDisplayText(option) }}
+          </span>
+          @if (isMultiLineOption && subLabelKey) {
+            <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
           }
         </div>
       </ng-template>
@@ -116,10 +122,10 @@
         @if (item) {
           <div class="selected-item-container">
             <span class="selected-text">
-              @if (subLabel === 'code' && item[subLabel]) {
-                <span>{{ item[subLabel] }}: </span>
+              @if (subLabelKey === 'code' && item[subLabelKey]) {
+                <span>{{ item[subLabelKey] }}: </span>
               }
-              {{ item[displayKey] }}
+              {{ getDisplayText(item) }}
             </span>
             @if (showClearIcon && !isDisabled) {
               <app-svg-icon

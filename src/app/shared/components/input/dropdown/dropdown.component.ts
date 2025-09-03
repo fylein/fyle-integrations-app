@@ -3,6 +3,7 @@ import { FormGroup, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/for
 import { TranslocoService } from '@jsverse/transloco';
 import { Dropdown, DropdownFilterEvent } from 'primeng/dropdown';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-dropdown',
@@ -25,7 +26,6 @@ export class DropdownComponent implements ControlValueAccessor {
   // Available only to template
   protected brandingConfig = brandingConfig;
 
-  // Core inputs (existing)
   @Input() options: any[] = [];
 
   @Input() placeholder: string = '';
@@ -39,12 +39,9 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() isDisabled: boolean = false;
 
-  @Input() additionalClasses: string = '';
+  @Input() customClasses: string = '';
 
-  // New enhanced inputs
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
-
-  @Input() errorState: boolean = false;
 
   @Input() showSearchFilter: boolean = false;
 
@@ -65,7 +62,9 @@ export class DropdownComponent implements ControlValueAccessor {
 
   @Input() isMultiLineOption: boolean = false;
 
-  @Input() subLabel: string;
+  @Input() convertOptionsToSentenceCase: boolean = false;
+
+  @Input() subLabelKey: string;
 
   @Input() appendTo: string = 'body';
 
@@ -103,20 +102,33 @@ export class DropdownComponent implements ControlValueAccessor {
   }
 
   protected get isInvalid(): boolean {
-    return this.form.controls[this.formControllerName].invalid && this.isFieldMandatory && this.form.controls[this.formControllerName].touched && !this.isSearchFocused;
+    return this.form.controls?.[this.formControllerName]?.invalid && this.isFieldMandatory && this.form.controls?.[this.formControllerName]?.touched && !this.isSearchFocused;
   }
 
   getDropdownContainerClasses(): string {
     const classes = ['app-dropdown'];
     classes.push(`app-dropdown-${this.size}`);
-    if (this.additionalClasses) {
-      classes.push(this.additionalClasses);
-    }
     return classes.join(' ');
   }
 
   getDropdownClasses(): string {
-    return this.isInvalid ? 'error-box' : 'normal-box';
+    const classes = [ this.isInvalid ? 'error-box' : 'normal-box' ];
+
+    if (this.showClearIcon && !this.isDisabled && this.form.controls?.[this.formControllerName]?.value) {
+      classes.push('showClearIcon');
+    }
+    if (this.customClasses) {
+      classes.push(this.customClasses);
+    }
+    return classes.join(' ');
+  }
+
+  getDisplayText(option: any): string {
+    const displayText = this.displayKey ? option[this.displayKey] : option;
+    if (this.convertOptionsToSentenceCase) {
+      return new SentenceCasePipe(this.translocoService).transform(displayText);
+    }
+    return displayText;
   }
 
   onSelectionChange(event: any) {
@@ -151,7 +163,7 @@ export class DropdownComponent implements ControlValueAccessor {
     this.dropdownHide.emit();
   }
 
-  isOverflowing(element: HTMLElement, option: any): boolean {
+  isOverflowing(element: HTMLElement): boolean {
     if (!this.tooltipEnabled || !element) {
       return false;
     }

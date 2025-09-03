@@ -49,10 +49,10 @@
 
 // Item styling
 .dropdown-item {
-  @apply tw-flex tw-flex-col tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-max-w-[16rem];
+  @apply tw-flex tw-flex-col tw-whitespace-nowrap tw-max-w-[16rem];
 
   .item-text {
-    @apply tw-text-14-px tw-text-text-secondary;
+    @apply tw-text-14-px tw-text-text-secondary tw-overflow-hidden tw-text-ellipsis;
   }
 
   .item-subtext {
