@@ -17,80 +17,50 @@
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
-                    [formControlName]="formControllerName"
+                <app-dropdown
+                    [form]="form"
+                    [formControllerName]="formControllerName"
+                    [options]="destinationAttributes"
+                    [optionLabel]="optionLabel"
+                    [displayKey]="optionLabel"
+                    subLabelKey="code"
                     [placeholder]="placeholder"
-                    [ngClass]="{
-                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused,
-                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused)}"
-                    [filter]="true"
-                    (onFilter)="searchOptions($event)"
-                    (onHide)="clearSearch()"
                     [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
-                    [resetFilterOnHide]="true"
-                    [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
-                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
-                    <ng-template let-options pTemplate="item">
-                        <div #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
-                            <span>
-                                {{options[optionLabel]}}
-                            </span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
-                        </div>
-                    </ng-template>
-                    <ng-template let-value pTemplate="selectedItem">
-                        <div *ngIf="value">
-                            <p>
-                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}: </span>
-                                {{ value[optionLabel] }}
-                            </p>
-                        </div>
-                        <div *ngIf="!value" class="tw-text-placeholder">
-                           {{placeholder}}
-                        </div>
-                    </ng-template>
+                    [isLoading]="isOptionSearchInProgress"
+                    [isMultiLineOption]="isMultiLineOption"
+                    [isFieldMandatory]="isFieldMandatory"
+                    [showSearchFilter]="true"
+                    size="large"
+                    (filterChange)="searchOptions($event)">
+
+                    <!-- Custom filter template - handles filter differently based on isAdvanceSearchEnabled -->
+                    <!-- Specific to the case where destinationAttributes is present and advanced search is disabled -->
                     <ng-template *ngIf="!isAdvanceSearchEnabled" pTemplate="filter" let-dropdownOptions="options">
-                        <app-search [form]="form" [isDropdown]="true" [placeholder]="'configurationSelectField.searchPlaceholder' | transloco" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="simpleSearch($event)" (searchFocused)="onSearchFocus($event)"></app-search>
+                        <app-search
+                            [form]="form"
+                            [isDropdown]="true"
+                            [placeholder]="'configurationSelectField.searchPlaceholder' | transloco"
+                            [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'"
+                            (handleSimpleSearch)="simpleSearch($event)"
+                            (searchFocused)="onSearchFocus($event)">
+                        </app-search>
                     </ng-template>
-                    <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
-                    </ng-template>
-                </p-dropdown>
+                </app-dropdown>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                    <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
-                    [formControlName]="formControllerName" [placeholder]="placeholder"
-                    [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-                    [ngClass]="{
-                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
-                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
-                        'selectedItem': form.controls[formControllerName].value && !isMultiLineOption,
-                        'filterDropdown': !form.controls[formControllerName].value,
-                        'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
-                    }" [disabled]="isDisabled">
-
-                    <ng-template let-option pTemplate="item">
-                        <div #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            <span>
-                            {{ (option.label | sentenceCase) }}</span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-12-px">{{ option.subLabel}}</p>
-                        </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="selectedItem" let-item>
-                        <div class="selected-item-container">
-                            <span class="selected-item-text">
-                                {{ (item.label | sentenceCase) }}
-                            </span>
-                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                    <app-dropdown
+                        [form]="form"
+                        [formControllerName]="formControllerName"
+                        [options]="options"
+                        displayKey="label"
+                        subLabelKey="subLabel"
+                        [placeholder]="placeholder"
+                        [isMultiLineOption]="isMultiLineOption"
+                        [isDisabled]="isDisabled"
+                        [isFieldMandatory]="isFieldMandatory"
+                        [showClearIcon]="showClearIcon"
+                    ></app-dropdown>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="link !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
                         <span> {{ 'configurationSelectField.inApp' | transloco: {uiExposedAppName: uiExposedAppName} }}</span>
@@ -106,52 +76,52 @@
                 <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
                     <div *ngIf="formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-                            <ng-template let-value pTemplate="selectedItem" >
-                                <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                                    <p>{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
-                                </div>
-                                <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
-                                    {{ placeholder }}
-                                </div>
-                            </ng-template>
-                            <ng-template let-day pTemplate="item">
-                                <div>
-                                    <p class="tw-text-sub-text-color tw-text-14-px">{{ day | snakeCaseToSpaceCase | sentenceCase }}</p>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            [formControllerName]="formControllerName"
+                            [options]="options"
+                            [placeholder]="placeholder"
+                            [convertOptionsToSentenceCase]="true"
+                        ></app-dropdown>
                     </div>
                     <div *ngIf="formControllerName === 'dayOfMonth'" class="p-field-checkbox tw-mr-20-px tw-pl-34-px">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" class="dropdown-monthy" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            [formControllerName]="formControllerName"
+                            [options]="options"
+                            displayKey="label"
+                            [placeholder]="placeholder"
+                            customClasses="dropdown-monthy"
+                        ></app-dropdown>
                     </div>
                     <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.timeLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco" ></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            formControllerName="timeOfDay"
+                            [options]="timeOption"
+                            [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco"
+                        ></app-dropdown>
                     </div>
                     <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
-                        <p-dropdown appendTo="body" [options]="meridiemOption" formControlName="meridiem" [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco" ></p-dropdown>
+                        <app-dropdown
+                            [form]="form"
+                            formControllerName="meridiem"
+                            [options]="meridiemOption"
+                            [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco"
+                        ></app-dropdown>
                     </div>
                 </div>
             </div>
             <div *ngIf="simpleOptions && !options" class="p-field-checkbox tw-pl-34-px">
-                <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
-                    <ng-template let-value pTemplate="selectedItem" >
-                        <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
-                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
-                            <p *ngIf="formControllerName === 'defaultEmployee'">{{ value }}</p>
-                        </div>
-                        <div *ngIf="!form.get(formControllerName)?.value" class="tw-text-placeholder">
-                            {{ placeholder }}
-                        </div>
-                    </ng-template>
-                    <ng-template let-memo pTemplate="item">
-                        <div>
-                            <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | snakeCaseToSpaceCase | sentenceCase }}</p>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                <app-dropdown
+                    [form]="form"
+                    [formControllerName]="formControllerName"
+                    [options]="simpleOptions"
+                    [placeholder]="placeholder"
+                    [isDisabled]="isDisabled"
+                ></app-dropdown>
             </div>
             <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px', formControllerName === 'import_code' && appName === AppName.INTACCT ? 'tw-ml-14-px' : '']">
                 <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled && !isSearchFocused" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
@@ -164,22 +134,14 @@
                 <label>{{label}}</label>
             </div>
             <div class="tw-pt-2 defaultFields">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
-                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}">
-                    <ng-template let-option pTemplate="item">
-                        <div #textElement
-                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? option.name : null" tooltipPosition="top">
-                            {{ (option.name | sentenceCase) }}
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="selectedItem" let-item>
-                        <p>
-                            {{ (item.name | sentenceCase) }}
-                        </p>
-                        <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
-                    </ng-template>
-                </p-dropdown>
+                <app-dropdown
+                    [form]="form"
+                    [formControllerName]="formControllerName"
+                    [options]="destinationAttributes"
+                    displayKey="name"
+                    [placeholder]="placeholder"
+                    [convertOptionsToSentenceCase]="true"
+                ></app-dropdown>
             </div>
         </div>
     </div>

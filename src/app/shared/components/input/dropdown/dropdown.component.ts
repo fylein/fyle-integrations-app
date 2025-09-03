@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, forwardRef, inject } from '@angular/core';
 import { FormGroup, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
-import { Dropdown } from 'primeng/dropdown';
+import { Dropdown, DropdownFilterEvent } from 'primeng/dropdown';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-dropdown',
@@ -14,17 +15,17 @@ import { brandingConfig } from 'src/app/branding/branding-config';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      // Standard Angular pattern for ControlValueAccessor
+      // eslint-disable-next-line no-use-before-define
       useExisting: forwardRef(() => DropdownComponent),
       multi: true
     }
   ]
 })
-export class DropdownComponent implements OnInit, ControlValueAccessor {
-  @ViewChild('dropdown') dropdown!: Dropdown;
+export class DropdownComponent implements ControlValueAccessor {
+  // Available only to template
+  protected brandingConfig = brandingConfig;
 
-  private translocoService: TranslocoService = inject(TranslocoService);
-
-  // Core inputs (existing)
   @Input() options: any[] = [];
 
   @Input() placeholder: string = '';
@@ -33,33 +34,24 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   @Input() formControllerName: string;
 
-  // Used in template-driven p-dropdowns
-  @Input() displayKey: string = 'label';
+  // Used in template-driven p-dropdowns - property key to display
+  @Input() displayKey: string = '';
 
   @Input() isDisabled: boolean = false;
 
-  @Input() additionalClasses: string = '';
+  @Input() customClasses: string = '';
 
-  @Input() isMultiLineOption: boolean = false;
-
-  // New enhanced inputs
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
-  @Input() width: string = '';
-
-  @Input() errorState: boolean = false;
-
-  @Input() showFilter: boolean = false;
+  @Input() showSearchFilter: boolean = false;
 
   @Input() filterFields: string[] = [];
 
-  @Input() emptyMessage: string = this.translocoService.translate('dropdown.noResultsFound');
-
-  @Input() loading: boolean = false;
+  @Input() isLoading: boolean = false;
 
   @Input() showClearIcon: boolean = false;
 
-  @Input() customClass: string = '';
+  @Input() isFieldMandatory: boolean = false;
 
   // Used in reactive p-dropdowns
   @Input() optionLabel: string;
@@ -68,14 +60,18 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   @Input() tooltipEnabled: boolean = true;
 
-  @Input() multiLine: boolean = false;
+  @Input() isMultiLineOption: boolean = false;
+
+  @Input() convertOptionsToSentenceCase: boolean = false;
+
+  @Input() subLabelKey: string;
 
   @Input() appendTo: string = 'body';
 
   // Events
   @Output() selectionChange = new EventEmitter<any>();
 
-  @Output() filterChange = new EventEmitter<string>();
+  @Output() filterChange = new EventEmitter<DropdownFilterEvent>();
 
   @Output() clearSelection = new EventEmitter<void>();
 
@@ -83,10 +79,12 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   @Output() dropdownHide = new EventEmitter<void>();
 
+  private isSearchFocused: boolean = false;
+
+  private translocoService: TranslocoService = inject(TranslocoService);
+
   // Internal state
   protected value: any;
-
-  private isSearchFocused: boolean = false;
 
   // ControlValueAccessor implementation
   private onChange = (value: any) => {};
@@ -95,19 +93,42 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   constructor() { }
 
-  ngOnInit() {
-    this.setupFormValidation();
+  // Helper methods for templates
+  protected get emptyFilterMessage(): string {
+    if (this.isLoading) {
+      return this.translocoService.translate('dropdown.searching');
+    }
+    return this.translocoService.translate('dropdown.noResultsFound');
   }
 
-  private setupFormValidation() {
-    if (this.form && this.formControllerName) {
-      const control = this.form.get(this.formControllerName);
-      if (control) {
-        control.statusChanges.subscribe(status => {
-          this.errorState = (status === 'INVALID' && control.touched) && !this.isSearchFocused;
-        });
-      }
+  protected get isInvalid(): boolean {
+    return this.form.controls?.[this.formControllerName]?.invalid && this.isFieldMandatory && this.form.controls?.[this.formControllerName]?.touched && !this.isSearchFocused;
+  }
+
+  getDropdownContainerClasses(): string {
+    const classes = ['app-dropdown'];
+    classes.push(`app-dropdown-${this.size}`);
+    return classes.join(' ');
+  }
+
+  getDropdownClasses(): string {
+    const classes = [ this.isInvalid ? 'error-box' : 'normal-box' ];
+
+    if (this.showClearIcon && !this.isDisabled && this.form.controls?.[this.formControllerName]?.value) {
+      classes.push('showClearIcon');
     }
+    if (this.customClasses) {
+      classes.push(this.customClasses);
+    }
+    return classes.join(' ');
+  }
+
+  getDisplayText(option: any): string {
+    const displayText = this.displayKey ? option[this.displayKey] : option;
+    if (this.convertOptionsToSentenceCase) {
+      return new SentenceCasePipe(this.translocoService).transform(displayText);
+    }
+    return displayText;
   }
 
   onSelectionChange(event: any) {
@@ -118,7 +139,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   }
 
   onFilter(event: any) {
-    this.filterChange.emit(event.filter);
+    this.filterChange.emit(event);
   }
 
   onSearchFocus(focused: boolean) {
@@ -142,33 +163,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
     this.dropdownHide.emit();
   }
 
-  // Helper methods for templates
-  getDropdownContainerClasses(): string {
-    const classes = ['app-dropdown'];
-    classes.push(`app-dropdown-${this.size}`);
-    if (this.errorState) {
-      classes.push('app-dropdown-error');
-    }
-    if (this.loading) {
-      classes.push('app-dropdown-loading');
-    }
-    if (this.customClass) {
-      classes.push(this.customClass);
-    }
-    if (this.additionalClasses) {
-      classes.push(this.additionalClasses);
-    }
-    return classes.join(' ');
-  }
-
-  getDropdownIcon(): string {
-    if (this.loading) {
-      return 'pi pi-spinner pi-spin';
-    }
-    return `pi pi-chevron-down ${brandingConfig.brandId}`;
-  }
-
-  isOverflowing(element: HTMLElement, option: any): boolean {
+  isOverflowing(element: HTMLElement): boolean {
     if (!this.tooltipEnabled || !element) {
       return false;
     }

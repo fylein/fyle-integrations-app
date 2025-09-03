@@ -105,8 +105,9 @@
     "supportMessage": "Connect our support team to get it resolved"
   },
   "dropdown": {
+    "searching": "Searching...",
     "noResultsFound": "No results found",
-    "subLabelSuffix": "o"
+    "searchPlaceholder": "Search"
   },
   "skippedExportLogTable": {
     "employee": "Employee",
