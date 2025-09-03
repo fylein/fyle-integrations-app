@@ -39,8 +39,8 @@ export class Sage300TokenGuard  {
             if (error.error.message === "Sage300 connection expired"){
               return this.router.navigateByUrl('integrations/sage300/token_expired/dashboard');
             }
-            // Treat fallback as token expired
-            return this.router.navigateByUrl('integrations/sage300/token_expired/dashboard');
+
+            return of(true);
           }
           return of(true);
         })

@@ -52,8 +52,7 @@ export class XeroTokenGuard  {
               return this.router.navigateByUrl('integrations/xero/disconnect/dashboard');
             }
 
-            // Treat fallback as token expired
-            return this.router.navigateByUrl('integrations/xero/token_expired/dashboard');
+            return of(true);
           }
 
           return of(true);

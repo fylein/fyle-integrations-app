@@ -67,7 +67,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         },
         mappings: {
             employeeMapping: true,
-            allowExpandableSearch: false
+            allowExpandableSearch: true
         },
         dashboard: {
             disconnectButton: true,

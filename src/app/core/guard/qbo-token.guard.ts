@@ -51,8 +51,7 @@ export class QboTokenGuard  {
               return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
             }
 
-            // Treat fallback as token expired
-            return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
+            return of(true);
           }
 
           return of(true);
