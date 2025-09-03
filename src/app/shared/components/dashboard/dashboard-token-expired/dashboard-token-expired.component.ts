@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, AppUrl } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl, ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -31,6 +31,10 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   readonly brandingConfig = brandingConfig;
 
   @Input() appName: string;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   isIncorrectAccountSelected: boolean;
 

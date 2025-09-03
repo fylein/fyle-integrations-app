@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
-import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { ButtonSize, ButtonType, ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QBDAccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
@@ -60,6 +60,10 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
   PaginatorPage = PaginatorPage;
 
   currentPage: number = 1;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   readonly brandingConfig = brandingConfig;
 

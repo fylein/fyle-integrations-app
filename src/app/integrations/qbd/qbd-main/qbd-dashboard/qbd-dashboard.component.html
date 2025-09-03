@@ -15,7 +15,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <app-primary-button (buttonClick)="triggerExports()" [styleClasses]="'tw-h-10 tw-px-24-px tw-py-8-px'" [svgSource]="'arrow-tail-right-medium'" [disabled]="exportInProgress || disableQBDExportButton" [buttonText]="!exportInProgress ? ('qbdDashboard.exportIifFileButton' | transloco) : ('qbdDashboard.exportingButton' | transloco)"></app-primary-button>
+                        <app-button (buttonClick)="triggerExports()"  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [svgSource]="'arrow-tail-right-medium'" [disabled]="exportInProgress || disableQBDExportButton" [buttonText]="!exportInProgress ? ('qbdDashboard.exportIifFileButton' | transloco) : ('qbdDashboard.exportingButton' | transloco)"></app-button>
                         <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
                     </div>
                 </div>

@@ -24,9 +24,8 @@
         </div>
         <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
-                <app-primary-button (buttonClick)="saveSettings()" [styleClasses]="'tw-px-24-px tw-py-8-px tw-text-14-px'" [disabled]="!cofigurationForm.valid" [isLoading]="isConfigurationSaveInProgress" [buttonText]="(isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco"></app-primary-button>
+                <app-button (buttonClick)="saveSettings()"  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [disabled]="!cofigurationForm.valid" [isLoading]="isConfigurationSaveInProgress" [buttonText]="(isConfigurationSaveInProgress ? 'configuration.savingButtonText': 'configuration.saveButtonText') | transloco"></app-button>
             </div>
         </div>
     </div>
 </div>
-                            

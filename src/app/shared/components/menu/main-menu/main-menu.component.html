@@ -5,7 +5,7 @@
 
         @if (isDisconnectRequired && !showMoreDropdown && !isMenuDisabled) {
             @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-outlined-icon-button>
+                <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="disconnect()" [buttonText]="'mainMenu.disconnect' | transloco"></app-button>
             } @else {
             <button class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
                 <span class="tw-text-14-px">
@@ -18,7 +18,7 @@
         <span *ngIf="isSyncVisible">
             @if(brandingFeatureConfig.isIconsInsideButtonAllowed){
             @if(brandingFeatureConfig.isDashboardButtonOutlined){
-                <app-outlined-icon-button [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-outlined-icon-button>
+                <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="refreshDimensions()" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [isIconLeftSide]="true" [buttonText]="'mainMenu.sync' | transloco"></app-button>
             } @else {
             <button
             [pTooltip]="toolTipText"
@@ -41,15 +41,9 @@
             </span>
         </button>  }
     } @else {
-        @if(!brandingFeatureConfig.isDashboardButtonOutlined){
             <div class="tw-mr-22-px">
-                <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText" (click)="refreshDimensions()">
-                    {{ 'mainMenu.refreshData' | transloco }}
-                </span>
+                <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" [pTooltip]="toolTipText" tooltipPosition="bottom" (buttonClick)="refreshDimensions()" [buttonText]="'mainMenu.refreshData' | transloco"></app-button>
             </div>
-        } @else {
-            <app-outlined-icon-button (buttonClick)="refreshDimensions()" [styleClasses]="'tw-h-10 tw-py-2 tw-px-6 tw-text-14-px'" [buttonText]="'mainMenu.refreshData' | transloco"></app-outlined-icon-button>
-            }
         }
         </span>
 
