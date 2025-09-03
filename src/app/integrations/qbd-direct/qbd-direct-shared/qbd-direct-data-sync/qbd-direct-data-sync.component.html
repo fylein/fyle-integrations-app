@@ -30,7 +30,6 @@
         </div>
         <div *ngIf="isLoading && showSection" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
-            <span class="tw-text-14-px tw-font-400 tw-text-text-primary">{{ 'qbdDirectDataSync.loadingState' | transloco }}</span>
         </div>
     </div>
     <div *ngIf="!isLoading && showSection">
