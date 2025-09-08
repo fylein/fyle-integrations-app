@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
@@ -25,6 +25,8 @@ export class CheckboxButtonComponent {
   isCheckboxSelected: boolean = false;
 
   brandingConfig = brandingConfig;
+
+  brandingStyle = brandingStyle;
 
   onCheckBoxClick() {
     this.isCheckboxSelected = !this.isCheckboxSelected;
