@@ -2,7 +2,7 @@
   "qbd_direct": {
     "landing": {
       "contentText": "Import data from QuickBooks Desktop to {{brandName}} and export expenses from {{brandName}} to QuickBooks Desktop",
-      "guideHeaderText": "Guide to setup your integrations"
+      "guideHeaderText": "Guide to setup your integration"
     },
     "configuration": {
       "preRequisite": {
@@ -101,7 +101,7 @@
   "netsuite": {
     "landing": {
       "contentText": "Import data from NetSuite to {{brandName}} and export expenses from {{brandName}} to NetSuite. ",
-      "guideHeaderText": "Guide to setup your integrations"
+      "guideHeaderText": "Guide to setup your integration"
     },
     "configuration": {
       "connector": {
@@ -188,7 +188,7 @@
   "xero": {
     "landing": {
       "contentText": "Import data from Xero to {{brandName}} and export expenses from {{brandName}} to Xero. ",
-      "guideHeaderText": "Guide to setup your integrations"
+      "guideHeaderText": "Guide to setup your integration"
     },
     "configuration": {
       "connector": {
@@ -259,7 +259,7 @@
   "intacct": {
     "landing": {
       "contentText": "Import data from Sage Intacct to {{brandName}} and export expenses from {{brandName}} to Sage Intacct. ",
-      "guideHeaderText": "Guide to setup your integrations"
+      "guideHeaderText": "Guide to setup your integration"
     },
     "common": {
       "readMoreText": "Read more",
@@ -469,7 +469,7 @@
   },
   "landing": {
     "contentText": "Import data from QuickBooks Online to {{brandName}} and export expenses from {{brandName}} to QuickBooks Online. ",
-    "guideHeaderText": "Guide to setup your integrations"
+    "guideHeaderText": "Guide to setup your integration"
   },
   "common": {
     "readMoreText": "Read more",
