@@ -1056,7 +1056,7 @@
     "appName": "Dynamics 365 Business Central",
     "appDescription": "Import data from Dynamics 365 Business Central to {{brandName}} and export expenses from {{brandName}} to Dynamics 365 Business Central. ",
     "connectButton": "Connect",
-    "headlineText": "Guide to setup your integrations",
+    "headlineText": "Guide to setup your integration",
     "headerText": "A quick guide to help you set up the integration quick and easy.",
     "incorrectAccountDialogHeader": "Incorrect account selected",
     "incorrectAccountDialogContext": "You had previously set up the integration with a different Dynamics 365 Business Central account. Please choose the same to restore the settings",
@@ -1096,7 +1096,7 @@
     "appName": "Sage 300 CRE",
     "appDescription": "Import data from Sage 300 CRE to {{brandName}} and export expenses from {{brandName}} to Sage 300 CRE. ",
     "buttonText": "Connect",
-    "headlineText": "Guide to setup your integrations",
+    "headlineText": "Guide to setup your integration",
     "headerText": "A set up through to help you set up the integration quick and easy."
   },
   "sage300ConnectionForm": {
