@@ -1756,7 +1756,7 @@
   "qbdDirectAssistedSetup": {
     "requestAssistedSetup": "Request assisted setup",
     "needHelpWithSetup": "Need help with setup",
-    "requestReceivedTooltip": "Your request has been&#10;received.",
+    "requestReceivedTooltip": "Your request has been received.",
     "requestReceivedSuccessfullyTitle": "Request received successfully",
     "qbdIntegrationSupportTitle": "QuickBooks Desktop integration support",
     "howCanWeHelpTitle": "How can we help?",
