@@ -34,6 +34,43 @@
 
         <div
             class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
+            <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
+                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/intacct-logo-new.png" />
+                    @if (isAppConnected('INTACCT')) {
+                        <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+                    }
+                </div>
+                <div>
+                    <span class="landing-v2--accounting-app-name">
+                        {{ 'landingV2.sageIntacct' | transloco }}
+                    </span>
+                    <span class="landing-v2--accounting-app-type">
+                        {{ 'landingV2.categoryAccounting' | transloco }}
+                    </span>
+                </div>
+            </div>
+
+            <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/sage300-logo.png" class="tw-py-[5px]" />
+                    @if (isAppConnected('SAGE300')) {
+                        <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
+                    <div>
+                        {{ 'landingV2.sage300CRE' | transloco }}
+                        <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+                    </div>
+                </span>
+            </div>
             <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                 <div class="tw-flex tw-justify-between tw-items-center">
@@ -117,42 +154,6 @@
                 <div>
                     <span class="landing-v2--accounting-app-name">
                         {{ 'landingV2.quickbooksOnline' | transloco }}
-                    </span>
-                    <span class="landing-v2--accounting-app-type">
-                        {{ 'landingV2.categoryAccounting' | transloco }}
-                    </span>
-                </div>
-            </div>
-            <div *ngIf="isAppShown('SAGE300')" class="landing-v2--accounting-app"
-                (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/sage300-logo.png" class="tw-py-[5px]" />
-                    @if (isAppConnected('SAGE300')) {
-                        <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-                    }
-                </div>
-                <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
-                    <div>
-                        {{ 'landingV2.sage300CRE' | transloco }}
-                        <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
-                    </div>
-                </span>
-            </div>
-            <div *ngIf="isAppShown('INTACCT')" class="landing-v2--accounting-app"
-                (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <img src="assets/logos/intacct-logo-new.png" />
-                    @if (isAppConnected('INTACCT')) {
-                        <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-                    } @else {
-                        <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-                    }
-                </div>
-                <div>
-                    <span class="landing-v2--accounting-app-name">
-                        {{ 'landingV2.sageIntacct' | transloco }}
                     </span>
                     <span class="landing-v2--accounting-app-type">
                         {{ 'landingV2.categoryAccounting' | transloco }}
