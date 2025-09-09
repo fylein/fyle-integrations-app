@@ -42,7 +42,7 @@
                 <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
                     @if (appName.includes('QuickBooks Desktop ')) {
                         <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
-                        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+                        <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
 
                     @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){
