@@ -28,6 +28,7 @@ export const c1Styles = {
     qbd_direct: {
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-full',
+            preRequisiteCard: 'tw-rounded-8-px tw-border-1-px tw-border-bg-brand tw-py-24-px tw-pl-24-px tw-pr-8-px tw-my-24-px',
             optionStepStateBackground: 'tw-bg-bg-primary',
             tutorialvideoClass: 'tw-rounded-16-px tw-w-[500px] tw-h-[250px]',
             logoSectionStyle: '',

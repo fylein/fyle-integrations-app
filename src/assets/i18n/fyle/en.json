@@ -485,7 +485,10 @@
     "customFieldCreateandSave": "Create and save",
     "currentDate": "Export date",
     "loader": {
-      "defaultLabel" : "Loading..."
+      "defaultLabel": "Loading..."
     }
+  },
+  "qbdDirectOnboardingPreRequisite": {
+    "learnMore": "Learn more"
   }
 }

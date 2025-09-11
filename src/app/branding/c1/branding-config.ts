@@ -21,6 +21,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isDashboardButtonOutlined: false,
     isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
+    disableTextColorWhenChecked: false,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,

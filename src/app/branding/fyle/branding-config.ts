@@ -21,6 +21,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     isDashboardButtonOutlined: true,
     isPrimengLoaderEnabled: false,
     shouldShowOnboardingYouTubeVideo: false,
+    disableTextColorWhenChecked: true,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
