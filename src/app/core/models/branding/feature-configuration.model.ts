@@ -14,6 +14,7 @@ export type FeatureConfiguration = {
         isDashboardButtonOutlined: boolean;
         isPrimengLoaderEnabled: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
+        disableTextColorWhenChecked: boolean,
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

@@ -484,5 +484,8 @@
     "customFieldType": "Field type",
     "customFieldCreateandSave": "Create and save",
     "currentDate": "Current date"
+  },
+  "qbdDirectOnboardingPreRequisite": {
+    "learnMore": "Read more"
   }
 }

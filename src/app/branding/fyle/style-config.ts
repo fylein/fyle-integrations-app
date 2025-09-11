@@ -28,6 +28,7 @@ export const fyleStyles = {
     qbd_direct: {
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-2xs',
+            preRequisiteCard: '',
             optionStepStateBackground: 'tw-bg-bg-secondary',
             tutorialvideoClass: 'tw-rounded-8-px tw-w-[720px] tw-h-[420px]',
             logoSectionStyle: 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px',
