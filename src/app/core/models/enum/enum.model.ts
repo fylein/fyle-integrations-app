@@ -169,7 +169,9 @@ export enum ClickEvent {
   CONNECT_SAGE300 = 'Connect Sage 300 CRE',
   CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central',
   QBD_DIRECT_EXPORT = 'Direct Export Quickbooks Desktop',
-  QBD_DIRECT_SYNC = 'Sync Quickbooks Desktop Direct'
+  QBD_DIRECT_SYNC = 'Sync Quickbooks Desktop Direct',
+  QBD_DIRECT_ASSISTED_SETUP_DIALOG = 'QBD Direct Assisted Setup Dialog Open',
+  QBD_DIRECT_ASSISTED_SETUP_BOOKED = 'QBD Direct Assisted Setup Booked'
 }
 
 export enum ProgressPhase {
