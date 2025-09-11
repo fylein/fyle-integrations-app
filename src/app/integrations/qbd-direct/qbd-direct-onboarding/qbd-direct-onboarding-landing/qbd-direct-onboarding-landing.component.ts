@@ -5,6 +5,7 @@ import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/
 import { AppName, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -33,7 +34,8 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
-    private userService: UserService
+    private userService: UserService,
+    private trackingService: TrackingService
   ) { }
 
   connectQbdDirect() {
@@ -46,6 +48,7 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.trackingService.onQbdDirectLandingPageOpen();
     const user = this.userService.getUserProfile();
     this.workspaceService.getWorkspace(user.org_id).subscribe((workspaces: QbdDirectWorkspace[]) => {
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {

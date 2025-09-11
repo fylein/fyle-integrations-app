@@ -92,6 +92,10 @@ export class TrackingService {
     this.eventTrack('Opened Landing V2');
   }
 
+  onQbdDirectLandingPageOpen(): void {
+    this.eventTrack('Opened QBD Direct Landing Page');
+  }
+
   onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent): void {
     this.eventTrack(`Click event: ${eventName}`, trackingApp, {});
   }
