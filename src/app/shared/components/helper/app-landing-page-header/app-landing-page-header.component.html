@@ -14,7 +14,7 @@
                             <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'appLandingPageHeader.syncDataTooltip' | transloco" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
                         </div>
                     </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-text-14-px tw-font-400 tw-text-pretty">
+                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.headerDescriptionText">
                         {{ appDescription }}
                         <a *ngIf="redirectLink"
                             class="link tw-w-fit tw-inline-flex tw-items-center tw-pl-2-px"

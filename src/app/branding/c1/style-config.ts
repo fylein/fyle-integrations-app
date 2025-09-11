@@ -32,6 +32,7 @@ export const c1Styles = {
             tutorialvideoClass: 'tw-rounded-16-px tw-w-[500px] tw-h-[250px]',
             logoSectionStyle: '',
             headerTopText: 'tw-text-14-px tw-font-600',
+            headerDescriptionText: 'tw-text-12-px',
             bodyTopText: 'tw-text-18-px tw-font-600',
             headerStyle: 'tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-c1-card',
             headerCenterTextStyle: 'tw-justify-center',
