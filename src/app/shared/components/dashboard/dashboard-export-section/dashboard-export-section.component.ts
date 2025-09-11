@@ -61,7 +61,8 @@ export class DashboardExportSectionComponent implements OnInit {
     [AppName.NETSUITE, 'assets/logos/netsuite-logo.png'],
     [AppName.QBO, 'assets/logos/email/qbo.png'],
     [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
-    [AppName.XERO, 'assets/logos/xero-logo.png']
+    [AppName.XERO, 'assets/logos/xero-logo.png'],
+    [AppName.QBD_DIRECT, 'assets/logos/qbd-direct.png']
   ]);
 
   get logoPath(): string {

@@ -22,6 +22,15 @@ export const c1Styles = {
         dashboardExportBtn: 'tw-rounded-4-px',
         dashboardMainMenu: 'tw-items-center'
     },
+    checkbok: {
+        theme: 'co-checkbox'
+    },
+    qbd_direct: {
+        onboarding: {
+            preRequisiteContainer: 'tw-rounded-border-radius-full',
+            optionStepStateBackground: 'tw-bg-bg-primary'
+        }
+    },
     buttons: {
         primary: {
            class: 'p-button p-button-raised',

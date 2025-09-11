@@ -17,6 +17,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
+    hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
     isPrimengLoaderEnabled: false,
     shouldShowOnboardingYouTubeVideo: false,

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { AppName, ConfigurationCta, QBDConnectionStatus, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { MessageService } from 'primeng/api';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -44,6 +44,8 @@ export class QbdDirectSetupConnectionComponent {
   appName = AppName;
 
   readonly brandingConfig = brandingConfig;
+
+  brandingStyle = brandingStyle;
 
   QBDDirectInteractionType = QBDDirectInteractionType;
 

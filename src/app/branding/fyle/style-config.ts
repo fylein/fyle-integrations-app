@@ -22,6 +22,15 @@ export const fyleStyles = {
         dashboardExportBtn: 'tw-rounded-32-px',
         dashboardMainMenu: 'tw-pr-6 tw-pl-0 tw-items-end'
     },
+    checkbok: {
+        theme: 'fyle-checkbox'
+    },
+    qbd_direct: {
+        onboarding: {
+            preRequisiteContainer: 'tw-rounded-border-radius-2xs',
+            optionStepStateBackground: 'tw-bg-bg-secondary'
+        }
+    },
     buttons: {
         primary: {
            class: 'tw-rounded-32-px tw-font-primary tw-text-14-px',
