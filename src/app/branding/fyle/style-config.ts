@@ -35,7 +35,7 @@ export const fyleStyles = {
             headerDescriptionText: 'tw-text-14-px',
             bodyTopText: 'tw-text-20-px tw-font-500',
             headerStyle: '',
-            headerCenterTextStyle: '',
+            headerCenterContent: '',
             bodyStyle: 'tw-pt-80-px tw-bg-white',
             flowChart: 'tw-mt-80-px tw-mb-14'
         }

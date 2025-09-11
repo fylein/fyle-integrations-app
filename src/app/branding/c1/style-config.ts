@@ -35,7 +35,7 @@ export const c1Styles = {
             headerDescriptionText: 'tw-text-12-px',
             bodyTopText: 'tw-text-18-px tw-font-600',
             headerStyle: 'tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-c1-card',
-            headerCenterTextStyle: 'tw-justify-center',
+            headerCenterContent: 'tw-justify-center',
             bodyStyle: 'tw-py-24-px tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-c1-card',
             flowChart: 'tw-mt-50-px'
         }

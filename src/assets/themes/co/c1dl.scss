@@ -185,7 +185,7 @@
     --bg-white: #{$white};
 
     // Background - Brand
-    --bg-brand: #F4F4F4;
+    --bg-brand: #{$tertiary-lighter};
     --bg-brand-disable: var(--bg-disable-lighter);
     --bg-brand-hover: #{$blue-65};
     --bg-brand-muted: #{rgba($blue-55, 0.15)};
