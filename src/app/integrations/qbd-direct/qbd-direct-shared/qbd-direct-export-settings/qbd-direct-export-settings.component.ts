@@ -122,7 +122,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   isEmployeeMappingDisabled(): boolean {
-    if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY)) {
+    if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY && this.brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed)) {
       return false;
     }
     return true;

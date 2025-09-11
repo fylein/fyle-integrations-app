@@ -70,7 +70,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         id: 2,
         label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenLabel'),
         caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenCaption', { brandName: brandingConfig.brandName }),
-        iconName: 'expand',
+        iconName: 'folder',
         state: QBDPreRequisiteState.INCOMPLETE
       },
       {
