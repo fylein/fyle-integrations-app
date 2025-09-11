@@ -28,7 +28,15 @@ export const c1Styles = {
     qbd_direct: {
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-full',
-            optionStepStateBackground: 'tw-bg-bg-primary'
+            optionStepStateBackground: 'tw-bg-bg-primary',
+            tutorialvideoClass: 'tw-rounded-16-px tw-w-[500px] tw-h-[250px]',
+            logoSectionStyle: '',
+            headerTopText: 'tw-text-14-px tw-font-600',
+            bodyTopText: 'tw-text-18-px tw-font-600',
+            headerStyle: 'tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-c1-card',
+            headerCenterTextStyle: 'tw-justify-center',
+            bodyStyle: 'tw-py-24-px tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-c1-card',
+            flowChart: 'tw-mt-50-px'
         }
     },
     buttons: {

@@ -28,7 +28,15 @@ export const fyleStyles = {
     qbd_direct: {
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-2xs',
-            optionStepStateBackground: 'tw-bg-bg-secondary'
+            optionStepStateBackground: 'tw-bg-bg-secondary',
+            tutorialvideoClass: 'tw-rounded-8-px tw-w-[720px] tw-h-[420px]',
+            logoSectionStyle: 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px',
+            headerTopText: 'tw-text-20-px tw-font-500',
+            bodyTopText: 'tw-text-20-px tw-font-500',
+            headerStyle: '',
+            headerCenterTextStyle: '',
+            bodyStyle: 'tw-pt-80-px tw-bg-white',
+            flowChart: 'tw-mt-80-px tw-mb-14'
         }
     },
     buttons: {

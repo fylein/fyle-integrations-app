@@ -1455,6 +1455,7 @@ module.exports = {
         'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
         'navbar-menu': '0px 5px 5px 0px rgba(0, 20, 30, 0.2), 0px 10px 10px 0px rgba(0, 20, 30, 0.1)',
         'focused': '0px 0px 0px 3px var(--semantic-focus-500), 0px 0px 0px 6px black',
+        'c1-card': '0 2px 8px 0 rgba(0, 0, 0, 0.20)',
         ...shadow,
       },
       dropShadow: {},
