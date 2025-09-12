@@ -225,6 +225,14 @@ export enum Sage300OnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum Sage50OnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
+}
+
 export enum IntacctField {
   LOCATION_ENTITY = 'LOCATION_ENTITY',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -618,7 +626,8 @@ export enum AppUrl {
   QBO = 'qbo',
   NETSUITE = 'netsuite',
   XERO = 'xero',
-  QBD_DIRECT = 'qbd_direct'
+  QBD_DIRECT = 'qbd_direct',
+  SAGE50 = 'sage50'
 }
 
 export enum Sage300ExportType {

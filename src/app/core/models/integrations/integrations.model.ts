@@ -58,6 +58,7 @@ export type AppUrlMap = {
     [AppUrl.NETSUITE]: string
     [AppUrl.XERO]: string
     [AppUrl.QBD_DIRECT]:string
+    [AppUrl.SAGE50]:string
 }
 
 export const integrationCallbackUrlMap: IntegrationCallbackUrl = {

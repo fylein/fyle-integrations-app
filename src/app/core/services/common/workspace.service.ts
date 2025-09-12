@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
+import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, Sage50OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
@@ -60,7 +60,8 @@ export class WorkspaceService {
       [AppUrl.QBO]: QBOOnboardingState.CONNECTION,
       [AppUrl.NETSUITE]: NetsuiteOnboardingState.CONNECTION,
       [AppUrl.XERO]: XeroOnboardingState.CONNECTION,
-      [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION
+      [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION,
+      [AppUrl.SAGE50]: Sage50OnboardingState.CONNECTION
     };
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];
