@@ -1,0 +1,6 @@
+---
+description: All tasks that make changes to the codebase
+alwaysApply: false
+---
+
+NEVER, under any circumstance, run build commands without asking first.

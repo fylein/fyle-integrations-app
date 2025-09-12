@@ -26,13 +26,14 @@ jobs:
         SUPPORT_EMAIL: "staging-1-in"
         HELP_ARTICLE_DOMAIN: "support@fylehq.com"
         ENV_ID: "https://help.manageexpenses.capitalone-fylehq.com"
-        FYLE_CLIENT_ID: "lolo" 
+        FYLE_CLIENT_ID: "lolo"
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
         CLUSTER_DOMAIN_API_URL: "http://lolo.fyle.tech"
         FYLE_APP_URL: "http://lolo.fyle.tech"
         SI_API_URL: "http://lolo.fyle.tech"
         SAGE300_API_URL: "http://lolo.fyle.tech"
-        QBD_DIRECT_API_URL": "http://lolo.fyle.tech"
+        QBD_DIRECT_API_URL": "http://lolo.fyle.tech",
+        SAGE50_API_URL: "http://lolo.fyle.tech"
     - name: Unit Test Coverage
       uses: fylein/comment-test-coverage@master
       with:
