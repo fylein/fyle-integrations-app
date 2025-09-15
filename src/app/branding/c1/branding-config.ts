@@ -149,6 +149,10 @@ export const c1KbArticles: KbArticle[string] = {
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+        },
+        SAGE50: {
+            // TODO
+            LANDING: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -164,6 +168,8 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/KeiegWDj308',
         NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk',
-        QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk'
+        QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk',
+        // TODO: Update link for Sage 50
+        SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
     }
 };

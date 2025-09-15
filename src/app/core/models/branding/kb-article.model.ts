@@ -13,6 +13,9 @@ export type KbArticle = {
             QBD_DIRECT: string
         },
         onboardingArticles: {
+            SAGE50: {
+                LANDING: string;
+            },
             QBD_DIRECT: {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;

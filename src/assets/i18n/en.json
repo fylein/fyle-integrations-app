@@ -2351,5 +2351,10 @@
       "quickbooksOnline": "QuickBooks Online",
       "quickbooksDesktop": "QuickBooks Desktop"
     }
+  },
+  "sage50OnboardingLanding": {
+    "appDescription": "Import data from Sage 50 to {{brandName}} and export expenses from {{brandName}} to Sage 50.",
+    "headlineText": "Guide to setup your integration",
+    "headerText": "A quick guide to help you set up your Sage 50 integration."
   }
 }
