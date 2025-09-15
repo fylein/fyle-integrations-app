@@ -39,7 +39,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             QBD: true,
             BAMBOO: true,
             QBD_DIRECT: true,
-            SAGE50: true
+            // TODO: enable after dev
+            SAGE50: false
         }
     },
     co: {
