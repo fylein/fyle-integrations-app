@@ -6,15 +6,9 @@ import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
-import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
-import { Token } from 'src/app/core/models/misc/token.model';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
-import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
-import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
@@ -70,11 +64,7 @@ export class LandingV2Component implements OnInit {
 
   constructor(
     private eventsService: EventsService,
-    private qboAuthService: QboAuthService,
-    private xeroAuthService: XeroAuthService,
-    private nsAuthService: NetsuiteAuthService,
     private router: Router,
-    private siAuthService: SiAuthService,
     private storageService: StorageService,
     private orgService: OrgService,
     private integrationService: IntegrationsService,

@@ -1936,7 +1936,9 @@
     "bambooHR": "BambooHR",
     "categoryHRMS": "HRMS",
     "travelperk": "TravelPerk",
-    "categoryTravel": "Travel"
+    "categoryTravel": "Travel",
+    "sage50": "Sage 50 Accounting (US)",
+    "beta": "Beta"
   },
   "configurationScheduleExport": {
     "hours": "Hours",
