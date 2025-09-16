@@ -389,7 +389,7 @@
     "zeroStateAltText": "Zero state"
   },
   "onboardingStepper": {
-    "configureSettingsDescription": "Configure these settings to set up your integration",
+    "configureSettingsDescription": "Configure the following settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
   "optionalField": {
@@ -2343,6 +2343,12 @@
       "customList": "Custom list",
       "customRecord": "Custom record",
       "customSegment": "Custom segment"
+    },
+    "sage50Onboarding": {
+      "prerequisites": "Prerequisites",
+      "exportSettings": "Export settings",
+      "importSettings": "Import settings",
+      "advancedSettings": "Advanced settings"
     }
   },
   "pipes": {
@@ -2358,5 +2364,10 @@
     "appDescription": "Import data from Sage 50 to {{brandName}} and export expenses from {{brandName}} to Sage 50.",
     "headlineText": "Guide to setup your integration",
     "headerText": "A quick guide to help you set up your Sage 50 integration."
+  },
+  "sage50OnboardingPrerequisites": {
+    "continue": "Save and continue",
+    "configurationHeaderText": "Prerequisites",
+    "configurationSubHeaderText": "To get started, add a few files from Sage 50. This will help set up your integration quickly and accurately."
   }
 }

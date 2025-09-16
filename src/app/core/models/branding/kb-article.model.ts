@@ -10,7 +10,8 @@ export type KbArticle = {
             SAGE300: string;
             BUSINESS_CENTRAL: string;
             XERO: string;
-            QBD_DIRECT: string
+            QBD_DIRECT: string;
+            SAGE50: string;
         },
         onboardingArticles: {
             SAGE50: {
