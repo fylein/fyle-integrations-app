@@ -168,6 +168,7 @@ const borderColors = {
   'border-date-picker-border': 'var(--border-date-picker-border)',
   'border-green': 'var(--bg-green)',
   'border-focus': 'var(--border-focus)',
+  'border-grey': 'var(--border-grey)',
 };
 
 const colors = {
@@ -228,6 +229,8 @@ const colors = {
   'icon-muted': 'var(--icon-muted)',
   'icon-link': 'var(--icon-link)',
   'icon-primary': 'var(--icon-primary)',
+  'icon-blue': 'var(--icon-blue)',
+  'icon-grey': 'var(--icon-grey)',
 };
 
 const textColors = {

@@ -36,7 +36,7 @@
       </button> } }
 
 
-      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed){
+      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed && showSyncButton){
             <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="refreshDimensions()" tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.refreshDataTooltip' | transloco: { appName: appName }" [buttonText]="'configurationStepHeader.refreshDataButtonText' | transloco"></app-button>
       }
 

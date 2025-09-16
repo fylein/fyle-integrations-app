@@ -1,25 +1,38 @@
-<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-tertiary" [ngClass]="{'tw-opacity-50': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="!showSection && !brandingFeatureConfig.isStepSectionAlwaysVisible ? 'tw-opacity-50' : brandingStyle.qbd_direct.onboarding.stepStateCard">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
+            @if(brandingFeatureConfig.showStepStateAsIcons) {
+                <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
+                    <app-svg-icon [c1SvgSource]="'grv-transfer'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
+                </div>
+            } @else {
                 <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
                     {{ 'qbdDirectDataSync.stepNumber' | transloco }}
                 </div>
-                <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection ? 'tw-text-text-disable' : 'tw-text-text-tertiary']">
+            }
+                <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection && !brandingFeatureConfig.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
                     <span>{{ 'qbdDirectDataSync.title' | transloco }}</span>
                 </div>
             </div>
         </div>
+        </div>
+
+        @if (brandingFeatureConfig.showStepStateDivider && showSection) {
+        <div class="tw-border-t tw-border-border-tertiary"></div>
+        }
+
+        <div [ngClass]="showSection ? 'tw-p-24-px tw-pt-0 ' + brandingStyle.qbd_direct.onboarding.dataSyncContent : ''">
         <div class="tw-py-20-px" *ngIf="!isLoading && showSection">
             <div *ngFor="let field of qbdFields; let i = index" [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
                 <div class="tw-flex tw-items-center tw-justify-between tw-px-12-px tw-py-20-px">
                     <div>
-                        <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
+                        <span class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
                     </div>
                     <div>
-                        <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
-                        <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
-                            <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
+                        <span *ngIf="field.count !== null" class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.count}}</span>
+                        <div class="spin-icon tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">
+                            <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [c1SvgSource]="'grv-refresh'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="brandingStyle.qbd_direct.onboarding.dataSyncIcon"></app-svg-icon>
                         </div>
                     </div>
                 </div>

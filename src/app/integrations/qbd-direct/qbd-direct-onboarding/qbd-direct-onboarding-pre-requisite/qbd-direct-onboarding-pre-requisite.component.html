@@ -20,9 +20,9 @@
                                 <app-svg-icon [svgSource]="step.iconName" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary') : ''"></app-svg-icon>
                             </div>
                             <div class="tw-ml-16-px">
-                                <h4 class="tw-text-14-px tw-font-500" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-secondary') : ''">{{step.label}}</h4>
+                                <h4 class="{{brandingStyle.qbd_direct.onboarding.preRequisiteHeaderText}}" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.preRequisiteHeaderFont) : ''">{{step.label}}</h4>
 
-                                <p class="tw-text-12-px tw-pt-4-px tw-font-400" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'tw-text-text-tertiary') : ''">
+                                <p class="tw-pt-4-px {{brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionText}}" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionFont) : ''">
                                     <span [innerHTML]="step.caption"></span>
                                     @if(step.externalLink) {
                                         <a

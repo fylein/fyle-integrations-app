@@ -1,66 +1,106 @@
-<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-tertiary" [ngClass]="{'tw-opacity-50': !showSection}">
+<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="!showSection && !brandingFeatureConfig.isStepSectionAlwaysVisible ? 'tw-opacity-50' : brandingStyle.qbd_direct.onboarding.stepStateCard">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
+            @if(brandingFeatureConfig.showStepStateAsIcons) {
+                <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
+                    <app-svg-icon [c1SvgSource]="'grv-settings-small'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
+                </div>
+            } @else {
                 <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                     2
                 </div>
-                <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection ? 'tw-text-text-disable' : 'tw-text-text-tertiary']">
+            }
+                <div class="tw-text-14-px" [ngClass]="[!showSection && !brandingFeatureConfig.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
                     <span>{{ 'qbdDirectSetupConnection.title' | transloco }}</span>
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
+            @if (brandingFeatureConfig.showStepStateAsIcons) {
+                <div class="tw-h-24-px tw-flex tw-items-center tw-justify-center tw-gap-2">
+                    <app-svg-icon [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+                    <div class="tw-text-text-primary tw-font-600 tw-text-12-px">
+                        Done
+                    </div>
+                </div>
+            } @else { 
                 <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
                     <app-svg-icon svgSource="check-small" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white'"></app-svg-icon>
                 </div>
+            }
             </div>
         </div>
+        </div>
+
+        @if (brandingFeatureConfig.showStepStateDivider && !isStepCompleted && showSection) {
+        <div class="tw-border-t tw-border-border-tertiary"></div>
+        }
+
+        <div [ngClass]="!isStepCompleted && showSection ? 'tw-p-24-px tw-pt-0' : ''">
         <div  *ngIf="!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted" class="tw-flex tw-items-start tw-justify-between tw-pt-32-px">
             <div>
                 <div>
                     <div class="tw-flex tw-items-center tw-justify-start">
+                    @if (brandingFeatureConfig.showStepStateAsIcons) {
+                    <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
+                        1
+                    </div> 
+                        } @else {
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
+                    }
                         <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">{{ 'qbdDirectSetupConnection.openIntegrationFilePart1' | transloco }}<a (click)="onManualDownload()" class=" tw-underline !tw-underline-offset-1 tw-cursor-pointer">{{ 'qbdDirectSetupConnection.integrationFileLinkText' | transloco }}</a>{{ 'qbdDirectSetupConnection.openIntegrationFilePart2' | transloco }}</h4>
-                            <p class="tw-text-12-px tw-text-text-muted tw-font-400">{{ 'qbdDirectSetupConnection.watchVideoGuidance' | transloco }}</p>
+                            <h4 class="tw-text-14-px tw-pb-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.openIntegrationFilePart1' | transloco }}<a (click)="onManualDownload()" class=" tw-underline !tw-underline-offset-1 tw-cursor-pointer">{{ 'qbdDirectSetupConnection.integrationFileLinkText' | transloco }}</a>{{ 'qbdDirectSetupConnection.openIntegrationFilePart2' | transloco }}</h4>
+                            <p class="tw-text-12-px tw-text-text-muted tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorDescription">{{ 'qbdDirectSetupConnection.watchVideoGuidance' | transloco }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="tw-pt-40-px">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
                     <div class="tw-flex tw-items-center tw-justify-start">
+                        @if (brandingFeatureConfig.showStepStateAsIcons) {
+                    <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
+                        2
+                    </div> 
+                        } @else {
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                         </div>
+                        }
                         <div class="tw-ml-16-px">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">{{ 'qbdDirectSetupConnection.usePassword' | transloco }}</h4>
+                            <h4 class="tw-text-14-px tw-pb-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.usePassword' | transloco }}</h4>
                             <div class="tw-flex">
-                                <div class="tw-pr-30-px tw-w-70-px">
-                                    <p *ngIf="!isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">****{{password.slice(4)}}</p>
-                                    <p *ngIf="isPasswordShown" class="tw-text-16-px tw-text-text-muted tw-font-400">{{password}}</p>
+                                <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorPassword">
+                                    <p *ngIf="!isPasswordShown" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorPasswordText">****{{password.slice(4)}}</p>
+                                    <p *ngIf="isPasswordShown" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorPasswordText">{{password}}</p>
                                 </div>
                                 <div class="tw-flex tw-items-center tw-justify-end">
                                     <div class="tw-pr-6-px">
-                                        <app-svg-icon *ngIf="!isPasswordShown" [svgSource]="'eye-slash-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(true)"></app-svg-icon>
-                                        <app-svg-icon *ngIf="isPasswordShown" [svgSource]="'eye-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="showPassword(false)"></app-svg-icon>
+                                        <app-svg-icon *ngIf="!isPasswordShown" [svgSource]="'eye-slash-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-cursor-pointer ' + brandingStyle.qbd_direct.onboarding.connectorPasswordIconColor" (iconClick)="showPassword(true)"></app-svg-icon>
+                                        <app-svg-icon *ngIf="isPasswordShown" [svgSource]="'eye-medium'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-cursor-pointer ' + brandingStyle.qbd_direct.onboarding.connectorPasswordIconColor" (iconClick)="showPassword(false)"></app-svg-icon>
                                     </div>
                                     <div>
-                                        <app-svg-icon [svgSource]="'duplicate'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'" (iconClick)="onClipboardCopy()"></app-svg-icon>
+                                        <app-svg-icon [svgSource]="'duplicate'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-cursor-pointer ' + brandingStyle.qbd_direct.onboarding.connectorPasswordIconColor" (iconClick)="onClipboardCopy()"></app-svg-icon>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="tw-pt-40-px">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
                     <div class="tw-flex tw-items-center tw-justify-start">
+                    @if (brandingFeatureConfig.showStepStateAsIcons) {
+                    <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
+                        3
+                    </div> 
+                        } @else {
                         <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                             <app-svg-icon [svgSource]="'check-medium'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
                         </div>
+                    }
                         <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
-                            <h4 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-4-px">{{ 'qbdDirectSetupConnection.updateSelectedTitle' | transloco }}</h4>
-                            <p class="tw-text-12-px tw-text-text-muted tw-font-400">{{ 'qbdDirectSetupConnection.updateSelectedDescription' | transloco : { brandName: brandingConfig.brandName } }}</p>
+                            <h4 class="tw-text-14-px tw-pb-4-px"  [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.updateSelectedTitleFirst' | transloco }} <span [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHighlightText">{{ 'qbdDirectSetupConnection.updateSelectedTitleMiddle' | transloco }} </span> {{ 'qbdDirectSetupConnection.updateSelectedTitleLast' | transloco }}</h4>
+                            <p class="tw-text-12-px tw-text-text-muted tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorDescription">{{ 'qbdDirectSetupConnection.updateSelectedDescription' | transloco : { brandName: brandingConfig.brandName } }}</p>
                         </div>
                     </div>
                 </div>
@@ -73,9 +113,12 @@
                     </app-checkbox-button>
                 </div>
             </div>
-            <div class="tw-w-[40%]">
-                <div class="tw-flex tw-justify-center tw-shadow-sm">
-                    <iframe class="tw-rounded-border-radius-2xl tw-w-[100%]" height="260" src="https://www.youtube.com/embed/jfPPb8wYcQ4" frameborder="0"></iframe>
+            <div class="tw-w-[40%]" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorSideVideoCard">
+                <div class="tw-flex tw-justify-center tw-overflow-hidden">
+                    <iframe class="tw-w-[100%]" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorSideVideoFrame" height="260" src="https://www.youtube.com/embed/jfPPb8wYcQ4" frameborder="0"></iframe>
+                </div>
+                <div class="tw-p-16-px" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorTutorialDescription">
+                    <p class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDownloadFile.webConnectorVideoTitle' | transloco }}</p>
                 </div>
             </div>
         </div>

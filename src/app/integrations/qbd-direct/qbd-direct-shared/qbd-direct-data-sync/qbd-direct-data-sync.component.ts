@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -33,11 +33,21 @@ export class QbdDirectDataSyncComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
+  brandingFeatureConfig = brandingFeatureConfig;
+
+  brandingStyle = brandingStyle;
+
   onContinueClick() {
     this.continueClick.emit();
   }
 
   ngOnInit() {
+    this.qbdFields = [
+      { attribute_type: 'Category', count: 5 },
+      { attribute_type: 'Tag', count: 12 },
+      { attribute_type: 'Label', count: null },
+      { attribute_type: 'Priority', count: 0 }
+    ];
   }
 
 }

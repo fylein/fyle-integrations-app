@@ -487,5 +487,20 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "learnMore": "Read more"
+  },
+  "qbdDirectDownloadFile": {
+    "enterCompanyFilePathTitle": "Company file path",
+    "companyFilePathHelpText": "Enter your company file path to generate and download the integration file.",
+    "findPathVideoTitle": "How to find the company file path."
+  },
+  "qbdDirectSetupConnection": {
+    "usePassword": "Enter the following password:",
+    "updateSelectedTitleFirst": "Select",
+    "updateSelectedTitleMiddle": "Update selected",
+    "updateSelectedTitleLast": " in Web Connector",
+    "openIntegrationFilePart2": " in QuickBooks Web Connector"
+  },
+  "qbdDirectDataSync": {
+    "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
   }
 }

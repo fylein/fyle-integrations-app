@@ -22,6 +22,10 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
+    showStepStateAsIcons: true,
+    showStepStateDivider: true,
+    isStepSectionAlwaysVisible: true,
+    isConfigurationToggleLeftSide: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
