@@ -486,7 +486,8 @@
     "currentDate": "Current date"
   },
   "qbdDirectOnboardingPreRequisite": {
-    "learnMore": "Read more"
+    "learnMore": "Read more",
+    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" link tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
   },
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Company file path",

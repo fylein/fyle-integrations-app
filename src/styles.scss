@@ -473,6 +473,12 @@ p {
     @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
 }
 
+[data-theme='co'] {
+    .link {
+        @apply tw-underline tw-cursor-pointer tw-text-icon-blue;
+    }
+}
+
 [data-theme='fyle'] {
   .p-tooltip .p-tooltip-text{
     @apply tw-py-8-px tw-px-12-px tw-text-14-px #{!important}

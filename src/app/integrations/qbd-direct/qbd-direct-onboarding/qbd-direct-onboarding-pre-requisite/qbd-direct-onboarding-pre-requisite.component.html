@@ -29,7 +29,7 @@
                                             [href]="step.externalLink"
                                             target="_blank"
                                             class="tw-cursor-pointer tw-ml-4-px tw-inline-flex tw-items-center"
-                                            [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'link') : ''"
+                                            [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'link') : 'link'"
                                         >
                                             {{ 'qbdDirectOnboardingPreRequisite.learnMore' | transloco }}
                                             <app-svg-icon

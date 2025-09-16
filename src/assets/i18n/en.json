@@ -1632,7 +1632,6 @@
     "done": "Done",
     "markAsDone": "Mark as done",
     "installWebConnectorLabel": "Install QuickBooks Web Connector",
-    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.",
     "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
     "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
     "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
