@@ -15,9 +15,11 @@ export type FeatureConfiguration = {
         isPrimengLoaderEnabled: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
         disableTextColorWhenChecked: boolean,
-        showStepStateAsIcons: boolean,
-        showStepStateDivider: boolean,
-        isStepSectionAlwaysVisible: boolean,
+        qbd_direct: {
+            showStepStateAsIcons: boolean,
+            showStepStateDivider: boolean,
+            isStepSectionAlwaysVisible: boolean,
+        },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
