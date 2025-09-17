@@ -235,6 +235,16 @@ export enum Sage50OnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum Sage50AttributeType {
+  JOB = "JOB",
+  ITEM = "ITEM",
+  PHASE = "PHASE",
+  VENDOR = "VENDOR",
+  ACCOUNT = "ACCOUNT",
+  EMPLOYEE = "EMPLOYEE",
+  COST_CODE = "COST_CODE"
+}
+
 export enum IntacctField {
   LOCATION_ENTITY = 'LOCATION_ENTITY',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',

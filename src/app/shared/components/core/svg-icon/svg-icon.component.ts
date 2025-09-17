@@ -85,6 +85,8 @@ export class SvgIconComponent implements OnInit {
 
   @Input() height: string;
 
+  @Input() viewBox: string;
+
   @Input() styleClasses: string = '';
 
   @Input() tooltipPosition: string = 'top';

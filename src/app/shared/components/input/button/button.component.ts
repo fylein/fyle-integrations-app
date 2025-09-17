@@ -24,6 +24,8 @@ export class ButtonComponent implements OnInit{
 
   @Input() iconSize?: string;
 
+  @Input() iconViewbox: string;
+
   @Input() isLoading?: boolean;
 
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();

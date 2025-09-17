@@ -14,11 +14,17 @@
                 </app-configuration-step-header>
             </div>
             <div class="tw-p-24-px">
-                <div class="tw-rounded-border-radius-2xs tw-border tw-border-border-tertiary tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
-                    <div>a</div>
-                    <div>b</div>
-                    <div>c</div>
-                    <div>d</div>
+                <div class="tw-rounded-[10px] tw-border tw-border-border-tertiary tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
+                    <app-configuration-csv-upload-field
+                        [attributeType]="Sage50AttributeType.ACCOUNT"
+                        [label]="'sage50OnboardingPrerequisites.ChartOfAccountsLabel' | transloco"
+                        [subLabel]="'sage50OnboardingPrerequisites.ChartOfAccountsSublabel' | transloco"
+                    ></app-configuration-csv-upload-field>
+                    <app-configuration-csv-upload-field
+                        [attributeType]="Sage50AttributeType.VENDOR"
+                        [label]="'sage50OnboardingPrerequisites.VendorLabel' | transloco"
+                        [subLabel]="'sage50OnboardingPrerequisites.VendorSublabel' | transloco"
+                    ></app-configuration-csv-upload-field>
                 </div>
             </div>
             <app-configuration-step-footer [ctaText]="'sage50OnboardingPrerequisites.continue' | transloco" [AppName]="AppName.SAGE50" [isButtonDisabled]="isFormFilled" (save)="continueToNextStep()"></app-configuration-step-footer>
