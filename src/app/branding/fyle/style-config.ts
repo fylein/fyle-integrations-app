@@ -63,7 +63,9 @@ export const fyleStyles = {
             downloadFileVideoFrame: 'tw-rounded-tl-border-radius-2xl tw-rounded-tr-border-radius-2xl ',
             dataSyncText: 'tw-text-text-tertiary',
             dataSyncContent: '',
-            dataSyncIcon: 'tw-text-icon-tertiary'
+            dataSyncIcon: 'tw-text-icon-tertiary',
+            configurationHeaderText: 'tw-text-text-secondary !tw-font-500',
+            configurationDescriptionText: '!tw-text-text-muted tw-text-pretty',
         }
     },
     buttons: {

@@ -63,7 +63,9 @@ export const c1Styles = {
             downloadFileVideoFrame: 'tw-rounded-tl-8-px tw-rounded-tr-8-px',
             dataSyncText: 'tw-text-text-primary',
             dataSyncContent: 'tw-flex tw-flex-col-reverse tw-mt-24-px',
-            dataSyncIcon: 'tw-text-icon-grey'
+            dataSyncIcon: 'tw-text-icon-grey',
+            configurationHeaderText: 'tw-text-text-primary !tw-font-600',
+            configurationDescriptionText: 'tw-text-text-primary',
         }
     },
     buttons: {
