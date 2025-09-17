@@ -1,20 +1,8 @@
 <div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-pb-0': hasDependentFields && form.get(formControllerName)?.value}">
     <div class="tw-flex tw-items-start" [ngClass]="{'tw-w-3/4': !hideToggle}">
-      <div *ngIf="iconPath && !isToggleLeftSide" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
+      <div *ngIf="iconPath" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
         <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
       </div>
-      @if (isToggleLeftSide) {
-        <div>
-        <p-inputSwitch
-        [formControlName]="formControllerName"
-        [tooltipPosition]="'top'"
-        [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''"
-        [attr.aria-label]="label"
-        role="switch"
-        [attr.aria-checked]="form.get(formControllerName)?.value"
-      ></p-inputSwitch>
-        </div>
-      }
       <div class="tw-text-pretty">
         <h4 [ngClass]="{'tw-text-text-primary tw-text-16-px': isSectionHeader, 'tw-text-text-secondary tw-text-14-px': !isSectionHeader}" class="!tw-font-500">
           {{label}}
@@ -33,7 +21,7 @@
         </h5>
       </div>
     </div>
-    <div *ngIf="!hideToggle && !isToggleLeftSide" class="configuration--input-toggle-section">
+    <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
       <p-inputSwitch
         [formControlName]="formControllerName"
         [tooltipPosition]="'top'"

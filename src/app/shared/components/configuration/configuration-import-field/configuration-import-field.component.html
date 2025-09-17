@@ -33,15 +33,9 @@
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
-                        @if (isToggleLeftSide) {
-                        <div class="configuration--input-toggle-section">
-                            <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
-                        </div>
-                        } @else {
                         <div class="tw-pr-16-px">
                         <app-svg-icon [svgSource]="'arrow-tail-down'" [width]="'24px'" [height]="'24px'" [styleClasses]="isCloneSettingView ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0' : 'tw-text-mandatory-field-color tw-block tw-ml-0'"></app-svg-icon>
                         </div>
-                        }
                       <div>
                         <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
                             {{ 'configurationImportField.importDestinationFieldFromApp' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
@@ -52,14 +46,12 @@
                         </h5>
                       </div>
                     </div>
-                    @if (!isToggleLeftSide) {
                     <div class="configuration--input-toggle-section">
                       <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
                     </div>
-                    }
                 </div>
             </div>
-            <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView, 'tw-pl-70-px': isToggleLeftSide}">
+            <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" [placeholder]="'configurationImportField.chooseAppFieldPlaceholder' | transloco: { appName: uiExposedAppName }" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">

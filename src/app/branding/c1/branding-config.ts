@@ -25,7 +25,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     showStepStateAsIcons: true,
     showStepStateDivider: true,
     isStepSectionAlwaysVisible: true,
-    isConfigurationToggleLeftSide: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
