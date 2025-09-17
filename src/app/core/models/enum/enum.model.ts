@@ -39,7 +39,8 @@ export enum InAppIntegration {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Connector'
+  QBD_DIRECT = 'QuickBooks Connector',
+  SAGE50 = 'Sage 50 Accounting (US)'
 }
 
 export type IntegrationAppKey = keyof typeof InAppIntegration;
@@ -104,7 +105,8 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop Connector'
+  QBD_DIRECT = 'QuickBooks Desktop Connector',
+  SAGE50 = 'Sage 50 Accounting (US)'
 }
 
 export enum AppNameInService {
@@ -219,6 +221,14 @@ export enum NetsuiteOnboardingState {
 export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   CONNECTOR_AUTH = 'CONNECTOR_AUTH',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
+}
+
+export enum Sage50OnboardingState {
+  CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
@@ -618,7 +628,8 @@ export enum AppUrl {
   QBO = 'qbo',
   NETSUITE = 'netsuite',
   XERO = 'xero',
-  QBD_DIRECT = 'qbd_direct'
+  QBD_DIRECT = 'qbd_direct',
+  SAGE50 = 'sage50'
 }
 
 export enum Sage300ExportType {
@@ -888,7 +899,8 @@ export enum TrackingApp {
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
   TRAVELPERK = 'TP',
-  QBD_DIRECT = 'QBD_DIRECT'
+  QBD_DIRECT = 'QBD_DIRECT',
+  SAGE50 = 'SAGE50'
 }
 
 export enum ReimbursableImportState {

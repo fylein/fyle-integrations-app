@@ -86,7 +86,9 @@ export const fyleKbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+        // TODO: update link
+        SAGE50: `${brandingConfig.helpArticleDomain}`
     },
     onboardingArticles: {
         INTACCT: {
@@ -150,6 +152,10 @@ export const fyleKbArticles: KbArticle[string] = {
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+        },
+        SAGE50: {
+            // TODO
+            LANDING: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -164,6 +170,8 @@ export const fyleDemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
         NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8',
-        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo'
+        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
+        // TODO: Update link for Sage 50
+        SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
     }
 };

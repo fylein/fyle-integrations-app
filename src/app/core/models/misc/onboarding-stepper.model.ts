@@ -4,5 +4,6 @@ export type OnboardingStepper = {
     step: string,
     icon: string,
     route: string,
-    styleClasses?: string[]
+    styleClasses?: string[],
+    onboardingState?: string
   }

@@ -46,7 +46,7 @@ export class HelperService {
     return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
   }
 
-  setBaseApiURL(appUrl: string| void): void {
+  setBaseApiURL(appUrl: string| void, options = { auth: false }): void {
     const urlSplit = this.router.url.split('/');
     let module: AppUrl;
 
@@ -69,7 +69,8 @@ export class HelperService {
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
       [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url,
       [AppUrl.NETSUITE]: environment.production ? `${this.apiBaseUrl}/netsuite-api/api` : environment.netsuite_api_url,
-      [AppUrl.XERO]: environment.production ? `${this.apiBaseUrl}/xero-api/api` : environment.xero_api_url
+      [AppUrl.XERO]: environment.production ? `${this.apiBaseUrl}/xero-api/api` : environment.xero_api_url,
+      [AppUrl.SAGE50]: environment.sage50_api_url + (options.auth ? '' : '/sage50')
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;

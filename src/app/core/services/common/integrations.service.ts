@@ -28,7 +28,8 @@ export class IntegrationsService {
     'Fyle Sage 300 Integration': 'SAGE300',
     'Fyle Business Central Integration': 'BUSINESS_CENTRAL',
     'Fyle TravelPerk Integration': 'TRAVELPERK',
-    'Fyle BambooHR Integration': 'BAMBOO_HR'
+    'Fyle BambooHR Integration': 'BAMBOO_HR',
+    'Sage File Export Integration': 'SAGE50'
   } satisfies Record<string, IntegrationAppKey>;
 
   readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
@@ -41,7 +42,8 @@ export class IntegrationsService {
     [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
     [InAppIntegration.NETSUITE]: '/integrations/netsuite',
     [InAppIntegration.XERO]: '/integrations/xero',
-    [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct'
+    [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct',
+    [InAppIntegration.SAGE50]: '/integrations/sage50'
   };
 
   getIntegrationKey(tpaName: string): IntegrationAppKey | null {
