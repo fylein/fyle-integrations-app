@@ -86,7 +86,9 @@ export const fyleKbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+        // TODO: update link
+        SAGE50: `${brandingConfig.helpArticleDomain}`
     },
     onboardingArticles: {
         INTACCT: {
