@@ -25,7 +25,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     qbd_direct: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
-        isStepSectionAlwaysVisible: true,
+        isStepSectionAlwaysVisible: true
     },
     featureFlags: {
         cloneSettings: false,
