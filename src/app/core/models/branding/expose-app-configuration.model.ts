@@ -11,6 +11,7 @@ export type AllowedAppsConfiguration = {
             QBD: boolean;
             BAMBOO: boolean;
             QBD_DIRECT: boolean;
+            SAGE50: boolean;
         }
     }
 };

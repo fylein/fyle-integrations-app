@@ -2,10 +2,20 @@
   <div class="tw-flex tw-items-center tw-justify-between">
 
     <div>
-      <h3 class="tw-text-text-primary tw-font-nav-link-font-weight"
+      <span class="tw-flex tw-items-center tw-gap-[6px]">
+        <h3 class="tw-text-text-primary tw-font-nav-link-font-weight"
         [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
-        {{ headerText }}
-      </h3>
+          {{ headerText }}
+        </h3>
+        @if (headerInfoTooltip) {
+          <img
+            src='assets/icons/info-circle-fill-blue.svg'
+            [class]="'tw-w-14-px tw-h-14-px'"
+            [pTooltip]="headerInfoTooltip"
+            [tooltipPosition]="'top'"
+          >
+        }
+      </span>
       <h5 class="tw-text-text-tertiary tw-text-14-px !tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px">
         <span [innerHTML]="contentText"></span>
         <a *ngIf="redirectLink"

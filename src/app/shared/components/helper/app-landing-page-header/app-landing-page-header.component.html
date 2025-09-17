@@ -7,7 +7,7 @@
                 <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
                     <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
                 </div>
-                <div class="tw-pl-16-px tw-flex tw-flex-col">
+                <div class="tw-pl-16-px tw-flex tw-flex-col tw-justify-center">
                     <div class="tw-flex tw-items-center tw-pt-6-px">
                         <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ uiExposedAppName }}</p>
                         <div>
@@ -45,7 +45,7 @@
                         <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
                     }
 
-                    @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){
+                    @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName === AppName.SAGE50)){
                     <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-button>
                     }
                 </div>

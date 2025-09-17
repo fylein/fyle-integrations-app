@@ -7,7 +7,8 @@
     "syncButtonTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export",
     "syncButtonText": "Sync",
     "refreshDataTooltip": "If you are unable to find a required value, click the sync button to instantly retrieve the latest values from {{appName}}",
-    "refreshDataButtonText": "Refresh data"
+    "refreshDataButtonText": "Refresh data",
+    "headerInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm."
   },
   "configurationStepSubHeader": {
     "clickHere": "Click here",
@@ -389,7 +390,7 @@
     "zeroStateAltText": "Zero state"
   },
   "onboardingStepper": {
-    "configureSettingsDescription": "Configure these settings to set up your integration",
+    "configureSettingsDescription": "Configure the following settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
   "optionalField": {
@@ -1936,7 +1937,9 @@
     "bambooHR": "BambooHR",
     "categoryHRMS": "HRMS",
     "travelperk": "TravelPerk",
-    "categoryTravel": "Travel"
+    "categoryTravel": "Travel",
+    "sage50": "Sage 50 Accounting (US)",
+    "beta": "Beta"
   },
   "configurationScheduleExport": {
     "hours": "Hours",
@@ -2341,6 +2344,12 @@
       "customList": "Custom list",
       "customRecord": "Custom record",
       "customSegment": "Custom segment"
+    },
+    "sage50Onboarding": {
+      "prerequisites": "Prerequisites",
+      "exportSettings": "Export settings",
+      "importSettings": "Import settings",
+      "advancedSettings": "Advanced settings"
     }
   },
   "pipes": {
@@ -2351,5 +2360,16 @@
       "quickbooksOnline": "QuickBooks Online",
       "quickbooksDesktop": "QuickBooks Desktop"
     }
+  },
+  "sage50OnboardingLanding": {
+    "appDescription": "Import data from Sage 50 to {{brandName}} and export expenses from {{brandName}} to Sage 50.",
+    "headlineText": "Guide to setup your integration",
+    "headerText": "A quick guide to help you set up your Sage 50 integration."
+  },
+  "sage50OnboardingPrerequisites": {
+    "continue": "Save and continue",
+    "configurationHeaderText": "Prerequisites",
+    "configurationSubHeaderText": "To get started, add a few files from Sage 50. This will help set up your integration quickly and accurately.",
+    "configurationHeaderInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm."
   }
 }

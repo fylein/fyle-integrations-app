@@ -33,7 +33,7 @@ export class Sage50Component implements OnInit {
         [Sage50OnboardingState.EXPORT_SETTINGS]: '/integrations/sage50/onboarding/export_settings',
         [Sage50OnboardingState.IMPORT_SETTINGS]: '/integrations/sage50/onboarding/import_settings',
         [Sage50OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage50/onboarding/advanced_settings',
-        [Sage50OnboardingState.COMPLETE]: '/integrations/sage50/onboarding/done'
+        [Sage50OnboardingState.COMPLETE]: '/integrations/sage50/main/dashboard'
       };
 
       const onboardingState = this.workspaceService.getOnboardingState() as Sage50OnboardingState;
