@@ -18,6 +18,7 @@ export type FeatureConfiguration = {
         showStepStateAsIcons: boolean,
         showStepStateDivider: boolean,
         isStepSectionAlwaysVisible: boolean,
+        isConfigurationToggleLeftSide: boolean,
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;

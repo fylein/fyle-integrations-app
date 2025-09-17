@@ -35,6 +35,8 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   AppName = AppName;
 
+  isToggleLeftSide = brandingFeatureConfig.isConfigurationToggleLeftSide;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;

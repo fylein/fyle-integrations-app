@@ -53,6 +53,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
+  isToggleLeftSide = brandingFeatureConfig.isConfigurationToggleLeftSide;
+
   showDependentFieldWarning: boolean;
 
   showAddButton: any;

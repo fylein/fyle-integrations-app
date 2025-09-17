@@ -25,6 +25,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     showStepStateAsIcons: false,
     showStepStateDivider: false,
     isStepSectionAlwaysVisible: false,
+    isConfigurationToggleLeftSide: false,
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,
