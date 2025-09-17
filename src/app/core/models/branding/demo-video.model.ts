@@ -9,6 +9,7 @@ export type DemoVideo = {
             TRAVELPERK: string;
             XERO:string;
             NETSUITE: string;
+            SAGE50: string;
         }
     }
 };
