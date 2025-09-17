@@ -18,9 +18,9 @@ export class ConfigurationCsvUploadFieldComponent {
 
   @Input({ required: true }) subLabel!: string;
 
-  @Input() fileName?: string;
+  @Input() fileName: string | null = null;
 
-  @Output() fileNameChange = new EventEmitter<string>();
+  @Output() fileNameChange = new EventEmitter<string | null>();
 
   ButtonType = ButtonType;
 
