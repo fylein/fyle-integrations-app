@@ -22,10 +22,12 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     isPrimengLoaderEnabled: false,
     shouldShowOnboardingYouTubeVideo: false,
     disableTextColorWhenChecked: true,
-    showStepStateAsIcons: false,
-    showStepStateDivider: false,
-    isStepSectionAlwaysVisible: false,
-    isConfigurationToggleLeftSide: false,
+    qbd_direct: {
+        showStepStateAsIcons: false,
+        showStepStateDivider: false,
+        isStepSectionAlwaysVisible: false,
+        isConfigurationToggleLeftSide: false
+    },
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,

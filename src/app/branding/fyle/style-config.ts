@@ -65,7 +65,7 @@ export const fyleStyles = {
             dataSyncContent: '',
             dataSyncIcon: 'tw-text-icon-tertiary',
             configurationHeaderText: 'tw-text-text-secondary !tw-font-500',
-            configurationDescriptionText: '!tw-text-text-muted tw-text-pretty',
+            configurationDescriptionText: '!tw-text-text-muted tw-text-pretty'
         }
     },
     buttons: {

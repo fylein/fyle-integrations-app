@@ -2,7 +2,7 @@
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-            @if(brandingFeatureConfig.showStepStateAsIcons) {
+            @if(brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
                 <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
                     <app-svg-icon [c1SvgSource]="'grv-download-small'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
                 </div>
@@ -18,7 +18,7 @@
             </div>
 
             <div *ngIf="isStepCompleted">
-                @if (brandingFeatureConfig.showStepStateAsIcons) {
+                @if (brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
                 <div class="tw-h-24-px tw-flex tw-items-center tw-justify-center tw-gap-2">
                     <app-svg-icon [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
                     <div class="tw-text-text-primary tw-font-600 tw-text-12-px">
@@ -34,7 +34,7 @@
         </div>
         </div>
 
-        @if (brandingFeatureConfig.showStepStateDivider && !isStepCompleted) {
+        @if (brandingFeatureConfig.qbd_direct.showStepStateDivider && !isStepCompleted) {
         <div class="tw-border-t tw-border-border-tertiary"></div>
         }
 
@@ -47,14 +47,14 @@
                 </div><div>
                     <div class="tw-pt-16-px">
                         <input type="text" pInputText id="downloadFilePath" name="downloadFilePath" [(ngModel)]="downloadFilePath"
-                        [placeholder]="brandingFeatureConfig.showStepStateDivider ?  ('qbdDirectDownloadFile.enterCompanyFilePathTitle' | transloco) : ('qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco)"
+                        [placeholder]="brandingFeatureConfig.qbd_direct.showStepStateDivider ?  ('qbdDirectDownloadFile.enterCompanyFilePathTitle' | transloco) : ('qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco)"
                         class="tw-w-full tw-border tw-border-input-default-border tw-rounded-border-radius-2xs tw-px-12-px tw-py-8-px"
                         required
                         #downloadFilePathField="ngModel"
                         [ngClass]="{
                             'error-box': (downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid
                           }">
-                        @if (brandingFeatureConfig.showStepStateDivider) {
+                        @if (brandingFeatureConfig.qbd_direct.showStepStateDivider) {
                         <small> {{'qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco}} </small>
                         }
                         <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-4-px">

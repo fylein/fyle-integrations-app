@@ -35,7 +35,7 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   AppName = AppName;
 
-  isToggleLeftSide = brandingFeatureConfig.isConfigurationToggleLeftSide;
+  isToggleLeftSide = brandingFeatureConfig.qbd_direct.isConfigurationToggleLeftSide;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 

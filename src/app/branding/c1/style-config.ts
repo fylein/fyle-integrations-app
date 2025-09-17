@@ -65,7 +65,7 @@ export const c1Styles = {
             dataSyncContent: 'tw-flex tw-flex-col-reverse tw-mt-24-px',
             dataSyncIcon: 'tw-text-icon-grey',
             configurationHeaderText: 'tw-text-text-primary !tw-font-600',
-            configurationDescriptionText: 'tw-text-text-primary',
+            configurationDescriptionText: 'tw-text-text-primary'
         }
     },
     buttons: {
