@@ -42,12 +42,6 @@ export class QbdDirectDataSyncComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.qbdFields = [
-      { attribute_type: 'Category', count: 5 },
-      { attribute_type: 'Tag', count: 12 },
-      { attribute_type: 'Label', count: null },
-      { attribute_type: 'Priority', count: 0 }
-    ];
   }
 
 }
