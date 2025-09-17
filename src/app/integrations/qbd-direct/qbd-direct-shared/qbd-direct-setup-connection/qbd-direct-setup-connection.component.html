@@ -1,8 +1,8 @@
-<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="!showSection && !brandingFeatureConfig.qbd_direct.isStepSectionAlwaysVisible ? 'tw-opacity-50' : brandingStyle.qbd_direct.onboarding.stepStateCard">
+<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-opacity-50' : brandingStyle.qbd_direct.onboarding.stepStateCard">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-            @if(brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
+            @if(brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                 <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
                     <app-svg-icon [c1SvgSource]="'grv-settings-small'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
                 </div>
@@ -11,12 +11,12 @@
                     2
                 </div>
             }
-                <div class="tw-text-14-px" [ngClass]="[!showSection && !brandingFeatureConfig.qbd_direct.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
+                <div class="tw-text-14-px" [ngClass]="[!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
                     <span>{{ 'qbdDirectSetupConnection.title' | transloco }}</span>
                 </div>
             </div>
             <div *ngIf="isStepCompleted">
-            @if (brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
+            @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                 <div class="tw-h-24-px tw-flex tw-items-center tw-justify-center tw-gap-2">
                     <app-svg-icon [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
                     <div class="tw-text-text-primary tw-font-600 tw-text-12-px">
@@ -32,7 +32,7 @@
         </div>
         </div>
 
-        @if (brandingFeatureConfig.qbd_direct.showStepStateDivider && !isStepCompleted && showSection) {
+        @if (brandingFeatureConfig.qbdDirect.showStepStateDivider && !isStepCompleted && showSection) {
         <div class="tw-border-t tw-border-border-tertiary"></div>
         }
 
@@ -41,7 +41,7 @@
             <div>
                 <div>
                     <div class="tw-flex tw-items-center tw-justify-start">
-                    @if (brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
+                    @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                     <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                         1
                     </div> 
@@ -58,7 +58,7 @@
                 </div>
                 <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
                     <div class="tw-flex tw-items-center tw-justify-start">
-                        @if (brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
+                        @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                     <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                         2
                     </div> 
@@ -89,7 +89,7 @@
                 </div>
                 <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
                     <div class="tw-flex tw-items-center tw-justify-start">
-                    @if (brandingFeatureConfig.qbd_direct.showStepStateAsIcons) {
+                    @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                     <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                         3
                     </div> 

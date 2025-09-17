@@ -22,7 +22,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
-    qbd_direct: {
+    qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
         isStepSectionAlwaysVisible: true,
