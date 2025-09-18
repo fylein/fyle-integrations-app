@@ -48,6 +48,7 @@ export const fyleStyles = {
             downloadFileHeader: '',
             downloadHeaderText: 'tw-text-16-px tw-font-500 tw-text-text-tertiary',
             downloadDescriptionText: 'tw-text-12-px tw-text-text-muted',
+            downloadFileSuccessDescription: 'tw-text-text-muted tw-text-12-px',
             stepStateCard: 'tw-border-border-tertiary',
             connectorDescription: '',
             connectorHeader: 'tw-text-text-tertiary tw-font-500',
@@ -65,7 +66,20 @@ export const fyleStyles = {
             dataSyncContent: '',
             dataSyncIcon: 'tw-text-icon-tertiary',
             configurationHeaderText: 'tw-text-text-secondary !tw-font-500',
-            configurationDescriptionText: '!tw-text-text-muted tw-text-pretty'
+            configurationDescriptionText: '!tw-text-text-muted tw-text-pretty',
+            configurationToggleHeaderText: 'tw-text-text-secondary tw-text-14-px !tw-font-500',
+            configurationToggleDescriptionText: '!tw-text-text-muted tw-text-14-px !tw-font-400',
+            configurationSelectFieldHeaderText: 'tw-text-slightly-normal-text-color !tw-font-500',
+            configurationSelectFieldDescriptionText: 'tw-text-text-muted',
+            configurationStepSubHeaderCard: 'tw-rounded-lg tw-bg-bg-tertiary-lighter',
+            configurationStepSubHeaderText: '',
+            configurationStepSubHeaderDescription: 'tw-text-faded-text-color',
+            configurationAdvancedSettingAutomationCardHeader: 'tw-mb-16-px',
+            configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border tw-rounded-lg tw-my-16-px',
+            configurationAdvancedSettingCustomizationCardHeader: 'tw-my-16-px',
+            configurationAdvancedSettingCustomizationCardBody: 'tw-mt-12-px tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
+            configurationDoneHeader: '!tw-font-400',
+            configurationDoneDescription: 'tw-py-20-px'
         }
     },
     buttons: {

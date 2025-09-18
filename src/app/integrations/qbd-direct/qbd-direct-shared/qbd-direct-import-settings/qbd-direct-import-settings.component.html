@@ -24,9 +24,9 @@
 
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
-                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">
                                 {{'qbd_direct.configuration.importSetting.chartOfAccountTypes' | transloco}}
-                                <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+                                <p [ngClass]="[brandingStyle.common.inputLabelTextStyle,brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
                                     {{'qbd_direct.configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
                                 </p>
                             </h5>

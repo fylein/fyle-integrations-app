@@ -43,11 +43,11 @@
                         </div>
                         }
                       <div>
-                        <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
+                        <h4 class="{{brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText}}" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
                             {{ 'configurationImportField.importDestinationFieldFromApp' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
-                        <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+                        <h5 *ngIf="!isCloneSettingView" class="!tw-font-400 !tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
                           {{ 'configurationImportField.importedDestinationFieldInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) } }}
                         </h5>
                       </div>

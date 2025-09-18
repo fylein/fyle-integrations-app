@@ -48,6 +48,7 @@ export const c1Styles = {
             downloadFileHeader: 'tw-flex tw-flex-col-reverse tw-gap-4',
             downloadHeaderText: 'tw-text-14-px tw-font-600 tw-text-text-primary',
             downloadDescriptionText: 'tw-text-14-px tw-text-text-primary',
+            downloadFileSuccessDescription: 'tw-text-text-primary tw-text-14-px',
             stepStateCard: 'tw-border-tertiary-lighter',
             connectorDescription: 'tw-hidden',
             connectorHeader: 'tw-text-text-primary tw-font-400',
@@ -65,13 +66,26 @@ export const c1Styles = {
             dataSyncContent: 'tw-flex tw-flex-col-reverse tw-mt-24-px',
             dataSyncIcon: 'tw-text-icon-grey',
             configurationHeaderText: 'tw-text-text-primary !tw-font-600',
-            configurationDescriptionText: 'tw-text-text-primary'
+            configurationDescriptionText: 'tw-text-text-primary',
+            configurationToggleHeaderText: 'tw-text-text-primary tw-text-14-px !tw-font-600',
+            configurationToggleDescriptionText: '!tw-text-sub-text-color tw-text-12-px !tw-font-400',
+            configurationSelectFieldHeaderText: 'tw-text-text-primary tw-text-14-px !tw-font-600',
+            configurationSelectFieldDescriptionText: '!tw-text-sub-text-color tw-text-12-px !tw-font-400',
+            configurationStepSubHeaderCard: 'tw-rounded-t-8-px tw-bg-bg-white',
+            configurationStepSubHeaderText: 'tw-font-600',
+            configurationStepSubHeaderDescription: 'tw-text-text-primary',
+            configurationAdvancedSettingAutomationCardHeader: '',
+            configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-mb-16-px',
+            configurationAdvancedSettingCustomizationCardHeader: 'tw-mt-16-px tw-rounded-t-8-px',
+            configurationAdvancedSettingCustomizationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
+            configurationDoneHeader: '!tw-font-600',
+            configurationDoneDescription: 'tw-pt-20-px'
         }
     },
     buttons: {
         primary: {
            class: 'p-button p-button-raised',
-           active: 'tw-bg-primary',
+           active: 'tw-bg-primary tw-font-600',
            disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
            progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
            loader: 'tw-border-t-border-tertiary',
