@@ -20,7 +20,7 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
 
   onboardingSteps = this.onboardingService.getOnboardingSteps(this.workspaceService.getOnboardingState());
 
-  isLoading: boolean;
+  isLoading = true;
 
   fileNames = {
     ACCOUNT: null,
@@ -55,6 +55,7 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
     this.sage50ImportAttributesService.getAttributeTypeToFileNameMap()
       .subscribe((attributeTypeToFileNameMap) => {
         this.fileNames = attributeTypeToFileNameMap;
+        this.isLoading = false;
       });
   }
 }
