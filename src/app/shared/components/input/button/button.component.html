@@ -1,9 +1,9 @@
 <button
-  type="button" 
+  type="button"
   [disabled]="disabled"
   (mouseenter)="iconColor = brandingStyle.buttons[this.buttonType].iconColorHover"
   (mouseleave)="iconColor = brandingStyle.buttons[this.buttonType].iconColorActive"
-  [class]="'tw-flex tw-justify-center tw-items-center tw-py-8-px tw-gap-2 ' + brandingStyle.buttons[this.buttonType].class"
+  [class]="'tw-flex tw-justify-center tw-items-center tw-py-8-px tw-gap-2 tw-font-500 ' + brandingStyle.buttons[this.buttonType].class"
   [ngClass]="[disabled && !isLoading ? brandingStyle.buttons[buttonType].disabled : (isLoading ? brandingStyle.buttons[this.buttonType].progress : brandingStyle.buttons[this.buttonType].active), buttonSize === ButtonSize.SMALL ? 'tw-px-16-px' : 'tw-px-24-px', styleClasses]"
   (click)="!disabled && onClick()">
   @if(!isIconLeftSide){
@@ -12,11 +12,12 @@
   @if(brandingFeatureConfig.isIconsInsideButtonAllowed && svgSource){
     @if(!isLoading || this.buttonType === 'secondary'){
   <app-svg-icon
-    [svgSource]="svgSource" 
+    [svgSource]="svgSource"
     [width]="iconSize || '18px'"
     [height]="iconSize || '18px'"
+    [viewBox]="iconViewbox"
     [ngClass]="disabled ? brandingStyle.buttons[this.buttonType].iconColorDisabled : iconColor">
-  </app-svg-icon>  } @else { 
+  </app-svg-icon>  } @else {
   <div class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-transparent tw-border-r-transparent tw-border-l-transparent tw-rounded-full tw-animate-spin" [ngClass]="brandingStyle.buttons[this.buttonType].loader"></div> }
     }
   @if(isIconLeftSide){

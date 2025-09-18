@@ -1,0 +1,21 @@
+<div class="tw-flex tw-gap-10-px tw-items-center">
+    <div class="tw-shrink-0 tw-self-start">
+        <img src="assets/icons/file-csv.svg" [alt]="'configurationCsvUploadField.csvUpload' | transloco">
+    </div>
+    <div class="tw-flex tw-flex-col tw-gap-[6px] tw-text-14-px">
+        <h4 class="tw-text-text-primary">{{ label }}</h4>
+        <h5 class="tw-text-yin-075">{{ subLabel }}</h5>
+    </div>
+    <div class="tw-grow"></div>
+
+    <!-- TODO: replace with upload button component -->
+     <app-button
+      [buttonType]="ButtonType.SECONDARY"
+      [buttonSize]="ButtonSize.MEDIUM"
+      [buttonText]="'configurationCsvUploadField.uploadCSV' | transloco"
+      [svgSource]="'upload'"
+      [iconSize]="'20px'"
+      [iconViewbox]="'0 0 16 16'"
+      class="tw-text-14-px tw-shrink-0"
+     ></app-button>
+</div>
