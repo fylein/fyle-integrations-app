@@ -2378,5 +2378,11 @@
   "configurationCsvUploadField": {
     "csvUpload": "CSV upload icon",
     "uploadCSV": "Upload CSV"
+  },
+  "csvUploadButton": {
+    "uploadButton": "Upload CSV",
+    "reuploadTooltip": "Re-upload CSV",
+    "reuploadButton": "Re-upload",
+    "csvUpload": "CSV File Icon"
   }
 }
