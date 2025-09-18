@@ -10,7 +10,7 @@
                 <div>
                     <app-configuration-step-header
                         [headerText]="'sage50OnboardingPrerequisites.configurationHeaderText' | transloco"
-                        [headerInfoTooltip]="'sage50OnboardingPrerequisites.configurationHeaderInfoTooltip' | transloco"
+                        [headerInfoTooltip]="'sage50OnboardingPrerequisites.configurationHeaderInfoTooltip' | transloco: { brandName: brandingConfig.brandName} "
                         [contentText]="'sage50OnboardingPrerequisites.configurationSubHeaderText' | transloco"
                         [redirectLink]="brandingKbArticles.topLevelArticles.SAGE50">
                     </app-configuration-step-header>
@@ -31,7 +31,12 @@
                         ></app-configuration-csv-upload-field>
                     </div>
                 </div>
-                <app-configuration-step-footer [ctaText]="'sage50OnboardingPrerequisites.continue' | transloco" [AppName]="AppName.SAGE50" [isButtonDisabled]="!isFormFilled" (save)="continueToNextStep()"></app-configuration-step-footer>
+                <app-configuration-step-footer
+                    [ctaText]="'sage50OnboardingPrerequisites.continue' | transloco"
+                    [AppName]="AppName.SAGE50"
+                    [isButtonDisabled]="!isFormFilled"
+                    (save)="continueToNextStep()"
+                ></app-configuration-step-footer>
             </div>
         }
     </div>
