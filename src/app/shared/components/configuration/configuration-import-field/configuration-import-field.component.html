@@ -33,7 +33,7 @@
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
-                        @if (isToggleLeftSide) {
+                        @if (isConfigToggleLeftAligned) {
                         <div class="configuration--input-toggle-section">
                             <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
                         </div>
@@ -52,14 +52,14 @@
                         </h5>
                       </div>
                     </div>
-                    @if (!isToggleLeftSide) {
+                    @if (!isConfigToggleLeftAligned) {
                     <div class="configuration--input-toggle-section">
                       <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-inputSwitch>
                     </div>
                     }
                 </div>
             </div>
-            <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView, 'tw-pl-70-px': isToggleLeftSide}">
+            <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView, 'tw-pl-70-px': isConfigToggleLeftAligned}">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" [placeholder]="'configurationImportField.chooseAppFieldPlaceholder' | transloco: { appName: uiExposedAppName }" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">

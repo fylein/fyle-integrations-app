@@ -37,7 +37,7 @@ export class ConfigurationScheduleExportComponent implements OnInit {
 
   @Input() isEmailPresent: boolean = false;
 
-  isConfigurationToggleLeftSide = brandingFeatureConfig.qbdDirect.isConfigurationToggleLeftSide;
+  isConfigToggleLeftAligned = brandingFeatureConfig.qbdDirect.configToggleLeftAligned;
 
   readonly brandingConfig = brandingConfig;
 
