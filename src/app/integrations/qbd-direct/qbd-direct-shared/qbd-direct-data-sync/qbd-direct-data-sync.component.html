@@ -42,7 +42,7 @@
             <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
         </div>
         <div *ngIf="isLoading && showSection" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
-            <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
+            <app-loader [isQbdDirectConnector]="true" styleClass="spinner-30 tw-top-2-px"></app-loader>
         </div>
     </div>
     <div *ngIf="!isLoading && showSection">

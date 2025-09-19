@@ -1,5 +1,13 @@
-@if (brandingFeatureConfig.isPrimengLoaderEnabled) {
+@if (brandingFeatureConfig.isPrimengLoaderEnabled && !isQbdDirectConnector) {
   <p-progressSpinner [styleClass]="styleClass"></p-progressSpinner>
+} @else if(brandingFeatureConfig.isPrimengLoaderEnabled && isQbdDirectConnector) {
+  <div [ngClass]="hostClasses">
+  <div class="tw-relative tw-w-[72px] tw-h-[72px]">
+      <div class="tw-absolute tw-inset-0 tw-border-[6px] tw-border-gray-200 tw-rounded-full"></div>
+      <div class="tw-absolute tw-inset-0 tw-border-[6px] tw-border-transparent tw-border-t-border-blue tw-border-r-border-blue tw-border-b-border-blue tw-animate-spin tw-rounded-full"></div>
+  </div>
+  <div [ngClass]="'tw-mt-24-px tw-text-text-primary tw-font-600 tw-text-14-px'" *ngIf="showSpinnerLabel">{{ spinnerLabel }}</div>
+  </div>
 } @else {
   <div [ngClass]="hostClasses">
     <div [ngClass]="spinnerClasses">

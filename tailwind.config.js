@@ -169,6 +169,7 @@ const borderColors = {
   'border-green': 'var(--bg-green)',
   'border-focus': 'var(--border-focus)',
   'border-grey': 'var(--border-grey)',
+  'border-blue': 'var(--border-blue)',
 };
 
 const colors = {
