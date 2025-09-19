@@ -1,13 +1,12 @@
 <app-generic-mapping-v2 *ngIf="!isLoading"
     [isLoading]="isLoading"
-    [destinationOptions]="destinationOptions"
-    [employeeFieldMapping]="employeeFieldMapping"
+    [destinationOptions]="qbdDirectMappingService.getDestinationOptions()"
+    [employeeFieldMapping]="qbdDirectMappingService.getEmployeeFieldMapping()"
     [sourceField]="sourceField"
-    [destinationField]="destinationField"
+    [destinationField]="qbdDirectMappingService.getDestinationField()"
     [showAutoMapEmployee]="false"
     [appName]="AppName.QBD_DIRECT"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
-    [displayName]="displayName"
-    [detailAccountType] = "detailAccountType"
-    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false">
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false"
+    [searchHandler]="handleSearch">
 </app-generic-mapping-v2>

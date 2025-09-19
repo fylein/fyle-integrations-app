@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -47,6 +47,8 @@ export class GenericMappingV2Component implements OnInit {
   @Input() detailAccountType: string[] | undefined;
 
   @Input() destinationAttributes?: string | string[];
+
+  @Input() searchHandler?: (query?: string) => Observable<void>;
 
   isInitialSetupComplete: boolean = false;
 

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { QbdDirectMappingsService } from './qbd-direct-mappings.service';
+import { QbdDirectMappingService } from './qbd-direct-mapping.service';
 
 xdescribe('QbdDirectMappingsService', () => {
-  let service: QbdDirectMappingsService;
+  let service: QbdDirectMappingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(QbdDirectMappingsService);
+    service = TestBed.inject(QbdDirectMappingService);
   });
 
   it('should be created', () => {
