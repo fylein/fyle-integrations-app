@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { concatMap, forkJoin, map, Observable } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, AccountingField, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName } from 'src/app/core/models/enum/enum.model';
+import { FyleField, AccountingField, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -15,33 +14,25 @@ import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct
 })
 export class QbdDirectMappingService {
 
-  destinationOptions: DestinationAttribute[] = [];
+  private destinationOptions: DestinationAttribute[] = [];
 
-  employeeFieldMapping: FyleField;
+  private employeeFieldMapping: FyleField;
 
-  sourceField: string;
+  private sourceField: string;
 
-  destinationField: string;
+  private destinationField: string;
 
-  reimbursableExpenseObject: QBDReimbursableExpensesObject | null;
+  private cccExpenseObject: QBDCorporateCreditCardExpensesObject | null;
 
-  cccExpenseObject: QBDCorporateCreditCardExpensesObject | null;
+  private displayName: string | undefined = undefined;
 
-  displayName: string | undefined = undefined;
+  private nameInJE: NameInJournalEntry;
 
-  isMultiLineOption: boolean;
+  private chartOfAccounts: string[];
 
-  brandingConfig = brandingConfig;
+  private isImportItemsEnabled: boolean;
 
-  nameInJE: NameInJournalEntry;
-
-  chartOfAccounts: string[];
-
-  detailAccountType: string[] | undefined;
-
-  isImportItemsEnabled: boolean;
-
-  query: string | undefined;
+  private query: string | undefined;
 
   getDestinationField(): string {
     return this.destinationField;
@@ -72,7 +63,6 @@ export class QbdDirectMappingService {
   }
 
   private fetchDestinationOptions(detailAccountType?: string[]): Observable<QbdDirectDestinationAttribute[]> {
-    this.detailAccountType = detailAccountType;
 
     // When items are enabled for category mapping, make separate API calls
     if (this.isImportItemsEnabled && this.destinationField === AccountingField.ACCOUNT && this.sourceField === FyleField.CATEGORY) {
@@ -143,7 +133,6 @@ export class QbdDirectMappingService {
       this.mappingService.getMappingSettings()
     ]).pipe(
       concatMap((responses) => {
-        this.reimbursableExpenseObject = responses[0].reimbursable_expense_export_type;
         this.cccExpenseObject = responses[0].credit_card_expense_export_type;
         this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
         this.nameInJE = responses[0].name_in_journal_entry;
