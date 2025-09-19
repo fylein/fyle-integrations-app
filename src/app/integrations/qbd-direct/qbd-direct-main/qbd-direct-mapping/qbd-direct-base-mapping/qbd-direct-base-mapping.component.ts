@@ -35,8 +35,8 @@ export class QbdDirectBaseMappingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.route.params.subscribe(() => {
+      this.isLoading = true;
       this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
       this.qbdDirectMappingService.initialize(this.sourceField).subscribe(() => {
         this.isLoading = false;
