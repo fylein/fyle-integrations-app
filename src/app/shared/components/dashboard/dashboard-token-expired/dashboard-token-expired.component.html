@@ -8,7 +8,7 @@
   @if (!isConnectionInProgress) {
   <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
 
-    <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired' | transloco}} </p>
+    <p class="tw-text-18-px tw-text-text-primary"> {{ (isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired') | transloco }} </p>
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
     <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
