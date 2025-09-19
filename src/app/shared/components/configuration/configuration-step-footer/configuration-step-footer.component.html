@@ -1,4 +1,4 @@
-<div class="tw-flex tw-items-center tw-py-16-px tw-px-24-px tw-border-t tw-border-t-border-tertiary" [ngClass]="[!showBackButton || brandingFeatureConfig.isFooterButtonsRightSide ? 'tw-justify-end': 'tw-justify-between', brandingFeatureConfig.isFooterButtonsRightSide ? 'tw-gap-10-px' : '']">
+<div class="tw-flex tw-items-center tw-py-16-px tw-px-24-px tw-border-t tw-border-t-border-tertiary" [ngClass]="[!showBackButton || brandingFeatureConfig.footerButtonsRightAligned ? 'tw-justify-end': 'tw-justify-between', brandingFeatureConfig.footerButtonsRightAligned ? 'tw-gap-10-px' : '']">
     <div class="tw-flex" *ngIf="showBackButton">
         <div>
             <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="'configurationStepFooter.back' | transloco"></app-button>

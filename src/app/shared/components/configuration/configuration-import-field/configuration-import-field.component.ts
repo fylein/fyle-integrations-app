@@ -53,7 +53,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
-  isToggleLeftSide = brandingFeatureConfig.qbdDirect.isConfigurationToggleLeftSide;
+  isConfigToggleLeftAligned = brandingFeatureConfig.qbdDirect.configToggleLeftAligned;
 
   showDependentFieldWarning: boolean;
 
