@@ -12,7 +12,7 @@
     <div>
         <form [formGroup]="importSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationImportCard">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'qbd_direct.configuration.importSetting.importCategoriesLabel' | transloco : {brandName: brandingConfig.brandName}"
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px"
+                <div class="tw-mt-24-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationImportCard"
                      *ngIf="brandingFeatureConfig.featureFlags.importSettings.importItems &&
                             exportSettings.reimbursable_expense_export_type !== QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY &&
                             exportSettings.credit_card_expense_export_type !== QbdDirectCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
@@ -74,7 +74,7 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
+                <div class="tw-mt-24-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationImportCard" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'qbd_direct.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco : {brandName: brandingConfig.brandName}"

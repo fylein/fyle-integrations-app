@@ -28,7 +28,7 @@
         </div>
     </div>
     <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
-        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-border-tertiary tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
+        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="[isDestinationFixedImport ? 'tw-mt-24-px tw-pb-24-px' : '', (isDestinationFixedImport && !isCloneSettingView) ? brandingStyle.qbd_direct.onboarding.configurationImportCard : '',isCloneSettingView ? 'tw-pr-24-px' : '']">
             <div class="tw-mt-18-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.get('source_field')?.value === 'PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue && brandingConfig.brandId !== 'co' , 'tw-pl-24-px': !isDestinationFixedImport}">
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">

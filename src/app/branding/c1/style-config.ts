@@ -65,6 +65,8 @@ export const c1Styles = {
             dataSyncText: 'tw-text-text-primary',
             dataSyncContent: 'tw-flex tw-flex-col-reverse tw-mt-24-px',
             dataSyncIcon: 'tw-text-icon-grey',
+            configurationExportCard: 'tw-border tw-border-solid tw-border-tertiary-lighter tw-rounded-8-px',
+            configurationImportCard: 'tw-rounded-8-px tw-border-tertiary-lighter tw-border',
             configurationHeaderText: 'tw-text-text-primary !tw-font-600',
             configurationDescriptionText: 'tw-text-text-primary',
             configurationToggleHeaderText: 'tw-text-text-primary tw-text-14-px !tw-font-600',

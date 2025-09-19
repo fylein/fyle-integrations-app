@@ -65,6 +65,8 @@ export const fyleStyles = {
             dataSyncText: 'tw-text-text-tertiary',
             dataSyncContent: '',
             dataSyncIcon: 'tw-text-icon-tertiary',
+            configurationExportCard: 'tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px',
+            configurationImportCard: 'tw-rounded-lg tw-border-border-tertiary tw-border',
             configurationHeaderText: 'tw-text-text-secondary !tw-font-500',
             configurationDescriptionText: '!tw-text-text-muted tw-text-pretty',
             configurationToggleHeaderText: 'tw-text-text-secondary tw-text-14-px !tw-font-500',
