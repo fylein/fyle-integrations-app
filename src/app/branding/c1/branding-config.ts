@@ -22,10 +22,12 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
+    footerButtonsRightAligned: true,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
-        isStepSectionAlwaysVisible: true
+        isStepSectionAlwaysVisible: true,
+        configToggleLeftAligned: true
     },
     featureFlags: {
         cloneSettings: false,

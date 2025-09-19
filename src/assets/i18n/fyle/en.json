@@ -495,7 +495,8 @@
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Enter company file path",
     "companyFilePathHelpText": "Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.",
-    "findPathVideoTitle": "Where to find company file path?"
+    "findPathVideoTitle": "Where to find company file path?",
+    "downloadWillBegin": "Your download will begin"
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Use this password to set up the connection",

@@ -91,9 +91,9 @@
                 <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
             </div>
             <div>
-                <p class="tw-text-text-tertiary tw-text-16-px tw-font-500 tw-py-4-px">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>
-                <span class="tw-text-text-muted tw-text-12-px tw-font-400 tw-pb-20-px">{{ 'qbdDirectDownloadFile.ifDownloadDidNotStart' | transloco }}<a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">{{ 'qbdDirectDownloadFile.downloadManuallyLink' | transloco }}</a>.</span>
-                <p class="tw-pt-16-px tw-text-text-muted tw-text-12-px tw-font-400">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
+                <p class="tw-py-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadHeaderText">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>
+                <span class="tw-font-400 tw-pb-20-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.ifDownloadDidNotStart' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">{{ 'qbdDirectDownloadFile.downloadManuallyLink' | transloco }}</a>.</span>
+                <p class="tw-pt-16-px tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
             </div>
         </div>
     </div>

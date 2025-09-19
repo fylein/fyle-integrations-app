@@ -15,13 +15,13 @@
     <div>
         <form [formGroup]="advancedSettingsForm">
             <div class="tw-p-24-px">
-                <div class="tw-mb-16-px">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingAutomationCardHeader">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.automationLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco">
                     </app-configuration-step-sub-header>
                 </div>
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-my-16-px">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingAutomationCardBody">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco"
@@ -71,13 +71,13 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div class="tw-my-16-px">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingCustomizationCardHeader">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                <div class="tw-bg-white" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingCustomizationCardBody">
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
