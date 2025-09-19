@@ -18,6 +18,8 @@ export class LoaderComponent implements OnInit {
 
   @Input() styleClass: string = '!tw-w-50-px !tw-h-50-px spinner-default';
 
+  @Input() isQbdDirectConnector: boolean;
+
   /** Text label below spinner */
   @Input() spinnerLabel: string = this.translocoService.translate('common.loader.defaultLabel');
 

@@ -503,7 +503,8 @@
     "updateSelectedTitleFirst": "Click on ‘",
     "updateSelectedTitleMiddle": "Update Selected",
     "updateSelectedTitleLast": "’ on QuickBooks Web Connector",
-    "openIntegrationFilePart2": " using QuickBooks Web Connector"
+    "openIntegrationFilePart2": " using QuickBooks Web Connector",
+    "connecting": "Connecting to QuickBooks Desktop..."
   },
   "qbdDirectDataSync": {
     "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values."
