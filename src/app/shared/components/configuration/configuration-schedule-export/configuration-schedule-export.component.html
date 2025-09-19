@@ -1,6 +1,6 @@
 <div [formGroup]="form">
     <div class="tw-px-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
-        <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
+        <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start" [ngClass]="isConfigurationToggleLeftSide ? 'tw-ml-10-px' : ''">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
                 <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
             </div>

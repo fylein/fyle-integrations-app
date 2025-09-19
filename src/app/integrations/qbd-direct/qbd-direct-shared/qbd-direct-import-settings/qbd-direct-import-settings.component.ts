@@ -38,6 +38,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.IMPORT_SETTING;
 
+  isConfigurationToggleLeftSide = brandingFeatureConfig.qbdDirect.isConfigurationToggleLeftSide;
+
   isOnboarding: boolean;
 
   brandingConfig = brandingConfig;
