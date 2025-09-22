@@ -40,7 +40,7 @@ export const c1Styles = {
         exportSummaryCenterContent: 'tw-mt-12-px tw-mb-16-px tw-border-b tw-border-tertiary-lighter',
         exportSummaryIcon: '',
         exportSummaryCountText: 'tw--ml-10-px',
-        exportSectionContainer: 'tw-justify-center',
+        exportSectionContainer: 'tw-justify-between',
         exportSectionHeaderText: 'tw-text-14-px tw-font-600 tw-text-text-primary',
         exportSectionDescriptionText: 'tw-text-12-px tw-font-400 tw-text-sub-text-color',
         exportSectionDescriptionSubText: '',
