@@ -15,6 +15,7 @@ export type FeatureConfiguration = {
         shouldShowOnboardingYouTubeVideo: boolean,
         disableTextColorWhenChecked: boolean,
         footerButtonsRightAligned: boolean,
+        usePrimaryLoader: boolean,
         qbdDirect: {
             showStepStateAsIcons: boolean,
             showStepStateDivider: boolean,

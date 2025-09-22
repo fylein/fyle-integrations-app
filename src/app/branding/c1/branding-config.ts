@@ -22,6 +22,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
     footerButtonsRightAligned: true,
+    usePrimaryLoader: true,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
