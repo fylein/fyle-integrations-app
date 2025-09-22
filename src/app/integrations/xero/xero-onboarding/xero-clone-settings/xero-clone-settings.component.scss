@@ -14,6 +14,9 @@
     &--dependent-field {
         @apply tw-pt-24-px;
     }
+    &--field-container {
+        @apply tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white;
+    }
 }
 
 :host ::ng-deep .reimbursableExpense .clone-setting-field--label-text, :host ::ng-deep .creditCardExpense .clone-setting-field--label-text {
