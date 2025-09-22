@@ -1,4 +1,4 @@
-<div class="tw-p-24-px tw-border-b tw-border-b-border-tertiary">
+<div class="tw-border-b tw-border-b-border-tertiary tw-p-24-px">
   <div class="tw-flex tw-items-center tw-justify-between">
 
     <div>
@@ -6,7 +6,7 @@
         [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
         {{ headerText }}
       </h3>
-      <h5 class="tw-text-text-tertiary tw-text-14-px !tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px">
+      <h5 class="!tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
         <span [innerHTML]="contentText"></span>
         <a *ngIf="redirectLink"
           class="link tw-text-14-px tw-w-fit tw-pl-4-px tw-inline-flex tw-items-center"

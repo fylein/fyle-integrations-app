@@ -442,9 +442,19 @@ p {
     @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px;
 }
 
-.p-dialog-header-close-icon {
-    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
+[data-theme='fyle'] {
+    .p-dialog-header-close-icon {
+        @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
+    }
 }
+
+
+[data-theme='co'] {
+    .p-dialog-header-close-icon {
+        @apply tw-mt-[-3px] tw-w-20-px tw-h-20-px tw-text-icon-primary #{!important} ;
+    }
+}
+
 
 .p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
     @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white tw-p-8-px #{!important};

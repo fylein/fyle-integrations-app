@@ -1,10 +1,16 @@
 export const fyleStyles = {
     common: {
         configurationContents: 'tw-mx-120-px tw-shadow-app-card',
+        configurationContentsDashboard: 'tw-mx-120-px tw-shadow-app-card',
         mainComponentPadding: 'tw-px-120-px',
         mainComponentShadow: 'tw-shadow-app-card',
         inputLabelTextStyle: 'tw-pt-8-px',
-        configurationBrandingClass: 'fyle'
+        configurationBrandingClass: 'fyle',
+        paginatorContainer: '',
+        dialogHeaderText: 'tw-text-text-primary tw-text-20-px tw-line-height-20',
+        dialogSubDescriptionContainer: 'tw-hidden',
+        dialogDescriptionText: 'tw-text-text-muted tw-text-14-px tw-font-400 tw-mt-8-px',
+        dialogSubDescriptionText: ''
     },
     mapping: {
         mappingHeaderBoxShadow: 'tw-shadow-stats-box'
@@ -15,12 +21,49 @@ export const fyleStyles = {
         importFieldDependentFieldSvg: 'tw-pt-46-px',
         importFieldDropDownText: '!tw-font-400 tw-text-14-px',
         stepHeaderH3Text: '',
-        searchIconFocus: 'tw-text-search-focused-search-icon'
+        stepDescriptionText: 'tw-text-text-tertiary tw-text-14-px',
+        searchIconFocus: 'tw-text-search-focused-search-icon',
+        settingsContainer: 'configuration--contents tw-border-border-tertiary tw-mt-6',
+        settingsHeader: 'tw-p-24-px',
+        infoLabelBackground: 'tw-py-8-px tw-px-16-px tw-border tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border-separate',
+        infoLabelIcon: 'tw-text-info',
+        infoLabelText: 'tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm',
         dashboardExportBtn: 'tw-rounded-32-px',
-        dashboardMainMenu: 'tw-pr-6 tw-pl-0 tw-items-end'
+        dashboardMainMenu: 'tw-pr-6 tw-pl-0 tw-items-end',
+        exportSummaryHeaderText: 'tw-font-500 tw-text-18-px',
+        exportSummaryDescriptionText: 'tw-font-500 tw-text-text-secondary',
+        exportSummaryViewText: 'tw-font-500 btn-text-primary',
+        exportSummaryContentCard: 'tw-border-solid tw-border-1-px tw-border-border-tertiary tw-p-24-px',
+        exportSummaryCenterContent: 'tw-hidden',
+        exportSummaryIcon: 'tw-mr-16-px',
+        exportSummaryCountText: 'tw-w-80-px',
+        exportSectionContainer: 'tw-justify-between',
+        exportSectionHeaderText: 'tw-text-20-px tw-font-500 tw-text-text-primary',
+        exportSectionDescriptionText: 'tw-text-14-px tw-pt-8-px tw-font-400 tw-text-text-secondary',
+        exportSectionDescriptionSubText: 'tw-pt-4-px',
+        exportErrorSectionHeaderText: '!tw-font-500 !tw-text-18-px',
+        exportErrorSubTextContainer: 'tw-border-solid tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-bg-bg-tertiary-lighter',
+        exportErrorSubTextHeader: 'tw-text-16-px !tw-font-500',
+        exportErrorSubTextDescription: '!tw-text-text-muted tw-text-14-px !tw-font-400 tw-pt-10-px',
+        exportErrorTextHeader: 'tw-text-14-px !tw-font-500 tw-text-text-secondary',
+        exportErrorTextDescription: '!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4',
+        exportErrorCard: 'tw-flex tw-justify-between tw-items-start tw-gap-4 tw-border-solid tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px',
+        exportErrorCardButton: 'tw-mt-4-px',
+        exportErrorAccountingDescription: '!tw-text-text-muted tw-pt-10-px',
+        exportErrorDescriptionText: 'tw-text-text-muted',
+        zeroStateHeaderText: 'tw-font-400',
+        zeroStateDescriptionText: 'tw-pt-4-px tw-max-w-sm',
+        subMenuContainer: '',
+        mapping: {
+            background: '',
+            mainComponentCard: 'tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary',
+            countCardsContainer: '',
+            countText: 'tw-text-16-px',
+            headerCard: 'tw-border-1-px tw-border-border-tertiary tw-shadow-stats-box'
+        }
     },
     checkbok: {
         theme: 'fyle-checkbox'
