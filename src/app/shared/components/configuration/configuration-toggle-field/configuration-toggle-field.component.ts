@@ -35,6 +35,8 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   AppName = AppName;
 
+  isConfigToggleLeftAligned = brandingFeatureConfig.qbdDirect.configToggleLeftAligned;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;

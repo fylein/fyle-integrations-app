@@ -1,9 +1,9 @@
 <div>
-    <div class="info-label">
+    <div class="info-label" [ngClass]="brandingStyle.configuration.infoLabelBackground">
         <div *ngIf="showIcon">
-            <app-svg-icon [svgSource]="'info-circle-fill-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-info'"></app-svg-icon>
+            <app-svg-icon [svgSource]="'info-circle-fill-medium'" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="brandingStyle.configuration.infoLabelIcon"></app-svg-icon>
         </div>
-        <div class="info-label-text">
+        <div [ngClass]="brandingStyle.configuration.infoLabelText">
             <p>{{infoText}}</p>
         </div>
     </div>

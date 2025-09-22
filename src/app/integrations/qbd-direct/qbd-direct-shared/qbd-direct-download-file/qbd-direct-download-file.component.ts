@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from "../../../../shared/shared.module";
 import { QbdDirectSharedComponent } from '../qbd-direct-shared.component';
 import { CardModule } from 'primeng/card';
-import { AppName, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
-import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbd-direct-download-file',
@@ -34,6 +34,12 @@ export class QbdDirectDownloadFileComponent {
   @Output() manualDownload = new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   brandingStyle = brandingStyle;
 

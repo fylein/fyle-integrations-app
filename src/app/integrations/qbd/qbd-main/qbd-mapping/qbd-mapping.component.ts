@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
@@ -16,6 +16,8 @@ export class QbdMappingComponent implements OnInit {
   activeModule: MenuItem;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router,

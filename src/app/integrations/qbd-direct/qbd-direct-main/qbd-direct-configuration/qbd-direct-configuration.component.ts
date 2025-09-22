@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,22 +17,22 @@ export class QbdDirectConfigurationComponent {
 
   modules: MenuItem[] = [];
 
-  activeModule: MenuItem;
-
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(private translocoService: TranslocoService) {
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  constructor(private translocoService: TranslocoService, private router: Router) {
     this.modules = [
       {label: this.translocoService.translate('qbd_direct.configuration.exportSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/export_settings'},
       {label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/import_settings'},
       {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings'}
     ];
 
-    this.activeModule = this.modules[0];
+    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }
