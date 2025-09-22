@@ -485,7 +485,28 @@
     "customFieldCreateandSave": "Create and save",
     "currentDate": "Export date",
     "loader": {
-      "defaultLabel" : "Loading..."
+      "defaultLabel": "Loading..."
     }
+  },
+  "qbdDirectOnboardingPreRequisite": {
+    "learnMore": "Learn more",
+    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
+  },
+  "qbdDirectDownloadFile": {
+    "enterCompanyFilePathTitle": "Enter company file path",
+    "companyFilePathHelpText": "Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.",
+    "findPathVideoTitle": "Where to find company file path?",
+    "downloadWillBegin": "Your download will begin"
+  },
+  "qbdDirectSetupConnection": {
+    "usePassword": "Use this password to set up the connection",
+    "updateSelectedTitleFirst": "Click on ‘",
+    "updateSelectedTitleMiddle": "Update Selected",
+    "updateSelectedTitleLast": "’ on QuickBooks Web Connector",
+    "openIntegrationFilePart2": " using QuickBooks Web Connector",
+    "connecting": "Connecting to QuickBooks Desktop..."
+  },
+  "qbdDirectDataSync": {
+    "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values."
   }
 }

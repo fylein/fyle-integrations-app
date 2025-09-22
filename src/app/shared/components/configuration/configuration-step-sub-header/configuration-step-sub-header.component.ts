@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
+import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-step-sub-header',
@@ -15,6 +16,8 @@ export class ConfigurationStepSubHeaderComponent implements OnInit {
   @Input() showPreview: boolean = false;
 
   @Output() isPreviewClick = new EventEmitter();
+
+  brandingStyle = brandingStyle;
 
   constructor() { }
 

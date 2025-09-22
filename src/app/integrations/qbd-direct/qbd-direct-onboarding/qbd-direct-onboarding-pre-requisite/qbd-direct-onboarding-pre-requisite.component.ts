@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingKbArticles, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingKbArticles, brandingStyle, brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDDirectInteractionType, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -51,6 +51,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,
@@ -70,7 +72,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         id: 2,
         label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenLabel'),
         caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.keepCompanyFileOpenCaption', { brandName: brandingConfig.brandName }),
-        iconName: 'folder',
+        iconName: 'expand',
         state: QBDPreRequisiteState.INCOMPLETE
       },
       {

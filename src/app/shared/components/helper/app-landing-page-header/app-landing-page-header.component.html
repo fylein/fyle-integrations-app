@@ -1,20 +1,20 @@
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div class="tw-p-24-px tw-text-slightly-normal-text-color">
+<div class="tw-p-24-px tw-text-slightly-normal-text-color" [ngClass]="brandingStyle.qbd_direct.onboarding.headerStyle">
     <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
                 <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
                     <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
                 </div>
-                <div class="tw-pl-16-px tw-flex tw-flex-col">
+                <div class="tw-pl-16-px tw-flex tw-flex-col" [ngClass]="brandingStyle.qbd_direct.onboarding.headerCenterContent">
                     <div class="tw-flex tw-items-center tw-pt-6-px">
-                        <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ uiExposedAppName }}</p>
+                        <p class="tw-text-text-primary" [ngClass]="brandingStyle.qbd_direct.onboarding.headerTopText">{{ uiExposedAppName }}</p>
                         <div>
                             <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'appLandingPageHeader.syncDataTooltip' | transloco" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
                         </div>
                     </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-text-14-px tw-font-400 tw-text-pretty">
+                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.headerDescriptionText">
                         {{ appDescription }}
                         <a *ngIf="redirectLink"
                             class="link tw-w-fit tw-inline-flex tw-items-center tw-pl-2-px"
@@ -44,7 +44,12 @@
                         @if(brandingFeatureConfig.hasAssistedSetupSupport){
                         <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
                         }
-                        <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+                        
+                        @if(brandingFeatureConfig.isDashboardButtonOutlined) {
+                         <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+                        } @else {
+                            <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+                        }
                     }
 
                     @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)){

@@ -1626,15 +1626,12 @@
   "qbdDirectDataSync": {
     "stepNumber": "3",
     "title": "Data sync",
-    "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values.",
     "loadingState": "Loading"
   },
   "qbdDirectOnboardingPreRequisite": {
-    "learnMore": "Learn more",
     "done": "Done",
     "markAsDone": "Mark as done",
     "installWebConnectorLabel": "Install QuickBooks Web Connector",
-    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.",
     "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
     "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
     "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
@@ -1655,18 +1652,15 @@
   },
   "qbdDirectDownloadFile": {
     "downloadIntegrationFileTitle": "Download the integration file",
-    "enterCompanyFilePathTitle": "Enter company file path",
-    "companyFilePathHelpText": "Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.",
     "companyFilePathPlaceholder": "Example: C:\\Users\\[Username]\\Documents\\QuickBooks",
     "invalidPathError": "Enter a valid company file path.",
     "downloadButtonLabel": "Download",
-    "findPathVideoTitle": "Where to find company file path?",
     "loadingText": "Loading",
-    "downloadWillBegin": "Your download will begin",
     "ifDownloadDidNotStart": "If it didn’t start, ",
     "downloadManuallyLink": "download the integration file manually",
     "notRightFilePrompt": "Not the right file? ",
-    "tryAgainLink": "Try again."
+    "tryAgainLink": "Try again.",
+    "webConnectorVideoTitle": "How to open the integration file in Web Connector."
   },
   "qbdDirectExportSettings": {
     "exportModule": "export module",
@@ -1727,14 +1721,10 @@
     "title": "Set up QuickBooks Web Connector",
     "openIntegrationFilePart1": "Open the ",
     "integrationFileLinkText": "integration file",
-    "openIntegrationFilePart2": " using QuickBooks Web Connector",
     "watchVideoGuidance": "Watch the video for guidance on opening the downloaded integration file in QuickBooks Web Connector.",
-    "usePassword": "Use this password to set up the connection",
-    "updateSelectedTitle": "Click on ‘Update Selected’ on QuickBooks Web Connector",
     "updateSelectedDescription": "Click the 'Update Selected' option to initiate a connection between {{brandName}} and QuickBooks Desktop",
     "done": "Done",
     "markAsDone": "Mark as done",
-    "connecting": "Connecting to QuickBooks Desktop...",
     "success": "Success!",
     "connected": "You're now connected to QuickBooks Desktop."
   },
