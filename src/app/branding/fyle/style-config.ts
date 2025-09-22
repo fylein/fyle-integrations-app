@@ -43,6 +43,16 @@ export const fyleStyles = {
            iconColorHover: 'tw-text-white',
            iconColorDisabled: 'tw-text-text-placeholder'
         },
+        tertiary: {
+            class: 'tw-h-10 tw-rounded-32-px tw-font-primary tw-text-size-14-px hover:tw-bg-utility-major-50',
+            active: 'tw-bg-white focus:tw-shadow-focused',
+            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+            progress: '',
+            loader: '',
+            iconColorActive: 'tw-text-green-text-color',
+            iconColorHover: 'tw-text-green-text-color',
+            iconColorDisabled: 'tw-text-text-placeholder'
+        },
         dialog: {
             cancel: ''
         }
