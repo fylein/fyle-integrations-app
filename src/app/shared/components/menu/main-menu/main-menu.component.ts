@@ -38,6 +38,10 @@ export class MainMenuComponent implements OnInit {
 
   @Input() toolTipText: string;
 
+  @Input() styleClasses: string = '';
+
+  @Input() useMainMenuForSubmenu: boolean = false;
+
   @Output() refreshDimensionClick = new EventEmitter<boolean>();
 
   @Output() disconnectClick = new EventEmitter();

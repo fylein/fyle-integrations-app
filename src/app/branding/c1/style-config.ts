@@ -1,10 +1,16 @@
 export const c1Styles = {
     common: {
         configurationContents: 'tw-mx-60-px tw-shadow-shadow-level-1',
+        configurationContentsDashboard: '',
         mainComponentPadding: 'tw-px-60-px',
         mainComponentShadow: 'tw-shadow-shadow-level-1',
         inputLabelTextStyle: 'tw-pt-4-px',
-        configurationBrandingClass: 'co'
+        configurationBrandingClass: 'co',
+        paginatorContainer: 'tw-rounded-b-8-px',
+        dialogHeaderText: 'tw-text-text-primary tw-text-20-px tw-font-600 tw-line-height-20',
+        dialogSubDescriptionContainer: 'tw-flex tw-justify-start tw-px-24-px tw-pt-24-px tw-pb-16-px tw-border-separator tw-border-t',
+        dialogDescriptionText: 'tw-hidden',
+        dialogSubDescriptionText: 'tw-text-text-primary tw-text-14-px tw-font-400'
     },
     mapping: {
         mappingHeaderBoxShadow: 'tw-shadow-shadow-level-1'
@@ -14,13 +20,50 @@ export const c1Styles = {
         importFieldDependentField: 'tw-pr-24-px tw-pl-[58px]',
         importFieldDependentFieldSvg: 'tw-pt-42-px',
         importFieldDropDownText: '!tw-font-600 tw-text-12-px',
-        stepHeaderH3Text: 'tw-text-18-px',
-        searchIconFocus: 'tw-text-search-focused-filled-border'
+        stepHeaderH3Text: 'tw-text-16-px',
+        stepDescriptionText: 'tw-text-12-px text-secondary-neutral',
+        searchIconFocus: 'tw-text-search-focused-filled-border',
+        settingsContainer: 'tw-rounded-8-px',
+        settingsHeader: 'tw-p-24-px',
+        infoLabelBackground: 'tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-bg-blue',
+        infoLabelIcon: 'tw-text-icon-blue',
+        infoLabelText: 'tw-text-12-px tw-font-400 tw-self-center tw-text-text-primary'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
         dashboardExportBtn: 'tw-rounded-4-px',
-        dashboardMainMenu: 'tw-items-center'
+        dashboardMainMenu: 'tw-items-center',
+        exportSummaryHeaderText: 'tw-font-600 tw-text-14-px',
+        exportSummaryDescriptionText: 'tw-font-400 tw-text-text-primary',
+        exportSummaryViewText: 'link tw-text-text-primary tw-font-400',
+        exportSummaryContentCard: 'tw-px-0 tw-py-0',
+        exportSummaryCenterContent: 'tw-mt-12-px tw-mb-16-px tw-border-b tw-border-tertiary-lighter',
+        exportSummaryIcon: '',
+        exportSummaryCountText: 'tw--ml-10-px',
+        exportSectionContainer: 'tw-justify-center',
+        exportSectionHeaderText: 'tw-text-14-px tw-font-600 tw-text-text-primary',
+        exportSectionDescriptionText: 'tw-text-12-px tw-font-400 tw-text-sub-text-color',
+        exportSectionDescriptionSubText: '',
+        exportErrorSectionHeaderText: '!tw-font-600 !tw-text-14-px',
+        exportErrorSubTextContainer: 'tw-rounded-4-px tw-py-8-px tw-px-12-px tw-bg-[#EBF8FF]',
+        exportErrorSubTextHeader: 'tw-text-12-px !tw-font-600',
+        exportErrorSubTextDescription: '!tw-text-text-primary tw-text-12-px !tw-font-400 tw-pt-4-px',
+        exportErrorTextHeader: 'tw-text-12-px !tw-font-600 tw-text-text-primary',
+        exportErrorTextDescription: '!tw-text-text-primary tw-text-12-px tw-pt-4-px !tw-font-400 !tw-leading-4',
+        exportErrorCard: 'tw-flex tw-justify-between tw-items-start tw-gap-4 tw-border-solid tw-border-1-px tw-border-border-tertiary tw-rounded-4-px tw-py-8-px tw-px-12-px',
+        exportErrorCardButton: '',
+        exportErrorAccountingDescription: '!tw-text-text-primary tw-pt-4-px',
+        exportErrorDescriptionText: 'tw-text-text-primary',
+        zeroStateHeaderText: 'tw-font-600',
+        zeroStateDescriptionText: 'tw-pt-20-px tw-max-w-xs',
+        subMenuContainer: 'tw-px-24-px tw-rounded-t-8-px',
+        mapping: {
+            background: 'tw-bg-white tw-rounded-8-px tw-shadow-md',
+            mainComponentCard: 'tw-rounded-8-px tw-bg-white',
+            countCardsContainer: 'tw-mx-24-px tw-mt-24-px tw--mb-20-px',
+            countText: 'tw-text-20-px tw-font-600 tw-pt-2-px',
+            headerCard: 'tw-bg-white tw-shadow-mapping-card'
+        }
     },
     checkbok: {
         theme: 'co-checkbox'

@@ -170,6 +170,7 @@ const borderColors = {
   'border-focus': 'var(--border-focus)',
   'border-grey': 'var(--border-grey)',
   'border-blue': 'var(--border-blue)',
+  'tertiary-lighter': 'var(--tertiary-lighter)',
 };
 
 const colors = {
@@ -192,6 +193,7 @@ const colors = {
   //regular bg'
   'bg-success': 'var(--bg-success)',
   'bg-info': 'var(--bg-info)',
+  'bg-blue': 'var(--bg-blue)',
   'bg-warning': 'var(--bg-warning)',
   'bg-danger': 'var(--bg-danger)',
   'bg-danger-dark': 'var(--bg-danger-dark)',
@@ -257,6 +259,7 @@ const textColors = {
   'text-muted-light': 'var(--text-muted-light)',
   'text-muted': 'var(--text-muted)',
   'text-toast-color': 'var(--text-toast-color)',
+  'text-secondary-neutral': 'var(--text-secondary-neutral)',
 
   //link
   'link-primary': 'var(--link-primary)',
@@ -1460,6 +1463,7 @@ module.exports = {
         'navbar-menu': '0px 5px 5px 0px rgba(0, 20, 30, 0.2), 0px 10px 10px 0px rgba(0, 20, 30, 0.1)',
         'focused': '0px 0px 0px 3px var(--semantic-focus-500), 0px 0px 0px 6px black',
         'onboarding-card': '0 2px 8px 0 rgba(0, 0, 0, 0.20)',
+        'mapping-card': '0 1px 4px 0 rgba(0, 0, 0, 0.20)',
         ...shadow,
       },
       dropShadow: {},

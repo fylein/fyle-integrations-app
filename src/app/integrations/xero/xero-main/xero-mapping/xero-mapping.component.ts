@@ -27,6 +27,8 @@ export class XeroMappingComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private mappingService: MappingService,
     private router: Router,

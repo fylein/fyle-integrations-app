@@ -59,6 +59,7 @@
     --text-tertiary: #{$grey-55};
     --text-warning: #{$yellow-55};
     --text-white: #{$white};
+    --text-secondary-neutral: #{$grey-65};
 
     // Icon
     --icon-brand-disable: #{$blue-10};
@@ -120,6 +121,7 @@
     --border-white: #{$white};
     --border-grey: #{$grey-09};
     --border-blue: #{$blue-icon};
+    --tertiary-lighter: #{$tertiary-lighter};
 
     // Spacing
     --spacing-0: 0px;
@@ -201,6 +203,7 @@
     --bg-info: #{$blue-45};
     --bg-success: #{$green-45};
     --bg-warning: #{$yellow-20};
+    --bg-blue: #{$blue-info};
 
     // Link
     --link-hover: #{$blue-65};
