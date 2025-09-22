@@ -22,8 +22,6 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() appName: string;
 
-  @Input() isPostOnboarding: boolean = false;
-
   @Output() refreshDimension = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;

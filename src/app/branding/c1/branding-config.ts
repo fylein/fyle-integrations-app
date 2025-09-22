@@ -35,7 +35,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         mapEmployees: false,
         showOptionalTextInsteadOfAsterisk: true,
         useCustomIcon: true,
-        displayAppLogoInDashboard: false,
+        displayAppLogoInDashboard: true,
         contentVersion: 'v2',
         useLandingV2: false,
         exportSettings: {

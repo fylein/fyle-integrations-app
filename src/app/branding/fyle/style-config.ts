@@ -40,6 +40,7 @@ export const fyleStyles = {
         exportSummaryCenterContent: 'tw-hidden',
         exportSummaryIcon: 'tw-mr-16-px',
         exportSummaryCountText: 'tw-w-80-px',
+        exportSectionContainer: 'tw-justify-between',
         exportSectionHeaderText: 'tw-text-20-px tw-font-500 tw-text-text-primary',
         exportSectionDescriptionText: 'tw-text-14-px tw-pt-8-px tw-font-400 tw-text-text-secondary',
         exportSectionDescriptionSubText: 'tw-pt-4-px',

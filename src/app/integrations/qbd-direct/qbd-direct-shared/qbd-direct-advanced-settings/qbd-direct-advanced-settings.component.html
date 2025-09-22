@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
+<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
         <app-configuration-step-header
             [headerText]="'qbd_direct.configuration.advancedSettings.stepName' | transloco"
@@ -9,7 +9,6 @@
             [showSyncButton]="isOnboarding"
             [appName]="appName.QBD_DIRECT"
             [redirectLink]="redirectLink"
-            [isPostOnboarding]="true"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
     </div>
