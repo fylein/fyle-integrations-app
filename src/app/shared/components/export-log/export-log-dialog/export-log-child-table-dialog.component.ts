@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { environment } from 'src/environments/environment';
+import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-export-log-child-table-dialog',
@@ -15,6 +16,8 @@ export class ExportLogChildTableDialogComponent implements OnInit {
   @Input() expenses: Expense[] = [];
 
   @Output() hideChildTable = new EventEmitter<void>();
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private windowService: WindowService

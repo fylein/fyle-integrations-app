@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 export type LoaderSpinnerVariants = 'neutral' | 'action';
 export type LoaderSpinnerSizes = 'horizontal-sm' | 'vertical-sm' | 'vertical-md' | 'vertical-lg' | 'vertical-xl';
@@ -15,6 +15,8 @@ export class LoaderComponent implements OnInit {
   constructor(private translocoService: TranslocoService) {}
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingConfig = brandingConfig;
 
   @Input() styleClass: string = '!tw-w-50-px !tw-h-50-px spinner-default';
 

@@ -1656,7 +1656,6 @@
     "invalidPathError": "Enter a valid company file path.",
     "downloadButtonLabel": "Download",
     "loadingText": "Loading",
-    "downloadWillBegin": "Your download will begin",
     "ifDownloadDidNotStart": "If it didn’t start, ",
     "downloadManuallyLink": "download the integration file manually",
     "notRightFilePrompt": "Not the right file? ",
@@ -1726,7 +1725,6 @@
     "updateSelectedDescription": "Click the 'Update Selected' option to initiate a connection between {{brandName}} and QuickBooks Desktop",
     "done": "Done",
     "markAsDone": "Mark as done",
-    "connecting": "Connecting to QuickBooks Desktop...",
     "success": "Success!",
     "connected": "You're now connected to QuickBooks Desktop."
   },
