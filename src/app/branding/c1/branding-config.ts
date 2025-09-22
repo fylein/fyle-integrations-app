@@ -19,7 +19,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: false,
     hasAssistedSetupSupport: false,
     isDashboardButtonOutlined: false,
-    isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
     footerButtonsRightAligned: true,

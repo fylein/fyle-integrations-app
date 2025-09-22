@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 export type LoaderSpinnerVariants = 'neutral' | 'action';
 export type LoaderSpinnerSizes = 'horizontal-sm' | 'vertical-sm' | 'vertical-md' | 'vertical-lg' | 'vertical-xl';
@@ -16,9 +16,9 @@ export class LoaderComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  @Input() styleClass: string = '!tw-w-50-px !tw-h-50-px spinner-default';
+  readonly brandingConfig = brandingConfig;
 
-  @Input() isQbdDirectConnector: boolean;
+  @Input() styleClass: string = '!tw-w-50-px !tw-h-50-px spinner-default';
 
   /** Text label below spinner */
   @Input() spinnerLabel: string = this.translocoService.translate('common.loader.defaultLabel');

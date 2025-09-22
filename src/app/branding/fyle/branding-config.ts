@@ -19,7 +19,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: true,
     hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
-    isPrimengLoaderEnabled: false,
     shouldShowOnboardingYouTubeVideo: false,
     disableTextColorWhenChecked: true,
     footerButtonsRightAligned: false,

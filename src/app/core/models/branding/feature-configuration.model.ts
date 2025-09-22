@@ -12,7 +12,6 @@ export type FeatureConfiguration = {
         loginToAllConnectedApps: boolean;
         hasAssistedSetupSupport: boolean;
         isDashboardButtonOutlined: boolean;
-        isPrimengLoaderEnabled: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
         disableTextColorWhenChecked: boolean,
         footerButtonsRightAligned: boolean,
