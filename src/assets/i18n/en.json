@@ -7,8 +7,7 @@
     "syncButtonTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export",
     "syncButtonText": "Sync",
     "refreshDataTooltip": "If you are unable to find a required value, click the sync button to instantly retrieve the latest values from {{appName}}",
-    "refreshDataButtonText": "Refresh data",
-    "headerInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm."
+    "refreshDataButtonText": "Refresh data"
   },
   "configurationStepSubHeader": {
     "clickHere": "Click here",
@@ -2370,6 +2369,20 @@
     "continue": "Save and continue",
     "configurationHeaderText": "Prerequisites",
     "configurationSubHeaderText": "To get started, add a few files from Sage 50. This will help set up your integration quickly and accurately.",
-    "configurationHeaderInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm."
+    "configurationHeaderInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm.",
+    "chartOfAccountsLabel": "Upload Chart of accounts",
+    "chartOfAccountsSublabel": "This helps set up your integration and is required for all exports.",
+    "vendorLabel": "Upload Vendors",
+    "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
+  },
+  "configurationCsvUploadField": {
+    "csvUpload": "CSV upload icon",
+    "uploadCSV": "Upload CSV"
+  },
+  "csvUploadButton": {
+    "uploadButton": "Upload CSV",
+    "reuploadTooltip": "Re-upload CSV",
+    "reuploadButton": "Re-upload",
+    "csvUpload": "CSV File Icon"
   }
 }
