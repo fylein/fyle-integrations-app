@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-zero-state-with-illustration',
@@ -13,6 +13,8 @@ export class ZeroStateWithIllustrationComponent implements OnInit {
   @Input() subText: string;
 
   illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor() { }
 
