@@ -2377,7 +2377,7 @@
   },
   "configurationCsvUploadField": {
     "csvUpload": "CSV upload icon",
-    "uploadCSV": "Upload CSV"
+    "header": "Upload CSV for {{dimension}}"
   },
   "csvUploadButton": {
     "uploadButton": "Upload CSV",

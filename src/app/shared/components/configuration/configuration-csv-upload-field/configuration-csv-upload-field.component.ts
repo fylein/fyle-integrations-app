@@ -1,16 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TranslocoModule } from '@jsverse/transloco';
-import { Sage300SharedModule } from "src/app/integrations/sage300/sage300-shared/sage300-shared.module";
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonSize, ButtonType, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-configuration-csv-upload-field',
   standalone: true,
-  imports: [TranslocoModule, Sage300SharedModule, CsvUploadButtonComponent],
+  imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
   providers: [DialogService],
   templateUrl: './configuration-csv-upload-field.component.html',
   styleUrl: './configuration-csv-upload-field.component.scss'
@@ -38,13 +38,14 @@ export class ConfigurationCsvUploadFieldComponent {
   ref?: DynamicDialogRef;
 
   constructor(
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    public translocoService: TranslocoService
   ) { }
 
   handleUploadClick() {
     const displayName = sage50AttributeDisplayNames[this.attributeType];
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
-      header: `Upload CSV for ${displayName}`,
+      header: this.translocoService.translate('configurationCsvUploadField.header', { dimension: displayName }),
       data: {
         attributeType: this.attributeType,
         articleLink: this.articleLink,
