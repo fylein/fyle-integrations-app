@@ -7,8 +7,7 @@
     "syncButtonTooltip": "The integration will import all the newly updated {{appName}} dimensions and {{brandName}} expenses in the configured state of export",
     "syncButtonText": "Sync",
     "refreshDataTooltip": "If you are unable to find a required value, click the sync button to instantly retrieve the latest values from {{appName}}",
-    "refreshDataButtonText": "Refresh data",
-    "headerInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm."
+    "refreshDataButtonText": "Refresh data"
   },
   "configurationStepSubHeader": {
     "clickHere": "Click here",
@@ -2379,5 +2378,11 @@
   "configurationCsvUploadField": {
     "csvUpload": "CSV upload icon",
     "uploadCSV": "Upload CSV"
+  },
+  "csvUploadButton": {
+    "uploadButton": "Upload CSV",
+    "reuploadTooltip": "Re-upload CSV",
+    "reuploadButton": "Re-upload",
+    "csvUpload": "CSV File Icon"
   }
 }
