@@ -34,7 +34,7 @@ export const fyleStyles = {
            iconColorDisabled: 'tw-text-text-placeholder'
         },
         secondary: {
-           class: 'tw-h-10 tw-border-2 tw-rounded-32-px tw-font-primary tw-text-size-14-px',
+           class: 'tw-h-10 tw-border-2 tw-rounded-32-px tw-font-primary tw-text-14-px',
            active: 'hover:tw-border-border-green hover:tw-bg-bg-green hover:tw-text-white tw-text-green-text-color tw-bg-white tw-border-mandatory-field-color focus:tw-border-3-px focus:tw-ring-[4px] focus:tw-ring-black focus:tw-border-border-focus',
            disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
            progress: '',
@@ -44,7 +44,7 @@ export const fyleStyles = {
            iconColorDisabled: 'tw-text-text-placeholder'
         },
         tertiary: {
-            class: 'tw-h-10 tw-rounded-32-px tw-font-primary tw-text-size-14-px hover:tw-bg-utility-major-50',
+            class: 'tw-h-10 tw-rounded-32-px tw-font-primary tw-text-14-px hover:tw-bg-utility-major-50',
             active: 'tw-bg-white focus:tw-shadow-focused',
             disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
             progress: '',

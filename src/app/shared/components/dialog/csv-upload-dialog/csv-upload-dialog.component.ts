@@ -17,6 +17,10 @@ export class CsvUploadDialogComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly ButtonType = ButtonType;
+
+  readonly ButtonSize = ButtonSize;
+
   data!: {
     attributeType: Sage50AttributeType,
     articleLink: string,
@@ -27,9 +31,7 @@ export class CsvUploadDialogComponent implements OnInit {
 
   safeVideoURL: SafeResourceUrl;
 
-  ButtonType = ButtonType;
-
-  ButtonSize = ButtonSize;
+  state: 'PROMPT' | 'UPLOADING' | 'ERROR' = 'PROMPT';
 
   constructor(
     public config: DynamicDialogConfig,
@@ -39,6 +41,12 @@ export class CsvUploadDialogComponent implements OnInit {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  uploadFile(): void {
+  }
+
+  downloadErrorLog(): void {
   }
 
   ngOnInit(): void {

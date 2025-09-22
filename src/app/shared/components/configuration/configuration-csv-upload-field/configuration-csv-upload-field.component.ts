@@ -43,9 +43,8 @@ export class ConfigurationCsvUploadFieldComponent {
   ) { }
 
   handleUploadClick() {
-    const displayName = sage50AttributeDisplayNames[this.attributeType];
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
-      header: this.translocoService.translate('configurationCsvUploadField.header', { dimension: displayName }),
+      showHeader: false,
       data: {
         attributeType: this.attributeType,
         articleLink: this.articleLink,

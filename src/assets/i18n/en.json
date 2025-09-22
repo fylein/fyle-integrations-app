@@ -2376,8 +2376,7 @@
     "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
   },
   "configurationCsvUploadField": {
-    "csvUpload": "CSV upload icon",
-    "header": "Upload CSV for {{dimension}}"
+    "csvUpload": "CSV upload icon"
   },
   "csvUploadButton": {
     "uploadButton": "Upload CSV",
@@ -2386,10 +2385,16 @@
     "csvUpload": "CSV File Icon"
   },
   "csvUploadDialog": {
-    "cancel": "Cancel",
-    "header": "Upload CSV or drag & drop your file",
-    "instructions": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "header": "Upload CSV for {{dimension}}",
+    "instructionsHeader": "Upload CSV or drag & drop your file",
+    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "errorHeader": "Error found in CSV for {{dimension}}",
+    "errorInstructionsHeader": "How do I correct the errors?",
+    "errorInstructionsContent": "Download the error log & upload the .csv again after fixing the errors",
     "readMore": "Read more",
-    "uploadButton": "Upload .csv file"
+    "uploadButton": "Upload .csv file",
+    "downloadErrorLogButton": "Download error log",
+    "cancel": "Cancel",
+    "processingFile": "Processing your file..."
   }
 }
