@@ -20,6 +20,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     isDashboardButtonOutlined: false,
     isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
+    shouldShowXeroPreviewImage: true,
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,

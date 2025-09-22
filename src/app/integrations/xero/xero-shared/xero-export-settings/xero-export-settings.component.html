@@ -124,7 +124,7 @@
                             [placeholder]="'xeroExportSettings.selectExpenseExportTypePlaceholder' | transloco"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
-                            [showExportPreview]="true"
+                            [showExportPreview]="brandingFeatureConfig.shouldShowXeroPreviewImage"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="true">
                         </app-configuration-select-field>
