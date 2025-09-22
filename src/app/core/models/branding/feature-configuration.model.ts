@@ -13,6 +13,7 @@ export type FeatureConfiguration = {
         isDashboardButtonOutlined: boolean;
         isPrimengLoaderEnabled: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
+        shouldShowXeroPreviewImage: boolean,
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
