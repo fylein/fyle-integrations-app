@@ -20,6 +20,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     hasAssistedSetupSupport: false,
     isDashboardButtonOutlined: false,
     shouldShowOnboardingYouTubeVideo: true,
+    shouldShowXeroPreviewImage: true,
     disableTextColorWhenChecked: false,
     footerButtonsRightAligned: true,
     useMainMenuForSubmenu: true,

@@ -13,6 +13,7 @@ export type FeatureConfiguration = {
         hasAssistedSetupSupport: boolean;
         isDashboardButtonOutlined: boolean;
         shouldShowOnboardingYouTubeVideo: boolean,
+        shouldShowXeroPreviewImage: boolean,
         disableTextColorWhenChecked: boolean,
         footerButtonsRightAligned: boolean,
         useMainMenuForSubmenu: boolean,
