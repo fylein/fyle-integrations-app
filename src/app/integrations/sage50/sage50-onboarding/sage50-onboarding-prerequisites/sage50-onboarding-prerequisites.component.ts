@@ -5,7 +5,7 @@ import { AppName, Sage50AttributeType, Sage50OnboardingState } from 'src/app/cor
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { CommonModule } from '@angular/common';
-import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { Router } from '@angular/router';
 import { ConfigurationCsvUploadFieldComponent } from "src/app/shared/components/configuration/configuration-csv-upload-field/configuration-csv-upload-field.component";
 
@@ -34,6 +34,8 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   readonly brandingKbArticles = brandingKbArticles;
+
+  readonly brandingDemoVideoLinks = brandingDemoVideoLinks;
 
   readonly Sage50AttributeType = Sage50AttributeType;
 

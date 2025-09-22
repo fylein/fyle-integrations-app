@@ -1,0 +1,48 @@
+<div class="tw-w-[770px] tw-flex tw-flex-col">
+
+    <!-- Content -->
+    <div class="tw-flex tw-justify-around tw-border-t tw-border-b tw-border-border-tertiary tw-p-24-px">
+        <iframe class="tw-rounded-[12px]" height="195" width="340" [src]="safeVideoURL" frameborder="0"></iframe>
+        <div class="custom-dashed-border"></div>
+
+        <!-- Right-side section - text content & upload button -->
+        <div class="tw-flex tw-flex-col tw-gap-24-px tw-text-center tw-justify-center tw-items-center tw-leading-1.4">
+            <div class="tw-max-w-[266px]">
+                <h4 class="tw-text-16-px tw-font-500 tw-text-text-primary">{{ 'csvUploadDialog.header' | transloco }}</h4>
+                <p class="tw-text-16-px tw-text-text-secondary tw-pt-8-px">{{ 'csvUploadDialog.instructions' | transloco: { dimension: displayName } }}</p>
+                @if (data.articleLink) {
+                    <div class="tw-pt-2-px">
+                        <a class="link tw-inline-flex tw-items-center tw-gap-[4px]" [href]="data.articleLink" target="_blank">
+                            {{ 'csvUploadDialog.readMore' | transloco}}
+                            @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-relative tw-top-[3px] tw-w-fit"></app-svg-icon>
+                            }
+                        </a>
+                    </div>
+                }
+            </div>
+
+            <app-button
+                [buttonText]="'csvUploadDialog.uploadButton' | transloco"
+                [svgSource]="'upload'"
+                [iconSize]="'20px'"
+                [iconViewbox]="'0 0 16 16'"
+                [isIconLeftSide]="true"
+                [buttonType]="ButtonType.PRIMARY"
+                [buttonSize]="ButtonSize.MEDIUM"
+                (buttonClick)="closeDialog()"
+                [styleClasses]="'tw-w-[306px]'"
+            ></app-button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px">
+        <app-button
+            [buttonText]="'csvUploadDialog.cancel' | transloco"
+            [buttonType]="ButtonType.SECONDARY"
+            [buttonSize]="ButtonSize.MEDIUM"
+            (buttonClick)="closeDialog()"
+        ></app-button>
+    </div>
+</div>

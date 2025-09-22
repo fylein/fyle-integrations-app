@@ -2384,5 +2384,12 @@
     "reuploadTooltip": "Re-upload CSV",
     "reuploadButton": "Re-upload",
     "csvUpload": "CSV File Icon"
+  },
+  "csvUploadDialog": {
+    "cancel": "Cancel",
+    "header": "Upload CSV or drag & drop your file",
+    "instructions": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "readMore": "Read more",
+    "uploadButton": "Upload .csv file"
   }
 }
