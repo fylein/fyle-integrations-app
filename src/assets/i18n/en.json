@@ -2370,10 +2370,10 @@
     "configurationHeaderText": "Prerequisites",
     "configurationSubHeaderText": "To get started, add a few files from Sage 50. This will help set up your integration quickly and accurately.",
     "configurationHeaderInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm.",
-    "ChartOfAccountsLabel": "Upload Chart of accounts",
-    "ChartOfAccountsSublabel": "This helps set up your integration and is required for all exports.",
-    "VendorLabel": "Upload Vendors",
-    "VendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
+    "chartOfAccountsLabel": "Upload Chart of accounts",
+    "chartOfAccountsSublabel": "This helps set up your integration and is required for all exports.",
+    "vendorLabel": "Upload Vendors",
+    "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
   },
   "configurationCsvUploadField": {
     "csvUpload": "CSV upload icon",
