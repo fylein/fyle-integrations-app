@@ -23,6 +23,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     shouldShowOnboardingYouTubeVideo: false,
     disableTextColorWhenChecked: true,
     footerButtonsRightAligned: false,
+    useMainMenuForSubmenu: false,
     qbdDirect: {
         showStepStateAsIcons: false,
         showStepStateDivider: false,

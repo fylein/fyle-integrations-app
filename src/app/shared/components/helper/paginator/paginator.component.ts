@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 @Component({
@@ -24,6 +24,8 @@ export class PaginatorComponent implements OnInit {
   @Input() dropDownValue: number = 10;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   totalPages: number;
 

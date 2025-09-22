@@ -23,6 +23,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: false,
     footerButtonsRightAligned: true,
+    useMainMenuForSubmenu: true,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
@@ -34,7 +35,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         mapEmployees: false,
         showOptionalTextInsteadOfAsterisk: true,
         useCustomIcon: true,
-        displayAppLogoInDashboard: true,
+        displayAppLogoInDashboard: false,
         contentVersion: 'v2',
         useLandingV2: false,
         exportSettings: {

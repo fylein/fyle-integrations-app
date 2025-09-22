@@ -1,4 +1,4 @@
-<div class="tw-flex tw-justify-between tw-items-center">
+<div class="tw-flex tw-justify-between tw-items-center" [ngClass]="brandingStyle.common.paginatorContainer">
     <div>
         <span *ngIf="pageType === PaginatorPage.DASHBOARD">{{ 'paginator.pageOfTotal' | transloco: { page: page, totalPages: totalPages } }}</span>
     </div>
