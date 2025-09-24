@@ -172,6 +172,10 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         this.exportSettingForm.controls.employeeFieldMapping.enable();
         this.exportSettingForm.controls.nameInJournalEntry.patchValue(NameInJournalEntry.EMPLOYEE);
       }
+
+      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.BILL) {
+          this.exportSettingForm.controls.splitExpenseGrouping.disable();
+      }
     });
     this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
         if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT ) {
