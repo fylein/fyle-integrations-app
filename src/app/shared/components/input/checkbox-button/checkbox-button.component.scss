@@ -35,7 +35,7 @@ input[type="checkbox"].co-checkbox:hover {
 }
 
 input[type="checkbox"].co-checkbox:checked {
-    @apply tw-bg-bg-success tw-border-checkbox-icon-selected-color #{!important};
+    @apply tw-bg-bg-success tw-border-none #{!important};
 }
 
 input[type="checkbox"].co-checkbox:checked::after {

@@ -504,7 +504,8 @@
     "updateSelectedTitleMiddle": "Update selected",
     "updateSelectedTitleLast": " in Web Connector",
     "openIntegrationFilePart2": " in QuickBooks Web Connector",
-    "connecting": "Connecting..."
+    "connecting": "Connecting...",
+    "success": "Connected to QuickBooks Desktop"
   },
   "qbdDirectDataSync": {
     "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."

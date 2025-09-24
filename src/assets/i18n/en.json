@@ -1725,7 +1725,6 @@
     "updateSelectedDescription": "Click the 'Update Selected' option to initiate a connection between {{brandName}} and QuickBooks Desktop",
     "done": "Done",
     "markAsDone": "Mark as done",
-    "success": "Success!",
     "connected": "You're now connected to QuickBooks Desktop."
   },
   "netsuiteExportLog": {

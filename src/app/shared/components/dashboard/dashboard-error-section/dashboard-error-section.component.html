@@ -25,7 +25,7 @@
                             </h5></div>
                             <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
-                                    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [styleClasses]="'tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
                                 </div>
                                 <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
-                                    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [styleClasses]="'tw-text-14-px'" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
                                 </div>
                                 <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
@@ -89,7 +89,7 @@
                             </h5></div>
                             <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                 <div>
-                                    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY"  [styleClasses]="'tw-text-14-px'" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
                                 </div>
                             </div>
                         </div>
