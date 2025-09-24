@@ -15,13 +15,13 @@
     <div>
         <form [formGroup]="advancedSettingsForm">
             <div class="tw-p-24-px">
-                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingAutomationCardHeader">
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.automationLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco">
                     </app-configuration-step-sub-header>
                 </div>
-                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingAutomationCardBody">
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco"
@@ -45,14 +45,14 @@
                     </div>
                 </div>
 
-                <div class="tw-mb-16-px">
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.otherPreferencesLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
 
-                <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px" *ngIf="isReimbursableExportTypePresent || isAutoCreateMerchantsAsVendorsFieldVisible()">
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody" *ngIf="isReimbursableExportTypePresent || isAutoCreateMerchantsAsVendorsFieldVisible()">
 
                     <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
                         [form]="advancedSettingsForm"
@@ -71,13 +71,13 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingCustomizationCardHeader">
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardHeader">
                     <app-configuration-step-sub-header
                         [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
                         [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
                     </app-configuration-step-sub-header>
                 </div>
-                <div class="tw-bg-white" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationAdvancedSettingCustomizationCardBody">
+                <div class="tw-bg-white" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody">
                     <app-configuration-multi-select
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-my-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
+                <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport || true">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco"

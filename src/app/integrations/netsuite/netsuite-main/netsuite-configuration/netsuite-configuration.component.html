@@ -1,10 +1,17 @@
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-84-px tw-w-[100%]"></div>
 <div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-84-px tw-w-[100%]"></div>
-<div class="tw-py-40-px page-layout-container">
+<div class="tw-py-40-px page-layout-container" [ngClass]="brandingFeatureConfig.useMainMenuForSubmenu ? brandingStyle.common.mainComponentPadding : ''">
+
+    <div [ngClass]="brandingStyle.dashboard.mapping.background">
+    @if (brandingFeatureConfig.useMainMenuForSubmenu) {
+        <app-main-menu [modules]="modules" [styleClasses]="brandingStyle.dashboard.subMenuContainer" [activeItem]="activeModule"></app-main-menu>
+    } @else {
     <div [ngClass]="brandingStyle.common.mainComponentPadding">
         <app-sub-menu [activeModule]="activeModule" [modules]="modules" ></app-sub-menu>
     </div>
+    }
     <div class="router-outlet-container">
         <router-outlet></router-outlet>
-    </div>
+    </div></div>
 </div>
+

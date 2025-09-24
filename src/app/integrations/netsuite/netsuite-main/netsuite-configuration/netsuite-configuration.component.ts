@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-netsuite-configuration',
@@ -20,7 +21,9 @@ export class NetsuiteConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(private translocoService: TranslocoService) { }
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  constructor(private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.modules = [
@@ -28,9 +31,8 @@ export class NetsuiteConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('netsuite.configuration.importSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/import_settings'},
       {label: this.translocoService.translate('netsuite.configuration.advancedSettings.stepName'), routerLink: '/integrations/netsuite/main/configuration/advanced_settings'}
     ];
-    // If (brandingConfig.brandId !== 'co') {
-    //   This.modules.push({label: 'Connection', routerLink: '/integrations/netsuite/main/configuration/connector'});
-    // }
+
+    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }

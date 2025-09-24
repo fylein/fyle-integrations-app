@@ -27,7 +27,14 @@ export const fyleStyles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-py-8-px tw-px-16-px tw-border tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border-separate',
         infoLabelIcon: 'tw-text-info',
-        infoLabelText: 'tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary'
+        infoLabelText: 'tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary',
+        configurationAdvancedSettingAutomationCardHeader: 'tw-mb-16-px',
+        configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border tw-rounded-lg tw-my-16-px',
+        configurationAdvancedSettingCustomizationCardHeader: 'tw-my-16-px',
+        configurationAdvancedSettingCustomizationCardBody: 'tw-mt-12-px tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
+        configurationAdvancedSettingNetsuiteCardBody: 'tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px',
+        configurationAdvancedSettingDefaultFieldCard: 'tw-mb-16-px',
+        configurationAdvancedSettingSingleCard: 'tw-rounded-12-px tw-border-border-tertiary tw-border'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm',
@@ -124,6 +131,10 @@ export const fyleStyles = {
             configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border tw-rounded-lg tw-my-16-px',
             configurationAdvancedSettingCustomizationCardHeader: 'tw-my-16-px',
             configurationAdvancedSettingCustomizationCardBody: 'tw-mt-12-px tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
+            configurationAdvancedSettingNetsuiteCardBody: 'tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px',
+            configurationAdvancedSettingIntacctCardBody: 'tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
+            configurationAdvancedSettingDefaultFieldCard: 'tw-mb-16-px',
+            configurationAdvancedSettingSingleCard: 'tw-rounded-12-px tw-border-border-tertiary tw-border',
             configurationDoneHeader: '!tw-font-400',
             configurationDoneDescription: 'tw-py-20-px'
         }

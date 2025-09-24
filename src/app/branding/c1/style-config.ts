@@ -27,7 +27,14 @@ export const c1Styles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-bg-blue',
         infoLabelIcon: 'tw-text-icon-blue',
-        infoLabelText: 'tw-text-12-px tw-font-400 tw-self-center tw-text-text-primary'
+        infoLabelText: 'tw-text-12-px tw-font-400 tw-self-center tw-text-text-primary',
+        configurationAdvancedSettingAutomationCardHeader: '',
+        configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-mb-16-px tw-rounded-b-8-px',
+        configurationAdvancedSettingCustomizationCardHeader: 'tw-mt-16-px tw-rounded-t-8-px',
+        configurationAdvancedSettingCustomizationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
+        configurationAdvancedSettingNetsuiteCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px tw-bg-white tw-mb-16-px',
+        configurationAdvancedSettingDefaultFieldCard: 'tw-pb-24-px tw-bg-white tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
+        configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
@@ -121,9 +128,13 @@ export const c1Styles = {
             configurationStepSubHeaderText: 'tw-font-600',
             configurationStepSubHeaderDescription: 'tw-text-text-primary',
             configurationAdvancedSettingAutomationCardHeader: '',
-            configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-mb-16-px',
+            configurationAdvancedSettingAutomationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-mb-16-px tw-rounded-b-8-px',
             configurationAdvancedSettingCustomizationCardHeader: 'tw-mt-16-px tw-rounded-t-8-px',
             configurationAdvancedSettingCustomizationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
+            configurationAdvancedSettingNetsuiteCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px tw-bg-white tw-mb-16-px',
+            configurationAdvancedSettingIntacctCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px tw-bg-white',
+            configurationAdvancedSettingDefaultFieldCard: 'tw-pb-24-px tw-bg-white tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
+            configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border',
             configurationDoneHeader: '!tw-font-600',
             configurationDoneDescription: 'tw-pt-20-px'
         }

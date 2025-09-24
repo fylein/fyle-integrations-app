@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
         <app-configuration-step-header [headerText]="'intacctC1ImportSettings.header' | transloco"
             [contentText]="'intacctC1ImportSettings.contentText' | transloco"
