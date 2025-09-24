@@ -27,6 +27,8 @@ export class Sage300MappingComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private router: Router,
     private mappingService: MappingService,

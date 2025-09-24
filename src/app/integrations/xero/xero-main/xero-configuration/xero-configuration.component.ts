@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-xero-configuration',
@@ -21,8 +22,11 @@ export class XeroConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +35,8 @@ export class XeroConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('xero.configuration.importSetting.stepName'), routerLink: '/integrations/xero/main/configuration/import_settings'},
       {label: this.translocoService.translate('xero.configuration.advancedSettings.stepName'), routerLink: '/integrations/xero/main/configuration/advanced_settings'}
     ];
+
+    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }

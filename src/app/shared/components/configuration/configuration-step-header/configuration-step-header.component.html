@@ -1,12 +1,12 @@
-<div class="tw-p-24-px tw-border-b tw-border-b-border-tertiary">
+<div class="tw-border-b tw-border-b-border-tertiary tw-p-24-px">
   <div class="tw-flex tw-items-center tw-justify-between">
 
     <div>
-      <h3 class="tw-text-text-primary tw-font-nav-link-font-weight"
+      <h3 class="tw-text-text-primary tw-font-nav-link-font-weight tw-py-4-px"
         [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
         {{ headerText }}
       </h3>
-      <h5 class="tw-text-text-tertiary tw-text-14-px !tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px">
+      <h5 class="!tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
         <span [innerHTML]="contentText"></span>
         <a *ngIf="redirectLink"
           class="link tw-text-14-px tw-w-fit tw-pl-4-px tw-inline-flex tw-items-center"
@@ -36,7 +36,7 @@
       </button> } }
 
 
-      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed){
+      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed && showSyncButton){
             <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="refreshDimensions()" tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.refreshDataTooltip' | transloco: { appName: appName }" [buttonText]="'configurationStepHeader.refreshDataButtonText' | transloco"></app-button>
       }
 

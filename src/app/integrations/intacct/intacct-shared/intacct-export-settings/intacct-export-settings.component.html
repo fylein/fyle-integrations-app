@@ -1,7 +1,7 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
     <app-configuration-step-header
     [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
@@ -23,7 +23,7 @@
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.get('reimbursableExpense')?.value">
-                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -72,7 +72,7 @@
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
                         <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
                             <app-configuration-select-field
@@ -88,7 +88,7 @@
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -100,7 +100,7 @@
                         [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -112,7 +112,7 @@
                         [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" >
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -136,7 +136,7 @@
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="exportSettingsForm.get('creditCardExpense')?.value">
-                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -225,7 +225,7 @@
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <div *ngIf="!exportSettingsForm.get('reimbursableExportType')?.value && exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
                         </div>
@@ -240,7 +240,7 @@
                         [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -253,7 +253,7 @@
                         [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"

@@ -1,7 +1,7 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
         <app-configuration-step-header
             [headerText]="'xero.configuration.advancedSettings.stepName' | transloco"
@@ -14,14 +14,14 @@
     </div>
     <form [formGroup]="advancedSettingForm">
         <div class="tw-p-24-px">
-            <div class="tw-mb-16-px">
+            <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                 <app-configuration-step-sub-header
                     [label]="'xeroAdvancedSettings.automationLabel' | transloco"
                     [subLabel]="'xero.configuration.advancedSettings.automationSubLabel' | transloco">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco"
@@ -47,13 +47,13 @@
                 </div>
             </div>
 
-            <div class="tw-mb-16-px">
+            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                 <app-configuration-step-sub-header
                     [label]="'xero.configuration.advancedSettings.customPreferencesLabel' | transloco"
                     [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
-            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+            <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
@@ -100,13 +100,13 @@
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
             </div>
-            <div class="tw-mb-16-px">
+            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                 <app-configuration-step-sub-header
                     [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
                     [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
                 </app-configuration-step-sub-header>
             </div>
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
                 <app-configuration-multi-select
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"

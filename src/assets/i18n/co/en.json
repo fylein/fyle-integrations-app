@@ -79,7 +79,7 @@
         "scheduleAutoExportLabel": "Schedule automatic export",
         "scheduleAutoExportSubLabel": "Set up a schedule to frequently automate the export of expenses from {{brandName}} to QuickBooks Desktop.",
         "autoExportfrequencyLabel": "Set up export frequency",
-        "autoExportfrequencySubLabel": "",
+        "autoExportfrequencySubLabel": "Expenses will automatically export at this frequency.",
         "topLevelMemoStructureLabel": "Select the top level memo field data for QuickBooks Desktop",
         "topLevelMemoStructureSubLabel": "You can customize the <b>data point</b> you would like to export to QuickBooks Desktop's <b>top-level memo</b> field while exporting expenses from {{brandName}}.",
         "memoStructureLabel": "Set the line-item level memo field data for QuickBooks Desktop.",
@@ -416,8 +416,8 @@
     },
     "done": {
       "ctaText": "Launch integration",
-      "hintText": "You can change your integration settings anytime in the <b class=\"tw-font-bold\">configuration</b> section.",
-      "doneHeaderText": "You've successfully set up your integration"
+      "hintText": "You can change your integration settings anytime in the Configuration section.",
+      "doneHeaderText": "Your integration setup is now complete."
     }
   },
   "dashboard": {
@@ -483,6 +483,31 @@
     "customFieldPlaceholderName": "Placeholder name",
     "customFieldType": "Field type",
     "customFieldCreateandSave": "Create and save",
-    "currentDate": "Current date"
+    "currentDate": "Current date",
+    "loader": {
+      "defaultLabel": " "
+    }
+  },
+  "qbdDirectOnboardingPreRequisite": {
+    "learnMore": "Read more",
+    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" link tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
+  },
+  "qbdDirectDownloadFile": {
+    "enterCompanyFilePathTitle": "Company file path",
+    "companyFilePathHelpText": "Enter your company file path to generate and download the integration file.",
+    "findPathVideoTitle": "How to find the company file path.",
+    "downloadWillBegin": "Your download should be complete"
+  },
+  "qbdDirectSetupConnection": {
+    "usePassword": "Enter the following password:",
+    "updateSelectedTitleFirst": "Select",
+    "updateSelectedTitleMiddle": "Update selected",
+    "updateSelectedTitleLast": " in Web Connector",
+    "openIntegrationFilePart2": " in QuickBooks Web Connector",
+    "connecting": "Connecting...",
+    "success": "Connected to QuickBooks Desktop"
+  },
+  "qbdDirectDataSync": {
+    "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
   }
 }

@@ -2,8 +2,8 @@
     <div class="tw-m-auto">
         <img *ngIf="illustrationsAllowed" src="assets/illustrations/zero-state.svg" width="200px" hight="200px" class="tw-inline-block">
         <div class="tw-pt-20-px">
-            <h4 [ngClass]="{'tw-text-text-secondary': illustrationsAllowed, 'tw-text-text-primary': !illustrationsAllowed}" class="tw-font-400 !tw-text-14-px">{{mainText}}</h4>
-            <p class="tw-text-text-primary tw-pt-4-px tw-font-400 !tw-text-14-px tw-max-w-sm tw-break-words">{{subText}}</p>
+            <h4 class="!tw-text-14-px" [ngClass]="[illustrationsAllowed ? 'tw-text-text-secondary' : 'tw-text-text-primary', brandingStyle.dashboard.zeroStateHeaderText]">{{mainText}}</h4>
+            <p class="tw-text-text-primary tw-font-400 !tw-text-14-px tw-break-words" [ngClass]="brandingStyle.dashboard.zeroStateDescriptionText">{{subText}}</p>
         </div>
     </div>
 </div>
