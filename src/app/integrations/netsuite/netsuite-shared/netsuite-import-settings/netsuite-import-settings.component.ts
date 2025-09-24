@@ -284,7 +284,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       // 2. reimbursable is disabled and corporate credit card is set to BILL
       // 3. reimbursable is set to BILL and corporate credit card is disabled
       const isReimbursableBill = workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL;
-      const isCorporateCreditCardBill = workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL';
+      const isCorporateCreditCardBill = workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.BILL;
       const isReimbursableEnabled = !!workspaceGeneralSetting.reimbursable_expenses_object;
       const isCorporateCreditCardEnabled = !!workspaceGeneralSetting.corporate_credit_card_expenses_object;
 
