@@ -49,6 +49,7 @@
                                 [checkedText]="'qbdDirectOnboardingPreRequisite.done' | transloco"
                                 [unCheckedText]="'qbdDirectOnboardingPreRequisite.markAsDone' | transloco"
                                 [id]="step.id"
+                                [disabled]="brandingFeatureConfig.qbdDirect.unlockStepsInOrder ? isStepDisabled(step.id) : false"
                                 (checkBoxUpdated)="updateConnectorStatus($event)">
                             </app-checkbox-button>
                         </div>

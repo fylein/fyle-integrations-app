@@ -260,6 +260,7 @@ const textColors = {
   'text-muted': 'var(--text-muted)',
   'text-toast-color': 'var(--text-toast-color)',
   'text-secondary-neutral': 'var(--text-secondary-neutral)',
+  'text-disabled': 'var(--text-disabled)',
 
   //link
   'link-primary': 'var(--link-primary)',

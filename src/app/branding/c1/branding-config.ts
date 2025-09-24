@@ -29,7 +29,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
         isStepSectionAlwaysVisible: true,
-        configToggleLeftAligned: true
+        configToggleLeftAligned: true,
+        unlockStepsInOrder: true
     },
     featureFlags: {
         cloneSettings: false,

@@ -153,6 +153,9 @@ export const fyleStyles = {
             cancel: ''
         }
     },
+    checkbox: {
+        text: 'tw-text-text-primary'
+    },
     toast: {
         class: 'tw-flex tw-items-stretch tw-bg-white tw-rounded-8-px',
         leftIcon: {

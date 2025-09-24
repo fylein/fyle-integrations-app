@@ -153,6 +153,9 @@ export const c1Styles = {
             cancel: 'outline-sm'
         }
     },
+    checkbox: {
+        text: 'tw-text-text-primary tw-text-12-px tw-font-600'
+    },
     toast: {
         class: 'tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px tw-p-12-px',
         leftIcon: {

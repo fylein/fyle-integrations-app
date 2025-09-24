@@ -60,6 +60,7 @@
     --text-warning: #{$yellow-55};
     --text-white: #{$white};
     --text-secondary-neutral: #{$grey-65};
+    --text-disabled: #{$grey-19};
 
     // Icon
     --icon-brand-disable: #{$blue-10};
@@ -376,7 +377,7 @@
 
     // Checkbox
     --checkbox-icon-color: var(--icon-tertiary);
-    --checkbox-icon-disabled-color: var(--icon-disable);
+    --checkbox-icon-disabled-color: var(--text-disabled);
     --checkbox-icon-hover-color: #{$blue-65};
     --checkbox-icon-selected-color: var(--icon-brand-primary);
     --checkbox-icon-selected-disabled-color: #{$grey-05};

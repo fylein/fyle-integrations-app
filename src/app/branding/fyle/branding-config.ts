@@ -29,7 +29,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         showStepStateAsIcons: false,
         showStepStateDivider: false,
         isStepSectionAlwaysVisible: false,
-        configToggleLeftAligned: false
+        configToggleLeftAligned: false,
+        unlockStepsInOrder: false
     },
     featureFlags: {
         cloneSettings: true,

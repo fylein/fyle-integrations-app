@@ -20,6 +20,8 @@ export class CheckboxButtonComponent {
 
   @Input({required: true}) id: number;
 
+  @Input() disabled: boolean = false;
+
   @Output() checkBoxUpdated: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
   isCheckboxSelected: boolean = false;
@@ -29,6 +31,10 @@ export class CheckboxButtonComponent {
   brandingStyle = brandingStyle;
 
   onCheckBoxClick() {
+    if (this.disabled) {
+      return;
+    }
+
     this.isCheckboxSelected = !this.isCheckboxSelected;
     this.checkBoxUpdated.emit({id: this.id, value: this.isCheckboxSelected});
   }

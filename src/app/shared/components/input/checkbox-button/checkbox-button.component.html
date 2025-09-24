@@ -1,8 +1,8 @@
 <div (click)="onCheckBoxClick()">
-    <p-button>
+    <p-button [disabled]="disabled">
         <ng-template pTemplate="content">
                 <input type="checkbox" [(ngModel)]="isCheckboxSelected" [ngClass]="brandingStyle.checkbok.theme"/>
-                {{ isCheckboxSelected ? checkedText : unCheckedText}}
+                <span [ngClass]="brandingStyle.checkbox.text"> {{ isCheckboxSelected ? checkedText : unCheckedText}} </span>
         </ng-template>
     </p-button>      
 </div>

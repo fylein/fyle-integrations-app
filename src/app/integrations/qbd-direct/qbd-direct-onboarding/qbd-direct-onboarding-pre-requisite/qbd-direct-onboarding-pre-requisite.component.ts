@@ -87,10 +87,27 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.preRequisite.stepName'), this.workspaceService.getOnboardingState());
   }
 
+  isStepDisabled(stepId: number): boolean {
+
+    if (stepId === 1) {
+      return false;
+    }
+
+    for (let i = 0; i < stepId - 1; i++) {
+      if (this.preRequisitesteps[i].state !== QBDPreRequisiteState.COMPLETE) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   updateConnectorStatus(status: CheckBoxUpdate): void {
     this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
     if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[2].state === QBDPreRequisiteState.COMPLETE) {
       this.isContinueDisabled = false;
+    } else {
+      this.isContinueDisabled = true;
     }
   }
 

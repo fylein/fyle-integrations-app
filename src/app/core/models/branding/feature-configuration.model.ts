@@ -23,6 +23,7 @@ export type FeatureConfiguration = {
             showStepStateDivider: boolean,
             isStepSectionAlwaysVisible: boolean,
             configToggleLeftAligned: boolean,
+            unlockStepsInOrder: boolean,
         },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;

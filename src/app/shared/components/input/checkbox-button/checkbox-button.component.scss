@@ -1,10 +1,15 @@
-
 :host ::ng-deep .p-button {
-    @apply tw-h-40-px tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
+    @apply tw-h-40-px tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 :host ::ng-deep .p-button:enabled:hover {
-    @apply tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-border tw-border-btn-outline-secondary-border-color #{!important};
+    @apply tw-bg-btn-outline-secondary-bg tw-border tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+[data-theme='co'] {
+    :host ::ng-deep .p-button:disabled {
+        @apply tw-text-text-disabled #{!important};
+    }
 }
 
 .unCheckedText:hover input[type="checkbox"], input[type="checkbox"]:hover {
@@ -32,6 +37,10 @@ input[type="checkbox"].co-checkbox {
 
 input[type="checkbox"].co-checkbox:hover {
     @apply tw-border-checkbox-icon-selected-color #{!important};
+}
+
+input[type="checkbox"].co-checkbox:disabled {
+    @apply tw-border-checkbox-icon-disabled-color #{!important};
 }
 
 input[type="checkbox"].co-checkbox:checked {
