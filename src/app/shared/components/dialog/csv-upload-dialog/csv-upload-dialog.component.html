@@ -1,103 +1,88 @@
-<div class="tw-w-[770px] tw-flex tw-flex-col">
-    <!-- Header -->
-    <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-        <div class="tw-flex tw-items-center tw-gap-10-px tw-min-h-32-px">
-            @if (state === 'ERROR') {
-                <div class="tw-flex tw-items-center tw-gap-10-px">
-                    <div class="tw-w-32-px tw-h-32-px tw-rounded-4-px tw-bg-bg-danger-light tw-flex tw-items-center tw-justify-center">
-                        <app-svg-icon
-                            [svgSource]="'danger-outline'"
-                            [width]="'20px'"
-                            [height]="'20px'"
-                            [viewBox]="'0 0 18 18'"
-                            [styleClasses]="'tw-text-alert-toast tw-relative tw-top-[2px]'"
-                        ></app-svg-icon>
-                    </div>
-                    <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
-                        {{ 'csvUploadDialog.errorHeader' | transloco: { dimension: displayName } }}
-                    </h3>
-                </div>
-            } @else {
-                <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
-                    {{ 'csvUploadDialog.header' | transloco: { dimension: displayName } }}
-                </h3>
-            }
-        </div>
-
-        <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="closeDialog()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
-    </div>
-
-
-    <!-- Content -->
-    <div class="tw-flex tw-justify-around tw-items-center tw-border-t tw-border-b tw-border-border-tertiary tw-p-24-px tw-min-h-[246px]">
+<app-dialog
+    (closeDialog)="closeDialog()"
+    [type]="state === 'ERROR' ? 'ERROR' : null"
+    [header]="(state === 'ERROR' ? 'csvUploadDialog.errorHeader' : 'csvUploadDialog.header') | transloco: { dimension: displayName }"
+    [buttonText]="'csvUploadDialog.cancel' | transloco"
+    [buttonType]="ButtonType.SECONDARY"
+>
+    <!-- Dialog content -->
+    <div class="tw-flex tw-items-center tw-justify-center tw-border-t tw-border-b tw-border-border-tertiary tw-p-24-px tw-min-h-[246px] tw-min-w-[770px] tw-relative">
         @if (state === 'UPLOADING') {
             <div class="tw-flex tw-items-center">
                 <app-loader [spinnerLabel]="'csvUploadDialog.processingFile' | transloco" [size]="'vertical-sm'"></app-loader>
             </div>
         } @else {
-        <iframe class="tw-rounded-[12px]" height="195" width="340" [src]="safeVideoURL" frameborder="0"></iframe>
+        <div class="tw-pl-[12.5px] tw-pr-[25px]">
+            <iframe class="tw-rounded-[12px]" height="195" width="340" [src]="safeVideoURL" frameborder="0"></iframe>
+        </div>
         <div class="custom-dashed-border"></div>
 
-        <!-- Right-side section - text content, upload & download button -->
-        <div class="tw-flex tw-flex-col tw-gap-24-px tw-text-center tw-justify-center tw-items-center tw-leading-1.4">
+        <!-- Right-side section - text content, upload & download button - wrapped in a file upload component -->
+        <p-fileUpload
+            name="demo[]"
+            (onSelect)="handleFileSelect($event)"
+            [multiple]="false"
+            accept=".csv"
+            mode="advanced"
+            class="tw-self-stretch"
+        >
+            <!-- Get rid of the default header, uploaded files UI in primeng -->
+            <ng-template pTemplate="header"></ng-template>
+            <ng-template pTemplate="file"></ng-template>
 
-            <!-- Text content -->
-            <div class="tw-max-w-[266px]">
-                <h4 class="tw-text-16-px tw-font-500 tw-text-text-primary">
-                    {{ (state === 'ERROR' ? 'csvUploadDialog.errorInstructionsHeader' : 'csvUploadDialog.instructionsHeader') | transloco }}
-                </h4>
-                <p class="tw-text-16-px tw-text-text-secondary tw-pt-8-px">
-                    {{ (state === 'ERROR' ? 'csvUploadDialog.errorInstructionsContent' : 'csvUploadDialog.instructionsContent') | transloco: { dimension: displayName } }}
-                </p>
-                @if (data.articleLink) {
-                    <div class="tw-pt-2-px">
-                        <a class="link tw-inline-flex tw-items-center tw-gap-[4px]" [href]="data.articleLink" target="_blank">
-                            {{ 'csvUploadDialog.readMore' | transloco}}
-                            @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-                                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-relative tw-top-[3px] tw-w-fit"></app-svg-icon>
-                            }
-                        </a>
+            <!-- This template acts as the drop zone for files, styles are in .p-fileupload-content -->
+            <ng-template pTemplate="content" let-chooseCallback="chooseCallback">
+                <div class="tw-h-full tw-flex tw-flex-col tw-gap-24-px tw-text-center tw-justify-center tw-items-center tw-leading-1.4">
+                    <!-- Text content -->
+                    <div [style.max-width]="displayName.length > 10 ? '280px' : '266px'">
+                        <h4 class="tw-text-16-px tw-font-500 tw-text-text-primary">
+                            {{ (state === 'ERROR' ? 'csvUploadDialog.errorInstructionsHeader' : 'csvUploadDialog.instructionsHeader') | transloco }}
+                        </h4>
+                        <p class="tw-text-16-px tw-text-text-secondary tw-pt-8-px">
+                            {{ (state === 'ERROR' ? 'csvUploadDialog.errorInstructionsContent' : 'csvUploadDialog.instructionsContent') | transloco: { dimension: displayName } }}
+                        </p>
+                        @if (data.articleLink) {
+                            <div class="tw-pt-2-px">
+                                <a class="link tw-inline-flex tw-items-center tw-gap-[4px]" [href]="data.articleLink" target="_blank">
+                                    {{ 'csvUploadDialog.readMore' | transloco}}
+                                    @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                                        <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-relative tw-top-[3px] tw-w-fit"></app-svg-icon>
+                                    }
+                                </a>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-8-px">
-                @if (state === 'ERROR') {
-                    <app-button
-                        [buttonText]="'csvUploadDialog.downloadErrorLogButton' | transloco"
-                        [svgSource]="'download-medium'"
-                        [iconSize]="'20px'"
-                        [iconViewbox]="'0 0 16 16'"
-                        [isIconLeftSide]="true"
-                        [buttonType]="ButtonType.SECONDARY"
-                        [buttonSize]="ButtonSize.MEDIUM"
-                        (buttonClick)="downloadErrorLog()"
-                        [styleClasses]="'tw-w-[306px]'"
-                    ></app-button>
-                }
-                <app-button
-                    [buttonText]="'csvUploadDialog.uploadButton' | transloco"
-                    [svgSource]="'upload'"
-                    [iconSize]="'20px'"
-                    [iconViewbox]="'0 0 16 16'"
-                    [isIconLeftSide]="true"
-                    [buttonType]="ButtonType.PRIMARY"
-                    [buttonSize]="ButtonSize.MEDIUM"
-                    (buttonClick)="uploadFile()"
-                    [styleClasses]="'tw-w-[306px]'"
-                ></app-button>
-            </div>
-        </div>
+                    <!-- Buttons -->
+                    <div class="tw-flex tw-flex-col tw-gap-8-px">
+                        @if (state === 'ERROR') {
+                            <app-button
+                                [buttonText]="'csvUploadDialog.downloadErrorLogButton' | transloco"
+                                [svgSource]="'download-medium'"
+                                [iconSize]="'20px'"
+                                [iconViewbox]="'0 0 16 16'"
+                                [isIconLeftSide]="true"
+                                [buttonType]="ButtonType.SECONDARY"
+                                [buttonSize]="ButtonSize.MEDIUM"
+                                (buttonClick)="downloadErrorLog()"
+                                [styleClasses]="'tw-w-[306px]'"
+                            ></app-button>
+                        }
+                        <app-button
+                            [buttonText]="'csvUploadDialog.uploadButton' | transloco"
+                            [svgSource]="'upload'"
+                            [iconSize]="'20px'"
+                            [iconViewbox]="'0 0 16 16'"
+                            [isIconLeftSide]="true"
+                            [buttonType]="ButtonType.PRIMARY"
+                            [buttonSize]="ButtonSize.MEDIUM"
+                            (buttonClick)="chooseCallback()"
+                            [styleClasses]="'tw-w-[306px]'"
+                        ></app-button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-fileUpload>
         }
     </div>
-
-    <!-- Footer -->
-    <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px">
-        <app-button
-            [buttonText]="'csvUploadDialog.cancel' | transloco"
-            [buttonType]="ButtonType.SECONDARY"
-            [buttonSize]="ButtonSize.MEDIUM"
-            (buttonClick)="closeDialog()"
-        ></app-button>
-    </div>
-</div>
+</app-dialog>

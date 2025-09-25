@@ -3,13 +3,14 @@ import { map, Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
-import { Sage50AccountingImportDetail } from '../../../models/sage50/db/sage50-import-attributes.model';
+import { Sage50AccountingImportDetail, Sage50ImportAttributesValidResponse } from '../../../models/sage50/db/sage50-import-attributes.model';
 import { Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
+import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Sage50ImportAttributesService {
+export class Sage50ImportAttributesService implements CSVImportAttributesService {
 
   constructor(
     private apiService: ApiService,
@@ -32,5 +33,13 @@ export class Sage50ImportAttributesService {
         return attributeTypeToFileNameMap;
       })
     );
+  }
+
+  importAttributes(attributeType: Sage50AttributeType, fileName: string, jsonData: any): Observable<Sage50ImportAttributesValidResponse> {
+    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/import_attributes/`, {
+      attribute_type: attributeType,
+      file_name: fileName,
+      data: jsonData
+    });
   }
 }
