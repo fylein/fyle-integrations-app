@@ -110,15 +110,25 @@ export class CsvUploadDialogComponent implements OnInit {
                 )
               );
             },
-            // On upload fail, save csv contents, then show download button
             error: (httpErrorResponse: { error: CSVImportAttributesInvalidResponse }) => {
-              const response = httpErrorResponse.error;
-              this.csv = {
-                name: `UPDATE_${file.name}`,
-                data: this.csvJsonTranslator.jsonToCsv(response.errors)
-              };
-              console.error('CSV upload - validation errors:', response.errors);
-              this.state = 'ERROR';
+              const response = httpErrorResponse?.error;
+              if (response?.errors?.length) {
+                // On validation fail, save csv contents, then show download button
+                this.csv = {
+                  name: `UPDATE_${file.name}`,
+                  data: this.csvJsonTranslator.jsonToCsv(response.errors)
+                };
+                console.error('CSV upload - validation errors:', response.errors);
+                this.state = 'ERROR';
+              } else {
+                // On other non-ok responses (such as 5xx), show error toast and close dialog
+                this.toastService.displayToastMessage(
+                  ToastSeverity.ERROR,
+                  this.translocoService.translate('csvUploadDialog.uploadError')
+                );
+                console.error('CSV upload - unexpected error:', response);
+                this.dialogRef.close();
+              }
             }
           });
         },
