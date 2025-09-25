@@ -62,4 +62,8 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
         this.isLoading = false;
       });
   }
+
+  uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
+    return this.sage50ImportAttributesService.importAttributes(attributeType, fileName, jsonData);
+  }
 }

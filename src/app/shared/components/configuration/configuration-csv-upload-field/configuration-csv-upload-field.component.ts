@@ -4,8 +4,9 @@ import { ButtonSize, ButtonType, Sage50AttributeType } from 'src/app/core/models
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { Observable } from 'rxjs';
+import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 
 @Component({
   selector: 'app-configuration-csv-upload-field',
@@ -22,6 +23,8 @@ export class ConfigurationCsvUploadFieldComponent {
   @Input({ required: true }) label!: string;
 
   @Input({ required: true }) subLabel!: string;
+
+  @Input({ required: true }) uploadData!: CSVImportAttributesService['importAttributes'];
 
   @Input() articleLink!: string;
 
@@ -43,13 +46,21 @@ export class ConfigurationCsvUploadFieldComponent {
   ) { }
 
   handleUploadClick() {
-    const displayName = sage50AttributeDisplayNames[this.attributeType];
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
-      header: this.translocoService.translate('configurationCsvUploadField.header', { dimension: displayName }),
+      showHeader: false,
       data: {
         attributeType: this.attributeType,
         articleLink: this.articleLink,
+        uploadData: this.uploadData,
         videoURL: this.videoURL
+      }
+    });
+
+    this.ref.onClose.subscribe((fileName: string | undefined) => {
+      if (fileName) {
+        // Dialog was closed with a filename (successful upload)
+        this.fileName = fileName;
+        this.fileNameChange.emit(fileName);
       }
     });
   }
