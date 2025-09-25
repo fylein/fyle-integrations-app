@@ -2376,13 +2376,33 @@
     "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
   },
   "configurationCsvUploadField": {
-    "csvUpload": "CSV upload icon",
-    "uploadCSV": "Upload CSV"
+    "csvUpload": "CSV upload icon"
   },
   "csvUploadButton": {
     "uploadButton": "Upload CSV",
     "reuploadTooltip": "Re-upload CSV",
     "reuploadButton": "Re-upload",
     "csvUpload": "CSV File Icon"
+  },
+  "csvUploadDialog": {
+    "header": "Upload CSV for {{dimension}}",
+    "instructionsHeader": "Upload CSV or drag & drop your file",
+    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "errorHeader": "Error found in CSV for {{dimension}}",
+    "errorInstructionsHeader": "How do I correct the errors?",
+    "errorInstructionsContent": "Download the error log & upload the .csv again after fixing the errors",
+    "readMore": "Read more",
+    "uploadButton": "Upload .csv file",
+    "downloadErrorLogButton": "Download error log",
+    "cancel": "Cancel",
+    "processingFile": "Processing your file...",
+    "errorDialogHeader": "Upload Error",
+    "fileIsNotCsv": "You tried to upload a file with wrong format. Please upload a csv file.",
+    "onlyOneCsvAllowed": "You can only upload one csv file at a time.",
+    "rowLimitExceeded": "The file exceeds the permitted row limit of 20,000.",
+    "invalidCsvFile": "The CSV file is invalid.",
+    "errorDialogButtonText": "Okay",
+    "uploadSuccess": "{{dimension}} uploaded successfully.",
+    "uploadError": "An unexpected error occurred. Please try again."
   }
 }

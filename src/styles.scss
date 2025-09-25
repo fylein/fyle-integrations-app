@@ -196,6 +196,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-rounded-2xl tw-overflow-hidden #{!important};
     }
 
+    .p-dialog .p-dialog-header {
+        @apply tw-text-text-primary #{!important};
+    }
+
     .p-dialog .p-dialog-content {
         @apply tw-p-0;
     }

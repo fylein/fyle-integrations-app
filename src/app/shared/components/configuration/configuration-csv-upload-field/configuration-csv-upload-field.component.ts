@@ -1,30 +1,68 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TranslocoModule } from '@jsverse/transloco';
-import { Sage300SharedModule } from "src/app/integrations/sage300/sage300-shared/sage300-shared.module";
-import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { ButtonSize, ButtonType, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
+import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { Observable } from 'rxjs';
+import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 
 @Component({
   selector: 'app-configuration-csv-upload-field',
   standalone: true,
-  imports: [TranslocoModule, Sage300SharedModule, CsvUploadButtonComponent],
+  imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
+  providers: [DialogService],
   templateUrl: './configuration-csv-upload-field.component.html',
   styleUrl: './configuration-csv-upload-field.component.scss'
 })
 export class ConfigurationCsvUploadFieldComponent {
 
-  @Input({ required: true }) attributeType!: string;
+  @Input({ required: true }) attributeType!: Sage50AttributeType;
 
   @Input({ required: true }) label!: string;
 
   @Input({ required: true }) subLabel!: string;
 
+  @Input({ required: true }) uploadData!: CSVImportAttributesService['importAttributes'];
+
+  @Input() articleLink!: string;
+
+  @Input() videoURL!: string;
+
   @Input() fileName: string | null = null;
 
   @Output() fileNameChange = new EventEmitter<string | null>();
 
-  ButtonType = ButtonType;
+  readonly ButtonType = ButtonType;
 
-  ButtonSize = ButtonSize;
+  readonly ButtonSize = ButtonSize;
+
+  ref?: DynamicDialogRef;
+
+  constructor(
+    public dialogService: DialogService,
+    public translocoService: TranslocoService
+  ) { }
+
+  handleUploadClick() {
+    this.ref = this.dialogService.open(CsvUploadDialogComponent, {
+      showHeader: false,
+      data: {
+        attributeType: this.attributeType,
+        articleLink: this.articleLink,
+        uploadData: this.uploadData,
+        videoURL: this.videoURL
+      }
+    });
+
+    this.ref.onClose.subscribe((fileName: string | undefined) => {
+      if (fileName) {
+        // Dialog was closed with a filename (successful upload)
+        this.fileName = fileName;
+        this.fileNameChange.emit(fileName);
+      }
+    });
+  }
 
 }
