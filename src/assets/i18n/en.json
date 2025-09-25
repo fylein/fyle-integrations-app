@@ -14,7 +14,8 @@
     "toPreview": "to preview."
   },
   "configurationMultiSelect": {
-    "expenseReportId": "Expense/Report ID"
+    "expenseReportId": "Expense/Report ID",
+    "cardNumber": "Card number (last 4 digit)"
   },
   "configurationConfirmationDialog": {
     "areYouSureToContinue": "Are you sure you want to continue?",
