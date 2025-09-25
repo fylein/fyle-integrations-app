@@ -43,7 +43,10 @@ export class CsvUploadDialogComponent implements OnInit {
 
   state: 'PROMPT' | 'UPLOADING' | 'ERROR' = 'PROMPT';
 
-  private csv: string;
+  private csv: {
+    name: string;
+    data: string;
+  };
 
   constructor(
     public config: DynamicDialogConfig,
@@ -110,7 +113,10 @@ export class CsvUploadDialogComponent implements OnInit {
             // On upload fail, save csv contents, then show download button
             error: (httpErrorResponse: { error: CSVImportAttributesInvalidResponse }) => {
               const response = httpErrorResponse.error;
-              this.csv = this.csvJsonTranslator.jsonToCsv(response.errors);
+              this.csv = {
+                name: `UPDATE_${file.name}`,
+                data: this.csvJsonTranslator.jsonToCsv(response.errors)
+              };
               console.error('CSV upload - validation errors:', response.errors);
               this.state = 'ERROR';
             }
@@ -127,7 +133,7 @@ export class CsvUploadDialogComponent implements OnInit {
   }
 
   downloadErrorLog(): void {
-    downloadCSVFile(this.csv, 'errors.csv');
+    downloadCSVFile(this.csv.data, this.csv.name);
   }
 
   ngOnInit(): void {
