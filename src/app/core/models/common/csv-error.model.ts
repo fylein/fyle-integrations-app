@@ -1,5 +1,4 @@
 export type CSVErrorName =
-  | 'NO_FILE_PROVIDED'
   | 'MULTIPLE_FILES_PROVIDED'
   | 'FILE_IS_NOT_CSV'
   | 'ROW_LIMIT_EXCEEDED';

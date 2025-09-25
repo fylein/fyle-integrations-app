@@ -2401,6 +2401,8 @@
     "onlyOneCsvAllowed": "You can only upload one csv file at a time.",
     "rowLimitExceeded": "The file exceeds the permitted row limit of 20,000.",
     "invalidCsvFile": "The CSV file is invalid.",
-    "errorDialogButtonText": "Okay"
+    "errorDialogButtonText": "Okay",
+    "uploadSuccess": "{{dimension}} uploaded successfully.",
+    "uploadError": "An unexpected error occurred. Please try again."
   }
 }

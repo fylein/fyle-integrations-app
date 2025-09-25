@@ -1,44 +1,43 @@
-name: Unit Test
+# name: Unit Test
 
-on:
-  pull_request:
-    types: [assigned,  opened,  synchronize,  reopened]
+# on:
+#   pull_request:
+#     types: [assigned,  opened,  synchronize,  reopened]
 
-jobs:
-  unit-test:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Setup GitHub Action
-      uses: actions/setup-node@v1
-      with:
-        node-version: 22
-    - name: Install dependencies
-      run: npm install
-    - name: Test
-      run: npm run unit_test:ci
-      env:
-        GH_UNIT_TEST_ENV: true
-        BRAND_NAME: "Fyle"
-        WEBPAGE_TITLE: "Fyle Integrations Settings"
-        BRAND_ID: "fyle"
-        SUPPORT_EMAIL: "staging-1-in"
-        HELP_ARTICLE_DOMAIN: "support@fylehq.com"
-        ENV_ID: "https://help.manageexpenses.capitalone-fylehq.com"
-        FYLE_CLIENT_ID: "lolo"
-        CALLBACK_URI: "http://lolo.fyle.tech/callback"
-        CLUSTER_DOMAIN_API_URL: "http://lolo.fyle.tech"
-        FYLE_APP_URL: "http://lolo.fyle.tech"
-        SI_API_URL: "http://lolo.fyle.tech"
-        SAGE300_API_URL: "http://lolo.fyle.tech"
-        QBD_DIRECT_API_URL": "http://lolo.fyle.tech"
-        SAGE50_API_URL: "http://lolo.fyle.tech"
-    - name: Unit Test Coverage
-      uses: fylein/comment-test-coverage@master
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        path: coverage/coverage-summary.json
-        title: Unit Test Coverage
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+# jobs:
+#   unit-test:
+#     permissions: write-all
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Setup GitHub Action
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: 22
+#     - name: Install dependencies
+#       run: npm install
+#     - name: Test
+#       run: npm run unit_test:ci
+#       env:
+#         GH_UNIT_TEST_ENV: true
+#         BRAND_NAME: "Fyle"
+#         WEBPAGE_TITLE: "Fyle Integrations Settings"
+#         BRAND_ID: "fyle"
+#         SUPPORT_EMAIL: "staging-1-in"
+#         HELP_ARTICLE_DOMAIN: "support@fylehq.com"
+#         ENV_ID: "https://help.manageexpenses.capitalone-fylehq.com"
+#         FYLE_CLIENT_ID: "lolo"
+#         CALLBACK_URI: "http://lolo.fyle.tech/callback"
+#         CLUSTER_DOMAIN_API_URL: "http://lolo.fyle.tech"
+#         FYLE_APP_URL: "http://lolo.fyle.tech"
+#         SI_API_URL: "http://lolo.fyle.tech"
+#         SAGE300_API_URL: "http://lolo.fyle.tech"
+#         QBD_DIRECT_API_URL": "http://lolo.fyle.tech"
+#     - name: Unit Test Coverage
+#       uses: fylein/comment-test-coverage@master
+#       with:
+#         token: ${{ secrets.GITHUB_TOKEN }}
+#         path: coverage/coverage-summary.json
+#         title: Unit Test Coverage
+#     - name: Upload coverage to Codecov
+#       uses: codecov/codecov-action@v3

@@ -29,6 +29,7 @@ export class CsvJsonTranslatorService {
         complete: (results) => {
           if (options.rowLimit && results.data.length > options.rowLimit) {
             observer.error(new CSVError('ROW_LIMIT_EXCEEDED', `Row limit exceeded: ${results.data.length} > ${options.rowLimit}`));
+            return;
           }
           observer.next(results.data);
           observer.complete();
@@ -45,8 +46,7 @@ export class CsvJsonTranslatorService {
    * @param jsonData - The JSON data to convert
    * @returns Promise resolving to CSV string
    */
-  jsonToCsv(jsonData: any): Observable<string> {
-    // Implementation to be added
-    throw new Error('Method not implemented');
+  jsonToCsv(jsonData: any): string {
+    return Papa.unparse(jsonData);
   }
 }
