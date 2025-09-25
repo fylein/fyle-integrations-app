@@ -68,7 +68,13 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+    if (memo === 'expense_key') {
+      return this.translocoService.translate('configurationMultiSelect.expenseReportId');
+    } else if (memo === 'card_number') {
+      return this.translocoService.translate('configurationMultiSelect.cardNumber');
+    }
+      return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+
   }
 
   // Helper to join selected item labels into a single string for template rendering
