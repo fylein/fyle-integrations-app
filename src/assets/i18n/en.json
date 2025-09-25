@@ -2349,6 +2349,16 @@
       "exportSettings": "Export settings",
       "importSettings": "Import settings",
       "advancedSettings": "Advanced settings"
+    },
+    "sage50ExportSettings": {
+      "generalJournalEntryOptionLabel": "General journal entry",
+      "purchasesOptionLabel": "Purchases",
+      "paymentsJournalOptionLabel": "Payments",
+      "processing": "Processing",
+      "closed": "Closed",
+      "approved": "Approved",
+      "transactionPostDateOptionLabel": "Transaction post date",
+      "spendDateOptionLabel": "Spend date"
     }
   },
   "pipes": {
@@ -2404,5 +2414,14 @@
     "errorDialogButtonText": "Okay",
     "uploadSuccess": "{{dimension}} uploaded successfully.",
     "uploadError": "An unexpected error occurred. Please try again."
+  },
+  "sage50ExportSettings": {
+    "headerText": "Export settings",
+    "contentText": "Configure how and when expenses from Fyle can be exported to Sage 50.",
+    "exportReimbursableExpensesLabel": "Export reimbursable expenses",
+    "exportCCCExpensesLabel": "Export corporate card expenses",
+    "reimbursableExportTypeLabel": "Export type",
+    "reimbursableExportTypeSubLabel": "Select the type of transaction you want to create in Sage 50 when exporting expenses.",
+    "reimbursableExportTypePlaceholder": "Select export type"
   }
 }
