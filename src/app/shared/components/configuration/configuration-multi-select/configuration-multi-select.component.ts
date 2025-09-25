@@ -52,6 +52,18 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   ) { }
 
   onMultiSelectChange() {
+    const selectedValues = this.form.get(this.formControllerName)?.value;
+
+    if (selectedValues && selectedValues.length > 0) {
+      const optionsCopy = [...this.options];
+
+      const sortedValues = [...selectedValues].sort((a, b) => {
+        return optionsCopy.indexOf(a) - optionsCopy.indexOf(b);
+      });
+
+      this.form.get(this.formControllerName)?.setValue(sortedValues, { emitEvent: false });
+    }
+
     this.changeInMultiSelect.emit();
   }
 
