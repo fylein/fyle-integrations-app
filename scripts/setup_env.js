@@ -2,7 +2,6 @@ const { writeFile } = require("fs");
 
 const environment = {
   production: true,
-  test_temp_2: 'test_key_secret',
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
   qbd_api_url: `${process.env.QBD_API_URL ? process.env.QBD_API_URL : '{{QBD_API_URL}}'}`,
@@ -47,11 +46,8 @@ const environment = {
   },
 };
 
-const targetPath = './src/environments/environment.ts';
-const envContent = `export const environment = ${JSON.stringify(environment, null, 2)};
-`;
-
-writeFile(targetPath, envContent, 'utf8', (err) => {
+const targetPath = './src/environments/environment.json';
+writeFile(targetPath, JSON.stringify(environment), 'utf8', (err) => {
   if (err) {
     return console.error(err);
   }
