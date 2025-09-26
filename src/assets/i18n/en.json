@@ -2424,6 +2424,12 @@
     "exportCCCExpensesLabel": "Export corporate card expenses",
     "reimbursableExportTypeLabel": "Export type",
     "reimbursableExportTypeSubLabel": "Select the type of transaction you want to create in Sage 50 when exporting expenses.",
-    "reimbursableExportTypePlaceholder": "Select export type"
+    "reimbursableExportTypePlaceholder": "Select export type",
+    "reimbursableDefaultCreditLineAccountLabel": "Default credit-line account",
+    "reimbursableDefaultCreditLineAccountSubLabel": "Select the Sage 50 account to be credited for expenses sent as journal entries.",
+    "reimbursableDefaultCreditLineAccountPlaceholder": "Select credit-line account",
+    "reimbursableDefaultAccountPayableAccountLabel": "Default accounts payable account",
+    "reimbursableDefaultAccountPayableAccountSubLabel": "Select the accounts payable account where invoices should be posted.",
+    "reimbursableDefaultAccountPayableAccountPlaceholder": "Select accounts payable account"
   }
 }

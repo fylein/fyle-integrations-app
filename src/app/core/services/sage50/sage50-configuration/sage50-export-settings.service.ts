@@ -5,7 +5,6 @@ import { Observable } from "rxjs";
 import { WorkspaceService } from "../../common/workspace.service";
 import { Sage50CCCExportType, Sage50CreditCardExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettings, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 import { FormControl, FormGroup } from "@angular/forms";
-import { CCCExpenseState, ExpenseState } from "src/app/core/models/enum/enum.model";
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 
 @Injectable({
@@ -84,6 +83,7 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       cccExportDate: new FormControl(apiResponse?.credit_card_expense_date ?? null),
       cccExportGroup: new FormControl(apiResponse?.credit_card_expense_grouped_by ?? null),
       jeSingleCreditLine: new FormControl(apiResponse?.je_single_credit_line ? true : false),
+      reimbursableDefaultAccountPayableAccount: new FormControl(apiResponse?.reimbursable_default_account_payable_account ?? null),
       reimbursableDefaultCreditLineAccount: new FormControl(apiResponse?.reimbursable_default_credit_line_account ?? null),
       cccDefaultCreditLineAccount: new FormControl(apiResponse?.ccc_default_credit_line_account ?? null),
       cccDefaultAccountPayableAccount: new FormControl(apiResponse?.ccc_default_account_payable_account ?? null),

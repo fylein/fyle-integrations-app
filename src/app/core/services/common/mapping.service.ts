@@ -19,8 +19,8 @@ import { TranslocoService } from '@jsverse/transloco';
 export class MappingService {
 
   constructor(
-    private apiService: ApiService,
-    private workspaceService: WorkspaceService,
+    protected apiService: ApiService,
+    protected workspaceService: WorkspaceService,
     helper: HelperService,
     private translocoService: TranslocoService
   ) {
@@ -165,8 +165,7 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
+  constructPaginatedDestinationAttributesParams(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]) {
     const params: {limit: number, offset: number, attribute_type?: string | string[], attribute_type__in?: string[], active?: boolean, value__icontains?: string, value?: string, display_name__in?: string, detail__account_type__in?: string[], detail__category__in?: string[], destination_id__in?: string[]} = {
       limit: 100,
       offset: 0,
@@ -203,6 +202,12 @@ export class MappingService {
       params.destination_id__in = destinationIds;
     }
 
+    return params;
+  }
+
+  getPaginatedDestinationAttributes(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params = this.constructPaginatedDestinationAttributesParams(attributeType, value, display_name, appName, detailed_account_type, categories, destinationIds);
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
   }
 
