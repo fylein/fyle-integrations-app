@@ -94,6 +94,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
         });
 
         this.accounts.sort((a, b) => a.value.localeCompare(b.value));
+        this.accounts = this.accounts.concat(); // Triggers change detection
         this.isOptionSearchInProgress = false;
       });
     });
