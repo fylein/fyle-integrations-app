@@ -52,7 +52,10 @@
                 }
               ],
               "outputHashing": "all",
-              "sourceMap": true
+              "sourceMap": {
+                "scripts": false,
+                "hidden": true
+              }
             },
             "development": {
               "buildOptimizer": false,
