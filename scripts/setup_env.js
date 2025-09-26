@@ -47,7 +47,7 @@ const environment = {
   },
 };
 
-const targetPath = './src/environments/environment.json';
+const targetPath = './src/environments/environment.ts';
 writeFile(targetPath, JSON.stringify(environment), 'utf8', (err) => {
   if (err) {
     return console.error(err);
