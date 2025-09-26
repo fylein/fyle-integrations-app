@@ -87,7 +87,7 @@ export class QboExportSettingsService extends ExportSettingsService {
     return creditCardExportTypes;
   }
 
-  getCCCExpenseStateOptions(): SelectFormOption[] {
+  override getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
         label: this.translocoService.translate('services.qboExportSettings.approved'),
@@ -100,7 +100,7 @@ export class QboExportSettingsService extends ExportSettingsService {
     ];
   }
 
-  getReimbursableExpenseStateOptions(): SelectFormOption[] {
+  override getReimbursableExpenseStateOptions(): SelectFormOption[] {
     return [
       {
         label: this.translocoService.translate('services.qboExportSettings.processing'),
