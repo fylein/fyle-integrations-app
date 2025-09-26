@@ -48,7 +48,10 @@ const environment = {
 };
 
 const targetPath = './src/environments/environment.ts';
-writeFile(targetPath, JSON.stringify(environment), 'utf8', (err) => {
+const envContent = `export const environment = ${JSON.stringify(environment, null, 2)};
+`;
+
+writeFile(targetPath, envContent, 'utf8', (err) => {
   if (err) {
     return console.error(err);
   }
