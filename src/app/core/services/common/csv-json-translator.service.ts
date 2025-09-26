@@ -26,6 +26,7 @@ export class CsvJsonTranslatorService {
       Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
+        dynamicTyping: (column) => column === 'Account Type',
         complete: (results) => {
           if (options.rowLimit && results.data.length > options.rowLimit) {
             observer.error(new CSVError('ROW_LIMIT_EXCEEDED', `Row limit exceeded: ${results.data.length} > ${options.rowLimit}`));
