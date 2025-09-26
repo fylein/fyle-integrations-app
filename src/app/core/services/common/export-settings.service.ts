@@ -14,39 +14,45 @@ import { TranslocoService } from "@jsverse/transloco";
 export class ExportSettingsService {
   protected translocoService: TranslocoService = inject(TranslocoService);
 
-  getReimbursableExpenseStateOptions: () => SelectFormOption[] = () => [
-    {
-      label: this.translocoService.translate('services.exportSettings.processingOptionLabel'),
-      value: ExpenseState.PAYMENT_PROCESSING
-    },
-    {
-      label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
-      value: ExpenseState.PAID
-    }
-  ];
+  getReimbursableExpenseStateOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.processingOptionLabel'),
+        value: ExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
+        value: ExpenseState.PAID
+      }
+    ];
+  }
 
-  getCCCExpenseStateOptions: () => SelectFormOption[] = () => [
-    {
-      label: this.translocoService.translate('services.exportSettings.approvedOptionLabel'),
-      value: CCCExpenseState.APPROVED
-    },
-    {
-      label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
-      value: CCCExpenseState.PAID
-    }
-  ];
+  getCCCExpenseStateOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.approvedOptionLabel'),
+        value: CCCExpenseState.APPROVED
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
+        value: CCCExpenseState.PAID
+      }
+    ];
+  }
 
   // Expense grouping options - for both reimbursable and CCC expenses
-  getExpenseGroupingOptions: () => SelectFormOption[] = () => [
-    {
-      label: this.translocoService.translate('services.exportSettings.expenseOptionLabel'),
-      value: ExpenseGroupingFieldOption.EXPENSE
-    },
-    {
-      label: this.translocoService.translate('services.exportSettings.reportOptionLabel'),
-      value: ExpenseGroupingFieldOption.REPORT
-    }
-  ];
+  getExpenseGroupingOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.expenseOptionLabel'),
+        value: ExpenseGroupingFieldOption.EXPENSE
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.reportOptionLabel'),
+        value: ExpenseGroupingFieldOption.REPORT
+      }
+    ];
+  }
 
   getSplitExpenseGroupingOptions(): SelectFormOption[] {
     return [
