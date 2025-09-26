@@ -13,7 +13,8 @@ export class Sage50OnboardingService {
     private translocoService: TranslocoService = inject(TranslocoService);
 
     private readonly onboardingStateStepMap = {
-        [Sage50OnboardingState.CONNECTION]: 1,
+        [Sage50OnboardingState.YET_TO_START]: 1,
+        [Sage50OnboardingState.PRE_REQUISITES]: 1,
         [Sage50OnboardingState.EXPORT_SETTINGS]: 2,
         [Sage50OnboardingState.IMPORT_SETTINGS]: 3,
         [Sage50OnboardingState.ADVANCED_SETTINGS]: 4,
@@ -29,7 +30,7 @@ export class Sage50OnboardingService {
             icon: 'link-vertical-medium',
             route: '/integrations/sage50/onboarding/prerequisites',
             styleClasses: ['step-name-pre-requisite--text'],
-            onboardingState: Sage50OnboardingState.CONNECTION
+            onboardingState: Sage50OnboardingState.PRE_REQUISITES
           },
           {
             active: false,

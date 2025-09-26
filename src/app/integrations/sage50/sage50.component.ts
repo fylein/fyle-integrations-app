@@ -29,7 +29,8 @@ export class Sage50Component implements OnInit {
   private navigate(): void {
     if (this.router.url === '/integrations/sage50') {
       const onboardingStateComponentMap = {
-        [Sage50OnboardingState.CONNECTION]: '/integrations/sage50/onboarding/landing',
+        [Sage50OnboardingState.YET_TO_START]: '/integrations/sage50/onboarding/landing',
+        [Sage50OnboardingState.PRE_REQUISITES]: '/integrations/sage50/onboarding/prerequisites',
         [Sage50OnboardingState.EXPORT_SETTINGS]: '/integrations/sage50/onboarding/export_settings',
         [Sage50OnboardingState.IMPORT_SETTINGS]: '/integrations/sage50/onboarding/import_settings',
         [Sage50OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage50/onboarding/advanced_settings',
