@@ -2260,7 +2260,12 @@
       "spendDate": "Spend date",
       "approvalDate": "Approval date",
       "lastSpendDate": "Last spend date",
-      "cardTransactionPostDate": "Card transaction post date"
+      "cardTransactionPostDate": "Card transaction post date",
+      "processingOptionLabel": "Processing",
+      "closedOptionLabel": "Closed",
+      "approvedOptionLabel": "Approved",
+      "expenseOptionLabel": "Expense",
+      "reportOptionLabel": "Expense report"
     },
     "importSettings": {
       "createCustomField": "Create a custom field"
@@ -2354,9 +2359,6 @@
       "generalJournalEntryOptionLabel": "General journal entry",
       "purchasesOptionLabel": "Purchases",
       "paymentsJournalOptionLabel": "Payments",
-      "processing": "Processing",
-      "closed": "Closed",
-      "approved": "Approved",
       "transactionPostDateOptionLabel": "Transaction post date",
       "spendDateOptionLabel": "Spend date"
     }

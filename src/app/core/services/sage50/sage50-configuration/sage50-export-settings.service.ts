@@ -41,39 +41,12 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
   ];
 
   // Expense state options
-  public readonly sage50ReimbursableExpenseStateOptions: SelectFormOption[] = [
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.processingOptionLabel'),
-      value: ExpenseState.PAYMENT_PROCESSING
-    },
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.closedOptionLabel'),
-      value: ExpenseState.PAID
-    }
-  ];
+  public readonly sage50ReimbursableExpenseStateOptions = this.getReimbursableExpenseStateOptions();
 
-  public readonly sage50CCCExpenseStateOptions: SelectFormOption[] = [
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.approvedOptionLabel'),
-      value: CCCExpenseState.APPROVED
-    },
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.closedOptionLabel'),
-      value: CCCExpenseState.PAID
-    }
-  ];
+  public readonly sage50CCCExpenseStateOptions = this.getCCCExpenseStateOptions();
 
   // Expense grouping options - for both reimbursable and CCC expenses
-  public readonly sage50ExpenseGroupingOptions: SelectFormOption[] = [
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.expenseOptionLabel'),
-      value: Sage50ExpensesGroupedBy.EXPENSE
-    },
-    {
-      label: this.translocoService.translate('services.sage50ExportSettings.reportOptionLabel'),
-      value: Sage50ExpensesGroupedBy.REPORT
-    }
-  ];
+  public readonly sage50ExpenseGroupingOptions = this.getExpenseGroupingOptions();
 
   // Expense date options for CCC + group by expense only - all other cases are preset
   public readonly sage50CCCExpenseDateOptions: SelectFormOption[] = [
