@@ -53,8 +53,7 @@
               ],
               "outputHashing": "all",
               "sourceMap": {
-                "scripts": false,
-                "styles": true,
+                "scripts": true,
                 "hidden": true
               }
             },
