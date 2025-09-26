@@ -2,6 +2,7 @@ const { writeFile } = require("fs");
 
 const environment = {
   production: true,
+  test_temp_1: 'test_key_secret',
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
   qbd_api_url: `${process.env.QBD_API_URL ? process.env.QBD_API_URL : '{{QBD_API_URL}}'}`,
