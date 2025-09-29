@@ -17,7 +17,7 @@ export enum Sage50CCCExportType {
     PURCHASES_RECEIVE_INVENTORY = 'PURCHASES_RECEIVE_INVENTORY'
 }
 
-export enum Sage50CreditCardExpensesDate {
+export enum Sage50CCCExpensesDate {
     SPENT_AT = 'spent_at',
     POSTED_AT = 'posted_at',
     CURRENT_DATE = 'current_date'
@@ -37,35 +37,35 @@ export type Sage50ExportSettings = {
     reimbursable_expense_grouped_by: Sage50ExpensesGroupedBy,
     credit_card_expense_export_type: Sage50CCCExportType,
     credit_card_expense_state: CCCExpenseState,
-    credit_card_expense_date: Sage50CreditCardExpensesDate,
+    credit_card_expense_date: Sage50CCCExpensesDate,
     credit_card_expense_grouped_by: Sage50ExpensesGroupedBy,
     je_single_credit_line: boolean,
     reimbursable_default_credit_line_account: string,
     reimbursable_default_account_payable_account: string,
     ccc_default_credit_line_account: string,
     ccc_default_account_payable_account: string,
-    default_payment_method: string,
+    default_cash_account: string,
     default_vendor: string,
-    default_cash_account: string
+    default_payment_method: string,
 };
 
 export type Sage50ExportSettingsForm = {
     reimbursableExpenses: FormControl<boolean>,
-    reimbursableExportType: FormControl<string | null>,
-    reimbursableExpenseState: FormControl<string | null>,
-    reimbursableExportDate: FormControl<string | null>,
-    reimbursableExportGroup: FormControl<string | null>,
+    reimbursableExportType: FormControl<Sage50ReimbursableExportType | null>,
+    reimbursableExpenseState: FormControl<ExpenseState | null>,
+    reimbursableExportDate: FormControl<Sage50ReimbursableExpenseDate | null>,
+    reimbursableExportGroup: FormControl<Sage50ExpensesGroupedBy | null>,
     cccExpenses: FormControl<boolean>,
-    cccExportType: FormControl<string | null>,
-    cccExpenseState: FormControl<string | null>,
-    cccExportDate: FormControl<string | null>,
-    cccExportGroup: FormControl<string | null>,
+    cccExportType: FormControl<Sage50CCCExportType | null>,
+    cccExpenseState: FormControl<CCCExpenseState | null>,
+    cccExportDate: FormControl<Sage50CCCExpensesDate | null>,
+    cccExportGroup: FormControl<Sage50ExpensesGroupedBy | null>,
     jeSingleCreditLine: FormControl<boolean | null>,
     reimbursableDefaultCreditLineAccount: FormControl<string | null>,
     reimbursableDefaultAccountPayableAccount: FormControl<string | null>,
     cccDefaultCreditLineAccount: FormControl<string | null>,
     cccDefaultAccountPayableAccount: FormControl<string | null>,
-    defaultPaymentMethod: FormControl<string | null>,
-    defaultVendor: FormControl<string | null>,
     defaultCashAccount: FormControl<string | null>,
+    defaultVendor: FormControl<string | null>,
+    defaultPaymentMethod: FormControl<string | null>,
 }

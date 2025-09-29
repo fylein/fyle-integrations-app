@@ -154,7 +154,7 @@ export class ExportSettingsService {
   constructExportDateOptions(
     isCoreCCCModule: boolean,
     expenseGrouping: ExpenseGroupingFieldOption,
-    exportDateType: ExportDateType,
+    exportDateType: ExportDateType | null,
     { allowPostedAt }: {allowPostedAt?: boolean} = {}
   ): SelectFormOption[] {
 

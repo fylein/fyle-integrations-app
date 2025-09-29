@@ -3,7 +3,7 @@ import { ApiService } from "../../common/api.service";
 import { ExportSettingsService } from "../../common/export-settings.service";
 import { Observable } from "rxjs";
 import { WorkspaceService } from "../../common/workspace.service";
-import { Sage50CCCExportType, Sage50CreditCardExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettings, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
+import { Sage50CCCExportType, Sage50CCCExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettings, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 import { FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 
@@ -30,12 +30,12 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       value: Sage50CCCExportType.GENERAL_JOURNAL_ENTRY
     },
     {
-      label: this.translocoService.translate('services.sage50ExportSettings.paymentsJournalOptionLabel'),
-      value: Sage50CCCExportType.PAYMENTS_JOURNAL
-    },
-    {
       label: this.translocoService.translate('services.sage50ExportSettings.purchasesOptionLabel'),
       value: Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY
+    },
+    {
+      label: this.translocoService.translate('services.sage50ExportSettings.paymentsJournalOptionLabel'),
+      value: Sage50CCCExportType.PAYMENTS_JOURNAL
     }
   ];
 
@@ -44,18 +44,15 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
 
   public readonly sage50CCCExpenseStateOptions = this.getCCCExpenseStateOptions();
 
-  // Expense grouping options - for both reimbursable and CCC expenses
-  public readonly sage50ExpenseGroupingOptions = this.getExpenseGroupingOptions();
-
-  // Expense date options for CCC + group by expense only - all other cases are preset
-  public readonly sage50CCCExpenseDateOptions: SelectFormOption[] = [
+  // Expense grouping options - for both reimbursable and CCC expenses (`value` is specific to sage 50)
+  public readonly sage50ExpenseGroupingOptions = [
     {
-      label: this.translocoService.translate('services.sage50ExportSettings.transactionPostDateOptionLabel'),
-      value: Sage50CreditCardExpensesDate.POSTED_AT
+      label: this.translocoService.translate('services.sage50ExportSettings.expenseOptionLabel'),
+      value: Sage50ExpensesGroupedBy.EXPENSE
     },
     {
-      label: this.translocoService.translate('services.sage50ExportSettings.spendDateOptionLabel'),
-      value: Sage50CreditCardExpensesDate.SPENT_AT
+      label: this.translocoService.translate('services.sage50ExportSettings.reportOptionLabel'),
+      value: Sage50ExpensesGroupedBy.REPORT
     }
   ];
 

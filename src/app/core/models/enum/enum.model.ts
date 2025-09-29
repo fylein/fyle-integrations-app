@@ -760,7 +760,8 @@ export enum QbdDirectExportSettingDestinationOptionKey {
 }
 
 export enum Sage50ExportSettingDestinationOptionKey {
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR'
 }
 
 export type DestinationOptionKey =

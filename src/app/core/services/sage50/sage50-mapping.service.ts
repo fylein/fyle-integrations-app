@@ -14,4 +14,11 @@ export class Sage50MappingService extends MappingService {
     );
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/paginated_destination_attributes/`, params);
   }
+
+  getVendors(value?: string): Observable<PaginatedDestinationAttribute> {
+    const params = this.constructPaginatedDestinationAttributesParams(
+      Sage50AttributeType.VENDOR, value, undefined, AppName.SAGE50
+    );
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/paginated_destination_attributes/`, params);
+  }
 }

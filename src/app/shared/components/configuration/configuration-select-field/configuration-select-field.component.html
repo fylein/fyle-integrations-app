@@ -95,10 +95,15 @@
                         <a class="link !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
                         <span> {{ 'configurationSelectField.inApp' | transloco: {uiExposedAppName: uiExposedAppName} }}</span>
                     </div>
-                    <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
+                    <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired && !disabledText" class="sub-text tw-text-pretty">
                         <span *ngIf="(appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value === 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup') || (appName !== AppName.QBD_DIRECT)">{{ 'configurationSelectField.autoSelectedOnExportModule' | transloco }}</span>
                         <span *ngIf="(formControllerName === 'reimbursableExportGroup' && form.controls.reimbursableExportType.value !== 'BILL' && appName === AppName.QBD_DIRECT) || (appName === AppName.QBD_DIRECT && form.controls.creditCardExportType.value !== 'CREDIT_CARD_PURCHASE' && formControllerName === 'creditCardExportGroup')"> {{ 'configurationSelectField.autoSelectedOnAccountPayable' | transloco }}</span>
                     </div>
+                    @if (!showExportPreview && isDisabled && disabledText && disabledText.length > 0) {
+                        <div class="sub-text tw-text-pretty">
+                            <span>{{ disabledText }}</span>
+                        </div>
+                    }
                     <div *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.get('cccExportType')?.value && form.get('cccExportGroup')?.value === 'REPORT'" class="sub-text">
                         <span [innerHTML]="'configurationSelectField.spendDateWarning' | transloco"></span>
                     </div>
