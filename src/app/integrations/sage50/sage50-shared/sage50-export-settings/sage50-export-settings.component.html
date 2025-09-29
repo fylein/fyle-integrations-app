@@ -222,7 +222,33 @@
             }
 
             @if (showField('defaultPaymentMethod')) {
-                <!-- TODO: Add text field for default payment method -->
+                <app-configuration-text-field
+                    [expanded]="true"
+                    [iconPath]="'list'"
+                    [form]="exportSettingForm"
+                    [label]="'sage50ExportSettings.cccDefaultPaymentMethodLabel' | transloco"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'defaultPaymentMethod'"
+                    [placeholder]="'sage50ExportSettings.cccDefaultPaymentMethodPlaceholder' | transloco"
+                >
+                    <div slot="subLabel">
+                        <span>
+                            {{ 'sage50ExportSettings.cccDefaultPaymentMethodSubLabel' | transloco: { brandName: brandingConfig.brandName } }}
+                        </span>
+                        <a class="link" (click)="showPaymentMethodPreview()">{{ 'sage50ExportSettings.preview' | transloco }}</a>
+                        <span>
+                            {{ 'sage50ExportSettings.forDetails' | transloco: { brandName: brandingConfig.brandName } }}
+                        </span>
+                    </div>
+                    <div slot="inputHint">
+                        <div class="tw-flex tw-gap-[4px] tw-pt-[4px]">
+                            <img src="assets/icons/warning-filled.svg" alt="Warning icon" class="tw-w-12-px tw-h-12-px tw-relative tw-top-[3px]">
+                            <span>
+                                {{ 'sage50ExportSettings.cccDefaultPaymentMethodInputHint' | transloco }}
+                            </span>
+                        </div>
+                    </div>
+                </app-configuration-text-field>
             }
             </div>
         }

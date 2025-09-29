@@ -2465,6 +2465,12 @@
     "cccDefaultVendorPlaceholder": "Select vendor",
     "cccDefaultCashAccountLabel": "Default cash account",
     "cccDefaultCashAccountSubLabel": "Select the cash account to use when an expense isn't matched to a card transaction.",
-    "cccDefaultCashAccountPlaceholder": "Select cash account"
+    "cccDefaultCashAccountPlaceholder": "Select cash account",
+    "cccDefaultPaymentMethodLabel": "Payment method",
+    "cccDefaultPaymentMethodPlaceholder": "Enter payment method",
+    "cccDefaultPaymentMethodSubLabel": "Enter the payment method to use for creating corporate card expenses in Sage 50 (e.g., Check, Credit card). ",
+    "preview": "Preview",
+    "forDetails": "for details.",
+    "cccDefaultPaymentMethodInputHint": "Use the exact payment method name as it appears in your Sage 50 settings."
   }
 }

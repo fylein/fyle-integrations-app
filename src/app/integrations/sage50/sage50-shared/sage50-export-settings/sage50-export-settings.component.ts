@@ -95,6 +95,10 @@ export class Sage50ExportSettingsComponent implements OnInit {
     }
   }
 
+  showPaymentMethodPreview() {
+    // TODO: Implement payment method preview
+  }
+
   private optionSearchWatcher(): void {
     this.optionSearchUpdate.pipe(
       debounceTime(1000)
