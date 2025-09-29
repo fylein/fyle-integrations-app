@@ -13,11 +13,11 @@
             [appName]="appName">
         </app-configuration-step-header>
     </div>
-    <form [formGroup]="exportSettingForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
+    <form [formGroup]="exportSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
         <!-- Reimbursable Expenses -->
         <div class="tw-rounded-10-px tw-bg-bg-tertiary-lighter">
             <app-configuration-toggle-field
-                [form]="exportSettingForm"
+                [form]="exportSettingsForm"
                 [label]="'sage50ExportSettings.exportReimbursableExpensesLabel' | transloco"
                 [formControllerName]="'reimbursableExpenses'"
                 [isSectionHeader]="true">
@@ -27,7 +27,7 @@
         @if (showField('reimbursableExportType')) {
         <div class="tw-border tw-border-separator tw-rounded-10-px">
             <app-configuration-select-field
-                [form]="exportSettingForm"
+                [form]="exportSettingsForm"
                 [label]="'sage50ExportSettings.reimbursableExportTypeLabel' | transloco"
                 [subLabel]="'sage50ExportSettings.reimbursableExportTypeSubLabel' | transloco"
                 [formControllerName]="'reimbursableExportType'"
@@ -41,7 +41,7 @@
 
             @if (showField('reimbursableDefaultCreditLineAccount')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.reimbursableDefaultCreditLineAccountLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.reimbursableDefaultCreditLineAccountSubLabel' | transloco"
                     [formControllerName]="'reimbursableDefaultCreditLineAccount'"
@@ -59,7 +59,7 @@
 
             @if (showField('reimbursableDefaultAccountPayableAccount')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.reimbursableDefaultAccountPayableAccountLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.reimbursableDefaultAccountPayableAccountSubLabel' | transloco"
                     [formControllerName]="'reimbursableDefaultAccountPayableAccount'"
@@ -80,7 +80,7 @@
         @if (showField('reimbursableExpenseState')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.reimbursableExpenseStateLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.reimbursableExpenseStateSubLabel' | transloco"
                     [formControllerName]="'reimbursableExpenseState'"
@@ -96,7 +96,7 @@
         @if (showField('reimbursableExportGroup')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.reimbursableExpenseGroupLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.reimbursableExpenseGroupSubLabel' | transloco"
                     [formControllerName]="'reimbursableExportGroup'"
@@ -112,7 +112,7 @@
         @if (showField('reimbursableExportDate')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.reimbursableExportDateLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.reimbursableExportDateSubLabel' | transloco: {
                         selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
@@ -132,7 +132,7 @@
         <!-- CCC Expenses -->
         <div class="tw-rounded-[10px] tw-bg-bg-tertiary-lighter">
             <app-configuration-toggle-field
-                [form]="exportSettingForm"
+                [form]="exportSettingsForm"
                 [label]="'sage50ExportSettings.exportCCCExpensesLabel' | transloco"
                 [formControllerName]="'cccExpenses'"
                 [isSectionHeader]="true">
@@ -142,7 +142,7 @@
         @if (showField('cccExportType')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExportTypeLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccExportTypeSubLabel' | transloco"
                     [formControllerName]="'cccExportType'"
@@ -154,7 +154,7 @@
                 ></app-configuration-select-field>
             @if (showField('cccDefaultCreditLineAccount')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccDefaultCreditLineAccountLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccDefaultCreditLineAccountSubLabel' | transloco"
                     [formControllerName]="'cccDefaultCreditLineAccount'"
@@ -171,7 +171,7 @@
             }
             @if (showField('cccDefaultAccountPayableAccount')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccDefaultAccountPayableAccountLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccDefaultAccountPayableAccountSubLabel' | transloco"
                     [formControllerName]="'cccDefaultAccountPayableAccount'"
@@ -188,7 +188,7 @@
             }
             @if (showField('defaultCashAccount')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccDefaultCashAccountLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccDefaultCashAccountSubLabel' | transloco"
                     [formControllerName]="'defaultCashAccount'"
@@ -205,7 +205,7 @@
             }
             @if (showField('defaultVendor')) {
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccDefaultVendorLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccDefaultVendorSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'defaultVendor'"
@@ -225,7 +225,7 @@
                 <app-configuration-text-field
                     [expanded]="true"
                     [iconPath]="'list'"
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccDefaultPaymentMethodLabel' | transloco"
                     [isFieldMandatory]="true"
                     [formControllerName]="'defaultPaymentMethod'"
@@ -256,7 +256,7 @@
         @if (showField('cccExpenseState')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExpenseStateLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco: {
                         brandName: brandingConfig.brandName
@@ -274,7 +274,7 @@
         @if (showField('cccExportGroup')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExportGroupLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccExportGroupSubLabel' | transloco"
                     [formControllerName]="'cccExportGroup'"
@@ -290,7 +290,7 @@
         @if (showField('cccExportDate')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
                 <app-configuration-select-field
-                    [form]="exportSettingForm"
+                    [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExportDateLabel' | transloco"
                     [subLabel]="'sage50ExportSettings.cccExportDateSubLabel' | transloco: {
                         selectedDateOption: getSelectedLabel('cccExportDate') ?? 'date',
