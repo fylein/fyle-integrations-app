@@ -81,7 +81,7 @@
                                 </app-configuration-select-field>
                             </div>
 
-                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))">
+                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))">
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [destinationAttributes]="accountsPayables"
@@ -277,7 +277,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))">
+                        <div *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))">
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="accountsPayables"
