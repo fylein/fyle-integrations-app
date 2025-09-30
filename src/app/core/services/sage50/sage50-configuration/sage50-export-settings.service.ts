@@ -130,7 +130,7 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       ccc_default_account_payable_account: form.get('cccDefaultAccountPayableAccount')?.value?.id,
       default_cash_account: form.get('defaultCashAccount')?.value?.id,
       default_vendor: form.get('defaultVendor')?.value?.id,
-      default_payment_method: form.get('defaultPaymentMethod')?.value?.id
+      default_payment_method: form.get('defaultPaymentMethod')?.value
     } satisfies Partial<Sage50ExportSettingsPost>);
   }
 

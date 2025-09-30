@@ -218,6 +218,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [infoTooltipText]="'sage50ExportSettings.cccDefaultVendorInfoTooltip' | transloco"
                 ></app-configuration-select-field>
             }
 
@@ -316,3 +317,11 @@
     </app-configuration-step-footer>
 </div>
 }
+
+<!-- Payment method preview dialog -->
+<app-preview-dialog
+    [isPreviewDialogVisible]="isPaymentMethodPreviewDialogVisible"
+    [iconPath]="'assets/pngs/preview-screens/sage50-payment-method.png'"
+    (closeDialog)="closePaymentMethodPreviewDialog()"
+    [header]="'sage50ExportSettings.paymentMethodPreviewHeader' | transloco"
+></app-preview-dialog>
