@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
@@ -12,6 +12,10 @@ import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mappin
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { Router } from '@angular/router';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -92,10 +96,27 @@ export class Sage50ExportSettingsComponent implements OnInit {
   constructor(
     private exportSettingService: Sage50ExportSettingsService,
     private mappingService: Sage50MappingService,
-    private router: Router
+    private router: Router,
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService,
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
   ) { }
 
   onSave(): void {
+    this.isSaveInProgress = true;
+    this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe(() => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(
+        ToastSeverity.SUCCESS,
+        this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
+      );
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
+        this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+      }
+    });
   }
 
   onBackButtonClick(): void {
@@ -227,8 +248,6 @@ export class Sage50ExportSettingsComponent implements OnInit {
       ...attributesByAccountType,
       this.mappingService.getVendors()
     ]).subscribe(([exportSettings, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
-      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings);
-
       this.accounts = [
         ...accountsPayable.results,
         ...longTermLiabilities.results,
@@ -236,6 +255,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
       ].sort((a, b) => a.value.localeCompare(b.value));
 
       this.vendors = vendors.results;
+
+      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings, this.accounts, this.vendors);
 
       this.optionSearchWatcher();
       this.setupFieldWatchers();
