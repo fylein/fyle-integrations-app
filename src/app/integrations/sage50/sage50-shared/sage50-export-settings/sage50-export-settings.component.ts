@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -30,6 +31,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly Sage50ExportSettingDestinationOptionKey = Sage50ExportSettingDestinationOptionKey;
+
+  readonly ConfigurationCtaText = ConfigurationCta;
 
   readonly allowedAccountTypes: string[] = [
     'Accounts Payable', 'Long Term Liabilities', 'Other Current Liabilities'
@@ -58,12 +61,14 @@ export class Sage50ExportSettingsComponent implements OnInit {
   // Form
   exportSettingsForm: FormGroup<Sage50ExportSettingsForm>;
 
-  // Loaders' states
+  // Flags
   isLoading: boolean;
 
   isSaveInProgress: boolean;
 
   isOptionSearchInProgress: boolean;
+
+  isOnboarding: boolean;
 
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -80,49 +85,22 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   showField(field: keyof Sage50ExportSettingsForm): boolean {
-    const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form: FormGroup) => boolean>([
-      ['reimbursableExpenses', () => true], // Always show
-      ['reimbursableExportType', (form) => !!form.get('reimbursableExpenses')?.value],
-      ['reimbursableDefaultCreditLineAccount', (form) =>
-        form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.GENERAL_JOURNAL_ENTRY
-      ],
-      ['reimbursableDefaultAccountPayableAccount', (form) =>
-        form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY
-      ],
-      ['reimbursableExpenseState', (form) => !!form.get('reimbursableExportType')?.value],
-      ['reimbursableExportGroup', (form) => !!form.get('reimbursableExportType')?.value],
-      ['reimbursableExportDate', (form) => !!form.get('reimbursableExportGroup')?.value],
-      ['cccExpenses', () => true], // Always show
-      ['cccExportType', (form) => !!form.get('cccExpenses')?.value],
-      ['cccDefaultCreditLineAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.GENERAL_JOURNAL_ENTRY
-      ],
-      ['cccDefaultAccountPayableAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY
-      ],
-      ['defaultCashAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL
-      ],
-      ['defaultVendor', (form) =>
-        [Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY, Sage50CCCExportType.PAYMENTS_JOURNAL]
-        .includes(form.get('cccExportType')?.value)
-      ],
-      ['defaultPaymentMethod', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL
-      ],
-      ['cccExpenseState', (form) => !!form.get('cccExportType')?.value],
-      ['cccExportGroup', (form) => !!form.get('cccExportType')?.value],
-      ['cccExportDate', (form) => !!form.get('cccExportGroup')?.value]
-    ]);
-
     const condition = FIELD_DEPENDENCIES.get(field);
     return condition ? condition(this.exportSettingsForm) : true;
   }
 
   constructor(
     private exportSettingService: Sage50ExportSettingsService,
-    private mappingService: Sage50MappingService
+    private mappingService: Sage50MappingService,
+    private router: Router
   ) { }
+
+  onSave(): void {
+  }
+
+  onBackButtonClick(): void {
+    this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
+  }
 
   onAdvancedSearch(event: ExportSettingOptionSearch): void {
     if (event.searchTerm) {
@@ -178,6 +156,23 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   private setupFieldWatchers(): void {
+    // Toggle field watchers - clear export type if the corresponding toggle is turned off
+    this.exportSettingsForm.get('reimbursableExpenses')?.valueChanges
+      .pipe(startWith(this.exportSettingsForm.get('reimbursableExpenses')?.value)) // Manually trigger on init
+      .subscribe((reimbursableExpenses) => {
+        if (!reimbursableExpenses) {
+          this.exportSettingsForm.get('reimbursableExportType')?.setValue(null);
+        }
+      });
+
+    this.exportSettingsForm.get('cccExpenses')?.valueChanges
+      .pipe(startWith(this.exportSettingsForm.get('cccExpenses')?.value)) // Manually trigger on init
+      .subscribe((cccExpenses) => {
+        if (!cccExpenses) {
+          this.exportSettingsForm.get('cccExportType')?.setValue(null);
+        }
+      });
+
     // Watchers for date fields
     this.exportSettingsForm.get('reimbursableExportGroup')?.valueChanges
       .pipe(startWith(this.exportSettingsForm.get('reimbursableExportGroup')?.value)) // Manually trigger on init
@@ -220,6 +215,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
     this.isLoading = true;
 
     const attributesByAccountType = this.allowedAccountTypes.map(accountType =>
