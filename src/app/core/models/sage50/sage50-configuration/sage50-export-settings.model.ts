@@ -30,8 +30,7 @@ export enum Sage50ExpensesGroupedBy {
     EXPENSE = 'expense_id'
 }
 
-
-export type Sage50ExportSettings = {
+type Sage50ExportSettingsBase = {
     reimbursable_expense_export_type: Sage50ReimbursableExportType | null,
     reimbursable_expense_state: ExpenseState | null,
     reimbursable_expense_date: Sage50ReimbursableExpenseDate | null,
@@ -40,6 +39,9 @@ export type Sage50ExportSettings = {
     credit_card_expense_state: CCCExpenseState | null,
     credit_card_expense_date: Sage50CCCExpensesDate | null,
     credit_card_expense_grouped_by: Sage50ExpensesGroupedBy | null,
+}
+
+export interface Sage50ExportSettingsPost extends Sage50ExportSettingsBase {
     reimbursable_default_credit_line_account: number | null,
     reimbursable_default_account_payable_account: number | null,
     ccc_default_credit_line_account: number | null,
@@ -48,6 +50,16 @@ export type Sage50ExportSettings = {
     default_vendor: number | null,
     default_payment_method: number | null,
 };
+
+export interface Sage50ExportSettingsGet extends Sage50ExportSettingsBase {
+    reimbursable_default_credit_line_account: DestinationAttribute | null,
+    reimbursable_default_account_payable_account: DestinationAttribute | null,
+    ccc_default_credit_line_account: DestinationAttribute | null,
+    ccc_default_account_payable_account: DestinationAttribute | null,
+    default_cash_account: DestinationAttribute | null,
+    default_vendor: DestinationAttribute | null,
+    default_payment_method: DestinationAttribute | null,
+}
 
 export type Sage50ExportSettingsForm = {
     reimbursableExpenses: FormControl<boolean>,

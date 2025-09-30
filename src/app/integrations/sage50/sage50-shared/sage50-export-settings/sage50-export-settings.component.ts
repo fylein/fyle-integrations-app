@@ -5,7 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
-import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50CCCExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
@@ -105,16 +105,25 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   onSave(): void {
     this.isSaveInProgress = true;
-    this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe(() => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(
-        ToastSeverity.SUCCESS,
-        this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
-      );
+    this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe({
+      next: () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
+        );
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
-        this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
+          this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+        }
+      },
+      error: () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage50ExportSettings.exportSettingsSaveError')
+        );
       }
     });
   }
@@ -132,6 +141,31 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   showPaymentMethodPreview() {
     // TODO: Implement payment method preview
+  }
+
+  private addMissingOptionsAndSort(exportSettings: Sage50ExportSettingsGet | null): void {
+    const extraAccountOptions = [
+      exportSettings?.reimbursable_default_credit_line_account,
+      exportSettings?.reimbursable_default_account_payable_account,
+      exportSettings?.ccc_default_credit_line_account,
+      exportSettings?.ccc_default_account_payable_account,
+      exportSettings?.default_cash_account,
+      exportSettings?.default_payment_method
+    ];
+
+    for (const account of extraAccountOptions) {
+      if (account && !this.accounts.find((existingAccount) => existingAccount.id === account.id)) {
+        this.accounts.push(account);
+      }
+    }
+
+    const extraVendor = exportSettings?.default_vendor;
+    if (extraVendor && !this.vendors.find((existingVendor) => existingVendor.id === extraVendor.id)) {
+      this.vendors.push(extraVendor);
+    }
+
+    this.accounts.sort((a, b) => a.value.localeCompare(b.value));
+    this.vendors.sort((a, b) => a.value.localeCompare(b.value));
   }
 
   private optionSearchWatcher(): void {
@@ -252,12 +286,13 @@ export class Sage50ExportSettingsComponent implements OnInit {
         ...accountsPayable.results,
         ...longTermLiabilities.results,
         ...otherCurrentLiabilities.results
-      ].sort((a, b) => a.value.localeCompare(b.value));
+      ];
 
       this.vendors = vendors.results;
 
       this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings, this.accounts, this.vendors);
 
+      this.addMissingOptionsAndSort(exportSettings);
       this.optionSearchWatcher();
       this.setupFieldWatchers();
 
