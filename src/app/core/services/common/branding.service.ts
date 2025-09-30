@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BrandingConfiguration } from '../../models/branding/branding-configuration.model';
-import { updateBrandingConfigRegistry, updateFeatureConfigRegistry, defaultBrandingConfig } from 'src/app/branding/branding-config';
+import { updateBrandingConfigRegistry, defaultBrandingConfig } from 'src/app/branding/branding-config';
 import { FeatureConfiguration } from '../../models/branding/feature-configuration.model';
 
 const faviconMap = {
@@ -44,10 +44,6 @@ export class BrandingService {
     const brandingConfig = { ...this.defaultBrandingConfig, ...config };
     this.defaultBrandingConfig = brandingConfig;
     updateBrandingConfigRegistry(brandingConfig);
-  }
-
-  updateFeatureConfig(featureUpdates: Partial<FeatureConfiguration[string]>): void {
-    updateFeatureConfigRegistry(featureUpdates);
   }
 
   private setupBrandingConfig(): void {
