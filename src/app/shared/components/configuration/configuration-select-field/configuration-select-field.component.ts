@@ -80,6 +80,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() isimportSettings: boolean = false;
 
+  @Input() infoTooltipText?: string;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
