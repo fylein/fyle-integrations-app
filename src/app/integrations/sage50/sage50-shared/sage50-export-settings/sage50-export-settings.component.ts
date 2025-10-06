@@ -16,6 +16,8 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TranslocoService } from '@jsverse/transloco';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
+import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.model';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -76,6 +78,10 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   isPaymentMethodPreviewDialogVisible: boolean;
 
+  isReimbursableEnabled = true;
+
+  isCCCEnabled = true;
+
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
@@ -92,7 +98,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   showField(field: keyof Sage50ExportSettingsForm): boolean {
     const condition = FIELD_DEPENDENCIES.get(field);
-    return condition ? condition(this.exportSettingsForm) : true;
+    const showToggles = this.isReimbursableEnabled && this.isCCCEnabled;
+    return condition ? condition(this.exportSettingsForm, showToggles) : true;
   }
 
   constructor(
@@ -102,7 +109,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
+    private userService: IntegrationsUserService
   ) { }
 
   onSave(): void {
@@ -285,9 +292,18 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
+      this.workspaceService.getWorkspace(this.userService.getUserProfile().org_id) as Observable<Sage50Workspace[]>,
       ...attributesByAccountType,
       this.mappingService.getVendors()
-    ]).subscribe(([exportSettings, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
+    ]).subscribe(([exportSettings, workspaces, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
+
+      // Set the payment method enabled flags based on the workspace settings
+      const paymentModes = workspaces?.[0]?.org_settings?.enabled_payment_modes;
+      if (paymentModes?.length > 0) {
+        this.isReimbursableEnabled = paymentModes.includes("REIMBURSABLE");
+        this.isCCCEnabled = paymentModes.includes("CREDIT_CARD");
+      }
+
       this.accounts = [
         ...accountsPayable.results,
         ...longTermLiabilities.results,
@@ -296,7 +312,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
       this.vendors = vendors.results;
 
-      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings, this.accounts, this.vendors);
+      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
+        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled
+      );
 
       this.addMissingOptionsAndSort(exportSettings);
       this.optionSearchWatcher();
