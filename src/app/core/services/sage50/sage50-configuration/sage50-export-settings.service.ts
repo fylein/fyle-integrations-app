@@ -3,7 +3,7 @@ import { ApiService } from "../../common/api.service";
 import { ExportSettingsService } from "../../common/export-settings.service";
 import { Observable } from "rxjs";
 import { WorkspaceService } from "../../common/workspace.service";
-import { Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettings, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
+import { Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsPost, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
@@ -110,7 +110,7 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     super();
   }
 
-  getExportSettings(): Observable<Sage50ExportSettings> {
+  getExportSettings(): Observable<Sage50ExportSettingsGet> {
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {});
   }
 
@@ -130,15 +130,15 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       ccc_default_account_payable_account: form.get('cccDefaultAccountPayableAccount')?.value?.id,
       default_cash_account: form.get('defaultCashAccount')?.value?.id,
       default_vendor: form.get('defaultVendor')?.value?.id,
-      default_payment_method: form.get('defaultPaymentMethod')?.value?.id
-    } satisfies Partial<Sage50ExportSettings>);
+      default_payment_method: form.get('defaultPaymentMethod')?.value
+    } satisfies Partial<Sage50ExportSettingsPost>);
   }
 
   findObjectById(array: DestinationAttribute[], id?: number | null): DestinationAttribute | null {
     return array?.find(item => item.id === id) || null;
   }
 
-  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettings | null, accounts: DestinationAttribute[], vendors: DestinationAttribute[]): FormGroup<Sage50ExportSettingsForm> {
+  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, accounts: DestinationAttribute[], vendors: DestinationAttribute[]): FormGroup<Sage50ExportSettingsForm> {
     return new FormGroup<Sage50ExportSettingsForm>({
       reimbursableExpenses: new FormControl(apiResponse ? !!apiResponse.reimbursable_expense_export_type : true, { nonNullable: true }),
       reimbursableExportType: new FormControl(apiResponse?.reimbursable_expense_export_type ?? null),
@@ -150,27 +150,13 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       cccExpenseState: new FormControl(apiResponse?.credit_card_expense_state ?? null),
       cccExportDate: new FormControl(apiResponse?.credit_card_expense_date ?? null),
       cccExportGroup: new FormControl(apiResponse?.credit_card_expense_grouped_by ?? null),
-      reimbursableDefaultAccountPayableAccount: new FormControl(
-        this.findObjectById(accounts, apiResponse?.reimbursable_default_account_payable_account)
-      ),
-      reimbursableDefaultCreditLineAccount: new FormControl(
-        this.findObjectById(accounts, apiResponse?.reimbursable_default_credit_line_account)
-      ),
-      cccDefaultCreditLineAccount: new FormControl(
-        this.findObjectById(accounts, apiResponse?.ccc_default_credit_line_account)
-      ),
-      cccDefaultAccountPayableAccount: new FormControl(
-        this.findObjectById(accounts, apiResponse?.ccc_default_account_payable_account)
-      ),
-      defaultPaymentMethod: new FormControl(
-        this.findObjectById(accounts, apiResponse?.default_payment_method)
-      ),
-      defaultVendor: new FormControl(
-        this.findObjectById(vendors, apiResponse?.default_vendor)
-      ),
-      defaultCashAccount: new FormControl(
-        this.findObjectById(accounts, apiResponse?.default_cash_account)
-      )
+      reimbursableDefaultAccountPayableAccount: new FormControl(apiResponse?.reimbursable_default_account_payable_account ?? null),
+      reimbursableDefaultCreditLineAccount: new FormControl(apiResponse?.reimbursable_default_credit_line_account ?? null),
+      cccDefaultCreditLineAccount: new FormControl(apiResponse?.ccc_default_credit_line_account ?? null),
+      cccDefaultAccountPayableAccount: new FormControl(apiResponse?.ccc_default_account_payable_account ?? null),
+      defaultPaymentMethod: new FormControl(apiResponse?.default_payment_method ?? null),
+      defaultVendor: new FormControl(apiResponse?.default_vendor ?? null),
+      defaultCashAccount: new FormControl(apiResponse?.default_cash_account ?? null)
     }, {
       validators: (form) => {
         const errors: ValidationErrors = {};
