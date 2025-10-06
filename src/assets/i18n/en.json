@@ -2473,6 +2473,8 @@
     "forDetails": "for details.",
     "cccDefaultPaymentMethodInputHint": "Use the exact payment method name as it appears in your Sage 50 settings.",
     "exportSettingsSavedSuccess": "Export settings saved successfully",
-    "exportSettingsSaveError": "Error saving export settings, please try again later"
+    "exportSettingsSaveError": "Error saving export settings, please try again later",
+    "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
+    "paymentMethodPreviewHeader": "Locate your payment method"
   }
 }

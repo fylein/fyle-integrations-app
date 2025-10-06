@@ -74,6 +74,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
+  isPaymentMethodPreviewDialogVisible: boolean;
+
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
@@ -140,8 +142,13 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   showPaymentMethodPreview() {
-    // TODO: Implement payment method preview
+    this.isPaymentMethodPreviewDialogVisible = true;
   }
+
+  closePaymentMethodPreviewDialog() {
+    this.isPaymentMethodPreviewDialogVisible = false;
+  }
+
 
   private addMissingOptionsAndSort(exportSettings: Sage50ExportSettingsGet | null): void {
     const extraAccountOptions = [
@@ -149,8 +156,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
       exportSettings?.reimbursable_default_account_payable_account,
       exportSettings?.ccc_default_credit_line_account,
       exportSettings?.ccc_default_account_payable_account,
-      exportSettings?.default_cash_account,
-      exportSettings?.default_payment_method
+      exportSettings?.default_cash_account
     ];
 
     for (const account of extraAccountOptions) {
