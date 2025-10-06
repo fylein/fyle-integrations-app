@@ -3,9 +3,10 @@ import { ApiService } from "../../common/api.service";
 import { ExportSettingsService } from "../../common/export-settings.service";
 import { Observable } from "rxjs";
 import { WorkspaceService } from "../../common/workspace.service";
-import { Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettings, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
+import { Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsPost, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
+import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 
 
 export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form: AbstractControl) => boolean>([
@@ -109,11 +110,35 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     super();
   }
 
-  getExportSettings(): Observable<Sage50ExportSettings> {
+  getExportSettings(): Observable<Sage50ExportSettingsGet> {
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {});
   }
 
-  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettings | null): FormGroup<Sage50ExportSettingsForm> {
+  constructPayloadAndPost(form: FormGroup<Sage50ExportSettingsForm>): Observable<void> {
+    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {
+      reimbursable_expense_export_type: form.get('reimbursableExportType')?.value,
+      reimbursable_expense_state: form.get('reimbursableExpenseState')?.value,
+      reimbursable_expense_date: form.get('reimbursableExportDate')?.value,
+      reimbursable_expense_grouped_by: form.get('reimbursableExportGroup')?.value,
+      reimbursable_default_credit_line_account: form.get('reimbursableDefaultCreditLineAccount')?.value?.id,
+      reimbursable_default_account_payable_account: form.get('reimbursableDefaultAccountPayableAccount')?.value?.id,
+      credit_card_expense_export_type: form.get('cccExportType')?.value,
+      credit_card_expense_state: form.get('cccExpenseState')?.value,
+      credit_card_expense_date: form.get('cccExportDate')?.value,
+      credit_card_expense_grouped_by: form.get('cccExportGroup')?.value,
+      ccc_default_credit_line_account: form.get('cccDefaultCreditLineAccount')?.value?.id,
+      ccc_default_account_payable_account: form.get('cccDefaultAccountPayableAccount')?.value?.id,
+      default_cash_account: form.get('defaultCashAccount')?.value?.id,
+      default_vendor: form.get('defaultVendor')?.value?.id,
+      default_payment_method: form.get('defaultPaymentMethod')?.value
+    } satisfies Partial<Sage50ExportSettingsPost>);
+  }
+
+  findObjectById(array: DestinationAttribute[], id?: number | null): DestinationAttribute | null {
+    return array?.find(item => item.id === id) || null;
+  }
+
+  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, accounts: DestinationAttribute[], vendors: DestinationAttribute[]): FormGroup<Sage50ExportSettingsForm> {
     return new FormGroup<Sage50ExportSettingsForm>({
       reimbursableExpenses: new FormControl(apiResponse ? !!apiResponse.reimbursable_expense_export_type : true, { nonNullable: true }),
       reimbursableExportType: new FormControl(apiResponse?.reimbursable_expense_export_type ?? null),
@@ -125,7 +150,6 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
       cccExpenseState: new FormControl(apiResponse?.credit_card_expense_state ?? null),
       cccExportDate: new FormControl(apiResponse?.credit_card_expense_date ?? null),
       cccExportGroup: new FormControl(apiResponse?.credit_card_expense_grouped_by ?? null),
-      jeSingleCreditLine: new FormControl(apiResponse?.je_single_credit_line ? true : false),
       reimbursableDefaultAccountPayableAccount: new FormControl(apiResponse?.reimbursable_default_account_payable_account ?? null),
       reimbursableDefaultCreditLineAccount: new FormControl(apiResponse?.reimbursable_default_credit_line_account ?? null),
       cccDefaultCreditLineAccount: new FormControl(apiResponse?.ccc_default_credit_line_account ?? null),
