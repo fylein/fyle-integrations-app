@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
-import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { Sage50CCCExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { Router } from '@angular/router';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -30,6 +35,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly Sage50ExportSettingDestinationOptionKey = Sage50ExportSettingDestinationOptionKey;
+
+  readonly ConfigurationCtaText = ConfigurationCta;
 
   readonly allowedAccountTypes: string[] = [
     'Accounts Payable', 'Long Term Liabilities', 'Other Current Liabilities'
@@ -58,12 +65,16 @@ export class Sage50ExportSettingsComponent implements OnInit {
   // Form
   exportSettingsForm: FormGroup<Sage50ExportSettingsForm>;
 
-  // Loaders' states
+  // Flags
   isLoading: boolean;
 
   isSaveInProgress: boolean;
 
   isOptionSearchInProgress: boolean;
+
+  isOnboarding: boolean;
+
+  isPaymentMethodPreviewDialogVisible: boolean;
 
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -80,49 +91,48 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   showField(field: keyof Sage50ExportSettingsForm): boolean {
-    const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form: FormGroup) => boolean>([
-      ['reimbursableExpenses', () => true], // Always show
-      ['reimbursableExportType', (form) => !!form.get('reimbursableExpenses')?.value],
-      ['reimbursableDefaultCreditLineAccount', (form) =>
-        form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.GENERAL_JOURNAL_ENTRY
-      ],
-      ['reimbursableDefaultAccountPayableAccount', (form) =>
-        form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY
-      ],
-      ['reimbursableExpenseState', (form) => !!form.get('reimbursableExportType')?.value],
-      ['reimbursableExportGroup', (form) => !!form.get('reimbursableExportType')?.value],
-      ['reimbursableExportDate', (form) => !!form.get('reimbursableExportGroup')?.value],
-      ['cccExpenses', () => true], // Always show
-      ['cccExportType', (form) => !!form.get('cccExpenses')?.value],
-      ['cccDefaultCreditLineAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.GENERAL_JOURNAL_ENTRY
-      ],
-      ['cccDefaultAccountPayableAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY
-      ],
-      ['defaultCashAccount', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL
-      ],
-      ['defaultVendor', (form) =>
-        [Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY, Sage50CCCExportType.PAYMENTS_JOURNAL]
-        .includes(form.get('cccExportType')?.value)
-      ],
-      ['defaultPaymentMethod', (form) =>
-        form.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL
-      ],
-      ['cccExpenseState', (form) => !!form.get('cccExportType')?.value],
-      ['cccExportGroup', (form) => !!form.get('cccExportType')?.value],
-      ['cccExportDate', (form) => !!form.get('cccExportGroup')?.value]
-    ]);
-
     const condition = FIELD_DEPENDENCIES.get(field);
     return condition ? condition(this.exportSettingsForm) : true;
   }
 
   constructor(
     private exportSettingService: Sage50ExportSettingsService,
-    private mappingService: Sage50MappingService
+    private mappingService: Sage50MappingService,
+    private router: Router,
+    private toastService: IntegrationsToastService,
+    private translocoService: TranslocoService,
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
   ) { }
+
+  onSave(): void {
+    this.isSaveInProgress = true;
+    this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe({
+      next: () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
+        );
+
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
+          this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+        }
+      },
+      error: () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage50ExportSettings.exportSettingsSaveError')
+        );
+      }
+    });
+  }
+
+  onBackButtonClick(): void {
+    this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
+  }
 
   onAdvancedSearch(event: ExportSettingOptionSearch): void {
     if (event.searchTerm) {
@@ -132,7 +142,36 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   showPaymentMethodPreview() {
-    // TODO: Implement payment method preview
+    this.isPaymentMethodPreviewDialogVisible = true;
+  }
+
+  closePaymentMethodPreviewDialog() {
+    this.isPaymentMethodPreviewDialogVisible = false;
+  }
+
+
+  private addMissingOptionsAndSort(exportSettings: Sage50ExportSettingsGet | null): void {
+    const extraAccountOptions = [
+      exportSettings?.reimbursable_default_credit_line_account,
+      exportSettings?.reimbursable_default_account_payable_account,
+      exportSettings?.ccc_default_credit_line_account,
+      exportSettings?.ccc_default_account_payable_account,
+      exportSettings?.default_cash_account
+    ];
+
+    for (const account of extraAccountOptions) {
+      if (account && !this.accounts.find((existingAccount) => existingAccount.id === account.id)) {
+        this.accounts.push(account);
+      }
+    }
+
+    const extraVendor = exportSettings?.default_vendor;
+    if (extraVendor && !this.vendors.find((existingVendor) => existingVendor.id === extraVendor.id)) {
+      this.vendors.push(extraVendor);
+    }
+
+    this.accounts.sort((a, b) => a.value.localeCompare(b.value));
+    this.vendors.sort((a, b) => a.value.localeCompare(b.value));
   }
 
   private optionSearchWatcher(): void {
@@ -178,6 +217,23 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   private setupFieldWatchers(): void {
+    // Toggle field watchers - clear export type if the corresponding toggle is turned off
+    this.exportSettingsForm.get('reimbursableExpenses')?.valueChanges
+      .pipe(startWith(this.exportSettingsForm.get('reimbursableExpenses')?.value)) // Manually trigger on init
+      .subscribe((reimbursableExpenses) => {
+        if (!reimbursableExpenses) {
+          this.exportSettingsForm.get('reimbursableExportType')?.setValue(null);
+        }
+      });
+
+    this.exportSettingsForm.get('cccExpenses')?.valueChanges
+      .pipe(startWith(this.exportSettingsForm.get('cccExpenses')?.value)) // Manually trigger on init
+      .subscribe((cccExpenses) => {
+        if (!cccExpenses) {
+          this.exportSettingsForm.get('cccExportType')?.setValue(null);
+        }
+      });
+
     // Watchers for date fields
     this.exportSettingsForm.get('reimbursableExportGroup')?.valueChanges
       .pipe(startWith(this.exportSettingsForm.get('reimbursableExportGroup')?.value)) // Manually trigger on init
@@ -220,6 +276,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
     this.isLoading = true;
 
     const attributesByAccountType = this.allowedAccountTypes.map(accountType =>
@@ -231,16 +288,17 @@ export class Sage50ExportSettingsComponent implements OnInit {
       ...attributesByAccountType,
       this.mappingService.getVendors()
     ]).subscribe(([exportSettings, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
-      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings);
-
       this.accounts = [
         ...accountsPayable.results,
         ...longTermLiabilities.results,
         ...otherCurrentLiabilities.results
-      ].sort((a, b) => a.value.localeCompare(b.value));
+      ];
 
       this.vendors = vendors.results;
 
+      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(exportSettings, this.accounts, this.vendors);
+
+      this.addMissingOptionsAndSort(exportSettings);
       this.optionSearchWatcher();
       this.setupFieldWatchers();
 
