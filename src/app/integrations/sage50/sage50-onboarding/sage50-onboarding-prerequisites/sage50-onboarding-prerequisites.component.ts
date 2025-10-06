@@ -59,10 +59,6 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.workspaceService.updateWorkspaceOnboardingState({
-      onboarding_state: Sage50OnboardingState.PRE_REQUISITES
-    }).subscribe();
-    this.workspaceService.setOnboardingState(Sage50OnboardingState.PRE_REQUISITES);
     this.sage50ImportAttributesService.getAttributeTypeToFileNameMap()
       .subscribe((attributeTypeToFileNameMap) => {
         this.fileNames = attributeTypeToFileNameMap;
