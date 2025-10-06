@@ -24,6 +24,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Output() syncEmployees = new EventEmitter<void>();
 
+  @Output() connectButtonClick = new EventEmitter<void>();
+
   @Input() iconPath: string;
 
   @Input() isIntegrationConnected: boolean;
@@ -109,6 +111,9 @@ export class AppLandingPageHeaderComponent implements OnInit {
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(TrackingApp.SAGE300, ClickEvent.CONNECT_SAGE300);
+    }
+    if (this.connectButtonClick?.observed) {
+      this.connectButtonClick.emit();
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }

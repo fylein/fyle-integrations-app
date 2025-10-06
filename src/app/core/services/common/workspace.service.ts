@@ -61,7 +61,7 @@ export class WorkspaceService {
       [AppUrl.NETSUITE]: NetsuiteOnboardingState.CONNECTION,
       [AppUrl.XERO]: XeroOnboardingState.CONNECTION,
       [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION,
-      [AppUrl.SAGE50]: Sage50OnboardingState.CONNECTION
+      [AppUrl.SAGE50]: Sage50OnboardingState.YET_TO_START
     };
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];
