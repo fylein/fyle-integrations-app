@@ -155,7 +155,8 @@ export const fyleKbArticles: KbArticle[string] = {
         },
         SAGE50: {
             // TODO
-            LANDING: `${brandingConfig.helpArticleDomain}`
+            LANDING: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`
         }
     }
 };

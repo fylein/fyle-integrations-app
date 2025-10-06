@@ -1,0 +1,327 @@
+@if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <app-loader></app-loader>
+    </div>
+} @else {
+<div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div>
+        <app-configuration-step-header
+            [headerText]="'sage50ExportSettings.headerText' | transloco"
+            [contentText]="'sage50ExportSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+            [redirectLink]="redirectLink"
+            [showSyncButton]="false"
+            [appName]="appName">
+        </app-configuration-step-header>
+    </div>
+    <form [formGroup]="exportSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
+        <!-- Reimbursable Expenses -->
+        <div class="tw-rounded-10-px tw-bg-bg-tertiary-lighter">
+            <app-configuration-toggle-field
+                [form]="exportSettingsForm"
+                [label]="'sage50ExportSettings.exportReimbursableExpensesLabel' | transloco"
+                [formControllerName]="'reimbursableExpenses'"
+                [isSectionHeader]="true">
+            </app-configuration-toggle-field>
+        </div>
+
+        @if (showField('reimbursableExportType')) {
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-select-field
+                [form]="exportSettingsForm"
+                [label]="'sage50ExportSettings.reimbursableExportTypeLabel' | transloco"
+                [subLabel]="'sage50ExportSettings.reimbursableExportTypeSubLabel' | transloco"
+                [formControllerName]="'reimbursableExportType'"
+                [options]="reimbursableExportTypes"
+                [placeholder]="'sage50ExportSettings.reimbursableExportTypePlaceholder' | transloco"
+                [isFieldMandatory]="true"
+                [appName]="appName"
+                [iconPath]="'list'"
+            ></app-configuration-select-field>
+
+
+            @if (showField('reimbursableDefaultCreditLineAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.reimbursableDefaultCreditLineAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.reimbursableDefaultCreditLineAccountSubLabel' | transloco"
+                    [formControllerName]="'reimbursableDefaultCreditLineAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.reimbursableDefaultCreditLineAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            }
+
+            @if (showField('reimbursableDefaultAccountPayableAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.reimbursableDefaultAccountPayableAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.reimbursableDefaultAccountPayableAccountSubLabel' | transloco"
+                    [formControllerName]="'reimbursableDefaultAccountPayableAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.reimbursableDefaultAccountPayableAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            }
+        </div>
+        }
+
+        @if (showField('reimbursableExpenseState')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.reimbursableExpenseStateLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.reimbursableExpenseStateSubLabel' | transloco"
+                    [formControllerName]="'reimbursableExpenseState'"
+                    [options]="reimbursableExpenseStates"
+                    [placeholder]="'sage50ExportSettings.reimbursableExpenseStatePlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            </div>
+        }
+
+        @if (showField('reimbursableExportGroup')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.reimbursableExpenseGroupLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.reimbursableExpenseGroupSubLabel' | transloco"
+                    [formControllerName]="'reimbursableExportGroup'"
+                    [options]="expenseGroupingOptions"
+                    [placeholder]="'sage50ExportSettings.reimbursableExpenseGroupPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            </div>
+        }
+
+        @if (showField('reimbursableExportDate')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.reimbursableExportDateLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.reimbursableExportDateSubLabel' | transloco: {
+                        selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
+                        brandName: brandingConfig.brandName
+                    }"
+                    [formControllerName]="'reimbursableExportDate'"
+                    [options]="reimbursableDateOptions"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isDisabled]="true"
+                    [disabledText]="'sage50ExportSettings.reimbursableExportDateDisabledText' | transloco"
+                ></app-configuration-select-field>
+            </div>
+        }
+
+        <!-- CCC Expenses -->
+        <div class="tw-rounded-[10px] tw-bg-bg-tertiary-lighter">
+            <app-configuration-toggle-field
+                [form]="exportSettingsForm"
+                [label]="'sage50ExportSettings.exportCCCExpensesLabel' | transloco"
+                [formControllerName]="'cccExpenses'"
+                [isSectionHeader]="true">
+            </app-configuration-toggle-field>
+        </div>
+
+        @if (showField('cccExportType')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccExportTypeLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccExportTypeSubLabel' | transloco"
+                    [formControllerName]="'cccExportType'"
+                    [options]="cccExportTypes"
+                    [placeholder]="'sage50ExportSettings.cccExportTypePlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            @if (showField('cccDefaultCreditLineAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccDefaultCreditLineAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccDefaultCreditLineAccountSubLabel' | transloco"
+                    [formControllerName]="'cccDefaultCreditLineAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.cccDefaultCreditLineAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            }
+            @if (showField('cccDefaultAccountPayableAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccDefaultAccountPayableAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccDefaultAccountPayableAccountSubLabel' | transloco"
+                    [formControllerName]="'cccDefaultAccountPayableAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.cccDefaultAccountPayableAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            }
+            @if (showField('defaultCashAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccDefaultCashAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccDefaultCashAccountSubLabel' | transloco"
+                    [formControllerName]="'defaultCashAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.cccDefaultCashAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            }
+            @if (showField('defaultVendor')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccDefaultVendorLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccDefaultVendorSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [formControllerName]="'defaultVendor'"
+                    [destinationAttributes]="vendors"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.VENDOR"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.cccDefaultVendorPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [infoTooltipText]="'sage50ExportSettings.cccDefaultVendorInfoTooltip' | transloco"
+                ></app-configuration-select-field>
+            }
+
+            @if (showField('defaultPaymentMethod')) {
+                <app-configuration-text-field
+                    [expanded]="true"
+                    [iconPath]="'list'"
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccDefaultPaymentMethodLabel' | transloco"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'defaultPaymentMethod'"
+                    [placeholder]="'sage50ExportSettings.cccDefaultPaymentMethodPlaceholder' | transloco"
+                >
+                    <div slot="subLabel">
+                        <span>
+                            {{ 'sage50ExportSettings.cccDefaultPaymentMethodSubLabel' | transloco: { brandName: brandingConfig.brandName } }}
+                        </span>
+                        <a class="link" (click)="showPaymentMethodPreview()">{{ 'sage50ExportSettings.preview' | transloco }}</a>
+                        <span>
+                            {{ 'sage50ExportSettings.forDetails' | transloco: { brandName: brandingConfig.brandName } }}
+                        </span>
+                    </div>
+                    <div slot="inputHint">
+                        <div class="tw-flex tw-gap-[4px] tw-pt-[4px]">
+                            <img src="assets/icons/warning-filled.svg" alt="Warning icon" class="tw-w-12-px tw-h-12-px tw-relative tw-top-[3px]">
+                            <span>
+                                {{ 'sage50ExportSettings.cccDefaultPaymentMethodInputHint' | transloco }}
+                            </span>
+                        </div>
+                    </div>
+                </app-configuration-text-field>
+            }
+            </div>
+        }
+
+        @if (showField('cccExpenseState')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccExpenseStateLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco: {
+                        brandName: brandingConfig.brandName
+                    }"
+                    [formControllerName]="'cccExpenseState'"
+                    [options]="cccExpenseStates"
+                    [placeholder]="'sage50ExportSettings.cccExpenseStatePlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            </div>
+        }
+
+        @if (showField('cccExportGroup')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccExportGroupLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccExportGroupSubLabel' | transloco"
+                    [formControllerName]="'cccExportGroup'"
+                    [options]="expenseGroupingOptions"
+                    [placeholder]="'sage50ExportSettings.cccExportGroupPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                ></app-configuration-select-field>
+            </div>
+        }
+
+        @if (showField('cccExportDate')) {
+            <div class="tw-border tw-border-separator tw-rounded-10-px">
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.cccExportDateLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.cccExportDateSubLabel' | transloco: {
+                        selectedDateOption: getSelectedLabel('cccExportDate') ?? 'date',
+                        brandName: brandingConfig.brandName
+                    }"
+                    [formControllerName]="'cccExportDate'"
+                    [options]="cccExpenseDateOptions"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isDisabled]="isCCCExportDateDisabled"
+                    [disabledText]="'sage50ExportSettings.cccExportDateDisabledText' | transloco"
+                ></app-configuration-select-field>
+            </div>
+        }
+    </form>
+    <app-configuration-step-footer
+        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton] = "isOnboarding"
+        [isButtonDisabled]="!exportSettingsForm.valid"
+        (navigateToPreviousStep)="onBackButtonClick()"
+        (save)="onSave()">
+    </app-configuration-step-footer>
+</div>
+}
+
+<!-- Payment method preview dialog -->
+<app-preview-dialog
+    [isPreviewDialogVisible]="isPaymentMethodPreviewDialogVisible"
+    [iconPath]="'assets/pngs/preview-screens/sage50-payment-method.png'"
+    (closeDialog)="closePaymentMethodPreviewDialog()"
+    [header]="'sage50ExportSettings.paymentMethodPreviewHeader' | transloco"
+></app-preview-dialog>
