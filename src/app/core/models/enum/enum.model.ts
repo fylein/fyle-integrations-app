@@ -760,6 +760,11 @@ export enum QbdDirectExportSettingDestinationOptionKey {
   ACCOUNT = 'ACCOUNT'
 }
 
+export enum Sage50ExportSettingDestinationOptionKey {
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR'
+}
+
 export type DestinationOptionKey =
 IntacctExportSettingDestinationOptionKey |
 NetsuiteExportSettingDestinationOptionKey |
@@ -767,7 +772,8 @@ QboExportSettingDestinationOptionKey |
 XeroExportSettingDestinationOptionKey |
 Sage300ExportSettingDestinationOptionKey |
 BCExportSettingDestinationOptionKey |
-QbdDirectExportSettingDestinationOptionKey;
+QbdDirectExportSettingDestinationOptionKey |
+Sage50ExportSettingDestinationOptionKey;
 
 export enum QbdDirectExportSettingDestinationAccountType {
   OtherCurrentAsset = 'OtherCurrentAsset',

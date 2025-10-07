@@ -76,7 +76,11 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() isDisableTextRequired: boolean = true;
 
+  @Input() disabledText: string;
+
   @Input() isimportSettings: boolean = false;
+
+  @Input() infoTooltipText?: string;
 
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
@@ -182,10 +186,13 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isDisabled?.currentValue) {
-      this.form.get(this.formControllerName)?.disable();
-    } else if (!changes.isDisabled?.currentValue) {
-      this.form.get(this.formControllerName)?.enable();
+    // Only modify FormControl state if isDisabled actually changed
+    if (changes.isDisabled) {
+      if (changes.isDisabled.currentValue) {
+        this.form.get(this.formControllerName)?.disable();
+      } else {
+        this.form.get(this.formControllerName)?.enable();
+      }
     }
 
     if (this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */

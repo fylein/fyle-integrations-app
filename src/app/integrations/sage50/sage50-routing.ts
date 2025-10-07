@@ -7,6 +7,7 @@ export const SAGE50_ROUTES: Routes = [
     children: [
       {
         path: 'onboarding',
+        loadComponent: () => import('./sage50-onboarding/sage50-onboarding.component').then(m => m.Sage50OnboardingComponent),
         children: [
           {
             path: '',
@@ -20,6 +21,10 @@ export const SAGE50_ROUTES: Routes = [
           {
             path: 'prerequisites',
             loadComponent: () => import('./sage50-onboarding/sage50-onboarding-prerequisites/sage50-onboarding-prerequisites.component').then(m => m.Sage50OnboardingPrerequisitesComponent)
+          },
+          {
+            path: 'export_settings',
+            loadComponent: () => import('./sage50-shared/sage50-export-settings/sage50-export-settings.component').then(m => m.Sage50ExportSettingsComponent)
           }
         ]
       }
