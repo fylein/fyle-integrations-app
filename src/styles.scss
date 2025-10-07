@@ -143,7 +143,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-px-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-chips-input-token > input):disabled, input[type="password"]:disabled {
+    input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input):not(.custom-search-field > input):disabled, input[type="password"]:disabled {
         @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
     }
 
