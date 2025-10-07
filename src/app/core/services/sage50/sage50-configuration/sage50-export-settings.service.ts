@@ -8,9 +8,13 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angu
 import { SelectFormOption } from "src/app/core/models/common/select-form-option.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 
+type DependencyChecker = (
+  form: AbstractControl,
+  showToggles?: boolean
+) => boolean;
 
-export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form: AbstractControl) => boolean>([
-  ['reimbursableExpenses', () => true], // No dependencies, always show
+export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, DependencyChecker>([
+  ['reimbursableExpenses', (_, showToggles) => !!showToggles], // Show toggles as necessary
   ['reimbursableExportType', (form) => !!form.get('reimbursableExpenses')?.value],
   ['reimbursableDefaultCreditLineAccount', (form) =>
     form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.GENERAL_JOURNAL_ENTRY
@@ -28,7 +32,7 @@ export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form:
     !!form.get('reimbursableExportType')?.value &&
     !!form.get('reimbursableExportGroup')?.value
   ],
-  ['cccExpenses', () => true], // No dependencies, always show
+  ['cccExpenses', (_, showToggles) => !!showToggles], // Show toggles as necessary
   ['cccExportType', (form) => !!form.get('cccExpenses')?.value],
   ['cccDefaultCreditLineAccount', (form) =>
     form.get('cccExportType')?.value === Sage50CCCExportType.GENERAL_JOURNAL_ENTRY
@@ -41,7 +45,7 @@ export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, (form:
   ],
   ['defaultVendor', (form) =>
     [Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY, Sage50CCCExportType.PAYMENTS_JOURNAL]
-    .includes(form.get('cccExportType')?.value)
+    .includes(form.get('cccExportType')?.value!)
   ],
   ['defaultPaymentMethod', (form) =>
     form.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL
@@ -138,14 +142,30 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     return array?.find(item => item.id === id) || null;
   }
 
-  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, accounts: DestinationAttribute[], vendors: DestinationAttribute[]): FormGroup<Sage50ExportSettingsForm> {
+  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, isReimbursableEnabled: boolean, isCCCEnabled: boolean): FormGroup<Sage50ExportSettingsForm> {
+    let reimbursableExpenses: boolean;
+    let cccExpenses: boolean;
+
+    if (isReimbursableEnabled) {
+      // If reimbursable is enabled, set the toggle to the value from the API response
+      // If unset, default to true
+      reimbursableExpenses = apiResponse ? !!apiResponse.reimbursable_expense_export_type : true;
+    } else {
+      reimbursableExpenses = false;
+    }
+    if (isCCCEnabled) {
+      cccExpenses = apiResponse ? !!apiResponse.credit_card_expense_export_type : true;
+    } else {
+      cccExpenses = false;
+    }
+
     return new FormGroup<Sage50ExportSettingsForm>({
-      reimbursableExpenses: new FormControl(apiResponse ? !!apiResponse.reimbursable_expense_export_type : true, { nonNullable: true }),
+      reimbursableExpenses: new FormControl(reimbursableExpenses, { nonNullable: true }),
       reimbursableExportType: new FormControl(apiResponse?.reimbursable_expense_export_type ?? null),
       reimbursableExpenseState: new FormControl(apiResponse?.reimbursable_expense_state ?? null),
       reimbursableExportDate: new FormControl(apiResponse?.reimbursable_expense_date ?? null),
       reimbursableExportGroup: new FormControl(apiResponse?.reimbursable_expense_grouped_by ?? null),
-      cccExpenses: new FormControl(apiResponse ? !!apiResponse.credit_card_expense_export_type : true, { nonNullable: true }),
+      cccExpenses: new FormControl(cccExpenses, { nonNullable: true }),
       cccExportType: new FormControl(apiResponse?.credit_card_expense_export_type ?? null),
       cccExpenseState: new FormControl(apiResponse?.credit_card_expense_state ?? null),
       cccExportDate: new FormControl(apiResponse?.credit_card_expense_date ?? null),

@@ -15,15 +15,16 @@
     </div>
     <form [formGroup]="exportSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
         <!-- Reimbursable Expenses -->
-        <div class="tw-rounded-10-px tw-bg-bg-tertiary-lighter">
-            <app-configuration-toggle-field
-                [form]="exportSettingsForm"
-                [label]="'sage50ExportSettings.exportReimbursableExpensesLabel' | transloco"
-                [formControllerName]="'reimbursableExpenses'"
-                [isSectionHeader]="true">
-            </app-configuration-toggle-field>
-        </div>
-
+         @if (showField('reimbursableExpenses')) {
+            <div class="tw-rounded-10-px tw-bg-bg-tertiary-lighter">
+                <app-configuration-toggle-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.exportReimbursableExpensesLabel' | transloco"
+                    [formControllerName]="'reimbursableExpenses'"
+                    [isSectionHeader]="true">
+                </app-configuration-toggle-field>
+            </div>
+        }
         @if (showField('reimbursableExportType')) {
         <div class="tw-border tw-border-separator tw-rounded-10-px">
             <app-configuration-select-field
@@ -130,14 +131,16 @@
         }
 
         <!-- CCC Expenses -->
-        <div class="tw-rounded-[10px] tw-bg-bg-tertiary-lighter">
-            <app-configuration-toggle-field
-                [form]="exportSettingsForm"
-                [label]="'sage50ExportSettings.exportCCCExpensesLabel' | transloco"
-                [formControllerName]="'cccExpenses'"
-                [isSectionHeader]="true">
-            </app-configuration-toggle-field>
-        </div>
+        @if (showField('cccExpenses')) {
+            <div class="tw-rounded-[10px] tw-bg-bg-tertiary-lighter">
+                <app-configuration-toggle-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.exportCCCExpensesLabel' | transloco"
+                    [formControllerName]="'cccExpenses'"
+                    [isSectionHeader]="true">
+                </app-configuration-toggle-field>
+            </div>
+        }
 
         @if (showField('cccExportType')) {
             <div class="tw-border tw-border-separator tw-rounded-10-px">
