@@ -3,7 +3,7 @@
     <app-loader></app-loader>
 </div>
 } @else {
-<div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div class="configuration--contents tw-border-separator tw-mt-6 tw-overflow-x-hidden" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
             [headerText]="'sage50ImportSettings.headerText' | transloco"
@@ -13,7 +13,47 @@
             [appName]="appName">
         </app-configuration-step-header>
     </div>
-    <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
+    <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[24px]">
+        <app-configuration-csv-import-field
+            [formGroupName]="'ACCOUNT'"
+            [isMandatory]="true"
+            [fieldNumber]="1"
+            [label]="'sage50ImportSettings.accountLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.accountSubLabel' | transloco"
+            [sourceField]="Sage50FyleField.CATEGORY"
+            [destinationField]="Sage50ImportableField.ACCOUNT"
+            [appName]="'sage50ImportSettings.appDisplayName' | transloco"
+        >
+            <ng-container slot="additionalFields">
+                <div class="tw-flex tw-gap-[10px]">
+                    <app-svg-icon
+                        [svgSource]="'list'"
+                        [width]="'24px'"
+                        [height]="'24px'"
+                        class="tw-shrink-0 tw-text-icon-primary"
+                    ></app-svg-icon>
+                    <div class="tw-flex tw-flex-col tw-gap-[6px]">
+                        <h5 class="tw-text-14-px tw-font-500">
+                            {{ 'sage50ImportSettings.accountTypesLabel' | transloco }}
+                            <app-mandatory-field></app-mandatory-field>
+                        </h5>
+                        <h3 class="tw-text-14-px tw-font-400 tw-text-text-tertiary">
+                            {{ 'sage50ImportSettings.accountTypesSubLabel' | transloco }}
+                        </h3>
+                    </div>
+                    <div class="tw-grow tw-min-w-[20px]"></div>
+                    <div class="tw-shrink-0 tw-self-center">
+                        <p-multiSelect
+                            [options]="importableCOAOptions"
+                            [formControlName]="'accountTypes'"
+                        ></p-multiSelect>
+                        <p class="tw-text-12-px tw-font-400 tw-text-text-tertiary">
+                            {{ 'sage50ImportSettings.accountTypesSubtext' | transloco }}
+                        </p>
+                    </div>
+                </div>
+            </ng-container>
+        </app-configuration-csv-import-field>
     </form>
 </div>
 }

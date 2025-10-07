@@ -1,27 +1,50 @@
 import { FormControl, FormGroup } from "@angular/forms";
+import { CSVImportFieldForm } from "../../misc/configuration-csv-import-field.model";
 
-export enum Sage50ImportableCOATypes {
-    INCOME = "Income",
+export enum Sage50ImportableCOAType {
     EXPENSES = "Expenses",
-    INVENTORY = "Inventory",
-    OTHER_ASSETS = "Other Assets",
-    FIXED_ASSETS = "Fixed Assets",
     COST_OF_SALES = "Cost of Sales",
-    OTHER_CURRENT_ASSETS = "Other Current Assets"
+    INVENTORY = "Inventory",
+    OTHER_CURRENT_ASSETS = "Other Current Assets",
+    FIXED_ASSETS = "Fixed Assets",
+    OTHER_ASSETS = "Other Assets",
+    INCOME = "Income"
+}
+
+export enum Sage50ImportableField {
+    JOB = 'JOB',
+    PHASE = 'PHASE',
+    VENDOR = 'VENDOR',
+    ACCOUNT = 'ACCOUNT',
+    COST_CODE = 'COST_CODE',
+}
+
+export enum Sage50FyleField {
+    CATEGORY = 'CATEGORY',
+    MERCHANT = 'MERCHANT',
+    PROJECT = 'PROJECT',
+    COST_CODE = 'COST_CODE',
+    COST_CENTER = 'COST_CENTER',
+    LOCATION = 'LOCATION'
 }
 
 export type Sage50ImportSettingsPost = {
     import_account_as_category: true,
-    chart_of_accounts: Sage50ImportableCOATypes[],
+    chart_of_accounts: Sage50ImportableCOAType[],
     import_vendor_as_merchant: boolean,
-    import_code_fields: ["ACCOUNT", "JOB"]
+    import_code_fields: Sage50ImportableField[]
 }
 
-// TODO: properly type all form groups
+export type Sage50ImportSettingsGet = Sage50ImportSettingsPost;
+
+export interface Sage50AccountsCSVImportFieldForm extends CSVImportFieldForm {
+    accountTypes: FormControl<Sage50ImportableCOAType[] | null>;
+}
+
 export type Sage50ImportSettingsForm = {
-    account: FormGroup,
-    vendor: FormGroup,
-    job: FormGroup,
-    phase: FormGroup,
-    costCode: FormGroup,
+    ACCOUNT: FormGroup<Sage50AccountsCSVImportFieldForm>,
+    VENDOR: FormGroup<CSVImportFieldForm>,
+    JOB: FormGroup<CSVImportFieldForm>,
+    PHASE: FormGroup<CSVImportFieldForm>,
+    COST_CODE: FormGroup<CSVImportFieldForm>
 }
