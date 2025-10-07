@@ -1,0 +1,19 @@
+@if (isLoading) {
+<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+</div>
+} @else {
+<div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div>
+        <app-configuration-step-header
+            [headerText]="'sage50ImportSettings.headerText' | transloco"
+            [contentText]="'sage50ImportSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+            [redirectLink]="redirectLink"
+            [showSyncButton]="false"
+            [appName]="appName">
+        </app-configuration-step-header>
+    </div>
+    <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
+    </form>
+</div>
+}

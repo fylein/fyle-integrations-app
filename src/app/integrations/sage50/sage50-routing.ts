@@ -25,6 +25,10 @@ export const SAGE50_ROUTES: Routes = [
           {
             path: 'export_settings',
             loadComponent: () => import('./sage50-shared/sage50-export-settings/sage50-export-settings.component').then(m => m.Sage50ExportSettingsComponent)
+          },
+          {
+            path: 'import_settings',
+            loadComponent: () => import('./sage50-shared/sage50-import-settings/sage50-import-settings.component').then(m => m.Sage50ImportSettingsComponent)
           }
         ]
       }
