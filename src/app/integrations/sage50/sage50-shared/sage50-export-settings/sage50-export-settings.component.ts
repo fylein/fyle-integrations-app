@@ -28,6 +28,7 @@ import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.
 })
 export class Sage50ExportSettingsComponent implements OnInit {
 
+  // Constants
   readonly appName = AppName.SAGE50;
 
   readonly redirectLink = brandingKbArticles.onboardingArticles.SAGE50.EXPORT_SETTINGS;
