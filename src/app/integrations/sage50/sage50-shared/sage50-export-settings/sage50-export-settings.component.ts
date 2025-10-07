@@ -93,7 +93,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   getSelectedLabel(field: keyof Sage50ExportSettingsForm): string | null{
     const selectedValue = this.exportSettingsForm.get(field)?.value;
     const selectedLabel = this.reimbursableDateOptions.find(option => option.value === selectedValue)?.label;
-    return new LowerCasePipe().transform(selectedLabel);
+    return selectedLabel ? new LowerCasePipe().transform(selectedLabel) : null;
   }
 
   showField(field: keyof Sage50ExportSettingsForm): boolean {
