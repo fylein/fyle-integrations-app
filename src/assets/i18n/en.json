@@ -2466,5 +2466,9 @@
     "exportSettingsSaveError": "Error saving export settings, please try again later",
     "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
     "paymentMethodPreviewHeader": "Locate your payment method"
+  },
+  "sage50ImportSettings": {
+    "headerText": "Import settings",
+    "contentText": "In this section, you can choose the fields required to be imported from Sage 50 to {{brandName}}."
   }
 }
