@@ -26,8 +26,8 @@ export class Sage50ImportSettingsService {
         return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/importable_chart_of_accounts/`, {});
     }
 
-    private getLastUploadedFile(importDetail: Sage50AccountingImportDetail): UploadedCSVFile | null {
-        if (!importDetail.last_uploaded_on) {
+    private getLastUploadedFile(importDetail?: Sage50AccountingImportDetail): UploadedCSVFile | null {
+        if (!importDetail?.last_uploaded_on) {
             return null;
         }
         return {
