@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
+import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationCsvImportFieldComponent } from "src/app/shared/components/configuration/configuration-csv-import-field/configuration-csv-import-field.component";
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
 import { forkJoin } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -36,6 +37,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
   // Flags
   isLoading: boolean;
 
+  isOnboarding: boolean;
+
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
@@ -43,14 +46,15 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   constructor(
     private importSettingService: Sage50ImportSettingsService,
-    private importAttributesService: Sage50ImportAttributesService
+    private importAttributesService: Sage50ImportAttributesService,
+    private router: Router
   ) { }
 
-  private constructOptions(importableChartOfAccounts: any[]): void {
+  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet): void {
     this.importableCOAOptions = Object.values(Sage50ImportableCOAType).map((value) => {
-      const count = importableChartOfAccounts?.find((v) => v.chart_of_account === value)?.count;
+      const count = importableChartOfAccounts?.find((v) => v.chart_of_account === value)?.count ?? 0;
       return {
-        label: `${value} (${count ?? 0})`,
+        label: `${value} (${count})`,
         value: value,
         disabled: value === Sage50ImportableCOAType.EXPENSES
       };
@@ -59,6 +63,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
+
     forkJoin([
       this.importSettingService.getSage50ImportSettings(),
       this.importSettingService.getImportableChartOfAccounts(),
@@ -71,6 +77,4 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.isLoading = false;
     });
   }
-
-
 }

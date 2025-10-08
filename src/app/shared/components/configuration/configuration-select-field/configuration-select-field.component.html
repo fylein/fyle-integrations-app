@@ -1,13 +1,16 @@
 <div [formGroup]="form" >
-    <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-py-24-px" [ngClass]="{'tw-px-6-px': isimportSettings, 'tw-px-24-px': !isimportSettings}">
+    <div *ngIf="!isDefaultFields" [class]="'tw-flex tw-flex-row tw-justify-between tw-items-center tw-py-24-px ' + customClasses" [ngClass]="{'tw-px-6-px': isimportSettings, 'tw-px-24-px': !isimportSettings}">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'noIcon']">
-                <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+                <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
             </div>
 
             <div>
                 <h5 class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationHeaderText">
                     {{ label | snakeCaseToSpaceCase}}
+                    @if (isOneTimeField) {
+                        <span class="tw-text-text-danger-dark"> {{ 'configurationSelectField.cannotBeEdited' | transloco }}</span>
+                    }
                     <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
                     @if (infoTooltipText) {
                         <img

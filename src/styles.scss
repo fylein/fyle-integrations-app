@@ -133,6 +133,15 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-text-text-danger-dark tw-text-14-px #{!important};
     }
 
+    // Multiselects
+    .p-multiselect {
+        @apply tw-pr-12-px #{!important};
+    }
+
+    .p-multiselect-trigger, .p-multiselect-trigger > * {
+        content: url('./assets/icons/caret-large-down.svg') !important;
+        @apply tw-w-18-px #{!important};
+    }
 
     // Text inputs
     input[type="text"]:not(.p-chips-input-token > input):not(p-calendar input):not(.custom-search-field > input), input[type="password"] {
@@ -251,6 +260,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     }
 
     // Multiselects
+    .p-multiselect .p-multiselect-trigger {
+        @apply tw-w-12-px #{!important};
+    }
+
     .p-multiselect:not(.p-disabled).p-focus {
         @apply tw-shadow-none #{!important};
     }
@@ -667,10 +680,6 @@ p {
 
 .p-multiselect {
     @apply tw-h-input-height tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px tw-pr-20-px #{!important};
-}
-
-.p-multiselect .p-multiselect-trigger {
-    @apply tw-w-12-px #{!important};
 }
 
 .p-multiselect .p-multiselect-label {

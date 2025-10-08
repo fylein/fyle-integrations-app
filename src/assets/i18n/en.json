@@ -83,7 +83,8 @@
     "dayLabel": "Day",
     "timeLabel": "Time",
     "selectTimePlaceholder": "Select time for export",
-    "selectMeridiemPlaceholder": "Select meridiem of time"
+    "selectMeridiemPlaceholder": "Select meridiem of time",
+    "cannotBeEdited": "(cannot be edited later)"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -2474,13 +2475,21 @@
     "accountSubLabel": "Import your chart of accounts as categories so employees can code expenses accurately.",
     "appDisplayName": "Sage 50",
     "accountTypesLabel": "Account types to import",
-    "accountTypesSubLabel": "“Expense” type accounts will be imported by default. Select any other account types you’d like to import.",
-    "accountTypesSubtext": "Add more from dropdown"
+    "accountTypesSubLabel": "\"Expense\" type accounts will be imported by default. Select any other account types you'd like to import.",
+    "accountTypesSubtext": "Add more from dropdown",
+    "accountTypesPlaceholder": "Select display name format"
   },
   "configurationCsvImportField": {
     "preview": "Preview",
     "previewText": " how {{dimension}}s appear in the expense form.",
     "dimension": " dimension",
-    "field": " field"
+    "field": " field",
+    "importFormatLabel": "Import format",
+    "importFormatSubLabel": "Choose to import {{dimension}} names only, or names with codes - pick what your employees will recognize best.",
+    "importCodesAndNamesLabel": "Import codes + names",
+    "importCodesAndNamesSubLabel": "Example: 4567 Meals & Entertainment",
+    "importNamesOnlyLabel": "Import names only",
+    "importNamesOnlySubLabel": "Example: Meals & Entertainment",
+    "importFormatPlaceholder": "Select display name format"
   }
 }
