@@ -1,30 +1,159 @@
-<form [formGroup]="form">
-    <p-dropdown
-        appendTo="body"
-        [ngClass]="additionalClasses ? additionalClasses : ''"
-        [placeholder]="placeholder"
+<div class="app-dropdown-container" [ngClass]="getDropdownContainerClasses()">
+  @if(form && formControllerName) {
+  <!-- Form-integrated dropdown -->
+    <form [formGroup]="form">
+      <p-dropdown
+        #dropdown
+        [appendTo]="appendTo"
         [options]="options"
+        [placeholder]="placeholder"
+        [filter]="showSearchFilter"
+        [filterFields]="filterFields.length > 0 ? filterFields : [displayKey]"
+        [emptyFilterMessage]="emptyFilterMessage"
+        [resetFilterOnHide]="true"
+        [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [ngClass]="getDropdownClasses()"
+        [formControlName]="formControllerName"
         [disabled]="isDisabled"
-        [formControlName]="formControllerName">
-        <ng-template pTemplate="item" let-item>
-            <div  #textElement
-            class="tw-flex tw-justify-between tw-items-center"
-            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-            [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
-            tooltipPosition="top">
-                <span>
-                    {{ item[displayKey] }}
-                </span>
-                <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ item['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}</p>
-            </div>
+        (onChange)="onSelectionChange($event)"
+        (onFilter)="onFilter($event)"
+        (onShow)="onDropdownShow()"
+        (onHide)="onDropdownHide()">
+
+        <!-- Item Template -->
+        <ng-template let-option pTemplate="item">
+          <div class="dropdown-item">
+            <span class="item-text"
+              #textElement
+              [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
+              tooltipPosition="top"
+            >
+              {{ getDisplayText(option) }}
+            </span>
+            @if (isMultiLineOption && subLabelKey) {
+              <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
+            }
+          </div>
         </ng-template>
 
-        <ng-template pTemplate="selectedItem" let-item>
-            <div class="tw-flex tw-justify-between tw-items-center">
-                <span>
-                    {{ item[displayKey] }}
-                </span>
+        <!-- Selected Item Template -->
+        <ng-template let-item pTemplate="selectedItem">
+          @if (item) {
+            <div class="selected-item-container">
+              <span class="selected-text">
+                @if (subLabelKey === 'code' && item[subLabelKey]) {
+                  <span>{{ item[subLabelKey] }}: </span>
+                }
+                {{ getDisplayText(item) }}
+              </span>
+              @if (showClearIcon && !isDisabled) {
+                <app-svg-icon
+                  [svgSource]="'cross-medium'"
+                  [c1SvgSource]="'grv-cross-filled-medium'"
+                  (click)="clearDropdown()"
+                  [height]="'18px'"
+                  [width]="'18px'"
+                  [styleClasses]="'clear-icon'">
+                </app-svg-icon>
+              }
             </div>
+          } @else {
+            <div class="placeholder-text">{{ placeholder }}</div>
+          }
         </ng-template>
+
+        <!-- Custom templates can be projected by parent components -->
+        <ng-content></ng-content>
+
+        <!-- Filter Icon Template -->
+        <ng-template pTemplate="filtericon">
+          <app-svg-icon
+            [svgSource]="'search-medium'"
+            [width]="'18px'"
+            [height]="'18px'"
+            [styleClasses]="'search-icon'">
+          </app-svg-icon>
+        </ng-template>
+      </p-dropdown>
+    </form>
+  } @else {
+  <!-- Standalone dropdown (without form) -->
+    <p-dropdown
+      #dropdown
+      [appendTo]="appendTo"
+      [options]="options"
+      [placeholder]="placeholder"
+      [disabled]="isDisabled"
+      [filter]="showSearchFilter"
+      [filterFields]="filterFields.length > 0 ? filterFields : [displayKey]"
+      [emptyFilterMessage]="emptyFilterMessage"
+      [resetFilterOnHide]="true"
+      [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+      [optionLabel]="optionLabel"
+      [optionValue]="optionValue"
+      [ngClass]="getDropdownClasses()"
+      [(ngModel)]="value"
+      (onChange)="onSelectionChange($event)"
+      (onFilter)="onFilter($event)"
+      (onShow)="onDropdownShow()"
+      (onHide)="onDropdownHide()">
+
+      <!-- Item Template -->
+      <ng-template let-option pTemplate="item">
+        <div class="dropdown-item">
+          <span class="item-text"
+            #textElement
+            [pTooltip]="isOverflowing(textElement) ? getDisplayText(option) : undefined"
+            tooltipPosition="top"
+          >
+            {{ getDisplayText(option) }}
+          </span>
+          @if (isMultiLineOption && subLabelKey) {
+            <p class="item-subtext">{{ option[subLabelKey] || '--' }}</p>
+          }
+        </div>
+      </ng-template>
+
+      <!-- Selected Item Template -->
+      <ng-template let-item pTemplate="selectedItem">
+        @if (item) {
+          <div class="selected-item-container">
+            <span class="selected-text">
+              @if (subLabelKey === 'code' && item[subLabelKey]) {
+                <span>{{ item[subLabelKey] }}: </span>
+              }
+              {{ getDisplayText(item) }}
+            </span>
+            @if (showClearIcon && !isDisabled) {
+              <app-svg-icon
+                [svgSource]="'cross-medium'"
+                [c1SvgSource]="'grv-cross-filled-medium'"
+                (click)="clearDropdown()"
+                [height]="'18px'"
+                [width]="'18px'"
+                [styleClasses]="'clear-icon'">
+              </app-svg-icon>
+            }
+          </div>
+        } @else {
+          <div class="placeholder-text">{{ placeholder }}</div>
+        }
+      </ng-template>
+
+      <!-- Custom templates can be projected by parent components -->
+      <ng-content></ng-content>
+
+      <!-- Filter Icon Template -->
+      <ng-template pTemplate="filtericon">
+        <app-svg-icon
+          [svgSource]="'search-medium'"
+          [width]="'18px'"
+          [height]="'18px'"
+          [styleClasses]="'search-icon'">
+        </app-svg-icon>
+      </ng-template>
     </p-dropdown>
-</form>
+  }
+</div>
