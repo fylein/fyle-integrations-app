@@ -213,6 +213,7 @@ const colors = {
   'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
 
   //icons
+  'icon-primary': 'var(--icon-primary)',
   'icon-secondary': 'var(--icon-secondary)',
   'icon-white': 'var(--icon-white)',
   'icon-disable': 'var(--icon-disable)',
