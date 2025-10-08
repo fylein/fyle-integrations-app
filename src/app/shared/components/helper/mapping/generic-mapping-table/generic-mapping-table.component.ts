@@ -122,9 +122,14 @@ export class GenericMappingTableComponent implements OnInit {
       if (mapping && mapping.length > 0) {
         const mappingDestinationKey = this.getMappingDestinationKey(data);
         const destinationAttribute = mapping[0][mappingDestinationKey];
-        const existingOption = this.destinationOptions.find((map: any) => map.value === destinationAttribute.value);
-        if (existingOption && destinationAttribute && this.isMultiLineOption && destinationAttribute.code && existingOption?.code !== destinationAttribute.code) {
-          this.destinationOptions.push(destinationAttribute);
+        if (destinationAttribute && (this.isMultiLineOption || !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value))) {
+          // Prevent duplicates by checking value and code combination
+          const isDuplicate = this.destinationOptions.some((map: any) =>
+            map.value === destinationAttribute.value && map.code === destinationAttribute.code
+          );
+          if (!isDuplicate) {
+            this.destinationOptions.push(destinationAttribute);
+          }
         }
       }
     });
