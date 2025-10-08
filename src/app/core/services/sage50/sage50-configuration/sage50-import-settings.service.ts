@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../common/api.service";
 import { Observable } from "rxjs";
-import { Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
+import { Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
 import { WorkspaceService } from "../../common/workspace.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
@@ -22,7 +22,7 @@ export class Sage50ImportSettingsService {
         return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/import_settings/`, {});
     }
 
-    getImportableChartOfAccounts(): Observable<Sage50ImportableCOAType[]> {
+    getImportableChartOfAccounts(): Observable<Sage50ImportableCOAGet> {
         return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/importable_chart_of_accounts/`, {});
     }
 
@@ -47,13 +47,13 @@ export class Sage50ImportSettingsService {
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.ACCOUNT])),
                 importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.ACCOUNT) ?? null)
             }),
-            // TODO: check if VENDOR is required, if yes, hard-code enabled
+            // TODO(sage50): check if VENDOR is required, if yes, hard-code enabled
             VENDOR: new FormGroup({
                 enabled: new FormControl(importSettings?.import_vendor_as_merchant ?? false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.VENDOR])),
                 importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.VENDOR) ?? null)
             }),
-            // TODO: check mapping_settings to see if these fields are enabled
+            // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),

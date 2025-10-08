@@ -37,6 +37,11 @@ export type Sage50ImportSettingsPost = {
 
 export type Sage50ImportSettingsGet = Sage50ImportSettingsPost;
 
+export type Sage50ImportableCOAGet = {
+    chart_of_account: Sage50ImportableCOAType,
+    count: number
+}[];
+
 export interface Sage50AccountsCSVImportFieldForm extends CSVImportFieldForm {
     accountTypes: FormControl<Sage50ImportableCOAType[] | null>;
 }

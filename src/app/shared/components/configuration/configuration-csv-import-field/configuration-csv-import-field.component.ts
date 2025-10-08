@@ -1,6 +1,7 @@
 import { LowerCasePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormGroupDirective, ControlContainer, ReactiveFormsModule } from '@angular/forms';
+import { Component, Host, Input, OnInit, Optional } from '@angular/core';
+import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { Sage50FyleField, Sage50ImportableCOAType, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
@@ -14,9 +15,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrl: './configuration-csv-import-field.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ConfigurationCsvImportFieldComponent {
+export class ConfigurationCsvImportFieldComponent implements OnInit {
 
-  readonly brandingConfig = brandingConfig;
+  @Input({ required: true }) formGroupName: string;
 
   @Input({ required: true }) isMandatory: boolean;
 
@@ -32,8 +33,38 @@ export class ConfigurationCsvImportFieldComponent {
 
   @Input() appName: string;
 
+  @Input({ required: true }) isImportCodeEditable: boolean;
+
+
+  readonly brandingConfig = brandingConfig;
+
+  readonly importFormatOptions = [
+    {
+      label: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesLabel'),
+      subLabel: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesSubLabel'),
+      value: true
+    },
+    {
+      label: this.translocoService.translate('configurationCsvImportField.importNamesOnlyLabel'),
+      subLabel: this.translocoService.translate('configurationCsvImportField.importNamesOnlySubLabel'),
+      value: false
+    }
+  ];
+
+  csvImportForm!: FormGroup;
+
+
+  constructor(
+    private translocoService: TranslocoService,
+    private formGroupDirective: FormGroupDirective
+  ) {}
+
   get dimension() {
     return sage50AttributeDisplayNames[this.destinationField];
+  }
+
+  ngOnInit(): void {
+    this.csvImportForm = this.formGroupDirective.form.get(this.formGroupName) as FormGroup;
   }
 
 }
