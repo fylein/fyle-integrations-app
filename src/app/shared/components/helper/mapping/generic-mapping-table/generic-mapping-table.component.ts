@@ -124,7 +124,7 @@ export class GenericMappingTableComponent implements OnInit {
         const destinationAttribute = mapping[0][mappingDestinationKey];
         if (destinationAttribute && (this.isMultiLineOption || !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value))) {
           // Prevent duplicates by checking value and code combination
-          const isDuplicate = this.destinationOptions.some((map: any) => 
+          const isDuplicate = this.destinationOptions.some((map: any) =>
             map.value === destinationAttribute.value && map.code === destinationAttribute.code
           );
           if (!isDuplicate) {
