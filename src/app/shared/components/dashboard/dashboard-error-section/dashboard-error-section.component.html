@@ -89,7 +89,7 @@
                             </h5></div>
                             <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                 <div>
-                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
                                 </div>
                             </div>
                         </div>
