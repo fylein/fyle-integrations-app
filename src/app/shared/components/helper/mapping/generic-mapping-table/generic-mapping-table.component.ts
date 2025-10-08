@@ -122,7 +122,8 @@ export class GenericMappingTableComponent implements OnInit {
       if (mapping && mapping.length > 0) {
         const mappingDestinationKey = this.getMappingDestinationKey(data);
         const destinationAttribute = mapping[0][mappingDestinationKey];
-        if (destinationAttribute && (this.isMultiLineOption || !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value))) {
+        const existingOption = this.destinationOptions.find((map: any) => map.value === destinationAttribute.value);
+        if (existingOption && destinationAttribute && this.isMultiLineOption && destinationAttribute.code && existingOption?.code !== destinationAttribute.code) {
           this.destinationOptions.push(destinationAttribute);
         }
       }
