@@ -177,8 +177,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
       this.vendors.push(extraVendor);
     }
 
-    this.accounts.sort((a, b) => a.value.localeCompare(b.value));
-    this.vendors.sort((a, b) => a.value.localeCompare(b.value));
+    this.accounts.sort((a, b) => a.value?.localeCompare(b.value));
+    this.vendors.sort((a, b) => a.value?.localeCompare(b.value));
   }
 
   private optionSearchWatcher(): void {
@@ -202,12 +202,12 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
       destinationAttributesObservable.subscribe((response) => {
         response.results.forEach((option) => {
-          if (!options.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+          if (option && !options.find((existingOption) => existingOption.destination_id === option.destination_id)) {
             options.push(option);
           }
         });
 
-        options.sort((a, b) => a.value.localeCompare(b.value));
+        options.sort((a, b) => a.value?.localeCompare(b.value));
 
         switch (event.destinationOptionKey) {
           case Sage50ExportSettingDestinationOptionKey.ACCOUNT:
