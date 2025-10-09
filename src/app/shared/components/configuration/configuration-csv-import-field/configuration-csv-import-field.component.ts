@@ -53,14 +53,17 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   csvImportForm!: FormGroup;
 
+  get dimension() {
+    return sage50AttributeDisplayNames[this.destinationField];
+  }
 
   constructor(
     private translocoService: TranslocoService,
     private formGroupDirective: FormGroupDirective
   ) {}
 
-  get dimension() {
-    return sage50AttributeDisplayNames[this.destinationField];
+  handleReuploadClick() {
+
   }
 
   ngOnInit(): void {

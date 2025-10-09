@@ -155,8 +155,8 @@ export const fyleStyles = {
            iconColorDisabled: 'tw-text-text-placeholder'
         },
         tertiary: {
-            class: 'tw-h-10 tw-rounded-32-px tw-font-primary tw-text-14-px hover:tw-bg-utility-major-50',
-            active: 'tw-bg-white focus:tw-shadow-focused',
+            class: 'tw-h-10 tw-rounded-32-px tw-font-primary tw-text-14-px',
+            active: 'tw-text-green-text-color',
             disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
             progress: '',
             loader: '',
