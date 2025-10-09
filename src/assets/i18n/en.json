@@ -2341,5 +2341,8 @@
       "quickbooksOnline": "QuickBooks Online",
       "quickbooksDesktop": "QuickBooks Desktop"
     }
+  },
+  "integrations": {
+    "reBrandedName": "Sage Expense Management"
   }
 }

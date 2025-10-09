@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class NetsuiteOnboardingLandingComponent implements OnInit {
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.NETSUITE;
 
-  constructor() { }
+  constructor(public brandingService: BrandingService) { }
 
   ngOnInit(): void {
   }

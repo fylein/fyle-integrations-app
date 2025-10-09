@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-intacct-onboarding-landing',
@@ -17,7 +18,9 @@ export class IntacctOnboardingLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor(
+    public brandingService: BrandingService
+  ) { }
 
   ngOnInit(): void {
   }

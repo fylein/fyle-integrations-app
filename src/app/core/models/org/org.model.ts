@@ -8,6 +8,7 @@ export type Org = {
     is_bamboo_connector: boolean;
     is_fyle_connected: boolean;
     is_sendgrid_connected: boolean;
+    is_org_rebranded: boolean;
     allow_travelperk: boolean;
     allow_dynamics: boolean;
     allow_qbd_direct_integration: boolean;
