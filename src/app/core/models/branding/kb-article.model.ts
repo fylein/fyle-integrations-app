@@ -1,3 +1,5 @@
+import { Sage50ImportableField } from "../sage50/sage50-configuration/sage50-import-settings.model";
+
 export type KbArticle = {
     [brandingId: string]: {
         topLevelArticles: {
@@ -15,6 +17,7 @@ export type KbArticle = {
         },
         onboardingArticles: {
             SAGE50: {
+                PREREQUISITES: string;
                 LANDING: string;
                 EXPORT_SETTINGS: string;
                 IMPORT_SETTINGS: string;
@@ -80,6 +83,9 @@ export type KbArticle = {
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
             },
+        },
+        postOnboardingArticles: {
+            SAGE50: Record<Sage50ImportableField, string>;
         }
     }
 };

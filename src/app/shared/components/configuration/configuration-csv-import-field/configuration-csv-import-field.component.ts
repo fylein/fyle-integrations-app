@@ -2,10 +2,14 @@ import { LowerCasePipe } from '@angular/common';
 import { Component, Host, Input, OnInit, Optional } from '@angular/core';
 import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { Sage50FyleField, Sage50ImportableCOAType, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CSVImportFieldForm, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 
 @Component({
   selector: 'app-configuration-csv-import-field',
@@ -13,7 +17,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [ReactiveFormsModule, SharedModule, LowerCasePipe],
   templateUrl: './configuration-csv-import-field.component.html',
   styleUrl: './configuration-csv-import-field.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [DialogService]
 })
 export class ConfigurationCsvImportFieldComponent implements OnInit {
 
@@ -31,10 +36,13 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() destinationField: Sage50ImportableField;
 
-  @Input() appName: string;
+  @Input() appDisplayName: string;
+
+  @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
   @Input({ required: true }) isImportCodeEditable: boolean;
 
+  @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
   readonly brandingConfig = brandingConfig;
 
@@ -51,7 +59,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     }
   ];
 
-  csvImportForm!: FormGroup;
+  csvImportForm!: FormGroup<CSVImportFieldForm>;
 
   get dimension() {
     return sage50AttributeDisplayNames[this.destinationField];
@@ -59,11 +67,30 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   constructor(
     private translocoService: TranslocoService,
-    private formGroupDirective: FormGroupDirective
+    private formGroupDirective: FormGroupDirective,
+    private dialogService: DialogService
   ) {}
 
-  handleReuploadClick() {
+  handleUploadClick() {
+    const ref = this.dialogService.open(CsvUploadDialogComponent, {
+      showHeader: false,
+      data: {
+        attributeType: this.destinationField,
+        articleLink: brandingKbArticles.postOnboardingArticles[this.appResourceKey][this.destinationField],
+        uploadData: this.uploadData,
+        videoURL: brandingDemoVideoLinks.postOnboarding[this.appResourceKey][this.destinationField]
+      }
+    });
 
+    ref.onClose.subscribe((file?: UploadedCSVFile) => {
+      if (file?.name) {
+        this.csvImportForm?.get('file')?.patchValue({
+          name: file.name,
+          valueCount: file.valueCount ?? 0,
+          lastUploadedAt: file.lastUploadedAt ?? new Date()
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
