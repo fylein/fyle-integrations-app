@@ -4,7 +4,7 @@ import { forkJoin, from, interval, Subject, switchMap, takeUntil, takeWhile } fr
 import { ButtonSize, ButtonType, ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QBDAccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -84,7 +84,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private iifLogsService: QbdIifLogsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private advancedSettingService: QbdAdvancedSettingService,
+    private advancedSettingService: QbdAdvancedSettingsService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,

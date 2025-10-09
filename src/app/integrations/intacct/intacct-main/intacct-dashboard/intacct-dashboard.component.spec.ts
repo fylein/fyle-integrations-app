@@ -6,7 +6,7 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { of } from 'rxjs';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Error } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctDashboardComponent', () => {
@@ -26,8 +26,8 @@ describe('IntacctDashboardComponent', () => {
   let accountingExportServiceSpy: jasmine.SpyObj<AccountingExportService>;
   let userServiceSpy: jasmine.SpyObj<UserService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
-  let intacctExportSettingServiceSpy: jasmine.SpyObj<SiExportSettingService>;
-  let intacctAdvancedSettingsServiceSpy: jasmine.SpyObj<SiAdvancedSettingService>;
+  let intacctExportSettingServiceSpy: jasmine.SpyObj<SiExportSettingsService>;
+  let intacctAdvancedSettingsServiceSpy: jasmine.SpyObj<SiAdvancedSettingsService>;
   let exportLogServiceSpy: jasmine.SpyObj<ExportLogService>;
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
@@ -36,9 +36,9 @@ describe('IntacctDashboardComponent', () => {
     const accountingExportServiceSpyObj = jasmine.createSpyObj('AccountingExportService', ['getAccountingExportSummary', 'importExpensesFromFyle']);
     const userServiceSpyObj = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', ['getConfiguration', 'getWorkspaceId', 'setOnboardingState']);
-    const intacctExportSettingServiceSpyObj = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
+    const intacctExportSettingServiceSpyObj = jasmine.createSpyObj('SiExportSettingsService', ['getExportSettings']);
     const exportLogServiceSpyObj = jasmine.createSpyObj('ExportLogService', ['getExportLogs']);
-    const intacctAdvancedSettingsServiceSpyObj = jasmine.createSpyObj('SiAdvancedSettingService', ['getAdvancedSettings']);
+    const intacctAdvancedSettingsServiceSpyObj = jasmine.createSpyObj('SiAdvancedSettingsService', ['getAdvancedSettings']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
         reRenderOnLangChange: true
@@ -55,8 +55,8 @@ describe('IntacctDashboardComponent', () => {
         { provide: AccountingExportService, useValue: accountingExportServiceSpyObj },
         { provide: UserService, useValue: userServiceSpyObj },
         { provide: WorkspaceService, useValue: workspaceServiceSpyObj },
-        { provide: SiExportSettingService, useValue: intacctExportSettingServiceSpyObj },
-        { provide: SiAdvancedSettingService, useValue: intacctAdvancedSettingsServiceSpyObj },
+        { provide: SiExportSettingsService, useValue: intacctExportSettingServiceSpyObj },
+        { provide: SiAdvancedSettingsService, useValue: intacctAdvancedSettingsServiceSpyObj },
         { provide: ExportLogService, useValue: exportLogServiceSpyObj },
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
@@ -68,8 +68,8 @@ describe('IntacctDashboardComponent', () => {
     accountingExportServiceSpy = TestBed.inject(AccountingExportService) as jasmine.SpyObj<AccountingExportService>;
     userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
-    intacctExportSettingServiceSpy = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
-    intacctAdvancedSettingsServiceSpy = TestBed.inject(SiAdvancedSettingService) as jasmine.SpyObj<SiAdvancedSettingService>;
+    intacctExportSettingServiceSpy = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
+    intacctAdvancedSettingsServiceSpy = TestBed.inject(SiAdvancedSettingsService) as jasmine.SpyObj<SiAdvancedSettingsService>;
     exportLogServiceSpy = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 

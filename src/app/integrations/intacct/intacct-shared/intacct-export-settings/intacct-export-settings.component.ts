@@ -12,7 +12,7 @@ import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, P
 import { ExportSettingFormOption, ExportSettingGet, IntacctExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -129,7 +129,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private exportSettingService: SiExportSettingService,
+    private exportSettingService: SiExportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
