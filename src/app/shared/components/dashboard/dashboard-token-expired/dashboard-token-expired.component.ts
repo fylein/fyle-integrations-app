@@ -8,7 +8,7 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';

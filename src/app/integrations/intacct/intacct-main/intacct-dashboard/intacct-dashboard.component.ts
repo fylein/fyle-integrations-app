@@ -7,7 +7,7 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
 import { IntacctTaskLog, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
+import { ExportLogService } from 'src/app/core/services/si/export-log/si-export-log.service';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';

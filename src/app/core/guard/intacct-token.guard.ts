@@ -5,7 +5,7 @@ import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
 import { AppUrl } from "../models/enum/enum.model";
 import { HelperService } from "../services/common/helper.service";
-import { IntacctConnectorService } from "../services/si/si-core/intacct-connector.service";
+import { IntacctConnectorService } from "../services/si/si-core/si-intacct-connector.service";
 
 
 @Injectable({

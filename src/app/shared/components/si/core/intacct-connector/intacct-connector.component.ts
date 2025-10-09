@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 
 @Component({

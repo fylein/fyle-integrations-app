@@ -19,7 +19,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
-import { ExportSettingsService as IntacctExportSettingsService } from 'src/app/core/services/intacct/intacct-configuration/export-settings.service';
+import { ExportSettingsService as IntacctExportSettingsService } from 'src/app/core/services/intacct/intacct-configuration/intacct-export-settings.service';
 
 @Component({
   selector: 'app-intacct-export-settings',

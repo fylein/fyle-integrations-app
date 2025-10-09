@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { IntacctConnectorService } from './intacct-connector.service';
+import { IntacctConnectorService } from './si-intacct-connector.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { StorageService } from '../../common/storage.service';
 import { of } from 'rxjs';
