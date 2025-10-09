@@ -51,11 +51,11 @@ export class Sage300ExportSettingsService {
   getExpenseGroupByOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.expense'),
+        label: this.translocoService.translate('services.sage300ExportSettings.expense'),
         value: ExpenseGroupingFieldOption.EXPENSE
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.expenseReport'),
+        label: this.translocoService.translate('services.sage300ExportSettings.expenseReport'),
         value: ExpenseGroupingFieldOption.REPORT
       }
     ];
@@ -64,11 +64,11 @@ export class Sage300ExportSettingsService {
   getCCCExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.cardTransactionPostDate'),
+        label: this.translocoService.translate('services.sage300ExportSettings.cardTransactionPostDate'),
         value: Sage300ExpenseDate.POSTED_AT
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.lastSpentDate'),
+        label: this.translocoService.translate('services.sage300ExportSettings.lastSpentDate'),
         value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
@@ -81,11 +81,11 @@ export class Sage300ExportSettingsService {
         value: Sage300ExpenseDate.CURRENT_DATE
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.spentDate'),
+        label: this.translocoService.translate('services.sage300ExportSettings.spentDate'),
         value: Sage300ExpenseDate.SPENT_AT
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.lastSpentDate'),
+        label: this.translocoService.translate('services.sage300ExportSettings.lastSpentDate'),
         value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
@@ -94,11 +94,11 @@ export class Sage300ExportSettingsService {
   getExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.accountsPayableInvoice'),
+        label: this.translocoService.translate('services.sage300ExportSettings.accountsPayableInvoice'),
         value: Sage300ExportType.PURCHASE_INVOICE
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.directCost'),
+        label: this.translocoService.translate('services.sage300ExportSettings.directCost'),
         value: Sage300ExportType.DIRECT_COST
       }
     ];
@@ -107,11 +107,11 @@ export class Sage300ExportSettingsService {
   getReimbursableExpenseState(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.processing'),
+        label: this.translocoService.translate('services.sage300ExportSettings.processing'),
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.closed'),
+        label: this.translocoService.translate('services.sage300ExportSettings.closed'),
         value: ExpenseState.PAID
       }
     ];
@@ -120,11 +120,11 @@ export class Sage300ExportSettingsService {
   getCCCExpenseState(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.approved'),
+        label: this.translocoService.translate('services.sage300ExportSettings.approved'),
         value: CCCExpenseState.APPROVED
       },
       {
-        label: this.translocoService.translate('services.sage300ExportSetting.closed'),
+        label: this.translocoService.translate('services.sage300ExportSettings.closed'),
         value: CCCExpenseState.PAID
       }
     ];
