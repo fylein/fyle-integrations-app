@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { IntacctConnectorComponent } from './intacct-connector.component';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MessageService } from 'primeng/api';

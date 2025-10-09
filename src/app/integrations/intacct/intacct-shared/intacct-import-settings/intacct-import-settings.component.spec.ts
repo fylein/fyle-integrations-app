@@ -7,7 +7,7 @@ import { of, throwError } from 'rxjs';
 import { IntacctImportSettingsComponent } from './intacct-import-settings.component';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';

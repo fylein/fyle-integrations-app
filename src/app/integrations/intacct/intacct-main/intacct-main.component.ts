@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { DashboardService } from 'src/app/core/services/si/si-core/si-dashboard.service';
+import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TranslocoService } from '@jsverse/transloco';
 

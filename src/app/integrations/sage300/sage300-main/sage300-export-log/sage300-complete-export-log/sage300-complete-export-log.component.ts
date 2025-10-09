@@ -5,7 +5,7 @@ import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/si-paginator.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PaginatorService } from './si-paginator.service';
+import { PaginatorService } from './paginator.service';
 
 xdescribe('PaginatorService', () => {
   let service: PaginatorService;

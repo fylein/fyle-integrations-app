@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ExportLogService } from './si-export-log.service';
+import { ExportLogService } from './export-log.service';
 
 xdescribe('ExportLogService', () => {
   let service: ExportLogService;

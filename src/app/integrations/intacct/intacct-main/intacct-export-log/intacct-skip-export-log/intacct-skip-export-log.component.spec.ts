@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { IntacctSkipExportLogComponent } from './intacct-skip-export-log.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/si-paginator.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { mockSkipExportLogResponse, mockPaginator } from '../../../intacct.fixture';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';

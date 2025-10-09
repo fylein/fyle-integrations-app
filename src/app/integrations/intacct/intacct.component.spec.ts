@@ -15,7 +15,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { MessageService } from 'primeng/api';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 
 describe('IntacctComponent', () => {

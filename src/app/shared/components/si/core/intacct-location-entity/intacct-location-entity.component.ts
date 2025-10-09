@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
