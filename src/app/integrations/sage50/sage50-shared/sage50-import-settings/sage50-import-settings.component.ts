@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -59,6 +59,10 @@ export class Sage50ImportSettingsComponent implements OnInit {
         disabled: value === Sage50ImportableCOAType.EXPENSES
       };
     });
+  }
+
+  public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
+    return this.importAttributesService.importAttributes(attributeType, fileName, jsonData);
   }
 
   ngOnInit(): void {

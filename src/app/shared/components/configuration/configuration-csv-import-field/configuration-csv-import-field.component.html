@@ -29,7 +29,7 @@
             <!-- Eg: Sage50 - Dimension | Fyle Field -->
             <div class="tw-flex tw-font-500 tw-text-14-px tw-text-text-primary">
                 <div class="tw-w-400-px">
-                    {{ appName }}{{ 'configurationCsvImportField.dimension' | transloco }}
+                    {{ appDisplayName }}{{ 'configurationCsvImportField.dimension' | transloco }}
                 </div>
                 <div>
                     {{ brandingConfig.brandName }}{{ 'configurationCsvImportField.field' | transloco }}
@@ -68,9 +68,9 @@
 
         @if (csvImportForm.get('file')?.value) {
             <app-uploaded-file-details
-                [file]="csvImportForm.get('file')?.value"
+                [file]="csvImportForm.get('file')?.value!"
                 [dimension]="dimension"
-                (reuploadClick)="handleReuploadClick()"
+                (reuploadClick)="handleUploadClick()"
             ></app-uploaded-file-details>
         }
     </div>

@@ -102,7 +102,11 @@ export class CsvUploadDialogComponent implements OnInit {
           this.data.uploadData(this.data.attributeType, file.name, jsonData).subscribe({
             // On upload success
             next: (response: CSVImportAttributesValidResponse) => {
-              this.dialogRef.close(response.file_name);
+              this.dialogRef.close({
+                name: response.file_name,
+                valueCount: response.data?.length ?? 0,
+                lastUploadedAt: new Date()
+              });
               this.toastService.displayToastMessage(
                 ToastSeverity.SUCCESS,
                 this.translocoService.translate(
