@@ -2487,7 +2487,7 @@
     "importFormatLabel": "Import format",
     "importFormatSubLabel": "Choose to import {{dimension}} names only, or names with codes - pick what your employees will recognize best.",
     "importCodesAndNamesLabel": "Import codes + names",
-    "importCodesAndNamesSubLabel": "Example: 4567 Meals & Entertainment",
+    "importCodesAndNamesSubLabel": "Example: 6050: Meals & Entertainment",
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
     "importFormatPlaceholder": "Select display name format"

@@ -40,14 +40,14 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   readonly importFormatOptions = [
     {
-      label: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesLabel'),
-      subLabel: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesSubLabel'),
-      value: true
-    },
-    {
       label: this.translocoService.translate('configurationCsvImportField.importNamesOnlyLabel'),
       subLabel: this.translocoService.translate('configurationCsvImportField.importNamesOnlySubLabel'),
       value: false
+    },
+    {
+      label: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesLabel'),
+      subLabel: this.translocoService.translate('configurationCsvImportField.importCodesAndNamesSubLabel'),
+      value: true
     }
   ];
 
