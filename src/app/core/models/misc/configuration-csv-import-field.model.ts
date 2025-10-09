@@ -1,9 +1,9 @@
 import { FormControl } from "@angular/forms";
 
 export type UploadedCSVFile = {
-    name: string;
-    valueCount: number;
-    lastUploadedAt: Date;
+    name: string | null;
+    valueCount: number | null;
+    lastUploadedAt: Date | null;
 };
 
 export type CSVImportFieldForm = {
