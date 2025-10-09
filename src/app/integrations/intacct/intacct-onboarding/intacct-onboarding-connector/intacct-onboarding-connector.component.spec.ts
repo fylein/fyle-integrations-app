@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector.component';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
