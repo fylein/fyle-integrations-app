@@ -82,6 +82,10 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() infoTooltipText?: string;
 
+  @Input() customClasses: string = '';
+
+  @Input() isOneTimeField: boolean = false;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
