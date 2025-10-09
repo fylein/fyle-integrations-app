@@ -65,5 +65,13 @@
             [customClasses]="'!tw-p-0'"
             [isOneTimeField]="isImportCodeEditable"
         ></app-configuration-select-field>
+
+        @if (csvImportForm.get('file')?.value) {
+            <app-uploaded-file-details
+                [file]="csvImportForm.get('file')?.value"
+                [dimension]="dimension"
+                (reuploadClick)="handleReuploadClick()"
+            ></app-uploaded-file-details>
+        }
     </div>
 </div>

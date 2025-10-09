@@ -105,6 +105,7 @@ import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log
 import { TranslocoModule } from '@jsverse/transloco';
 import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
 import { ConfigurationFieldContainerComponent } from './components/configuration/configuration-field-container/configuration-field-container.component';
+import { UploadedFileDetailsComponent } from './components/core/uploaded-file-details/uploaded-file-details.component';
 
 @NgModule({
   declarations: [
@@ -188,7 +189,8 @@ import { ConfigurationFieldContainerComponent } from './components/configuration
     SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
-    ConfigurationFieldContainerComponent
+    ConfigurationFieldContainerComponent,
+    UploadedFileDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -302,7 +304,8 @@ import { ConfigurationFieldContainerComponent } from './components/configuration
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
     TranslocoModule,
-    ConfigurationFieldContainerComponent
+    ConfigurationFieldContainerComponent,
+    UploadedFileDetailsComponent
   ]
 })
 export class SharedModule { }
