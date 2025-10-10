@@ -11,11 +11,12 @@ import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upl
 import { DialogService } from 'primeng/dynamicdialog';
 import { CSVImportFieldForm, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { Router } from '@angular/router';
+import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 
 @Component({
   selector: 'app-configuration-csv-import-field',
   standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe],
+  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent],
   templateUrl: './configuration-csv-import-field.component.html',
   styleUrl: './configuration-csv-import-field.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -40,6 +41,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   @Input() appDisplayName: string;
 
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
+
+  @Input() hasBeenImported: boolean;
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
@@ -69,6 +72,11 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   get isEnabled() {
     return this.csvImportForm?.get('enabled')?.value ?? false;
   }
+
+  get uploadedFile() {
+    return this.csvImportForm?.get('file')?.value ?? null;
+  }
+
 
   constructor(
     private translocoService: TranslocoService,

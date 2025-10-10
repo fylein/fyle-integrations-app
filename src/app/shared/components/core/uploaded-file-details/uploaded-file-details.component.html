@@ -34,7 +34,7 @@
         [iconSize]="'20px'"
         [iconViewbox]="'0 0 16 16'"
         (buttonClick)="reuploadClick.emit()"
-        [pTooltip]="'uploadedFileDetails.reuploadTooltip' | transloco: { dimension: dimension | sentenceCase }"
+        [pTooltip]="tooltipText"
         [tooltipPosition]="'top'"
         styleClasses="!tw-p-0 !tw-h-auto tw-shrink-0">
     </app-button>
