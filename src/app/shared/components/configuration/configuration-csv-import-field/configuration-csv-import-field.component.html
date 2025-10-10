@@ -1,6 +1,6 @@
 <div [formGroup]="csvImportForm" class="tw-border tw-border-separator tw-rounded-10-px">
     <!-- Header -->
-    <div class="tw-border-b tw-border-separator tw-p-24-px tw-flex tw-gap-[16px]">
+    <div class="tw-p-24-px tw-flex tw-gap-[16px]">
         @if (fieldNumber) {
             <div class="tw-bg-bg-primary tw-w-20-px tw-h-20-px tw-shrink-0 tw-rounded-4-px tw-flex tw-items-center tw-justify-center tw-text-white tw-font-[system-ui] tw-text-14-px tw-font-500">
                 {{ fieldNumber }}
@@ -20,10 +20,22 @@
                 <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
             </h5>
         </div>
+
+        <div class="tw-grow"></div>
+
+        <!-- If the field is not mandatory, it is toggle-able -->
+        @if (!isMandatory) {
+            <app-toggle
+                [form]="csvImportForm"
+                [formControllerName]="'enabled'"
+                class="tw-self-center"
+            ></app-toggle>
+        }
     </div>
 
     <!-- Body -->
-    <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
+    @if (isEnabled) {
+    <div class="tw-border-t tw-border-separator tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
 
         <div class="tw-flex tw-flex-col tw-gap-[8px]">
             <!-- Eg: Sage50 - Dimension | Fyle Field -->
@@ -78,4 +90,5 @@
             ></app-uploaded-file-details>
         }
     </div>
+    }
 </div>
