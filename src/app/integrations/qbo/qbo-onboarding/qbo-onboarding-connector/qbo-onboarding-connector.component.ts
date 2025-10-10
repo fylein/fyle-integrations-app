@@ -10,7 +10,7 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
+import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -77,7 +77,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private cloneSettingService: CloneSettingService,
+    private cloneSettingService: CloneSettingsService,
     private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,

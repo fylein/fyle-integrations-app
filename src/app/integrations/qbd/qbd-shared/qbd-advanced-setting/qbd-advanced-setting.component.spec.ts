@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -25,7 +25,7 @@ describe('QbdAdvancedSettingComponent', () => {
   let service3: any;
   let service4: any;
   let formbuilder: FormBuilder;
-  let qbdAdvancedSettingService: QbdAdvancedSettingService;
+  let qbdAdvancedSettingService: QbdAdvancedSettingsService;
   let qbdWorkspaceService: QbdWorkspaceService;
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
@@ -64,7 +64,7 @@ describe('QbdAdvancedSettingComponent', () => {
     providers: [
         FormBuilder,
         { provide: Router, useValue: routerSpy },
-        { provide: QbdAdvancedSettingService, useValue: service1 },
+        { provide: QbdAdvancedSettingsService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: OrgService, useValue: service3 },
         { provide: IntegrationsToastService, useValue: service4 },
@@ -81,7 +81,7 @@ describe('QbdAdvancedSettingComponent', () => {
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
     qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
-    qbdAdvancedSettingService = TestBed.inject(QbdAdvancedSettingService);
+    qbdAdvancedSettingService = TestBed.inject(QbdAdvancedSettingsService);
     component.advancedSettings = QBDAdvancedSettingResponse;
     component.memoStructure = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
     component.advancedSettingsForm = formbuilder.group({

@@ -10,7 +10,7 @@ import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dash
 import { Sage300AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import { Sage300ExportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-settings.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { Router } from '@angular/router';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
@@ -82,7 +82,7 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private refinerService: RefinerService,
-    private sage300ExportSettingService: Sage300ExportSettingService,
+    private sage300ExportSettingService: Sage300ExportSettingsService,
     private sage300ImportSettingService: Sage300ImportSettingsService,
     private router: Router,
     private sage300AdvancedSettingsService: Sage300AdvancedSettingsService

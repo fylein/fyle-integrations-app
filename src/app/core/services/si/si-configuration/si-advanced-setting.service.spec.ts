@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SiAdvancedSettingService } from './si-advanced-setting.service';
+import { SiAdvancedSettingsService } from './si-advanced-settings.service';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('SiAdvancedSettingService', () => {
-  let service: SiAdvancedSettingService;
+xdescribe('SiAdvancedSettingsService', () => {
+  let service: SiAdvancedSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [],
-    providers: [SiAdvancedSettingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [SiAdvancedSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 });
-    service = TestBed.inject(SiAdvancedSettingService);
+    service = TestBed.inject(SiAdvancedSettingsService);
   });
 
   it('should be created', () => {

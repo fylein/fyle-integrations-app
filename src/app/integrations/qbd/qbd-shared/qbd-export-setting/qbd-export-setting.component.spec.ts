@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, ExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
-import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
+import { QbdExportSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -26,7 +26,7 @@ describe('QbdExportSettingComponent', () => {
   let service4: any;
   let formbuilder: FormBuilder;
   let qbdWorkspaceService: QbdWorkspaceService;
-  let qbdExportSettingService: QbdExportSettingService;
+  let qbdExportSettingService: QbdExportSettingsService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   let translocoService: jasmine.SpyObj<TranslocoService>;
@@ -66,7 +66,7 @@ describe('QbdExportSettingComponent', () => {
         FormBuilder,
         { provide: TranslocoService, useValue: translocoServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: QbdExportSettingService, useValue: service1 },
+        { provide: QbdExportSettingsService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
         { provide: QbdMappingService, useValue: service4 },
@@ -83,7 +83,7 @@ describe('QbdExportSettingComponent', () => {
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
     qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
-    qbdExportSettingService = TestBed.inject(QbdExportSettingService);
+    qbdExportSettingService = TestBed.inject(QbdExportSettingsService);
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
       reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],

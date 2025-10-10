@@ -13,7 +13,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TranslocoService } from '@jsverse/transloco';
-import { TravelperkAdvancedSettingService } from 'src/app/core/services/travelperk/travelperk-advanced-settings.service';
+import { TravelperkAdvancedSettingsService } from 'src/app/core/services/travelperk/travelperk-advanced-settings.service';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -74,7 +74,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private travelperkAdvancedSettingService: TravelperkAdvancedSettingService
+    private travelperkAdvancedSettingService: TravelperkAdvancedSettingsService
   ) {
     this.destinationFieldOptions = this.travelperkAdvancedSettingService.getDefaultCategory();
     this.lineItems = this.travelperkAdvancedSettingService.getExpenseGroup();

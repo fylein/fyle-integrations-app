@@ -12,7 +12,7 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TranslocoService } from '@jsverse/transloco';
-import { TravelperkPaymentProfileSettingService } from 'src/app/core/services/travelperk/travelperk-payment-profile-settings.service';
+import { TravelperkPaymentProfileSettingsService } from 'src/app/core/services/travelperk/travelperk-payment-profile-settings.service';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -67,7 +67,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private travelperkPaymentProfileSettingService: TravelperkPaymentProfileSettingService
+    private travelperkPaymentProfileSettingService: TravelperkPaymentProfileSettingsService
   ) {
     this.userRole = this.travelperkPaymentProfileSettingService.getUserRoleOptions();
   }

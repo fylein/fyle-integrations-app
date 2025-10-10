@@ -13,7 +13,7 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
-import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
+import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -29,7 +29,7 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
-import { XeroCloneSettingService } from 'src/app/core/services/xero/xero-configuration/xero-clone-settings.service';
+import { XeroCloneSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-clone-settings.service';
 
 @Component({
   selector: 'app-xero-clone-settings',
@@ -141,7 +141,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private cloneSettingService: CloneSettingService,
+    private cloneSettingService: CloneSettingsService,
     private configurationService: ConfigurationService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private zeroExportSettingService: XeroExportSettingsService,
@@ -156,7 +156,7 @@ export class XeroCloneSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private xeroOnboardingService: XeroOnboardingService,
     private xeroExportSettingsService: XeroExportSettingsService,
-    private xeroCloneSettingService: XeroCloneSettingService,
+    private xeroCloneSettingsService: XeroCloneSettingsService,
     private xeroAdvancedSettingsService: XeroAdvancedSettingsService,
     private exportSettingsService: ExportSettingsService
   ) {
@@ -235,7 +235,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = this.xeroCloneSettingService.constructPayload(this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
+    const cloneSettingPayload = this.xeroCloneSettingsService.constructPayload(this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;

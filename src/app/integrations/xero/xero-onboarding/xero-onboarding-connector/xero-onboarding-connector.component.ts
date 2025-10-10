@@ -11,7 +11,7 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { TenantMapping, TenantMappingModel, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
-import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
+import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -91,7 +91,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private helperService: HelperService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private cloneSettingService: CloneSettingService,
+    private cloneSettingService: CloneSettingsService,
     private xeroHelperService: XeroHelperService,
     private storageService: StorageService,
     private translocoService: TranslocoService,

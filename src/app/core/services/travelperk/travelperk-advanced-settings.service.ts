@@ -9,7 +9,7 @@ import { TranslocoService } from "@jsverse/transloco";
 @Injectable({
   providedIn: 'root'
 })
-export class TravelperkAdvancedSettingService {
+export class TravelperkAdvancedSettingsService {
 
   constructor(
     private translocoService: TranslocoService

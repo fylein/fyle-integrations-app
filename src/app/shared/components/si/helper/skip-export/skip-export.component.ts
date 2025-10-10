@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -62,7 +62,7 @@ export class SkipExportComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private advancedSettingsService: SiAdvancedSettingService,
+    private advancedSettingsService: SiAdvancedSettingsService,
     private translocoService: TranslocoService
   ) {
     this.customOperatorOptions = [
