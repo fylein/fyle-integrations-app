@@ -14,6 +14,8 @@ export class UploadedFileDetailsComponent {
 
   @Input({ required: true }) dimension: string;
 
+  @Input() isOnboarding: boolean = false;
+
   @Output() reuploadClick: EventEmitter<void> = new EventEmitter<void>();
 
   readonly ButtonType = ButtonType;

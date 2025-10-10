@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CSVImportFieldForm, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration-csv-import-field',
@@ -40,8 +41,6 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
-  @Input({ required: true }) isImportCodeEditable: boolean;
-
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
   readonly brandingConfig = brandingConfig;
@@ -59,7 +58,9 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     }
   ];
 
-  csvImportForm!: FormGroup<CSVImportFieldForm>;
+  public csvImportForm!: FormGroup<CSVImportFieldForm>;
+
+  public isOnboarding: boolean;
 
   get dimension() {
     return sage50AttributeDisplayNames[this.destinationField];
@@ -68,7 +69,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   constructor(
     private translocoService: TranslocoService,
     private formGroupDirective: FormGroupDirective,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {}
 
   handleUploadClick() {
@@ -84,16 +86,28 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
     ref.onClose.subscribe((file?: UploadedCSVFile) => {
       if (file?.name) {
-        this.csvImportForm?.get('file')?.patchValue({
-          name: file.name,
-          valueCount: file.valueCount ?? 0,
-          lastUploadedAt: file.lastUploadedAt ?? new Date()
-        });
+        if (this.isOnboarding) {
+          // During onboarding, update the 'Values ready to import' field
+          this.csvImportForm?.get('file')?.patchValue({
+            name: file.name,
+            valueCount: file.valueCount ?? 0,
+            lastUploadedAt: file.lastUploadedAt ?? new Date()
+          });
+        } else {
+          // Post onboarding, don't update the 'Mapped values' field
+          const currentFile = this.csvImportForm?.get('file')?.value;
+          this.csvImportForm?.get('file')?.patchValue({
+            name: file.name,
+            valueCount: currentFile?.valueCount ?? 0,
+            lastUploadedAt: file.lastUploadedAt ?? new Date()
+          });
+        }
       }
     });
   }
 
   ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
     this.csvImportForm = this.formGroupDirective.form.get(this.formGroupName) as FormGroup;
   }
 

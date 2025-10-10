@@ -11,6 +11,7 @@ import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage
 import { forkJoin } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -47,6 +48,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
   constructor(
     private importSettingService: Sage50ImportSettingsService,
     private importAttributesService: Sage50ImportAttributesService,
+    private mappingService: Sage50MappingService,
     private router: Router
   ) { }
 
@@ -69,13 +71,23 @@ export class Sage50ImportSettingsComponent implements OnInit {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
+    const attributeStatsRequests = this.isOnboarding
+      ? [
+        this.mappingService.getAttributeStats(Sage50AttributeType.ACCOUNT),
+        this.mappingService.getAttributeStats(Sage50AttributeType.VENDOR)
+      ]
+      : [];
+
     forkJoin([
       this.importSettingService.getSage50ImportSettings(),
       this.importSettingService.getImportableChartOfAccounts(),
-      this.importAttributesService.getAccountingImportDetailsByType()
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails]) => {
+      this.importAttributesService.getAccountingImportDetailsByType(),
+      ...attributeStatsRequests
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, accountStats, vendorStats]) => {
 
-      this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(importSettings, accountingImportDetails);
+      this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
+        importSettings, accountingImportDetails, accountStats, vendorStats
+      );
       this.constructOptions(importableChartOfAccounts);
 
       this.isLoading = false;

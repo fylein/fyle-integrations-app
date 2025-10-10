@@ -52,24 +52,28 @@
         <!-- Additional Fields -->
         <ng-content select="[slot='additionalFields']"></ng-content>
 
-        <app-configuration-select-field
-            [form]="csvImportForm"
-            [formControllerName]="'importCode'"
-            [options]="importFormatOptions"
-            [isMultiLineOption]="true"
-            [label]="'configurationCsvImportField.importFormatLabel' | transloco"
-            [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
-            [iconPath]="'question-square-outline'"
-            [isFieldMandatory]="true"
-            [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
-            [customClasses]="'!tw-p-0'"
-            [isOneTimeField]="isImportCodeEditable"
-        ></app-configuration-select-field>
+        <!-- Import code: onboarding only -->
+        @if (isOnboarding) {
+            <app-configuration-select-field
+                [form]="csvImportForm"
+                [formControllerName]="'importCode'"
+                [options]="importFormatOptions"
+                [isMultiLineOption]="true"
+                [label]="'configurationCsvImportField.importFormatLabel' | transloco"
+                [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
+                [iconPath]="'question-square-outline'"
+                [isFieldMandatory]="true"
+                [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
+                [customClasses]="'!tw-p-0'"
+                [isOneTimeField]="isOnboarding"
+            ></app-configuration-select-field>
+        }
 
         @if (csvImportForm.get('file')?.value) {
             <app-uploaded-file-details
                 [file]="csvImportForm.get('file')?.value!"
                 [dimension]="dimension"
+                [isOnboarding]="isOnboarding"
                 (reuploadClick)="handleUploadClick()"
             ></app-uploaded-file-details>
         }
