@@ -58,3 +58,9 @@ export type GroupedDestinationAttribute = {
   TAX_CODE: DestinationAttribute[],
   COMPANY: BusinessCentralDestinationAttributes[]
 };
+
+export type DestinationAttributeStats = {
+  attributes_count: number;
+  active_attributes_count: number;
+  inactive_attributes_count: number;
+};
