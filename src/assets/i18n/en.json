@@ -2477,7 +2477,9 @@
     "accountTypesLabel": "Account types to import",
     "accountTypesSubLabel": "\"Expense\" type accounts will be imported by default. Select any other account types you'd like to import.",
     "accountTypesSubtext": "Add more from dropdown",
-    "accountTypesPlaceholder": "Select display name format"
+    "accountTypesPlaceholder": "Select display name format",
+    "vendorLabel": "Vendor",
+    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation."
   },
   "configurationCsvImportField": {
     "preview": "Preview",

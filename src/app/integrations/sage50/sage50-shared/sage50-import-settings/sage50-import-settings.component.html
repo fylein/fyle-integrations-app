@@ -42,6 +42,19 @@
                 </app-configuration-field-container>
             </ng-container>
         </app-configuration-csv-import-field>
+
+        <app-configuration-csv-import-field
+            [formGroupName]="'VENDOR'"
+            [isMandatory]="isVendorMandatory"
+            [fieldNumber]="2"
+            [label]="'sage50ImportSettings.vendorLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.vendorSubLabel' | transloco"
+            [sourceField]="Sage50FyleField.MERCHANT"
+            [destinationField]="Sage50ImportableField.VENDOR"
+            [appResourceKey]="'SAGE50'"
+            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+            [uploadData]="uploadData.bind(this)"
+        ></app-configuration-csv-import-field>
     </form>
 </div>
 }
