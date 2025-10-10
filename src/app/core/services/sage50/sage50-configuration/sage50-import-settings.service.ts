@@ -68,7 +68,7 @@ export class Sage50ImportSettingsService {
 
         let isVendorEnabled = importSettings?.import_vendor_as_merchant ?? false;
         const isVendorMandatory = this.isVendorMandatory(exportSettings);
-        if (isVendorMandatory) {
+        if (isVendorMandatory || vendorFile) {
             isVendorEnabled = true;
         }
 

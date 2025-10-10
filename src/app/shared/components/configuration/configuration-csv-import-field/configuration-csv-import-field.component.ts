@@ -66,6 +66,10 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     return sage50AttributeDisplayNames[this.destinationField];
   }
 
+  get isEnabled() {
+    return this.csvImportForm?.get('enabled')?.value ?? false;
+  }
+
   constructor(
     private translocoService: TranslocoService,
     private formGroupDirective: FormGroupDirective,
