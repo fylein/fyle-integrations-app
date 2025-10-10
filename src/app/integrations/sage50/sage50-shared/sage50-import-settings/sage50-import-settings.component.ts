@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -40,6 +41,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
+  isVendorMandatory: boolean;
+
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
@@ -49,6 +52,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private importSettingService: Sage50ImportSettingsService,
     private importAttributesService: Sage50ImportAttributesService,
     private mappingService: Sage50MappingService,
+    private exportSettingService: Sage50ExportSettingsService,
     private router: Router
   ) { }
 
@@ -82,11 +86,15 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importSettingService.getSage50ImportSettings(),
       this.importSettingService.getImportableChartOfAccounts(),
       this.importAttributesService.getAccountingImportDetailsByType(),
+      this.exportSettingService.getExportSettings(),
       ...attributeStatsRequests
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, accountStats, vendorStats]) => {
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, accountStats, vendorStats]) => {
+
+      // If payments or purchases are being exported, vendor is mandatory
+      this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
-        importSettings, accountingImportDetails, accountStats, vendorStats
+        importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
       );
       this.constructOptions(importableChartOfAccounts);
 

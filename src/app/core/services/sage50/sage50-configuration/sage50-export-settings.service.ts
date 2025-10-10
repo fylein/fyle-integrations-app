@@ -114,7 +114,7 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     super();
   }
 
-  getExportSettings(): Observable<Sage50ExportSettingsGet> {
+  getExportSettings(): Observable<Sage50ExportSettingsGet | null> {
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {});
   }
 

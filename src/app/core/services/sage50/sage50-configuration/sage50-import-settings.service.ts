@@ -8,6 +8,7 @@ import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
 import { Sage50AccountingImportDetail } from "src/app/core/models/sage50/db/sage50-import-attributes.model";
 import { UploadedCSVFile } from "src/app/core/models/misc/configuration-csv-import-field.model";
 import { DestinationAttributeStats } from "src/app/core/models/db/destination-attribute.model";
+import { Sage50CCCExportType, Sage50ExportSettingsGet, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 
 @Injectable({
     providedIn: 'root'
@@ -41,6 +42,7 @@ export class Sage50ImportSettingsService {
     mapApiResponseToFormGroup(
         importSettings: Sage50ImportSettingsGet | null,
         accountingImportDetails: Record<Sage50AttributeType, Sage50AccountingImportDetail>,
+        exportSettings: Sage50ExportSettingsGet | null,
         accountStats?: DestinationAttributeStats,
         vendorStats?: DestinationAttributeStats
     ): FormGroup<Sage50ImportSettingsForm> {
@@ -63,6 +65,13 @@ export class Sage50ImportSettingsService {
         if (vendorFile && vendorStats) {
             vendorFile.valueCount = vendorStats.active_attributes_count;
         }
+
+        let isVendorEnabled = importSettings?.import_vendor_as_merchant ?? false;
+        const isVendorMandatory = this.isVendorMandatory(exportSettings);
+        if (isVendorMandatory) {
+            isVendorEnabled = true;
+        }
+
         return new FormGroup({
             ACCOUNT: new FormGroup({
                 enabled: new FormControl(true, { nonNullable: true }),
@@ -72,7 +81,7 @@ export class Sage50ImportSettingsService {
             }),
             // TODO(sage50): check if VENDOR is required, if yes, hard-code enabled
             VENDOR: new FormGroup({
-                enabled: new FormControl(importSettings?.import_vendor_as_merchant ?? false, { nonNullable: true }),
+                enabled: new FormControl(isVendorEnabled, { nonNullable: true }),
                 file: new FormControl(vendorFile),
                 importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.VENDOR) ?? null)
             }),
@@ -93,5 +102,24 @@ export class Sage50ImportSettingsService {
                 importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.COST_CODE) ?? null)
             })
         });
+    }
+
+    /**
+     * If payments or purchases are being exported, vendor is mandatory
+     */
+    isVendorMandatory(exportSettings: Sage50ExportSettingsGet | null): boolean {
+        const cccExportType = exportSettings?.credit_card_expense_export_type;
+        const reimbursableExportType = exportSettings?.reimbursable_expense_export_type;
+
+        return (
+            // Is CCC set to payments or purchases?
+            [
+                Sage50CCCExportType.PAYMENTS_JOURNAL,
+                Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY
+            ].includes(cccExportType!)
+        ) || (
+            // Or, is reimbursable set to purchases?
+            reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY
+        );
     }
 }
