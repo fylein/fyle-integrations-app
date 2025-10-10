@@ -28,14 +28,25 @@ export enum Sage50FyleField {
     LOCATION = 'LOCATION'
 }
 
-export type Sage50ImportSettingsPost = {
-    import_account_as_category: true,
-    chart_of_accounts: Sage50ImportableCOAType[],
-    import_vendor_as_merchant: boolean,
-    import_code_fields: Sage50ImportableField[]
+export type Sage50MappingSettingRow = {
+    source_field: Sage50FyleField,
+    destination_field: Sage50ImportableField,
+    import_to_fyle: boolean,
+    is_custom: boolean,
+    source_placeholder: string | null
 }
 
-export type Sage50ImportSettingsGet = Sage50ImportSettingsPost;
+export type Sage50ImportSettingsGet = {
+    import_settings: {
+        import_account_as_category: true,
+        chart_of_accounts: Sage50ImportableCOAType[],
+        import_vendor_as_merchant: boolean,
+        import_code_fields: Sage50ImportableField[]
+    },
+    mapping_settings: Sage50MappingSettingRow[] | [],
+}
+
+export type Sage50ImportSettingsPost = Sage50ImportSettingsGet;
 
 export type Sage50ImportableCOAGet = {
     chart_of_account: Sage50ImportableCOAType,
