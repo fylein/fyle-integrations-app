@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MappingService } from '../common/mapping.service';
 import { Observable } from 'rxjs';
-import { PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
+import { DestinationAttributeStats, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { AppName, Sage50AttributeType } from '../../models/enum/enum.model';
 
 @Injectable({
@@ -20,5 +20,12 @@ export class Sage50MappingService extends MappingService {
       Sage50AttributeType.VENDOR, value, undefined, AppName.SAGE50
     );
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/paginated_destination_attributes/`, params);
+  }
+
+  getAttributeStats(attributeType: Sage50AttributeType): Observable<DestinationAttributeStats> {
+    const params = {
+      attribute_type: attributeType
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes_stats/`, params);
   }
 }
