@@ -2479,7 +2479,12 @@
     "accountTypesSubtext": "Add more from dropdown",
     "accountTypesPlaceholder": "Select display name format",
     "vendorLabel": "Vendor",
-    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation."
+    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation.",
+    "jobSubLabel": "Import job codes as projects to enable accurate job costing and simplify billable invoicing.",
+    "jobLabel": "Job",
+    "customFieldLabel": "Create a custom field",
+    "projectLabel": "Project",
+    "costCenterLabel": "Cost center"
   },
   "configurationCsvImportField": {
     "preview": "Preview",
@@ -2492,7 +2497,8 @@
     "importCodesAndNamesSubLabel": "Example: 6050: Meals & Entertainment",
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
-    "importFormatPlaceholder": "Select display name format"
+    "importFormatPlaceholder": "Select display name format",
+    "selectSourceFieldPlaceholder": "Select field in {{brandName}}"
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",

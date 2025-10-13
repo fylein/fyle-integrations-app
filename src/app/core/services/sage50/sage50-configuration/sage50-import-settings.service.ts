@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../common/api.service";
 import { Observable } from "rxjs";
-import { Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
+import { Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet, Sage50MappingSettingRow } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
 import { WorkspaceService } from "../../common/workspace.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
@@ -84,6 +84,12 @@ export class Sage50ImportSettingsService {
             // If the field has not been imported before, show null (blank dropdown)
             importCodeValues[field] = importStatuses[field] ? importCodeFields.includes(field) : null;
         }
+
+        const mappedFields = {} as Record<Sage50ImportableField, Sage50MappingSettingRow>;
+        for (const setting of mapping_settings ?? []) {
+            mappedFields[setting.destination_field] = setting;
+        }
+
         return new FormGroup<Sage50ImportSettingsForm>({
             ACCOUNT: new FormGroup({
                 enabled: new FormControl(true, { nonNullable: true }),
@@ -98,19 +104,28 @@ export class Sage50ImportSettingsService {
             }),
             // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
-                enabled: new FormControl(false, { nonNullable: true }),
+                enabled: new FormControl(!!mappedFields[Sage50ImportableField.JOB], { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),
-                importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB])
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB]),
+                sourceField: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_field ?? null),
+                destinationField: new FormControl(Sage50ImportableField.JOB as Sage50ImportableField, { nonNullable: true }),
+                sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_placeholder ?? null)
             }),
             PHASE: new FormGroup({
-                enabled: new FormControl(false, { nonNullable: true }),
+                enabled: new FormControl(!!mappedFields[Sage50ImportableField.PHASE], { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.PHASE])),
-                importCode: new FormControl(importCodeValues[Sage50ImportableField.PHASE])
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.PHASE]),
+                sourceField: new FormControl(mappedFields[Sage50ImportableField.PHASE]?.source_field ?? null),
+                destinationField: new FormControl(Sage50ImportableField.PHASE as Sage50ImportableField, { nonNullable: true }),
+                sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.PHASE]?.source_placeholder ?? null)
             }),
             COST_CODE: new FormGroup({
-                enabled: new FormControl(false, { nonNullable: true }),
+                enabled: new FormControl(!!mappedFields[Sage50ImportableField.COST_CODE], { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.COST_CODE])),
-                importCode: new FormControl(importCodeValues[Sage50ImportableField.COST_CODE])
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.COST_CODE]),
+                sourceField: new FormControl(mappedFields[Sage50ImportableField.COST_CODE]?.source_field ?? null),
+                destinationField: new FormControl(Sage50ImportableField.COST_CODE as Sage50ImportableField, { nonNullable: true }),
+                sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.COST_CODE]?.source_placeholder ?? null)
             })
         });
     }

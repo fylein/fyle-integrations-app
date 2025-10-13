@@ -13,6 +13,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -51,12 +52,15 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   importableCOAOptions: { label: string, value: Sage50ImportableCOAType, disabled: boolean }[] = [];
 
+  sourceFieldOptions: { label: string, value: Sage50FyleField | 'custom_field' }[] = [];
+
   constructor(
     private importSettingService: Sage50ImportSettingsService,
     private importAttributesService: Sage50ImportAttributesService,
     private mappingService: Sage50MappingService,
     private exportSettingService: Sage50ExportSettingsService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) { }
 
   private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet): void {
@@ -68,6 +72,12 @@ export class Sage50ImportSettingsComponent implements OnInit {
         disabled: value === Sage50ImportableCOAType.EXPENSES
       };
     });
+
+    this.sourceFieldOptions = [
+      { label: this.translocoService.translate('sage50ImportSettings.projectLabel'), value: Sage50FyleField.PROJECT },
+      { label: this.translocoService.translate('sage50ImportSettings.costCenterLabel'), value: Sage50FyleField.COST_CENTER },
+      { label: this.translocoService.translate('sage50ImportSettings.customFieldLabel'), value: 'custom_field' }
+    ];
   }
 
   public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {

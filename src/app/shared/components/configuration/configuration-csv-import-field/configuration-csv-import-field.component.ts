@@ -1,4 +1,4 @@
-import { LowerCasePipe } from '@angular/common';
+import { CommonModule, LowerCasePipe } from '@angular/common';
 import { Component, Host, Input, OnInit, Optional } from '@angular/core';
 import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
@@ -16,7 +16,7 @@ import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-uplo
 @Component({
   selector: 'app-configuration-csv-import-field',
   standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent],
+  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
   templateUrl: './configuration-csv-import-field.component.html',
   styleUrl: './configuration-csv-import-field.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -35,6 +35,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   @Input() subLabel: string;
 
   @Input() sourceField: Sage50FyleField;
+
+  @Input() sourceFieldOptions: { label: string, value: Sage50FyleField | 'custom_field' }[];
 
   @Input() destinationField: Sage50ImportableField;
 
