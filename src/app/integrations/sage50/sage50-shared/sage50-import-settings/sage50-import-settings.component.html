@@ -3,7 +3,7 @@
     <app-loader></app-loader>
 </div>
 } @else {
-<div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+<div class="configuration--contents tw-border-separator tw-mt-6 tw-overflow-x-hidden" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header
             [headerText]="'sage50ImportSettings.headerText' | transloco"
@@ -13,7 +13,50 @@
             [appName]="appName">
         </app-configuration-step-header>
     </div>
-    <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
+    <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[24px]">
+        <app-configuration-csv-import-field
+            [formGroupName]="'ACCOUNT'"
+            [isMandatory]="true"
+            [fieldNumber]="1"
+            [label]="'sage50ImportSettings.accountLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.accountSubLabel' | transloco"
+            [sourceField]="Sage50FyleField.CATEGORY"
+            [destinationField]="Sage50ImportableField.ACCOUNT"
+            [appResourceKey]="'SAGE50'"
+            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+            [hasBeenImported]="importStatuses[Sage50ImportableField.ACCOUNT]"
+            [uploadData]="uploadData.bind(this)"
+        >
+            <ng-container slot="additionalFields">
+                <app-configuration-field-container
+                    [label]="'sage50ImportSettings.accountTypesLabel' | transloco"
+                    [subLabel]="'sage50ImportSettings.accountTypesSubLabel' | transloco"
+                    [iconPath]="'list'"
+                    [isMandatory]="true"
+                    [hint]="'sage50ImportSettings.accountTypesSubtext' | transloco "
+                >
+                    <p-multiSelect
+                        [options]="importableCOAOptions"
+                        [placeholder]="'sage50ImportSettings.accountTypesPlaceholder' | transloco"
+                        [formControlName]="'accountTypes'"
+                    ></p-multiSelect>
+                </app-configuration-field-container>
+            </ng-container>
+        </app-configuration-csv-import-field>
+
+        <app-configuration-csv-import-field
+            [formGroupName]="'VENDOR'"
+            [isMandatory]="isVendorMandatory"
+            [fieldNumber]="2"
+            [label]="'sage50ImportSettings.vendorLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.vendorSubLabel' | transloco"
+            [sourceField]="Sage50FyleField.MERCHANT"
+            [destinationField]="Sage50ImportableField.VENDOR"
+            [appResourceKey]="'SAGE50'"
+            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+            [hasBeenImported]="importStatuses[Sage50ImportableField.VENDOR]"
+            [uploadData]="uploadData.bind(this)"
+        ></app-configuration-csv-import-field>
     </form>
 </div>
 }

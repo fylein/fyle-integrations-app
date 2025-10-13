@@ -1,3 +1,5 @@
+import { Sage50ImportableField } from "../sage50/sage50-configuration/sage50-import-settings.model";
+
 export type DemoVideo = {
     [brandingId: string]: {
         onboarding: {
@@ -10,6 +12,9 @@ export type DemoVideo = {
             XERO:string;
             NETSUITE: string;
             SAGE50: string;
+        }
+        postOnboarding: {
+            SAGE50: Record<Sage50ImportableField, string>;
         }
     }
 };
