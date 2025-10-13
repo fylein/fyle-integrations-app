@@ -2153,7 +2153,7 @@
       "emailToQboEmail": "{brandName} Email to QuickBooks Online Email",
       "employeeCodeToQboDisplayName": "{brandName} Employee Code to QuickBooks Online Display name"
     },
-    "intacctExportSettings": {
+    "siExportSetting": {
       "verificationDate": "Verification date",
       "spendDate": "Spend date",
       "approvalDate": "Approval date",

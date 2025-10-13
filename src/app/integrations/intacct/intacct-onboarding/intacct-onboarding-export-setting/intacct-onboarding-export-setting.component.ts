@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
+import { IntacctOnboardingService } from 'src/app/core/services/si/si-configuration/si-onboarding.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
