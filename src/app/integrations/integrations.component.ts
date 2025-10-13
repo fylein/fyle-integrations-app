@@ -9,6 +9,8 @@ import { UserService } from '../core/services/misc/user.service';
 import { OrgService } from '../core/services/org/org.service';
 import { EventsService } from '../core/services/common/events.service';
 import { brandingFeatureConfig } from '../branding/branding-config';
+import { BrandingService } from '../core/services/common/branding.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-integrations',
@@ -32,7 +34,9 @@ export class IntegrationsComponent implements OnInit {
     private storageService: StorageService,
     private trackingService: TrackingService,
     private userService: UserService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private translocoService: TranslocoService,
+    private brandingService: BrandingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -66,15 +70,29 @@ export class IntegrationsComponent implements OnInit {
   private setupOrg(): void {
     this.eventsService.setupRouteWatcher();
     this.user = this.userService.getUserProfile();
+    if (this.storageService.get('is_org_rebranded')){
+      this.setOrgRebranded();
+    }
     this.getOrCreateOrg().then((org: Org | undefined) => {
       if (org) {
         this.trackingService.onOpenLandingPage(this.user?.user_id, org.fyle_org_id);
         this.org = org;
         this.storageService.set('orgId', this.org.id);
         this.storageService.set('org', this.org);
+        if (this.org.is_org_rebranded && !this.storageService.get('is_org_rebranded')) {
+          this.storageService.set('is_org_rebranded', true);
+          this.setOrgRebranded();
+        } else if (!this.org.is_org_rebranded){
+          this.storageService.remove('is_org_rebranded');
+        }
       }
       this.navigate();
     });
+  }
+
+  private setOrgRebranded(): void {
+    this.brandingService.updateBrandingConfig({ brandName: this.translocoService.translate('integrations.reBrandedName') });
+    this.brandingService.setOrgRebranded(true);
   }
 
   ngOnInit(): void {
