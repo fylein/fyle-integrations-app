@@ -56,7 +56,7 @@
                     <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
                 </div>
                 <div class="tw-w-30-vw">
-                    @if (sourceFieldOptions && sourceFieldOptions.length > 0) {
+                    @if (isSourceFieldEditable) {
                         <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="sourceField" [options]="sourceFieldOptions" [placeholder]="'configurationCsvImportField.selectSourceFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }">
                             <ng-template let-option pTemplate="item">
                                 <div [ngClass]="{'custom-option': option.value === 'custom_field'}" class="tw-align-middle">
@@ -77,6 +77,7 @@
                     <div class="tw-grow"></div>
                     <app-csv-upload-button
                         (uploadClicked)="handleUploadClick()"
+                        [isDisabled]="isUploadDisabled"
                         class="tw-shrink-0"
                     ></app-csv-upload-button>
                 }
@@ -115,3 +116,10 @@
     </div>
     }
 </div>
+
+<app-configuration-custom-field-creation-dialog
+    [customFieldForm]="customFieldForm"
+    [showCustomFieldCreationDialog]="showCustomFieldDialog"
+    (saveCustomFieldFn)="handleCustomFieldSave()"
+    (closeModelFn)="closeModel()">
+</app-configuration-custom-field-creation-dialog>
