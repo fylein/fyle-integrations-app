@@ -75,33 +75,42 @@ export class Sage50ImportSettingsService {
 
         const importCodeFields = import_settings?.import_code_fields ?? [];
         const chartOfAccounts = import_settings?.chart_of_accounts ?? [Sage50ImportableCOAType.EXPENSES];
-        return new FormGroup({
+
+        const importStatuses = this.getImportStatusesByField(importSettings);
+        const importCodeValues = {} as Record<Sage50ImportableField, boolean | null>;
+        for (const field of Object.values(Sage50ImportableField)) {
+            // If the field has been imported before, hide its importCode field but
+            // Initialize it with true/false for the payload
+            // If the field has not been imported before, show null (blank dropdown)
+            importCodeValues[field] = importStatuses[field] ? importCodeFields.includes(field) : null;
+        }
+        return new FormGroup<Sage50ImportSettingsForm>({
             ACCOUNT: new FormGroup({
                 enabled: new FormControl(true, { nonNullable: true }),
                 accountTypes: new FormControl(chartOfAccounts),
                 file: new FormControl(accountFile),
-                importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.ACCOUNT) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.ACCOUNT])
             }),
             VENDOR: new FormGroup({
                 enabled: new FormControl(isVendorEnabled, { nonNullable: true }),
                 file: new FormControl(vendorFile),
-                importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.VENDOR) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.VENDOR])
             }),
             // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),
-                importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.JOB) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB])
             }),
             PHASE: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.PHASE])),
-                importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.PHASE) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.PHASE])
             }),
             COST_CODE: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.COST_CODE])),
-                importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.COST_CODE) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.COST_CODE])
             })
         });
     }
