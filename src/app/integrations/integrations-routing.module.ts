@@ -56,6 +56,10 @@ const routes: Routes = [
       {
         path: 'qbd_direct',
         loadChildren: () => import('./qbd-direct/qbd-direct.module').then(m => m.QbdDirectModule)
+      },
+      {
+        path: 'sage50',
+        loadChildren: () => import('./sage50/sage50-routing').then(m => m.SAGE50_ROUTES)
       }
     ]
   }

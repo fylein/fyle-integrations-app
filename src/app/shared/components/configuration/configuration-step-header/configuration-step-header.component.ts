@@ -14,6 +14,8 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() headerText: string;
 
+  @Input() headerInfoTooltip: string;
+
   @Input() contentText: string;
 
   @Input() redirectLink: string;

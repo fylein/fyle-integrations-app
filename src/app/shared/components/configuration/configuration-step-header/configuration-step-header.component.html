@@ -2,14 +2,24 @@
   <div class="tw-flex tw-items-center tw-justify-between">
 
     <div>
-      <h3 class="tw-text-text-primary tw-font-nav-link-font-weight tw-py-4-px"
+      <span class="tw-flex tw-items-center tw-gap-[6px]">
+        <h3 class="tw-text-text-primary tw-font-nav-link-font-weight tw-text-18-px"
         [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
-        {{ headerText }}
-      </h3>
-      <h5 class="!tw-font-400 tw-text-pretty tw-pt-2-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
+          {{ headerText }}
+        </h3>
+        @if (headerInfoTooltip) {
+          <img
+            src='assets/icons/info-circle-fill-blue.svg'
+            [class]="'tw-w-14-px tw-h-14-px'"
+            [pTooltip]="headerInfoTooltip"
+            [tooltipPosition]="'top'"
+          >
+        }
+      </span>
+      <h5 class="!tw-font-400 tw-text-pretty tw-pt-8-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
         <span [innerHTML]="contentText"></span>
         <a *ngIf="redirectLink"
-          class="link tw-text-14-px tw-w-fit tw-pl-4-px tw-inline-flex tw-items-center"
+          class="link tw-text-14-px tw-w-fit tw-pl-6-px tw-inline-flex tw-items-center"
           (click)="windowService.openInNewTab(redirectLink)">
           {{'common.readMoreText' | transloco}}
           <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"

@@ -39,7 +39,8 @@ export enum InAppIntegration {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Connector'
+  QBD_DIRECT = 'QuickBooks Connector',
+  SAGE50 = 'Sage 50 Accounting (US)'
 }
 
 export type IntegrationAppKey = keyof typeof InAppIntegration;
@@ -104,7 +105,8 @@ export enum AppName {
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
-  QBD_DIRECT = 'QuickBooks Desktop Connector'
+  QBD_DIRECT = 'QuickBooks Desktop Connector',
+  SAGE50 = 'Sage 50 Accounting (US)'
 }
 
 export enum AppNameInService {
@@ -223,6 +225,25 @@ export enum Sage300OnboardingState {
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
+}
+
+export enum Sage50OnboardingState {
+  YET_TO_START = 'YET_TO_START',
+  PRE_REQUISITES = 'PRE_REQUISITES',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
+}
+
+export enum Sage50AttributeType {
+  JOB = "JOB",
+  ITEM = "ITEM",
+  PHASE = "PHASE",
+  VENDOR = "VENDOR",
+  ACCOUNT = "ACCOUNT",
+  EMPLOYEE = "EMPLOYEE",
+  COST_CODE = "COST_CODE"
 }
 
 export enum IntacctField {
@@ -618,7 +639,8 @@ export enum AppUrl {
   QBO = 'qbo',
   NETSUITE = 'netsuite',
   XERO = 'xero',
-  QBD_DIRECT = 'qbd_direct'
+  QBD_DIRECT = 'qbd_direct',
+  SAGE50 = 'sage50'
 }
 
 export enum Sage300ExportType {
@@ -738,6 +760,11 @@ export enum QbdDirectExportSettingDestinationOptionKey {
   ACCOUNT = 'ACCOUNT'
 }
 
+export enum Sage50ExportSettingDestinationOptionKey {
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR'
+}
+
 export type DestinationOptionKey =
 IntacctExportSettingDestinationOptionKey |
 NetsuiteExportSettingDestinationOptionKey |
@@ -745,7 +772,8 @@ QboExportSettingDestinationOptionKey |
 XeroExportSettingDestinationOptionKey |
 Sage300ExportSettingDestinationOptionKey |
 BCExportSettingDestinationOptionKey |
-QbdDirectExportSettingDestinationOptionKey;
+QbdDirectExportSettingDestinationOptionKey |
+Sage50ExportSettingDestinationOptionKey;
 
 export enum QbdDirectExportSettingDestinationAccountType {
   OtherCurrentAsset = 'OtherCurrentAsset',
@@ -888,7 +916,8 @@ export enum TrackingApp {
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
   TRAVELPERK = 'TP',
-  QBD_DIRECT = 'QBD_DIRECT'
+  QBD_DIRECT = 'QBD_DIRECT',
+  SAGE50 = 'SAGE50'
 }
 
 export enum ReimbursableImportState {
@@ -966,4 +995,5 @@ export enum ButtonSize {
 export enum ButtonType {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
+  TERTIARY = 'tertiary',
 }

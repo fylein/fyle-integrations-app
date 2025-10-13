@@ -98,7 +98,9 @@ export const fyleKbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+        // TODO(sage50): update link
+        SAGE50: `${brandingConfig.helpArticleDomain}`
     },
     onboardingArticles: {
         INTACCT: {
@@ -162,6 +164,24 @@ export const fyleKbArticles: KbArticle[string] = {
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+        },
+        SAGE50: {
+            // TODO(sage50)
+            PREREQUISITES: `${brandingConfig.helpArticleDomain}`,
+            LANDING: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}`
+        }
+    },
+    postOnboardingArticles: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: `${brandingConfig.helpArticleDomain}`,
+            PHASE: `${brandingConfig.helpArticleDomain}`,
+            VENDOR: `${brandingConfig.helpArticleDomain}`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -176,6 +196,18 @@ export const fyleDemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
         NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8',
-        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo'
+        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
+        // TODO(sage50): Update link for Sage 50
+        SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+    },
+    postOnboarding: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        }
     }
 };

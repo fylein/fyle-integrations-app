@@ -1,0 +1,24 @@
+---
+description: When one or more files are to be generated
+alwaysApply: false
+---
+
+## Command
+Aways use the `ng generate` command for any file generation. Examples:
+- `ng generate component` or `ng g c`
+- `ng generate service` or `ng g s`
+- `ng generate module` or `ng g m`
+- `ng generate directive` or `ng g d`
+- `ng generate pipe` or `ng g p`
+- `ng generate guard`
+- `ng generate class`
+- `ng generate interface`
+- `ng generate enum`
+
+## Modifications
+- `ng generate component` - skip creating test (.spec.ts) files (--skip-tests)
+
+## Guidelines
+- ALWAYS create standalone components (--standalone=true), regardless of the existing code
+- Don't create modules
+- Use the newest angular practices
