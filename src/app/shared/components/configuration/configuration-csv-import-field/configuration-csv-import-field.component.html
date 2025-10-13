@@ -58,32 +58,41 @@
                 <div class="tw-w-30-vw">
                     <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
                 </div>
+
+                @if (!uploadedFile) {
+                    <div class="tw-grow"></div>
+                    <app-csv-upload-button
+                        (uploadClicked)="handleUploadClick()"
+                        class="tw-shrink-0"
+                    ></app-csv-upload-button>
+                }
             </div>
         </div>
 
         <!-- Additional Fields -->
         <ng-content select="[slot='additionalFields']"></ng-content>
 
-        <!-- Import code: onboarding only -->
-        @if (isOnboarding) {
-            <app-configuration-select-field
-                [form]="csvImportForm"
-                [formControllerName]="'importCode'"
-                [options]="importFormatOptions"
-                [isMultiLineOption]="true"
-                [label]="'configurationCsvImportField.importFormatLabel' | transloco"
-                [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
-                [iconPath]="'question-square-outline'"
-                [isFieldMandatory]="true"
-                [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
-                [customClasses]="'!tw-p-0'"
-                [isOneTimeField]="isOnboarding"
-            ></app-configuration-select-field>
-        }
+        <!-- Show the import code field and uploaded file details only if a file was uploaded -->
+        @if (uploadedFile) {
+            <!-- Import code: show only if not imported yet -->
+            @if (!hasBeenImported) {
+                <app-configuration-select-field
+                    [form]="csvImportForm"
+                    [formControllerName]="'importCode'"
+                    [options]="importFormatOptions"
+                    [isMultiLineOption]="true"
+                    [label]="'configurationCsvImportField.importFormatLabel' | transloco"
+                    [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
+                    [iconPath]="'question-square-outline'"
+                    [isFieldMandatory]="true"
+                    [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
+                    [customClasses]="'!tw-p-0'"
+                    [isOneTimeField]="!hasBeenImported"
+                ></app-configuration-select-field>
+            }
 
-        @if (csvImportForm.get('file')?.value) {
             <app-uploaded-file-details
-                [file]="csvImportForm.get('file')?.value!"
+                [file]="uploadedFile"
                 [dimension]="dimension"
                 [isOnboarding]="isOnboarding"
                 (reuploadClick)="handleUploadClick()"
