@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +11,8 @@ import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage
 import { forkJoin } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -39,6 +41,11 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
+  isVendorMandatory: boolean;
+
+  // State
+  importStatuses: Record<Sage50ImportableField, boolean>;
+
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
@@ -47,6 +54,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
   constructor(
     private importSettingService: Sage50ImportSettingsService,
     private importAttributesService: Sage50ImportAttributesService,
+    private mappingService: Sage50MappingService,
+    private exportSettingService: Sage50ExportSettingsService,
     private router: Router
   ) { }
 
@@ -61,17 +70,37 @@ export class Sage50ImportSettingsComponent implements OnInit {
     });
   }
 
+  public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
+    return this.importAttributesService.importAttributes(attributeType, fileName, jsonData);
+  }
+
   ngOnInit(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
 
+    const attributeStatsRequests = this.isOnboarding
+      ? [
+        this.mappingService.getAttributeStats(Sage50AttributeType.ACCOUNT),
+        this.mappingService.getAttributeStats(Sage50AttributeType.VENDOR)
+      ]
+      : [];
+
     forkJoin([
       this.importSettingService.getSage50ImportSettings(),
       this.importSettingService.getImportableChartOfAccounts(),
-      this.importAttributesService.getAccountingImportDetailsByType()
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails]) => {
+      this.importAttributesService.getAccountingImportDetailsByType(),
+      this.exportSettingService.getExportSettings(),
+      ...attributeStatsRequests
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, accountStats, vendorStats]) => {
 
-      this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(importSettings, accountingImportDetails);
+      // If payments or purchases are being exported, vendor is mandatory
+      this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
+
+      this.importStatuses = this.importSettingService.getImportStatusesByField(importSettings);
+
+      this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
+        importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
+      );
       this.constructOptions(importableChartOfAccounts);
 
       this.isLoading = false;
