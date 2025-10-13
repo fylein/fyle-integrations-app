@@ -10,7 +10,7 @@
                 [headerText]="'sage50OnboardingPrerequisites.configurationHeaderText' | transloco"
                 [headerInfoTooltip]="'sage50OnboardingPrerequisites.configurationHeaderInfoTooltip' | transloco: { brandName: brandingConfig.brandName} "
                 [contentText]="'sage50OnboardingPrerequisites.configurationSubHeaderText' | transloco"
-                [redirectLink]="brandingKbArticles.topLevelArticles.SAGE50">
+                [redirectLink]="brandingKbArticles.onboardingArticles.SAGE50.PREREQUISITES">
             </app-configuration-step-header>
         </div>
         <div class="tw-p-24-px">
@@ -20,8 +20,8 @@
                     [label]="'sage50OnboardingPrerequisites.chartOfAccountsLabel' | transloco"
                     [subLabel]="'sage50OnboardingPrerequisites.chartOfAccountsSublabel' | transloco"
                     [(fileName)]="fileNames.ACCOUNT"
-                    [articleLink]="brandingKbArticles.topLevelArticles.SAGE50"
-                    [videoURL]="brandingDemoVideoLinks.onboarding.SAGE50"
+                    [articleLink]="brandingKbArticles.postOnboardingArticles.SAGE50.ACCOUNT"
+                    [videoURL]="brandingDemoVideoLinks.postOnboarding.SAGE50.ACCOUNT"
                     [uploadData]="uploadData.bind(this)"
                 ></app-configuration-csv-upload-field>
                 <app-configuration-csv-upload-field
@@ -29,8 +29,8 @@
                     [label]="'sage50OnboardingPrerequisites.vendorLabel' | transloco"
                     [subLabel]="'sage50OnboardingPrerequisites.vendorSublabel' | transloco"
                     [(fileName)]="fileNames.VENDOR"
-                    [articleLink]="brandingKbArticles.topLevelArticles.SAGE50"
-                    [videoURL]="brandingDemoVideoLinks.onboarding.SAGE50"
+                    [articleLink]="brandingKbArticles.postOnboardingArticles.SAGE50.VENDOR"
+                    [videoURL]="brandingDemoVideoLinks.postOnboarding.SAGE50.VENDOR"
                     [uploadData]="uploadData.bind(this)"
                 ></app-configuration-csv-upload-field>
             </div>

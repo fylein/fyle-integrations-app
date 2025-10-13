@@ -166,10 +166,21 @@ export const c1KbArticles: KbArticle[string] = {
         },
         SAGE50: {
             // TODO(sage50)
+            PREREQUISITES: `${brandingConfig.helpArticleDomain}`,
             LANDING: `${brandingConfig.helpArticleDomain}`,
             EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
             IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
             ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}`
+        }
+    },
+    postOnboardingArticles: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: `${brandingConfig.helpArticleDomain}`,
+            PHASE: `${brandingConfig.helpArticleDomain}`,
+            VENDOR: `${brandingConfig.helpArticleDomain}`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -188,5 +199,15 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk',
         // TODO(sage50): Update link for Sage 50
         SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+    },
+    postOnboarding: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        }
     }
 };

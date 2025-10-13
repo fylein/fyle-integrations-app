@@ -2477,7 +2477,9 @@
     "accountTypesLabel": "Account types to import",
     "accountTypesSubLabel": "\"Expense\" type accounts will be imported by default. Select any other account types you'd like to import.",
     "accountTypesSubtext": "Add more from dropdown",
-    "accountTypesPlaceholder": "Select display name format"
+    "accountTypesPlaceholder": "Select display name format",
+    "vendorLabel": "Vendor",
+    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation."
   },
   "configurationCsvImportField": {
     "preview": "Preview",
@@ -2491,5 +2493,13 @@
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
     "importFormatPlaceholder": "Select display name format"
+  },
+  "uploadedFileDetails": {
+    "valuesReadyToImportLabel": "Values ready to import:",
+    "valuesImportedLabel": "Values mapped:",
+    "lastUploadedAtLabel": "Last uploaded on:",
+    "reuploadButtonLabel": "Re-upload",
+    "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
+    "csvUploadAlt": "CSV upload icon"
   }
 }
