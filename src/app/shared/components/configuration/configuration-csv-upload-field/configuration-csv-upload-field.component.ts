@@ -5,8 +5,8 @@ import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-uplo
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { Observable } from 'rxjs';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
+import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 
 @Component({
   selector: 'app-configuration-csv-upload-field',
@@ -56,11 +56,11 @@ export class ConfigurationCsvUploadFieldComponent {
       }
     });
 
-    this.ref.onClose.subscribe((fileName: string | undefined) => {
-      if (fileName) {
+    this.ref.onClose.subscribe((file: UploadedCSVFile | undefined) => {
+      if (file?.name) {
         // Dialog was closed with a filename (successful upload)
-        this.fileName = fileName;
-        this.fileNameChange.emit(fileName);
+        this.fileName = file.name;
+        this.fileNameChange.emit(file.name);
       }
     });
   }
