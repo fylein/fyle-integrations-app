@@ -987,6 +987,7 @@ export enum QBDDirectInteractionType {
 }
 
 export enum ButtonSize {
+  EXTRA_SMALL = 'extra_small',
   SMALL = 'small',
   MEDIUM = 'medium',
 }

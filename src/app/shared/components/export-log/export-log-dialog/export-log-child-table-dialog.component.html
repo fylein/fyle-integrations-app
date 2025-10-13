@@ -1,4 +1,9 @@
-<p-dialog [header]="'exportLogChildTableDialog.dialogHeader' | transloco" [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
+    <p-header>
+        <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'exportLogChildTableDialog.dialogHeader' | transloco}}</p>
+    </p-header>
+    <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
+    </div>
     <div class="tw-bg-white">
         <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">

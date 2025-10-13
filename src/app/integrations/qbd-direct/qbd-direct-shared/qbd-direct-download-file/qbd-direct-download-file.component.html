@@ -1,52 +1,84 @@
-<div class="tw-border tw-border-border-tertiary tw-rounded-border-radius-2xs">
+<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="brandingStyle.qbd_direct.onboarding.stepStateCard">
     <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
-                    1
+            @if(brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
+                <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
+                    <app-svg-icon [c1SvgSource]="'grv-download-small'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
                 </div>
-                <div class="tw-text-14-px tw-font-500 tw-text-text-tertiary">
+            } @else {
+                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
+                    1
+                </div> 
+            }
+                <div class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.stepStateHeaderText">
                     <span>{{ 'qbdDirectDownloadFile.downloadIntegrationFileTitle' | transloco }}</span>
                 </div>
+
             </div>
+
             <div *ngIf="isStepCompleted">
+                @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
+                <div class="tw-h-24-px tw-flex tw-items-center tw-justify-center tw-gap-2">
+                    <app-svg-icon [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+                    <div class="tw-text-text-primary tw-font-600 tw-text-12-px">
+                        Done
+                    </div>
+                </div>
+                } @else { 
                 <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
                     <app-svg-icon svgSource="check-small" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-white'"></app-svg-icon>
                 </div>
+                }
             </div>
         </div>
-        <div  *ngIf="!isLoading && !showDownloadLink && !isStepCompleted" class="tw-flex tw-items-center tw-justify-between tw-pt-32-px">
+        </div>
+
+        @if (brandingFeatureConfig.qbdDirect.showStepStateDivider && !isStepCompleted) {
+        <div class="tw-border-t tw-border-border-tertiary"></div>
+        }
+
+        <div [ngClass]="!isStepCompleted ? 'tw-p-24-px tw-pt-0' : ''">
+        <div  *ngIf="!isLoading && !showDownloadLink && !isStepCompleted" class="tw-flex items-center tw-justify-between tw-pt-32-px">
             <div class="tw-w-350-px">
-                <h4 class="tw-text-16-px tw-pb-4-px tw-font-500 tw-text-text-tertiary">{{ 'qbdDirectDownloadFile.enterCompanyFilePathTitle' | transloco }}</h4>
-                <p class="tw-text-12-px tw-font-400 tw-text-text-muted tw-text-wrap">{{ 'qbdDirectDownloadFile.companyFilePathHelpText' | transloco }}</p>
-                <div>
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileHeader">
+                <h4 class="tw-pb-4-px " [ngClass]="brandingStyle.qbd_direct.onboarding.downloadHeaderText">{{ 'qbdDirectDownloadFile.enterCompanyFilePathTitle' | transloco }}</h4>
+                <p class="tw-font-400 tw-text-wrap" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadDescriptionText">{{ 'qbdDirectDownloadFile.companyFilePathHelpText' | transloco }}</p>
+                </div><div>
                     <div class="tw-pt-16-px">
                         <input type="text" pInputText id="downloadFilePath" name="downloadFilePath" [(ngModel)]="downloadFilePath"
-                        [placeholder]="'qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco"
+                        [placeholder]="brandingFeatureConfig.qbdDirect.showStepStateDivider ?  ('qbdDirectDownloadFile.enterCompanyFilePathTitle' | transloco) : ('qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco)"
                         class="tw-w-full tw-border tw-border-input-default-border tw-rounded-border-radius-2xs tw-px-12-px tw-py-8-px"
                         required
                         #downloadFilePathField="ngModel"
                         [ngClass]="{
                             'error-box': (downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid
                           }">
-                        <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-2-px">
+                        @if (brandingFeatureConfig.qbdDirect.showStepStateDivider) {
+                        <small> {{'qbdDirectDownloadFile.companyFilePathPlaceholder' | transloco}} </small>
+                        }
+                        <div *ngIf="(downloadFilePathField.invalid && downloadFilePathField.touched) || isCompanyPathInvalid" class="tw-text-alert-toast tw-pt-4-px">
                             <small *ngIf="downloadFilePathField.errors?.required || isCompanyPathInvalid" class="tw-flex">
-                                <app-svg-icon [svgSource]="'info-circle-fill'" [isTextColorAllowed]="true" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-form-error-help-text-color'"></app-svg-icon>
+                                <app-svg-icon [svgSource]="'info-circle-fill-small'" [isTextColorAllowed]="true" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-form-error-help-text-color'"></app-svg-icon>
                                 {{ 'qbdDirectDownloadFile.invalidPathError' | transloco }}</small>
                           </div>
                     </div>
-                    <div class="tw-pt-40-px">
-                        <button pButton pRipple [label]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" class="downloadBtn" (click)="onDownloadClick()"></button>
+                    <div class="tw-pt-40-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileButton">
+                        @if(brandingFeatureConfig.isDashboardButtonOutlined) {
+                            <button pButton pRipple [label]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" class="downloadBtn" (click)="onDownloadClick()"></button>
+                        } @else {
+                        <app-button [buttonType]="ButtonType.PRIMARY" [buttonSize]="ButtonSize.SMALL" [buttonText]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" (buttonClick)="onDownloadClick()"></app-button>
+                        }
                     </div>
                 </div>
             </div>
             <div class="tw-w-[40%]">
-                <div class="tw-shadow-md tw-rounded-border-radius-2xl">
+                <div [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileVideoCard">
                     <div class="tw-flex tw-justify-center tw-overflow-hidden">
-                        <iframe class="tw-rounded-tl-border-radius-2xl tw-rounded-tr-border-radius-2xl tw-w-[100%] tw-h-240-px" src="https://www.youtube.com/embed/HHm1ASm20j0" frameborder="0"></iframe>
+                        <iframe class="tw-w-[100%] tw-h-240-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileVideoFrame" src="https://www.youtube.com/embed/HHm1ASm20j0" frameborder="0"></iframe>
                     </div>
                     <div class="tw-p-16-px">
-                        <p class="tw-text-14-px tw-font-500 tw-text-text-tertiary">{{ 'qbdDirectDownloadFile.findPathVideoTitle' | transloco }}</p>
+                        <p class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.stepStateHeaderText">{{ 'qbdDirectDownloadFile.findPathVideoTitle' | transloco }}</p>
                     </div>
                 </div>
             </div>
@@ -59,9 +91,9 @@
                 <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
             </div>
             <div>
-                <p class="tw-text-text-tertiary tw-text-16-px tw-font-500 tw-py-4-px">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>
-                <span class="tw-text-text-muted tw-text-12-px tw-font-400 tw-pb-20-px">{{ 'qbdDirectDownloadFile.ifDownloadDidNotStart' | transloco }}<a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">{{ 'qbdDirectDownloadFile.downloadManuallyLink' | transloco }}</a>.</span>
-                <p class="tw-pt-16-px tw-text-text-muted tw-text-12-px tw-font-400">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
+                <p class="tw-py-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadHeaderText">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>
+                <span class="tw-font-400 tw-pb-20-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.ifDownloadDidNotStart' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">{{ 'qbdDirectDownloadFile.downloadManuallyLink' | transloco }}</a>.</span>
+                <p class="tw-pt-16-px tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
             </div>
         </div>
     </div>

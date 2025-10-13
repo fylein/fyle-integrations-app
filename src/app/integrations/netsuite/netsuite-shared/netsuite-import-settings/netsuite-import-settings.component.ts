@@ -280,9 +280,19 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         workspaceGeneralSetting.corporate_credit_card_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT
       );
 
-      if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
-        this.isImportItemsAllowed = true;
-      }
+      // 1. Both reimbursable and corporate credit card are enabled and set to BILL
+      // 2. reimbursable is disabled and corporate credit card is set to BILL
+      // 3. reimbursable is set to BILL and corporate credit card is disabled
+      const isReimbursableBill = workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL;
+      const isCorporateCreditCardBill = workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.BILL;
+      const isReimbursableEnabled = !!workspaceGeneralSetting.reimbursable_expenses_object;
+      const isCorporateCreditCardEnabled = !!workspaceGeneralSetting.corporate_credit_card_expenses_object;
+
+      this.isImportItemsAllowed = (
+        (isReimbursableEnabled && isReimbursableBill && isCorporateCreditCardEnabled && isCorporateCreditCardBill) ||
+        (!isReimbursableEnabled && isCorporateCreditCardEnabled && isCorporateCreditCardBill) ||
+        (isReimbursableEnabled && isReimbursableBill && !isCorporateCreditCardEnabled)
+      );
 
       if (
         ( workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY )

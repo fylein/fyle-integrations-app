@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qbo-configuration',
@@ -20,7 +21,9 @@ export class QboConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(private translocoService: TranslocoService) { }
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  constructor(private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.modules = [
@@ -28,6 +31,8 @@ export class QboConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('configuration.importSetting.stepName'), routerLink: '/integrations/qbo/main/configuration/import_settings'},
       {label: this.translocoService.translate('configuration.advancedSettings.stepName'), routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
     ];
+
+    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }

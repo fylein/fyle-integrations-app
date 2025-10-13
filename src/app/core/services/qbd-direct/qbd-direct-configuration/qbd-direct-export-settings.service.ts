@@ -12,6 +12,7 @@ import { QBDExportSettingFormOption } from "../../../models/qbd/qbd-configuratio
 import { DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { QbdDirectDestinationAttribute } from "../../../models/qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Injectable({
   providedIn: 'root'
@@ -170,7 +171,8 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
         case 'defaultReimbursableAccountsPayableAccountName':
           return form.controls.reimbursableExportType.value === QBDReimbursableExpensesObject.JOURNAL_ENTRY;
         case 'nameInJE':
-          return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          return brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry &&
+                 form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
         case 'defaultCreditCardAccountName':
           return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
         case 'employeeMapping':
@@ -209,19 +211,25 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null, destinationAccounts: QbdDirectDestinationAttribute[]): FormGroup {
       const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+
+      let creditCardExpenseValue = !!exportSettings?.credit_card_expense_export_type;
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+        creditCardExpenseValue = true;
+      }
+
       return new FormGroup({
           reimbursableExportType: new FormControl(exportSettings?.reimbursable_expense_export_type),
           reimbursableExpense: new FormControl(exportSettings?.reimbursable_expense_export_type ? true : false),
           reimbursableExportGroup: new FormControl(exportSettings?.reimbursable_expense_grouped_by ? exportSettings?.reimbursable_expense_grouped_by : null),
           reimbursableExportDate: new FormControl(exportSettings?.reimbursable_expense_date ? exportSettings?.reimbursable_expense_date : null),
-          creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type ? true : false),
+          creditCardExpense: new FormControl(creditCardExpenseValue),
           creditCardExportType: new FormControl(exportSettings?.credit_card_expense_export_type ? exportSettings?.credit_card_expense_export_type : null),
           creditCardExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions()[1].value),
           creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
           reimbursableExpenseState: new FormControl(exportSettings?.reimbursable_expense_state ? exportSettings?.reimbursable_expense_state : null),
           creditCardExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
           employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : EmployeeFieldMapping.VENDOR),
-          nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
+          nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : this.nameInJEOptions()[0].value),
           defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_credit_card_account_id) : null),
           defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_reimbursable_accounts_payable_account_id) : null),
           defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_ccc_accounts_payable_account_id) : null),
@@ -230,6 +238,14 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
   }
 
   static constructPayload(exportSettingsForm: FormGroup): QbdDirectExportSettingsPost {
+    let nameInJournalEntry;
+
+    if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+      nameInJournalEntry = NameInJournalEntry.MERCHANT;
+    } else {
+      nameInJournalEntry = exportSettingsForm.get('nameInJE')?.value;
+    }
+
     const exportSettingPayload: QbdDirectExportSettingsPost = {
         reimbursable_expense_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
         reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
@@ -240,7 +256,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
         credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
         credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
         employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
-        name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
+        name_in_journal_entry: nameInJournalEntry,
         default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.value : null,
         default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.destination_id : null,
         default_reimbursable_accounts_payable_account_name: exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value.value : null,

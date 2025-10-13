@@ -19,6 +19,8 @@ export class IntacctConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   modules: MenuItem[] = [];
 
   constructor(

@@ -59,6 +59,8 @@
     --text-tertiary: #{$grey-55};
     --text-warning: #{$yellow-55};
     --text-white: #{$white};
+    --text-secondary-neutral: #{$grey-65};
+    --text-disabled: #{$grey-19};
 
     // Icon
     --icon-brand-disable: #{$blue-10};
@@ -75,6 +77,8 @@
     --icon-tertiary: #{$grey-55};
     --icon-warning: #{$yellow-55};
     --icon-white: #{$white};
+    --icon-blue: #{$blue-icon};
+    --icon-grey: #{$grey-08};
 
     // Border Radius
     --border-radius-2xl: #{$size-12};
@@ -116,6 +120,9 @@
     --border-warning: #{$yellow-55};
     --border-warning-lighter: #{$yellow-05};
     --border-white: #{$white};
+    --border-grey: #{$grey-09};
+    --border-blue: #{$blue-icon};
+    --tertiary-lighter: #{$tertiary-lighter};
 
     // Spacing
     --spacing-0: 0px;
@@ -185,6 +192,7 @@
     --bg-white: #{$white};
 
     // Background - Brand
+    --bg-brand: #{$tertiary-lighter};
     --bg-brand-disable: var(--bg-disable-lighter);
     --bg-brand-hover: #{$blue-65};
     --bg-brand-muted: #{rgba($blue-55, 0.15)};
@@ -196,6 +204,7 @@
     --bg-info: #{$blue-45};
     --bg-success: #{$green-45};
     --bg-warning: #{$yellow-20};
+    --bg-blue: #{$blue-info};
 
     // Link
     --link-hover: #{$blue-65};
@@ -368,7 +377,7 @@
 
     // Checkbox
     --checkbox-icon-color: var(--icon-tertiary);
-    --checkbox-icon-disabled-color: var(--icon-disable);
+    --checkbox-icon-disabled-color: var(--text-disabled);
     --checkbox-icon-hover-color: #{$blue-65};
     --checkbox-icon-selected-color: var(--icon-brand-primary);
     --checkbox-icon-selected-disabled-color: #{$grey-05};

@@ -17,9 +17,21 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: false,
     loginRedirectUri: true,
     loginToAllConnectedApps: false,
+    hasAssistedSetupSupport: false,
     isDashboardButtonOutlined: false,
-    isPrimengLoaderEnabled: true,
     shouldShowOnboardingYouTubeVideo: true,
+    shouldShowXeroPreviewImage: true,
+    disableTextColorWhenChecked: false,
+    footerButtonsRightAligned: true,
+    useMainMenuForSubmenu: true,
+    usePrimaryLoader: true,
+    qbdDirect: {
+        showStepStateAsIcons: true,
+        showStepStateDivider: true,
+        isStepSectionAlwaysVisible: true,
+        configToggleLeftAligned: true,
+        unlockStepsInOrder: true
+    },
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,

@@ -1,8 +1,11 @@
 <p-dialog [header]="exportLogHeader + ' ' + ('dashboardExportLogDialog.headerSuffix' | transloco)" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" (onHide)="handleDialogClose()" [position]="'topright'" [style]="{ width: '50vw', height: '100vh' }">
     <p-header>
-        <p class="tw-text-text-primary tw-text-20-px">{{exportLogHeader}}</p>
-        <h3 class="tw-font-400 tw-mt-8-px tw-text-text-muted tw-text-14-px">{{exportLogSubHeader}}</h3>
+        <p [ngClass]="brandingStyle.common.dialogHeaderText">{{exportLogHeader}}</p>
+        <h3 [ngClass]="brandingStyle.common.dialogDescriptionText">{{exportLogSubHeader}}</h3>
     </p-header>
+    <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
+        <h3 [ngClass]="brandingStyle.common.dialogSubDescriptionText">{{exportLogSubHeader}}</h3>
+    </div>
     <div class="tw-bg-white">
         <app-export-log-table [appName]="appName" [filteredExpenseGroups]="accountingExports" [isDashboardFailed]="exportLogHeader==='Successful' ? false : true" [isExportLogTable]="false"></app-export-log-table>
     </div>

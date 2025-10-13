@@ -17,9 +17,21 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: true,
     loginRedirectUri: false,
     loginToAllConnectedApps: true,
+    hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
-    isPrimengLoaderEnabled: false,
+    shouldShowXeroPreviewImage: false,
     shouldShowOnboardingYouTubeVideo: false,
+    disableTextColorWhenChecked: true,
+    footerButtonsRightAligned: false,
+    useMainMenuForSubmenu: false,
+    usePrimaryLoader: false,
+    qbdDirect: {
+        showStepStateAsIcons: false,
+        showStepStateDivider: false,
+        isStepSectionAlwaysVisible: false,
+        configToggleLeftAligned: false,
+        unlockStepsInOrder: false
+    },
     featureFlags: {
         cloneSettings: true,
         mapEmployees: true,

@@ -1,8 +1,8 @@
 <div class="tw-h-full">
-    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
+    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
         <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
         <div>
             <app-configuration-step-header [headerText]="'qbd_direct.configuration.exportSetting.stepName' | transloco"
                 [contentText]="'qbd_direct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}" [redirectLink]="redirectLink"
@@ -24,7 +24,7 @@
 
                     <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
                         <div
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                            class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                             <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'qbdDirectExportSettings.exportModule' | transloco"
                                 [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeLabel' | transloco"
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -75,7 +75,7 @@
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
-                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.expenseState' | transloco"
                             [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseStateLabel' | transloco : {brandName: brandingConfig.brandName}"
@@ -88,7 +88,7 @@
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
-                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.howExpensesToBeGrouped' | transloco"
                             [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseGroupLabel' | transloco"
@@ -104,7 +104,7 @@
                     </div>
 
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType"
-                        class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                         <app-configuration-select-field [form]="exportSettingsForm" [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
                             [label]="('qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseDateLabel' | transloco) + (exportSettingsForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
@@ -128,7 +128,7 @@
 
 
                 <div *ngIf="exportSettingsForm.value?.creditCardExpense">
-                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -216,7 +216,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -230,7 +230,7 @@
                     </app-configuration-select-field>
                 </div>
 
-                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -247,7 +247,7 @@
                     </app-configuration-select-field>
                 </div>
 
-                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                <div *ngIf="exportSettingsForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white" [ngClass]="brandingStyle.configuration.configurationExportCard">
                     <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"

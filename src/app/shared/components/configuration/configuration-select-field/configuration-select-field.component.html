@@ -6,7 +6,7 @@
             </div>
 
             <div>
-                <h5 class="tw-text-text-secondary tw-text-14-px !tw-font-500">
+                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationHeaderText">
                     {{ label | snakeCaseToSpaceCase}}
                     <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
                     @if (infoTooltipText) {
@@ -18,7 +18,8 @@
                         >
                     }
                 </h5>
-                <h5 *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="brandingStyle.common.inputLabelTextStyle" [innerHTML]="subLabel"></h5>
+
+                <h5 class="tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px {{brandingStyle.qbd_direct.onboarding.configurationDescriptionText}}" [ngClass]="brandingStyle.common.inputLabelTextStyle" *ngIf="!(exportConfigurationIconPath && appName === AppName.TRAVELPERK ) && (subLabel !== undefined|| (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType'))" [innerHTML]="subLabel"></h5>
                 <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                     {{ 'configurationSelectField.transactionRecordInfo' | transloco: { uiExposedAppName: uiExposedAppName, brandName: brandingConfig.brandName } }} <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">{{ 'configurationSelectField.click' | transloco }} <a (click)="showExportTable()" class="link">{{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forMoreDetails' | transloco }}</span>
                 </h5>

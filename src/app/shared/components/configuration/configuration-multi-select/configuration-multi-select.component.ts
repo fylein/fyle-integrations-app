@@ -52,11 +52,29 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   ) { }
 
   onMultiSelectChange() {
+    const selectedValues = this.form.get(this.formControllerName)?.value;
+
+    if (selectedValues && selectedValues.length > 0) {
+      const optionsCopy = [...this.options];
+
+      const sortedValues = [...selectedValues].sort((a, b) => {
+        return optionsCopy.indexOf(a) - optionsCopy.indexOf(b);
+      });
+
+      this.form.get(this.formControllerName)?.setValue(sortedValues, { emitEvent: false });
+    }
+
     this.changeInMultiSelect.emit();
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+    if (memo === 'expense_key') {
+      return this.translocoService.translate('configurationMultiSelect.expenseReportId');
+    } else if (memo === 'card_number') {
+      return this.translocoService.translate('configurationMultiSelect.cardNumber');
+    }
+      return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+
   }
 
   // Helper to join selected item labels into a single string for template rendering
