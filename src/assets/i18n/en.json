@@ -2501,5 +2501,8 @@
     "reuploadButtonLabel": "Re-upload",
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
     "csvUploadAlt": "CSV upload icon"
+  },
+  "integrations": {
+    "reBrandedName": "Sage Expense Management"
   }
 }

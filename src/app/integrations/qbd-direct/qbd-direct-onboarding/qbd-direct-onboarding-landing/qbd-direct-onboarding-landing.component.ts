@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -35,7 +36,8 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     private userService: UserService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    public brandingService: BrandingService
   ) { }
 
   connectQbdDirect() {
