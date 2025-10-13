@@ -65,7 +65,7 @@ export class AccountingExportService {
   }
 
   static getFyleExpenseUrl(expense_id: string): string {
-    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}`;
     return url;
   }
 
@@ -120,11 +120,14 @@ export class AccountingExportService {
   generateFyleUrl(expense: Expense, referenceType: FyleReferenceType, org_id: string) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `admin/#/view_expense/${expense.expense_id}`;
+      url += `admin/#/company_expenses?txnId=${expense.expense_id}`;
+      return `${url}&org_id=${org_id}`;
     } else if (referenceType === FyleReferenceType.REPORT_ID) {
       url += `admin/#/reports/${expense.report_id}`;
+      return `${url}?org_id=${org_id}`;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expense.settlement_id}`;
+      return `${url}?org_id=${org_id}`;
     }
     return `${url}?org_id=${org_id}`;
   }
