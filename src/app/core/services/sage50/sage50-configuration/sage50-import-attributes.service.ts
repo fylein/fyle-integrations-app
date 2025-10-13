@@ -22,13 +22,44 @@ export class Sage50ImportAttributesService implements CSVImportAttributesService
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/accounting_import_details/`, {});
   }
 
-  getAttributeTypeToFileNameMap(): Observable<Record<Sage50AttributeType, string | null>> {
+  /**
+   * Returns the accounting import details by type
+   * @example {
+   *   ACCOUNT: {
+   *     attribute_type: 'ACCOUNT',
+   *     last_uploaded_file_name: 'account.csv',
+   *     imported_to_fyle_count: 10
+   *     last_uploaded_on: '2025-09-26T08:32:26.408289Z'
+   *   }
+   * }
+   */
+  getAccountingImportDetailsByType(): Observable<Record<Sage50AttributeType, Sage50AccountingImportDetail>> {
     return this.getAccountingImportDetails().pipe(
       map((accountingImportDetails) => {
-        const attributeTypeToFileNameMap = {} as Record<Sage50AttributeType, string | null>;
+        const detailsByType = {} as Record<Sage50AttributeType, Sage50AccountingImportDetail>;
         for (const accountingImportDetail of accountingImportDetails) {
-          const {attribute_type, last_uploaded_file_name} = accountingImportDetail;
-          attributeTypeToFileNameMap[attribute_type] = last_uploaded_file_name;
+          const {attribute_type} = accountingImportDetail;
+          detailsByType[attribute_type] = accountingImportDetail;
+        }
+        return detailsByType;
+      })
+    );
+  }
+
+  /**
+   * Returns the attribute type to file name map
+   * @example {
+   *   ACCOUNT: 'account.csv',
+   *   VENDOR: 'vendor.csv'
+   * }
+   */
+  getAttributeTypeToFileNameMap(): Observable<Record<Sage50AttributeType, string | null>> {
+    return this.getAccountingImportDetailsByType().pipe(
+      map((accountingImportDetails) => {
+        const attributeTypeToFileNameMap = {} as Record<Sage50AttributeType, string | null>;
+        let key: keyof typeof accountingImportDetails;
+        for (key in accountingImportDetails) {
+          attributeTypeToFileNameMap[key] = accountingImportDetails[key].last_uploaded_file_name;
         }
         return attributeTypeToFileNameMap;
       })

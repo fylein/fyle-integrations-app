@@ -99,7 +99,7 @@ export const c1KbArticles: KbArticle[string] = {
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
         QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
-        // TODO: update link
+        // TODO(sage50): update link
         SAGE50: `${brandingConfig.helpArticleDomain}`
     },
     onboardingArticles: {
@@ -165,9 +165,22 @@ export const c1KbArticles: KbArticle[string] = {
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
         },
         SAGE50: {
-            // TODO
+            // TODO(sage50)
+            PREREQUISITES: `${brandingConfig.helpArticleDomain}`,
             LANDING: `${brandingConfig.helpArticleDomain}`,
-            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`
+            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}`
+        }
+    },
+    postOnboardingArticles: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: `${brandingConfig.helpArticleDomain}`,
+            PHASE: `${brandingConfig.helpArticleDomain}`,
+            VENDOR: `${brandingConfig.helpArticleDomain}`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -184,7 +197,17 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         XERO: 'https://www.youtube.com/embed/KeiegWDj308',
         NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk',
         QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk',
-        // TODO: Update link for Sage 50
+        // TODO(sage50): Update link for Sage 50
         SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+    },
+    postOnboarding: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        }
     }
 };
