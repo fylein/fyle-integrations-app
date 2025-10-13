@@ -1,4 +1,4 @@
-<div class="tw-flex tw-items-center tw-gap-[10px] tw-bg-input-disabled-bg tw-px-24-px tw-py-16-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+<div class="tw-flex tw-items-center tw-gap-[10px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
     <div class="tw-flex tw-items-center tw-gap-[4px]">
         <img src="assets/icons/file-csv-dark.svg" [alt]="'uploadedFileDetails.csvUploadAlt' | transloco">
         <span class="tw-font-500 tw-truncate tw-max-w-[140px]">{{ file.name ?? '' }}</span>
@@ -7,7 +7,11 @@
     <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>
 
     <p>
-        <span>{{ 'uploadedFileDetails.valueCountLabel' | transloco }}</span>
+        @if (isOnboarding) {
+            <span>{{ 'uploadedFileDetails.valuesReadyToImportLabel' | transloco }}</span>
+        } @else {
+            <span>{{ 'uploadedFileDetails.valuesImportedLabel' | transloco }}</span>
+        }
         <strong class="tw-pl-6-px tw-font-500">{{ file.valueCount || 0 }}</strong>
     </p>
 
@@ -30,7 +34,7 @@
         [iconSize]="'20px'"
         [iconViewbox]="'0 0 16 16'"
         (buttonClick)="reuploadClick.emit()"
-        [pTooltip]="'uploadedFileDetails.reuploadTooltip' | transloco: { dimension: dimension | sentenceCase }"
+        [pTooltip]="tooltipText"
         [tooltipPosition]="'top'"
         styleClasses="!tw-p-0 !tw-h-auto tw-shrink-0">
     </app-button>

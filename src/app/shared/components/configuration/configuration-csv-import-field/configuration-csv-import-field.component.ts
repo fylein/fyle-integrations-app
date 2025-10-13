@@ -10,11 +10,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CSVImportFieldForm, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
+import { Router } from '@angular/router';
+import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 
 @Component({
   selector: 'app-configuration-csv-import-field',
   standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe],
+  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent],
   templateUrl: './configuration-csv-import-field.component.html',
   styleUrl: './configuration-csv-import-field.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -40,7 +42,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
-  @Input({ required: true }) isImportCodeEditable: boolean;
+  @Input() hasBeenImported: boolean;
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
@@ -59,16 +61,28 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     }
   ];
 
-  csvImportForm!: FormGroup<CSVImportFieldForm>;
+  public csvImportForm!: FormGroup<CSVImportFieldForm>;
+
+  public isOnboarding: boolean;
 
   get dimension() {
     return sage50AttributeDisplayNames[this.destinationField];
   }
 
+  get isEnabled() {
+    return this.csvImportForm?.get('enabled')?.value ?? false;
+  }
+
+  get uploadedFile() {
+    return this.csvImportForm?.get('file')?.value ?? null;
+  }
+
+
   constructor(
     private translocoService: TranslocoService,
     private formGroupDirective: FormGroupDirective,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {}
 
   handleUploadClick() {
@@ -84,16 +98,28 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
     ref.onClose.subscribe((file?: UploadedCSVFile) => {
       if (file?.name) {
-        this.csvImportForm?.get('file')?.patchValue({
-          name: file.name,
-          valueCount: file.valueCount ?? 0,
-          lastUploadedAt: file.lastUploadedAt ?? new Date()
-        });
+        if (this.isOnboarding) {
+          // During onboarding, update the 'Values ready to import' field
+          this.csvImportForm?.get('file')?.patchValue({
+            name: file.name,
+            valueCount: file.valueCount ?? 0,
+            lastUploadedAt: file.lastUploadedAt ?? new Date()
+          });
+        } else {
+          // Post onboarding, don't update the 'Mapped values' field
+          const currentFile = this.csvImportForm?.get('file')?.value;
+          this.csvImportForm?.get('file')?.patchValue({
+            name: file.name,
+            valueCount: currentFile?.valueCount ?? 0,
+            lastUploadedAt: file.lastUploadedAt ?? new Date()
+          });
+        }
       }
     });
   }
 
   ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
     this.csvImportForm = this.formGroupDirective.form.get(this.formGroupName) as FormGroup;
   }
 

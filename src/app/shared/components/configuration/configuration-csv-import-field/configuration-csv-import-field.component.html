@@ -1,6 +1,6 @@
 <div [formGroup]="csvImportForm" class="tw-border tw-border-separator tw-rounded-10-px">
     <!-- Header -->
-    <div class="tw-border-b tw-border-separator tw-p-24-px tw-flex tw-gap-[16px]">
+    <div class="tw-p-24-px tw-flex tw-gap-[16px]">
         @if (fieldNumber) {
             <div class="tw-bg-bg-primary tw-w-20-px tw-h-20-px tw-shrink-0 tw-rounded-4-px tw-flex tw-items-center tw-justify-center tw-text-white tw-font-[system-ui] tw-text-14-px tw-font-500">
                 {{ fieldNumber }}
@@ -20,10 +20,22 @@
                 <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
             </h5>
         </div>
+
+        <div class="tw-grow"></div>
+
+        <!-- If the field is not mandatory, it is toggle-able -->
+        @if (!isMandatory) {
+            <app-toggle
+                [form]="csvImportForm"
+                [formControllerName]="'enabled'"
+                class="tw-self-center"
+            ></app-toggle>
+        }
     </div>
 
     <!-- Body -->
-    <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
+    @if (isEnabled) {
+    <div class="tw-border-t tw-border-separator tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
 
         <div class="tw-flex tw-flex-col tw-gap-[8px]">
             <!-- Eg: Sage50 - Dimension | Fyle Field -->
@@ -46,32 +58,46 @@
                 <div class="tw-w-30-vw">
                     <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
                 </div>
+
+                @if (!uploadedFile) {
+                    <div class="tw-grow"></div>
+                    <app-csv-upload-button
+                        (uploadClicked)="handleUploadClick()"
+                        class="tw-shrink-0"
+                    ></app-csv-upload-button>
+                }
             </div>
         </div>
 
         <!-- Additional Fields -->
         <ng-content select="[slot='additionalFields']"></ng-content>
 
-        <app-configuration-select-field
-            [form]="csvImportForm"
-            [formControllerName]="'importCode'"
-            [options]="importFormatOptions"
-            [isMultiLineOption]="true"
-            [label]="'configurationCsvImportField.importFormatLabel' | transloco"
-            [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
-            [iconPath]="'question-square-outline'"
-            [isFieldMandatory]="true"
-            [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
-            [customClasses]="'!tw-p-0'"
-            [isOneTimeField]="isImportCodeEditable"
-        ></app-configuration-select-field>
+        <!-- Show the import code field and uploaded file details only if a file was uploaded -->
+        @if (uploadedFile) {
+            <!-- Import code: show only if not imported yet -->
+            @if (!hasBeenImported) {
+                <app-configuration-select-field
+                    [form]="csvImportForm"
+                    [formControllerName]="'importCode'"
+                    [options]="importFormatOptions"
+                    [isMultiLineOption]="true"
+                    [label]="'configurationCsvImportField.importFormatLabel' | transloco"
+                    [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
+                    [iconPath]="'question-square-outline'"
+                    [isFieldMandatory]="true"
+                    [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
+                    [customClasses]="'!tw-p-0'"
+                    [isOneTimeField]="!hasBeenImported"
+                ></app-configuration-select-field>
+            }
 
-        @if (csvImportForm.get('file')?.value) {
             <app-uploaded-file-details
-                [file]="csvImportForm.get('file')?.value!"
+                [file]="uploadedFile"
                 [dimension]="dimension"
+                [isOnboarding]="isOnboarding"
                 (reuploadClick)="handleUploadClick()"
             ></app-uploaded-file-details>
         }
     </div>
+    }
 </div>

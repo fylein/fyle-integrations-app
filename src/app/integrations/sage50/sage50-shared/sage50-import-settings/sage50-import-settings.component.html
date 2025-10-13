@@ -24,7 +24,7 @@
             [destinationField]="Sage50ImportableField.ACCOUNT"
             [appResourceKey]="'SAGE50'"
             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-            [isImportCodeEditable]="isOnboarding"
+            [hasBeenImported]="importStatuses[Sage50ImportableField.ACCOUNT]"
             [uploadData]="uploadData.bind(this)"
         >
             <ng-container slot="additionalFields">
@@ -43,6 +43,20 @@
                 </app-configuration-field-container>
             </ng-container>
         </app-configuration-csv-import-field>
+
+        <app-configuration-csv-import-field
+            [formGroupName]="'VENDOR'"
+            [isMandatory]="isVendorMandatory"
+            [fieldNumber]="2"
+            [label]="'sage50ImportSettings.vendorLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.vendorSubLabel' | transloco"
+            [sourceField]="Sage50FyleField.MERCHANT"
+            [destinationField]="Sage50ImportableField.VENDOR"
+            [appResourceKey]="'SAGE50'"
+            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+            [hasBeenImported]="importStatuses[Sage50ImportableField.VENDOR]"
+            [uploadData]="uploadData.bind(this)"
+        ></app-configuration-csv-import-field>
     </form>
 </div>
 }
