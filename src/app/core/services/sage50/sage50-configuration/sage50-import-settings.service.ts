@@ -8,6 +8,7 @@ import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
 import { Sage50AccountingImportDetail } from "src/app/core/models/sage50/db/sage50-import-attributes.model";
 import { UploadedCSVFile } from "src/app/core/models/misc/configuration-csv-import-field.model";
 import { DestinationAttributeStats } from "src/app/core/models/db/destination-attribute.model";
+import { Sage50CCCExportType, Sage50ExportSettingsGet, Sage50ReimbursableExportType } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 
 @Injectable({
     providedIn: 'root'
@@ -41,6 +42,7 @@ export class Sage50ImportSettingsService {
     mapApiResponseToFormGroup(
         importSettings: Sage50ImportSettingsGet | null,
         accountingImportDetails: Record<Sage50AttributeType, Sage50AccountingImportDetail>,
+        exportSettings: Sage50ExportSettingsGet | null,
         accountStats?: DestinationAttributeStats,
         vendorStats?: DestinationAttributeStats
     ): FormGroup<Sage50ImportSettingsForm> {
@@ -63,35 +65,89 @@ export class Sage50ImportSettingsService {
         if (vendorFile && vendorStats) {
             vendorFile.valueCount = vendorStats.active_attributes_count;
         }
-        return new FormGroup({
+
+        const {import_settings, mapping_settings} = importSettings ?? {};
+        let isVendorEnabled = import_settings?.import_vendor_as_merchant ?? false;
+        const isVendorMandatory = this.isVendorMandatory(exportSettings);
+        if (isVendorMandatory || vendorFile) {
+            isVendorEnabled = true;
+        }
+
+        const importCodeFields = import_settings?.import_code_fields ?? [];
+        const chartOfAccounts = import_settings?.chart_of_accounts ?? [Sage50ImportableCOAType.EXPENSES];
+
+        const importStatuses = this.getImportStatusesByField(importSettings);
+        const importCodeValues = {} as Record<Sage50ImportableField, boolean | null>;
+        for (const field of Object.values(Sage50ImportableField)) {
+            // If the field has been imported before, hide its importCode field but
+            // Initialize it with true/false for the payload
+            // If the field has not been imported before, show null (blank dropdown)
+            importCodeValues[field] = importStatuses[field] ? importCodeFields.includes(field) : null;
+        }
+        return new FormGroup<Sage50ImportSettingsForm>({
             ACCOUNT: new FormGroup({
                 enabled: new FormControl(true, { nonNullable: true }),
-                accountTypes: new FormControl(importSettings?.chart_of_accounts ?? [Sage50ImportableCOAType.EXPENSES]),
+                accountTypes: new FormControl(chartOfAccounts),
                 file: new FormControl(accountFile),
-                importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.ACCOUNT) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.ACCOUNT])
             }),
-            // TODO(sage50): check if VENDOR is required, if yes, hard-code enabled
             VENDOR: new FormGroup({
-                enabled: new FormControl(importSettings?.import_vendor_as_merchant ?? false, { nonNullable: true }),
+                enabled: new FormControl(isVendorEnabled, { nonNullable: true }),
                 file: new FormControl(vendorFile),
-                importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.VENDOR) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.VENDOR])
             }),
             // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),
-                importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.JOB) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB])
             }),
             PHASE: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.PHASE])),
-                importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.PHASE) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.PHASE])
             }),
             COST_CODE: new FormGroup({
                 enabled: new FormControl(false, { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.COST_CODE])),
-                importCode: new FormControl(importSettings?.import_code_fields?.includes(Sage50ImportableField.COST_CODE) ?? null)
+                importCode: new FormControl(importCodeValues[Sage50ImportableField.COST_CODE])
             })
         });
+    }
+
+    /**
+     * If payments or purchases are being exported, vendor is mandatory
+     */
+    isVendorMandatory(exportSettings: Sage50ExportSettingsGet | null): boolean {
+        const cccExportType = exportSettings?.credit_card_expense_export_type;
+        const reimbursableExportType = exportSettings?.reimbursable_expense_export_type;
+
+        return (
+            // Is CCC set to payments or purchases?
+            [
+                Sage50CCCExportType.PAYMENTS_JOURNAL,
+                Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY
+            ].includes(cccExportType!)
+        ) || (
+            // Or, is reimbursable set to purchases?
+            reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY
+        );
+    }
+
+    getImportStatusesByField(
+        importSettings: Sage50ImportSettingsGet | null
+    ): Record<Sage50ImportableField, boolean> {
+        const {import_settings, mapping_settings} = importSettings ?? {};
+
+        const mappedDestinationFields = mapping_settings?.map((setting) => setting.destination_field);
+        const importStatuses = {} as Record<Sage50ImportableField, boolean>;
+
+        for (const field of Object.values(Sage50ImportableField)) {
+            importStatuses[field] = mappedDestinationFields?.includes(field) ?? false;
+        }
+
+        importStatuses[Sage50ImportableField.ACCOUNT] = import_settings?.import_account_as_category ?? false;
+        importStatuses[Sage50ImportableField.VENDOR] = import_settings?.import_vendor_as_merchant ?? false;
+        return importStatuses;
     }
 }
