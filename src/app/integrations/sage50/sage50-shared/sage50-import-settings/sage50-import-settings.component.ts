@@ -43,6 +43,9 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   isVendorMandatory: boolean;
 
+  // State
+  importStatuses: Record<Sage50ImportableField, boolean>;
+
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
@@ -92,6 +95,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
       // If payments or purchases are being exported, vendor is mandatory
       this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
+
+      this.importStatuses = this.importSettingService.getImportStatusesByField(importSettings);
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
         importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
