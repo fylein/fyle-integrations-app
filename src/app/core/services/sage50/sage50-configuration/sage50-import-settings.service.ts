@@ -82,7 +82,6 @@ export class Sage50ImportSettingsService {
                 file: new FormControl(accountFile),
                 importCode: new FormControl(importCodeFields.includes(Sage50ImportableField.ACCOUNT) ?? null)
             }),
-            // TODO(sage50): check if VENDOR is required, if yes, hard-code enabled
             VENDOR: new FormGroup({
                 enabled: new FormControl(isVendorEnabled, { nonNullable: true }),
                 file: new FormControl(vendorFile),
