@@ -83,7 +83,8 @@
     "dayLabel": "Day",
     "timeLabel": "Time",
     "selectTimePlaceholder": "Select time for export",
-    "selectMeridiemPlaceholder": "Select meridiem of time"
+    "selectMeridiemPlaceholder": "Select meridiem of time",
+    "cannotBeEdited": "(cannot be edited later)"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -390,7 +391,7 @@
     "zeroStateAltText": "Zero state"
   },
   "onboardingStepper": {
-    "configureSettingsDescription": "Configure these settings to set up your integration",
+    "configureSettingsDescription": "Configure the following settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
   "optionalField": {
@@ -1926,7 +1927,9 @@
     "bambooHR": "BambooHR",
     "categoryHRMS": "HRMS",
     "travelperk": "TravelPerk",
-    "categoryTravel": "Travel"
+    "categoryTravel": "Travel",
+    "sage50": "Sage 50 Accounting (US)",
+    "beta": "Beta"
   },
   "configurationScheduleExport": {
     "hours": "Hours",
@@ -2248,7 +2251,12 @@
       "spendDate": "Spend date",
       "approvalDate": "Approval date",
       "lastSpendDate": "Last spend date",
-      "cardTransactionPostDate": "Card transaction post date"
+      "cardTransactionPostDate": "Card transaction post date",
+      "processingOptionLabel": "Processing",
+      "closedOptionLabel": "Closed",
+      "approvedOptionLabel": "Approved",
+      "expenseOptionLabel": "Expense",
+      "reportOptionLabel": "Expense report"
     },
     "importSettings": {
       "createCustomField": "Create a custom field"
@@ -2331,6 +2339,21 @@
       "customList": "Custom list",
       "customRecord": "Custom record",
       "customSegment": "Custom segment"
+    },
+    "sage50Onboarding": {
+      "prerequisites": "Prerequisites",
+      "exportSettings": "Export settings",
+      "importSettings": "Import settings",
+      "advancedSettings": "Advanced settings"
+    },
+    "sage50ExportSettings": {
+      "generalJournalEntryOptionLabel": "General journal entry",
+      "purchasesOptionLabel": "Purchases",
+      "paymentsJournalOptionLabel": "Payments",
+      "transactionPostDateOptionLabel": "Transaction post date",
+      "spendDateOptionLabel": "Spend date",
+      "expenseOptionLabel": "Expense",
+      "reportOptionLabel": "Expense report"
     }
   },
   "pipes": {
@@ -2341,6 +2364,143 @@
       "quickbooksOnline": "QuickBooks Online",
       "quickbooksDesktop": "QuickBooks Desktop"
     }
+  },
+  "sage50OnboardingLanding": {
+    "appDescription": "Import data from Sage 50 to {{brandName}} and export expenses from {{brandName}} to Sage 50.",
+    "headlineText": "Guide to setup your integration",
+    "headerText": "A quick guide to help you set up your Sage 50 integration."
+  },
+  "sage50OnboardingPrerequisites": {
+    "continue": "Save and continue",
+    "configurationHeaderText": "Prerequisites",
+    "configurationSubHeaderText": "To get started, add a few files from Sage 50. This will help set up your integration quickly and accurately.",
+    "configurationHeaderInfoTooltip": "Importing your full Chart of accounts and Vendor lists ensures a smooth setup. No data will be added to {{brandName}} until you confirm.",
+    "chartOfAccountsLabel": "Upload Chart of accounts",
+    "chartOfAccountsSublabel": "This helps set up your integration and is required for all exports.",
+    "vendorLabel": "Upload Vendors",
+    "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
+  },
+  "configurationCsvUploadField": {
+    "csvUpload": "CSV upload icon"
+  },
+  "csvUploadButton": {
+    "uploadButton": "Upload CSV",
+    "reuploadTooltip": "Re-upload CSV",
+    "reuploadButton": "Re-upload",
+    "csvUpload": "CSV File Icon"
+  },
+  "csvUploadDialog": {
+    "header": "Upload CSV for {{dimension}}",
+    "instructionsHeader": "Upload CSV or drag & drop your file",
+    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "errorHeader": "Error found in CSV for {{dimension}}",
+    "errorInstructionsHeader": "How do I correct the errors?",
+    "errorInstructionsContent": "Download the error log & upload the .csv again after fixing the errors",
+    "readMore": "Read more",
+    "uploadButton": "Upload .csv file",
+    "downloadErrorLogButton": "Download error log",
+    "cancel": "Cancel",
+    "processingFile": "Processing your file...",
+    "errorDialogHeader": "Upload Error",
+    "fileIsNotCsv": "You tried to upload a file with wrong format. Please upload a csv file.",
+    "onlyOneCsvAllowed": "You can only upload one csv file at a time.",
+    "rowLimitExceeded": "The file exceeds the permitted row limit of 20,000.",
+    "invalidCsvFile": "The CSV file is invalid.",
+    "errorDialogButtonText": "Okay",
+    "uploadSuccess": "{{dimension}} uploaded successfully.",
+    "uploadError": "An unexpected error occurred. Please try again."
+  },
+  "sage50ExportSettings": {
+    "headerText": "Export settings",
+    "contentText": "Configure how and when expenses from {{brandName}} can be exported to Sage 50.",
+    "exportReimbursableExpensesLabel": "Export reimbursable expenses",
+    "exportCCCExpensesLabel": "Export corporate card expenses",
+    "reimbursableExportTypeLabel": "Export type",
+    "reimbursableExportTypeSubLabel": "Select the type of transaction you want to create in Sage 50 when exporting expenses.",
+    "reimbursableExportTypePlaceholder": "Select export type",
+    "reimbursableDefaultCreditLineAccountLabel": "Default credit-line account",
+    "reimbursableDefaultCreditLineAccountSubLabel": "Select the Sage 50 account to be credited for expenses sent as journal entries.",
+    "reimbursableDefaultCreditLineAccountPlaceholder": "Select credit-line account",
+    "reimbursableDefaultAccountPayableAccountLabel": "Default accounts payable account",
+    "reimbursableDefaultAccountPayableAccountSubLabel": "Select the accounts payable account where invoices should be posted.",
+    "reimbursableDefaultAccountPayableAccountPlaceholder": "Select accounts payable account",
+    "reimbursableExpenseStateLabel": "State of export",
+    "reimbursableExpenseStateSubLabel": "Choose whether to export expenses after the reimbursement is initiated (Processing) or after the reimbursement is settled (Closed).",
+    "reimbursableExpenseStatePlaceholder": "Select export state",
+    "reimbursableExpenseGroupLabel": "Grouping method",
+    "reimbursableExpenseGroupSubLabel": "Choose whether to export each expense as an individual record (Expense) or group all expenses in a report into one record with line items (Expense Report).",
+    "reimbursableExpenseGroupPlaceholder": "Select grouping method",
+    "reimbursableExportDateDisabledText": "Change grouping method to use different date",
+    "reimbursableExportDateLabel": "Posting date",
+    "reimbursableExportDateSubLabel": "Expenses will be posted in Sage 50 with the {{selectedDateOption}} from {{brandName}}. This is automatically set based on your grouping selection.",
+    "cccExportTypeLabel": "Export type",
+    "cccExportTypeSubLabel": "Select the type of transaction you want to create in Sage 50 when exporting expenses.",
+    "cccExportTypePlaceholder": "Select export module",
+    "cccDefaultCreditLineAccountLabel": "Default credit-line account",
+    "cccDefaultCreditLineAccountSubLabel": "Select the Sage 50 account to be credited for expenses sent as journal entries.",
+    "cccDefaultCreditLineAccountPlaceholder": "Select credit-line account",
+    "cccExpenseStateLabel": "State of export",
+    "cccExpenseStateSubLabel": "Select when corporate card expenses should be exported from {{brandName}}: after they are approved (Approved) or after they are closed (Closed).",
+    "cccExpenseStatePlaceholder": "Select export state",
+    "cccExportGroupLabel": "Grouping method",
+    "cccExportGroupSubLabel": "Choose whether to export each expense as an individual record (Expense) or group all expenses in a report into one record with line items (Expense Report).",
+    "cccExportGroupPlaceholder": "Select grouping method",
+    "cccExportDateLabel": "Posting date",
+    "cccExportDateSubLabel": "Expenses will be posted in Sage 50 with the {{selectedDateOption}} from {{brandName}}. This is automatically set based on your grouping selection.",
+    "cccExportDateDisabledText": "Change grouping method to use different date",
+    "cccDefaultAccountPayableAccountLabel": "Default accounts payable account",
+    "cccDefaultAccountPayableAccountSubLabel": "Select the accounts payable account where invoices should be posted.",
+    "cccDefaultAccountPayableAccountPlaceholder": "Select accounts payable account",
+    "cccDefaultVendorLabel": "Default vendor",
+    "cccDefaultVendorSubLabel": "Select a fallback vendor for expenses where the merchant in {{brandName}} doesn't match any vendor in Sage 50. All unmatched expenses will be posted to this vendor.",
+    "cccDefaultVendorPlaceholder": "Select vendor",
+    "cccDefaultCashAccountLabel": "Default cash account",
+    "cccDefaultCashAccountSubLabel": "Select the cash account to use when an expense isn't matched to a card transaction.",
+    "cccDefaultCashAccountPlaceholder": "Select cash account",
+    "cccDefaultPaymentMethodLabel": "Payment method",
+    "cccDefaultPaymentMethodPlaceholder": "Enter payment method",
+    "cccDefaultPaymentMethodSubLabel": "Enter the payment method to use for creating corporate card expenses in Sage 50 (e.g., Check, Credit card). ",
+    "preview": "Preview",
+    "forDetails": "for details.",
+    "cccDefaultPaymentMethodInputHint": "Use the exact payment method name as it appears in your Sage 50 settings.",
+    "exportSettingsSavedSuccess": "Export settings saved successfully",
+    "exportSettingsSaveError": "Error saving export settings, please try again later",
+    "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
+    "paymentMethodPreviewHeader": "Locate your payment method"
+  },
+  "sage50ImportSettings": {
+    "headerText": "Import settings",
+    "contentText": "In this section, you can choose the fields required to be imported from Sage 50 to {{brandName}}.",
+    "accountLabel": "Chart of accounts",
+    "accountSubLabel": "Import your chart of accounts as categories so employees can code expenses accurately.",
+    "appDisplayName": "Sage 50",
+    "accountTypesLabel": "Account types to import",
+    "accountTypesSubLabel": "\"Expense\" type accounts will be imported by default. Select any other account types you'd like to import.",
+    "accountTypesSubtext": "Add more from dropdown",
+    "accountTypesPlaceholder": "Select display name format",
+    "vendorLabel": "Vendor",
+    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation."
+  },
+  "configurationCsvImportField": {
+    "preview": "Preview",
+    "previewText": " how {{dimension}}s appear in the expense form.",
+    "dimension": " dimension",
+    "field": " field",
+    "importFormatLabel": "Import format",
+    "importFormatSubLabel": "Choose to import {{dimension}} names only, or names with codes - pick what your employees will recognize best.",
+    "importCodesAndNamesLabel": "Import codes + names",
+    "importCodesAndNamesSubLabel": "Example: 6050: Meals & Entertainment",
+    "importNamesOnlyLabel": "Import names only",
+    "importNamesOnlySubLabel": "Example: Meals & Entertainment",
+    "importFormatPlaceholder": "Select display name format"
+  },
+  "uploadedFileDetails": {
+    "valuesReadyToImportLabel": "Values ready to import:",
+    "valuesImportedLabel": "Values mapped:",
+    "lastUploadedAtLabel": "Last uploaded on:",
+    "reuploadButtonLabel": "Re-upload",
+    "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
+    "csvUploadAlt": "CSV upload icon"
   },
   "integrations": {
     "reBrandedName": "Sage Expense Management"
