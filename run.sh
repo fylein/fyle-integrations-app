@@ -52,6 +52,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{SUPPORT_EMAIL}}?${SUPPORT_EMAIL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{HELP_ARTICLE_DOMAIN}}?${HELP_ARTICLE_DOMAIN}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{MIXPANEL_PROJECT_TOKEN}}?${MIXPANEL_PROJECT_TOKEN}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{SAGE50_API_URL}}?${SAGE50_API_URL}?g" $f;
 done
 
 nginx -g "daemon off;"

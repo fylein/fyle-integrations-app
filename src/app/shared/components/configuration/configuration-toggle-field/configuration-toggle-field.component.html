@@ -23,17 +23,19 @@
           {{label}}
           <app-optional-field *ngIf="!isAsterikAllowed && !isSectionHeader"></app-optional-field>
         </h4>
-        <h5 class="!tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
-          <span [innerHTML]="subLabel + ' '"></span>
-          <a *ngIf="redirectLink"
-            class="link tw-w-fit tw-inline-flex tw-items-center"
-            (click)="windowService.openInNewTab(redirectLink)">
-            {{'common.readMoreText' | transloco}}
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-              class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-            </app-svg-icon>
-          </a>
-        </h5>
+        @if (subLabel) {
+          <h5 class="!tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
+            <span [innerHTML]="subLabel + ' '"></span>
+            <a *ngIf="redirectLink"
+              class="link tw-w-fit tw-inline-flex tw-items-center"
+              (click)="windowService.openInNewTab(redirectLink)">
+              {{'common.readMoreText' | transloco}}
+              <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+              </app-svg-icon>
+            </a>
+          </h5>
+        }
       </div>
     </div>
     <div *ngIf="!hideToggle && !isConfigToggleLeftAligned" class="configuration--input-toggle-section">

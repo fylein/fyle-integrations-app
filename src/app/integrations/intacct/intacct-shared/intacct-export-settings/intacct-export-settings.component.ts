@@ -19,7 +19,6 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
-import { ExportSettingsService as IntacctExportSettingsService } from 'src/app/core/services/intacct/intacct-configuration/export-settings.service';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -137,11 +136,10 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService,
-    private intacctExportSettingsService: IntacctExportSettingsService,
     private exportSettingsService: ExportSettingsService
     ) {
     this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
-    this.reimbursableExpenseGroupingDateOptions = this.intacctExportSettingsService.getExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.getExpenseGroupingDateOptions();
     this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
     this.expenseGroupingFieldOptions = [
       {
@@ -522,7 +520,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     if (data.hasAccepted) {
       this.saveInProgress = true;
-        const exportSettingPayload = IntacctExportSettingsService.constructPayload(this.exportSettingsForm);
+        const exportSettingPayload = SiExportSettingsService.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);

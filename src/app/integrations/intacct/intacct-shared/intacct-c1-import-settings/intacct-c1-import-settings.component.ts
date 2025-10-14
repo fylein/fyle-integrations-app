@@ -13,7 +13,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TranslocoService } from '@jsverse/transloco';

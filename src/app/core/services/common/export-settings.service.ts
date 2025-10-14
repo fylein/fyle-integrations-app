@@ -1,5 +1,5 @@
 import { AbstractControl } from "@angular/forms";
-import { IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, SplitExpenseGrouping } from "../../models/enum/enum.model";
+import { CCCExpenseState, ExpenseState, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, SplitExpenseGrouping } from "../../models/enum/enum.model";
 import { DestinationAttribute } from "../../models/db/destination-attribute.model";
 import { DefaultDestinationAttribute } from "../../models/db/destination-attribute.model";
 import { ExpenseGroupingFieldOption } from "../../models/enum/enum.model";
@@ -13,6 +13,46 @@ import { TranslocoService } from "@jsverse/transloco";
 })
 export class ExportSettingsService {
   protected translocoService: TranslocoService = inject(TranslocoService);
+
+  getReimbursableExpenseStateOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.processingOptionLabel'),
+        value: ExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
+        value: ExpenseState.PAID
+      }
+    ];
+  }
+
+  getCCCExpenseStateOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.approvedOptionLabel'),
+        value: CCCExpenseState.APPROVED
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.closedOptionLabel'),
+        value: CCCExpenseState.PAID
+      }
+    ];
+  }
+
+  // Expense grouping options - for both reimbursable and CCC expenses
+  getExpenseGroupingOptions(): SelectFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.exportSettings.expenseOptionLabel'),
+        value: ExpenseGroupingFieldOption.EXPENSE
+      },
+      {
+        label: this.translocoService.translate('services.exportSettings.reportOptionLabel'),
+        value: ExpenseGroupingFieldOption.REPORT
+      }
+    ];
+  }
 
   getSplitExpenseGroupingOptions(): SelectFormOption[] {
     return [
@@ -114,7 +154,7 @@ export class ExportSettingsService {
   constructExportDateOptions(
     isCoreCCCModule: boolean,
     expenseGrouping: ExpenseGroupingFieldOption,
-    exportDateType: ExportDateType,
+    exportDateType: ExportDateType | null,
     { allowPostedAt }: {allowPostedAt?: boolean} = {}
   ): SelectFormOption[] {
 

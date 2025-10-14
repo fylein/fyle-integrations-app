@@ -25,6 +25,10 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   @Input() styleClasses?: string;
 
+  @Input() expanded = false;
+
+  @Input() iconPath: string;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingStyle = brandingStyle;
