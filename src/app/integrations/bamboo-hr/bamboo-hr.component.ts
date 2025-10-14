@@ -13,6 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-bamboo-hr',
@@ -73,7 +74,8 @@ export class BambooHrComponent implements OnInit {
     private trackingService: TrackingService,
     private authService: AuthService,
     private translocoService: TranslocoService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    public brandingService: BrandingService
   ) { }
 
   openDialog(): void {

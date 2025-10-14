@@ -12,7 +12,7 @@
     (syncEmployees)="syncEmployees()"
 ></app-landing-page-header>
 
-<app-landing-page-body *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR" [appName]="appName"></app-landing-page-body>
+<app-landing-page-body *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" [svgPath]="'assets/flow-charts/'+ brandingService.getAssetsBrandId() +'-bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR" [appName]="appName"></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>
 

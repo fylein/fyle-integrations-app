@@ -11,6 +11,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-travelperk-onboarding-landing',
@@ -45,7 +46,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private storageService: StorageService,
     private router: Router,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) { }
 
   disconnect(): void {
