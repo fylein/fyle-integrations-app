@@ -73,13 +73,15 @@ export class ExportLogService {
   generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `admin/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
+      url += `admin/#/company_expenses?txnId=${expenseGroup.expenses[0].expense_id}`;
+      return `${url}&org_id=${this.org_id}`;
     } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
       url += `admin/#/reports/${expenseGroup.expenses[0].report_id}`;
+      return `${url}?org_id=${this.org_id}`;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expenseGroup.expenses[0].settlement_id}`;
+      return `${url}?org_id=${this.org_id}`;
     }
-
     return `${url}?org_id=${this.org_id}`;
   }
 }
