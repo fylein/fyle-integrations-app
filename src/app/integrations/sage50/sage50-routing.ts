@@ -31,6 +31,59 @@ export const SAGE50_ROUTES: Routes = [
             loadComponent: () => import('./sage50-shared/sage50-import-settings/sage50-import-settings.component').then(m => m.Sage50ImportSettingsComponent)
           }
         ]
+      },
+      {
+        path: 'main',
+        loadComponent: () => import('./sage50-main/sage50-main.component').then(m => m.Sage50MainComponent),
+        children: [
+          {
+            path: '',
+            redirectTo: 'dashboard',
+            pathMatch: 'full'
+          },
+          {
+            path: 'dashboard',
+            loadComponent: () => import('./sage50-main/sage50-dashboard/sage50-dashboard.component').then(m => m.Sage50DashboardComponent)
+          },
+          {
+            path: 'mapping',
+            loadComponent: () => import('./sage50-main/sage50-mapping/sage50-mapping.component').then(m => m.Sage50MappingComponent),
+            children: [
+              {
+                path: '',
+                redirectTo: 'employee',
+                pathMatch: 'full'
+              },
+              {
+                path: 'employee',
+                loadComponent: () => import('./sage50-main/sage50-mapping/sage50-base-mapping/sage50-base-mapping.component').then(m => m.Sage50BaseMappingComponent)
+              },
+              {
+                path: 'category',
+                loadComponent: () => import('./sage50-main/sage50-mapping/sage50-base-mapping/sage50-base-mapping.component').then(m => m.Sage50BaseMappingComponent)
+              }
+            ]
+          },
+          {
+            path: 'configuration',
+            loadComponent: () => import('./sage50-main/sage50-configuration/sage50-configuration.component').then(m => m.Sage50ConfigurationComponent),
+            children: [
+              {
+                path: '',
+                redirectTo: 'export_settings',
+                pathMatch: 'full'
+              },
+              {
+                path: 'export_settings',
+                loadComponent: () => import('../sage50/sage50-shared/sage50-export-settings/sage50-export-settings.component').then(m => m.Sage50ExportSettingsComponent)
+              },
+              {
+                path: 'import_settings',
+                loadComponent: () => import('../sage50/sage50-shared/sage50-import-settings/sage50-import-settings.component').then(m => m.Sage50ImportSettingsComponent)
+              }
+            ]
+          }
+        ]
       }
     ]
   }

@@ -28,4 +28,8 @@ export class Sage50MappingService extends MappingService {
     };
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes_stats/`, params);
   }
+
+  importSage50Attributes(refresh: boolean): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage50/import_attributes/`, {refresh});
+  }
 }
