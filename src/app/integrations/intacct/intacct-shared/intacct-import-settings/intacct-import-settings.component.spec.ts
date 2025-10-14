@@ -5,7 +5,7 @@ import { provideRouter, Router, RouterModule } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { IntacctImportSettingsComponent } from './intacct-import-settings.component';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
+import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -27,7 +27,7 @@ import { TranslocoService } from '@jsverse/transloco';
 describe('IntacctImportSettingsComponent', () => {
   let component: IntacctImportSettingsComponent;
   let fixture: ComponentFixture<IntacctImportSettingsComponent>;
-  let siImportSettingService: jasmine.SpyObj<SiImportSettingService>;
+  let siImportSettingService: jasmine.SpyObj<SiImportSettingsService>;
   let siMappingsService: jasmine.SpyObj<SiMappingsService>;
   let intacctConnectorService: jasmine.SpyObj<IntacctConnectorService>;
   let orgService: jasmine.SpyObj<OrgService>;
@@ -40,7 +40,7 @@ describe('IntacctImportSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const siImportSettingServiceSpy = jasmine.createSpyObj('SiImportSettingService', ['getImportSettings', 'postImportSettings', 'getImportCodeFieldConfig']);
+    const siImportSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', ['getImportSettings', 'postImportSettings', 'getImportCodeFieldConfig']);
     const siMappingsServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getSageIntacctFields', 'getFyleFields', 'getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
     const intacctConnectorServiceSpy = jasmine.createSpyObj('IntacctConnectorService', ['getLocationEntityMapping']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
@@ -60,7 +60,7 @@ describe('IntacctImportSettingsComponent', () => {
     imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
     providers: [
         FormBuilder,
-        { provide: SiImportSettingService, useValue: siImportSettingServiceSpy },
+        { provide: SiImportSettingsService, useValue: siImportSettingServiceSpy },
         { provide: SiMappingsService, useValue: siMappingsServiceSpy },
         { provide: IntacctConnectorService, useValue: intacctConnectorServiceSpy },
         { provide: OrgService, useValue: orgServiceSpy },
@@ -76,7 +76,7 @@ describe('IntacctImportSettingsComponent', () => {
 })
       .compileComponents();
 
-    siImportSettingService = TestBed.inject(SiImportSettingService) as jasmine.SpyObj<SiImportSettingService>;
+    siImportSettingService = TestBed.inject(SiImportSettingsService) as jasmine.SpyObj<SiImportSettingsService>;
     siMappingsService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
     intacctConnectorService = TestBed.inject(IntacctConnectorService) as jasmine.SpyObj<IntacctConnectorService>;
     orgService = TestBed.inject(OrgService) as jasmine.SpyObj<OrgService>;

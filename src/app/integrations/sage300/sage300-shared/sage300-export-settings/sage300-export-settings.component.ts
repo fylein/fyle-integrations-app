@@ -11,7 +11,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import { Sage300ExportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -106,7 +106,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private exportSettingService: Sage300ExportSettingService,
+    private exportSettingService: Sage300ExportSettingsService,
     private importSettingsService: Sage300ImportSettingsService,
     private router: Router,
     private helperService: HelperService,

@@ -2085,7 +2085,7 @@
     "businessCentralHelper": {
       "syncingDataDimensions": "Syncing data dimensions from Dynamics 365 Business Central"
     },
-    "sage300ExportSetting": {
+    "sage300ExportSettings": {
       "expense": "Expense",
       "expenseReport": "Expense report",
       "cardTransactionPostDate": "Card transaction post date",

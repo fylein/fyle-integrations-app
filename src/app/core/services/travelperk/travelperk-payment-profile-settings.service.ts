@@ -8,7 +8,7 @@ import { TranslocoService } from "@jsverse/transloco";
 @Injectable({
   providedIn: 'root'
 })
-export class TravelperkPaymentProfileSettingService {
+export class TravelperkPaymentProfileSettingsService {
 
   constructor(
     private translocoService: TranslocoService

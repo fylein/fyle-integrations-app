@@ -11,7 +11,7 @@ import { ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject, S
 @Injectable({
   providedIn: 'root'
 })
-export class SiExportSettingService {
+export class SiExportSettingsService {
 
   constructor(
     private apiService: ApiService,
@@ -86,19 +86,19 @@ export class SiExportSettingService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: this.translocoService.translate('services.siExportSetting.verificationDate'),
+        label: this.translocoService.translate('services.siExportSettings.verificationDate'),
         value: ExportDateType.VERIFIED_DATE
       },
       {
-        label: this.translocoService.translate('services.siExportSetting.spendDate'),
+        label: this.translocoService.translate('services.siExportSettings.spendDate'),
         value: ExportDateType.SPENT_AT
       },
       {
-        label: this.translocoService.translate('services.siExportSetting.approvalDate'),
+        label: this.translocoService.translate('services.siExportSettings.approvalDate'),
         value: ExportDateType.APPROVAL_DATE
       },
       {
-        label: this.translocoService.translate('services.siExportSetting.lastSpendDate'),
+        label: this.translocoService.translate('services.siExportSettings.lastSpendDate'),
         value: ExportDateType.LAST_SPENT_AT
       }
     ];

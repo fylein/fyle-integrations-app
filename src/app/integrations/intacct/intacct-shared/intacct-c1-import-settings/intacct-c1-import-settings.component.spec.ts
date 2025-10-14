@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular
 import { provideRouter, Router, RouterModule } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings.component';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
+import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -41,7 +41,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
   let fixture: ComponentFixture<IntacctC1ImportSettingsComponent>;
   let router: Router;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
-  let importSettingService: jasmine.SpyObj<SiImportSettingService>;
+  let importSettingService: jasmine.SpyObj<SiImportSettingsService>;
   let connectorService: jasmine.SpyObj<IntacctConnectorService>;
   let storageService: jasmine.SpyObj<StorageService>;
   let toastService: jasmine.SpyObj<IntegrationsToastService>;
@@ -58,7 +58,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
       'refreshSageIntacctDimensions',
       'refreshFyleDimensions'
     ]);
-    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingService', ['getImportSettings', 'postImportSettings']);
+    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', ['getImportSettings', 'postImportSettings']);
     const connectorServiceSpy = jasmine.createSpyObj('IntacctConnectorService', ['getLocationEntityMapping']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
@@ -78,7 +78,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     providers: [
         FormBuilder,
         { provide: SiMappingsService, useValue: mappingServiceSpy },
-        { provide: SiImportSettingService, useValue: importSettingServiceSpy },
+        { provide: SiImportSettingsService, useValue: importSettingServiceSpy },
         { provide: IntacctConnectorService, useValue: connectorServiceSpy },
         { provide: StorageService, useValue: storageServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
@@ -97,7 +97,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
 
     router = TestBed.inject(Router);
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
-    importSettingService = TestBed.inject(SiImportSettingService) as jasmine.SpyObj<SiImportSettingService>;
+    importSettingService = TestBed.inject(SiImportSettingsService) as jasmine.SpyObj<SiImportSettingsService>;
     connectorService = TestBed.inject(IntacctConnectorService) as jasmine.SpyObj<IntacctConnectorService>;
     storageService = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;

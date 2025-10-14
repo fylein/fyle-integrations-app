@@ -14,9 +14,9 @@ import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dash
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { Router } from '@angular/router';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -122,9 +122,9 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private intacctExportSettingService: SiExportSettingService,
+    private intacctExportSettingService: SiExportSettingsService,
     private router: Router,
-    private intacctAdvancedSettingsService: SiAdvancedSettingService
+    private intacctAdvancedSettingsService: SiAdvancedSettingsService
   ) { }
 
   export() {

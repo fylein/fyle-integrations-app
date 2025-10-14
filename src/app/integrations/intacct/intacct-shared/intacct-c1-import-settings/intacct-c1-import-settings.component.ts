@@ -12,7 +12,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
+import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
@@ -93,7 +93,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
-    private importSettingService: SiImportSettingService,
+    private importSettingService: SiImportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
