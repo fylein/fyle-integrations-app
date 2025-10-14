@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbd-landing',
@@ -21,7 +22,7 @@ export class QbdLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor(public brandingService: BrandingService) { }
 
   ngOnInit(): void {
   }
