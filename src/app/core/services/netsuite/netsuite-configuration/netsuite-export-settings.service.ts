@@ -98,7 +98,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
     return exportType;
   }
 
-  getCCCExpenseStateOptions(): SelectFormOption[] {
+  override getCCCExpenseStateOptions(): SelectFormOption[] {
       return [
         {
           label: this.translocoService.translate('services.netsuiteExportSettings.approved'),
@@ -111,7 +111,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
       ];
   }
 
-  getReimbursableExpenseStateOptions(): SelectFormOption[] {
+  override getReimbursableExpenseStateOptions(): SelectFormOption[] {
       return [
         {
           label: this.translocoService.translate('services.netsuiteExportSettings.processing'),
