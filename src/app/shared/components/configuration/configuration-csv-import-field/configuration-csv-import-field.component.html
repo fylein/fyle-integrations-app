@@ -1,6 +1,9 @@
-<div [formGroup]="csvImportForm" class="tw-border tw-border-separator tw-rounded-10-px">
+<div [formGroup]="csvImportForm" [ngClass]="{
+    'tw-border tw-border-separator tw-rounded-10-px': !isSubfield,
+    'tw-border-t tw-border-separator': isSubfield
+}">
     <!-- Header -->
-    <div class="tw-p-24-px tw-flex tw-gap-[16px]">
+    <div class="tw-p-24-px tw-flex tw-gap-[16px]" [ngClass]="{'tw-px-0': isSubfield}">
         @if (fieldNumber) {
             <div class="tw-bg-bg-primary tw-w-20-px tw-h-20-px tw-shrink-0 tw-rounded-4-px tw-flex tw-items-center tw-justify-center tw-text-white tw-font-[system-ui] tw-text-14-px tw-font-500">
                 {{ fieldNumber }}
@@ -35,7 +38,10 @@
 
     <!-- Body -->
     @if (isEnabled) {
-    <div class="tw-border-t tw-border-separator tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
+    <div class="tw-flex tw-flex-col tw-gap-[48px]" [ngClass]="{
+        'tw-p-24-px tw-border-t tw-border-separator': !isSubfield,
+        'tw-pb-24-px': isSubfield
+    }">
 
         <div class="tw-flex tw-flex-col tw-gap-[8px]">
             <!-- Eg: Sage50 - Dimension | Fyle Field -->
@@ -114,6 +120,13 @@
             ></app-uploaded-file-details>
         }
     </div>
+    }
+
+    <!-- Subfields -->
+    @if (isEnabled && uploadedFile) {
+        <div [ngClass]="{'tw-px-24-px': !isSubfield}">
+            <ng-content select="[slot='subfield']"></ng-content>
+        </div>
     }
 </div>
 

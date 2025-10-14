@@ -49,6 +49,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() hasBeenImported: boolean;
 
+  @Input() isSubfield: boolean = false;
+
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
   readonly brandingConfig = brandingConfig;
