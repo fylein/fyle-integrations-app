@@ -86,7 +86,8 @@ export class LandingV2Component implements OnInit {
       (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
       (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
       (appKey === 'TRAVELPERK' && !this.org.allow_travelperk) ||
-      (appKey === 'QBD' && !this.showQBDIIFIntegration)
+      (appKey === 'QBD' && !this.showQBDIIFIntegration) ||
+      (appKey === 'SAGE50' && !this.exposeApps.SAGE50)
     ) {
       return false;
     }
