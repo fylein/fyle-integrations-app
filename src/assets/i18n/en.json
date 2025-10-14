@@ -2484,7 +2484,11 @@
     "jobLabel": "Job",
     "customFieldLabel": "Create a custom field",
     "projectLabel": "Project",
-    "costCenterLabel": "Cost center"
+    "costCenterLabel": "Cost center",
+    "phaseLabel": "Phase",
+    "phaseSubLabel": "Import phases to allocate expenses stage-wise across jobs.",
+    "costCodeLabel": "Cost code",
+    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase."
   },
   "configurationCsvImportField": {
     "preview": "Preview",

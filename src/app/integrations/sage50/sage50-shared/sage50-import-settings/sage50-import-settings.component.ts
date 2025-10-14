@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { CSVImportSourceFieldOption } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -52,7 +53,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   importableCOAOptions: { label: string, value: Sage50ImportableCOAType, disabled: boolean }[] = [];
 
-  sourceFieldOptions: { label: string, value: Sage50FyleField | 'custom_field' }[] = [];
+  sourceFieldOptions: CSVImportSourceFieldOption[] = [];
 
   constructor(
     private importSettingService: Sage50ImportSettingsService,
@@ -62,6 +63,47 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private router: Router,
     private translocoService: TranslocoService
   ) { }
+
+  public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
+    return this.importAttributesService.importAttributes(attributeType, fileName, jsonData);
+  }
+
+  public getSourceFieldOptions(destinationField: Sage50ImportableField) {
+    // Get all selected source fields
+    const selectedSourceFields: (Sage50FyleField | null)[] = [];
+    Object.keys(this.importSettingsForm.controls).forEach(key => {
+      const formGroup = this.importSettingsForm.get(key);
+
+      if (formGroup?.get('sourceField')?.value) {
+        const sourceFieldValue = formGroup.get('sourceField')?.value;
+        selectedSourceFields.push(sourceFieldValue);
+      }
+    });
+
+    return this.sourceFieldOptions.filter(option => {
+
+      // Include value if it is the current value of this source field
+      if (option.value === this.importSettingsForm.get(destinationField)?.get('sourceField')?.value) {
+        return true;
+      }
+
+      // Exclude options already selected in other source fields
+      if (selectedSourceFields.includes(option.value as Sage50FyleField)) {
+        return false;
+      }
+
+      // Include PROJECT only if destinationField is JOB
+      if (destinationField !== Sage50ImportableField.JOB && option.value === Sage50FyleField.PROJECT) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  public addSourceFieldOption(option: CSVImportSourceFieldOption) {
+    this.sourceFieldOptions.splice(this.sourceFieldOptions.length - 1, 0, option);
+  }
 
   private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet): void {
     this.importableCOAOptions = Object.values(Sage50ImportableCOAType).map((value) => {
@@ -74,14 +116,22 @@ export class Sage50ImportSettingsComponent implements OnInit {
     });
 
     this.sourceFieldOptions = [
-      { label: this.translocoService.translate('sage50ImportSettings.projectLabel'), value: Sage50FyleField.PROJECT },
-      { label: this.translocoService.translate('sage50ImportSettings.costCenterLabel'), value: Sage50FyleField.COST_CENTER },
-      { label: this.translocoService.translate('sage50ImportSettings.customFieldLabel'), value: 'custom_field' }
+      {
+        label: this.translocoService.translate('sage50ImportSettings.projectLabel'),
+        value: Sage50FyleField.PROJECT,
+        placeholder: null
+      },
+      {
+        label: this.translocoService.translate('sage50ImportSettings.costCenterLabel'),
+        value: Sage50FyleField.COST_CENTER,
+        placeholder: null
+      },
+      {
+        label: this.translocoService.translate('sage50ImportSettings.customFieldLabel'),
+        value: 'custom_field',
+        placeholder: null
+      }
     ];
-  }
-
-  public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
-    return this.importAttributesService.importAttributes(attributeType, fileName, jsonData);
   }
 
   ngOnInit(): void {
