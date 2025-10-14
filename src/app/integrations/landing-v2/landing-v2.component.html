@@ -71,6 +71,28 @@
                     </div>
                 </span>
             </div>
+
+            <div *ngIf="false" class="landing-v2--accounting-app"
+                (click)="openInAppIntegration(InAppIntegration.SAGE50)">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <img src="assets/logos/sage50-logo.svg" />
+                    @if (isAppConnected('SAGE50')) {
+                        <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+                    } @else {
+                        <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+                    }
+                </div>
+                <span class="landing-v2--accounting-app-name tw-items-start">
+                    <div class="tw-grow">
+                        <div class="tw-flex tw-justify-between">
+                            <span>{{ 'landingV2.sage50' | transloco }}</span>
+                            <app-badge [text]="'landingV2.beta' | transloco" [theme]="ThemeOption.DARK"></app-badge>
+                        </div>
+                        <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+                    </div>
+                </span>
+            </div>
+
             <div *ngIf="isAppShown('BUSINESS_CENTRAL')" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                 <div class="tw-flex tw-justify-between tw-items-center">

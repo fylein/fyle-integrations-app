@@ -9,7 +9,7 @@ import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-con
   providedIn: 'root'
 })
 
-export class XeroCloneSettingService {
+export class XeroCloneSettingsService {
 
   constructor(
     private xeroExportSettingsService: XeroExportSettingsService,

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { IntacctOnboardingService } from 'src/app/core/services/intacct/intacct-configuration/intacct-onboarding.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
+import { IntacctOnboardingService } from 'src/app/core/services/si/si-configuration/si-onboarding.service';
 
 @Component({
   selector: 'app-onboarding-intacct-connector',

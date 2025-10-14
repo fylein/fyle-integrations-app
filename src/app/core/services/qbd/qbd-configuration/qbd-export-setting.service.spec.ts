@@ -3,12 +3,12 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
-import { QbdExportSettingService } from './qbd-export-setting.service';
+import { QbdExportSettingsService } from './qbd-export-settings.service';
 import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdExportSettingService', () => {
-  let service: QbdExportSettingService;
+xdescribe('QbdExportSettingsService', () => {
+  let service: QbdExportSettingsService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.qbd_api_url;
@@ -18,10 +18,10 @@ xdescribe('QbdExportSettingService', () => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
     imports: [],
-    providers: [QbdExportSettingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [QbdExportSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 });
     injector = getTestBed();
-    service = injector.inject(QbdExportSettingService);
+    service = injector.inject(QbdExportSettingsService);
     httpMock = injector.inject(HttpTestingController);
   });
 

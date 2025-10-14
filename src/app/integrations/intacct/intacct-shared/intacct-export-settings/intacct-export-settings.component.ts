@@ -12,14 +12,13 @@ import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, P
 import { ExportSettingFormOption, ExportSettingGet, IntacctExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
-import { ExportSettingsService as IntacctExportSettingsService } from 'src/app/core/services/intacct/intacct-configuration/export-settings.service';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -129,7 +128,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private exportSettingService: SiExportSettingService,
+    private exportSettingService: SiExportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -137,11 +136,10 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService,
-    private intacctExportSettingsService: IntacctExportSettingsService,
     private exportSettingsService: ExportSettingsService
     ) {
     this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
-    this.reimbursableExpenseGroupingDateOptions = this.intacctExportSettingsService.getExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.getExpenseGroupingDateOptions();
     this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
     this.expenseGroupingFieldOptions = [
       {
@@ -522,7 +520,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
     if (data.hasAccepted) {
       this.saveInProgress = true;
-        const exportSettingPayload = IntacctExportSettingsService.constructPayload(this.exportSettingsForm);
+        const exportSettingPayload = SiExportSettingsService.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);

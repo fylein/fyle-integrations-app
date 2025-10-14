@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings.component';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
@@ -22,7 +22,7 @@ import { TranslocoService } from '@jsverse/transloco';
 describe('IntacctAdvancedSettingsComponent', () => {
   let component: IntacctAdvancedSettingsComponent;
   let fixture: ComponentFixture<IntacctAdvancedSettingsComponent>;
-  let advancedSettingsService: jasmine.SpyObj<SiAdvancedSettingService>;
+  let advancedSettingsService: jasmine.SpyObj<SiAdvancedSettingsService>;
   let router: Router;
   let toastService: jasmine.SpyObj<IntegrationsToastService>;
   let trackingService: jasmine.SpyObj<TrackingService>;
@@ -32,7 +32,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const advancedSettingsServiceSpy = jasmine.createSpyObj('SiAdvancedSettingService', [
+    const advancedSettingsServiceSpy = jasmine.createSpyObj('SiAdvancedSettingsService', [
       'getAdvancedSettings',
       'getExpenseFilter',
       'getAdditionalEmails',
@@ -57,7 +57,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       imports: [SharedModule, ReactiveFormsModule],
       providers: [
         FormBuilder,
-        { provide: SiAdvancedSettingService, useValue: advancedSettingsServiceSpy },
+        { provide: SiAdvancedSettingsService, useValue: advancedSettingsServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
@@ -68,7 +68,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
       ]
     }).compileComponents();
 
-    advancedSettingsService = TestBed.inject(SiAdvancedSettingService) as jasmine.SpyObj<SiAdvancedSettingService>;
+    advancedSettingsService = TestBed.inject(SiAdvancedSettingsService) as jasmine.SpyObj<SiAdvancedSettingsService>;
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;

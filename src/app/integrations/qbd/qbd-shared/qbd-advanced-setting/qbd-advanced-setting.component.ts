@@ -6,7 +6,7 @@ import { QBDAdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOptions } from
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { environment } from 'src/environments/environment';
@@ -59,7 +59,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private advancedSettingService: QbdAdvancedSettingService,
+    private advancedSettingService: QbdAdvancedSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private orgService: OrgService,
