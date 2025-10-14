@@ -1,0 +1,34 @@
+@if (isGradientAllowed){
+<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
+
+@if (isLoading) {
+<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+</div>
+} 
+@if (!isLoading) {
+    <app-dashboard-export-section
+        (export)="export()"
+        [loaderType]="LoaderType.INDETERMINATE"
+        [appName]="appName"
+        [isImportInProgress]="isImportInProgress"
+        [isExportInProgress]="isExportInProgress"
+        [exportableAccountingExportIds]="exportableAccountingExportIds"
+        [failedExpenseGroupCount]="failedExpenseGroupCount"
+        [exportProgressPercentage]="exportProgressPercentage"
+        [accountingExportSummary]="accountingExportSummary"
+        [processedCount]="processedCount"
+        [reimbursableImportState]="reimbursableImportState"
+        [cccImportState]="cccImportState">
+    </app-dashboard-export-section>
+
+    @if(!accountingExportSummary && !exportableAccountingExportIds.length){
+    <app-zero-state
+        [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
+        [headerText]="'sage50Dashboard.zeroStateHeaderText' | transloco"
+        [subHeaderText]="'sage50Dashboard.zeroStateSubHeaderText' | transloco">
+    </app-zero-state>
+    }
+}

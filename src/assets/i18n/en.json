@@ -1123,6 +1123,28 @@
     "zeroStateHeaderText": "Looks like you have",
     "zeroStateSubHeaderText": "0 expenses to export right now"
   },
+  "sage50Main": {
+    "dashboard": "Dashboard",
+    "mapping": "Mapping",
+    "configuration": "Configuration"
+  },
+  "sage50Dashboard": {
+    "zeroStateHeaderText": "Looks like you have",
+    "zeroStateSubHeaderText": "0 expenses to export right now"
+  },
+  "sage50Mapping": {
+    "employeeLabel": "Employee",
+    "categoryLabel": "Category"
+  },
+  "sage50BaseMapping": {
+    "autoMappingInProgress": "Auto mapping of employees is in progress",
+    "autoMappingError": "Something went wrong, please try again"
+  },
+  "sage50Configuration": {
+    "exportSettings": "Export settings",
+    "importSettings": "Import settings",
+    "advancedSettings": "Advanced settings"
+  },
   "sage300ImportSettings": {
     "headerText": "Import settings",
     "contentText": "In this section, you can choose the fields required to be imported from Sage 300 CRE to {{brandName}}. ",
@@ -2067,6 +2089,11 @@
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
     },
+    "sage50Connector": {
+      "connectionReconnectedToast": "Reconnected to Sage 50 successfully.",
+      "connectionErrorToast": "Error while connecting, please try again later.",
+      "connectionExpiredToast": "Oops! Your Sage 50 connection expired, please connect again"
+    },
     "intacctConnector": {
       "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
@@ -2099,6 +2126,9 @@
     },
     "sage300Helper": {
       "syncDataDimensionsToast": "Syncing data dimensions from Sage 300 CRE"
+    },
+    "sage50Helper": {
+      "syncDataDimensionsToast": "Syncing data dimensions from Sage 50"
     },
     "sage300Onboarding": {
       "connectToSage": "Connect to Sage 300 CRE",
