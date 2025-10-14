@@ -81,37 +81,38 @@ export class LandingV2Component implements OnInit {
   }
 
   isAppShown(appKey: IntegrationAppKey) {
-    // If this app disabled for this org
+    // If this app disabled for this org, or not exposed
+    const isAppExposed = this.exposeApps[appKey];
     if (
       (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
       (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
       (appKey === 'TRAVELPERK' && !this.org.allow_travelperk) ||
-      (appKey === 'QBD' && !this.showQBDIIFIntegration)
+      (appKey === 'QBD' && !this.showQBDIIFIntegration) ||
+      !isAppExposed
     ) {
       return false;
     }
 
-    // If this app allowed and all apps are shown
+    // If this app enabled & exposed, and all apps are shown
     if (this.integrationTabs.ALL) {
       return true;
     }
 
-    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
-
     if (appKey === 'BAMBOO_HR') {
-      return this.exposeApps.BAMBOO && this.integrationTabs.HRMS;
+      return this.integrationTabs.HRMS;
     }
 
     if (appKey === 'TRAVELPERK') {
-      return this.exposeApps.TRAVELPERK && this.integrationTabs.TRAVEL;
+      return this.integrationTabs.TRAVEL;
     }
 
     // If the app was not BAMBOO_HR or TRAVELPERK, it must be an accounting app
+    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
     if (allAppKeys.includes(appKey)) {
-      return this.exposeApps[appKey] && this.integrationTabs.ACCOUNTING;
+      return this.integrationTabs.ACCOUNTING;
     }
 
-    // TS catch-all (shouln't reach here)
+    // TS catch-all (shouldn't reach here)
     return false;
   }
 
