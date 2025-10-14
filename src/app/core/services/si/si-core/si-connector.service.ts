@@ -80,12 +80,12 @@ export class IntacctConnectorService {
             })
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.intacctConnector.connectionReconnectedToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.siConnector.connectionReconnectedToast'), 6000);
           return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response), isIntacctConnected: true });
 
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.intacctConnector.connectionErrorToast'), 6000);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.siConnector.connectionErrorToast'), 6000);
         return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(this.intacctCredential), isIntacctConnected: false });
       })
     );
@@ -120,7 +120,7 @@ export class IntacctConnectorService {
       }),
       catchError((error) => {
         if (error.error.message !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.intacctConnector.connectionExpiredToast'), 6000);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.siConnector.connectionExpiredToast'), 6000);
         }
         return of(false);
       })

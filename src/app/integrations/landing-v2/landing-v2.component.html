@@ -5,7 +5,7 @@
                 {{ 'landingV2.integrationsList' | transloco }}
             </h3>
 
-            <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco">
+            <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco:{ brandName: brandingConfig.brandName }">
             </p>
         </header>
         <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
@@ -72,7 +72,7 @@
                 </span>
             </div>
 
-            <div *ngIf="isAppShown('SAGE50')" class="landing-v2--accounting-app"
+            <div *ngIf="false" class="landing-v2--accounting-app"
                 (click)="openInAppIntegration(InAppIntegration.SAGE50)">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <img src="assets/logos/sage50-logo.svg" />

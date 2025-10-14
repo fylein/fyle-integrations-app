@@ -3,7 +3,7 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QbdDashboardComponent } from './qbd-dashboard.component';
@@ -49,7 +49,7 @@ describe('QbdDashboardComponent', () => {
     imports: [RouterTestingModule, TranslocoModule],
     providers: [FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
-        { provide: QbdAdvancedSettingService, useValue: service2 },
+        { provide: QbdAdvancedSettingsService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi())
