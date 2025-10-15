@@ -119,7 +119,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private siExportSettingService : SiExportSettingsService,
+    private siExportSettingsService : SiExportSettingsService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService,
     private advanceSettingsService: AdvancedSettingsService
@@ -288,7 +288,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
-    const exportSettings$ = this.siExportSettingService.getExportSettings();
+    const exportSettings$ = this.siExportSettingsService.getExportSettings();
 
     forkJoin({
       advancedSettings: advancedSettings$,

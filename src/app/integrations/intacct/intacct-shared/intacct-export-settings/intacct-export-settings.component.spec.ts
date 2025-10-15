@@ -26,7 +26,7 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 describe('IntacctExportSettingsComponent', () => {
   let component: IntacctExportSettingsComponent;
   let fixture: ComponentFixture<IntacctExportSettingsComponent>;
-  let siExportSettingService: jasmine.SpyObj<SiExportSettingsService>;
+  let siExportSettingsService: jasmine.SpyObj<SiExportSettingsService>;
   let exportSettingsService: jasmine.SpyObj<ExportSettingsService>;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
@@ -65,7 +65,7 @@ describe('IntacctExportSettingsComponent', () => {
       ]
     }).compileComponents();
 
-    siExportSettingService = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
+    siExportSettingsService = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     toastService = TestBed.inject(IntegrationsToastService) as jasmine.SpyObj<IntegrationsToastService>;
@@ -74,7 +74,7 @@ describe('IntacctExportSettingsComponent', () => {
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
-    siExportSettingService.getExportSettings.and.returnValue(of(mockExportSettings));
+    siExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettings));
     mappingService.refreshSageIntacctDimensions.and.returnValue(of(null));
     mappingService.refreshFyleDimensions.and.returnValue(of(null));
 
@@ -140,7 +140,7 @@ describe('IntacctExportSettingsComponent', () => {
     });
 
     it('should fetch and store export settings', () => {
-      expect(siExportSettingService.getExportSettings).toHaveBeenCalled();
+      expect(siExportSettingsService.getExportSettings).toHaveBeenCalled();
       expect(component.exportSettings).toEqual(mockExportSettings);
       expect(component.exportSettingsForm).toBeDefined();
       expect(component.isLoading).toBeFalse();
@@ -150,7 +150,7 @@ describe('IntacctExportSettingsComponent', () => {
   describe('Form Save', () => {
     it('should save export settings successfully during onboarding', fakeAsync(() => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.EXPORT_SETTINGS);
-      siExportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      siExportSettingsService.postExportSettings.and.returnValue(of(mockExportSettings));
       translocoService.translate.and.returnValue('Export settings saved successfully');
       spyOnProperty(router, 'url').and.returnValue('/integrations/intacct/onboarding/export_settings');
 
@@ -158,7 +158,7 @@ describe('IntacctExportSettingsComponent', () => {
       component.save();
       tick();
 
-      expect(siExportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(siExportSettingsService.postExportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalled();
       expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.IMPORT_SETTINGS);
@@ -167,19 +167,19 @@ describe('IntacctExportSettingsComponent', () => {
 
     it('should save export settings successfully post onboarding', () => {
       workspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.COMPLETE);
-      siExportSettingService.postExportSettings.and.returnValue(of(mockExportSettings));
+      siExportSettingsService.postExportSettings.and.returnValue(of(mockExportSettings));
       translocoService.translate.and.returnValue('Export settings saved successfully');
       fixture.detectChanges();
       component.save();
 
-      expect(siExportSettingService.postExportSettings).toHaveBeenCalled();
+      expect(siExportSettingsService.postExportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       expect(trackingService.intacctUpdateEvent).toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
     });
 
     it('should handle save failure', () => {
-      siExportSettingService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
+      siExportSettingsService.postExportSettings.and.returnValue(throwError(() => new Error('API Error')));
       translocoService.translate.and.returnValue('Error saving export settings, please try again later');
       fixture.detectChanges();
       component.save();

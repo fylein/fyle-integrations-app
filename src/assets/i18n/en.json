@@ -2067,7 +2067,7 @@
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
     },
-    "intacctConnector": {
+    "siConnector": {
       "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again"
