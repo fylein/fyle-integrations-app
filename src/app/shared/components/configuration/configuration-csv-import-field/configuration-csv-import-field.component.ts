@@ -185,6 +185,11 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
           this.customFieldForm.reset();
           this.showCustomFieldDialog = true;
         }
+        // Update the source placeholder along with source field updates
+        const currentOption = this.sourceFieldOptions.find(option => option.value === currentValue);
+        if (currentOption?.placeholder) {
+          this.csvImportForm?.get('sourcePlaceholder')?.patchValue(currentOption.placeholder);
+        }
       });
   }
 
