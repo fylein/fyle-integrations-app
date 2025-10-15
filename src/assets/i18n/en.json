@@ -2505,7 +2505,8 @@
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
     "importFormatPlaceholder": "Select display name format",
-    "selectSourceFieldPlaceholder": "Select field in {{brandName}}"
+    "selectSourceFieldPlaceholder": "Select field in {{brandName}}",
+    "previewHeader": "Preview of a {{brandName}} expense"
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",

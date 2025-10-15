@@ -25,6 +25,7 @@
             [appResourceKey]="'SAGE50'"
             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
             [hasBeenImported]="importStatuses[Sage50ImportableField.ACCOUNT]"
+            [previewImagePath]="'assets/pngs/preview-screens/sage50-category-field.png'"
             [uploadData]="uploadData.bind(this)"
         >
             <ng-container slot="additionalFields">
@@ -56,6 +57,7 @@
             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
             [infoText]="'sage50ImportSettings.vendorInfoText' | transloco"
             [hasBeenImported]="importStatuses[Sage50ImportableField.VENDOR]"
+            [previewImagePath]="'assets/pngs/preview-screens/sage50-merchant-field.png'"
             [uploadData]="uploadData.bind(this)"
         ></app-configuration-csv-import-field>
 
@@ -70,6 +72,7 @@
             [appResourceKey]="'SAGE50'"
             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
             [hasBeenImported]="importStatuses[Sage50ImportableField.JOB]"
+            [previewImagePath]="'assets/pngs/preview-screens/sage50-project-field.png'"
             [uploadData]="uploadData.bind(this)"
         >
             <ng-container slot="subfield" [formGroup]="importSettingsForm">
@@ -86,6 +89,7 @@
                     [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
                     [hasBeenImported]="importStatuses[Sage50ImportableField.PHASE]"
                     [uploadData]="uploadData.bind(this)"
+                    [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-center-field.png'"
                     [isSubfield]="true"
                 >
                     <ng-container slot="subfield" [formGroup]="importSettingsForm">
@@ -101,6 +105,7 @@
                             [appResourceKey]="'SAGE50'"
                             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
                             [hasBeenImported]="importStatuses[Sage50ImportableField.COST_CODE]"
+                            [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-code-custom-field.png'"
                             [uploadData]="uploadData.bind(this)"
                             [isSubfield]="true"
                         ></app-configuration-csv-import-field>
