@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationCsvImportFieldComponent } from "src/app/shared/components/configuration/configuration-csv-import-field/configuration-csv-import-field.component";
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, startWith } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
@@ -38,12 +38,16 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   readonly Sage50ImportableField = Sage50ImportableField;
 
+  readonly ConfigurationCtaText = ConfigurationCta;
+
   // Flags
   isLoading: boolean;
 
   isOnboarding: boolean;
 
   isVendorMandatory: boolean;
+
+  isSaveInProgress: boolean;
 
   // State
   importStatuses: Record<Sage50ImportableField, boolean>;
@@ -105,6 +109,14 @@ export class Sage50ImportSettingsComponent implements OnInit {
     this.sourceFieldOptions.splice(this.sourceFieldOptions.length - 1, 0, option);
   }
 
+  public onBackButtonClick() {
+    this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
+  }
+
+  public onSave() {
+    this.isSaveInProgress = true;
+  }
+
   private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet): void {
     this.importableCOAOptions = Object.values(Sage50ImportableCOAType).map((value) => {
       const count = importableChartOfAccounts?.find((v) => v.chart_of_account === value)?.count ?? 0;
@@ -132,6 +144,29 @@ export class Sage50ImportSettingsComponent implements OnInit {
         placeholder: null
       }
     ];
+  }
+
+  private setupWatchers(): void {
+    // Auto-disable dependent fields
+    this.importSettingsForm.get('JOB')?.get('enabled')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('JOB')?.get('enabled')?.value)
+      )
+      .subscribe((enabled) => {
+        if (!enabled) {
+          this.importSettingsForm.get('PHASE')?.get('enabled')?.setValue(false);
+        }
+      });
+
+    this.importSettingsForm.get('PHASE')?.get('enabled')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('PHASE')?.get('enabled')?.value)
+      )
+      .subscribe((enabled) => {
+        if (!enabled) {
+          this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false);
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -162,6 +197,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
         importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
       );
       this.constructOptions(importableChartOfAccounts);
+
+      this.setupWatchers();
 
       this.isLoading = false;
     });

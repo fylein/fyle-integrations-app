@@ -3,7 +3,7 @@ import { ApiService } from "../../common/api.service";
 import { Observable } from "rxjs";
 import { Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet, Sage50MappingSettingRow } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
 import { WorkspaceService } from "../../common/workspace.service";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
 import { Sage50AccountingImportDetail } from "src/app/core/models/sage50/db/sage50-import-attributes.model";
 import { UploadedCSVFile } from "src/app/core/models/misc/configuration-csv-import-field.model";
@@ -127,6 +127,48 @@ export class Sage50ImportSettingsService {
                 destinationField: new FormControl(Sage50ImportableField.COST_CODE as Sage50ImportableField, { nonNullable: true }),
                 sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.COST_CODE]?.source_placeholder ?? null)
             })
+        }, {
+            validators: (form) => {
+                const errors: ValidationErrors = {};
+
+                for (const field of Object.values(Sage50ImportableField)) {
+                    const formGroup = form.get(field);
+                    const hasBeenImported = importStatuses[field];
+
+                    // If the field isn't enabled, skip validation
+                    // (a field can be disabled only if it is non-mandatory)
+                    if (!formGroup?.get('enabled')?.value) {
+                        continue;
+                    }
+
+                    // A valid file is mandatory if the field is enabled
+                    if (!formGroup?.get('file')?.value) {
+                        errors[field] = {
+                            ...errors[field],
+                            file: { required: true }
+                        };
+                    }
+
+                    // Code import is mandatory if the field is enabled and has NOT been imported before
+                    // If it has been imported before, import code is not shown at all since it is a one-time setting
+                    if (!hasBeenImported && formGroup?.get('importCode')?.value === null) {
+                        errors[field] = {
+                            ...errors[field],
+                            importCode: { required: true }
+                        };
+                    }
+
+                    // Source field is mandatory if the import field has one, and is enabled
+                    if (!!formGroup?.get('sourceField') && !formGroup?.get('sourceField')?.value) {
+                        errors[field] = {
+                            ...errors[field],
+                            sourceField: { required: true }
+                        };
+                    }
+                }
+
+                return Object.keys(errors).length > 0 ? errors : null;
+            }
         });
     }
 
