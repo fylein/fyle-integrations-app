@@ -218,16 +218,17 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importAttributesService.getAccountingImportDetailsByType(),
       this.exportSettingService.getExportSettings(),
       this.mappingService.getFyleFields('v1', { prefixWorkspaces: false }),
+      this.importSettingService.getImportCodeFieldsConfig(),
       ...attributeStatsRequests
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, accountStats, vendorStats]) => {
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
 
       // If payments or purchases are being exported, vendor is mandatory
       this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
 
-      this.importStatuses = this.importSettingService.getImportStatusesByField(importSettings);
+      this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
-        importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
+        importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
       );
       this.constructOptions(importableChartOfAccounts, fyleFields as unknown as Sage50FyleFieldGet[]);
 

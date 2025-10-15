@@ -32,6 +32,10 @@ export class Sage50ImportSettingsService {
         return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/importable_chart_of_accounts/`, {});
     }
 
+    getImportCodeFieldsConfig(): Observable<Record<Sage50ImportableField, boolean>> {
+        return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/import_code_fields_config/`, {});
+    }
+
     private getLastUploadedFile(importDetail?: Sage50AccountingImportDetail): UploadedCSVFile | null {
         if (!importDetail?.last_uploaded_on || !importDetail.last_uploaded_file_name) {
             return null;
@@ -47,6 +51,7 @@ export class Sage50ImportSettingsService {
         importSettings: Sage50ImportSettingsGet | null,
         accountingImportDetails: Record<Sage50AttributeType, Sage50AccountingImportDetail>,
         exportSettings: Sage50ExportSettingsGet | null,
+        importStatuses: Record<Sage50ImportableField, boolean>,
         accountStats?: DestinationAttributeStats,
         vendorStats?: DestinationAttributeStats
     ): FormGroup<Sage50ImportSettingsForm> {
@@ -73,14 +78,13 @@ export class Sage50ImportSettingsService {
         const {import_settings, mapping_settings} = importSettings ?? {};
         let isVendorEnabled = import_settings?.import_vendor_as_merchant ?? false;
         const isVendorMandatory = this.isVendorMandatory(exportSettings);
-        if (isVendorMandatory || vendorFile) {
+        if (isVendorMandatory) {
             isVendorEnabled = true;
         }
 
         const importCodeFields = import_settings?.import_code_fields ?? [];
         const chartOfAccounts = import_settings?.chart_of_accounts ?? [Sage50ImportableCOAType.EXPENSES];
 
-        const importStatuses = this.getImportStatusesByField(importSettings);
         const importCodeValues = {} as Record<Sage50ImportableField, boolean | null>;
         for (const field of Object.values(Sage50ImportableField)) {
             // If the field has been imported before, hide its importCode field but
@@ -230,19 +234,14 @@ export class Sage50ImportSettingsService {
     }
 
     getImportStatusesByField(
-        importSettings: Sage50ImportSettingsGet | null
+        importCodeFieldsConfig: Record<Sage50ImportableField, boolean>
     ): Record<Sage50ImportableField, boolean> {
-        const {import_settings, mapping_settings} = importSettings ?? {};
-
-        const mappedDestinationFields = mapping_settings?.map((setting) => setting.destination_field);
         const importStatuses = {} as Record<Sage50ImportableField, boolean>;
 
         for (const field of Object.values(Sage50ImportableField)) {
-            importStatuses[field] = mappedDestinationFields?.includes(field) ?? false;
+            // A field has been imported before if its import code field is not shown
+            importStatuses[field] = !importCodeFieldsConfig[field];
         }
-
-        importStatuses[Sage50ImportableField.ACCOUNT] = import_settings?.import_account_as_category ?? false;
-        importStatuses[Sage50ImportableField.VENDOR] = import_settings?.import_vendor_as_merchant ?? false;
         return importStatuses;
     }
 }
