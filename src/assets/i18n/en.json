@@ -2490,7 +2490,8 @@
     "costCodeLabel": "Cost code",
     "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase.",
     "importSettingsSavedSuccess": "Import settings saved successfully",
-    "importSettingsSaveError": "Error saving import settings, please try again later"
+    "importSettingsSaveError": "Error saving import settings, please try again later",
+    "vendorInfoText": "The same Vendor CSV will be used for employee-vendor mapping"
   },
   "configurationCsvImportField": {
     "preview": "Preview",
@@ -2516,5 +2517,8 @@
   },
   "integrations": {
     "reBrandedName": "Sage Expense Management"
+  },
+  "alert": {
+    "infoIconAlt": "Info icon"
   }
 }

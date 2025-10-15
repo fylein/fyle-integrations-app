@@ -45,6 +45,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() appDisplayName: string;
 
+  @Input() infoText: string;
+
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
   @Input() hasBeenImported: boolean;
