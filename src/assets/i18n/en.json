@@ -2488,7 +2488,9 @@
     "phaseLabel": "Phase",
     "phaseSubLabel": "Import phases to allocate expenses stage-wise across jobs.",
     "costCodeLabel": "Cost code",
-    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase."
+    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase.",
+    "importSettingsSavedSuccess": "Import settings saved successfully",
+    "importSettingsSaveError": "Error saving import settings, please try again later"
   },
   "configurationCsvImportField": {
     "preview": "Preview",

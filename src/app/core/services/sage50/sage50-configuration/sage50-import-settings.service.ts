@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../common/api.service";
 import { Observable } from "rxjs";
-import { Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet, Sage50MappingSettingRow } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
+import { Sage50FyleField, Sage50ImportableCOAGet, Sage50ImportableCOAType, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportSettingsGet, Sage50ImportSettingsPost, Sage50MappingSettingRow } from "src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model";
 import { WorkspaceService } from "../../common/workspace.service";
 import { FormControl, FormGroup, ValidationErrors } from "@angular/forms";
 import { Sage50AttributeType } from "src/app/core/models/enum/enum.model";
@@ -22,6 +22,10 @@ export class Sage50ImportSettingsService {
 
     getSage50ImportSettings(): Observable<Sage50ImportSettingsGet> {
         return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/import_settings/`, {});
+    }
+
+    putSage50ImportSettings(payload: Sage50ImportSettingsPost): Observable<void> {
+        return this.apiService.put(`/${this.workspaceService.getWorkspaceId()}/settings/import_settings/`, payload);
     }
 
     getImportableChartOfAccounts(): Observable<Sage50ImportableCOAGet> {
@@ -90,6 +94,8 @@ export class Sage50ImportSettingsService {
             mappedFields[setting.destination_field] = setting;
         }
 
+        const isMappedFieldEnabled = (field: Sage50ImportableField) => mappedFields[field]?.import_to_fyle ?? false;
+
         return new FormGroup<Sage50ImportSettingsForm>({
             ACCOUNT: new FormGroup({
                 enabled: new FormControl(true, { nonNullable: true }),
@@ -104,7 +110,7 @@ export class Sage50ImportSettingsService {
             }),
             // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
-                enabled: new FormControl(!!mappedFields[Sage50ImportableField.JOB], { nonNullable: true }),
+                enabled: new FormControl(isMappedFieldEnabled(Sage50ImportableField.JOB), { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),
                 importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB]),
                 sourceField: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_field ?? null),
@@ -112,7 +118,7 @@ export class Sage50ImportSettingsService {
                 sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_placeholder ?? null)
             }),
             PHASE: new FormGroup({
-                enabled: new FormControl(!!mappedFields[Sage50ImportableField.PHASE], { nonNullable: true }),
+                enabled: new FormControl(isMappedFieldEnabled(Sage50ImportableField.PHASE), { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.PHASE])),
                 importCode: new FormControl(importCodeValues[Sage50ImportableField.PHASE]),
                 sourceField: new FormControl(mappedFields[Sage50ImportableField.PHASE]?.source_field ?? null),
@@ -120,7 +126,7 @@ export class Sage50ImportSettingsService {
                 sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.PHASE]?.source_placeholder ?? null)
             }),
             COST_CODE: new FormGroup({
-                enabled: new FormControl(!!mappedFields[Sage50ImportableField.COST_CODE], { nonNullable: true }),
+                enabled: new FormControl(isMappedFieldEnabled(Sage50ImportableField.COST_CODE), { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.COST_CODE])),
                 importCode: new FormControl(importCodeValues[Sage50ImportableField.COST_CODE]),
                 sourceField: new FormControl(mappedFields[Sage50ImportableField.COST_CODE]?.source_field ?? null),
@@ -169,6 +175,38 @@ export class Sage50ImportSettingsService {
 
                 return Object.keys(errors).length > 0 ? errors : null;
             }
+        });
+    }
+
+    constructPayloadAndPost(importSettingsForm: FormGroup<Sage50ImportSettingsForm>): Observable<void> {
+        const importCodeFields = Object.values(Sage50ImportableField).filter((field) =>
+            importSettingsForm.get(field)?.get('importCode')?.value
+        );
+
+        const mappingSettings = [] as Sage50MappingSettingRow[];
+        for (const field of Object.values(Sage50ImportableField)) {
+            const sourceField = importSettingsForm.get(field)?.get('sourceField')?.value;
+            const sourcePlaceholder = importSettingsForm.get(field)?.get('sourcePlaceholder')?.value;
+            const enabled = importSettingsForm.get(field)?.get('enabled')?.value;
+            if (sourceField) {
+                mappingSettings.push({
+                    source_field: sourceField,
+                    destination_field: field,
+                    import_to_fyle: enabled ?? false,
+                    is_custom: ![Sage50FyleField.PROJECT, Sage50FyleField.COST_CENTER].includes(sourceField),
+                    source_placeholder: sourcePlaceholder ?? null
+                });
+            }
+        }
+
+        return this.putSage50ImportSettings({
+            import_settings: {
+                import_account_as_category: true,
+                import_vendor_as_merchant: !!importSettingsForm.get('VENDOR')?.get('enabled')?.value,
+                import_code_fields: importCodeFields,
+                chart_of_accounts: importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value ?? [Sage50ImportableCOAType.EXPENSES]
+            },
+            mapping_settings: mappingSettings
         });
     }
 
