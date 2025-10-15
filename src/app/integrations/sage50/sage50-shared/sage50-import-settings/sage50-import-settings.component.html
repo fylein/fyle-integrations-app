@@ -88,7 +88,7 @@
                     [uploadData]="uploadData.bind(this)"
                     [isSubfield]="true"
                 >
-                    <ng-container slot="subfield">
+                    <ng-container slot="subfield" [formGroup]="importSettingsForm">
                         <!-- COST_CODE: subfield of PHASE -->
                         <app-configuration-csv-import-field
                             [formGroupName]="'COST_CODE'"
