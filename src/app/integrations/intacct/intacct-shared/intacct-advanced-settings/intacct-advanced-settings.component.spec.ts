@@ -16,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctAdvancedSettingsComponent', () => {
@@ -28,7 +28,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
   let trackingService: jasmine.SpyObj<TrackingService>;
   let workspaceService: jasmine.SpyObj<SiWorkspaceService>;
   let mappingService: jasmine.SpyObj<SiMappingsService>;
-  let exportSettingService: jasmine.SpyObj<SiExportSettingService>;
+  let siExportSettingsService: jasmine.SpyObj<SiExportSettingsService>;
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
@@ -43,7 +43,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
     const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
     const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
-    const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingService', ['getExportSettings']);
+    const siExportSettingsServiceSpy = jasmine.createSpyObj('SiExportSettingsService', ['getExportSettings']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
         reRenderOnLangChange: true
@@ -62,7 +62,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: SiWorkspaceService, useValue: workspaceServiceSpy },
         { provide: SiMappingsService, useValue: mappingServiceSpy },
-        { provide: SiExportSettingService, useValue: exportSettingServiceSpy },
+        { provide: SiExportSettingsService, useValue: siExportSettingsServiceSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([])
       ]
@@ -73,7 +73,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     trackingService = TestBed.inject(TrackingService) as jasmine.SpyObj<TrackingService>;
     workspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
     mappingService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
-    exportSettingService = TestBed.inject(SiExportSettingService) as jasmine.SpyObj<SiExportSettingService>;
+    siExportSettingsService = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
@@ -83,7 +83,7 @@ describe('IntacctAdvancedSettingsComponent', () => {
     advancedSettingsService.getExpenseFilter.and.returnValue(of(expenseFilter as ExpenseFilterResponse));
     mappingService.getGroupedDestinationAttributes.and.returnValue(of(groupedAttributes));
     mappingService.getConfiguration.and.returnValue(of(configurationForAdvancedSettings));
-    exportSettingService.getExportSettings.and.returnValue(of(mockExportSettingGet));
+    siExportSettingsService.getExportSettings.and.returnValue(of(mockExportSettingGet));
 
     fixture = TestBed.createComponent(IntacctAdvancedSettingsComponent);
     component = fixture.componentInstance;
