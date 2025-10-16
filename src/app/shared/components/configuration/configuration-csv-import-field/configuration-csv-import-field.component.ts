@@ -45,11 +45,15 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() appDisplayName: string;
 
+  @Input() infoText: string;
+
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
   @Input() hasBeenImported: boolean;
 
   @Input() isSubfield: boolean = false;
+
+  @Input() previewImagePath: string;
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
@@ -77,6 +81,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   });
 
   public showCustomFieldDialog = false;
+
+  public showPreviewDialog = false;
 
   public isOnboarding: boolean;
 
@@ -187,9 +193,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
         }
         // Update the source placeholder along with source field updates
         const currentOption = this.sourceFieldOptions.find(option => option.value === currentValue);
-        if (currentOption?.placeholder) {
-          this.csvImportForm?.get('sourcePlaceholder')?.patchValue(currentOption.placeholder);
-        }
+        this.csvImportForm?.get('sourcePlaceholder')?.patchValue(currentOption?.placeholder ?? null);
       });
   }
 

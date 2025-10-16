@@ -91,8 +91,9 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
+  getFyleFields(version?: 'v1', { prefixWorkspaces } = { prefixWorkspaces: true }): Observable<FyleField[]> {
+    const prefix = prefixWorkspaces ? '/workspaces' : '';
+    return this.apiService.get(`${prefix}/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
