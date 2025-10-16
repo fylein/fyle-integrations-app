@@ -1,22 +1,23 @@
-import { LowerCasePipe } from '@angular/common';
-import { Component, Host, Input, OnInit, Optional } from '@angular/core';
-import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { CommonModule, LowerCasePipe } from '@angular/common';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
-import { Sage50FyleField, Sage50ImportableCOAType, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
+import { Sage50FyleField, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CSVImportFieldForm, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
+import { CSVImportFieldForm, CSVImportFieldFormWithMapping, CSVImportSourceFieldOption, UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { Router } from '@angular/router';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
+import { pairwise, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-configuration-csv-import-field',
   standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent],
+  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
   templateUrl: './configuration-csv-import-field.component.html',
   styleUrl: './configuration-csv-import-field.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -36,13 +37,23 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() sourceField: Sage50FyleField;
 
+  @Input() sourceFieldOptions: CSVImportSourceFieldOption[];
+
+  @Output() addSourceFieldOption = new EventEmitter<CSVImportSourceFieldOption>();
+
   @Input() destinationField: Sage50ImportableField;
 
   @Input() appDisplayName: string;
 
+  @Input() infoText: string;
+
   @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
 
   @Input() hasBeenImported: boolean;
+
+  @Input() isSubfield: boolean = false;
+
+  @Input() previewImagePath: string;
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
@@ -61,7 +72,17 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     }
   ];
 
-  public csvImportForm!: FormGroup<CSVImportFieldForm>;
+  public csvImportForm!: FormGroup<CSVImportFieldForm | CSVImportFieldFormWithMapping>;
+
+  public customFieldForm = new FormGroup({
+    attribute_type: new FormControl('', Validators.required),
+    display_name: new FormControl(''),
+    source_placeholder: new FormControl('', Validators.required)
+  });
+
+  public showCustomFieldDialog = false;
+
+  public showPreviewDialog = false;
 
   public isOnboarding: boolean;
 
@@ -77,12 +98,21 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     return this.csvImportForm?.get('file')?.value ?? null;
   }
 
+  get isSourceFieldEditable() {
+    return this.sourceFieldOptions?.length > 0;
+  }
+
+  get isUploadDisabled() {
+    return this.isSourceFieldEditable && !this.csvImportForm?.get('sourceField')?.value;
+  }
+
 
   constructor(
     private translocoService: TranslocoService,
     private formGroupDirective: FormGroupDirective,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   handleUploadClick() {
@@ -118,9 +148,59 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     });
   }
 
+  handleCustomFieldSave() {
+    const rawFieldName = this.customFieldForm.get('attribute_type')?.value;
+    const fieldName = rawFieldName?.split(' ')?.join('_')?.toUpperCase();
+    const placeholder = this.customFieldForm.get('source_placeholder')?.value;
+
+    // Add the new option to the global sourceFieldOptions
+    this.addSourceFieldOption.emit({
+      label: rawFieldName ?? '',
+      value: fieldName ?? null,
+      placeholder: placeholder ?? null
+    });
+
+    // Set the new values to the csvImportForm
+    this.csvImportForm?.get('sourceField')?.patchValue(fieldName ?? null);
+    this.csvImportForm?.get('sourcePlaceholder')?.patchValue(placeholder ?? null);
+    this.showCustomFieldDialog = false;
+  }
+
+  closeModel() {
+    this.showCustomFieldDialog = false;
+    this.customFieldForm.reset();
+  }
+
+  private setupWatchers(): void {
+    if (!this.csvImportForm?.get('sourceField')) {
+      return;
+    }
+    const sourceFieldControl = (this.csvImportForm as FormGroup<CSVImportFieldFormWithMapping>).get('sourceField');
+    sourceFieldControl?.valueChanges
+      .pipe(
+        startWith(this.csvImportForm?.get('sourceField')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        if (currentValue === 'custom_field') {
+          // Hack to get primeNG dropdown to update
+          setTimeout(() => {
+            this.csvImportForm?.get('sourceField')?.patchValue(previousValue ?? null);
+            this.cdr.detectChanges();
+          }, 0);
+          this.customFieldForm.reset();
+          this.showCustomFieldDialog = true;
+        }
+        // Update the source placeholder along with source field updates
+        const currentOption = this.sourceFieldOptions.find(option => option.value === currentValue);
+        this.csvImportForm?.get('sourcePlaceholder')?.patchValue(currentOption?.placeholder ?? null);
+      });
+  }
+
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.csvImportForm = this.formGroupDirective.form.get(this.formGroupName) as FormGroup;
+    this.setupWatchers();
   }
 
 }
