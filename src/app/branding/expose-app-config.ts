@@ -11,7 +11,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
+            BAMBOO_HR: true,
             QBD_DIRECT: true,
             SAGE50: true
         },
@@ -24,7 +24,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
+            BAMBOO_HR: true,
             QBD_DIRECT: false,
             SAGE50: false
         },
@@ -37,7 +37,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
+            BAMBOO_HR: true,
             QBD_DIRECT: true,
             // TODO(sage50): enable after dev
             SAGE50: false
@@ -53,7 +53,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false,
+            BAMBOO_HR: false,
             QBD_DIRECT: true,
             SAGE50: false
         },
@@ -66,7 +66,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false,
+            BAMBOO_HR: false,
             QBD_DIRECT: false,
             SAGE50: false
         },
@@ -79,7 +79,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false,
+            BAMBOO_HR: false,
             QBD_DIRECT: false,
             SAGE50: false
         }

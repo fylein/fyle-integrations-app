@@ -1908,7 +1908,7 @@
   },
   "landingV2": {
     "integrationsList": "List of integrations",
-    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with Fyle. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support@fylehq.com</a>",
+    "integrationsDescription": "If your company uses any of the applications listed below, you can easily integrate them with {{brandName}}. <br> Need an integration we don't support yet? Let us know at <a class=\"link\" href=\"mailto:support@fylehq.com\">support@fylehq.com</a>",
     "tabAll": "All",
     "tabAccounting": "Accounting",
     "tabHRMS": "HRMS",
@@ -2067,7 +2067,7 @@
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
     },
-    "intacctConnector": {
+    "siConnector": {
       "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage Intacct connection expired, please connect again"
@@ -2085,7 +2085,7 @@
     "businessCentralHelper": {
       "syncingDataDimensions": "Syncing data dimensions from Dynamics 365 Business Central"
     },
-    "sage300ExportSetting": {
+    "sage300ExportSettings": {
       "expense": "Expense",
       "expenseReport": "Expense report",
       "cardTransactionPostDate": "Card transaction post date",
@@ -2156,7 +2156,7 @@
       "emailToQboEmail": "{brandName} Email to QuickBooks Online Email",
       "employeeCodeToQboDisplayName": "{brandName} Employee Code to QuickBooks Online Display name"
     },
-    "intacctExportSettings": {
+    "siExportSetting": {
       "verificationDate": "Verification date",
       "spendDate": "Spend date",
       "approvalDate": "Approval date",
