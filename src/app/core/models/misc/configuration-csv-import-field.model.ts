@@ -17,3 +17,9 @@ export interface CSVImportFieldFormWithMapping extends CSVImportFieldForm {
     destinationField: FormControl<string>;
     sourcePlaceholder: FormControl<string | null>;
 }
+
+export type CSVImportSourceFieldOption = {
+    label: string;
+    value: string | null;
+    placeholder: string | null;
+}
