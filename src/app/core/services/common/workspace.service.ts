@@ -21,19 +21,8 @@ export class WorkspaceService {
     helper.setBaseApiURL();
    }
 
-
-  private buildWorkspacePath(path: string): string {
-    const appName = this.helper.getAppName();
-
-    if (appName === 'sage50') {
-      return `/${path}`;
-    }
-
-    return `/workspaces/${path}`;
-  }
-
   importFyleAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(this.buildWorkspacePath(`${this.getWorkspaceId()}/fyle/import_attributes/`), {refresh});
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/fyle/import_attributes/`), {refresh});
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
@@ -80,14 +69,14 @@ export class WorkspaceService {
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getConfiguration(): Observable<any> {
-    return this.apiService.get(this.buildWorkspacePath(`${this.getWorkspaceId()}/configuration/`), {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/configuration/`), {});
   }
 
   getWorkspaceGeneralSettings(): Observable<any> {
-    return this.apiService.get(this.buildWorkspacePath(`${this.getWorkspaceId()}/settings/general/`), {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/settings/general/`), {});
   }
 
   updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<QbdDirectWorkspace> {
-    return this.apiService.patch(this.buildWorkspacePath(`${this.getWorkspaceId()}/onboarding_state/`), payload);
+    return this.apiService.patch(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/onboarding_state/`), payload);
   }
 }

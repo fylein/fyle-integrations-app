@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AppName, FyleField, Sage50AttributeType, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, FyleField, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
@@ -33,13 +33,9 @@ export class Sage50BaseMappingComponent implements OnInit {
 
   destinationField: string;
 
-  showAutoMapEmployee: boolean;
-
   AppName = AppName;
 
   FyleField = FyleField;
-
-  displayName: string | undefined = undefined;
 
   isMultiLineOption: boolean;
 
@@ -55,17 +51,6 @@ export class Sage50BaseMappingComponent implements OnInit {
     private exportSettingsService: Sage50ExportSettingsService,
     private translocoService: TranslocoService
   ) { }
-
-  triggerAutoMapEmployees(): void {
-    this.isLoading = true;
-    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('sage50BaseMapping.autoMappingInProgress'));
-    }, () => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage50BaseMapping.autoMappingError'));
-    });
-  }
 
   private getDestinationField(mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
@@ -86,25 +71,17 @@ export class Sage50BaseMappingComponent implements OnInit {
 
     this.sourceField = decodeURIComponent(sourceFieldParam).toUpperCase();
     forkJoin([
-      this.mappingService.getSage50MappingSettings(),
+      this.mappingService.getMappingSettings(),
       this.exportSettingsService.getExportSettings(),
       this.importSettingsService.getSage50ImportSettings()
     ]).subscribe((responses) => {
-      this.employeeFieldMapping = FyleField.EMPLOYEE;
-      this.showAutoMapEmployee = false;
+      this.employeeFieldMapping = FyleField.VENDOR;
       this.destinationField = this.getDestinationField(responses[0].results);
-
       this.destinationAttributes = this.destinationField;
 
       this.isMultiLineOption = responses[2]?.import_settings?.import_code_fields?.includes(this.destinationField as Sage50ImportableField) || false;
 
-      if (this.destinationField === Sage50AttributeType.ACCOUNT) {
-        this.displayName = AccountingDisplayName.ACCOUNT;
-      } else {
-        this.displayName = undefined;
-      }
-
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, undefined, this.displayName).subscribe((responses) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, undefined, undefined).subscribe((responses) => {
         this.destinationOptions = responses.results;
         this.isLoading = false;
       });
