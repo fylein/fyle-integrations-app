@@ -21,7 +21,7 @@
         <a *ngIf="redirectLink"
           class="link tw-text-14-px tw-w-fit tw-pl-6-px tw-inline-flex tw-items-center"
           (click)="windowService.openInNewTab(redirectLink)">
-          {{'common.readMoreText' | transloco}}
+          {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.common.readMoreText' : 'common.readMoreText') | transloco}}
           <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"
             [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
           </app-svg-icon>

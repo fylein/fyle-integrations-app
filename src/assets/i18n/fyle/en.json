@@ -2,7 +2,8 @@
   "qbd_direct": {
     "landing": {
       "contentText": "Import data from QuickBooks Desktop to {{brandName}} and export expenses from {{brandName}} to QuickBooks Desktop",
-      "guideHeaderText": "Guide to setup your integration"
+      "guideHeaderLineText": "Guide to setup your integration",
+      "guideHeaderText": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."
     },
     "configuration": {
       "preRequisite": {
@@ -490,13 +491,21 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "learnMore": "Learn more",
-    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
+    "installWebConnectorLabel": "Install QuickBooks Web Connector",
+    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.",
+    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
+    "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
+    "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
+    "loginAsAdminCaption": "Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode."
   },
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Enter company file path",
     "companyFilePathHelpText": "Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.",
     "findPathVideoTitle": "Where to find company file path?",
-    "downloadWillBegin": "Your download will begin"
+    "downloadWillBegin": "Your download will begin",
+    "downloadManuallyLink": "download the integration file manually",
+    "notRightFilePrompt": "Not the right file? ",
+    "tryAgainLink": "Try again."
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Use this password to set up the connection",

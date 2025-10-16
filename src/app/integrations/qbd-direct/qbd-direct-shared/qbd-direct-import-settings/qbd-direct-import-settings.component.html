@@ -19,7 +19,8 @@
                         [subLabel]="'qbd_direct.configuration.importSetting.importCategoriesSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        [appName]="appName">
                     </app-configuration-toggle-field>
 
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.value.importCategories" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
@@ -70,7 +71,8 @@
                         [label]="'qbd_direct.configuration.importSetting.importItemsLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [subLabel]="'qbd_direct.configuration.importSetting.importItemsSubLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importItems'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        [appName]="appName">
                     </app-configuration-toggle-field>
                 </div>
 
@@ -80,7 +82,8 @@
                         [label]="'qbd_direct.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco : {brandName: brandingConfig.brandName}"
                         [subLabel]="'qbdDirectImportSettings.importVendorsAsMerchantsSubLabel' | transloco : { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        [appName]="appName">
                     </app-configuration-toggle-field>
                 </div>
 
