@@ -2488,7 +2488,10 @@
     "phaseLabel": "Phase",
     "phaseSubLabel": "Import phases to allocate expenses stage-wise across jobs.",
     "costCodeLabel": "Cost code",
-    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase."
+    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase.",
+    "importSettingsSavedSuccess": "Import settings saved successfully",
+    "importSettingsSaveError": "Error saving import settings, please try again later",
+    "vendorInfoText": "The same Vendor CSV will be used for employee-vendor mapping"
   },
   "configurationCsvImportField": {
     "preview": "Preview",
@@ -2502,7 +2505,8 @@
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
     "importFormatPlaceholder": "Select display name format",
-    "selectSourceFieldPlaceholder": "Select field in {{brandName}}"
+    "selectSourceFieldPlaceholder": "Select field in {{brandName}}",
+    "previewHeader": "Preview of a {{brandName}} expense"
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",
@@ -2514,5 +2518,8 @@
   },
   "integrations": {
     "reBrandedName": "Sage Expense Management"
+  },
+  "alert": {
+    "infoIconAlt": "Info icon"
   }
 }
