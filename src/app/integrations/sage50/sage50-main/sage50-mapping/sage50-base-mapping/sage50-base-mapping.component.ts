@@ -46,20 +46,16 @@ export class Sage50BaseMappingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
-    private toastService: IntegrationsToastService,
     private importSettingsService: Sage50ImportSettingsService,
-    private exportSettingsService: Sage50ExportSettingsService,
-    private translocoService: TranslocoService
-  ) { }
+    private exportSettingsService: Sage50ExportSettingsService
+    ) { }
 
-  private getDestinationField(mappingSettings: MappingSetting[]): string {
+  private getDestinationField(): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return Sage50AttributeType.VENDOR;
-    } else if (this.sourceField === FyleField.CATEGORY) {
-      return Sage50AttributeType.ACCOUNT;
     }
+      return Sage50AttributeType.ACCOUNT;
 
-    return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
   }
 
   private setupPage(): void {
@@ -76,7 +72,7 @@ export class Sage50BaseMappingComponent implements OnInit {
       this.importSettingsService.getSage50ImportSettings()
     ]).subscribe((responses) => {
       this.employeeFieldMapping = FyleField.VENDOR;
-      this.destinationField = this.getDestinationField(responses[0].results);
+      this.destinationField = this.getDestinationField();
       this.destinationAttributes = this.destinationField;
 
       this.isMultiLineOption = responses[2]?.import_settings?.import_code_fields?.includes(this.destinationField as Sage50ImportableField) || false;
