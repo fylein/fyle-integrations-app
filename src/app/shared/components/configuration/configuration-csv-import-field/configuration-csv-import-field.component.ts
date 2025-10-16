@@ -53,6 +53,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() isSubfield: boolean = false;
 
+  @Input() previewImagePath: string;
+
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
   readonly brandingConfig = brandingConfig;
@@ -79,6 +81,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   });
 
   public showCustomFieldDialog = false;
+
+  public showPreviewDialog = false;
 
   public isOnboarding: boolean;
 
