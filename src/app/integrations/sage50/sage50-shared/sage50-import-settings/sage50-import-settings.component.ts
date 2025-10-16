@@ -91,18 +91,13 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
     return this.sourceFieldOptions.filter(option => {
 
-      // Include value if it is the current value of this source field
+      // Include option if it is the current value of this source field
       if (option.value === this.importSettingsForm.get(destinationField)?.get('sourceField')?.value) {
         return true;
       }
 
       // Exclude options already selected in other source fields
       if (selectedSourceFields.includes(option.value as Sage50FyleField)) {
-        return false;
-      }
-
-      // Include PROJECT only if destinationField is JOB
-      if (destinationField !== Sage50ImportableField.JOB && option.value === Sage50FyleField.PROJECT) {
         return false;
       }
 
@@ -160,11 +155,6 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
     this.sourceFieldOptions = [
       {
-        label: this.translocoService.translate('sage50ImportSettings.projectLabel'),
-        value: Sage50FyleField.PROJECT,
-        placeholder: null
-      },
-      {
         label: this.translocoService.translate('sage50ImportSettings.costCenterLabel'),
         value: Sage50FyleField.COST_CENTER,
         placeholder: null
@@ -218,16 +208,17 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importAttributesService.getAccountingImportDetailsByType(),
       this.exportSettingService.getExportSettings(),
       this.mappingService.getFyleFields('v1', { prefixWorkspaces: false }),
+      this.importSettingService.getImportCodeFieldsConfig(),
       ...attributeStatsRequests
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, accountStats, vendorStats]) => {
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
 
       // If payments or purchases are being exported, vendor is mandatory
       this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
 
-      this.importStatuses = this.importSettingService.getImportStatusesByField(importSettings);
+      this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
-        importSettings, accountingImportDetails, exportSettings, accountStats, vendorStats
+        importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
       );
       this.constructOptions(importableChartOfAccounts, fyleFields as unknown as Sage50FyleFieldGet[]);
 
