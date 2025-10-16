@@ -1,0 +1,10 @@
+<div class="tw-flex tw-gap-8-px">
+    @if (type === 'info') {
+        <img
+            src='assets/icons/info-circle-fill-blue.svg'
+            [class]="'tw-w-20-px tw-h-20-px'"
+            [alt]="'alert.infoIconAlt' | transloco"
+        >
+    }
+    <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{ message }}</p>
+</div>
