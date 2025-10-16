@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
+import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { Sage50CCCExportType, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-sage50-mapping',
@@ -37,43 +40,58 @@ export class Sage50MappingComponent implements OnInit {
 
   constructor(
     private mappingService: MappingService,
+    private exportSettingsService: Sage50ExportSettingsService,
     private router: Router,
     private translocoService: TranslocoService
   ) { }
 
   setupPage(): void {
-    this.mappingService.getMappingSettings().subscribe((response) => {
-        if (response.results && Array.isArray(response.results)) {
-          response.results.forEach((item) => {
-            if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
-              const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
-              this.modules.push({
-                label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
-                routerLink: `/integrations/qbo/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
-              });
-            }
-          });
-        }
-        if (!brandingFeatureConfig.featureFlags.mapEmployees) {
-          this.modules.splice(0, 1);
-        }
+    this.isLoading = true;
+
+    forkJoin([
+      this.mappingService.getSage50MappingSettings(),
+      this.exportSettingsService.getExportSettings()
+    ]).subscribe(([mappingSettings, exportSettings]) => {
+      this.modules = [];
+
+      if (exportSettings?.reimbursable_expense_export_type === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY) {
+        this.modules.push({
+          label: this.translocoService.translate('sage50Mapping.employeeLabel'),
+          routerLink: '/integrations/sage50/main/mapping/employee'
+        });
+      }
+
+      if (exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL) {
+        this.modules.push({
+          label: this.translocoService.translate('sage50Mapping.corporateCardLabel'),
+          routerLink: '/integrations/sage50/main/mapping/corporate_card'
+        });
+      }
+
+      // Add custom field mappings from backend
+      if (mappingSettings.results && Array.isArray(mappingSettings.results)) {
+        mappingSettings.results.forEach((item) => {
+          if (item.source_field !== FyleField.EMPLOYEE &&
+              item.source_field !== FyleField.CATEGORY &&
+              item.source_field !== FyleField.CORPORATE_CARD) {
+            const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
+            this.modules.push({
+              label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
+              routerLink: `/integrations/sage50/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+            });
+          }
+        });
+      }
+
+      if (this.modules.length > 0) {
         this.router.navigateByUrl(this.modules[0].routerLink);
-        this.isLoading = false;
-      });
+      }
+
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
-    this.modules = [
-      {
-        label: this.translocoService.translate('sage50Mapping.employeeLabel'),
-        routerLink: '/integrations/sage50/main/mapping/employee'
-      },
-      {
-        label: this.translocoService.translate('sage50Mapping.categoryLabel'),
-        routerLink: '/integrations/sage50/main/mapping/category'
-      }
-    ];
-
     this.setupPage();
   }
 }

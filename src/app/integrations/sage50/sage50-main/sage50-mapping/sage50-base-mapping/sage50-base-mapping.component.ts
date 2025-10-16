@@ -7,7 +7,6 @@ import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingDisplayName, AppName, FyleField, Sage50AttributeType, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
@@ -52,7 +51,6 @@ export class Sage50BaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService,
     private importSettingsService: Sage50ImportSettingsService,
     private exportSettingsService: Sage50ExportSettingsService,
     private translocoService: TranslocoService
@@ -80,19 +78,25 @@ export class Sage50BaseMappingComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
+    const sourceFieldParam = this.route.snapshot.params.source_field;
+    if (!sourceFieldParam) {
+      this.isLoading = false;
+      return;
+    }
+
+    this.sourceField = decodeURIComponent(sourceFieldParam).toUpperCase();
     forkJoin([
-      this.mappingService.getMappingSettings(),
+      this.mappingService.getSage50MappingSettings(),
       this.exportSettingsService.getExportSettings(),
       this.importSettingsService.getSage50ImportSettings()
     ]).subscribe((responses) => {
       this.employeeFieldMapping = FyleField.EMPLOYEE;
-      this.showAutoMapEmployee = false; // TODO: Update when workspace settings are available
+      this.showAutoMapEmployee = false;
       this.destinationField = this.getDestinationField(responses[0].results);
 
       this.destinationAttributes = this.destinationField;
 
-      this.isMultiLineOption = responses[2].import_settings.import_code_fields?.includes(this.destinationField as Sage50ImportableField);
+      this.isMultiLineOption = responses[2]?.import_settings?.import_code_fields?.includes(this.destinationField as Sage50ImportableField) || false;
 
       if (this.destinationField === Sage50AttributeType.ACCOUNT) {
         this.displayName = AccountingDisplayName.ACCOUNT;

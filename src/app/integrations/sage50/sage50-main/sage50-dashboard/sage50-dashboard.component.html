@@ -7,11 +7,11 @@
 <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
 </div>
-} 
-@if (!isLoading) {
+}
+
+@if (!isLoading && !isSage50TokenNotValid) {
     <app-dashboard-export-section
         (export)="export()"
-        [loaderType]="LoaderType.INDETERMINATE"
         [appName]="appName"
         [isImportInProgress]="isImportInProgress"
         [isExportInProgress]="isExportInProgress"

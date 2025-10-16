@@ -1134,7 +1134,7 @@
   },
   "sage50Mapping": {
     "employeeLabel": "Employee",
-    "categoryLabel": "Category"
+    "corporateCardLabel": "Corporate Card"
   },
   "sage50BaseMapping": {
     "autoMappingInProgress": "Auto mapping of employees is in progress",

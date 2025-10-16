@@ -55,11 +55,7 @@ export const SAGE50_ROUTES: Routes = [
                 pathMatch: 'full'
               },
               {
-                path: 'employee',
-                loadComponent: () => import('./sage50-main/sage50-mapping/sage50-base-mapping/sage50-base-mapping.component').then(m => m.Sage50BaseMappingComponent)
-              },
-              {
-                path: 'category',
+                path: ':source_field',
                 loadComponent: () => import('./sage50-main/sage50-mapping/sage50-base-mapping/sage50-base-mapping.component').then(m => m.Sage50BaseMappingComponent)
               }
             ]
