@@ -112,12 +112,11 @@ export class Sage50ImportSettingsService {
                 file: new FormControl(vendorFile),
                 importCode: new FormControl(importCodeValues[Sage50ImportableField.VENDOR])
             }),
-            // TODO(sage50): check mapping_settings to see if these fields are enabled
             JOB: new FormGroup({
                 enabled: new FormControl(isMappedFieldEnabled(Sage50ImportableField.JOB), { nonNullable: true }),
                 file: new FormControl(this.getLastUploadedFile(accountingImportDetails[Sage50AttributeType.JOB])),
                 importCode: new FormControl(importCodeValues[Sage50ImportableField.JOB]),
-                sourceField: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_field ?? null),
+                sourceField: new FormControl(Sage50FyleField.PROJECT as Sage50FyleField),
                 destinationField: new FormControl(Sage50ImportableField.JOB as Sage50ImportableField, { nonNullable: true }),
                 sourcePlaceholder: new FormControl(mappedFields[Sage50ImportableField.JOB]?.source_placeholder ?? null)
             }),
