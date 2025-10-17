@@ -6,11 +6,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import { DialogService } from 'primeng/dynamicdialog';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import { ConditionField, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ScheduleDialogData, ScheduleForm } from 'src/app/core/models/misc/schedule-dialog.model';
 import { Sage50AdvancedSettings, Sage50AdvancedSettingsForm } from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
 import { Sage50CCCExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { ScheduleFormService } from 'src/app/core/services/misc/schedule-form.service';
 import { Sage50AdvancedSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-advanced-settings.service';
@@ -47,6 +49,10 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
   isTopLevelMemoVisible: boolean = false;
 
+  get isSkipExportEnabled() {
+    return this.advancedSettingsForm.get('isSkipExportEnabled')?.value ?? false;
+  }
+
   // Other state
   schedulePreview: string | null = null;
 
@@ -57,6 +63,8 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
   // Form
   advancedSettingsForm!: FormGroup<Sage50AdvancedSettingsForm>;
+
+  skipExportForm!: FormGroup;
 
   // API Response
   advancedSettings!: Sage50AdvancedSettings | null;
@@ -72,12 +80,17 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     return this.advancedSettingsService.getLineLevelMemoOptions(this.exportSettings);
   }
 
+  expenseFilters!: ExpenseFilterResponse;
+
+  conditionFieldOptions!: ConditionField[];
+
   constructor(
     private router: Router,
     private advancedSettingsService: Sage50AdvancedSettingsService,
     private exportSettingService: Sage50ExportSettingsService,
     private dialogService: DialogService,
     private scheduleFormService: ScheduleFormService,
+    private skipExportService: SkipExportService,
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
@@ -120,6 +133,10 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     });
   }
 
+  deleteExpenseFilter(id: number) {
+    this.skipExportService.deleteExpenseFilter(id).subscribe();
+  }
+
   private setupFormWatchers() {
     this.advancedSettingsForm.get('isScheduleEnabled')?.valueChanges.subscribe(value => {
       if (value) {
@@ -142,13 +159,23 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
     forkJoin([
       this.advancedSettingsService.getSage50AdvancedSettings(),
-      this.exportSettingService.getExportSettings()
-    ]).subscribe(([advancedSettings, exportSettings]) => {
+      this.exportSettingService.getExportSettings(),
+      this.skipExportService.getExpenseFilter(),
+      this.skipExportService.getExpenseFields()
+    ]).subscribe(([advancedSettings, exportSettings, expenseFilters, expenseFields]) => {
       this.advancedSettings = advancedSettings;
       this.exportSettings = exportSettings;
+      this.expenseFilters = expenseFilters;
+      this.conditionFieldOptions = expenseFields;
+
       this.isTopLevelMemoVisible = exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
 
-      this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(advancedSettings);
+      // Build both forms
+      const isSkipExportEnabled = expenseFilters.count > 0;
+      this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(advancedSettings, isSkipExportEnabled);
+      this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
+
+      // Set schedule preview from the schedule form value
       this.schedulePreview = this.scheduleFormService.getSchedulePreview(
         this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
       );
