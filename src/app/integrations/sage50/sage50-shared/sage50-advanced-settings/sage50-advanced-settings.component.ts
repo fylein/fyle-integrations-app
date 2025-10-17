@@ -9,6 +9,7 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ScheduleDialogData, ScheduleForm } from 'src/app/core/models/misc/schedule-dialog.model';
 import { Sage50AdvancedSettings, Sage50AdvancedSettingsForm } from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
+import { Sage50CCCExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { ScheduleFormService } from 'src/app/core/services/misc/schedule-form.service';
@@ -44,14 +45,32 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
+  isTopLevelMemoVisible: boolean = false;
+
   // Other state
   schedulePreview: string | null = null;
+
+  topLevelMemoPreviewText: string = '';
+
+  lineLevelMemoPreviewText: string = '';
+
 
   // Form
   advancedSettingsForm!: FormGroup<Sage50AdvancedSettingsForm>;
 
   // API Response
   advancedSettings!: Sage50AdvancedSettings | null;
+
+  exportSettings!: Sage50ExportSettingsGet | null;
+
+  // Options
+  get topLevelMemoOptions() {
+    return this.advancedSettingsService.getTopLevelMemoOptions();
+  }
+
+  get lineLevelMemoOptions() {
+    return this.advancedSettingsService.getLineLevelMemoOptions(this.exportSettings);
+  }
 
   constructor(
     private router: Router,
@@ -107,6 +126,14 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
         this.editSchedule();
       }
     });
+
+    this.advancedSettingsForm.get('topLevelMemoStructure')?.valueChanges.subscribe(value => {
+      this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
+    });
+
+    this.advancedSettingsForm.get('lineLevelMemoStructure')?.valueChanges.subscribe(value => {
+      this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
+    });
   }
 
   ngOnInit(): void {
@@ -114,9 +141,13 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
 
     forkJoin([
-      this.advancedSettingsService.getSage50AdvancedSettings()
-    ]).subscribe(([advancedSettings]) => {
+      this.advancedSettingsService.getSage50AdvancedSettings(),
+      this.exportSettingService.getExportSettings()
+    ]).subscribe(([advancedSettings, exportSettings]) => {
       this.advancedSettings = advancedSettings;
+      this.exportSettings = exportSettings;
+      this.isTopLevelMemoVisible = exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
+
       this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(advancedSettings);
       this.schedulePreview = this.scheduleFormService.getSchedulePreview(
         this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>

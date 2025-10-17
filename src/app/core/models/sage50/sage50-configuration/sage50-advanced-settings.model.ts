@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ScheduleForm } from "../../misc/schedule-dialog.model";
 
-enum Sage50LineLevelMemoOption {
+export enum Sage50LineLevelMemoOption {
     PURPOSE = 'purpose',
     SPENT_AT = 'spent_at',
     MERCHANT = 'merchant',
@@ -10,7 +10,7 @@ enum Sage50LineLevelMemoOption {
     CARD_MERCHANT = 'card_merchant',
 }
 
-enum Sage50TopLevelMemoOption {
+export enum Sage50TopLevelMemoOption {
     CARD_NUMBER = 'card_number',
     EMPLOYEE_NAME = 'employee_name',
 }
@@ -28,6 +28,6 @@ export type Sage50AdvancedSettings = {
 export interface Sage50AdvancedSettingsForm {
     isScheduleEnabled: FormControl<boolean>;
     schedule: FormGroup<ScheduleForm>;
-    lineLevelMemoStructure: FormControl<Sage50LineLevelMemoOption[] | null>;
-    topLevelMemoStructure: FormControl<Sage50TopLevelMemoOption[] | null>;
+    lineLevelMemoStructure: FormControl<Sage50LineLevelMemoOption[] | []>;
+    topLevelMemoStructure: FormControl<Sage50TopLevelMemoOption[] | []>;
 }

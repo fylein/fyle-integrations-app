@@ -36,6 +36,47 @@
                 </div>
             }
         </div>
+
+        @if (isTopLevelMemoVisible) {
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-multi-select
+                [form]="advancedSettingsForm"
+                [formControllerName]="'topLevelMemoStructure'"
+                [options]="topLevelMemoOptions"
+                [isFieldMandatory]="true"
+                [mandatoryErrorListName]="'sage50AdvancedSettings.topLevelMemoErrorName' | transloco"
+                [label]="'sage50AdvancedSettings.topLevelMemoLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.topLevelMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [placeholder]="'sage50AdvancedSettings.topLevelMemoPlaceholder' | transloco"
+                [iconPath]="'list'"
+            ></app-configuration-multi-select>
+
+            <div class="tw-m-24-px tw-mt-[-8px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+                <p>{{topLevelMemoPreviewText || ('sage50AdvancedSettings.memoPreviewPlaceholder' | transloco)}}</p>
+            </div>
+        </div>
+        }
+
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-multi-select
+                [form]="advancedSettingsForm"
+                [formControllerName]="'lineLevelMemoStructure'"
+                [options]="lineLevelMemoOptions"
+                [isFieldMandatory]="true"
+                [mandatoryErrorListName]="'sage50AdvancedSettings.lineLevelMemoErrorName' | transloco"
+                [label]="'sage50AdvancedSettings.lineLevelMemoLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.lineLevelMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [placeholder]="'sage50AdvancedSettings.lineLevelMemoPlaceholder' | transloco"
+                [iconPath]="'list'"
+                [maxSelections]="3"
+            ></app-configuration-multi-select>
+
+            <div class="tw-m-24-px tw-mt-[-8px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+                <p>{{lineLevelMemoPreviewText || ('sage50AdvancedSettings.memoPreviewPlaceholder' | transloco)}}</p>
+            </div>
+        </div>
+
+
     </form>
 </div>
 }
