@@ -1,0 +1,67 @@
+<app-dialog
+    (closeDialog)="closeDialog()"
+    (buttonClick)="save()"
+    [header]="'scheduleDialog.header' | transloco"
+    [buttonText]="'scheduleDialog.save' | transloco"
+    [showCancelButton]="true"
+    [isButtonDisabled]="!form.valid"
+>
+    <div [formGroup]="form" class="tw-flex tw-flex-col tw-gap-24-px tw-p-24-px tw-border-t tw-border-b tw-border-border-tertiary">
+        <p class="tw-text-14-px tw-text-text-secondary">{{ 'scheduleDialog.contentText' | transloco: { brandName: brandingConfig.brandName } }}</p>
+
+        <div class="tw-flex tw-flex-col tw-gap-8-px tw-text-14-px tw-text-text-primary tw-font-500">
+            <h5>{{ 'scheduleDialog.frequencyLabel' | transloco }}</h5>
+            <div class="tw-flex tw-items-center tw-gap-24-px">
+                @for (option of frequencyOptions; track option.value) {
+                    <span class="tw-flex tw-items-center tw-gap-8-px">
+                        <p-radioButton [value]="option.value" [formControlName]="'frequency'" [inputId]="option.value"></p-radioButton>
+                        <label [for]="option.value">{{option.label}}</label>
+                    </span>
+                }
+            </div>
+        </div>
+
+        @if (frequencyValue) {
+            <div class="tw-flex tw-justify-between">
+                @if (['WEEKLY', 'MONTHLY'].includes(frequencyValue)) {
+                    <div class="tw-flex tw-flex-col tw-gap-8-px day-dropdown">
+                        <h5 class="tw-font-500 tw-text-text-primary tw-text-14-px">{{ 'scheduleDialog.dayLabel' | transloco }}</h5>
+                        @if (frequencyValue === 'WEEKLY') {
+                            <p-dropdown
+                                appendTo="body"
+                                [options]="dayOfWeekOptions"
+                                [formControlName]="'dayOfWeek'"
+                                [placeholder]="'scheduleDialog.dayPlaceholder' | transloco"
+                            ></p-dropdown>
+                        } @else if (frequencyValue === 'MONTHLY') {
+                            <p-dropdown
+                                appendTo="body"
+                                [options]="dayOfMonthOptions"
+                                [formControlName]="'dayOfMonth'"
+                                [placeholder]="'scheduleDialog.dayPlaceholder' | transloco"
+                            ></p-dropdown>
+                        }
+                    </div>
+                }
+                <div class="tw-flex tw-flex-col tw-gap-8-px">
+                    <h5 class="tw-font-500 tw-text-text-primary tw-text-14-px">{{ 'scheduleDialog.timeLabel' | transloco }}</h5>
+                    <div class="tw-flex tw-gap-8-px">
+                        <p-dropdown
+                            appendTo="body"
+                            [options]="timeOptions"
+                            [formControlName]="'timeOfDay'"
+                            [placeholder]="'scheduleDialog.timePlaceholder' | transloco"
+                            class="time-dropdown"
+                        ></p-dropdown>
+                        <p-dropdown
+                            appendTo="body"
+                            [options]="['AM', 'PM']"
+                            [formControlName]="'meridiem'"
+                            class="meridiem-dropdown"
+                        ></p-dropdown>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</app-dialog>
