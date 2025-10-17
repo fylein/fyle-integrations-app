@@ -36,6 +36,8 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   ButtonSize = ButtonSize;
 
+  readonly AppName = AppName;
+
   constructor(
     public windowService: WindowService
   ) { }

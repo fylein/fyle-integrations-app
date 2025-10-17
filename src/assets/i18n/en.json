@@ -159,6 +159,8 @@
     "importDimensionTooltip": "Importing a dimension syncs active values from {{appName}} every 24 hours. Deactivated values in {{appName}} will also be disabled in {{brandName}}",
     "importDestinationFieldFromApp": "Import {{destinationField}} from {{appName}}",
     "importedDestinationFieldInfo": "The imported {{destinationField}} will be an available field when creating an expense.",
+    "c1QbdImportDestinationFieldFromApp": "Import {{destinationField}}",
+    "c1QbdImportedDestinationFieldInfo": "{{destinationField}} will import as the expense field you choose, available for employees to select when adding expense details.",
     "chooseAppFieldPlaceholder": "Choose {{appName}} field",
     "uniqueAppFieldsError": "{{appName}} Fields should be unique",
     "chooseExpenseFieldPlaceholder": "Choose expense field in {{brandName}}",
@@ -1632,12 +1634,7 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "done": "Done",
-    "markAsDone": "Mark as done",
-    "installWebConnectorLabel": "Install QuickBooks Web Connector",
-    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
-    "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
-    "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
-    "loginAsAdminCaption": "Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode."
+    "markAsDone": "Mark as done"
   },
   "qbdDirectOnboardingLanding": {
     "setUpIntegration": "Set up integration",
@@ -1659,9 +1656,6 @@
     "downloadButtonLabel": "Download",
     "loadingText": "Loading",
     "ifDownloadDidNotStart": "If it didn’t start, ",
-    "downloadManuallyLink": "download the integration file manually",
-    "notRightFilePrompt": "Not the right file? ",
-    "tryAgainLink": "Try again.",
     "webConnectorVideoTitle": "How to open the integration file in Web Connector."
   },
   "qbdDirectExportSettings": {

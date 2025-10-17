@@ -79,7 +79,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         id: 3,
         label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminLabel'),
         caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminCaption'),
-        externalLink: this.QBDconnectorArticleLink,
+        externalLink: brandingConfig.brandId === 'co' ? '' : this.QBDconnectorArticleLink,
         iconName: 'user-one',
         state: QBDPreRequisiteState.INCOMPLETE
       }
