@@ -34,7 +34,7 @@ export class SkipExportService {
   }
 
   postExpenseFilter(expenseFilter: ExpenseFilterPost): Observable<ExpenseFilter> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, expenseFilter);
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`), expenseFilter);
   }
 
   deleteExpenseFilter(id: number): Observable<{}> {

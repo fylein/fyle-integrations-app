@@ -97,5 +97,12 @@
             }
         </div>
     </form>
+    <app-configuration-step-footer
+        [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton]="isOnboarding"
+        [isButtonDisabled]="!isFormValid"
+        (navigateToPreviousStep)="navigateBack()"
+        (save)="save()">
+    </app-configuration-step-footer>
 </div>
 }
