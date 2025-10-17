@@ -13,7 +13,6 @@
       },
       "connector": {
         "configurationHeaderText": "Connect to QuickBooks Desktop",
-        "configurationSubHeaderText": " ",
         "stepName": "Connect to QuickBooks Desktop",
         "subLabel": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account"
       },
@@ -68,7 +67,9 @@
         "importItemsSubLabel": "Items from QuickBooks Desktop will be imported as categories in {{brandName}}.",
         "importVendorsAsMerchantsLabel": "Import vendors as merchants",
         "chartOfAccountTypes": "Select which account types to import",
-        "chartOfAccountTypesSubLabel": "The expense account type is imported by default."
+        "chartOfAccountTypesSubLabel": "The expense account type is imported by default.",
+        "importDestinationFieldFromApp": "Import {{destinationField}}",
+        "importedDestinationFieldInfo": "{{destinationField}} will import as the expense field you choose, available for employees to select when adding expense details."
       },
       "advancedSettings": {
         "stepName": "Advanced settings",
@@ -100,6 +101,16 @@
     },
     "common": {
       "readMoreText": "Get detailed instructions"
+    },
+    "dashboard": {
+      "exportHeaderZeroStateText": "All expenses have been exported",
+      "noExpensesToExport": "There are no [approved,closed] expenses to export right now.",
+      "viewText": "View all",
+      "integrationErrorHeader": "QuickBooks Desktop errors",
+      "resolveErrorsPrompt": "Resolve the following errors in your QuickBooks Desktop account, then try to export your expenses again."
+    },
+    "exportLog": {
+      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports."
     }
   },
   "netsuite": {
@@ -439,7 +450,8 @@
     "exportLogHeader": "Failed to export?",
     "exportLogSubHeader": "Resolve the errors from your dashboard and try exporting these expenses again.",
     "dashboardExportZeroStateHeaderText": "No records to show yet",
-    "dashboardExportZeroStateSubHeaderText": "Looks like you have no records to export right now."
+    "dashboardExportZeroStateSubHeaderText": "Looks like you have no records to export right now.",
+    "viewText": "View"
   },
   "exportLog": {
     "tableHeaders": {

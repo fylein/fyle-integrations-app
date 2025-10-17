@@ -36,7 +36,7 @@
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-        [mainText]="'exportLog.completeExportLogCountZeroStateHeaderText' | transloco"
-        [subText]="'exportLog.completeExportLogCountZeroStateSubHeaderText' | transloco">
+        [mainText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateHeaderText' : 'exportLog.completeExportLogCountZeroStateHeaderText') | transloco"
+        [subText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateSubHeaderText' : 'exportLog.completeExportLogCountZeroStateSubHeaderText') | transloco">
     </app-zero-state-with-illustration>
 </div>

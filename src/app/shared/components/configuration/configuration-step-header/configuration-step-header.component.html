@@ -18,8 +18,8 @@
       </span>
       <h5 class="!tw-font-400 tw-text-pretty tw-pt-8-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
         <span [innerHTML]="contentText"></span>
-        <a *ngIf="redirectLink"
-          class="link tw-text-14-px tw-w-fit tw-pl-6-px tw-inline-flex tw-items-center"
+        <a *ngIf="redirectLink" [ngClass]="!(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT && contentText === '') ? 'tw-pl-6-px' : ''"
+          class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center"
           (click)="windowService.openInNewTab(redirectLink)">
           {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.common.readMoreText' : 'common.readMoreText') | transloco}}
           <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"

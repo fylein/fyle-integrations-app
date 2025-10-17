@@ -58,6 +58,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() accountingExportSummary: any;
 
+  @Input() redirectLink: string;
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;

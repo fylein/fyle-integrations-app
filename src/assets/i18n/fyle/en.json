@@ -436,7 +436,8 @@
     "exportLogHeader": "Failed",
     "exportLogSubHeader": "These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again",
     "dashboardExportZeroStateHeaderText": "Looks like you have",
-    "dashboardExportZeroStateSubHeaderText": "0 expenses to export right now"
+    "dashboardExportZeroStateSubHeaderText": "0 expenses to export right now",
+    "viewText": "View"
   },
   "exportLog": {
     "tableHeaders": {
