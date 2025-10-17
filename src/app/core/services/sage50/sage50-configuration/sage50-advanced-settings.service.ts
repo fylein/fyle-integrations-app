@@ -63,12 +63,13 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
         });
     }
 
-    mapAPIResponseToFormGroup(advancedSettings: Sage50AdvancedSettings | null): FormGroup<Sage50AdvancedSettingsForm> {
+    mapAPIResponseToFormGroup(advancedSettings: Sage50AdvancedSettings | null, isSkipExportEnabled: boolean): FormGroup<Sage50AdvancedSettingsForm> {
         return new FormGroup<Sage50AdvancedSettingsForm>({
             isScheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled ?? false, { nonNullable: true }),
             schedule: this.mapAPIResponseToScheduleFormGroup(advancedSettings),
             lineLevelMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure ?? [], { nonNullable: true }),
-            topLevelMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure ?? [], { nonNullable: true })
+            topLevelMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure ?? [], { nonNullable: true }),
+            isSkipExportEnabled: new FormControl(isSkipExportEnabled, { nonNullable: true })
         });
     }
 

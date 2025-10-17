@@ -42,6 +42,16 @@ export class HelperService {
     return createdAt >= this.AUTO_ENABLE_ACCOUNTING_PERIOD_DATE;
   }
 
+  buildEndpointPath(path: string): string {
+    const appName = this.getAppName();
+
+    if (appName === 'sage50') {
+      return `/${path}`;
+    }
+
+    return `/workspaces/${path}`;
+  }
+
   get apiBaseUrl(): string {
     return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
   }

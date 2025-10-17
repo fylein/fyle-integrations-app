@@ -28,6 +28,7 @@ export type Sage50AdvancedSettings = {
 export interface Sage50AdvancedSettingsForm {
     isScheduleEnabled: FormControl<boolean>;
     schedule: FormGroup<ScheduleForm>;
-    lineLevelMemoStructure: FormControl<Sage50LineLevelMemoOption[] | []>;
     topLevelMemoStructure: FormControl<Sage50TopLevelMemoOption[] | []>;
+    lineLevelMemoStructure: FormControl<Sage50LineLevelMemoOption[] | []>;
+    isSkipExportEnabled: FormControl<boolean>;
 }

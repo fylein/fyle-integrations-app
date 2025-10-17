@@ -19,7 +19,10 @@ export class SkipExportService {
   }
 
   getExpenseFields(version?: 'v1'): Observable<ConditionField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields': 'expense_fields'}/`, {});
+    const endpoint = this.helper.buildEndpointPath(
+      `${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields': 'expense_fields'}/`
+    );
+    return this.apiService.get(endpoint, {});
   }
 
   getAdminEmail(): Observable<EmailOption[]> {
@@ -27,7 +30,7 @@ export class SkipExportService {
   }
 
   getExpenseFilter(): Observable<ExpenseFilterResponse> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`), {});
   }
 
   postExpenseFilter(expenseFilter: ExpenseFilterPost): Observable<ExpenseFilter> {
@@ -35,7 +38,7 @@ export class SkipExportService {
   }
 
   deleteExpenseFilter(id: number): Observable<{}> {
-    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${id}/`, {});
+    return this.apiService.delete(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${id}/`), {});
   }
 
 }
