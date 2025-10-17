@@ -2354,6 +2354,11 @@
       "spendDateOptionLabel": "Spend date",
       "expenseOptionLabel": "Expense",
       "reportOptionLabel": "Expense report"
+    },
+    "scheduleForm": {
+      "dailySchedulePreview": "Daily, at {{timeOfDay}} {{meridiem}}",
+      "weeklySchedulePreview": "Weekly, every {{dayOfWeek}} at {{timeOfDay}} {{meridiem}}",
+      "monthlySchedulePreview": "Monthly, {{dayOfMonth}} at {{timeOfDay}} {{meridiem}}"
     }
   },
   "pipes": {
@@ -2521,5 +2526,26 @@
   },
   "alert": {
     "infoIconAlt": "Info icon"
+  },
+  "sage50AdvancedSettings": {
+    "headerText": "Advanced settings",
+    "contentText": "Customize the integration based on your accounting requirements.",
+    "scheduleExportLabel": "Export schedule",
+    "scheduleExportSubLabel": "Choose how often {{brandName}} should automatically prepare export-ready CSV files (recommended), or export manually when needed.",
+    "savedSchedulePreviewText": "Scheduled <strong class=\"tw-font-500\">{{preview}}</strong>",
+    "editScheduleIconAlt": "Edit schedule icon"
+  },
+  "scheduleDialog": {
+    "header": "Set schedule",
+    "save": "Save",
+    "contentText": "Set how often and when you want {{brandName}} to automatically export your expenses.",
+    "frequencyLabel": "Frequency",
+    "dayLabel": "Day",
+    "dayPlaceholder": "Select day",
+    "timeLabel": "Time",
+    "timePlaceholder": "Select time"
+  },
+  "dialog": {
+    "cancel": "Cancel"
   }
 }
