@@ -15,7 +15,10 @@
   },
   "configurationMultiSelect": {
     "expenseReportId": "Expense/Report ID",
-    "cardNumber": "Card number (last 4 digit)"
+    "cardNumber": "Card number (last 4 digits)",
+    "spentAt": "Spent on",
+    "merchant": "Merchant (from expense)",
+    "cardMerchant": "Merchant (from card feed)"
   },
   "configurationConfirmationDialog": {
     "areYouSureToContinue": "Are you sure you want to continue?",
@@ -2533,7 +2536,16 @@
     "scheduleExportLabel": "Export schedule",
     "scheduleExportSubLabel": "Choose how often {{brandName}} should automatically prepare export-ready CSV files (recommended), or export manually when needed.",
     "savedSchedulePreviewText": "Scheduled <strong class=\"tw-font-500\">{{preview}}</strong>",
-    "editScheduleIconAlt": "Edit schedule icon"
+    "editScheduleIconAlt": "Edit schedule icon",
+    "topLevelMemoLabel": "Top-level memo field (for Payments)",
+    "topLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50’s top-level memo field for payments.",
+    "topLevelMemoPlaceholder": "Select datapoints",
+    "topLevelMemoErrorName": "datapoint",
+    "lineLevelMemoErrorName": "datapoint",
+    "lineLevelMemoLabel": "Line-item-level description field",
+    "lineLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50’s line-item-level description field.",
+    "lineLevelMemoPlaceholder": "Select datapoints",
+    "memoPreviewPlaceholder": "Select datapoints to see a preview"
   },
   "scheduleDialog": {
     "header": "Set schedule",

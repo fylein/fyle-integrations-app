@@ -34,6 +34,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Input() maxSelections: number;
+
   @Output() changeInMultiSelect = new EventEmitter();
 
   currentlyDragging: string | null;
@@ -72,9 +74,15 @@ export class ConfigurationMultiSelectComponent implements OnInit {
       return this.translocoService.translate('configurationMultiSelect.expenseReportId');
     } else if (memo === 'card_number') {
       return this.translocoService.translate('configurationMultiSelect.cardNumber');
+    } else if (memo === 'spent_at') {
+      return this.translocoService.translate('configurationMultiSelect.spentAt');
+    } else if (memo === 'merchant' && this.options.includes('card_merchant')) {
+      return this.translocoService.translate('configurationMultiSelect.merchant');
+    } else if (memo === 'card_merchant') {
+      return this.translocoService.translate('configurationMultiSelect.cardMerchant');
     }
-      return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
 
+    return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
   }
 
   // Helper to join selected item labels into a single string for template rendering
