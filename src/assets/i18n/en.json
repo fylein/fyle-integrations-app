@@ -2547,7 +2547,9 @@
     "lineLevelMemoPlaceholder": "Select datapoints",
     "memoPreviewPlaceholder": "Select datapoints to see a preview",
     "skipExportLabel": "Skip expenses from export",
-    "skipExportSubLabel": "Set rules to prevent certain expenses from being exported to Sage 50."
+    "skipExportSubLabel": "Set rules to prevent certain expenses from being exported to Sage 50.",
+    "advancedSettingsSavedSuccess": "Advanced settings saved successfully",
+    "advancedSettingsSaveError": "Error saving advanced settings, please try again later"
   },
   "scheduleDialog": {
     "header": "Set schedule",
