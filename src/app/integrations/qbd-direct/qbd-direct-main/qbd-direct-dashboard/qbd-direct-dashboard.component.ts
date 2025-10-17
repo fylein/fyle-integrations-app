@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
@@ -85,6 +85,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
   chartOfAccounts: string[];
 
   private destroy$ = new Subject<void>();
+
+  redirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.ERROR_RESOLUTION_GUIDE_LINK;
 
   constructor(
     private accountingExportService: AccountingExportService,

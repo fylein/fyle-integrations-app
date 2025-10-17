@@ -13,7 +13,6 @@
       },
       "connector": {
         "configurationHeaderText": "Connect to QuickBooks Desktop",
-        "configurationSubHeaderText": " ",
         "stepName": "Connect to QuickBooks Desktop",
         "subLabel": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account"
       },
