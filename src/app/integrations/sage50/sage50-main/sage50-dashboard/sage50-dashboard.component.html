@@ -24,11 +24,77 @@
         [cccImportState]="cccImportState">
     </app-dashboard-export-section>
 
-    @if(!accountingExportSummary && !exportableAccountingExportIds.length){
-    <app-zero-state
-        [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="'sage50Dashboard.zeroStateHeaderText' | transloco"
-        [subHeaderText]="'sage50Dashboard.zeroStateSubHeaderText' | transloco">
-    </app-zero-state>
+    @if (showPendingMappings || true) {
+    <div class="tw-mt-24-px tw-py-32-px tw-px-120-px">
+    <div class="tw-rounded-8-px tw-bg-white tw-shadow-md">
+        <div class="tw-p-24-px tw-border">
+        <h2 class="tw-text-18-px tw-font-500 tw-text-text-primary tw-m-0">
+            {{ 'sage50Dashboard.pendingMappingsTitle' | transloco }}
+        </h2>
+        <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-8-px">
+            {{ 'sage50Dashboard.pendingMappingsDescription' | transloco }}
+        </p>
+        </div>
+        <div class="tw-p-24-px tw-gap-16-px tw-flex tw-flex-col">
+        @if (employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0 || true) {
+        <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center">
+            <div>
+                <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
+                    {{ 'sage50Dashboard.employeeMappingTitle' | transloco }}
+                </h3>
+                <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
+                    {{ 'sage50Dashboard.employeeMappingDescription' | transloco }}
+                </p>
+            </div>
+            <app-button 
+                (buttonClick)="navigateToEmployeeMapping()" 
+                [buttonText]="'sage50Dashboard.mapEmployeesButtonText' | transloco" 
+                [buttonType]="ButtonType.SECONDARY" 
+                [buttonSize]="ButtonSize.MEDIUM">
+            </app-button>
+        </div>
+        }
+
+        @if (corporateCardMappingStats && corporateCardMappingStats.unmapped_attributes_count > 0 || true) {
+        <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-mt-4': employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0 || true}">
+            <div>
+                <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
+                    {{ 'sage50Dashboard.corporateCardMappingTitle' | transloco }}
+                </h3>
+                <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
+                    {{ 'sage50Dashboard.corporateCardMappingDescription' | transloco }}
+                </p>
+            </div>
+            <app-button 
+                (buttonClick)="navigateToCorporateCardMapping()" 
+                [buttonText]="'sage50Dashboard.mapCorporateCardsButtonText' | transloco" 
+                [buttonType]="ButtonType.PRIMARY" 
+                [buttonSize]="ButtonSize.MEDIUM">
+            </app-button>
+        </div>
+        }
+            </div>
+        </div>
+    </div>
     }
+
+    <div>
+    <p-dialog [dismissableMask]="true" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
+        <p-header>
+            <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
+            <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-8-px">{{ mappingDialogDescription | transloco }}</p>
+        </p-header>
+            <app-generic-mapping-table 
+                [employeeFieldMapping]="employeeFieldMapping" 
+                [isLoading]="isMappingDialogLoading" 
+                [appName]="appName" 
+                [isDashboardMappingResolve]="true" 
+                [destinationField]="mappingDestinationField" 
+                [filteredMappings]="filteredMappings" 
+                [sourceField]="mappingSourceField" 
+                [destinationOptions]="mappingDestinationOptions" 
+                [isMultiLineOption]="false">
+            </app-generic-mapping-table>
+    </p-dialog>
+    </div>
 }

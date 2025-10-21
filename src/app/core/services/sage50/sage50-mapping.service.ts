@@ -32,4 +32,46 @@ export class Sage50MappingService extends MappingService {
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes_stats/`, params);
   }
 
+  getEmployeeMappingStats(destinationType: string): Observable<any> {
+    const params = {
+      source_type: 'EMPLOYEE',
+      destination_type: destinationType,
+      app_name: AppName.SAGE50
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/stats/`, params);
+  }
+
+  getCorporateCardMappingStats(destinationType: string): Observable<any> {
+    const params = {
+      source_type: 'CORPORATE_CARD',
+      destination_type: destinationType,
+      app_name: AppName.SAGE50
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/stats/`, params);
+  }
+
+  getUnmappedEmployeeAttributes(destinationType: string, limit: number = 500, offset: number = 0): Observable<any> {
+    const params = {
+      limit,
+      offset,
+      mapped: false,
+      destination_type: destinationType,
+      source_type: 'EMPLOYEE',
+      app_name: AppName.SAGE50
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/employee_attributes/`, params);
+  }
+
+  getUnmappedCorporateCardAttributes(destinationType: string, limit: number = 500, offset: number = 0): Observable<any> {
+    const params = {
+      limit,
+      offset,
+      mapped: false,
+      destination_type: destinationType,
+      source_type: 'CORPORATE_CARD',
+      app_name: AppName.SAGE50
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/employee_attributes/`, params);
+  }
+
 }

@@ -334,10 +334,10 @@ export class AccountingExportService {
   }
 
   @Cacheable()
-  importExpensesFromFyle(version?: 'v1' | 'v2'): Observable<{}> {
+  importExpensesFromFyle(version?: 'v1' | 'v2' | 'v3'): Observable<{}> {
     // Dedicated to qbd direct
-    if (version === 'v2') {
-      return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/sync/`), {});
+    if (version === 'v2' || version === 'v3') {
+      return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/${(version === 'v3' ? 'fyle/sync_expenses/' : 'export_logs/sync/')}`), {});
     }
     return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`), {});
   }

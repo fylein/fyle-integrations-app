@@ -1126,11 +1126,28 @@
   "sage50Main": {
     "dashboard": "Dashboard",
     "mapping": "Mapping",
-    "configuration": "Configuration"
+    "configuration": "Configuration",
+    "syncDataDimensionsToast": "Syncing data dimensions from {{appName}}..."
   },
   "sage50Dashboard": {
     "zeroStateHeaderText": "Looks like you have",
-    "zeroStateSubHeaderText": "0 expenses to export right now"
+    "zeroStateSubHeaderText": "0 expenses to export right now",
+    "exportLogTitle": "Export log",
+    "exportLogDescription": "Download the file from the table below and upload it in Sage 50.",
+    "readMore": "Read more",
+    "exportButtonText": "Export",
+    "pendingMappingsTitle": "Pending mappings",
+    "pendingMappingsDescription": "Map Fyle values to their Sage 50 counterparts. Without these mappings, expenses cannot be exported.",
+    "employeeMappingTitle": "Employee mapping",
+    "employeeMappingDescription": "Map employees in Fyle to their corresponding records in Sage 50.",
+    "mapEmployeesButtonText": "Map employees",
+    "corporateCardMappingTitle": "Corporate card mapping",
+    "corporateCardMappingDescription": "Map corporate cards in Fyle to their corresponding records in Sage 50.",
+    "mapCorporateCardsButtonText": "Map corporate cards",
+    "employeeMappingDialogTitle": "Employee mapping",
+    "employeeMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "corporateCardMappingDialogTitle": "Corporate card mapping",
+    "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50"
   },
   "sage50Mapping": {
     "employeeLabel": "Employee",
