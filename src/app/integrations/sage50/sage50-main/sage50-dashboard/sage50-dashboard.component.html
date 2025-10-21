@@ -9,7 +9,7 @@
 </div>
 }
 
-@if (!isLoading && !isSage50TokenNotValid) {
+@if (!isLoading) {
     <app-dashboard-export-section
         (export)="export()"
         [appName]="appName"
@@ -47,7 +47,7 @@
                 </p>
             </div>
             <app-button 
-                (buttonClick)="navigateToEmployeeMapping()" 
+                (buttonClick)="showMappingDialog('EMPLOYEE', 'VENDOR')" 
                 [buttonText]="'sage50Dashboard.mapEmployeesButtonText' | transloco" 
                 [buttonType]="ButtonType.SECONDARY" 
                 [buttonSize]="ButtonSize.MEDIUM">
@@ -66,7 +66,7 @@
                 </p>
             </div>
             <app-button 
-                (buttonClick)="navigateToCorporateCardMapping()" 
+                (buttonClick)="showMappingDialog('CORPORATE_CARD', 'ACCOUNT')" 
                 [buttonText]="'sage50Dashboard.mapCorporateCardsButtonText' | transloco" 
                 [buttonType]="ButtonType.SECONDARY" 
                 [buttonSize]="ButtonSize.MEDIUM">
@@ -84,17 +84,18 @@
             <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
             <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-8-px">{{ mappingDialogDescription | transloco }}</p>
         </p-header>
-            <app-generic-mapping-table 
-                [employeeFieldMapping]="employeeFieldMapping" 
-                [isLoading]="isMappingDialogLoading" 
-                [appName]="appName" 
-                [isDashboardMappingResolve]="true" 
-                [destinationField]="mappingDestinationField" 
-                [filteredMappings]="filteredMappings" 
-                [sourceField]="mappingSourceField" 
-                [destinationOptions]="mappingDestinationOptions" 
-                [isMultiLineOption]="false">
-            </app-generic-mapping-table>
+        <app-generic-mapping-table 
+            [employeeFieldMapping]="employeeFieldMapping" 
+            [appName]="appName" 
+            [isDashboardMappingResolve]="true" 
+            [isLoading]="isMappingDialogLoading"
+            [destinationField]="mappingDestinationField" 
+            [filteredMappings]="filteredMappings" 
+            [sourceField]="mappingSourceField" 
+            [destinationOptions]="mappingDestinationOptions" 
+            [isMultiLineOption]="false"
+            [mappingStats]="currentMappingStats!">
+        </app-generic-mapping-table>
     </p-dialog>
     </div>
 }

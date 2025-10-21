@@ -32,7 +32,7 @@ export class Sage50MainComponent implements OnInit {
     private mappingService: Sage50MappingService,
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) { }
 
   ngOnInit(): void {
