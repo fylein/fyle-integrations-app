@@ -25,6 +25,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     footerButtonsRightAligned: false,
     useMainMenuForSubmenu: false,
     usePrimaryLoader: false,
+    allowToastMessageInApps: true,
     qbdDirect: {
         showStepStateAsIcons: false,
         showStepStateDivider: false,
@@ -163,7 +164,8 @@ export const fyleKbArticles: KbArticle[string] = {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration#h_d3cc42849a`,
-            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`,
+            ERROR_RESOLUTION_GUIDE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/12585819-quickbooks-web-connector-qbw-error-resolution-guide`
         },
         SAGE50: {
             // TODO(sage50)
