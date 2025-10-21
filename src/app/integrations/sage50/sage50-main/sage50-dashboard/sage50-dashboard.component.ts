@@ -174,57 +174,37 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   }
 
   private getPendingMappings(): void {
-    this.sage50ExportSettingService.getExportSettings().subscribe((exportSettings) => {
+    forkJoin([
+      this.sage50ExportSettingService.getExportSettings(),
+      this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
+      this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
+    ]).subscribe((responses) => {
+      const exportSettings = responses[0];
+      const employeeMappingStats = responses[1];
+      const corporateCardMappingStats = responses[2];
+      this.isLoading = false;
+
       if (exportSettings) {
         this.reimbursableExportType = exportSettings.reimbursable_expense_export_type;
         this.cccExportType = exportSettings.credit_card_expense_export_type;
 
-        const observables: any[] = [];
-        let employeeIndex = -1;
-        let corporateCardIndex = -1;
-
-        if (this.reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY) {
-          employeeIndex = observables.length;
-          observables.push(
-            this.sage50MappingService.getEmployeeMappingStats('VENDOR').pipe(
-              catchError(() => of(null))
-            )
-          );
+        if (this.reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY && employeeMappingStats) {
+          this.employeeMappingStats = employeeMappingStats;
         }
 
-        if (this.cccExportType === Sage50CCCExportType.PAYMENTS_JOURNAL) {
-          corporateCardIndex = observables.length;
-          observables.push(
-            this.sage50MappingService.getCorporateCardMappingStats('ACCOUNT').pipe(
-              catchError(() => of(null))
-            )
-          );
+        if (this.cccExportType === Sage50CCCExportType.PAYMENTS_JOURNAL && corporateCardMappingStats) {
+          this.corporateCardMappingStats = corporateCardMappingStats;
         }
 
-        if (observables.length > 0) {
-          forkJoin(observables).subscribe((responses) => {
-            if (employeeIndex >= 0 && responses[employeeIndex]) {
-              this.employeeMappingStats = responses[employeeIndex];
-            }
-            if (corporateCardIndex >= 0 && responses[corporateCardIndex]) {
-              this.corporateCardMappingStats = responses[corporateCardIndex];
-            }
-
-            this.showPendingMappings =
-              (this.employeeMappingStats?.unmapped_attributes_count ?? 0) > 0 ||
-              (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
-          });
-        }
+        this.showPendingMappings =
+          (this.employeeMappingStats?.unmapped_attributes_count ?? 0) > 0 ||
+          (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
       }
     });
   }
 
   private setupPage(): void {
     this.getPendingMappings();
-
-    this.accountingExportService.getExportLogs(['ENQUEUED', 'IN_PROGRESS', 'COMPLETE', 'FAILED']).subscribe((exportLogsResponse) => {
-    
-    });
 
     forkJoin([
       this.dashboardService.getExportableAccountingExportIds('v2'),
@@ -258,7 +238,6 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setupPage();
-    this.isLoading = false;
   }
 
   ngOnDestroy(): void {

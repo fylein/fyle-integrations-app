@@ -9,6 +9,7 @@ import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50
 import { Sage50CCCExportType, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-sage50-main',
@@ -30,7 +31,8 @@ export class Sage50MainComponent implements OnInit {
     private exportSettingsService: Sage50ExportSettingsService,
     private mappingService: Sage50MappingService,
     private translocoService: TranslocoService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private workspaceService: WorkspaceService,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +41,8 @@ export class Sage50MainComponent implements OnInit {
       {label: this.translocoService.translate('sage50Main.mapping'), routerLink: '/integrations/sage50/main/mapping'},
       {label: this.translocoService.translate('sage50Main.configuration'), routerLink: '/integrations/sage50/main/configuration'}
     ];
+
+    this.workspaceService.importFyleAttributes(false).subscribe();
 
     this.exportSettingsService.getExportSettings().subscribe((exportSettings) => {
       const hasMappings = exportSettings?.reimbursable_expense_export_type === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY ||

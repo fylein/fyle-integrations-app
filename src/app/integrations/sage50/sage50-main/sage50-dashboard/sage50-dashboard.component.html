@@ -24,7 +24,7 @@
         [cccImportState]="cccImportState">
     </app-dashboard-export-section>
 
-    @if (showPendingMappings || true) {
+    @if (showPendingMappings) {
     <div class="tw-mt-24-px tw-py-32-px tw-px-120-px">
     <div class="tw-rounded-8-px tw-bg-white tw-shadow-md">
         <div class="tw-p-24-px tw-border">
@@ -36,7 +36,7 @@
         </p>
         </div>
         <div class="tw-p-24-px tw-gap-16-px tw-flex tw-flex-col">
-        @if (employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0 || true) {
+        @if (employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0) {
         <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center">
             <div>
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
@@ -55,8 +55,8 @@
         </div>
         }
 
-        @if (corporateCardMappingStats && corporateCardMappingStats.unmapped_attributes_count > 0 || true) {
-        <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-mt-4': employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0 || true}">
+        @if (corporateCardMappingStats && corporateCardMappingStats.unmapped_attributes_count > 0) {
+        <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-mt-4': employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0}">
             <div>
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
                     {{ 'sage50Dashboard.corporateCardMappingTitle' | transloco }}
