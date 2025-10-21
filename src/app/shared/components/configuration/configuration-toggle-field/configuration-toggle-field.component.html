@@ -21,7 +21,7 @@
       <div class="tw-text-pretty">
         <h4 [ngClass]="isSectionHeader ? 'tw-text-text-primary tw-text-16-px !tw-font-500' : brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">
           {{label}}
-          <app-optional-field *ngIf="!isAsterikAllowed && !isSectionHeader"></app-optional-field>
+          <app-optional-field *ngIf="!isAsterikAllowed && !isSectionHeader && !(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT)"></app-optional-field>
         </h4>
         @if (subLabel) {
           <h5 class="!tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">

@@ -64,6 +64,8 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly AppName = AppName;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
