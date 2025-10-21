@@ -11,3 +11,15 @@ export type CSVImportFieldForm = {
     file: FormControl<UploadedCSVFile | null>;
     importCode: FormControl<boolean | null>;
 };
+
+export interface CSVImportFieldFormWithMapping extends CSVImportFieldForm {
+    sourceField: FormControl<string | null>;
+    destinationField: FormControl<string>;
+    sourcePlaceholder: FormControl<string | null>;
+}
+
+export type CSVImportSourceFieldOption = {
+    label: string;
+    value: string | null;
+    placeholder: string | null;
+}

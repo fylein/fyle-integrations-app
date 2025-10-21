@@ -31,6 +31,7 @@ export type KbArticle = {
                 ASSISTED_SETUP_ARTICLE_LINK: string;
                 HELPER_ARTICLE: string;
                 GCAL_LINK: string;
+                ERROR_RESOLUTION_GUIDE_LINK: string;
             },
             INTACCT: {
                 IMPORT_SETTING: string;

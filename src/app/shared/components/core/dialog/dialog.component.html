@@ -32,12 +32,21 @@
     <ng-content></ng-content>
 
     <!-- Footer -->
-    <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px">
+    <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px tw-gap-10-px">
+        @if (showCancelButton) {
+            <app-button
+                [buttonText]="'dialog.cancel' | transloco"
+                [buttonType]="ButtonType.SECONDARY"
+                [buttonSize]="ButtonSize.MEDIUM"
+                (buttonClick)="closeDialog.emit()"
+            ></app-button>
+        }
         <app-button
             [buttonText]="buttonText"
             [buttonType]="buttonType"
             [buttonSize]="ButtonSize.MEDIUM"
             (buttonClick)="buttonClick.emit()"
+            [disabled]="isButtonDisabled"
         ></app-button>
     </div>
 </div>

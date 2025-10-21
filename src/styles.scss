@@ -577,7 +577,7 @@ p {
 // Radio Button
 [data-theme='fyle'] {
     .p-radiobutton {
-        @apply tw-w-fit tw-h-19-px #{!important};
+        @apply tw-w-fit tw-h-18-px #{!important};
     }
 
     .p-radiobutton .p-radiobutton-box {
@@ -728,7 +728,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-6-px #{!important};
+    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-8-px #{!important};
 }
 
 .p-checkbox {

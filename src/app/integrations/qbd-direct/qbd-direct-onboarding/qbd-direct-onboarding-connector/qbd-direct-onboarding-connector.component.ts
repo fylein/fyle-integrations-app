@@ -80,6 +80,8 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly AppName = AppName;
+
   constructor(
     private router: Router,
     private workspaceService: WorkspaceService,

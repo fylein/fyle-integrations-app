@@ -1,0 +1,108 @@
+@if (isLoading) {
+<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+</div>
+} @else {
+<div class="configuration--contents tw-border-separator tw-my-6 tw-overflow-x-hidden" [ngClass]="brandingStyle.common.configurationContents">
+    <div>
+        <app-configuration-step-header
+            [headerText]="'sage50AdvancedSettings.headerText' | transloco"
+            [contentText]="'sage50AdvancedSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+            [redirectLink]="redirectLink"
+            [showSyncButton]="false"
+            [appName]="appName"
+        ></app-configuration-step-header>
+    </div>
+    <form [formGroup]="advancedSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[24px]">
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-toggle-field
+                [form]="advancedSettingsForm"
+                [label]="'sage50AdvancedSettings.scheduleExportLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.scheduleExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [formControllerName]="'isScheduleEnabled'"
+                [iconPath]="'calendar'"
+            ></app-configuration-toggle-field>
+
+            <!-- Saved schedule preview -->
+            @if (advancedSettingsForm.get('isScheduleEnabled')?.value && schedulePreview) {
+                <div class="tw-m-24-px tw-mt-[-8px] tw-flex tw-items-center tw-justify-between tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+                    <p [innerHTML]="'sage50AdvancedSettings.savedSchedulePreviewText' | transloco: { preview: schedulePreview }"></p>
+                    <img
+                        src="assets/icons/edit.svg"
+                        [alt]="'sage50AdvancedSettings.editScheduleIconAlt' | transloco"
+                        class="tw-cursor-pointer"
+                        (click)="editSchedule()"
+                    >
+                </div>
+            }
+        </div>
+
+        @if (isTopLevelMemoVisible) {
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-multi-select
+                [form]="advancedSettingsForm"
+                [formControllerName]="'topLevelMemoStructure'"
+                [options]="topLevelMemoOptions"
+                [isFieldMandatory]="true"
+                [mandatoryErrorListName]="'sage50AdvancedSettings.topLevelMemoErrorName' | transloco"
+                [label]="'sage50AdvancedSettings.topLevelMemoLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.topLevelMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [placeholder]="'sage50AdvancedSettings.topLevelMemoPlaceholder' | transloco"
+                [iconPath]="'list'"
+            ></app-configuration-multi-select>
+
+            <div class="tw-m-24-px tw-mt-[-8px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+                <p>{{topLevelMemoPreviewText || ('sage50AdvancedSettings.memoPreviewPlaceholder' | transloco)}}</p>
+            </div>
+        </div>
+        }
+
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-multi-select
+                [form]="advancedSettingsForm"
+                [formControllerName]="'lineLevelMemoStructure'"
+                [options]="lineLevelMemoOptions"
+                [isFieldMandatory]="true"
+                [mandatoryErrorListName]="'sage50AdvancedSettings.lineLevelMemoErrorName' | transloco"
+                [label]="'sage50AdvancedSettings.lineLevelMemoLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.lineLevelMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [placeholder]="'sage50AdvancedSettings.lineLevelMemoPlaceholder' | transloco"
+                [iconPath]="'list'"
+                [maxSelections]="3"
+            ></app-configuration-multi-select>
+
+            <div class="tw-m-24-px tw-mt-[-8px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
+                <p>{{lineLevelMemoPreviewText || ('sage50AdvancedSettings.memoPreviewPlaceholder' | transloco)}}</p>
+            </div>
+        </div>
+
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-toggle-field
+                [form]="advancedSettingsForm"
+                [label]="'sage50AdvancedSettings.skipExportLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.skipExportSubLabel' | transloco"
+                [formControllerName]="'isSkipExportEnabled'"
+                [iconPath]="'list'">
+            </app-configuration-toggle-field>
+            @if (isSkipExportEnabled) {
+                <div>
+                    <app-configuration-skip-export
+                        [enableSkipExport]="isSkipExportEnabled"
+                        [skipExportForm]="skipExportForm"
+                        [expenseFilter]="expenseFilters"
+                        [conditionFieldOptions]="conditionFieldOptions"
+                        (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    </app-configuration-skip-export>
+                </div>
+            }
+        </div>
+    </form>
+    <app-configuration-step-footer
+        [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton]="isOnboarding"
+        [isButtonDisabled]="!isFormValid"
+        (navigateToPreviousStep)="navigateBack()"
+        (save)="save()">
+    </app-configuration-step-footer>
+</div>
+}
