@@ -119,7 +119,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
         );
 
         // Update the advanced settings in-memory
-        // This will acts as a fallback if the dialog is closed without saving.
+        // This will act as a fallback if the dialog is closed without saving.
         this.advancedSettings = {
           ...this.advancedSettings!,
           ...this.advancedSettingsService.constructSchedulePayload(
@@ -216,13 +216,25 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       }
     });
 
-    this.advancedSettingsForm.get('topLevelMemoStructure')?.valueChanges.subscribe(value => {
-      this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
-    });
+    this.advancedSettingsForm.get('topLevelMemoStructure')?.valueChanges
+      .pipe(
+        startWith(this.advancedSettingsForm.get('topLevelMemoStructure')?.value)
+      )
+      .subscribe(value => {
+        if (value) {
+          this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
+        }
+      });
 
-    this.advancedSettingsForm.get('lineLevelMemoStructure')?.valueChanges.subscribe(value => {
-      this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
-    });
+    this.advancedSettingsForm.get('lineLevelMemoStructure')?.valueChanges
+      .pipe(
+        startWith(this.advancedSettingsForm.get('lineLevelMemoStructure')?.value)
+      )
+      .subscribe(value => {
+        if (value) {
+          this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
+        }
+      });
   }
 
   ngOnInit(): void {
