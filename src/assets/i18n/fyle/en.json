@@ -416,7 +416,7 @@
     },
     "done": {
       "ctaText": "Launch integration",
-      "hintText": "After launching the integration, you can change your settings at any point of time under the <b class=\"tw-font-bold\">configuration</b> section.",
+      "hintText": "After launching the integration, you can change your settings at any point in time under the <b class=\"tw-font-bold\">configuration</b> section.",
       "doneHeaderText": "Your integration setup is now complete."
     }
   },
