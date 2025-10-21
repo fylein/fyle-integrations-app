@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../common/api.service";
 import { ExportSettingsService } from "../../common/export-settings.service";
-import { Observable } from "rxjs";
+import { catchError, Observable, of } from "rxjs";
 import { WorkspaceService } from "../../common/workspace.service";
 import { Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsPost, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from "src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model";
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
@@ -115,7 +115,9 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
   }
 
   getExportSettings(): Observable<Sage50ExportSettingsGet | null> {
-    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {});
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {}).pipe(
+      catchError(() => of(null))
+    );
   }
 
   constructPayloadAndPost(form: FormGroup<Sage50ExportSettingsForm>): Observable<void> {
