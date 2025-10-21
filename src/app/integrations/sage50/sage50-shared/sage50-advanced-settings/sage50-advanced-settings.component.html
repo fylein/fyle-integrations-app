@@ -76,7 +76,33 @@
             </div>
         </div>
 
-
+        <div class="tw-border tw-border-separator tw-rounded-10-px">
+            <app-configuration-toggle-field
+                [form]="advancedSettingsForm"
+                [label]="'sage50AdvancedSettings.skipExportLabel' | transloco"
+                [subLabel]="'sage50AdvancedSettings.skipExportSubLabel' | transloco"
+                [formControllerName]="'isSkipExportEnabled'"
+                [iconPath]="'list'">
+            </app-configuration-toggle-field>
+            @if (isSkipExportEnabled) {
+                <div>
+                    <app-configuration-skip-export
+                        [enableSkipExport]="isSkipExportEnabled"
+                        [skipExportForm]="skipExportForm"
+                        [expenseFilter]="expenseFilters"
+                        [conditionFieldOptions]="conditionFieldOptions"
+                        (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    </app-configuration-skip-export>
+                </div>
+            }
+        </div>
     </form>
+    <app-configuration-step-footer
+        [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton]="isOnboarding"
+        [isButtonDisabled]="!isFormValid"
+        (navigateToPreviousStep)="navigateBack()"
+        (save)="save()">
+    </app-configuration-step-footer>
 </div>
 }

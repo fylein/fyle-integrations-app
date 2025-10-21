@@ -2538,14 +2538,18 @@
     "savedSchedulePreviewText": "Scheduled <strong class=\"tw-font-500\">{{preview}}</strong>",
     "editScheduleIconAlt": "Edit schedule icon",
     "topLevelMemoLabel": "Top-level memo field (for Payments)",
-    "topLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50’s top-level memo field for payments.",
+    "topLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50's top-level memo field for payments.",
     "topLevelMemoPlaceholder": "Select datapoints",
     "topLevelMemoErrorName": "datapoint",
     "lineLevelMemoErrorName": "datapoint",
     "lineLevelMemoLabel": "Line-item-level description field",
-    "lineLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50’s line-item-level description field.",
+    "lineLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50's line-item-level description field.",
     "lineLevelMemoPlaceholder": "Select datapoints",
-    "memoPreviewPlaceholder": "Select datapoints to see a preview"
+    "memoPreviewPlaceholder": "Select datapoints to see a preview",
+    "skipExportLabel": "Skip expenses from export",
+    "skipExportSubLabel": "Set rules to prevent certain expenses from being exported to Sage 50.",
+    "advancedSettingsSavedSuccess": "Advanced settings saved successfully",
+    "advancedSettingsSaveError": "Error saving advanced settings, please try again later"
   },
   "scheduleDialog": {
     "header": "Set schedule",
