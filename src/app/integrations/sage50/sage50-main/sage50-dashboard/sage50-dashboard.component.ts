@@ -222,6 +222,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   private setupPage(): void {
     this.getPendingMappings();
 
+    this.accountingExportService.getExportLogs(['ENQUEUED', 'IN_PROGRESS', 'COMPLETE', 'FAILED']).subscribe((exportLogsResponse) => {
+    
+    });
+
     forkJoin([
       this.dashboardService.getExportableAccountingExportIds('v2'),
       this.sage50ExportSettingService.getExportSettings()
