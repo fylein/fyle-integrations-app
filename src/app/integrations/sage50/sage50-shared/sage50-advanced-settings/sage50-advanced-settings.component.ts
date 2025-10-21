@@ -80,7 +80,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
   // Options
   get topLevelMemoOptions() {
-    return this.advancedSettingsService.getTopLevelMemoOptions();
+    return this.advancedSettingsService.getTopLevelMemoOptions(this.exportSettings);
   }
 
   get lineLevelMemoOptions() {

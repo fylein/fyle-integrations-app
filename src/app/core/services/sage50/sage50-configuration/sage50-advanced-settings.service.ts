@@ -120,26 +120,25 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
         };
     }
 
-    getTopLevelMemoOptions(): Sage50TopLevelMemoOption[] {
+    getTopLevelMemoOptions(exportSettings: Sage50ExportSettingsGet | null): Sage50TopLevelMemoOption[] {
+        const isCCCEnabled = !!exportSettings?.credit_card_expense_export_type;
+
         return [
             Sage50TopLevelMemoOption.EMPLOYEE_NAME,
-            Sage50TopLevelMemoOption.CARD_NUMBER
+            ...(isCCCEnabled ? [Sage50TopLevelMemoOption.CARD_NUMBER] : [])
         ];
     }
 
     getLineLevelMemoOptions(exportSettings: Sage50ExportSettingsGet | null): Sage50LineLevelMemoOption[] {
-        const options = [
+        const isCCCEnabled = !!exportSettings?.credit_card_expense_export_type;
+
+        return [
             Sage50LineLevelMemoOption.EMPLOYEE_NAME,
-            Sage50LineLevelMemoOption.CARD_NUMBER,
+            ...(isCCCEnabled ? [Sage50LineLevelMemoOption.CARD_NUMBER] : []),
             Sage50LineLevelMemoOption.PURPOSE,
             Sage50LineLevelMemoOption.SPENT_AT,
-            Sage50LineLevelMemoOption.MERCHANT
+            Sage50LineLevelMemoOption.MERCHANT,
+            ...(isCCCEnabled ? [Sage50LineLevelMemoOption.CARD_MERCHANT] : [])
         ];
-
-        if (!!exportSettings?.credit_card_expense_export_type) {
-            options.push(Sage50LineLevelMemoOption.CARD_MERCHANT);
-        }
-
-        return options;
     }
 }
