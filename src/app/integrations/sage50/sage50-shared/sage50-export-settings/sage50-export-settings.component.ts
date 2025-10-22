@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.model';
 
@@ -139,7 +138,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   onBackButtonClick(): void {
-    this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
+    this.router.navigate(['/integrations/sage50/onboarding/prerequisites']);
   }
 
   onAdvancedSearch(event: ExportSettingOptionSearch): void {
