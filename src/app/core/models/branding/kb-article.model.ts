@@ -86,7 +86,9 @@ export type KbArticle = {
             },
         },
         postOnboardingArticles: {
-            SAGE50: Record<Sage50ImportableField, string>;
+            SAGE50: {
+                EXPORT_LOG: string;
+            } & Record<Sage50ImportableField, string>;
         }
     }
 };
