@@ -135,6 +135,7 @@
   "exportLogChildTableDialog": {
     "dialogHeader": "Expenses",
     "expenseIdHeader": "Expense ID",
+    "claimNumberHeader": "Report ID",
     "merchantHeader": "Merchant",
     "categoryHeader": "Category",
     "amountHeader": "Amount"

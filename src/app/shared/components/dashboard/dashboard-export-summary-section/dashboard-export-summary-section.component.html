@@ -46,12 +46,12 @@
                                 <span class="tw-text-right tw-text-14-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
                                     {{ accountingExportSummary?.repurposed_failed_count ? accountingExportSummary?.repurposed_failed_count : 0 }}
                                 </span>
-                                <a *ngIf="accountingExportSummary?.repurposed_failed_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">View</a>
+                                <a *ngIf="accountingExportSummary?.repurposed_failed_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
                             } @else {
                                 <span class="tw-text-right tw-text-14-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
                                     {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
                                 </span>
-                                <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">View</a>
+                                <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
                             }
                         </div>
                         <div class="tw-flex tw-flex-col">

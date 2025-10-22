@@ -86,19 +86,19 @@
         <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
         </div>
-        <div *ngIf="!isLoading && showDownloadLink && !isStepCompleted" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px] tw-text-center">
-            <div class="tw-text-center">
+        <div *ngIf="!isLoading && showDownloadLink && !isStepCompleted" class="tw-h-[400px] tw-text-center tw-content-center">
+            <div class="tw-flex tw-flex-col tw-items-center tw-text-center">
                 <app-svg-icon svgSource="check-circle-outline-extra-large" [width]="'40px'" [height]="'40px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
             </div>
             <div>
                 <p class="tw-py-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadHeaderText">{{ 'qbdDirectDownloadFile.downloadWillBegin' | transloco }}</p>
                 <span class="tw-font-400 tw-pb-20-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.ifDownloadDidNotStart' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onManualDownload()">{{ 'qbdDirectDownloadFile.downloadManuallyLink' | transloco }}</a>.</span>
-                <div class="tw-flex tw-items-center tw-justify-between">
+                <div class="tw-grid tw-grid-cols-[8rem_auto_8rem] tw-justify-stretch tw-flex tw-items-center">
                     <div></div>
-                    <div>
-                        <p class="tw-pt-16-px tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
+                    <div class="tw-flex tw-items-center tw-justify-center">
+                            <p class="tw-font-40" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileSuccessDescription">{{ 'qbdDirectDownloadFile.notRightFilePrompt' | transloco }}<a class="link tw-underline tw-underline-offset-1 tw-cursor-pointer" (click)="onRetryClick()">{{ 'qbdDirectDownloadFile.tryAgainLink' | transloco }}</a></p>
                     </div>
-                    <div *ngIf="!isStepCompleted && brandingConfig.brandId === 'co'">
+                    <div *ngIf="!isStepCompleted && brandingConfig.brandId === 'co'" class="tw-flex tw-items-center tw-justify-between">
                         <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" (save)="continueToNextStep()"></app-configuration-step-footer>
                     </div>
                 </div>

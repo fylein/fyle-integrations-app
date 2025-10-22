@@ -110,7 +110,8 @@
       "resolveErrorsPrompt": "Resolve the following errors in your QuickBooks Desktop account, then try to export your expenses again."
     },
     "exportLog": {
-      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports."
+      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports.",
+      "completeExportLogCountZeroStateSubHeaderText" : " "
     }
   },
   "netsuite": {
