@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AccountingExportStatus, AppName } from '../../models/enum/enum.model';
+import { AccountingExportStatus, AppName, TaskLogState } from '../../models/enum/enum.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
@@ -341,10 +341,10 @@ export class AccountingExportService {
     return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`), {});
   }
 
-  getExportLogs(status?: string[]): Observable<any> {
-    const apiParams: any = {};
+  getExportLogs(status: TaskLogState[]): Observable<any> {
+    const apiParams: { status__in?: TaskLogState[] } = {};
     if (status && status.length > 0) {
-      apiParams.status__in = status.join(',');
+      apiParams.status__in = status;
     }
     return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
   }
