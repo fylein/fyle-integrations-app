@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, Sage50OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -21,7 +22,8 @@ export class Sage50OnboardingLandingComponent {
   appName: AppName = AppName.SAGE50;
 
   constructor(
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    public brandingService: BrandingService
   ) {}
 
   handleConnectButtonClick() {

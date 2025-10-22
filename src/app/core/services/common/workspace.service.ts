@@ -7,6 +7,7 @@ import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { WorkspaceOnboardingState } from '../../models/db/workspaces.model';
 import { QbdDirectWorkspace } from '../../models/qbd-direct/db/qbd-direct-workspaces.model';
+import { Cacheable } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class WorkspaceService {
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
+  @Cacheable()
   getWorkspace(orgId: string): any {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
