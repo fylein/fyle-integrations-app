@@ -1641,7 +1641,6 @@
     "markAsDone": "Mark as done"
   },
   "qbdDirectOnboardingLanding": {
-    "setUpIntegration": "Set up integration",
     "appName": "QuickBooks Desktop ",
     "uiExposedAppName": "QuickBooks Desktop - Web Connector",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."

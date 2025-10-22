@@ -534,5 +534,8 @@
   },
   "qbdDirectDataSync": {
     "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
+  },
+  "qbdDirectOnboardingLanding": {
+    "setUpIntegration": "Connect"
   }
 }
