@@ -341,13 +341,10 @@ export class AccountingExportService {
     return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`), {});
   }
 
-  getExportLogs(status?: string[], types?: string[]): Observable<any> {
+  getExportLogs(status?: string[]): Observable<any> {
     const apiParams: any = {};
     if (status && status.length > 0) {
       apiParams.status__in = status.join(',');
-    }
-    if (types && types.length > 0) {
-      apiParams.type__in = types.join(',');
     }
     return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
   }

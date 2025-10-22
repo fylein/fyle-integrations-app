@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, interval, from } from 'rxjs';
+import { switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
@@ -101,7 +102,52 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   export() {
     this.isExportInProgress = true;
     this.dashboardService.triggerAccountingExport("v2").subscribe(() => {
-      this.setupPage();
+      this.pollExportStatus();
+    });
+  }
+
+  private pollExportStatus(): void {
+    interval(1000).pipe(
+      switchMap(() => from(
+        this.accountingExportService.getExportLogs(
+          ['ENQUEUED', 'IN_PROGRESS', 'FAILED']
+        ).toPromise()
+      )),
+      takeUntil(this.destroy$),
+      takeWhile((response: any) =>
+        response.results.filter((task: any) =>
+          (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
+        ).length > 0, true
+      )
+    ).subscribe((res: any) => {
+      const allTasks = res.results;
+      this.processedCount = allTasks.filter((task: any) =>
+        (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)
+      ).length;
+
+      if (this.exportableAccountingExportIds.length > 0) {
+        this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
+      }
+
+      // Check if all exports are complete
+      if (allTasks.filter((task: any) =>
+        (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
+      ).length === 0) {
+        // Update failed count and exportable IDs
+        this.failedExpenseGroupCount = allTasks.filter((task: any) =>
+          task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL
+        ).length;
+
+        // Refresh the dashboard data
+        this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableResponse) => {
+          const newExportableCount = exportableResponse?.ready_to_export_count || 0;
+          this.exportableAccountingExportIds = Array(newExportableCount).fill(0).map((_, i) => i + 1);
+
+          this.isExportInProgress = false;
+          this.exportProgressPercentage = 0;
+          this.processedCount = 0;
+        });
+      }
     });
   }
 
@@ -175,9 +221,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.dashboardService.getExportableAccountingExportIds('v2'),
       this.sage50ExportSettingService.getExportSettings(),
       this.accountingExportService.getExportLogs(
-        ['ENQUEUED', 'IN_PROGRESS', 'COMPLETE', 'FAILED'],
-        ['PAYMENTS_JOURNAL', 'PURCHASES_RECEIVE_INVENTORY', 'GENERAL_JOURNAL_ENTRY']
-      ),
+        ['ENQUEUED', 'IN_PROGRESS', 'FAILED']
+        ),
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
       this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
     ]).subscribe((responses) => {
@@ -206,6 +251,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
+        this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v3').subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableAccountingExportIds) => {
