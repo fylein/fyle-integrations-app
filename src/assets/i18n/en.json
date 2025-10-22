@@ -135,6 +135,7 @@
   "exportLogChildTableDialog": {
     "dialogHeader": "Expenses",
     "expenseIdHeader": "Expense ID",
+    "claimNumberHeader": "Report ID",
     "merchantHeader": "Merchant",
     "categoryHeader": "Category",
     "amountHeader": "Amount"
@@ -1679,7 +1680,6 @@
     "markAsDone": "Mark as done"
   },
   "qbdDirectOnboardingLanding": {
-    "setUpIntegration": "Set up integration",
     "appName": "QuickBooks Desktop ",
     "uiExposedAppName": "QuickBooks Desktop - Web Connector",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."

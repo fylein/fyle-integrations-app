@@ -519,5 +519,8 @@
   },
   "qbdDirectDataSync": {
     "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values."
+  },
+  "qbdDirectOnboardingLanding": {
+    "setUpIntegration": "Set up integration"
   }
 }
