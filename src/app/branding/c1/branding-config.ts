@@ -157,10 +157,10 @@ export const c1KbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`
         },
         QBD_DIRECT: {
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585923-importing-dimensions-fields-from-quickbooks-desktop-web-connector-into-expense-management`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_0c194b57b6`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_c1cbc71bf2`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_dd62a240fe`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_2e0ba92e21`,
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
             GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`,
