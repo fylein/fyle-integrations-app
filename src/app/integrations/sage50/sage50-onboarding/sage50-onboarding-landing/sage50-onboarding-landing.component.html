@@ -16,7 +16,7 @@
       [headlineText]="'sage50OnboardingLanding.headlineText' | transloco"
       [headerText]="'sage50OnboardingLanding.headerText' | transloco"
       [embedVideo]="embedVideoLink"
-      [svgPath]="'assets/flow-charts/sage50-flow-chart.svg'"
+      [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() +'-sage50-flow-chart.svg'"
       [appName]="appName"
     ></app-landing-page-body>
   </div>

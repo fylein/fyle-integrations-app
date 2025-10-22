@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AccountingExportStatus, AccountingExportType, AppName } from '../../models/enum/enum.model';
+import { AccountingExportStatus, AppName, TaskLogState } from '../../models/enum/enum.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
@@ -29,7 +29,7 @@ export class AccountingExportService {
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    helper: HelperService
+    private helper: HelperService
   ) {
     helper.setBaseApiURL();
   }
@@ -277,19 +277,19 @@ export class AccountingExportService {
     }
     if (version === 'v1') {
       // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_detail/`, apiParams);
+      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_detail/`), apiParams);
     } else if (version === AppName.QBD_DIRECT) {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/summary/`, apiParams);
+      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/summary/`), apiParams);
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`, apiParams);
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`), apiParams);
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
     };
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/count/`, apiParams);
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/count/`), apiParams);
   }
 
   getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null, appName?: string): Observable<any> {
@@ -327,18 +327,25 @@ export class AccountingExportService {
         apiParams.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
       delete apiParams.type__in;
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/`, apiParams);
+      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
     }
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/`, apiParams);
+      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`), apiParams);
 
   }
 
-  @Cacheable()
-  importExpensesFromFyle(version?: 'v1' | 'v2'): Observable<{}> {
+  importExpensesFromFyle(version?: 'v1' | 'v2' | 'v3'): Observable<{}> {
     // Dedicated to qbd direct
-    if (version === 'v2') {
-      return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/sync/`, {});
+    if (version === 'v2' || version === 'v3') {
+      return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/${(version === 'v3' ? 'fyle/sync_expenses/' : 'export_logs/sync/')}`), {});
     }
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`), {});
+  }
+
+  getExportLogs(status: TaskLogState[]): Observable<any> {
+    const apiParams: { status__in?: TaskLogState[] } = {};
+    if (status && status.length > 0) {
+      apiParams.status__in = status;
+    }
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
   }
 }

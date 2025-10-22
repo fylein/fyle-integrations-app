@@ -6,7 +6,7 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { AccountingDisplayName, AppName, AppUrl, MappingState, QboExportSettingDestinationOptionKey } from '../../models/enum/enum.model';
+import { AppName, MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
@@ -21,18 +21,18 @@ export class MappingService {
   constructor(
     protected apiService: ApiService,
     protected workspaceService: WorkspaceService,
-    helper: HelperService,
+    private helper: HelperService,
     private translocoService: TranslocoService
   ) {
     helper.setBaseApiURL();
   }
 
   getExportSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath('export_settings/'), {});
   }
 
   getImportSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath('import_settings/'), {});
   }
 
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
@@ -52,10 +52,10 @@ export class MappingService {
     }
 
     if (version === 'v1') {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/${apiPath}/destination_attributes/`, params);
+      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/${apiPath}/destination_attributes/`), params);
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`, params);
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`), params);
   }
 
   getGroupedDestinationAttributes(attributeTypes: string[], version: 'v1' | 'v2', apiPath?: string): Observable<GroupedDestinationAttribute> {
@@ -88,24 +88,23 @@ export class MappingService {
   }
 
   getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/${app_name}/fields/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/${app_name}/fields/`), {});
   }
 
-  getFyleFields(version?: 'v1', { prefixWorkspaces } = { prefixWorkspaces: true }): Observable<FyleField[]> {
-    const prefix = prefixWorkspaces ? '/workspaces' : '';
-    return this.apiService.get(`${prefix}/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
+  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`), {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/employee/`, employeeMapping);
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/mappings/employee/`), employeeMapping);
   }
 
   getMappingSettings(): Observable<MappingSettingResponse> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/mappings/settings/`), {});
   }
 
   triggerAutoMapEmployees() {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`), {});
   }
 
   private getEndpoint(mappingPage: string, isCategoryMappingGeneric?: boolean): string {
@@ -145,12 +144,12 @@ export class MappingService {
 
     const endpoint = this.getEndpoint(sourceType, isCategoryMappingGeneric);
 
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/${endpoint}/`, params);
+    return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/mappings/${endpoint}/`), params);
   }
 
   getMappingStats(sourceType: string, destinationType: string, appName: AppName): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
+    return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/mappings/stats/`), {
       source_type: sourceType,
       destination_type: destinationType,
       app_name: appName
@@ -159,11 +158,12 @@ export class MappingService {
 
   postCategoryMappings(mapping: CategoryMappingPost): Observable<CategoryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
+    return this.apiService.post(this.helper.buildEndpointPath(`${workspaceId}/mappings/category/`), mapping);
   }
 
   postMapping(mapping: GenericMappingPost): Observable<GenericMapping> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.post(this.helper.buildEndpointPath(`${workspaceId}/mappings/`), mapping);
   }
 
   constructPaginatedDestinationAttributesParams(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]) {
@@ -209,7 +209,7 @@ export class MappingService {
   getPaginatedDestinationAttributes(attributeType: string | string[], value?: string, display_name?: string, appName?: string, detailed_account_type?: string[], categories?: string[], destinationIds?: string[]): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params = this.constructPaginatedDestinationAttributesParams(attributeType, value, display_name, appName, detailed_account_type, categories, destinationIds);
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
+    return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/mappings/paginated_destination_attributes/`), params);
   }
 
 }
