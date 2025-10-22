@@ -67,7 +67,7 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             NETSUITE: true,
             QBD: false,
             BAMBOO_HR: false,
-            QBD_DIRECT: false,
+            QBD_DIRECT: true,
             SAGE50: false
         },
         'c1-production-1-us': {
