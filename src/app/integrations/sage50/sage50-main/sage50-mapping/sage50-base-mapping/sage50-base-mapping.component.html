@@ -1,0 +1,11 @@
+<app-generic-mapping-v2 *ngIf="!isLoading"
+    [isLoading]="isLoading"
+    [destinationOptions]="destinationOptions"
+    [employeeFieldMapping]="employeeFieldMapping"
+    [sourceField]="sourceField"
+    [destinationField]="destinationField"
+    [destinationAttributes]="destinationAttributes"
+    [appName]="AppName.SAGE50"
+    [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false">
+</app-generic-mapping-v2>
