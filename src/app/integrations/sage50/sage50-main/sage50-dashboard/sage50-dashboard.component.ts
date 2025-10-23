@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject, ViewChild } from '@angular/core';
 import { Subject, forkJoin, interval, from } from 'rxjs';
 import { switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -6,7 +6,7 @@ import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { FormBuilder } from '@angular/forms';
@@ -17,15 +17,23 @@ import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
+import { CsvExportLogComponent } from "src/app/shared/components/export-log/csv-export-log/csv-export-log.component";
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
   selector: 'app-sage50-dashboard',
   standalone: true,
-  imports: [SharedModule, CommonModule, DialogModule],
+  imports: [SharedModule, CommonModule, DialogModule, CsvExportLogComponent],
   templateUrl: './sage50-dashboard.component.html',
   styleUrls: ['./sage50-dashboard.component.scss']
 })
 export class Sage50DashboardComponent implements OnInit, OnDestroy {
+
+  readonly brandingStyle = brandingStyle;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly exportLogArticleLink = brandingKbArticles.postOnboardingArticles.SAGE50.EXPORT_LOG;
 
   isLoading: boolean = true;
 
@@ -91,6 +99,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   currentMappingStats: MappingStats | null = null;
 
+  @ViewChild(CsvExportLogComponent) csvExportLogComponent!: CsvExportLogComponent;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private accountingExportService: AccountingExportService,
@@ -122,9 +132,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     ).subscribe((res: any) => {
       const allTasks = res.results;
 
-      if (!allTasks) {
+      if (!allTasks.length) {
           this.exportableAccountingExportIds = [];
           this.isExportInProgress = false;
+          this.csvExportLogComponent.applyFilters();
       }
     });
   }
@@ -193,10 +204,16 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
   }
 
+  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+    return this.accountingExportService.getAccountingExports(
+      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, searchQuery, this.appName
+    );
+  }
+
   private setupPage(): void {
 
     forkJoin([
-      this.dashboardService.getExportableAccountingExportIds('v2'),
+      this.dashboardService.getExportableAccountingExportIds('v3'),
       this.sage50ExportSettingService.getExportSettings(),
       this.accountingExportService.getExportLogs(
         [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]
@@ -229,7 +246,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v3').subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableAccountingExportIds) => {
+          this.dashboardService.getExportableAccountingExportIds('v3').subscribe((exportableAccountingExportIds) => {
             const newExportableCount = exportableAccountingExportIds?.ready_to_export_count || 0;
             this.exportableAccountingExportIds = Array(newExportableCount).fill(0).map((_, i) => i + 1);
             this.isImportInProgress = false;

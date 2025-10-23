@@ -1,0 +1,83 @@
+@if (!exportLogs) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <app-loader></app-loader>
+    </div>
+} @else {
+    <div>
+        <div>
+            <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
+                [exportLogForm]="exportLogForm"
+                [hideCalendar]="hideCalendar"
+                [dateOptions]="dateOptions"
+                (handleSimpleSearch)="handleSimpleSearch($event)">
+            </app-export-log-filter>
+
+            <!-- Custom CSV Export Log Table -->
+            <p-table *ngIf="exportLogs.length > 0 && !isLoading" #dt1 [value]="exportLogs">
+                <ng-template pTemplate="header">
+                    <tr class="tw-text-text-primary">
+                        <th class="tw-min-w-120-px">{{ 'csvExportLog.tableHeaders.dateTime' | transloco}}</th>
+                        <th>{{ 'csvExportLog.tableHeaders.expenseType' | transloco }}</th>
+                        <th>{{ 'csvExportLog.tableHeaders.exportFile' | transloco }}</th>
+                        <th>{{ 'csvExportLog.tableHeaders.fileDetails' | transloco }}</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                        <td>
+                            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | date}}</p>
+                            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | date : "hh:mm a"}}</span>
+                        </td>
+                        <td>
+                            <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+                                {{getExpenseType(rowData)}}
+                            </h4>
+                            <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
+                                {{rowData?.expenses?.length || 0}} {{ rowData?.expenses?.length === 1 ? ('csvExportLog.expense' | transloco) : ('csvExportLog.expenses' | transloco) }}
+                            </h5>
+                        </td>
+                        <td class="tw-text-text-secondary">
+                            <a
+                                (click)="downloadFile(rowData)"
+                                class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[20px]"
+                            >
+                                <span style="overflow-wrap: anywhere;">{{ constructFileName(rowData) }}</span>
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'download-medium'"
+                                    [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                                </app-svg-icon>
+                            </a>
+                        </td>
+                        <td class="tw-text-text-secondary">
+                            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+                                {{ rowData.error_count ? ('csvExportLog.errorCount' | transloco: { count: rowData.error_count }) : ('csvExportLog.noErrors' | transloco) }}
+                            </p>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <div *ngIf="totalCount > 0 && !isLoading" class="tw-p-24-px tw-border-t-1-px">
+                <app-paginator
+                    [dropDownValue]="limit"
+                    [page]="currentPage"
+                    [totalCount]="totalCount"
+                    (pageSizeChangeEvent)="pageSizeChanges($event)"
+                    (pageOffsetChangeEvent)="pageChanges($event)">
+                </app-paginator>
+            </div>
+
+            <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
+                [mainText]="'csvExportLog.noResultsFound' | transloco"
+                [subText]="'csvExportLog.noResultsSuggestion' | transloco">
+            </app-zero-state-with-illustration>
+
+        </div>
+
+        <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
+        [mainText]="'csvExportLog.noRecordsToShow' | transloco"
+        [subText]="'csvExportLog.successfulExportsStoredHere' | transloco">
+        </app-zero-state-with-illustration>
+
+    </div>
+}
