@@ -1,7 +1,11 @@
 <div class="tw-flex tw-items-center tw-gap-[10px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
     <div class="tw-flex tw-items-center tw-gap-[4px]">
         <img src="assets/icons/file-csv-dark.svg" [alt]="'uploadedFileDetails.csvUploadAlt' | transloco">
-        <span class="tw-font-500 tw-truncate tw-max-w-[140px]">{{ file.name ?? '' }}</span>
+        <span 
+            #fileNameElement
+            class="tw-font-500 tw-truncate tw-max-w-[140px]"
+            [pTooltip]="fileNameElement.offsetWidth < fileNameElement.scrollWidth ? (file.name ?? '') : ''"
+            tooltipPosition="top">{{ file.name ?? '' }}</span>
     </div>
 
     <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>

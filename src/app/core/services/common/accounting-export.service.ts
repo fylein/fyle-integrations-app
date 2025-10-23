@@ -334,6 +334,7 @@ export class AccountingExportService {
     return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`), apiParams);
   }
 
+  @Cacheable()
   importExpensesFromFyle(version?: 'v1' | 'v2' | 'v3'): Observable<{}> {
     // Dedicated to qbd direct
     if (version === 'v2' || version === 'v3') {
