@@ -28,7 +28,7 @@ export class DashboardService {
   }
 
   triggerAccountingExport(version?: 'v1' | 'v2'): Observable<{}> {
-    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : (version === 'v2' ? `/${this.workspaceService.getWorkspaceId()}/export_logs/export/` : '');
+    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : (version === 'v2' ? `/${this.workspaceService.getWorkspaceId()}/export_logs/export/` : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`);
     return this.apiService.post(url, {});
   }
 
