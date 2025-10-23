@@ -22,7 +22,7 @@ export class DashboardService {
   getExportableAccountingExportIds(version?: 'v1' | 'v2' | 'v3'): Observable<any> {
     // Dedicated to qbd direct
     if (version === 'v2' || version === 'v3') {
-      return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/export_logs/${(version === 'v3' ? 'ready_to_export_count/' : 'ready_to_export/')}/`, {});
+      return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/export_logs/${(version === 'v3' ? 'ready_to_export_count' : 'ready_to_export')}/`, {});
     }
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
