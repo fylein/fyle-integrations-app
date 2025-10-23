@@ -27,7 +27,6 @@ export class WorkspaceService {
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
-  @Cacheable()
   getWorkspace(orgId: string): any {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
