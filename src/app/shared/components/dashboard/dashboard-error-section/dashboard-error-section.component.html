@@ -12,7 +12,7 @@
                             <h5 class="!tw-leading-4" [ngClass]="brandingStyle.dashboard.exportErrorSubTextDescription">
                                 {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.resolveErrorsPrompt' : 'dashboardErrorSection.resolveErrorsPrompt') | transloco }}
                                 <a *ngIf="brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT"
-                                    class="link tw-text-14-px tw-w-fit tw-pl-6-px tw-inline-flex tw-items-center"
+                                    class="link tw-text-12-px tw-w-fit tw-inline-flex tw-items-center"
                                     (click)="windowService.openInNewTab(redirectLink)">
                                     {{ 'qbd_direct.common.readMoreText' | transloco}}</a>
                             </h5>

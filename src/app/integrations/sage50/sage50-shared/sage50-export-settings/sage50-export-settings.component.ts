@@ -5,7 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
-import { Sage50CCCExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ExportSettingsGet, Sage50CCCExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
@@ -123,6 +123,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
           ToastSeverity.SUCCESS,
           this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
         );
+
+        const hasMappings = this.exportSettingsForm.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY || this.exportSettingsForm.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL;
+        this.mappingService.shouldShowMappingPage.emit(hasMappings);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);

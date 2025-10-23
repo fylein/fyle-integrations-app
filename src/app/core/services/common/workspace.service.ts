@@ -7,6 +7,7 @@ import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { WorkspaceOnboardingState } from '../../models/db/workspaces.model';
 import { QbdDirectWorkspace } from '../../models/qbd-direct/db/qbd-direct-workspaces.model';
+import { Cacheable } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,11 @@ export class WorkspaceService {
    }
 
   importFyleAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh});
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/fyle/import_attributes/`), {refresh});
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
+  @Cacheable()
   getWorkspace(orgId: string): any {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
@@ -69,14 +71,14 @@ export class WorkspaceService {
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getConfiguration(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/configuration/`), {});
   }
 
   getWorkspaceGeneralSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/settings/general/`), {});
   }
 
   updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<QbdDirectWorkspace> {
-    return this.apiService.patch(`/workspaces/${this.getWorkspaceId()}/onboarding_state/`, payload);
+    return this.apiService.patch(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/onboarding_state/`), payload);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { MappingService } from '../common/mapping.service';
 import { Observable } from 'rxjs';
 import { DestinationAttributeStats, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
@@ -8,6 +8,9 @@ import { AppName, Sage50AttributeType } from '../../models/enum/enum.model';
   providedIn: 'root'
 })
 export class Sage50MappingService extends MappingService {
+
+  @Output() shouldShowMappingPage: EventEmitter<boolean> = new EventEmitter();
+
   getAccounts(accountTypes: string[], value?: string): Observable<PaginatedDestinationAttribute> {
     const params = this.constructPaginatedDestinationAttributesParams(
       Sage50AttributeType.ACCOUNT, value, undefined, AppName.SAGE50, accountTypes
@@ -28,4 +31,17 @@ export class Sage50MappingService extends MappingService {
     };
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes_stats/`, params);
   }
+
+  getUnmappedAttributes(sourceType: 'EMPLOYEE' | 'CORPORATE_CARD', destinationType: string, limit: number = 500, offset: number = 0): Observable<any> {
+    const params = {
+      limit,
+      offset,
+      mapped: false,
+      destination_type: destinationType,
+      source_type: sourceType,
+      app_name: AppName.SAGE50
+    };
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/mappings/employee_attributes/`, params);
+  }
+
 }

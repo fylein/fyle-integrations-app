@@ -207,7 +207,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importSettingService.getImportableChartOfAccounts(),
       this.importAttributesService.getAccountingImportDetailsByType(),
       this.exportSettingService.getExportSettings(),
-      this.mappingService.getFyleFields('v1', { prefixWorkspaces: false }),
+      this.mappingService.getFyleFields('v1'),
       this.importSettingService.getImportCodeFieldsConfig(),
       ...attributeStatsRequests
     ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {

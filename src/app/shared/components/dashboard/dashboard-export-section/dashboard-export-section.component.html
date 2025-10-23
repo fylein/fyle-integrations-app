@@ -26,7 +26,7 @@
                     </h5>
                     <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']" *ngIf="isExportInProgress">{{ 'dashboardExportSection.exportInProgressMessage' | transloco }}</h5>
                     <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
-                        {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.noExpensesToExport' : 'dashboardExportSection.noExpensesToExport' | transloco: { importStates: importStates }) }}
+                        {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.noExpensesToExport' : 'dashboardExportSection.noExpensesToExport') | transloco: { importStates: importStates } }}
                     </h5>
                     <div *ngIf="!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-flex" [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
                         <h5>{{ 'dashboardExportSection.exportSummary' | transloco: { newCount: (exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0), failedCount: failedExpenseGroupCount } }}</h5>

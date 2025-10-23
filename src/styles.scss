@@ -461,7 +461,7 @@ p {
 
 [data-theme='fyle'] {
     .p-dialog-header-close-icon {
-        @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
+        @apply tw-mt-[-3px] tw-w-16-px tw-h-16-px tw-text-icon-primary #{!important} ;
     }
 }
 

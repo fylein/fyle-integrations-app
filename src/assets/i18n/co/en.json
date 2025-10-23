@@ -110,7 +110,8 @@
       "resolveErrorsPrompt": "Resolve the following errors in your QuickBooks Desktop account, then try to export your expenses again."
     },
     "exportLog": {
-      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports."
+      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports.",
+      "completeExportLogCountZeroStateSubHeaderText" : " "
     }
   },
   "netsuite": {
@@ -533,5 +534,8 @@
   },
   "qbdDirectDataSync": {
     "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
+  },
+  "qbdDirectOnboardingLanding": {
+    "setUpIntegration": "Connect"
   }
 }
