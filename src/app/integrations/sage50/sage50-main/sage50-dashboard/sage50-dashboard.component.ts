@@ -206,9 +206,9 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
   }
 
-  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null) {
     return this.accountingExportService.getAccountingExports(
-      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, searchQuery, this.appName
+      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, null, this.appName
     );
   }
 

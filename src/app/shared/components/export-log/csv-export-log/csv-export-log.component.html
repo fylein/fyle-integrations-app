@@ -7,12 +7,11 @@
         <div>
             <div class="tw-p-24-px">
                 <h2 class="tw-text-12-px tw-text-form-label-text-color tw-pl-8-px tw-pb-8-px tw-font-nav-link-font-weight"> {{ 'csvExportLog.tableHeaders.dateTime' | transloco }}</h2>
-                <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
+                <app-export-log-filter *ngIf="totalCount > 0 || isDateSelected"
                     [exportLogForm]="exportLogForm"
                     [hideCalendar]="hideCalendar"
                     [dateOptions]="dateOptions"
-                    [isSimpleSearchRequired]="false"
-                    (handleSimpleSearch)="handleSimpleSearch($event)">
+                    [isSimpleSearchRequired]="false">
                 </app-export-log-filter>
             </div>
 
@@ -71,14 +70,14 @@
                 </app-paginator>
             </div>
 
-            <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
+            <app-zero-state-with-illustration *ngIf="isDateSelected && totalCount === 0 && !isLoading"
                 [mainText]="'csvExportLog.noResultsFound' | transloco"
                 [subText]="'csvExportLog.noResultsSuggestion' | transloco">
             </app-zero-state-with-illustration>
 
         </div>
 
-        <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
+        <app-zero-state-with-illustration *ngIf="totalCount === 0 && !isDateSelected && !isLoading"
         [mainText]="'csvExportLog.noRecordsToShow' | transloco"
         [subText]="'csvExportLog.successfulExportsStoredHere' | transloco">
         </app-zero-state-with-illustration>
