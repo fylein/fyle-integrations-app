@@ -9,6 +9,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>{{ 'exportLogChildTableDialog.expenseIdHeader' | transloco }}</th>
+                    <th>{{ 'exportLogChildTableDialog.claimNumberHeader' | transloco }}</th>
                     <th>{{ 'exportLogChildTableDialog.merchantHeader' | transloco }}</th>
                     <th>{{ 'exportLogChildTableDialog.categoryHeader' | transloco }}</th>
                     <th>{{ 'exportLogChildTableDialog.amountHeader' | transloco }}</th>
@@ -16,7 +17,8 @@
             </ng-template>
             <ng-template pTemplate="body" let-expense>
                 <tr>
-                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(expense.expense_id, expense.org_id)">{{expense.expense_number}}</td>
+                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(expense.expense_id, expense.org_id)">{{ expense.expense_number ? expense.expense_number : '-' }}</td>
+                    <td>{{ expense.claim_number ? expense.claim_number : '-' }}</td>
                     <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
                     <td>{{ expense.category }}</td>
                     <td>{{ expense.amount }}</td>

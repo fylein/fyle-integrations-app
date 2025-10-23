@@ -210,7 +210,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   private setupPage(): void {
 
     forkJoin([
-      this.dashboardService.getExportableAccountingExportIds('v2'),
+      this.dashboardService.getExportableAccountingExportIds('v3'),
       this.sage50ExportSettingService.getExportSettings(),
       this.accountingExportService.getExportLogs(
         [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]
@@ -243,7 +243,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v3').subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds('v2').subscribe((exportableAccountingExportIds) => {
+          this.dashboardService.getExportableAccountingExportIds('v3').subscribe((exportableAccountingExportIds) => {
             const newExportableCount = exportableAccountingExportIds?.ready_to_export_count || 0;
             this.exportableAccountingExportIds = Array(newExportableCount).fill(0).map((_, i) => i + 1);
             this.isImportInProgress = false;
