@@ -180,6 +180,7 @@ const colors = {
   'bg-brand-pressed': 'var(--bg-brand-pressed)',
   'bg-brand-hover': 'var(--bg-brand-hover)',
   'bg-red': 'var(--bg-red)',
+  'bg-subtle': 'var(--bg-subtle)',
 
   //grey bg
   'bg-primary': 'var(--bg-primary)',

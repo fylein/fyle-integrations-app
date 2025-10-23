@@ -1,5 +1,5 @@
-@if (!exportLogs) {
-    <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-h-[370px]">
         <app-loader></app-loader>
     </div>
 } @else {
@@ -12,8 +12,11 @@
                 (handleSimpleSearch)="handleSimpleSearch($event)">
             </app-export-log-filter>
 
-            <!-- Custom CSV Export Log Table -->
-            <p-table *ngIf="exportLogs.length > 0 && !isLoading" #dt1 [value]="exportLogs">
+            <!-- Custom CSV Completed Export Log Table -->
+            @if (isSkippedExpenses) {
+                <app-csv-expenses-table [expenses]="skippedExpenses"></app-csv-expenses-table>
+            } @else {
+            <p-table *ngIf="records.length > 0 && !isLoading" #dt1 [value]="records">
                 <ng-template pTemplate="header">
                     <tr class="tw-text-text-primary">
                         <th class="tw-min-w-120-px">{{ 'csvExportLog.tableHeaders.dateTime' | transloco}}</th>
@@ -56,6 +59,7 @@
                     </tr>
                 </ng-template>
             </p-table>
+            }
 
             <div *ngIf="totalCount > 0 && !isLoading" class="tw-p-24-px tw-border-t-1-px">
                 <app-paginator

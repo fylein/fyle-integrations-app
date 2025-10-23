@@ -78,6 +78,6 @@ export class WorkspaceService {
   }
 
   updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<QbdDirectWorkspace> {
-    return this.apiService.patch(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/onboarding_state/`), payload);
+    return this.apiService.patch(`/workspaces/${this.getWorkspaceId()}/onboarding_state/`, payload);
   }
 }

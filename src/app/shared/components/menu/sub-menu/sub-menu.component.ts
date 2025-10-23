@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
@@ -13,11 +13,20 @@ export class SubMenuComponent implements OnInit {
 
   @Input() activeModule: MenuItem;
 
+  @Output() activeModuleChange: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
+
+  @Input() shouldRedirect: boolean = true;
+
+  @Input() customStyles: string = '';
+
   constructor(
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    if (!this.shouldRedirect) {
+      return;
+    }
     // Redirect to the first module (tab) if the if a full path is not specified in the url
     // Eg: /integrations/xero/main/configuration, /integrations/xero/main/mapping
     // Skips redirection if the child route is also specified

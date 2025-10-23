@@ -45,21 +45,30 @@ export interface ExpenseGroupList {
 }
 
 export interface SkipExportList {
-  updated_at: Date;
+  expense_id: string;
+  updated_at: string;
+  expense_number: string;
+  fyleUrl: string;
   employee: [string, string];
+  amount: number;
   expenseType: 'Corporate Card' | 'Reimbursable';
   claim_number: string;
-  fyleUrl: string;
+  report_title: string;
+  spent_at: string;
 }
 
 export type SkipExportLog = {
   employee_name: string;
   employee_email: string;
   claim_number: string;
-  updated_at: Date;
+  updated_at: string;
   fund_source: string;
   expense_id: string;
   org_id: string;
+  amount: number;
+  expense_number: string;
+  report_title: string;
+  spent_at: string;
 };
 
 export interface SkipExportLogResponse extends PaginatedResponse {
