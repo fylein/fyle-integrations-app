@@ -25,8 +25,8 @@
     </app-dashboard-export-section>
 
     @if (showPendingMappings) {
-    <div class="tw-mt-24-px tw-py-32-px tw-px-120-px">
-    <div class="tw-rounded-8-px tw-bg-white tw-shadow-md">
+    <div [ngClass]="brandingStyle.common.mainComponentPadding">
+    <div class="tw-rounded-8-px tw-bg-white" [ngClass]="brandingStyle.common.mainComponentShadow">
         <div class="tw-p-24-px tw-border">
         <h2 class="tw-text-18-px tw-font-500 tw-text-text-primary tw-m-0">
             {{ 'sage50Dashboard.pendingMappingsTitle' | transloco }}
@@ -46,10 +46,10 @@
                     {{ 'sage50Dashboard.employeeMappingDescription' | transloco }}
                 </p>
             </div>
-            <app-button 
-                (buttonClick)="showMappingDialog('EMPLOYEE', 'VENDOR')" 
-                [buttonText]="'sage50Dashboard.mapEmployeesButtonText' | transloco" 
-                [buttonType]="ButtonType.SECONDARY" 
+            <app-button
+                (buttonClick)="showMappingDialog('EMPLOYEE', 'VENDOR')"
+                [buttonText]="'sage50Dashboard.mapEmployeesButtonText' | transloco"
+                [buttonType]="ButtonType.SECONDARY"
                 [buttonSize]="ButtonSize.MEDIUM">
             </app-button>
         </div>
@@ -65,10 +65,10 @@
                     {{ 'sage50Dashboard.corporateCardMappingDescription' | transloco }}
                 </p>
             </div>
-            <app-button 
-                (buttonClick)="showMappingDialog('CORPORATE_CARD', 'ACCOUNT')" 
-                [buttonText]="'sage50Dashboard.mapCorporateCardsButtonText' | transloco" 
-                [buttonType]="ButtonType.SECONDARY" 
+            <app-button
+                (buttonClick)="showMappingDialog('CORPORATE_CARD', 'ACCOUNT')"
+                [buttonText]="'sage50Dashboard.mapCorporateCardsButtonText' | transloco"
+                [buttonType]="ButtonType.SECONDARY"
                 [buttonSize]="ButtonSize.MEDIUM">
             </app-button>
         </div>
@@ -78,21 +78,50 @@
     </div>
     }
 
+    <!-- Export log -->
+    <div [ngClass]="brandingStyle.common.mainComponentPadding" class="tw-py-32-px">
+        <div class="tw-rounded-8-px tw-bg-white" [ngClass]="brandingStyle.common.mainComponentShadow">
+            <!-- Header -->
+            <div class="tw-p-24-px tw-border-b">
+                <h2 class="tw-text-18-px tw-font-500 tw-text-text-primary tw-m-0">
+                    {{ 'sage50Dashboard.exportLogTitle' | transloco }}
+                </h2>
+                <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-8-px">
+                    <span>{{ 'sage50Dashboard.exportLogDescription' | transloco }}</span>
+                    <a [href]="exportLogArticleLink" target="_blank" class="link tw-pl-6-px tw-w-fit tw-inline-flex tw-items-center">
+                        {{ 'sage50Dashboard.readMore' | transloco }}
+                        <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"
+                            [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                        </app-svg-icon>
+                    </a>
+                </p>
+            </div>
+            <!-- TODO: Completed / Skipped tabs -->
+
+            <!-- Completed export log table with filters -->
+            <div>
+                <app-csv-export-log
+                    [updateExportLogs]="updateExportLogs.bind(this)"
+                ></app-csv-export-log>
+            </div>
+        </div>
+    </div>
+
     <div>
     <p-dialog [dismissableMask]="true" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
         <p-header>
             <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
             <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-4-px">{{ mappingDialogDescription | transloco }}</p>
         </p-header>
-        <app-generic-mapping-table 
-            [employeeFieldMapping]="employeeFieldMapping" 
-            [appName]="appName" 
-            [isDashboardMappingResolve]="true" 
+        <app-generic-mapping-table
+            [employeeFieldMapping]="employeeFieldMapping"
+            [appName]="appName"
+            [isDashboardMappingResolve]="true"
             [isLoading]="isMappingDialogLoading"
-            [destinationField]="mappingDestinationField" 
-            [filteredMappings]="filteredMappings" 
-            [sourceField]="mappingSourceField" 
-            [destinationOptions]="mappingDestinationOptions" 
+            [destinationField]="mappingDestinationField"
+            [filteredMappings]="filteredMappings"
+            [sourceField]="mappingSourceField"
+            [destinationOptions]="mappingDestinationOptions"
             [isMultiLineOption]="false"
             [mappingStats]="currentMappingStats!">
         </app-generic-mapping-table>

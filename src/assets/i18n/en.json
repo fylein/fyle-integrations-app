@@ -2604,5 +2604,23 @@
   },
   "dialog": {
     "cancel": "Cancel"
+  },
+  "csvExportLog": {
+    "tableHeaders": {
+      "dateTime": "Date of export",
+      "expenseType": "Expense type",
+      "exportFile": "Export file",
+      "fileDetails": "File details"
+    },
+    "expense": "expense",
+    "expenses": "expenses",
+    "noRecordsToShow": "No records to show yet!",
+    "successfulExportsStoredHere": "All your successful exports and their details will be stored here.",
+    "noResultsFound": "No results found!",
+    "noResultsSuggestion": "We could not find what you were looking for. Kindly check the keywords again.",
+    "reimbursableType": "Reimbursable",
+    "cccType": "Corporate card",
+    "errorCount": "{{count}} errors identified",
+    "noErrors": "No errors"
   }
 }

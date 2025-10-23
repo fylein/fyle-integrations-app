@@ -183,7 +183,8 @@ export const fyleKbArticles: KbArticle[string] = {
             PHASE: `${brandingConfig.helpArticleDomain}`,
             VENDOR: `${brandingConfig.helpArticleDomain}`,
             ACCOUNT: `${brandingConfig.helpArticleDomain}`,
-            COST_CODE: `${brandingConfig.helpArticleDomain}`
+            COST_CODE: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_LOG: `${brandingConfig.helpArticleDomain}`
         }
     }
 };

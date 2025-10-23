@@ -19,6 +19,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { environment } from 'src/environments/environment';
 import { AccountingExportList } from '../../models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupDescription } from '../../models/db/expense-group.model';
+import { convertDateRangeToAPIFormat } from '../../util/dateRangeConverter';
 
 @Injectable({
   providedIn: 'root'
@@ -312,25 +313,25 @@ export class AccountingExportService {
     }
 
     if (selectedDateFilter) {
-      const exportedAtLte = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const exportedAtGte = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      apiParams.exported_at__gte = `${exportedAtLte[2]}-${exportedAtLte[1]}-${exportedAtLte[0]}T00:00:00`;
-      apiParams.exported_at__lte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
+      const dateRangeInAPIFormat = convertDateRangeToAPIFormat(selectedDateFilter);
+
+      apiParams.exported_at__gte = dateRangeInAPIFormat.start;
+      apiParams.exported_at__lte = dateRangeInAPIFormat.end;
     }
 
     if (exportedAt) {
       apiParams.exported_at__gte = exportedAt;
     }
 
-    if (appName === AppName.QBD_DIRECT) {
+    if (appName === AppName.QBD_DIRECT || appName === AppName.SAGE50) {
       if (apiParams.status__in?.includes(AccountingExportStatus.FAILED)) {
         apiParams.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
       delete apiParams.type__in;
       return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
     }
-      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`), apiParams);
 
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`), apiParams);
   }
 
   importExpensesFromFyle(version?: 'v1' | 'v2' | 'v3'): Observable<{}> {
