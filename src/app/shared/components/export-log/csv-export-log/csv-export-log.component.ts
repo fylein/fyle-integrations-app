@@ -146,7 +146,7 @@ export class CsvExportLogComponent implements OnInit {
     this.applyFilters();
   }
 
-  private applyFilters(): void {
+  applyFilters(): void {
     this.isLoading = true;
     this.updateExportLogs(
       this.limit, this.offset, this.selectedDateFilter, this.searchQuery

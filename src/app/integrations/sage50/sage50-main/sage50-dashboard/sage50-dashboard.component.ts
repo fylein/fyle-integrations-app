@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject, ViewChild } from '@angular/core';
 import { Subject, forkJoin, interval, from } from 'rxjs';
 import { switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
@@ -99,6 +99,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   currentMappingStats: MappingStats | null = null;
 
+  @ViewChild(CsvExportLogComponent) csvExportLogComponent!: CsvExportLogComponent;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private accountingExportService: AccountingExportService,
@@ -133,6 +135,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       if (!allTasks.length) {
           this.exportableAccountingExportIds = [];
           this.isExportInProgress = false;
+          this.csvExportLogComponent.applyFilters();
       }
     });
   }
