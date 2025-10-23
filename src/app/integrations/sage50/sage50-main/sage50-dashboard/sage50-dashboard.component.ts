@@ -130,7 +130,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     ).subscribe((res: any) => {
       const allTasks = res.results;
 
-      if (!allTasks) {
+      if (!allTasks.length) {
           this.exportableAccountingExportIds = [];
           this.isExportInProgress = false;
       }
