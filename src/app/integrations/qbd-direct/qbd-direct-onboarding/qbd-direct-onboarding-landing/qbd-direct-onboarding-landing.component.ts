@@ -24,7 +24,7 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
-  redirectLink = brandingKbArticles.topLevelArticles.QBD_DIRECT;
+  redirectLink = brandingConfig.brandId !== 'co' ? brandingKbArticles.topLevelArticles.QBD_DIRECT : '';
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBD_DIRECT;
 

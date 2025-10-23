@@ -252,13 +252,13 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
-                        [label]="('qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateLabel' | transloco) + (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco)"
+                        [label]="('qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateLabel' | transloco) + (brandingConfig.brandId === 'co' ? '' : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco))" 
                         [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"
                         [formControllerName]="'creditCardExportDate'">
-                    </app-configuration-select-field>
+                    </app-configuration-select-field> 
                 </div>
 
             </div>

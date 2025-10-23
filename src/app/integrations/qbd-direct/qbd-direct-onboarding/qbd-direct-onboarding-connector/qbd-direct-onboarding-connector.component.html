@@ -46,6 +46,9 @@
                     (continueClick)="proceedToExportSetting()"></app-qbd-direct-data-sync>
                 </div>
             </div>
+            <div *ngIf="!isDataSyncLoading && isConnectionStepCompleted">
+                <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [AppName]="appName" [isButtonDisabled]="isDataSyncCTADisabled" (save)="proceedToExportSetting()"></app-configuration-step-footer>
+            </div>
         </div>
     </div>
 </div>

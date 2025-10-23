@@ -102,6 +102,7 @@
                 [isButtonDisabled]="!importSettingForm.valid"
                 [showBackButton]="isOnboarding ? true : false"
                 (save)="save()"
+                [AppName]="appName"
                 (navigateToPreviousStep)="navigateToPreviousStep()">
             </app-configuration-step-footer>
         </form>

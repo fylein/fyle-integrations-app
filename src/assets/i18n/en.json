@@ -463,7 +463,6 @@
     "quickbooksOnlineAppName": "QuickBooks Online",
     "xeroAppName": "Xero",
     "quickbooksDesktopIifAppName": "QuickBooks Desktop (IIF)",
-    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop (Web Connector)",
     "sage300CreAppName": "Sage 300 CRE",
     "dynamics365BusinessCentralAppName": "Dynamics 365 Business Central",
     "hrmsSectionTitle": "HRMS",
@@ -1681,7 +1680,6 @@
   },
   "qbdDirectOnboardingLanding": {
     "appName": "QuickBooks Desktop ",
-    "uiExposedAppName": "QuickBooks Desktop - Web Connector",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."
   },
   "qbdDirectOnboardingConnector": {
@@ -1697,28 +1695,22 @@
     "invalidPathError": "Enter a valid company file path.",
     "downloadButtonLabel": "Download",
     "loadingText": "Loading",
-    "ifDownloadDidNotStart": "If it didn’t start, ",
-    "webConnectorVideoTitle": "How to open the integration file in Web Connector."
+    "ifDownloadDidNotStart": "If it didn’t start, "
   },
   "qbdDirectExportSettings": {
     "exportModule": "export module",
-    "selectExportTypePlaceholder": "Select an export type",
     "option": "option",
     "selectRepresentationPlaceholder": "Select representation",
     "accountsPayable": "accounts payable",
     "debitLinesReflectCategory": ", while debit lines will reflect the category chosen by the employee for each respective expense",
     "selectAccountsPayablePlaceholder": "Select accounts payable",
     "expenseState": "expense state",
-    "selectExportStatePlaceholder": "Select export state",
     "howExpensesToBeGrouped": "how expenses to be grouped",
-    "selectExpenseGroupingPlaceholder": "Select expense grouping",
     "exportDate": "export date",
     "dateAsSuffix": " date as",
-    "selectDatePlaceholder": "Select date",
     "nameInJournalEntryToExport": "Name in which Journal Entry should export",
     "selectNamePlaceholder": "Select a name",
     "creditCardAccount": "credit card account",
-    "selectDefaultCreditCardAccountPlaceholder": "Select default credit card account",
     "aDefaultCreditAccount": "a default credit account",
     "selectDefaultAccountPlaceholder": "Select default account",
     "changeInConfigurationTitle": "Change in configuration",
