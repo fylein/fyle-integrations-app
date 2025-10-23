@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -29,6 +30,8 @@ export class AppLandingPageBodyComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly AppName = AppName;
 
   brandingStyle = brandingStyle;
 

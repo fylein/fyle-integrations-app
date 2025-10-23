@@ -62,7 +62,7 @@
         "headerText": "",
         "contentText": "Customize the data that’s imported from QuickBooks Desktop to Expense Management.",
         "importCategoriesLabel": "Import the chart of accounts as categories",
-        "importCategoriesSubLabel": "The chart of accounts will import as categories, available for employees to select when adding expense details.",
+        "importCategoriesSubLabel": "The chart of accounts will import as categories employees can select from when adding expense details.",
         "importItemsLabel": "Import items from QuickBooks Desktop",
         "importItemsSubLabel": "Items from QuickBooks Desktop will be imported as categories in {{brandName}}.",
         "importVendorsAsMerchantsLabel": "Import vendors as merchants",
@@ -111,7 +111,10 @@
     },
     "exportLog": {
       "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports.",
-      "completeExportLogCountZeroStateSubHeaderText" : " "
+      "completeExportLogCountZeroStateSubHeaderText": " "
+    },
+    "configurationStepFooter": {
+      "back": "Go back"
     }
   },
   "netsuite": {
@@ -486,7 +489,8 @@
   },
   "landing": {
     "contentText": "If you have an existing QuickBooks Online integration with your capital one account, you'll need to disconnect it in your QuickBooks Online account before setting up your connection with Expense Management.",
-    "guideHeaderText": "How to setup your integration"
+    "guideHeaderText": "How to setup your integration",
+    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop"
   },
   "common": {
     "readMoreText": "Read more",
@@ -517,11 +521,12 @@
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Company file path",
     "companyFilePathHelpText": "Enter your company file path to generate and download the integration file.",
-    "findPathVideoTitle": "How to find the company file path.",
+    "findPathVideoTitle": "Learn how to find the company file path.",
     "downloadWillBegin": "Your download should be complete",
     "downloadManuallyLink": "manually download the integration file.",
     "notRightFilePrompt": " ",
-    "tryAgainLink": "Download a different integration file"
+    "tryAgainLink": "Download a different integration file",
+    "webConnectorVideoTitle": "Learn how to open the integration file in Web Connector."
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Enter the following password:",
@@ -533,9 +538,17 @@
     "success": "Connected to QuickBooks Desktop"
   },
   "qbdDirectDataSync": {
-    "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
+    "infoText": "Data field"
   },
   "qbdDirectOnboardingLanding": {
-    "setUpIntegration": "Connect"
+    "setUpIntegration": "Connect",
+    "uiExposedAppName": "QuickBooks Desktop"
+  },
+  "qbdDirectExportSettings": {
+    "selectExportTypePlaceholder": "Export type",
+    "selectDefaultCreditCardAccountPlaceholder": "Account",
+    "selectExportStatePlaceholder": "Expense status",
+    "selectExpenseGroupingPlaceholder": "Formate",
+    "selectDatePlaceholder": "Date"
   }
 }

@@ -1,7 +1,7 @@
 <div class="tw-flex tw-items-center tw-py-16-px tw-px-24-px" [ngClass]="[!showBackButton || brandingFeatureConfig.footerButtonsRightAligned ? 'tw-justify-end': 'tw-justify-between', brandingFeatureConfig.footerButtonsRightAligned ? 'tw-gap-10-px' : '', !(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? 'tw-border-t tw-border-t-border-tertiary' : '']">
     <div class="tw-flex" *ngIf="showBackButton">
         <div>
-            <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="'configurationStepFooter.back' | transloco"></app-button>
+            <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT ? 'qbd_direct.configurationStepFooter.back' : 'configurationStepFooter.back') | transloco"></app-button>
         </div>
 
         <div class="tw-ml-16-px">

@@ -471,7 +471,8 @@
   },
   "landing": {
     "contentText": "Import data from QuickBooks Online to {{brandName}} and export expenses from {{brandName}} to QuickBooks Online. ",
-    "guideHeaderText": "Guide to setup your integration"
+    "guideHeaderText": "Guide to setup your integration",
+    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop (Web Connector)"
   },
   "common": {
     "readMoreText": "Read more",
@@ -506,7 +507,8 @@
     "downloadWillBegin": "Your download will begin",
     "downloadManuallyLink": "download the integration file manually",
     "notRightFilePrompt": "Not the right file? ",
-    "tryAgainLink": "Try again."
+    "tryAgainLink": "Try again.",
+    "webConnectorVideoTitle": "How to open the integration file in Web Connector."
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Use this password to set up the connection",
@@ -521,6 +523,14 @@
     "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values."
   },
   "qbdDirectOnboardingLanding": {
-    "setUpIntegration": "Set up integration"
+    "setUpIntegration": "Set up integration",
+    "uiExposedAppName": "QuickBooks Desktop - Web Connector"
+  },
+  "qbdDirectExportSettings": {
+    "selectExportTypePlaceholder": "Select an export type",
+    "selectDefaultCreditCardAccountPlaceholder": "Select default credit card account",
+    "selectExportStatePlaceholder": "Select export state",
+    "selectExpenseGroupingPlaceholder": "Select expense grouping",
+    "selectDatePlaceholder": "Select date"
   }
 }
