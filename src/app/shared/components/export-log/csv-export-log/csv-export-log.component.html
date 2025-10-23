@@ -5,12 +5,16 @@
 } @else {
     <div>
         <div>
-            <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
-                [exportLogForm]="exportLogForm"
-                [hideCalendar]="hideCalendar"
-                [dateOptions]="dateOptions"
-                (handleSimpleSearch)="handleSimpleSearch($event)">
-            </app-export-log-filter>
+            <div class="tw-p-24-px">
+                <h2 class="tw-text-12-px tw-text-form-label-text-color tw-pl-8-px tw-pb-8-px tw-font-nav-link-font-weight"> Date of export</h2>
+                <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
+                    [exportLogForm]="exportLogForm"
+                    [hideCalendar]="hideCalendar"
+                    [dateOptions]="dateOptions"
+                    [isSimpleSearchRequired]="false"
+                    (handleSimpleSearch)="handleSimpleSearch($event)">
+                </app-export-log-filter>
+            </div>
 
             <!-- Custom CSV Export Log Table -->
             <p-table *ngIf="exportLogs.length > 0 && !isLoading" #dt1 [value]="exportLogs">
