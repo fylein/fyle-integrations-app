@@ -17,6 +17,7 @@ interface CsvExportLogItem {
   expenses: {
     fund_source?: 'PERSONAL' | 'CCC';
   }[];
+  type: string;
   exported_at?: string;
   error_count?: number;
   file_name?: string;
@@ -106,10 +107,25 @@ export class CsvExportLogComponent implements OnInit {
     });
   }
 
-  downloadFile(fileId: string) {
-    this.exportLogService.getDownloadUrl(fileId).subscribe((response) => {
-      this.exportLogService.renameAndDownloadFile(response.download_url, 'abc.csv');
+  downloadFile(exportLog: CsvExportLogItem) {
+    if (!exportLog.file_id || !exportLog.type || !exportLog.exported_at) {
+      return;
+    }
+    const fileName = this.constructFileName(exportLog);
+    this.exportLogService.getDownloadUrl(exportLog.file_id).subscribe((response) => {
+      this.exportLogService.renameAndDownloadFile(response.download_url, fileName);
     });
+  }
+
+  constructFileName(exportLog: CsvExportLogItem): string {
+    if (!exportLog.exported_at || !exportLog.type) {
+      return '';
+    }
+    const exportedDate = new Date(exportLog.exported_at);
+    const year = exportedDate.getFullYear().toString().padStart(4, '0');
+    const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = exportedDate.getDate().toString().padStart(2, '0');
+    return `${year}_${month}_${day}_${exportLog.type}.CSV`;
   }
 
   public handleSimpleSearch(query: string) {

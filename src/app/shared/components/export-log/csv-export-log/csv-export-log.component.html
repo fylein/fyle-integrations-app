@@ -39,10 +39,10 @@
                         </td>
                         <td class="tw-text-text-secondary">
                             <a
-                                (click)="downloadFile(rowData.file_id)"
+                                (click)="downloadFile(rowData)"
                                 class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[20px]"
                             >
-                                <span style="overflow-wrap: anywhere;">{{ rowData.file_name }}</span>
+                                <span style="overflow-wrap: anywhere;">{{ constructFileName(rowData) }}</span>
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'download-medium'"
                                     [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                                 </app-svg-icon>
