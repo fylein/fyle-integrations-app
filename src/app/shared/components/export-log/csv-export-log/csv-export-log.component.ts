@@ -12,6 +12,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { UserService } from 'src/app/core/services/misc/user.service';
+import { CsvExpensesTableComponent } from "../csv-expenses-table/csv-expenses-table.component";
 
 interface CsvExportLogItem {
   expenses: {
@@ -27,17 +31,23 @@ interface CsvExportLogItem {
 @Component({
   selector: 'app-csv-export-log',
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent],
   templateUrl: './csv-export-log.component.html',
   styleUrl: './csv-export-log.component.scss'
 })
 export class CsvExportLogComponent implements OnInit {
 
-  @Input({ required: true }) updateExportLogs!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) => Observable<any>;
+  @Input({ required: true }) updateRecords!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) => Observable<any>;
+
+  @Input() isSkippedExpenses: boolean = false;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  exportLogs: CsvExportLogItem[] = [];
+  records: (CsvExportLogItem | SkipExportList)[] = [];
+
+  get skippedExpenses() {
+    return this.records as SkipExportList[];
+  }
 
   isLoading: boolean = false;
 
@@ -94,7 +104,8 @@ export class CsvExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private userService: UserService
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
@@ -148,11 +159,18 @@ export class CsvExportLogComponent implements OnInit {
 
   applyFilters(): void {
     this.isLoading = true;
-    this.updateExportLogs(
+    this.updateRecords(
       this.limit, this.offset, this.selectedDateFilter, this.searchQuery
-    ).subscribe((exportLogsResponse) => {
-      this.totalCount = exportLogsResponse.count;
-      this.exportLogs = exportLogsResponse.results;
+    ).subscribe((recordsResponse) => {
+      this.totalCount = recordsResponse.count;
+      if (this.isSkippedExpenses) {
+        const orgId = this.userService.getUserProfile().org_id;
+        this.records = recordsResponse.results.map(
+          (skippedExpense: SkipExportLog) => SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId)
+        );
+      } else {
+        this.records = recordsResponse.results;
+      }
       this.isLoading = false;
     });
   }

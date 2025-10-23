@@ -10,6 +10,7 @@ import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../
 import { convertDateRangeToAPIFormat } from '../../util/dateRangeConverter';
 import { downloadCSVFile } from '../../util/downloadFile';
 import { HttpClient } from '@angular/common/http';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class ExportLogService {
     private apiService: ApiService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private http: HttpClient
+    private http: HttpClient,
+    private helper: HelperService
   ) { }
 
   getSkippedExpenses(limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, query?: string | null, appName?:string): Observable<SkipExportLogResponse> {
@@ -42,16 +44,16 @@ export class ExportLogService {
     params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
-      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.updated_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.updated_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      const dateRangeInAPIFormat = convertDateRangeToAPIFormat(selectedDateFilter);
+
+      params.updated_at__gte = dateRangeInAPIFormat.start;
+      params.updated_at__lte = dateRangeInAPIFormat.end;
     }
     if (appName === AppName.NETSUITE) {
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expenses/v2/`, params);
     }
-      return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
 
+    return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/fyle/expenses/`), params);
   }
 
   getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
