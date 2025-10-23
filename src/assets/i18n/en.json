@@ -2397,6 +2397,10 @@
       "dailySchedulePreview": "Daily, at {{timeOfDay}} {{meridiem}}",
       "weeklySchedulePreview": "Weekly, every {{dayOfWeek}} at {{timeOfDay}} {{meridiem}}",
       "monthlySchedulePreview": "Monthly, {{dayOfMonth}} at {{timeOfDay}} {{meridiem}}"
+    },
+    "exportLog": {
+      "reimbursableType": "Reimbursable",
+      "cccType": "Corporate card"
     }
   },
   "pipes": {
@@ -2624,5 +2628,10 @@
     "amount": "Amount",
     "spendDate": "Spend date",
     "reportDetails": "Report details"
+  },
+  "csvExportLogDialog": {
+    "header": "Expense details",
+    "expenseType": "Expense type",
+    "fileName": "File name"
   }
 }

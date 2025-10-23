@@ -16,22 +16,15 @@ import { SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/ex
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { CsvExpensesTableComponent } from "../csv-expenses-table/csv-expenses-table.component";
+import { CsvExportLogDialogComponent } from "../csv-export-log-dialog/csv-export-log-dialog.component";
+import { ExpenseDetails } from 'src/app/core/models/db/expense-details.model';
+import { CsvExportLogItem } from 'src/app/core/models/db/csv-export-log.model';
 
-interface CsvExportLogItem {
-  expenses: {
-    fund_source?: 'PERSONAL' | 'CCC';
-  }[];
-  type: string;
-  exported_at?: string;
-  error_count?: number;
-  file_name?: string;
-  file_id?: string;
-}
 
 @Component({
   selector: 'app-csv-export-log',
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent, CsvExportLogDialogComponent],
   templateUrl: './csv-export-log.component.html',
   styleUrl: './csv-export-log.component.scss'
 })
@@ -51,6 +44,8 @@ export class CsvExportLogComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isExpensesDialogOpen: boolean = false;
+
   totalCount: number = 0;
 
   limit: number = 10;
@@ -63,6 +58,10 @@ export class CsvExportLogComponent implements OnInit {
 
   selectedDateFilter: SelectedDateFilter | null = null;
 
+  selectedExportLog: CsvExportLogItem | null = null;
+
+  selectedExpenses: ExpenseDetails[] = [];
+
   exportLogForm: FormGroup;
 
   hideCalendar: boolean = false;
@@ -74,29 +73,7 @@ export class CsvExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   getExpenseType(exportLog: CsvExportLogItem): string {
-    let isReimbursable = false;
-    let isCCC = false;
-
-    for (const expense of exportLog.expenses) {
-      if (expense.fund_source === 'PERSONAL') {
-        isReimbursable = true;
-      } else if (expense.fund_source === 'CCC') {
-        isCCC = true;
-      }
-    }
-
-    const reimbursableString = this.translocoService.translate('csvExportLog.reimbursableType');
-    const cccString = this.translocoService.translate('csvExportLog.cccType');
-
-    const types: string[] = [];
-    if (isReimbursable) {
-      types.push(reimbursableString);
-    }
-    if (isCCC) {
-      types.push(cccString);
-    }
-
-    return types.join(', ');
+    return this.exportLogService.getExpenseType(exportLog);
   }
 
   constructor(
@@ -118,25 +95,21 @@ export class CsvExportLogComponent implements OnInit {
     });
   }
 
+  openExpensesDialog(exportLog: CsvExportLogItem) {
+    const orgId = this.userService.getUserProfile().org_id;
+    this.selectedExportLog = exportLog;
+    this.selectedExpenses = exportLog.expenses.map(expense => (
+      SkippedAccountingExportModel.parseAPIResponseToSkipExportList(expense, orgId)
+    ));
+    this.isExpensesDialogOpen = true;
+  }
+
   downloadFile(exportLog: CsvExportLogItem) {
-    if (!exportLog.file_id || !exportLog.type || !exportLog.exported_at) {
-      return;
-    }
-    const fileName = this.constructFileName(exportLog);
-    this.exportLogService.getDownloadUrl(exportLog.file_id).subscribe((response) => {
-      this.exportLogService.renameAndDownloadFile(response.download_url, fileName);
-    });
+    this.exportLogService.downloadFile(exportLog);
   }
 
   constructFileName(exportLog: CsvExportLogItem): string {
-    if (!exportLog.exported_at || !exportLog.type) {
-      return '';
-    }
-    const exportedDate = new Date(exportLog.exported_at);
-    const year = exportedDate.getFullYear().toString().padStart(4, '0');
-    const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = exportedDate.getDate().toString().padStart(2, '0');
-    return `${year}_${month}_${day}_${exportLog.type}.CSV`;
+    return this.exportLogService.constructFileName(exportLog);
   }
 
   public handleSimpleSearch(query: string) {

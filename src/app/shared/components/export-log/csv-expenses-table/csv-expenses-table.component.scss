@@ -1,3 +1,7 @@
-::ng-deep .p-datatable table {
+::ng-deep .p-element:not(.skipped-expenses) .p-datatable table {
+    @apply tw-min-w-[800px];
+}
+
+::ng-deep .p-element.skipped-expenses .p-datatable table {
     @apply tw-min-w-[1000px];
 }

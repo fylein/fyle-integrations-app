@@ -14,7 +14,10 @@
 
             <!-- Custom CSV Completed Export Log Table -->
             @if (isSkippedExpenses) {
-                <app-csv-expenses-table [expenses]="skippedExpenses"></app-csv-expenses-table>
+                <app-csv-expenses-table
+                    [isSkippedExpenses]="true"
+                    [expenses]="skippedExpenses"
+                ></app-csv-expenses-table>
             } @else {
             <p-table *ngIf="records.length > 0 && !isLoading" #dt1 [value]="records">
                 <ng-template pTemplate="header">
@@ -27,7 +30,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="body" let-rowData>
-                    <tr>
+                    <tr (click)="openExpensesDialog(rowData)" class="tw-cursor-pointer">
                         <td>
                             <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | date}}</p>
                             <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | date : "hh:mm a"}}</span>
@@ -85,3 +88,9 @@
 
     </div>
 }
+
+<app-csv-export-log-dialog
+    [expenses]="selectedExpenses!"
+    [exportLog]="selectedExportLog!"
+    [(isDialogOpen)]="isExpensesDialogOpen"
+></app-csv-export-log-dialog>
