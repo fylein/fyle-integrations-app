@@ -2399,8 +2399,8 @@
       "monthlySchedulePreview": "Monthly, {{dayOfMonth}} at {{timeOfDay}} {{meridiem}}"
     },
     "exportLog": {
-      "reimbursableType": "Reimbursable",
-      "cccType": "Corporate card"
+      "cccType": "Corporate card",
+      "reimbursableType": "Reimbursable"
     }
   },
   "pipes": {

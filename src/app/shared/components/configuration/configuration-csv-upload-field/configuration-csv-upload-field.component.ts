@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonSize, ButtonType, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
@@ -11,7 +12,7 @@ import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-impo
 @Component({
   selector: 'app-configuration-csv-upload-field',
   standalone: true,
-  imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
+  imports: [CommonModule, TranslocoModule, SharedModule, CsvUploadButtonComponent],
   providers: [DialogService],
   templateUrl: './configuration-csv-upload-field.component.html',
   styleUrl: './configuration-csv-upload-field.component.scss'
@@ -31,6 +32,8 @@ export class ConfigurationCsvUploadFieldComponent {
   @Input() videoURL!: string;
 
   @Input() fileName: string | null = null;
+
+  @Input() isFieldMandatory: boolean = false;
 
   @Output() fileNameChange = new EventEmitter<string | null>();
 

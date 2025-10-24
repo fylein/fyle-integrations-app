@@ -151,6 +151,10 @@ export class ExportLogService {
       return '';
     }
     const exportedDate = new Date(exportLog.exported_at);
+    if (!exportedDate.getTime()) {
+      console.error('Invalid date in exported_at field:', exportLog.exported_at);
+      return '';
+    }
     const year = exportedDate.getFullYear().toString().padStart(4, '0');
     const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
     const day = exportedDate.getDate().toString().padStart(2, '0');

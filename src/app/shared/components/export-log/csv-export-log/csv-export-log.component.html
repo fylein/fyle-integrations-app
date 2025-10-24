@@ -5,12 +5,15 @@
 } @else {
     <div>
         <div>
-            <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
-                [exportLogForm]="exportLogForm"
-                [hideCalendar]="hideCalendar"
-                [dateOptions]="dateOptions"
-                (handleSimpleSearch)="handleSimpleSearch($event)">
-            </app-export-log-filter>
+            <div [ngClass]="{'tw-p-24-px': !isSkippedExpenses}">
+                <app-export-log-filter *ngIf="totalCount > 0 || isDateSelected || searchQuery"
+                    [exportLogForm]="exportLogForm"
+                    [hideCalendar]="hideCalendar"
+                    [dateOptions]="dateOptions"
+                    [isSimpleSearchRequired]="isSkippedExpenses"
+                    (handleSimpleSearch)="handleSimpleSearch($event)"
+                ></app-export-log-filter>
+            </div>
 
             <!-- Custom CSV Completed Export Log Table -->
             @if (isSkippedExpenses) {
@@ -89,8 +92,10 @@
     </div>
 }
 
-<app-csv-export-log-dialog
-    [expenses]="selectedExpenses!"
-    [exportLog]="selectedExportLog!"
-    [(isDialogOpen)]="isExpensesDialogOpen"
-></app-csv-export-log-dialog>
+@if (isExpensesDialogOpen && selectedExpenses && selectedExportLog) {
+    <app-csv-export-log-dialog
+        [expenses]="selectedExpenses"
+        [exportLog]="selectedExportLog"
+        [(isDialogOpen)]="isExpensesDialogOpen"
+    ></app-csv-export-log-dialog>
+}
