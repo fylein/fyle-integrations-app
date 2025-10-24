@@ -2557,7 +2557,7 @@
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",
-    "valuesImportedLabel": "Values mapped:",
+    "valuesImportedLabel": "Values imported:",
     "lastUploadedAtLabel": "Last uploaded on:",
     "reuploadButtonLabel": "Re-upload",
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
@@ -2588,7 +2588,8 @@
     "skipExportLabel": "Skip expenses from export",
     "skipExportSubLabel": "Set rules to prevent certain expenses from being exported to Sage 50.",
     "advancedSettingsSavedSuccess": "Advanced settings saved successfully",
-    "advancedSettingsSaveError": "Error saving advanced settings, please try again later"
+    "advancedSettingsSaveError": "Error saving advanced settings, please try again later",
+    "selectionLimitExceededTooltipText": "Only {{maxSelections}} values can be selected due to character limit"
   },
   "scheduleDialog": {
     "header": "Set schedule",

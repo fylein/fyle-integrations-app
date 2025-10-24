@@ -126,22 +126,22 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
       }
     });
 
-    ref.onClose.subscribe((file?: UploadedCSVFile) => {
-      if (file?.name) {
+    ref.onClose.subscribe((newFile?: UploadedCSVFile) => {
+      if (newFile?.name) {
         if (this.isOnboarding) {
           // During onboarding, update the 'Values ready to import' field
           this.csvImportForm?.get('file')?.patchValue({
-            name: file.name,
-            valueCount: file.valueCount ?? 0,
-            lastUploadedAt: file.lastUploadedAt ?? new Date()
+            name: newFile.name,
+            valueCount: newFile.valueCount ?? 0,
+            lastUploadedAt: newFile.lastUploadedAt ?? new Date()
           });
         } else {
-          // Post onboarding, don't update the 'Mapped values' field
+          // Post onboarding, don't update the 'Imported values' field
           const currentFile = this.csvImportForm?.get('file')?.value;
           this.csvImportForm?.get('file')?.patchValue({
-            name: file.name,
+            name: newFile.name,
             valueCount: currentFile?.valueCount ?? 0,
-            lastUploadedAt: file.lastUploadedAt ?? new Date()
+            lastUploadedAt: newFile.lastUploadedAt ?? new Date()
           });
         }
       }

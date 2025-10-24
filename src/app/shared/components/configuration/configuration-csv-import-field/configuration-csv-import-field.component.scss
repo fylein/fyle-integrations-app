@@ -1,3 +1,24 @@
 .custom-option {
     @apply tw-flex tw-text-mandatory-field-color;
 }
+
+.body-container {
+    container-type: inline-size;
+    container-name: body;
+}
+
+.responsive-field, :host ::ng-deep .responsive-field .p-dropdown {
+    width: 220px !important;
+}
+
+@container body (width > 870px) {
+    .responsive-field, :host ::ng-deep .responsive-field .p-dropdown {
+        width: 270px !important;
+    }
+}
+
+@container body (width > 940px) {
+    .responsive-field, :host ::ng-deep .responsive-field .p-dropdown{
+        width: 300px !important;
+    }
+}
