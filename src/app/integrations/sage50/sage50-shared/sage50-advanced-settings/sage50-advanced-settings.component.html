@@ -69,6 +69,9 @@
                 [placeholder]="'sage50AdvancedSettings.lineLevelMemoPlaceholder' | transloco"
                 [iconPath]="'list'"
                 [maxSelections]="3"
+                [selectionLimitExceededTooltipText]="
+                    'sage50AdvancedSettings.selectionLimitExceededTooltipText' | transloco: { maxSelections: 3 }
+                "
             ></app-configuration-multi-select>
 
             <div class="tw-m-24-px tw-mt-[-8px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
