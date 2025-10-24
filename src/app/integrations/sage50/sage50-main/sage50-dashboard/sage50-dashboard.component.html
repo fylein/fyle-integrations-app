@@ -100,11 +100,29 @@
             </div>
             <!-- TODO: Completed / Skipped tabs -->
 
+            @if (shouldShowExportLog) {
+                <div class="tw-bg-bg-subtle tw-pt-16-px">
+                    <app-sub-menu
+                        [modules]="exportLogModules"
+                        [(activeModule)]="activeExportLogModule"
+                        [shouldRedirect]="false"
+                        [customStyles]="'!tw-mb-0'"
+                    ></app-sub-menu>
+                </div>
+            }
+
             <!-- Completed export log table with filters -->
             <div>
-                <app-csv-export-log
-                    [updateExportLogs]="updateExportLogs.bind(this)"
-                ></app-csv-export-log>
+                @if (activeExportLogModule.label === 'Completed') {
+                    <app-csv-export-log
+                        [updateRecords]="updateExportLogs.bind(this)"
+                    ></app-csv-export-log>
+                } @else {
+                    <app-csv-export-log
+                        [updateRecords]="updateSkippedExpenses.bind(this)"
+                        [isSkippedExpenses]="true"
+                    ></app-csv-export-log>
+                }
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject, debounceTime } from 'rxjs';
 import { TableModule } from 'primeng/table';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
@@ -12,34 +12,39 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { UserService } from 'src/app/core/services/misc/user.service';
+import { CsvExpensesTableComponent } from "../csv-expenses-table/csv-expenses-table.component";
+import { CsvExportLogDialogComponent } from "../csv-export-log-dialog/csv-export-log-dialog.component";
+import { ExpenseDetails } from 'src/app/core/models/db/expense-details.model';
+import { CsvExportLogItem } from 'src/app/core/models/db/csv-export-log.model';
 
-interface CsvExportLogItem {
-  expenses: {
-    fund_source?: 'PERSONAL' | 'CCC';
-  }[];
-  type: string;
-  exported_at?: string;
-  error_count?: number;
-  file_name?: string;
-  file_id?: string;
-}
 
 @Component({
   selector: 'app-csv-export-log',
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent, CsvExportLogDialogComponent],
   templateUrl: './csv-export-log.component.html',
   styleUrl: './csv-export-log.component.scss'
 })
 export class CsvExportLogComponent implements OnInit {
 
-  @Input({ required: true }) updateExportLogs!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null) => Observable<any>;
+  @Input({ required: true }) updateRecords!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) => Observable<any>;
+
+  @Input() isSkippedExpenses: boolean = false;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  exportLogs: CsvExportLogItem[] = [];
+  records: (CsvExportLogItem | SkipExportList)[] = [];
+
+  get skippedExpenses() {
+    return this.records as SkipExportList[];
+  }
 
   isLoading: boolean = false;
+
+  isExpensesDialogOpen: boolean = false;
 
   totalCount: number = 0;
 
@@ -53,36 +58,22 @@ export class CsvExportLogComponent implements OnInit {
 
   selectedDateFilter: SelectedDateFilter | null = null;
 
+  selectedExportLog: CsvExportLogItem | null = null;
+
+  selectedExpenses: ExpenseDetails[] = [];
+
   exportLogForm: FormGroup;
 
   hideCalendar: boolean = false;
 
   isDateSelected: boolean = false;
 
+  searchQuery: string | null = null;
+
+  private searchQuerySubject = new Subject<string>();
+
   getExpenseType(exportLog: CsvExportLogItem): string {
-    let isReimbursable = false;
-    let isCCC = false;
-
-    for (const expense of exportLog.expenses) {
-      if (expense.fund_source === 'PERSONAL') {
-        isReimbursable = true;
-      } else if (expense.fund_source === 'CCC') {
-        isCCC = true;
-      }
-    }
-
-    const reimbursableString = this.translocoService.translate('csvExportLog.reimbursableType');
-    const cccString = this.translocoService.translate('csvExportLog.cccType');
-
-    const types: string[] = [];
-    if (isReimbursable) {
-      types.push(reimbursableString);
-    }
-    if (isCCC) {
-      types.push(cccString);
-    }
-
-    return types.join(', ');
+    return this.exportLogService.getExpenseType(exportLog);
   }
 
   constructor(
@@ -90,30 +81,39 @@ export class CsvExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private userService: UserService
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-  }
-
-  downloadFile(exportLog: CsvExportLogItem) {
-    if (!exportLog.file_id || !exportLog.type || !exportLog.exported_at) {
-      return;
-    }
-    const fileName = this.constructFileName(exportLog);
-    this.exportLogService.getDownloadUrl(exportLog.file_id).subscribe((response) => {
-      this.exportLogService.renameAndDownloadFile(response.download_url, fileName);
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = 1;
+      this.applyFilters();
     });
   }
 
+  openExpensesDialog(exportLog: CsvExportLogItem) {
+    const orgId = this.userService.getUserProfile().org_id;
+    this.selectedExportLog = exportLog;
+    this.selectedExpenses = exportLog.expenses.map(expense => (
+      SkippedAccountingExportModel.parseAPIResponseToSkipExportList(expense, orgId)
+    ));
+    this.isExpensesDialogOpen = true;
+  }
+
+  downloadFile(exportLog: CsvExportLogItem) {
+    this.exportLogService.downloadFile(exportLog);
+  }
+
   constructFileName(exportLog: CsvExportLogItem): string {
-    if (!exportLog.exported_at || !exportLog.type) {
-      return '';
-    }
-    const exportedDate = new Date(exportLog.exported_at);
-    const year = exportedDate.getFullYear().toString().padStart(4, '0');
-    const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = exportedDate.getDate().toString().padStart(2, '0');
-    return `${year}_${month}_${day}_${exportLog.type}.CSV`;
+    return this.exportLogService.constructFileName(exportLog);
+  }
+
+  public handleSimpleSearch(query: string) {
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -132,17 +132,26 @@ export class CsvExportLogComponent implements OnInit {
 
   applyFilters(): void {
     this.isLoading = true;
-    this.updateExportLogs(
-      this.limit, this.offset, this.selectedDateFilter
-    ).subscribe((exportLogsResponse) => {
-      this.totalCount = exportLogsResponse.count;
-      this.exportLogs = exportLogsResponse.results;
+    this.updateRecords(
+      this.limit, this.offset, this.selectedDateFilter, this.searchQuery
+    ).subscribe((recordsResponse) => {
+      this.totalCount = recordsResponse.count;
+      if (this.isSkippedExpenses) {
+        const orgId = this.userService.getUserProfile().org_id;
+        this.records = recordsResponse.results.map(
+          (skippedExpense: SkipExportLog) => SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId)
+        );
+      } else {
+        this.records = recordsResponse.results;
+      }
       this.isLoading = false;
     });
   }
 
   private setupForm(): void {
     this.exportLogForm = this.formBuilder.group({
+      searchOption: [''],
+      dateRange: [null],
       start: [''],
       end: ['']
     });

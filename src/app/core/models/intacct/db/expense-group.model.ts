@@ -1,5 +1,6 @@
 import { PaginatedResponse } from "../../db/paginated-response.model";
 import { FyleReferenceType } from "../../enum/enum.model";
+import { ExpenseDetails } from "../../db/expense-details.model";
 import { Expense } from "./expense.model";
 
 export type ExpenseGroupDescription = {
@@ -44,23 +45,9 @@ export interface ExpenseGroupList {
   expenses: Expense[];
 }
 
-export interface SkipExportList {
-  updated_at: Date;
-  employee: [string, string];
-  expenseType: 'Corporate Card' | 'Reimbursable';
-  claim_number: string;
-  fyleUrl: string;
-}
+export type SkipExportList = ExpenseDetails;
 
-export type SkipExportLog = {
-  employee_name: string;
-  employee_email: string;
-  claim_number: string;
-  updated_at: Date;
-  fund_source: string;
-  expense_id: string;
-  org_id: string;
-};
+export type SkipExportLog = Expense;
 
 export interface SkipExportLogResponse extends PaginatedResponse {
   results: SkipExportLog[];

@@ -1152,7 +1152,9 @@
     "employeeMappingDialogTitle": "Employee mapping",
     "employeeMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
     "corporateCardMappingDialogTitle": "Corporate card mapping",
-    "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50"
+    "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "completed": "Completed",
+    "skipped": "Skipped"
   },
   "sage50Mapping": {
     "employeeLabel": "Employee",
@@ -2395,6 +2397,10 @@
       "dailySchedulePreview": "Daily, at {{timeOfDay}} {{meridiem}}",
       "weeklySchedulePreview": "Weekly, every {{dayOfWeek}} at {{timeOfDay}} {{meridiem}}",
       "monthlySchedulePreview": "Monthly, {{dayOfMonth}} at {{timeOfDay}} {{meridiem}}"
+    },
+    "exportLog": {
+      "cccType": "Corporate card",
+      "reimbursableType": "Reimbursable"
     }
   },
   "pipes": {
@@ -2614,5 +2620,18 @@
     "cccType": "Corporate card",
     "errorCount": "{{count}} errors identified",
     "noErrors": "No errors"
+  },
+  "csvExpensesTable": {
+    "exportSkippedOn": "Export skipped on",
+    "expenseId": "Expense ID",
+    "employee": "Employee",
+    "amount": "Amount",
+    "spendDate": "Spend date",
+    "reportDetails": "Report details"
+  },
+  "csvExportLogDialog": {
+    "header": "Expense details",
+    "expenseType": "Expense type",
+    "fileName": "File name"
   }
 }

@@ -10,6 +10,9 @@ import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../
 import { convertDateRangeToAPIFormat } from '../../util/dateRangeConverter';
 import { downloadCSVFile } from '../../util/downloadFile';
 import { HttpClient } from '@angular/common/http';
+import { HelperService } from './helper.service';
+import { CsvExportLogItem } from '../../models/db/csv-export-log.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +23,9 @@ export class ExportLogService {
     private apiService: ApiService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private http: HttpClient
+    private http: HttpClient,
+    private helper: HelperService,
+    private translocoService: TranslocoService
   ) { }
 
   getSkippedExpenses(limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, query?: string | null, appName?:string): Observable<SkipExportLogResponse> {
@@ -42,16 +47,16 @@ export class ExportLogService {
     params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
-      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.updated_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.updated_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      const dateRangeInAPIFormat = convertDateRangeToAPIFormat(selectedDateFilter);
+
+      params.updated_at__gte = dateRangeInAPIFormat.start;
+      params.updated_at__lte = dateRangeInAPIFormat.end;
     }
     if (appName === AppName.NETSUITE) {
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expenses/v2/`, params);
     }
-      return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
 
+    return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/fyle/expenses/`), params);
   }
 
   getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
@@ -112,6 +117,57 @@ export class ExportLogService {
   renameAndDownloadFile(fileUrl: string, newFileName: string): void {
     this.http.get(fileUrl, { responseType: 'text' }).subscribe((fileContent: string) => {
       downloadCSVFile(fileContent, newFileName);
+    });
+  }
+
+  getExpenseType(exportLog: CsvExportLogItem): string {
+    let isReimbursable = false;
+    let isCCC = false;
+
+    for (const expense of exportLog.expenses) {
+      if (expense.fund_source === 'PERSONAL') {
+        isReimbursable = true;
+      } else if (expense.fund_source === 'CCC') {
+        isCCC = true;
+      }
+    }
+
+    const reimbursableString = this.translocoService.translate('services.exportLog.reimbursableType');
+    const cccString = this.translocoService.translate('services.exportLog.cccType');
+
+    const types: string[] = [];
+    if (isReimbursable) {
+      types.push(reimbursableString);
+    }
+    if (isCCC) {
+      types.push(cccString);
+    }
+
+    return types.join(', ');
+  }
+
+  constructFileName(exportLog: CsvExportLogItem): string {
+    if (!exportLog.exported_at || !exportLog.type) {
+      return '';
+    }
+    const exportedDate = new Date(exportLog.exported_at);
+    if (!exportedDate.getTime()) {
+      console.error('Invalid date in exported_at field:', exportLog.exported_at);
+      return '';
+    }
+    const year = exportedDate.getFullYear().toString().padStart(4, '0');
+    const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = exportedDate.getDate().toString().padStart(2, '0');
+    return `${year}_${month}_${day}_${exportLog.type}.CSV`;
+  }
+
+  downloadFile(exportLog: CsvExportLogItem): void {
+    if (!exportLog.file_id || !exportLog.type || !exportLog.exported_at) {
+      return;
+    }
+    const fileName = this.constructFileName(exportLog);
+    this.getDownloadUrl(exportLog.file_id).subscribe((response) => {
+      this.renameAndDownloadFile(response.download_url, fileName);
     });
   }
 }

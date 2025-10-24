@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject, ViewChild } from '@angular/core';
-import { Subject, forkJoin, interval, from } from 'rxjs';
-import { switchMap, takeUntil, takeWhile } from 'rxjs/operators';
+import { Subject, forkJoin, interval, from, Observable } from 'rxjs';
+import { map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType } from 'src/app/core/models/enum/enum.model';
@@ -19,6 +19,13 @@ import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { CsvExportLogComponent } from "src/app/shared/components/export-log/csv-export-log/csv-export-log.component";
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
+import { MenuItem } from 'primeng/api';
+import { TranslocoService } from '@jsverse/transloco';
+import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
+import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { SkipExportList, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage50-dashboard',
@@ -103,12 +110,21 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild(CsvExportLogComponent) csvExportLogComponent!: CsvExportLogComponent;
 
+  shouldShowExportLog: boolean = false;
+
+  exportLogModules: MenuItem[] = [];
+
+  activeExportLogModule: MenuItem;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private sage50ExportSettingService: Sage50ExportSettingsService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private skipExportService: SkipExportService,
+    private exportLogService: ExportLogService,
+    private translocoService: TranslocoService
   ) { }
 
   export() {
@@ -206,13 +222,22 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
   }
 
-  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null) {
+  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
     return this.accountingExportService.getAccountingExports(
-      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, null, this.appName
+      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, searchQuery, this.appName
     );
   }
 
+  updateSkippedExpenses(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+    return this.exportLogService.getSkippedExpenses(limit, offset, selectedDateFilter, searchQuery);
+  }
+
   private setupPage(): void {
+    this.exportLogModules = [
+      {label: this.translocoService.translate('sage50Dashboard.completed')},
+      {label: this.translocoService.translate('sage50Dashboard.skipped')}
+    ];
+    this.activeExportLogModule = this.exportLogModules[0];
 
     forkJoin([
       this.dashboardService.getExportableAccountingExportIds('v3'),
@@ -221,7 +246,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]
         ),
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
-      this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
+      this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50),
+      this.skipExportService.getExpenseFilter()
     ]).subscribe((responses) => {
       this.isLoading = false;
 
@@ -230,6 +256,11 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       const exportLogs = responses[2];
       const employeeMappingStats = responses[3];
       const corporateCardMappingStats = responses[4];
+      const expenseFilters = responses[5];
+
+      this.shouldShowExportLog =
+        this.brandingFeatureConfig.featureFlags.advancedSettings.skipExport &&
+        expenseFilters.count > 0;
 
       this.reimbursableExportType = exportSettings?.reimbursable_expense_export_type ?? null;
       this.cccExportType = exportSettings?.credit_card_expense_export_type ?? null;
