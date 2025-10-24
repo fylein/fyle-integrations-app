@@ -2557,7 +2557,7 @@
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",
-    "valuesImportedLabel": "Values mapped:",
+    "valuesImportedLabel": "Values imported:",
     "lastUploadedAtLabel": "Last uploaded on:",
     "reuploadButtonLabel": "Re-upload",
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
