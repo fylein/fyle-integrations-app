@@ -108,6 +108,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-bg-utility-major-100 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
     }
 
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item:has(.custom-option) {
+        @apply tw-border-t tw-border-t-separator #{!important};
+    }
+
     .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
         @apply tw-min-h-dropdown-option-height #{!important};
     }
