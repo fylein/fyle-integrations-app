@@ -27,6 +27,8 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() processedCount: number;
 
+  @Input() isExportButtonDisabled: boolean = false;
+
   @Input() loaderType: LoaderType = LoaderType.DETERMINATE;
 
   @Input() reimbursableImportState: ReimbursableImportState | null;
@@ -38,6 +40,8 @@ export class DashboardExportSectionComponent implements OnInit {
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
+
+  LoaderType = LoaderType;
 
   readonly brandingConfig = brandingConfig;
 

@@ -3,7 +3,7 @@ import { Subject, forkJoin, interval, from } from 'rxjs';
 import { switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
@@ -56,6 +56,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
+
+  LoaderType = LoaderType;
 
   private destroy$ = new Subject<void>();
 
@@ -204,9 +206,9 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
   }
 
-  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null) {
     return this.accountingExportService.getAccountingExports(
-      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, searchQuery, this.appName
+      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, null, this.appName
     );
   }
 

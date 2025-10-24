@@ -10,6 +10,7 @@ import { Sage50CCCExportType, Sage50ReimbursableExportType } from 'src/app/core/
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Component({
   selector: 'app-sage50-main',
@@ -62,6 +63,7 @@ export class Sage50MainComponent implements OnInit {
   }
 
   refreshDimensions() {
+    globalCacheBusterNotifier.next();
     this.accountingExportService.importExpensesFromFyle('v3').subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50Main.syncDataDimensionsToast', { appName: AppName.SAGE50 }));
   }

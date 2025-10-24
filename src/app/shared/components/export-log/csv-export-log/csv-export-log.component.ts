@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject, debounceTime } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TableModule } from 'primeng/table';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
@@ -33,7 +33,7 @@ interface CsvExportLogItem {
 })
 export class CsvExportLogComponent implements OnInit {
 
-  @Input({ required: true }) updateExportLogs!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) => Observable<any>;
+  @Input({ required: true }) updateExportLogs!: (limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null) => Observable<any>;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -58,10 +58,6 @@ export class CsvExportLogComponent implements OnInit {
   hideCalendar: boolean = false;
 
   isDateSelected: boolean = false;
-
-  searchQuery: string | null = null;
-
-  private searchQuerySubject = new Subject<string>();
 
   getExpenseType(exportLog: CsvExportLogItem): string {
     let isReimbursable = false;
@@ -97,14 +93,6 @@ export class CsvExportLogComponent implements OnInit {
     private translocoService: TranslocoService
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
-      this.searchQuery = query;
-      this.offset = 0;
-      this.currentPage = 1;
-      this.applyFilters();
-    });
   }
 
   downloadFile(exportLog: CsvExportLogItem) {
@@ -128,10 +116,6 @@ export class CsvExportLogComponent implements OnInit {
     return `${year}_${month}_${day}_${exportLog.type}.CSV`;
   }
 
-  public handleSimpleSearch(query: string) {
-    this.searchQuerySubject.next(query);
-  }
-
   pageSizeChanges(limit: number): void {
     this.limit = limit;
     this.currentPage = 1;
@@ -149,7 +133,7 @@ export class CsvExportLogComponent implements OnInit {
   applyFilters(): void {
     this.isLoading = true;
     this.updateExportLogs(
-      this.limit, this.offset, this.selectedDateFilter, this.searchQuery
+      this.limit, this.offset, this.selectedDateFilter
     ).subscribe((exportLogsResponse) => {
       this.totalCount = exportLogsResponse.count;
       this.exportLogs = exportLogsResponse.results;
@@ -159,8 +143,6 @@ export class CsvExportLogComponent implements OnInit {
 
   private setupForm(): void {
     this.exportLogForm = this.formBuilder.group({
-      searchOption: [''],
-      dateRange: [null],
       start: [''],
       end: ['']
     });
