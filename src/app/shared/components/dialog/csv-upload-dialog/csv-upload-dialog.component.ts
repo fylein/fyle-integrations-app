@@ -66,7 +66,8 @@ export class CsvUploadDialogComponent implements OnInit {
     const messageMap: Record<CSVErrorName, string> = {
       MULTIPLE_FILES_PROVIDED: this.translocoService.translate('csvUploadDialog.onlyOneCsvAllowed'),
       FILE_IS_NOT_CSV: this.translocoService.translate('csvUploadDialog.fileIsNotCsv'),
-      ROW_LIMIT_EXCEEDED: this.translocoService.translate('csvUploadDialog.rowLimitExceeded')
+      ROW_LIMIT_EXCEEDED: this.translocoService.translate('csvUploadDialog.rowLimitExceeded'),
+      FILE_SIZE_EXCEEDED: this.translocoService.translate('csvUploadDialog.fileSizeExceeded')
     };
     this.dialogService.open(DynamicDialogComponent, {
       showHeader: false,

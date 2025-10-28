@@ -2452,6 +2452,7 @@
     "fileIsNotCsv": "You tried to upload a file with wrong format. Please upload a csv file.",
     "onlyOneCsvAllowed": "You can only upload one csv file at a time.",
     "rowLimitExceeded": "The file exceeds the permitted row limit of 20,000.",
+    "fileSizeExceeded": "The file exceeds the permitted size of 20MB.",
     "invalidCsvFile": "The CSV file is invalid.",
     "errorDialogButtonText": "Okay",
     "uploadSuccess": "{{dimension}} uploaded successfully.",
