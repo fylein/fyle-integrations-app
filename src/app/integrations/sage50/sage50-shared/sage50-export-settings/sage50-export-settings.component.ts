@@ -92,6 +92,15 @@ export class Sage50ExportSettingsComponent implements OnInit {
     return this.exportSettingsForm.get('cccExportGroup')?.value === Sage50ExpensesGroupedBy.REPORT;
   }
 
+  get cccExportDateSubLabel(): string {
+    return this.isCCCExportDateDisabled ?
+      this.translocoService.translate('sage50ExportSettings.cccExportDateFixedSubLabel', {
+        selectedDateOption: this.getSelectedLabel('cccExportDate') ?? 'date',
+        brandName: brandingConfig.brandName
+      }) :
+      this.translocoService.translate('sage50ExportSettings.cccExportDateEditableSubLabel');
+  }
+
   getSelectedLabel(field: keyof Sage50ExportSettingsForm): string | null{
     const selectedValue = this.exportSettingsForm.get(field)?.value;
     const selectedLabel = this.reimbursableDateOptions.find(option => option.value === selectedValue)?.label;
