@@ -28,11 +28,11 @@ export class MappingService {
   }
 
   getExportSettings(): Observable<any> {
-    return this.apiService.get(this.helper.buildEndpointPath('export_settings/'), {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
   getImportSettings(): Observable<any> {
-    return this.apiService.get(this.helper.buildEndpointPath('import_settings/'), {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
