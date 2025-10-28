@@ -36,6 +36,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() maxSelections: number;
 
+  @Input() selectionLimitExceededTooltipText: string;
+
   @Output() changeInMultiSelect = new EventEmitter();
 
   currentlyDragging: string | null;
@@ -83,6 +85,16 @@ export class ConfigurationMultiSelectComponent implements OnInit {
     }
 
     return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+  }
+
+  getOptionTooltip(item: string): string | undefined {
+    // If selection limit is reached, show tooltip on the disabled (not selected) options
+    const selectedOptions = this.form.get(this.formControllerName)?.value;
+    const isOptionSelected = selectedOptions.includes(item);
+    if (this.maxSelections && selectedOptions.length >= this.maxSelections && !isOptionSelected) {
+      return this.selectionLimitExceededTooltipText;
+    }
+    return undefined;
   }
 
   // Helper to join selected item labels into a single string for template rendering

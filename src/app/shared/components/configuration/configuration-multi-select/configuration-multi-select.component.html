@@ -27,7 +27,10 @@
                     <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | sentenceCase | snakeCaseToSpaceCase }}</p>
                 </div> -->
                 <div>
-                    <p class="tw-text-14-px">{{ getMemo(memo) }}</p>
+                    <p [pTooltip]="getOptionTooltip(memo)"
+                        tooltipPosition="top"
+                        class="tw-text-14-px !tw-pointer-events-auto"
+                    >{{ getMemo(memo) }}</p>
                 </div>
             </ng-template>
         </p-multiSelect>
