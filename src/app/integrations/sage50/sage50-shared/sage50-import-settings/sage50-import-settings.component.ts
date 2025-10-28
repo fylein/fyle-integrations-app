@@ -55,6 +55,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
   // State
   importStatuses: Record<Sage50ImportableField, boolean>;
 
+  importableChartOfAccounts: Sage50ImportableCOAGet | null = null;
+
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
@@ -135,7 +137,28 @@ export class Sage50ImportSettingsComponent implements OnInit {
     });
   }
 
-  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet, fyleFields: Sage50FyleFieldGet[]): void {
+  private getImportableCOACount(
+    importableChartOfAccounts: Sage50ImportableCOAGet | null, selectedAccountTypes: Sage50ImportableCOAType[]
+  ): number {
+    let count = 0;
+    for (const accountType of selectedAccountTypes) {
+      count += importableChartOfAccounts?.find((v) => v.chart_of_account === accountType)?.count ?? 0;
+    }
+    return count;
+  }
+
+  private setImportableCOACount(
+    importableChartOfAccounts: Sage50ImportableCOAGet | null, selectedAccountTypes?: Sage50ImportableCOAType[] | null
+  ): void {
+    const currentFile = this.importSettingsForm.get('ACCOUNT')?.get('file')?.value;
+    selectedAccountTypes = selectedAccountTypes ?? this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value ?? [];
+    if (currentFile && selectedAccountTypes) {
+      currentFile.valueCount = this.getImportableCOACount(importableChartOfAccounts, selectedAccountTypes);
+      this.importSettingsForm.get('ACCOUNT')?.get('file')?.patchValue(currentFile, { emitEvent: false });
+    }
+  }
+
+  private constructCOAOptions(importableChartOfAccounts: Sage50ImportableCOAGet | null): void {
     this.importableCOAOptions = Object.values(Sage50ImportableCOAType).map((value) => {
       const count = importableChartOfAccounts?.find((v) => v.chart_of_account === value)?.count ?? 0;
       return {
@@ -144,6 +167,11 @@ export class Sage50ImportSettingsComponent implements OnInit {
         disabled: value === Sage50ImportableCOAType.EXPENSES
       };
     });
+  }
+
+  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet | null, fyleFields: Sage50FyleFieldGet[]): void {
+
+    this.constructCOAOptions(importableChartOfAccounts);
 
     const customFieldOptions = fyleFields.filter((field) => field.is_custom).map((field) => {
       return {
@@ -189,6 +217,35 @@ export class Sage50ImportSettingsComponent implements OnInit {
           this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false);
         }
       });
+
+
+    // If a new file for ACCOUNT is uploaded
+    // 1. update the counts in the account types dropdown options
+    // 2. update the 'Ready to import' count (onboarding only)
+    this.importSettingsForm.get('ACCOUNT')?.get('file')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('ACCOUNT')?.get('file')?.value)
+      )
+      .subscribe((file) => {
+        if (file?.name) {
+          this.importSettingService.getImportableChartOfAccounts().subscribe((importableChartOfAccounts) => {
+            this.importableChartOfAccounts = importableChartOfAccounts ?? null;
+            this.constructCOAOptions(importableChartOfAccounts);
+            this.setImportableCOACount(importableChartOfAccounts);
+          });
+        }
+      });
+
+    // Get the 'Ready to import' count from the selected account types (onboarding only)
+    if (this.isOnboarding) {
+      this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value)
+      )
+      .subscribe((accountTypes) => {
+        this.setImportableCOACount(this.importableChartOfAccounts, accountTypes);
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -211,6 +268,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importSettingService.getImportCodeFieldsConfig(),
       ...attributeStatsRequests
     ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
+
+      this.importableChartOfAccounts = importableChartOfAccounts ?? null;
 
       // If payments or purchases are being exported, vendor is mandatory
       this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
