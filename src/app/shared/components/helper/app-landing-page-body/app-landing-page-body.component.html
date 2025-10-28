@@ -13,7 +13,7 @@
       </p>
 
       <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-24-px">
-          <iframe class="{{brandingStyle.qbd_direct.onboarding.tutorialvideoClass}}" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0"></iframe>
+          <iframe class="{{brandingStyle.qbd_direct.onboarding.tutorialvideoClass}}" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0" allowfullscreen></iframe>
       </div>
     }
     @if(!embedVideo && embedImage) {

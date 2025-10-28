@@ -45,6 +45,7 @@ export class Sage50Component implements OnInit {
   private storeWorkspaceAndNavigate(workspace: Sage50Workspace) {
     this.workspaceService.setWorkspaceId(workspace.id);
     this.workspaceService.setOnboardingState(workspace.onboarding_state);
+    this.workspaceService.importFyleAttributes(false).subscribe();
     this.isLoading = false;
     this.navigate();
   }
