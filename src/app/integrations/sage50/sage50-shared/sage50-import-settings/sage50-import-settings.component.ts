@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, Sage50AttributeType, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, Sage50AttributeType, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationCsvImportFieldComponent } from "src/app/shared/components/configuration/configuration-csv-import-field/configuration-csv-import-field.component";
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
-import { forkJoin, startWith } from 'rxjs';
+import { forkJoin, pairwise, startWith } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
@@ -18,6 +18,8 @@ import { CSVImportSourceFieldOption } from 'src/app/core/models/misc/configurati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { Sage50FyleField as Sage50FyleFieldGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-mapping.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -43,6 +45,12 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   readonly ConfigurationCtaText = ConfigurationCta;
 
+  readonly ConfigurationWarningEvent = ConfigurationWarningEvent;
+
+  readonly AppName = AppName;
+
+  readonly sage50AttributeDisplayNames = sage50AttributeDisplayNames;
+
   // Flags
   isLoading: boolean;
 
@@ -51,6 +59,19 @@ export class Sage50ImportSettingsComponent implements OnInit {
   isVendorMandatory: boolean;
 
   isSaveInProgress: boolean;
+
+  // Warning dialog state
+  showTurnOffImportWarning: boolean = false;
+
+  showChangeMappingWarning: boolean = false;
+
+  currentWarningField: Sage50ImportableField | null = null;
+
+  private previousSourceFieldValue: string | null = null;
+
+  private isProcessingWarning: boolean = false;
+
+  private isRevertingSourceField: boolean = false;
 
   // State
   importStatuses: Record<Sage50ImportableField, boolean>;
@@ -169,26 +190,175 @@ export class Sage50ImportSettingsComponent implements OnInit {
   }
 
   private setupWatchers(): void {
-    // Auto-disable dependent fields
+    // Watch Job toggle
     this.importSettingsForm.get('JOB')?.get('enabled')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('JOB')?.get('enabled')?.value)
-      )
-      .subscribe((enabled) => {
-        if (!enabled) {
-          this.importSettingsForm.get('PHASE')?.get('enabled')?.setValue(false);
+      .subscribe((currentValue) => {
+        if (this.isProcessingWarning) {
+          return;
+        }
+
+        // When Job is disabled (true -> false), show warning
+        if (!currentValue) {
+          this.handleToggleOff(Sage50ImportableField.JOB);
         }
       });
 
+    // Watch Phase toggle
     this.importSettingsForm.get('PHASE')?.get('enabled')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('PHASE')?.get('enabled')?.value)
-      )
-      .subscribe((enabled) => {
-        if (!enabled) {
-          this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false);
+      .subscribe((currentValue) => {
+        if (this.isProcessingWarning) {
+          return;
+        }
+
+        // When Phase is disabled (true -> false), show warning
+        if (!currentValue) {
+          this.handleToggleOff(Sage50ImportableField.PHASE);
         }
       });
+
+    // Watch Cost Code toggle
+    this.importSettingsForm.get('COST_CODE')?.get('enabled')?.valueChanges
+      .subscribe((currentValue) => {
+        if (this.isProcessingWarning) {
+          return;
+        }
+
+        // When Cost Code is disabled (true -> false), show warning
+        if (!currentValue) {
+          this.handleToggleOff(Sage50ImportableField.COST_CODE);
+        }
+      });
+
+    // Watch Phase source field changes (for mapping change warning)
+    this.importSettingsForm.get('PHASE')?.get('sourceField')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('PHASE')?.get('sourceField')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        this.handleSourceFieldChange(Sage50ImportableField.PHASE, previousValue ?? null, currentValue ?? null);
+      });
+
+    // Watch Cost Code source field changes (for mapping change warning)
+    this.importSettingsForm.get('COST_CODE')?.get('sourceField')?.valueChanges
+      .pipe(
+        startWith(this.importSettingsForm.get('COST_CODE')?.get('sourceField')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        this.handleSourceFieldChange(Sage50ImportableField.COST_CODE, previousValue ?? null, currentValue ?? null);
+      });
+  }
+
+  private handleToggleOff(field: Sage50ImportableField): void {
+    // Immediately revert the toggle back to enabled
+    this.isProcessingWarning = true;
+    this.importSettingsForm.get(field)?.get('enabled')?.setValue(true, { emitEvent: false });
+
+    // Store which field is being toggled off and show warning
+    this.currentWarningField = field;
+    this.showTurnOffImportWarning = true;
+    this.isProcessingWarning = false;
+  }
+
+  private handleSourceFieldChange(field: Sage50ImportableField, previousValue: string | null, currentValue: string | null): void {
+    // Only check for Phase and Cost Code fields
+    const isPhaseOrCostCode = field === Sage50ImportableField.PHASE || field === Sage50ImportableField.COST_CODE;
+
+    if (this.isRevertingSourceField || !isPhaseOrCostCode) {
+      return;
+    }
+
+    // Don't show warning if user selected "Create a custom field" option
+    // Or if reverting from "Create a custom field" option
+    // That option opens its own dialog and reverts the value
+    if (currentValue === 'custom_field' || previousValue === 'custom_field') {
+      return;
+    }
+
+    // Only show warning post-onboarding when there's a previous mapping and it's being changed
+    const hasPreviousMapping = previousValue && previousValue !== '';
+    const isChangingMapping = previousValue !== currentValue;
+    const hasBeenImported = this.importStatuses[field];
+
+    if (!this.isOnboarding && hasPreviousMapping && isChangingMapping && hasBeenImported) {
+      // Store the previous value to revert if user cancels
+      this.previousSourceFieldValue = previousValue;
+      this.currentWarningField = field;
+      this.showChangeMappingWarning = true;
+    }
+  }
+
+  acceptTurnOffImportWarning(data: ConfigurationWarningOut): void {
+    this.showTurnOffImportWarning = false;
+
+    if (!this.currentWarningField) {
+      return;
+    }
+
+    if (data.hasAccepted) {
+      // User accepted, disable the field and cascade to children
+      this.isProcessingWarning = true;
+
+      if (this.currentWarningField === Sage50ImportableField.JOB) {
+        // Disable Job, Phase, and Cost Code
+        this.importSettingsForm.get('JOB')?.get('enabled')?.setValue(false, { emitEvent: false });
+        this.importSettingsForm.get('PHASE')?.get('enabled')?.setValue(false, { emitEvent: false });
+        this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false, { emitEvent: false });
+      } else if (this.currentWarningField === Sage50ImportableField.PHASE) {
+        // Disable Phase and Cost Code
+        this.importSettingsForm.get('PHASE')?.get('enabled')?.setValue(false, { emitEvent: false });
+        this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false, { emitEvent: false });
+      } else if (this.currentWarningField === Sage50ImportableField.COST_CODE) {
+        // Disable only Cost Code
+        this.importSettingsForm.get('COST_CODE')?.get('enabled')?.setValue(false, { emitEvent: false });
+      }
+
+      this.isProcessingWarning = false;
+    }
+    this.currentWarningField = null;
+  }
+
+  get currentWarningDimension(): string {
+    return this.currentWarningField ? sage50AttributeDisplayNames[this.currentWarningField] : '';
+  }
+
+  get currentSourceFieldDisplayName(): string {
+    if (!this.currentWarningField) {
+      return '';
+    }
+
+    const sourceFieldValue = this.importSettingsForm.get(this.currentWarningField)?.get('sourceField')?.value;
+    if (!sourceFieldValue) {
+      return '';
+    }
+
+    const option = this.sourceFieldOptions.find(opt => opt.value === sourceFieldValue);
+    return option?.label || sourceFieldValue;
+  }
+
+  acceptChangeMappingWarning(data: ConfigurationWarningOut): void {
+    this.showChangeMappingWarning = false;
+
+    if (!this.currentWarningField) {
+      return;
+    }
+
+    if (!data.hasAccepted && this.previousSourceFieldValue !== null) {
+      // User canceled, revert to the previous source field value
+      this.isRevertingSourceField = true;
+      this.importSettingsForm.get(this.currentWarningField)?.get('sourceField')?.setValue(this.previousSourceFieldValue as Sage50FyleField, { emitEvent: true });
+
+      // Also update the placeholder
+      const previousOption = this.sourceFieldOptions.find(option => option.value === this.previousSourceFieldValue);
+      this.importSettingsForm.get(this.currentWarningField)?.get('sourcePlaceholder')?.setValue(previousOption?.placeholder ?? null);
+
+
+      this.isRevertingSourceField = false;
+    }
+
+    this.previousSourceFieldValue = null;
+    this.currentWarningField = null;
   }
 
   ngOnInit(): void {
