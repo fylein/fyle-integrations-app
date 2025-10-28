@@ -322,19 +322,15 @@ export class Sage50ImportSettingsComponent implements OnInit {
   get currentWarningDimension(): string {
     return this.currentWarningField ? sage50AttributeDisplayNames[this.currentWarningField] : '';
   }
+  
 
-  get currentSourceFieldDisplayName(): string {
-    if (!this.currentWarningField) {
+  get previousSourceFieldDisplayName(): string {
+    if (!this.previousSourceFieldValue) {
       return '';
     }
 
-    const sourceFieldValue = this.importSettingsForm.get(this.currentWarningField)?.get('sourceField')?.value;
-    if (!sourceFieldValue) {
-      return '';
-    }
-
-    const option = this.sourceFieldOptions.find(opt => opt.value === sourceFieldValue);
-    return option?.label || sourceFieldValue;
+    const option = this.sourceFieldOptions.find(opt => opt.value === this.previousSourceFieldValue);
+    return option?.label || this.previousSourceFieldValue;
   }
 
   acceptChangeMappingWarning(data: ConfigurationWarningOut): void {

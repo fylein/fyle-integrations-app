@@ -138,7 +138,7 @@
     (warningAccepted)="acceptChangeMappingWarning($event)"
     [isWarningVisible]="showChangeMappingWarning"
     [headerText]="'configurationCsvImportField.changeMappingWarningHeader' | transloco"
-    [contextText]="'configurationCsvImportField.changeMappingWarningContext' | transloco: { dimension: currentWarningDimension, appName: ('sage50ImportSettings.appDisplayName' | transloco), brandName: brandingConfig.brandName, sourceFieldName: currentSourceFieldDisplayName }"
+    [contextText]="'configurationCsvImportField.changeMappingWarningContext' | transloco: { dimension: currentWarningDimension, appName: ('sage50ImportSettings.appDisplayName' | transloco), brandName: brandingConfig.brandName, sourceFieldName: previousSourceFieldDisplayName }"
     [confirmBtnText]="'configurationCsvImportField.continue' | transloco"
     [appName]="AppName.SAGE50"
     [event]="ConfigurationWarningEvent.SAGE50_CHANGE_FIELD_MAPPING">
