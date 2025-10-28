@@ -2516,7 +2516,12 @@
     "exportSettingsSavedSuccess": "Export settings saved successfully",
     "exportSettingsSaveError": "Error saving export settings, please try again later",
     "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
-    "paymentMethodPreviewHeader": "Locate your payment method"
+    "paymentMethodPreviewHeader": "Locate your payment method",
+    "purchasesExportWarningHeader": "Important",
+    "purchasesExportWarningContext": "Before switching the export type to {{exportType}}, ensure you have the Vendors CSV downloaded and ready. Vendor data is required to map employees in {{brandName}} to their corresponding records in Sage 50.",
+    "purchasesExportWarningConfirmButton": "Yes, continue",
+    "paymentsLabel": "Payments",
+    "purchasesLabel": "Purchases"
   },
   "sage50ImportSettings": {
     "headerText": "Import settings",

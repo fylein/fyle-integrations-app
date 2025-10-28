@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
-import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
+import { catchError, debounceTime, forkJoin, Observable, of, pairwise, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
@@ -17,6 +17,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -39,6 +40,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
   readonly Sage50ExportSettingDestinationOptionKey = Sage50ExportSettingDestinationOptionKey;
 
   readonly ConfigurationCtaText = ConfigurationCta;
+
+  readonly ConfigurationWarningEvent = ConfigurationWarningEvent;
 
   readonly allowedAccountTypes: string[] = [
     'Accounts Payable', 'Long Term Liabilities', 'Other Current Liabilities'
@@ -83,6 +86,21 @@ export class Sage50ExportSettingsComponent implements OnInit {
   isCCCEnabled = true;
 
   isCCCExportGroupEditable = true;
+
+  showPurchasesExportWarning: boolean = false;
+
+  selectedExportTypeName: string;
+
+  // Track the last known good values to prevent race conditions
+  private lastReimbursableExportType: Sage50ReimbursableExportType | null = null;
+
+  private lastCCCExportType: Sage50CCCExportType | null = null;
+
+  private pendingExportChange: {
+    expenseType: 'reimbursable' | 'ccc';
+    previousValue: Sage50ReimbursableExportType | Sage50CCCExportType | null;
+    newValue: Sage50ReimbursableExportType | Sage50CCCExportType;
+  } | null = null;
 
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -161,6 +179,86 @@ export class Sage50ExportSettingsComponent implements OnInit {
     this.isPaymentMethodPreviewDialogVisible = false;
   }
 
+  onExportTypeDropdownChange(changeEvent: {event: any, formControllerName: string}): void {
+    const { event, formControllerName } = changeEvent;
+    const selectedExportType = event.value;
+
+    // Get the previous export type from our tracking variables (not from form control which is already updated)
+    const previousExportType = formControllerName === 'reimbursableExportType'
+      ? this.lastReimbursableExportType
+      : this.lastCCCExportType;
+
+    // Check if we need to show warning for purchases/payments
+    const needsWarning = this.shouldShowPurchasesWarning(selectedExportType, formControllerName);
+
+    if (needsWarning) {
+      // Revert to the previous value immediately
+      this.exportSettingsForm.get(formControllerName)?.setValue(previousExportType, { emitEvent: false });
+      this.exportSettingsForm.get(formControllerName)?.updateValueAndValidity();
+
+      // Store pending change and show warning
+      this.pendingExportChange = {
+        expenseType: formControllerName === 'reimbursableExportType' ? 'reimbursable' : 'ccc',
+        previousValue: previousExportType,
+        newValue: selectedExportType
+      };
+
+      this.selectedExportTypeName = selectedExportType === Sage50CCCExportType.PAYMENTS_JOURNAL
+        ? this.translocoService.translate('sage50ExportSettings.paymentsLabel')
+        : this.translocoService.translate('sage50ExportSettings.purchasesLabel');
+      this.showPurchasesExportWarning = true;
+    } else {
+      // Update tracking variable with the new value since no warning is needed
+      if (formControllerName === 'reimbursableExportType') {
+        this.lastReimbursableExportType = selectedExportType;
+      } else {
+        this.lastCCCExportType = selectedExportType;
+      }
+    }
+  }
+
+  private shouldShowPurchasesWarning(selectedExportType: any, formControllerName: string): boolean {
+    const hasVendorsUploaded = this.vendors && this.vendors.length > 0;
+
+    if (hasVendorsUploaded) {
+      return false;
+    }
+
+    if (formControllerName === 'reimbursableExportType') {
+      return selectedExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY;
+    } else if (formControllerName === 'cccExportType') {
+      return [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(selectedExportType);
+    }
+
+    return false;
+  }
+
+  acceptPurchasesExportWarning(data: ConfigurationWarningOut): void {
+    this.showPurchasesExportWarning = false;
+
+    if (data.hasAccepted && this.pendingExportChange) {
+      const { expenseType, newValue: selectedExportType } = this.pendingExportChange;
+      const formControl = expenseType === 'reimbursable'
+        ? this.exportSettingsForm.get('reimbursableExportType')
+        : this.exportSettingsForm.get('cccExportType');
+
+      if (formControl) {
+        formControl.setValue(selectedExportType as any, { emitEvent: false });
+        formControl.markAsTouched();
+        formControl.updateValueAndValidity();
+      }
+
+      // Update tracking variables with the accepted value
+      if (expenseType === 'reimbursable') {
+        this.lastReimbursableExportType = selectedExportType as Sage50ReimbursableExportType;
+      } else {
+        this.lastCCCExportType = selectedExportType as Sage50CCCExportType;
+      }
+
+    }
+
+    this.pendingExportChange = null;
+  }
 
   private addMissingOptionsAndSort(exportSettings: Sage50ExportSettingsGet | null): void {
     const extraAccountOptions = [
@@ -333,6 +431,10 @@ export class Sage50ExportSettingsComponent implements OnInit {
       this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
         exportSettings, this.isReimbursableEnabled, this.isCCCEnabled
       );
+
+      // Initialize tracking variables for warning dialog with current form values
+      this.lastReimbursableExportType = this.exportSettingsForm.get('reimbursableExportType')?.value || null;
+      this.lastCCCExportType = this.exportSettingsForm.get('cccExportType')?.value || null;
 
       this.addMissingOptionsAndSort(exportSettings);
       this.optionSearchWatcher();
