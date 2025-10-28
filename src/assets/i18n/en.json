@@ -2439,7 +2439,7 @@
   "csvUploadDialog": {
     "header": "Upload CSV for {{dimension}}",
     "instructionsHeader": "Upload CSV or drag & drop your file",
-    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here. Sage 50's default export format is supported.",
     "errorHeader": "Error found in CSV for {{dimension}}",
     "errorInstructionsHeader": "How do I correct the errors?",
     "errorInstructionsContent": "Download the error log & upload the .csv again after fixing the errors",
@@ -2456,7 +2456,9 @@
     "invalidCsvFile": "The CSV file is invalid.",
     "errorDialogButtonText": "Okay",
     "uploadSuccess": "{{dimension}} uploaded successfully.",
-    "uploadError": "An unexpected error occurred. Please try again."
+    "uploadError": "An unexpected error occurred. Please try again.",
+    "fileRequirements": "File requirements:",
+    "fileRequirementsContent": "CSV files only | Maximum 20,000 rows"
   },
   "sage50ExportSettings": {
     "headerText": "Export settings",
