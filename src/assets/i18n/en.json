@@ -2565,7 +2565,7 @@
     "turnOffImportWarningHeader": "Turn off import?",
     "turnOffImportWarningContext": "<p class='tw-text-14-px tw-font-400 tw-text-text-secondary'>{{dimension}} will no longer be exported to {{appName}}.</p><p class='tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-16-px'>It will still be available for coding in {{brandName}}. To prevent employees from using it, disable this field in your Org Settings as well.</p>",
     "changeMappingWarningHeader": "Change field mapping?",
-    "changeMappingWarningContext": "<p class='tw-text-14-px tw-font-400 tw-text-text-secondary'>You're about to change the mapping for &lt;{{appName}} {{dimension}}&gt;.</p><p class='tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-16-px'>Values already imported to the &lt;{{sourceFieldName}}&gt; field will remain active in {{brandName}}. To prevent employees from using it, you'll need to disable this field in your Org Settings as well.</p>",
+    "changeMappingWarningContext": "<p class='tw-text-14-px tw-font-400 tw-text-text-secondary'>You're about to change the mapping for {{appName}} {{dimension}}.</p><p class='tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-16-px'>Values already imported to the {{sourceFieldName}} field will remain active in {{brandName}}. To prevent employees from using it, you'll need to disable this field in your Org Settings as well.</p>",
     "continue": "Continue"
   },
   "uploadedFileDetails": {
