@@ -44,11 +44,11 @@
                         }
                       <div>
                         <h4 class="{{brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText}}" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                            {{ 'configurationImportField.importDestinationFieldFromApp' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
-                            <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
+                            {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.configuration.importSetting.importDestinationFieldFromApp' : 'configurationImportField.importDestinationFieldFromApp') | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
+                            <app-optional-field *ngIf="!isAsterikAllowed && !(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT)"></app-optional-field>
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-font-400 !tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
-                          {{ 'configurationImportField.importedDestinationFieldInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) } }}
+                          {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.configuration.importSetting.importedDestinationFieldInfo' : 'configurationImportField.importedDestinationFieldInfo') | transloco: { destinationField: (brandingConfig.brandId !== 'co' && appName !== AppName.QBD_DIRECT ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase)) } }}
                         </h5>
                       </div>
                     </div>

@@ -55,6 +55,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isMultiLineOption]="true"
                 ></app-configuration-select-field>
             }
 
@@ -73,6 +74,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isMultiLineOption]="true"
                 ></app-configuration-select-field>
             }
         </div>
@@ -170,6 +172,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isMultiLineOption]="true"
                 ></app-configuration-select-field>
             }
             @if (showField('cccDefaultAccountPayableAccount')) {
@@ -187,6 +190,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isMultiLineOption]="true"
                 ></app-configuration-select-field>
             }
             @if (showField('defaultCashAccount')) {
@@ -204,6 +208,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isMultiLineOption]="true"
                 ></app-configuration-select-field>
             }
             @if (showField('defaultVendor')) {
@@ -287,6 +292,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [isDisabled]="!isCCCExportGroupEditable"
                 ></app-configuration-select-field>
             </div>
         }

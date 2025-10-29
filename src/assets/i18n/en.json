@@ -15,7 +15,10 @@
   },
   "configurationMultiSelect": {
     "expenseReportId": "Expense/Report ID",
-    "cardNumber": "Card number (last 4 digit)"
+    "cardNumber": "Card number (last 4 digits)",
+    "spentAt": "Spent on",
+    "merchant": "Merchant (from expense)",
+    "cardMerchant": "Merchant (from card feed)"
   },
   "configurationConfirmationDialog": {
     "areYouSureToContinue": "Are you sure you want to continue?",
@@ -132,6 +135,7 @@
   "exportLogChildTableDialog": {
     "dialogHeader": "Expenses",
     "expenseIdHeader": "Expense ID",
+    "claimNumberHeader": "Report ID",
     "merchantHeader": "Merchant",
     "categoryHeader": "Category",
     "amountHeader": "Amount"
@@ -159,6 +163,8 @@
     "importDimensionTooltip": "Importing a dimension syncs active values from {{appName}} every 24 hours. Deactivated values in {{appName}} will also be disabled in {{brandName}}",
     "importDestinationFieldFromApp": "Import {{destinationField}} from {{appName}}",
     "importedDestinationFieldInfo": "The imported {{destinationField}} will be an available field when creating an expense.",
+    "c1QbdImportDestinationFieldFromApp": "Import {{destinationField}}",
+    "c1QbdImportedDestinationFieldInfo": "{{destinationField}} will import as the expense field you choose, available for employees to select when adding expense details.",
     "chooseAppFieldPlaceholder": "Choose {{appName}} field",
     "uniqueAppFieldsError": "{{appName}} Fields should be unique",
     "chooseExpenseFieldPlaceholder": "Choose expense field in {{brandName}}",
@@ -457,7 +463,6 @@
     "quickbooksOnlineAppName": "QuickBooks Online",
     "xeroAppName": "Xero",
     "quickbooksDesktopIifAppName": "QuickBooks Desktop (IIF)",
-    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop (Web Connector)",
     "sage300CreAppName": "Sage 300 CRE",
     "dynamics365BusinessCentralAppName": "Dynamics 365 Business Central",
     "hrmsSectionTitle": "HRMS",
@@ -1123,6 +1128,47 @@
     "zeroStateHeaderText": "Looks like you have",
     "zeroStateSubHeaderText": "0 expenses to export right now"
   },
+  "sage50Main": {
+    "dashboard": "Dashboard",
+    "mapping": "Mapping",
+    "configuration": "Configuration",
+    "syncDataDimensionsToast": "Syncing data dimensions from {{appName}}..."
+  },
+  "sage50Dashboard": {
+    "zeroStateHeaderText": "Looks like you have",
+    "zeroStateSubHeaderText": "0 expenses to export right now",
+    "exportLogTitle": "Export log",
+    "exportLogDescription": "Download the file from the table below and upload it in Sage 50.",
+    "readMore": "Read more",
+    "exportButtonText": "Export",
+    "pendingMappingsTitle": "Pending mappings",
+    "pendingMappingsDescription": "Map Fyle values to their Sage 50 counterparts. Without these mappings, expenses cannot be exported.",
+    "employeeMappingTitle": "Employee mapping",
+    "employeeMappingDescription": "Map employees in Fyle to their corresponding records in Sage 50.",
+    "mapEmployeesButtonText": "Map employees",
+    "corporateCardMappingTitle": "Corporate card mapping",
+    "corporateCardMappingDescription": "Map corporate cards in Fyle to their corresponding records in Sage 50.",
+    "mapCorporateCardsButtonText": "Map corporate cards",
+    "employeeMappingDialogTitle": "Employee mapping",
+    "employeeMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "corporateCardMappingDialogTitle": "Corporate card mapping",
+    "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "completed": "Completed",
+    "skipped": "Skipped"
+  },
+  "sage50Mapping": {
+    "employeeLabel": "Employee",
+    "corporateCardLabel": "Corporate Card"
+  },
+  "sage50BaseMapping": {
+    "autoMappingInProgress": "Auto mapping of employees is in progress",
+    "autoMappingError": "Something went wrong, please try again"
+  },
+  "sage50Configuration": {
+    "exportSettings": "Export settings",
+    "importSettings": "Import settings",
+    "advancedSettings": "Advanced settings"
+  },
   "sage300ImportSettings": {
     "headerText": "Import settings",
     "contentText": "In this section, you can choose the fields required to be imported from Sage 300 CRE to {{brandName}}. ",
@@ -1632,17 +1678,10 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "done": "Done",
-    "markAsDone": "Mark as done",
-    "installWebConnectorLabel": "Install QuickBooks Web Connector",
-    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
-    "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
-    "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
-    "loginAsAdminCaption": "Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode."
+    "markAsDone": "Mark as done"
   },
   "qbdDirectOnboardingLanding": {
-    "setUpIntegration": "Set up integration",
     "appName": "QuickBooks Desktop ",
-    "uiExposedAppName": "QuickBooks Desktop - Web Connector",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."
   },
   "qbdDirectOnboardingConnector": {
@@ -1658,31 +1697,22 @@
     "invalidPathError": "Enter a valid company file path.",
     "downloadButtonLabel": "Download",
     "loadingText": "Loading",
-    "ifDownloadDidNotStart": "If it didn’t start, ",
-    "downloadManuallyLink": "download the integration file manually",
-    "notRightFilePrompt": "Not the right file? ",
-    "tryAgainLink": "Try again.",
-    "webConnectorVideoTitle": "How to open the integration file in Web Connector."
+    "ifDownloadDidNotStart": "If it didn’t start, "
   },
   "qbdDirectExportSettings": {
     "exportModule": "export module",
-    "selectExportTypePlaceholder": "Select an export type",
     "option": "option",
     "selectRepresentationPlaceholder": "Select representation",
     "accountsPayable": "accounts payable",
     "debitLinesReflectCategory": ", while debit lines will reflect the category chosen by the employee for each respective expense",
     "selectAccountsPayablePlaceholder": "Select accounts payable",
     "expenseState": "expense state",
-    "selectExportStatePlaceholder": "Select export state",
     "howExpensesToBeGrouped": "how expenses to be grouped",
-    "selectExpenseGroupingPlaceholder": "Select expense grouping",
     "exportDate": "export date",
     "dateAsSuffix": " date as",
-    "selectDatePlaceholder": "Select date",
     "nameInJournalEntryToExport": "Name in which Journal Entry should export",
     "selectNamePlaceholder": "Select a name",
     "creditCardAccount": "credit card account",
-    "selectDefaultCreditCardAccountPlaceholder": "Select default credit card account",
     "aDefaultCreditAccount": "a default credit account",
     "selectDefaultAccountPlaceholder": "Select default account",
     "changeInConfigurationTitle": "Change in configuration",
@@ -2067,6 +2097,11 @@
       "connectionErrorToast": "Error while connecting, please try again later.",
       "connectionExpiredToast": "Oops! Your Sage300 connection expired, please connect again"
     },
+    "sage50Connector": {
+      "connectionReconnectedToast": "Reconnected to Sage 50 successfully.",
+      "connectionErrorToast": "Error while connecting, please try again later.",
+      "connectionExpiredToast": "Oops! Your Sage 50 connection expired, please connect again"
+    },
     "siConnector": {
       "connectionReconnectedToast": "Reconnected to Sage Intacct successfully.",
       "connectionErrorToast": "Error while connecting, please try again later.",
@@ -2099,6 +2134,9 @@
     },
     "sage300Helper": {
       "syncDataDimensionsToast": "Syncing data dimensions from Sage 300 CRE"
+    },
+    "sage50Helper": {
+      "syncDataDimensionsToast": "Syncing data dimensions from Sage 50"
     },
     "sage300Onboarding": {
       "connectToSage": "Connect to Sage 300 CRE",
@@ -2354,6 +2392,15 @@
       "spendDateOptionLabel": "Spend date",
       "expenseOptionLabel": "Expense",
       "reportOptionLabel": "Expense report"
+    },
+    "scheduleForm": {
+      "dailySchedulePreview": "Daily, at {{timeOfDay}} {{meridiem}}",
+      "weeklySchedulePreview": "Weekly, every {{dayOfWeek}} at {{timeOfDay}} {{meridiem}}",
+      "monthlySchedulePreview": "Monthly, {{dayOfMonth}} at {{timeOfDay}} {{meridiem}}"
+    },
+    "exportLog": {
+      "cccType": "Corporate card",
+      "reimbursableType": "Reimbursable"
     }
   },
   "pipes": {
@@ -2479,7 +2526,19 @@
     "accountTypesSubtext": "Add more from dropdown",
     "accountTypesPlaceholder": "Select display name format",
     "vendorLabel": "Vendor",
-    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation."
+    "vendorSubLabel": "Import vendors as merchants to capture supplier details, and simplify reconciliation.",
+    "jobSubLabel": "Import job codes as projects to enable accurate job costing and simplify billable invoicing.",
+    "jobLabel": "Job",
+    "customFieldLabel": "Create a custom field",
+    "projectLabel": "Project",
+    "costCenterLabel": "Cost center",
+    "phaseLabel": "Phase",
+    "phaseSubLabel": "Import phases to allocate expenses stage-wise across jobs.",
+    "costCodeLabel": "Cost code",
+    "costCodeSubLabel": "Import cost codes to classify expense types within each job or phase.",
+    "importSettingsSavedSuccess": "Import settings saved successfully",
+    "importSettingsSaveError": "Error saving import settings, please try again later",
+    "vendorInfoText": "The same Vendor CSV will be used for employee-vendor mapping"
   },
   "configurationCsvImportField": {
     "preview": "Preview",
@@ -2492,11 +2551,13 @@
     "importCodesAndNamesSubLabel": "Example: 6050: Meals & Entertainment",
     "importNamesOnlyLabel": "Import names only",
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
-    "importFormatPlaceholder": "Select display name format"
+    "importFormatPlaceholder": "Select display name format",
+    "selectSourceFieldPlaceholder": "Select field in {{brandName}}",
+    "previewHeader": "Preview of a {{brandName}} expense"
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",
-    "valuesImportedLabel": "Values mapped:",
+    "valuesImportedLabel": "Values imported:",
     "lastUploadedAtLabel": "Last uploaded on:",
     "reuploadButtonLabel": "Re-upload",
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
@@ -2504,5 +2565,74 @@
   },
   "integrations": {
     "reBrandedName": "Sage Expense Management"
+  },
+  "alert": {
+    "infoIconAlt": "Info icon"
+  },
+  "sage50AdvancedSettings": {
+    "headerText": "Advanced settings",
+    "contentText": "Customize the integration based on your accounting requirements.",
+    "scheduleExportLabel": "Export schedule",
+    "scheduleExportSubLabel": "Choose how often {{brandName}} should automatically prepare export-ready CSV files (recommended), or export manually when needed.",
+    "savedSchedulePreviewText": "Scheduled <strong class=\"tw-font-500\">{{preview}}</strong>",
+    "editScheduleIconAlt": "Edit schedule icon",
+    "topLevelMemoLabel": "Top-level memo field (for Payments)",
+    "topLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50's top-level memo field for payments.",
+    "topLevelMemoPlaceholder": "Select datapoints",
+    "topLevelMemoErrorName": "datapoint",
+    "lineLevelMemoErrorName": "datapoint",
+    "lineLevelMemoLabel": "Line-item-level description field",
+    "lineLevelMemoSubLabel": "Select which datapoints from {{brandName}} should appear in Sage 50's line-item-level description field.",
+    "lineLevelMemoPlaceholder": "Select datapoints",
+    "memoPreviewPlaceholder": "Select datapoints to see a preview",
+    "skipExportLabel": "Skip expenses from export",
+    "skipExportSubLabel": "Set rules to prevent certain expenses from being exported to Sage 50.",
+    "advancedSettingsSavedSuccess": "Advanced settings saved successfully",
+    "advancedSettingsSaveError": "Error saving advanced settings, please try again later",
+    "selectionLimitExceededTooltipText": "Only {{maxSelections}} values can be selected due to character limit"
+  },
+  "scheduleDialog": {
+    "header": "Set schedule",
+    "save": "Save",
+    "contentText": "Set how often and when you want {{brandName}} to automatically export your expenses.",
+    "frequencyLabel": "Frequency",
+    "dayLabel": "Day",
+    "dayPlaceholder": "Select day",
+    "timeLabel": "Time",
+    "timePlaceholder": "Select time"
+  },
+  "dialog": {
+    "cancel": "Cancel"
+  },
+  "csvExportLog": {
+    "tableHeaders": {
+      "dateTime": "Date of export",
+      "expenseType": "Expense type",
+      "exportFile": "Export file",
+      "fileDetails": "File details"
+    },
+    "expense": "expense",
+    "expenses": "expenses",
+    "noRecordsToShow": "No records to show yet!",
+    "successfulExportsStoredHere": "All your successful exports and their details will be stored here.",
+    "noResultsFound": "No results found!",
+    "noResultsSuggestion": "We could not find what you were looking for. Kindly check the keywords again.",
+    "reimbursableType": "Reimbursable",
+    "cccType": "Corporate card",
+    "errorCount": "{{count}} errors identified",
+    "noErrors": "No errors"
+  },
+  "csvExpensesTable": {
+    "exportSkippedOn": "Export skipped on",
+    "expenseId": "Expense ID",
+    "employee": "Employee",
+    "amount": "Amount",
+    "spendDate": "Spend date",
+    "reportDetails": "Report details"
+  },
+  "csvExportLogDialog": {
+    "header": "Expense details",
+    "expenseType": "Expense type",
+    "fileName": "File name"
   }
 }

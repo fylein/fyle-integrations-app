@@ -25,6 +25,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     footerButtonsRightAligned: true,
     useMainMenuForSubmenu: true,
     usePrimaryLoader: true,
+    allowToastMessageInApps: false,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
@@ -98,7 +99,7 @@ export const c1KbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
         // TODO(sage50): update link
         SAGE50: `${brandingConfig.helpArticleDomain}`
     },
@@ -156,13 +157,14 @@ export const c1KbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`
         },
         QBD_DIRECT: {
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_78e1747002`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_0c194b57b6`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_c1cbc71bf2`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_dd62a240fe`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_2e0ba92e21`,
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
-            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`,
+            ERROR_RESOLUTION_GUIDE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/12585819-quickbooks-web-connector-qbw-error-resolution-guide`
         },
         SAGE50: {
             // TODO(sage50)
@@ -180,7 +182,8 @@ export const c1KbArticles: KbArticle[string] = {
             PHASE: `${brandingConfig.helpArticleDomain}`,
             VENDOR: `${brandingConfig.helpArticleDomain}`,
             ACCOUNT: `${brandingConfig.helpArticleDomain}`,
-            COST_CODE: `${brandingConfig.helpArticleDomain}`
+            COST_CODE: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_LOG: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -196,7 +199,7 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/KeiegWDj308',
         NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk',
-        QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk',
+        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
         // TODO(sage50): Update link for Sage 50
         SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
     },

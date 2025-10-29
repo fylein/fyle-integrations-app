@@ -1,25 +1,25 @@
 {
   "qbd_direct": {
     "landing": {
-      "contentText": "Import data from QuickBooks Desktop to {{brandName}} and export expenses from {{brandName}} to QuickBooks Desktop",
-      "guideHeaderText": "How to setup your integration"
+      "contentText": "Import GL accounts and projects from QuickBooks Desktop and export expenses from your {{ brandName }} account.",
+      "guideHeaderLineText": "How to setup your integration",
+      "guideHeaderText": "Check out the video guide for setting up your integration with QuickBooks Desktop."
     },
     "configuration": {
       "preRequisite": {
-        "stepName": "Prerequisites",
-        "configurationHeaderText": "Getting started",
-        "configurationSubHeaderText": "Begin your QuickBooks integration by completing the following steps."
+        "stepName": "Requirements",
+        "configurationHeaderText": "Requirements to get started",
+        "configurationSubHeaderText": "Complete the following steps to begin the set up process."
       },
       "connector": {
         "configurationHeaderText": "Connect to QuickBooks Desktop",
-        "configurationSubHeaderText": "Connect to QuickBooks Desktop by completing the following steps.",
         "stepName": "Connect to QuickBooks Desktop",
         "subLabel": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account"
       },
       "exportSetting": {
         "stepName": "Export settings",
         "headerText": " Export corporate card expenses",
-        "contentText": "Configure how and when expenses from {{brandName}} can be exported to QuickBooks Desktop.",
+        "contentText": "Select how and when expenses are exported to QuickBooks Desktop.",
         "reimbursable": {
           "reimbursableExpenseLabel": "Export reimbursable expenses",
           "reimbursableExpenseSubLabel": "Enable this to export the reimbursable expenses from {{brandName}}. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.",
@@ -41,18 +41,18 @@
         "corporateCard": {
           "creditCardExpenseLabel": "Export corporate card expenses",
           "creditCardExpenseSubLabel": "Enable this to export the non-reimbursable expenses from {{brandName}}. If not enabled, any <b>corporate credit card </b> expenses will not be exported to QuickBooks Desktop.",
-          "creditCardExpenseTypeLabel": "How should the expenses be exported?",
-          "creditCardExpenseTypeSubLabel": "Choose the type of transaction in QuickBooks Desktop to export your {{brandName}} expenses.",
-          "creditCardExpenseStateLabel": "At which state should the expenses be ready to export from {{brandName}}?",
-          "creditCardExpenseStateSubLabel": "You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.",
-          "creditCardExpenseDateLabel": "Set the expense ",
-          "creditCardExpenseDateSubLabel": "Expenses will be grouped and posted using the configured date when exporting from {{brandName}} to QuickBooks Desktop",
-          "creditCardExpenseGroupLabel": "How should the expenses be grouped?",
-          "creditCardExpenseGroupSubLabel": "Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)",
+          "creditCardExpenseTypeLabel": "Select how expenses are exported",
+          "creditCardExpenseTypeSubLabel": "Export your expenses as journal entries or credit card purchases.",
+          "creditCardExpenseStateLabel": "Select expense status for exporting",
+          "creditCardExpenseStateSubLabel": "Select whether to export expenses once they’re approved or closed.",
+          "creditCardExpenseDateLabel": "Set the transaction date ",
+          "creditCardExpenseDateSubLabel": "The date you select will reflect in expenses exported to QuickBooks Desktop.",
+          "creditCardExpenseGroupLabel": "Select expense format",
+          "creditCardExpenseGroupSubLabel": "Export expenses as an expense (a single line item) or a report (a group with multiple line items).",
           "creditCardExpenseNameinJELabel": "Name in journal entry",
           "creditCardExpenseNameinJESubLabel": "You can select either the 'merchant name' or the 'employee name' to appear in the 'name' field of your journal entries.",
-          "defaultCCCAccountLabel": "Set default credit card account as",
-          "defaultCCCAccountSubLabel": "Post all your company corporate card transactions to a default credit card account.",
+          "defaultCCCAccountLabel": "Select which account expenses post to ",
+          "defaultCCCAccountSubLabel": "Expenses that aren't mapped to accounts in QuickBooks Desktop will post to the account you select.",
           "defaultCCCAccountPayableLabel": "Select the default credit account for adding ",
           "defaultCCCAccountPayableSubLabel": "This account will be used for the credit line of the "
         }
@@ -60,30 +60,32 @@
       "importSetting": {
         "stepName": "Import settings",
         "headerText": "",
-        "contentText": "Choose the required import fields from QuickBooks Desktop to {{brandName}}.",
+        "contentText": "Customize the data that’s imported from QuickBooks Desktop to Expense Management.",
         "importCategoriesLabel": "Import the chart of accounts as categories",
-        "importCategoriesSubLabel": "Imported accounts will be available as categories in {{brandName}}.",
+        "importCategoriesSubLabel": "The chart of accounts will import as categories employees can select from when adding expense details.",
         "importItemsLabel": "Import items from QuickBooks Desktop",
         "importItemsSubLabel": "Items from QuickBooks Desktop will be imported as categories in {{brandName}}.",
-        "importVendorsAsMerchantsLabel": "Import vendors from QuickBooks Desktop",
-        "chartOfAccountTypes": "Select accounts from QuickBooks Desktop to import as categories.",
-        "chartOfAccountTypesSubLabel": "By default, expense will be selected. To select another option, open the dropdown."
+        "importVendorsAsMerchantsLabel": "Import vendors as merchants",
+        "chartOfAccountTypes": "Select which account types to import",
+        "chartOfAccountTypesSubLabel": "The expense account type is imported by default.",
+        "importDestinationFieldFromApp": "Import {{destinationField}}",
+        "importedDestinationFieldInfo": "{{destinationField}} will import as the expense field you choose, available for employees to select when adding expense details."
       },
       "advancedSettings": {
         "stepName": "Advanced settings",
         "contentText": "Customize the integration based on your accounting requirements.",
-        "customizeSectionLabel": "Customization",
-        "customizeSectionSubLabel": "In this section, you can customize the data that you'd like to export from {{brandName}} to QuickBooks Desktop. You can choose what data points need to be exported and what shouldn't be.",
-        "automationLabel": "Automation",
-        "automationSubLabel": "You can automate the export and sync of your data in this section.",
-        "scheduleAutoExportLabel": "Schedule automatic export",
-        "scheduleAutoExportSubLabel": "Set up a schedule to frequently automate the export of expenses from {{brandName}} to QuickBooks Desktop.",
-        "autoExportfrequencyLabel": "Set up export frequency",
+        "customizeSectionLabel": "Customize memo fields",
+        "customizeSectionSubLabel": "Select the expense details that export to memo fields in QuickBooks Desktop.",
+        "automationLabel": "Automate expense exports",
+        "automationSubLabel": "Choose how often your data syncs with QuickBooks Desktop.",
+        "scheduleAutoExportLabel": "Set up automatic exports",
+        "scheduleAutoExportSubLabel": "Choose when to automatically export expenses from Expense Management to QuickBooks Desktop.",
+        "autoExportfrequencyLabel": "Select export frequency",
         "autoExportfrequencySubLabel": "Expenses will automatically export at this frequency.",
-        "topLevelMemoStructureLabel": "Select the top level memo field data for QuickBooks Desktop",
-        "topLevelMemoStructureSubLabel": "You can customize the <b>data point</b> you would like to export to QuickBooks Desktop's <b>top-level memo</b> field while exporting expenses from {{brandName}}.",
-        "memoStructureLabel": "Set the line-item level memo field data for QuickBooks Desktop.",
-        "memoStructureSubLabel": "You can customize the data set you would like to export to QuickBooks Desktop's <b>transaction line-item level memo</b> field while exporting expenses from {{brandName}}.",
+        "topLevelMemoStructureLabel": "Set the top-level memo field",
+        "topLevelMemoStructureSubLabel": "Select which expense details to export to the top-level memo field in QuickBooks Desktop.",
+        "memoStructureLabel": "Set the inline-item memo field",
+        "memoStructureSubLabel": "Select which expense details to export to the inline-item memo field in QuickBooks Desktop.",
         "previewDescriptionFieldLabel": "Preview of the description field",
         "otherPreferencesLabel": "Other preferences",
         "otherPreferencesSubLabel": "Based on your preference, you can choose whether you want to create any new records in QuickBooks Desktop from {{brandName}}.",
@@ -96,6 +98,23 @@
         "accountingPeriodLabel": "Post entries in the current accounting period",
         "accountingPeriodSubLabel": "If there are expenses for which the accounting period is closed in QuickBooks Desktop, you can export those to the current month by enabling this option."
       }
+    },
+    "common": {
+      "readMoreText": "Get detailed instructions"
+    },
+    "dashboard": {
+      "exportHeaderZeroStateText": "All expenses have been exported",
+      "noExpensesToExport": "There are no [approved,closed] expenses to export right now.",
+      "viewText": "View all",
+      "integrationErrorHeader": "QuickBooks Desktop errors",
+      "resolveErrorsPrompt": "Resolve the following errors in your QuickBooks Desktop account, then try to export your expenses again."
+    },
+    "exportLog": {
+      "completeExportLogCountZeroStateHeaderText": "You haven’t made any exports.",
+      "completeExportLogCountZeroStateSubHeaderText": " "
+    },
+    "configurationStepFooter": {
+      "back": "Go back"
     }
   },
   "netsuite": {
@@ -435,7 +454,8 @@
     "exportLogHeader": "Failed to export?",
     "exportLogSubHeader": "Resolve the errors from your dashboard and try exporting these expenses again.",
     "dashboardExportZeroStateHeaderText": "No records to show yet",
-    "dashboardExportZeroStateSubHeaderText": "Looks like you have no records to export right now."
+    "dashboardExportZeroStateSubHeaderText": "Looks like you have no records to export right now.",
+    "viewText": "View"
   },
   "exportLog": {
     "tableHeaders": {
@@ -469,7 +489,8 @@
   },
   "landing": {
     "contentText": "If you have an existing QuickBooks Online integration with your capital one account, you'll need to disconnect it in your QuickBooks Online account before setting up your connection with Expense Management.",
-    "guideHeaderText": "How to setup your integration"
+    "guideHeaderText": "How to setup your integration",
+    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop"
   },
   "common": {
     "readMoreText": "Read more",
@@ -490,13 +511,22 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "learnMore": "Read more",
-    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" link tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
+    "installWebConnectorLabel": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" link tw-underline !tw-underline-offset-1\" >Download Web Connector</a> where QuickBooks Desktop is locally installed.",
+    "installWebConnectorCaption": " ",
+    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open while you set up the integration.",
+    "keepCompanyFileOpenCaption": " ",
+    "loginAsAdminLabel": "Sign in to QuickBooks Desktop as an admin in single-user mode.",
+    "loginAsAdminCaption": " "
   },
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Company file path",
     "companyFilePathHelpText": "Enter your company file path to generate and download the integration file.",
-    "findPathVideoTitle": "How to find the company file path.",
-    "downloadWillBegin": "Your download should be complete"
+    "findPathVideoTitle": "Learn how to find the company file path.",
+    "downloadWillBegin": "Your download should be complete",
+    "downloadManuallyLink": "manually download the integration file.",
+    "notRightFilePrompt": " ",
+    "tryAgainLink": "Download a different integration file",
+    "webConnectorVideoTitle": "Learn how to open the integration file in Web Connector."
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Enter the following password:",
@@ -508,6 +538,17 @@
     "success": "Connected to QuickBooks Desktop"
   },
   "qbdDirectDataSync": {
-    "infoText": "The following values have been synced from QuickBooks Desktop. If you notice discrepancies, continue the set up process. Any missing values should appear within five minutes."
+    "infoText": "Data field"
+  },
+  "qbdDirectOnboardingLanding": {
+    "setUpIntegration": "Connect",
+    "uiExposedAppName": "QuickBooks Desktop"
+  },
+  "qbdDirectExportSettings": {
+    "selectExportTypePlaceholder": "Export type",
+    "selectDefaultCreditCardAccountPlaceholder": "Account",
+    "selectExportStatePlaceholder": "Expense status",
+    "selectExpenseGroupingPlaceholder": "Formate",
+    "selectDatePlaceholder": "Date"
   }
 }

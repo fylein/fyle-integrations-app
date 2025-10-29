@@ -57,10 +57,16 @@ export interface Sage50AccountsCSVImportFieldForm extends CSVImportFieldForm {
     accountTypes: FormControl<Sage50ImportableCOAType[] | null>;
 }
 
+export interface Sage50CSVImportFieldFormWithMapping extends CSVImportFieldForm {
+    sourceField: FormControl<Sage50FyleField | null>;
+    destinationField: FormControl<Sage50ImportableField>;
+    sourcePlaceholder: FormControl<string | null>;
+}
+
 export type Sage50ImportSettingsForm = {
     ACCOUNT: FormGroup<Sage50AccountsCSVImportFieldForm>,
     VENDOR: FormGroup<CSVImportFieldForm>,
-    JOB: FormGroup<CSVImportFieldForm>,
-    PHASE: FormGroup<CSVImportFieldForm>,
-    COST_CODE: FormGroup<CSVImportFieldForm>
+    JOB: FormGroup<Sage50CSVImportFieldFormWithMapping>,
+    PHASE: FormGroup<Sage50CSVImportFieldFormWithMapping>,
+    COST_CODE: FormGroup<Sage50CSVImportFieldFormWithMapping>
 }

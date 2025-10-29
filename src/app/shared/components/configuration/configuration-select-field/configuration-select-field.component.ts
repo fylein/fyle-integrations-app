@@ -163,7 +163,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   clearSearch(): void {
-    this.form.controls.searchOption.patchValue('');
+    this.form.controls.searchOption?.patchValue('');
   }
 
   searchOptions(event: any) {

@@ -16,16 +16,16 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
-        @if (brandingFeatureConfig.qbdDirect.showStepStateDivider && showSection) {
-        <div class="tw-border-t tw-border-border-tertiary"></div>
-        }
+    @if (brandingFeatureConfig.qbdDirect.showStepStateDivider && showSection) {
+    <div class="tw-border-t tw-border-border-tertiary"></div>
+    }
 
-        <div [ngClass]="showSection ? 'tw-p-24-px tw-pt-0 ' + brandingStyle.qbd_direct.onboarding.dataSyncContent : ''">
-        <div class="tw-py-20-px" *ngIf="!isLoading && showSection">
+    <div [ngClass]="showSection ? 'tw-p-24-px tw-py-0 ' + brandingStyle.qbd_direct.onboarding.dataSyncContent : ''">
+        <div *ngIf="!isLoading && showSection">
             <div *ngFor="let field of qbdFields; let i = index" [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
-                <div class="tw-flex tw-items-center tw-justify-between tw-px-12-px tw-py-20-px">
+                <div class="tw-flex tw-items-center tw-justify-between tw-py-20-px">
                     <div>
                         <span class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
                     </div>
@@ -39,13 +39,15 @@
             </div>
         </div>
         <div *ngIf="!isLoading && showSection">
-            <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
+            <div *ngIf="brandingConfig.brandId !== 'co'">
+                <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
+            </div>
+            <div *ngIf="brandingConfig.brandId === 'co'">
+                <h4 class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDataSync.infoText' | transloco }}</h4>
+            </div>
         </div>
         <div *ngIf="isLoading && showSection" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
             <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
         </div>
-    </div>
-    <div *ngIf="!isLoading && showSection">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
     </div>
 </div>

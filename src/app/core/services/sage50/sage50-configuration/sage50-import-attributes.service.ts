@@ -17,7 +17,6 @@ export class Sage50ImportAttributesService implements CSVImportAttributesService
     private workspaceService: WorkspaceService
   ) { }
 
-  @Cacheable()
   getAccountingImportDetails(): Observable<Sage50AccountingImportDetail[]> {
     return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/settings/accounting_import_details/`, {});
   }

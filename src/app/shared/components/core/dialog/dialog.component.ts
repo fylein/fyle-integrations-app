@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -9,7 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss'
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
 
   @Input() type: 'ERROR' | null = null;
 
@@ -19,6 +19,10 @@ export class DialogComponent {
 
   @Input() buttonType = ButtonType.PRIMARY;
 
+  @Input() showCancelButton: boolean = false;
+
+  @Input() isButtonDisabled: boolean = false;
+
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
 
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
@@ -27,7 +31,7 @@ export class DialogComponent {
 
   readonly ButtonSize = ButtonSize;
 
-  constructor() {
+  ngOnInit(): void {
     if (!this.buttonClick.observed) {
       this.buttonClick.subscribe(() => {
         this.closeDialog.emit();

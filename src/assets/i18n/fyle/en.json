@@ -2,7 +2,8 @@
   "qbd_direct": {
     "landing": {
       "contentText": "Import data from QuickBooks Desktop to {{brandName}} and export expenses from {{brandName}} to QuickBooks Desktop",
-      "guideHeaderText": "Guide to setup your integration"
+      "guideHeaderLineText": "Guide to setup your integration",
+      "guideHeaderText": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."
     },
     "configuration": {
       "preRequisite": {
@@ -416,7 +417,7 @@
     },
     "done": {
       "ctaText": "Launch integration",
-      "hintText": "After launching the integration, you can change your settings at any point of time under the <b class=\"tw-font-bold\">configuration</b> section.",
+      "hintText": "After launching the integration, you can change your settings at any point in time under the <b class=\"tw-font-bold\">configuration</b> section.",
       "doneHeaderText": "Your integration setup is now complete."
     }
   },
@@ -435,7 +436,8 @@
     "exportLogHeader": "Failed",
     "exportLogSubHeader": "These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again",
     "dashboardExportZeroStateHeaderText": "Looks like you have",
-    "dashboardExportZeroStateSubHeaderText": "0 expenses to export right now"
+    "dashboardExportZeroStateSubHeaderText": "0 expenses to export right now",
+    "viewText": "View"
   },
   "exportLog": {
     "tableHeaders": {
@@ -469,7 +471,8 @@
   },
   "landing": {
     "contentText": "Import data from QuickBooks Online to {{brandName}} and export expenses from {{brandName}} to QuickBooks Online. ",
-    "guideHeaderText": "Guide to setup your integration"
+    "guideHeaderText": "Guide to setup your integration",
+    "quickbooksDesktopWebConnectorAppName": "QuickBooks Desktop (Web Connector)"
   },
   "common": {
     "readMoreText": "Read more",
@@ -490,13 +493,22 @@
   },
   "qbdDirectOnboardingPreRequisite": {
     "learnMore": "Learn more",
-    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed."
+    "installWebConnectorLabel": "Install QuickBooks Web Connector",
+    "installWebConnectorCaption": "<a href='https://developer.intuit.com/app/developer/qbdesktop/docs/get-started/get-started-with-quickbooks-web-connector' target=\"_blank\" class=\" tw-underline !tw-underline-offset-1\" >Download</a> and install the QuickBooks Web Connector on the system where QuickBooks Desktop is installed.",
+    "keepCompanyFileOpenLabel": "Keep your QuickBooks company file open",
+    "keepCompanyFileOpenCaption": "Make sure the QuickBooks company you want to connect to {{brandName}} is open during the integration setup.",
+    "loginAsAdminLabel": "Log in to QuickBooks Desktop as admin in single-user mode",
+    "loginAsAdminCaption": "Make sure you're logged into QuickBooks Desktop as an admin user and that the company file is in single-user mode."
   },
   "qbdDirectDownloadFile": {
     "enterCompanyFilePathTitle": "Enter company file path",
     "companyFilePathHelpText": "Enter the file path of your company to generate the integration file. Watch the video for guidance on locating company file path.",
     "findPathVideoTitle": "Where to find company file path?",
-    "downloadWillBegin": "Your download will begin"
+    "downloadWillBegin": "Your download will begin",
+    "downloadManuallyLink": "download the integration file manually",
+    "notRightFilePrompt": "Not the right file? ",
+    "tryAgainLink": "Try again.",
+    "webConnectorVideoTitle": "How to open the integration file in Web Connector."
   },
   "qbdDirectSetupConnection": {
     "usePassword": "Use this password to set up the connection",
@@ -509,5 +521,16 @@
   },
   "qbdDirectDataSync": {
     "infoText": "The values displayed here are synced from QuickBooks Desktop to {{ brandName }}. If you notice discrepancies in the synced values, you can continue onboarding; the sync will refresh automatically in 5 minutes to capture any missed values."
+  },
+  "qbdDirectOnboardingLanding": {
+    "setUpIntegration": "Set up integration",
+    "uiExposedAppName": "QuickBooks Desktop - Web Connector"
+  },
+  "qbdDirectExportSettings": {
+    "selectExportTypePlaceholder": "Select an export type",
+    "selectDefaultCreditCardAccountPlaceholder": "Select default credit card account",
+    "selectExportStatePlaceholder": "Select export state",
+    "selectExpenseGroupingPlaceholder": "Select expense grouping",
+    "selectDatePlaceholder": "Select date"
   }
 }

@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport || true">
+                <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
                         [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco"
@@ -135,7 +135,7 @@
                 </div>
 
             </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
         </form>
     </div>
 </div>

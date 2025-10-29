@@ -5,7 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
-import { Sage50CCCExpensesDate, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.model';
 
@@ -83,6 +82,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   isCCCEnabled = true;
 
+  isCCCExportGroupEditable = true;
+
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
@@ -123,6 +124,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
           this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
         );
 
+        const hasMappings = this.exportSettingsForm.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY || this.exportSettingsForm.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL;
+        this.mappingService.shouldShowMappingPage.emit(hasMappings);
+
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
           this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
@@ -139,7 +143,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   onBackButtonClick(): void {
-    this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
+    this.router.navigate(['/integrations/sage50/onboarding/prerequisites']);
   }
 
   onAdvancedSearch(event: ExportSettingOptionSearch): void {
@@ -239,6 +243,19 @@ export class Sage50ExportSettingsComponent implements OnInit {
       .subscribe((cccExpenses) => {
         if (!cccExpenses) {
           this.exportSettingsForm.get('cccExportType')?.setValue(null);
+        }
+      });
+
+    // Watcher for CCC export type -> hard-code CCC export group
+    // The CCC export group is always EXPENSE when the CCC export type is Payments / Purcheses
+    this.exportSettingsForm.get('cccExportType')?.valueChanges
+      .pipe(startWith(this.exportSettingsForm.get('cccExportType')?.value)) // Manually trigger on init
+      .subscribe((cccExportType) => {
+        if ([Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(cccExportType!)) {
+          this.exportSettingsForm.get('cccExportGroup')?.setValue(Sage50ExpensesGroupedBy.EXPENSE);
+          this.isCCCExportGroupEditable = false;
+        } else {
+          this.isCCCExportGroupEditable = true;
         }
       });
 

@@ -31,7 +31,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   QBDDirectInteractionType = QBDDirectInteractionType;
 
-  QBDconnectorArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
+  QBDconnectorArticleLink: string = brandingConfig.brandId === 'co' ? '' : brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
@@ -79,7 +79,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         id: 3,
         label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminLabel'),
         caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminCaption'),
-        externalLink: this.QBDconnectorArticleLink,
+        externalLink: brandingConfig.brandId === 'co' ? '' : this.QBDconnectorArticleLink,
         iconName: 'user-one',
         state: QBDPreRequisiteState.INCOMPLETE
       }

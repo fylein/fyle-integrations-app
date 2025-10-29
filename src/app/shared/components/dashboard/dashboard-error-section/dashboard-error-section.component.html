@@ -8,8 +8,14 @@
                 <div *ngIf="errors.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">
                         <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
-                            <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{'dashboard.integrationErrorHeader' | transloco}}</h4>
-                            <h5 class="!tw-leading-4" [ngClass]="brandingStyle.dashboard.exportErrorSubTextDescription">{{ 'dashboardErrorSection.resolveErrorsPrompt' | transloco }}</h5>
+                            <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.integrationErrorHeader' : 'dashboard.integrationErrorHeader') | transloco}}</h4>
+                            <h5 class="!tw-leading-4" [ngClass]="brandingStyle.dashboard.exportErrorSubTextDescription">
+                                {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.resolveErrorsPrompt' : 'dashboardErrorSection.resolveErrorsPrompt') | transloco }}
+                                <a *ngIf="brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT"
+                                    class="link tw-text-12-px tw-w-fit tw-inline-flex tw-items-center"
+                                    (click)="windowService.openInNewTab(redirectLink)">
+                                    {{ 'qbd_direct.common.readMoreText' | transloco}}</a>
+                            </h5>
                         </div>
                     </div>
                 </div>

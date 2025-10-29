@@ -8,7 +8,8 @@
             <div>
                 <app-configuration-step-header
                     [headerText]="'qbd_direct.configuration.connector.configurationHeaderText' | transloco"
-                    [contentText]="'qbd_direct.configuration.connector.configurationSubHeaderText' | transloco"
+                    [contentText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? '' : 'qbd_direct.configuration.connector.configurationSubHeaderText') | transloco"
+                    [appName]="appName"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
@@ -44,6 +45,9 @@
                     [showSection]="isConnectionStepCompleted"
                     (continueClick)="proceedToExportSetting()"></app-qbd-direct-data-sync>
                 </div>
+            </div>
+            <div *ngIf="!isDataSyncLoading && isConnectionStepCompleted">
+                <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [AppName]="appName" [isButtonDisabled]="isDataSyncCTADisabled" (save)="proceedToExportSetting()"></app-configuration-step-footer>
             </div>
         </div>
     </div>
