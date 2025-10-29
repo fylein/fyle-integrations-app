@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';

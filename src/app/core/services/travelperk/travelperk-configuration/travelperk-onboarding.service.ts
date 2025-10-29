@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TravelPerkOnboardingState } from '../../models/enum/enum.model';
-import { OnboardingStepper } from '../../models/misc/onboarding-stepper.model';
-import { WorkspaceService } from '../common/workspace.service';
-import { TravelPerkOnboardingStepperMap } from '../../models/travelperk/travelperk-configuration/travelperk-onboarding.model';
+import { TravelPerkOnboardingState } from '../../../models/enum/enum.model';
+import { OnboardingStepper } from '../../../models/misc/onboarding-stepper.model';
+import { WorkspaceService } from '../../common/workspace.service';
+import { TravelPerkOnboardingStepperMap } from '../../../models/travelperk/travelperk-configuration/travelperk-onboarding.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({

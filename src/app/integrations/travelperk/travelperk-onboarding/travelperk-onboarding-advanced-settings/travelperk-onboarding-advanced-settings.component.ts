@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { TravelperkOnboardingService } from 'src/app/core/services/travelperk/travelperk-onboarding.service';
+import { TravelperkOnboardingService } from 'src/app/core/services/travelperk/travelperk-configuration/travelperk-onboarding.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
