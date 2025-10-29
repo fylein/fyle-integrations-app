@@ -7,7 +7,7 @@ import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable'
 import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sage300ConnectorModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-connector.model';
-import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
+import { Sage300MappingService } from '../sage300-core/sage300-mapping.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from '../../common/workspace.service';

@@ -5,7 +5,7 @@ import { ButtonSize, ButtonType, ClickEvent, Page, PaginatorPage, QBDAccountingE
 import { QBDAccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
-import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
+import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-core/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';

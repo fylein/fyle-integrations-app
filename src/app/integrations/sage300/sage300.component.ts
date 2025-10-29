@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
-import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
+import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-core/sage300-mapping.service';
 
 @Component({
   selector: 'app-sage300',

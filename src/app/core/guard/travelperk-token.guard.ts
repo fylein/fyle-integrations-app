@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
-import { TravelperkService } from '../services/travelperk/travelperk.service';
+import { TravelperkService } from '../services/travelperk/travelperk-core/travelperk.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { IntegrationsToastService } from '../services/common/integrations-toast.service';
 import { TravelPerkOnboardingState, ToastSeverity } from '../models/enum/enum.model';

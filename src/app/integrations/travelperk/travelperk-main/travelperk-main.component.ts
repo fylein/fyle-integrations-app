@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({

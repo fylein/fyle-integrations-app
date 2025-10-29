@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { MappingService } from '../common/mapping.service';
+import { MappingService } from '../../common/mapping.service';
 import { Observable } from 'rxjs';
-import { DestinationAttributeStats, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
-import { AppName, Sage50AttributeType } from '../../models/enum/enum.model';
+import { DestinationAttributeStats, PaginatedDestinationAttribute } from '../../../models/db/destination-attribute.model';
+import { AppName, Sage50AttributeType } from '../../../models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UtravelperkUadvancedUsettingsService } from './travelperk-advanced-settings.service';
+import { Sage50MappingService } from './sage50-mapping.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UtravelperkUadvancedUsettingsService', () => {
-  let service: UtravelperkUadvancedUsettingsService;
+describe('Sage50MappingService', () => {
+  let service: Sage50MappingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UtravelperkUadvancedUsettingsService,
+        Sage50MappingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UtravelperkUadvancedUsettingsService);
+    service = TestBed.inject(Sage50MappingService);
   });
 
   it('should be created', () => {
