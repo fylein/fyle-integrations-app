@@ -79,7 +79,7 @@ export class IntegrationsComponent implements OnInit {
         this.org = org;
         this.storageService.set('orgId', this.org.id);
         this.storageService.set('org', this.org);
-        if (this.org.is_org_rebranded && !this.storageService.get('is_org_rebranded')) {
+        if (this.org.is_org_rebranded && !this.storageService.get('is_org_rebranded') && this.brandingService.brandingConfig.brandId === 'fyle') {
           this.storageService.set('is_org_rebranded', true);
           this.setOrgRebranded();
         } else if (!this.org.is_org_rebranded){
