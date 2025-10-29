@@ -63,6 +63,7 @@ export class Sage50MainComponent implements OnInit {
   refreshDimensions() {
     globalCacheBusterNotifier.next();
     this.accountingExportService.importExpensesFromFyle('v3').subscribe();
+    this.workspaceService.importFyleAttributes(true).subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50Main.syncDataDimensionsToast', { appName: AppName.SAGE50 }));
   }
 }
