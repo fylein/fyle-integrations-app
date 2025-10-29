@@ -23,8 +23,8 @@ export class CsvJsonTranslatorService {
         throw new CSVError('FILE_IS_NOT_CSV', `File ${file.name} is not a CSV file`);
       }
 
-      if (file.size > 20_000_000) {
-        observer.error(new CSVError('FILE_SIZE_EXCEEDED', `File size exceeded: ${file.size} > 20000000`));
+      if (file.size > 15_000_000) {
+        observer.error(new CSVError('FILE_SIZE_EXCEEDED', `File size exceeded: ${file.size} > 15000000`));
         return;
       }
 
