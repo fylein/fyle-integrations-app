@@ -108,7 +108,7 @@ export class ExportLogService {
 
   }
 
-  getExportData(fileId: string): Observable<{ download_url: string }> {
+  getExportData(fileId: string): Observable<any[]> {
     return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/export_logs/export_data/`, {
       file_id: fileId
     });
