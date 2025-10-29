@@ -23,7 +23,7 @@ import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-
 import { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-core/business-central-mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({

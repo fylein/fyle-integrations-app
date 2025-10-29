@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WorkspaceService } from '../../common/workspace.service';
-import { Sage300MappingService } from '../sage300-mapping/sage300-mapping.service';
+import { Sage300MappingService } from './sage300-mapping.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';

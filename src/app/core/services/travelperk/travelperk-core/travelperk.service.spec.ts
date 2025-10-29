@@ -1,8 +1,8 @@
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
-import { OrgService } from '../org/org.service';
-import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData, travelperkConfigurationMockData } from './travelperk.fixture';
+import { OrgService } from '../../org/org.service';
+import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData, travelperkConfigurationMockData } from '../travelperk.fixture';
 
 import { TravelperkService } from './travelperk.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
