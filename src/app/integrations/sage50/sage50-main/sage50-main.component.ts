@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterOutlet } from '@angular/router';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50CCCExportType, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
-import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-core/sage50-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';

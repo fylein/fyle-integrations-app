@@ -1,9 +1,9 @@
   import { Injectable } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { SelectFormOption, SelectFormLabel } from "src/app/core/models/common/select-form-option.model";
-import { TravelPerkExpenseGroup } from "../../models/enum/enum.model";
-import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost, TravelperkAdvancedSettingArray, TravelperkAdvancedSettingFormArray, TravelperkCategoryMapping } from "../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
-import { TravelperkDestinationAttribuite } from "../../models/travelperk/travelperk.model";
+import { TravelPerkExpenseGroup } from "../../../models/enum/enum.model";
+import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost, TravelperkAdvancedSettingArray, TravelperkAdvancedSettingFormArray, TravelperkCategoryMapping } from "../../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
+import { TravelperkDestinationAttribuite } from "../../../models/travelperk/travelperk.model";
 import { TranslocoService } from "@jsverse/transloco";
 
 @Injectable({

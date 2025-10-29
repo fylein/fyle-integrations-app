@@ -7,13 +7,13 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { travelperkDestinationAttribute } from '../travelperk.fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TranslocoService } from '@jsverse/transloco';
-import { TravelperkAdvancedSettingsService } from 'src/app/core/services/travelperk/travelperk-advanced-settings.service';
+import { TravelperkAdvancedSettingsService } from 'src/app/core/services/travelperk/travelperk-configuration/travelperk-advanced-settings.service';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',

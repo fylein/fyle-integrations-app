@@ -11,7 +11,7 @@ import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage
 import { forkJoin, startWith } from 'rxjs';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Router } from '@angular/router';
-import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-core/sage50-mapping.service';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { CSVImportSourceFieldOption } from 'src/app/core/models/misc/configuration-csv-import-field.model';
