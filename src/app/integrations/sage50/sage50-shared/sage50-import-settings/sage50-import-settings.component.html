@@ -40,7 +40,12 @@
                         [options]="importableCOAOptions"
                         [placeholder]="'sage50ImportSettings.accountTypesPlaceholder' | transloco"
                         [formControlName]="'accountTypes'"
-                    ></p-multiSelect>
+                    >
+                        <!-- Show the items' values (without counts), not labels -->
+                        <ng-template let-selectedItems pTemplate="selectedItems">
+                            {{ selectedItems?.join(', ') }}
+                        </ng-template>
+                    </p-multiSelect>
                 </app-configuration-field-container>
             </ng-container>
         </app-configuration-csv-import-field>

@@ -43,8 +43,6 @@ export class Sage50MainComponent implements OnInit {
       {label: this.translocoService.translate('sage50Main.configuration'), routerLink: '/integrations/sage50/main/configuration'}
     ];
 
-    this.workspaceService.importFyleAttributes(false).subscribe();
-
     this.exportSettingsService.getExportSettings().subscribe((exportSettings) => {
       const hasMappings = exportSettings?.reimbursable_expense_export_type === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY ||
                           exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
