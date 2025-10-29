@@ -2400,7 +2400,10 @@
     },
     "exportLog": {
       "cccType": "Corporate card",
-      "reimbursableType": "Reimbursable"
+      "reimbursableType": "Reimbursable",
+      "generalJournalEntryDisplayName": "GENERAL_JOURNAL_ENTRY",
+      "purchasesDisplayName": "PURCHASES",
+      "paymentsDisplayName": "PAYMENTS"
     }
   },
   "pipes": {
