@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 import { SelectedDateFilter } from '../../models/qbd/misc/qbd-date-filter.model';
 import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../models/db/expense-group.model';
 import { convertDateRangeToAPIFormat } from '../../util/dateRangeConverter';
-import { downloadCSVFile } from '../../util/downloadFile';
-import { HttpClient } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { CsvExportLogItem } from '../../models/db/csv-export-log.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { CsvJsonTranslatorService } from './csv-json-translator.service';
+import { downloadCSVFile } from '../../util/downloadFile';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class ExportLogService {
     private apiService: ApiService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private http: HttpClient,
     private helper: HelperService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private csvJsonTranslatorService: CsvJsonTranslatorService
   ) { }
 
   getSkippedExpenses(limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, query?: string | null, appName?:string): Observable<SkipExportLogResponse> {
@@ -108,15 +108,9 @@ export class ExportLogService {
 
   }
 
-  getDownloadUrl(fileId: string): Observable<{ download_url: string }> {
-    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/export_logs/download_url/`, {
+  getExportData(fileId: string): Observable<{ download_url: string }> {
+    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/export_logs/export_data/`, {
       file_id: fileId
-    });
-  }
-
-  renameAndDownloadFile(fileUrl: string, newFileName: string): void {
-    this.http.get(fileUrl, { responseType: 'text' }).subscribe((fileContent: string) => {
-      downloadCSVFile(fileContent, newFileName);
     });
   }
 
@@ -150,15 +144,23 @@ export class ExportLogService {
     if (!exportLog.exported_at || !exportLog.type) {
       return '';
     }
+
     const exportedDate = new Date(exportLog.exported_at);
     if (!exportedDate.getTime()) {
       console.error('Invalid date in exported_at field:', exportLog.exported_at);
       return '';
     }
+
+    const exportTypeDisplayNames: Record<typeof exportLog.type, string> = {
+      'GENERAL_JOURNAL_ENTRY': this.translocoService.translate('services.exportLog.generalJournalEntryDisplayName'),
+      'PURCHASES_RECEIVE_INVENTORY': this.translocoService.translate('services.exportLog.purchasesDisplayName'),
+      'PAYMENTS_JOURNAL': this.translocoService.translate('services.exportLog.paymentsDisplayName')
+    };
+
     const year = exportedDate.getFullYear().toString().padStart(4, '0');
     const month = (exportedDate.getMonth() + 1).toString().padStart(2, '0');
     const day = exportedDate.getDate().toString().padStart(2, '0');
-    return `${year}_${month}_${day}_${exportLog.type}.CSV`;
+    return `${year}_${month}_${day}_${exportTypeDisplayNames[exportLog.type]}.CSV`;
   }
 
   downloadFile(exportLog: CsvExportLogItem): void {
@@ -166,8 +168,9 @@ export class ExportLogService {
       return;
     }
     const fileName = this.constructFileName(exportLog);
-    this.getDownloadUrl(exportLog.file_id).subscribe((response) => {
-      this.renameAndDownloadFile(response.download_url, fileName);
+    this.getExportData(exportLog.file_id).subscribe((exportData) => {
+      const csvData = this.csvJsonTranslatorService.jsonToCsv(exportData);
+      downloadCSVFile(csvData, fileName);
     });
   }
 }
