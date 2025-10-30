@@ -114,7 +114,9 @@
 
             <div class="tw-flex tw-flex-col tw-gap-[16px]">
                 @if (infoText) {
-                    <app-alert [type]="'info'" [message]="infoText"></app-alert>
+                    <app-alert [type]="'info'" [variant]="'subtle'">
+                        <p>{{ infoText }}</p>
+                    </app-alert>
                 }
                 <app-uploaded-file-details
                     [file]="uploadedFile"

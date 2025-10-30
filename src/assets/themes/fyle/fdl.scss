@@ -59,7 +59,7 @@
 
     //_contextual bg
     --bg-success: #{$green-500};
-    --bg-info: #{$blue-500};
+    --bg-info: #{$semantic-info-500};
     --bg-warning: #{$yellow-500};
     --bg-danger: #{$red-500};
     --bg-danger-dark: #{$red-600};
@@ -88,8 +88,9 @@
     --border-primary: #{$grey-700};
     --border-secondary: #{$grey-300};
     --border-tertiary: #{$grey-50};
+    --border-subtle: #{$grey-350};
 
-    --border-info: #{$blue-500};
+    --border-info: #{$semantic-info-500};
     --border-warning: #{$yellow-500};
     --border-success: #{$green-500};
     --border-danger: #{$red-500};
@@ -147,7 +148,7 @@
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
     --text-toast-color: #{$grey-90};
-    --text-red: #{$red-650};
+    --text-red: #{$red-600};
 
     //link
     --link-primary: #{$green-700};
@@ -356,7 +357,7 @@
 
     --toast-success-bg: #{$green-950};
 
-    --toast-error: #{$red-650};
+    --toast-error: #{$red-600};
 
     --toast-info-bg: #{$slate-500};
 
@@ -511,6 +512,7 @@
 
     // Semantics colors - UI semantic colors denote standard states. Each color has the same meaning in all contexts.
     --semantic-focus-500: #{$semantic-focus-500};
+    --semantic-info-500: #{$semantic-info-500};
 
     // Loader colors
     --loader-neutral: #{$brand-500};

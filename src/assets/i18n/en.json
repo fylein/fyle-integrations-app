@@ -2587,7 +2587,8 @@
     "reBrandedName": "Sage Expense Management"
   },
   "alert": {
-    "infoIconAlt": "Info icon"
+    "infoIconAlt": "Info icon",
+    "dangerIconAlt": "Danger icon"
   },
   "sage50AdvancedSettings": {
     "headerText": "Advanced settings",
