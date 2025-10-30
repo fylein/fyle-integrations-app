@@ -1,5 +1,5 @@
 <div>
-    <p-dialog [showHeader]="false" [modal]="true" [(visible)]="isWarningVisible" [draggable]="false" [style]="{width: '468px'}">
+    <p-dialog [showHeader]="false" [modal]="true" [(visible)]="isWarningVisible" [draggable]="false" [style]="{width: dialogWidth}">
         <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
                 <div class="tw-flex tw-items-center">
@@ -36,8 +36,8 @@
         </div>
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
             <div class="tw-mr-16-px">
-                @if (showSecondaryCTA || true) {
-                <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(true)"></app-button>
+                @if (showSecondaryCTA) {
+                <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(false)"></app-button>
                 }
             </div>
             <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-button>

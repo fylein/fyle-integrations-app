@@ -1,3 +1,13 @@
 :host ::ng-deep .p-button {
     @apply tw-w-fit #{!important};
 }
+
+[data-theme='fyle'] {
+    :host ::ng-deep .p-dialog {
+        @apply tw-rounded-8-px #{!important};
+    }
+
+    :host ::ng-deep .pi-times {
+        @apply tw-w-20-px tw-h-20-px tw-text-icon-secondary #{!important};
+    }
+}

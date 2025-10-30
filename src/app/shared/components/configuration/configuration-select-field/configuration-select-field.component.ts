@@ -88,6 +88,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
+  @Output() dropdownChange: EventEmitter<{event: any, formControllerName: string}> = new EventEmitter<{event: any, formControllerName: string}>();
+
   exportTypeIconPath: string;
 
   uiExposedAppName: string;
@@ -203,5 +205,13 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
     this.optionsCopy = this.destinationAttributes;
     this.destinationAttributes = [...this.optionsCopy];
     }
+  }
+
+  onDropdownChange(event: any): void {
+    // Emit the change event to parent component for handling
+    this.dropdownChange.emit({
+      event,
+      formControllerName: this.formControllerName
+    });
   }
 }

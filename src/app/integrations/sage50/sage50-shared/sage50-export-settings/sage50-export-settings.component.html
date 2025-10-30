@@ -37,6 +37,7 @@
                 [isFieldMandatory]="true"
                 [appName]="appName"
                 [iconPath]="'list'"
+                (dropdownChange)="onExportTypeDropdownChange($event)"
             ></app-configuration-select-field>
 
 
@@ -154,6 +155,7 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    (dropdownChange)="onExportTypeDropdownChange($event)"
                 ></app-configuration-select-field>
             @if (showField('cccDefaultCreditLineAccount')) {
                 <app-configuration-select-field
@@ -327,3 +329,15 @@
     (closeDialog)="closePaymentMethodPreviewDialog()"
     [header]="'sage50ExportSettings.paymentMethodPreviewHeader' | transloco"
 ></app-preview-dialog>
+
+<!-- Purchases/Payments export warning dialog -->
+<app-configuration-confirmation-dialog
+    (warningAccepted)="acceptPurchasesExportWarning($event)"
+    [isWarningVisible]="showPurchasesExportWarning"
+    [headerText]="'sage50ExportSettings.purchasesExportWarningHeader' | transloco"
+    [contextText]="'sage50ExportSettings.purchasesExportWarningContext' | transloco: { brandName: brandingConfig.brandName, exportType: selectedExportTypeName }"
+    [confirmBtnText]="'sage50ExportSettings.purchasesExportWarningConfirmButton' | transloco"
+    [appName]="appName"
+    [dialogWidth]="'770px'"
+    [event]="ConfigurationWarningEvent.SAGE50_PURCHASES_EXPORT_TYPE">
+</app-configuration-confirmation-dialog>

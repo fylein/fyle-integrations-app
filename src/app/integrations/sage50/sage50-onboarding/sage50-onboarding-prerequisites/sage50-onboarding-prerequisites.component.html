@@ -44,3 +44,14 @@
         ></app-configuration-step-footer>
     </div>
 }
+<div>
+    <app-configuration-confirmation-dialog
+        (warningAccepted)="acceptVendorUploadWarning($event)"
+        [isWarningVisible]="showVendorUploadWarning"
+        [headerText]="'sage50OnboardingPrerequisites.warningHeader' | transloco"
+        [contextText]="'sage50OnboardingPrerequisites.warningContext' | transloco"
+        [confirmBtnText]="'sage50OnboardingPrerequisites.skipAndContinue' | transloco"
+        [appName]="AppName.SAGE50"
+        [event]="ConfigurationWarningEvent.SAGE50_SKIP_VENDOR_UPLOAD">
+    </app-configuration-confirmation-dialog>
+</div>
