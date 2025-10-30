@@ -48,8 +48,6 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
-  isVendorMandatory: boolean;
-
   isSaveInProgress: boolean;
 
   // State
@@ -270,9 +268,6 @@ export class Sage50ImportSettingsComponent implements OnInit {
     ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
 
       this.importableChartOfAccounts = importableChartOfAccounts ?? null;
-
-      // If payments or purchases are being exported, vendor is mandatory
-      this.isVendorMandatory = this.importSettingService.isVendorMandatory(exportSettings);
 
       this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
 

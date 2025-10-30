@@ -109,26 +109,24 @@
                     [appName]="appName"
                     [iconPath]="'list'"
                 ></app-configuration-select-field>
-            </div>
-        }
 
-        @if (showField('reimbursableExportDate')) {
-            <div class="tw-border tw-border-separator tw-rounded-10-px">
-                <app-configuration-select-field
-                    [form]="exportSettingsForm"
-                    [label]="'sage50ExportSettings.reimbursableExportDateLabel' | transloco"
-                    [subLabel]="'sage50ExportSettings.reimbursableExportDateSubLabel' | transloco: {
-                        selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
-                        brandName: brandingConfig.brandName
-                    }"
-                    [formControllerName]="'reimbursableExportDate'"
-                    [options]="reimbursableDateOptions"
-                    [isFieldMandatory]="true"
-                    [appName]="appName"
-                    [iconPath]="'list'"
-                    [isDisabled]="true"
-                    [disabledText]="'sage50ExportSettings.reimbursableExportDateDisabledText' | transloco"
-                ></app-configuration-select-field>
+                @if (showField('reimbursableExportDate')) {
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [label]="'sage50ExportSettings.reimbursableExportDateLabel' | transloco"
+                        [subLabel]="'sage50ExportSettings.reimbursableExportDateSubLabel' | transloco: {
+                            selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
+                            brandName: brandingConfig.brandName
+                        }"
+                        [formControllerName]="'reimbursableExportDate'"
+                        [options]="reimbursableDateOptions"
+                        [isFieldMandatory]="true"
+                        [appName]="appName"
+                        [iconPath]="'list'"
+                        [isDisabled]="true"
+                        [disabledText]="'sage50ExportSettings.reimbursableExportDateDisabledText' | transloco"
+                    ></app-configuration-select-field>
+                }
             </div>
         }
 
@@ -294,26 +292,21 @@
                     [iconPath]="'list'"
                     [isDisabled]="!isCCCExportGroupEditable"
                 ></app-configuration-select-field>
-            </div>
-        }
 
-        @if (showField('cccExportDate')) {
-            <div class="tw-border tw-border-separator tw-rounded-10-px">
-                <app-configuration-select-field
-                    [form]="exportSettingsForm"
-                    [label]="'sage50ExportSettings.cccExportDateLabel' | transloco"
-                    [subLabel]="'sage50ExportSettings.cccExportDateSubLabel' | transloco: {
-                        selectedDateOption: getSelectedLabel('cccExportDate') ?? 'date',
-                        brandName: brandingConfig.brandName
-                    }"
-                    [formControllerName]="'cccExportDate'"
-                    [options]="cccExpenseDateOptions"
-                    [isFieldMandatory]="true"
-                    [appName]="appName"
-                    [iconPath]="'list'"
-                    [isDisabled]="isCCCExportDateDisabled"
-                    [disabledText]="'sage50ExportSettings.cccExportDateDisabledText' | transloco"
-                ></app-configuration-select-field>
+                @if (showField('cccExportDate')) {
+                    <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [label]="'sage50ExportSettings.cccExportDateLabel' | transloco"
+                        [subLabel]="cccExportDateSubLabel"
+                        [formControllerName]="'cccExportDate'"
+                        [options]="cccExpenseDateOptions"
+                        [isFieldMandatory]="true"
+                        [appName]="appName"
+                        [iconPath]="'list'"
+                        [isDisabled]="isCCCExportDateDisabled"
+                        [disabledText]="'sage50ExportSettings.cccExportDateDisabledText' | transloco"
+                    ></app-configuration-select-field>
+                }
             </div>
         }
     </form>
