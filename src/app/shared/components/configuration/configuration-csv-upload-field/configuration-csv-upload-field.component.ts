@@ -1,13 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { ButtonSize, ButtonType, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
+import { ButtonSize, ButtonType, ClickEvent, Sage50AttributeType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-configuration-csv-upload-field',
@@ -45,10 +46,12 @@ export class ConfigurationCsvUploadFieldComponent {
 
   constructor(
     public dialogService: DialogService,
-    public translocoService: TranslocoService
+    public translocoService: TranslocoService,
+    private trackingService: TrackingService
   ) { }
 
   handleUploadClick() {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.UPLOAD_CSV, {field: this.attributeType});
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
       showHeader: false,
       data: {

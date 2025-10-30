@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { integrationCallbackUrlMap, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -61,6 +61,20 @@ export class LandingV2Component implements OnInit {
   readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
 
   readonly ThemeOption = ThemeOption;
+
+  private readonly trackingInAppIntegrationMap = {
+    [InAppIntegration.QBD]: TrackingApp.QBD,
+    [InAppIntegration.QBD_DIRECT]: TrackingApp.QBD_DIRECT,
+    [InAppIntegration.SAGE300]: TrackingApp.SAGE300,
+    [InAppIntegration.SAGE50]: TrackingApp.SAGE50,
+    [InAppIntegration.BUSINESS_CENTRAL]: TrackingApp.BUSINESS_CENTRAL,
+    [InAppIntegration.TRAVELPERK]: TrackingApp.TRAVELPERK,
+    [InAppIntegration.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
+    [InAppIntegration.INTACCT]: TrackingApp.INTACCT,
+    [InAppIntegration.NETSUITE]: TrackingApp.NETSUITE,
+    [InAppIntegration.XERO]: TrackingApp.XERO,
+    [InAppIntegration.QBO]: TrackingApp.QBO,
+  }
 
   constructor(
     private eventsService: EventsService,
@@ -138,6 +152,7 @@ export class LandingV2Component implements OnInit {
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
+    this.trackingService.onClickEvent(this.trackingInAppIntegrationMap[inAppIntegration], ClickEvent.OPEN_INTEGRATION);
     this.router.navigate([this.integrationService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 

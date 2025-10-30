@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, Sage50AttributeType, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, ProgressPhase, Sage50AttributeType, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { Sage50FyleField as Sage50FyleFieldGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-mapping.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -91,7 +92,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private router: Router,
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private trackingService: TrackingService
   ) { }
 
   public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
@@ -137,14 +139,21 @@ export class Sage50ImportSettingsComponent implements OnInit {
   public onSave() {
     this.isSaveInProgress = true;
     this.importSettingService.constructPayloadAndPost(this.importSettingsForm).subscribe({
-      next: () => {
+      next: (response: void) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(
           ToastSeverity.SUCCESS, this.translocoService.translate('sage50ImportSettings.importSettingsSavedSuccess')
         );
         if (this.isOnboarding) {
+          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.IMPORT_SETTINGS, 3, response);
           this.workspaceService.setOnboardingState(Sage50OnboardingState.ADVANCED_SETTINGS);
           this.router.navigate(['/integrations/sage50/onboarding/advanced_settings']);
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.IMPORT_SETTINGS, {
+            phase: ProgressPhase.POST_ONBOARDING,
+            oldState: this.importSettingsForm.value,
+            newState: this.importSettingsForm.value
+          });
         }
       },
       error: () => {

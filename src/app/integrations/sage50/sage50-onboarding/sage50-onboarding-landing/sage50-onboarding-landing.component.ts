@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, Sage50OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, Sage50OnboardingState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -23,10 +24,12 @@ export class Sage50OnboardingLandingComponent {
 
   constructor(
     private workspaceService: WorkspaceService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
+    private trackingService: TrackingService
   ) {}
 
   handleConnectButtonClick() {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.CONNECT_INTEGRATION);
     this.workspaceService.updateWorkspaceOnboardingState({
       onboarding_state: Sage50OnboardingState.PRE_REQUISITES
     }).subscribe();

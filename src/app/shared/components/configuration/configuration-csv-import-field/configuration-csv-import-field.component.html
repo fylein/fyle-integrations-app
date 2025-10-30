@@ -19,7 +19,7 @@
             </h3>
             <h5 class="tw-text-text-tertiary tw-text-14-px tw-font-400 tw-pt-4-px">
                 {{ subLabel }}
-                <a (click)="showPreviewDialog = true" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
+                <a (click)="handlePreviewDialog()" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
                 <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
             </h5>
         </div>

@@ -7,7 +7,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -19,6 +19,7 @@ import { CsvExpensesTableComponent } from "../csv-expenses-table/csv-expenses-ta
 import { CsvExportLogDialogComponent } from "../csv-export-log-dialog/csv-export-log-dialog.component";
 import { ExpenseDetails } from 'src/app/core/models/db/expense-details.model';
 import { CsvExportLogItem } from 'src/app/core/models/db/csv-export-log.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class CsvExportLogComponent implements OnInit {
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
     private translocoService: TranslocoService,
-    private userService: UserService
+    private userService: UserService,
+    private trackingService: TrackingService
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.searchQuerySubject.pipe(
@@ -105,6 +107,7 @@ export class CsvExportLogComponent implements OnInit {
   }
 
   downloadFile(exportLog: CsvExportLogItem) {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_CSV, {fileName: exportLog.file_name, fileId: exportLog.file_id, view: 'Export Log list view'});
     this.exportLogService.downloadFile(exportLog);
   }
 
