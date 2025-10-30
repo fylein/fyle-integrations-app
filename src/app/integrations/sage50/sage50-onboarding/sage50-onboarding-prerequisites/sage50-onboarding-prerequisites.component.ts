@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Sage50OnboardingService } from 'src/app/core/services/sage50/sage50-configuration/sage50-onboarding.service';
 import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
-import { AppName, Sage50AttributeType, Sage50OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationWarningEvent, Sage50AttributeType, Sage50OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { Router } from '@angular/router';
 import { ConfigurationCsvUploadFieldComponent } from "src/app/shared/components/configuration/configuration-csv-upload-field/configuration-csv-upload-field.component";
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-sage50-onboarding-prerequisites',
@@ -39,6 +40,10 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
 
   readonly Sage50AttributeType = Sage50AttributeType;
 
+  readonly ConfigurationWarningEvent = ConfigurationWarningEvent;
+
+  showVendorUploadWarning: boolean = false;
+
   constructor(
     private onboardingService: Sage50OnboardingService,
     private workspaceService: WorkspaceService,
@@ -51,6 +56,21 @@ export class Sage50OnboardingPrerequisitesComponent implements OnInit {
   }
 
   continueToNextStep() {
+    if (!this.fileNames.VENDOR) {
+      this.showVendorUploadWarning = true;
+      return;
+    }
+    this.proceedToNextStep();
+  }
+
+  acceptVendorUploadWarning(data: ConfigurationWarningOut): void {
+    this.showVendorUploadWarning = false;
+    if (data.hasAccepted) {
+      this.proceedToNextStep();
+    }
+  }
+
+  private proceedToNextStep(): void {
     this.workspaceService.updateWorkspaceOnboardingState({
       onboarding_state: Sage50OnboardingState.EXPORT_SETTINGS
     }).subscribe();

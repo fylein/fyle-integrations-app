@@ -85,7 +85,8 @@
                         'selectedItem': form.controls[formControllerName].value && !isMultiLineOption,
                         'filterDropdown': !form.controls[formControllerName].value,
                         'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
-                    }" [disabled]="isDisabled">
+                    }" [disabled]="isDisabled"
+                    (onChange)="onDropdownChange($event)">
 
                     <ng-template let-option pTemplate="item">
                         <div #textElement
