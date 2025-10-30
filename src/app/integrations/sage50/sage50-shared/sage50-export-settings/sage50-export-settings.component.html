@@ -265,9 +265,7 @@
                 <app-configuration-select-field
                     [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExpenseStateLabel' | transloco"
-                    [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco: {
-                        brandName: brandingConfig.brandName
-                    }"
+                    [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco"
                     [formControllerName]="'cccExpenseState'"
                     [options]="cccExpenseStates"
                     [placeholder]="'sage50ExportSettings.cccExpenseStatePlaceholder' | transloco"
