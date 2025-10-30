@@ -1958,7 +1958,7 @@
     "categoryHRMS": "HRMS",
     "travelperk": "TravelPerk",
     "categoryTravel": "Travel",
-    "sage50": "Sage 50 Accounting (US)",
+    "sage50": "Sage 50 (US)",
     "beta": "Beta"
   },
   "configurationScheduleExport": {
@@ -2400,7 +2400,10 @@
     },
     "exportLog": {
       "cccType": "Corporate card",
-      "reimbursableType": "Reimbursable"
+      "reimbursableType": "Reimbursable",
+      "generalJournalEntryDisplayName": "GENERAL_JOURNAL_ENTRY",
+      "purchasesDisplayName": "PURCHASES",
+      "paymentsDisplayName": "PAYMENTS"
     }
   },
   "pipes": {
@@ -2439,7 +2442,7 @@
   "csvUploadDialog": {
     "header": "Upload CSV for {{dimension}}",
     "instructionsHeader": "Upload CSV or drag & drop your file",
-    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here",
+    "instructionsContent": "Download the .csv for {{dimension}} from Sage 50 and upload here. Sage 50's default export format is supported.",
     "errorHeader": "Error found in CSV for {{dimension}}",
     "errorInstructionsHeader": "How do I correct the errors?",
     "errorInstructionsContent": "Download the error log & upload the .csv again after fixing the errors",
@@ -2452,10 +2455,13 @@
     "fileIsNotCsv": "You tried to upload a file with wrong format. Please upload a csv file.",
     "onlyOneCsvAllowed": "You can only upload one csv file at a time.",
     "rowLimitExceeded": "The file exceeds the permitted row limit of 20,000.",
+    "fileSizeExceeded": "The file exceeds the permitted size of 15MB.",
     "invalidCsvFile": "The CSV file is invalid.",
     "errorDialogButtonText": "Okay",
     "uploadSuccess": "{{dimension}} uploaded successfully.",
-    "uploadError": "An unexpected error occurred. Please try again."
+    "uploadError": "An unexpected error occurred. Please try again.",
+    "fileRequirements": "File requirements:",
+    "fileRequirementsContent": "CSV files only | Maximum 20,000 rows"
   },
   "sage50ExportSettings": {
     "headerText": "Export settings",
@@ -2493,7 +2499,8 @@
     "cccExportGroupSubLabel": "Choose whether to export each expense as an individual record (Expense) or group all expenses in a report into one record with line items (Expense Report).",
     "cccExportGroupPlaceholder": "Select grouping method",
     "cccExportDateLabel": "Posting date",
-    "cccExportDateSubLabel": "Expenses will be posted in Sage 50 with the {{selectedDateOption}} from {{brandName}}. This is automatically set based on your grouping selection.",
+    "cccExportDateFixedSubLabel": "Expenses will be posted in Sage 50 with the {{selectedDateOption}} from {{brandName}}. This is automatically set based on your grouping selection.",
+    "cccExportDateEditableSubLabel": "Select the date to use when posting expenses to Sage 50. Use 'Card transaction post date' for accurate reconciliation, or 'Spend date' if you prefer posting with the original spend date.",
     "cccExportDateDisabledText": "Change grouping method to use different date",
     "cccDefaultAccountPayableAccountLabel": "Default accounts payable account",
     "cccDefaultAccountPayableAccountSubLabel": "Select the accounts payable account where invoices should be posted.",

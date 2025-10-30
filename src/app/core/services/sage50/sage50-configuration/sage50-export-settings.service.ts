@@ -144,22 +144,30 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     return array?.find(item => item.id === id) || null;
   }
 
-  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, isReimbursableEnabled: boolean, isCCCEnabled: boolean): FormGroup<Sage50ExportSettingsForm> {
-    let reimbursableExpenses: boolean;
-    let cccExpenses: boolean;
+  getEnabledExportTypes(
+    apiResponse: Sage50ExportSettingsGet | null,
+    isReimbursableEnabled: boolean,
+    isCCCEnabled: boolean
+  ): { reimbursableExpenses: boolean, cccExpenses: boolean } {
 
-    if (isReimbursableEnabled) {
-      // If reimbursable is enabled, set the toggle to the value from the API response
-      // If unset, default to true
-      reimbursableExpenses = apiResponse ? !!apiResponse.reimbursable_expense_export_type : true;
-    } else {
-      reimbursableExpenses = false;
+    // If only one payment mode is enabled, enable that section and disable the other
+    // This will hide toggles and show settings for the enabled payment mode only
+    if (isReimbursableEnabled && !isCCCEnabled) {
+      return { reimbursableExpenses: true, cccExpenses: false };
     }
-    if (isCCCEnabled) {
-      cccExpenses = apiResponse ? !!apiResponse.credit_card_expense_export_type : true;
-    } else {
-      cccExpenses = false;
+    if (!isReimbursableEnabled && isCCCEnabled) {
+      return { reimbursableExpenses: false, cccExpenses: true };
     }
+    // If both/neither payment modes are enabled, set the toggles to the value from the API response
+    // If unset, default to true (for onboarding, when apiResponse doesn't exist yet)
+    return {
+      reimbursableExpenses: apiResponse ? !!apiResponse.reimbursable_expense_export_type : true,
+      cccExpenses: apiResponse ? !!apiResponse.credit_card_expense_export_type : true
+    };
+  }
+
+  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, isReimbursableEnabled: boolean, isCCCEnabled: boolean): FormGroup<Sage50ExportSettingsForm> {
+    const { reimbursableExpenses, cccExpenses } = this.getEnabledExportTypes(apiResponse, isReimbursableEnabled, isCCCEnabled);
 
     return new FormGroup<Sage50ExportSettingsForm>({
       reimbursableExpenses: new FormControl(reimbursableExpenses, { nonNullable: true }),

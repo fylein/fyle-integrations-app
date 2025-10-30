@@ -25,6 +25,10 @@ export class OnboardingSteppersComponent implements OnInit {
     private router: Router
   ) { }
 
+  getViewBox(onboardingStep: OnboardingStepper) {
+    return onboardingStep.icon === 'upload' ? '0 0 16 16' : '';
+  }
+
   shouldDisableConfigurationSteps(index: number): boolean {
     return ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) || ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted);
   }
