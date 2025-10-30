@@ -29,6 +29,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() dialogWidth: string = '468px';
+
   @Output() warningAccepted = new EventEmitter<ConfigurationWarningOut>();
 
   readonly brandingConfig = brandingConfig;

@@ -332,7 +332,7 @@
     [header]="'sage50ExportSettings.paymentMethodPreviewHeader' | transloco"
 ></app-preview-dialog>
 
-<!-- Purchases export warning dialog -->
+<!-- Purchases/Payments export warning dialog -->
 <app-configuration-confirmation-dialog
     (warningAccepted)="acceptPurchasesExportWarning($event)"
     [isWarningVisible]="showPurchasesExportWarning"
@@ -340,5 +340,6 @@
     [contextText]="'sage50ExportSettings.purchasesExportWarningContext' | transloco: { brandName: brandingConfig.brandName, exportType: selectedExportTypeName }"
     [confirmBtnText]="'sage50ExportSettings.purchasesExportWarningConfirmButton' | transloco"
     [appName]="appName"
+    [dialogWidth]="'770px'"
     [event]="ConfigurationWarningEvent.SAGE50_PURCHASES_EXPORT_TYPE">
 </app-configuration-confirmation-dialog>
