@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingKbArticles, brandingStyle, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, Sage50AttributeType, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
@@ -18,11 +18,16 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { Sage50Workspace } from 'src/app/core/models/sage50/db/sage50-workspace.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
+import { CsvUploadDialogComponent } from 'src/app/shared/components/dialog/csv-upload-dialog/csv-upload-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 
 @Component({
   selector: 'app-sage50-export-settings',
   standalone: true,
   imports: [SharedModule, CommonModule],
+  providers: [DialogService],
   templateUrl: './sage50-export-settings.component.html',
   styleUrl: './sage50-export-settings.component.scss'
 })
@@ -37,7 +42,13 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingKbArticles = brandingKbArticles;
+
+  readonly brandingDemoVideoLinks = brandingDemoVideoLinks;
+
   readonly Sage50ExportSettingDestinationOptionKey = Sage50ExportSettingDestinationOptionKey;
+
+  readonly Sage50AttributeType = Sage50AttributeType;
 
   readonly ConfigurationCtaText = ConfigurationCta;
 
@@ -91,6 +102,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   selectedExportTypeName: string;
 
+  vendorUploadDialogRef?: DynamicDialogRef;
+
   // Track the last known good values to prevent race conditions
   private lastReimbursableExportType: Sage50ReimbursableExportType | null = null;
 
@@ -129,7 +142,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
     private workspaceService: WorkspaceService,
-    private userService: IntegrationsUserService
+    private userService: IntegrationsUserService,
+    private sage50ImportAttributesService: Sage50ImportAttributesService,
+    private dialogService: DialogService
   ) { }
 
   onSave(): void {
@@ -237,6 +252,37 @@ export class Sage50ExportSettingsComponent implements OnInit {
     this.showPurchasesExportWarning = false;
 
     if (data.hasAccepted && this.pendingExportChange) {
+      this.openVendorUploadDialog();
+    } else {
+      this.pendingExportChange = null;
+    }
+  }
+
+  private openVendorUploadDialog(): void {
+    this.vendorUploadDialogRef = this.dialogService.open(CsvUploadDialogComponent, {
+      showHeader: false,
+      data: {
+        attributeType: Sage50AttributeType.VENDOR,
+        articleLink: this.brandingKbArticles.postOnboardingArticles.SAGE50.VENDOR,
+        uploadData: this.uploadVendorData.bind(this),
+        videoURL: this.brandingDemoVideoLinks.postOnboarding.SAGE50.VENDOR
+      }
+    });
+
+    this.vendorUploadDialogRef.onClose.subscribe((file: UploadedCSVFile | undefined) => {
+      if (file?.name) {
+        this.applyPendingExportTypeChange();
+        this.mappingService.getVendors().subscribe((vendors) => {
+          this.vendors = vendors.results;
+        });
+      }
+
+      this.pendingExportChange = null;
+    });
+  }
+
+  private applyPendingExportTypeChange(): void {
+    if (this.pendingExportChange) {
       const { expenseType, newValue: selectedExportType } = this.pendingExportChange;
       const formControl = expenseType === 'reimbursable'
         ? this.exportSettingsForm.get('reimbursableExportType')
@@ -254,10 +300,11 @@ export class Sage50ExportSettingsComponent implements OnInit {
       } else {
         this.lastCCCExportType = selectedExportType as Sage50CCCExportType;
       }
-
     }
+  }
 
-    this.pendingExportChange = null;
+  uploadVendorData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
+    return this.sage50ImportAttributesService.importAttributes(attributeType, fileName, jsonData);
   }
 
   private addMissingOptionsAndSort(exportSettings: Sage50ExportSettingsGet | null): void {
@@ -444,3 +491,4 @@ export class Sage50ExportSettingsComponent implements OnInit {
     });
   }
 }
+
