@@ -78,12 +78,12 @@
         </div>
         <div class="tw-p-24-px">
             <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                {{ 'emailMultiSelectField.nameLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'emailMultiSelectField.nameLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
             </p>
             <input formControlName="name" type="text" class="tw-w-388-px tw-h-48-px" pInputText [placeholder]="'emailMultiSelectField.enterNamePlaceholder' | transloco" [ngClass]="[addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled" [customErrorMessage]="'emailMultiSelectField.validNameError' | transloco"></app-mandatory-error-message>
             <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
-                {{ 'emailMultiSelectField.emailAddressLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'emailMultiSelectField.emailAddressLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
             </p>
 
             <div>
