@@ -48,7 +48,7 @@
                         </td>
                         <td class="tw-text-text-secondary">
                             <a
-                                (click)="downloadFile(rowData)"
+                                (click)="downloadFile($event, rowData)"
                                 class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[20px]"
                             >
                                 <span style="overflow-wrap: anywhere;">{{ constructFileName(rowData) }}</span>
