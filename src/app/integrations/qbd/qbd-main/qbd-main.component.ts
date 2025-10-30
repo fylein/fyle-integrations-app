@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api/menuitem';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdExportSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-settings.service';
-import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({

@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { QbdExportSettingComponent } from './qbd-export-setting.component';
 import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './qbd-export-setting.fixture';
-import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mapping.service';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TranslocoService } from '@jsverse/transloco';
 
