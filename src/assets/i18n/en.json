@@ -2516,7 +2516,7 @@
     "cccDefaultPaymentMethodSubLabel": "Enter the payment method to use for creating corporate card expenses in Sage 50 (e.g., Check, Credit card). ",
     "preview": "Preview",
     "forDetails": "for details.",
-    "cccDefaultPaymentMethodInputHint": "Use the exact payment method name as it appears in your Sage 50 settings.",
+    "cccDefaultPaymentMethodInputHint": "Enter payment method exactly as in Sage 50.",
     "exportSettingsSavedSuccess": "Export settings saved successfully",
     "exportSettingsSaveError": "Error saving export settings, please try again later",
     "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
