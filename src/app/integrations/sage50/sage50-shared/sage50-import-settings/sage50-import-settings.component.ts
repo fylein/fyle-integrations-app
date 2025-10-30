@@ -377,7 +377,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
   get currentWarningDimension(): string {
     return this.currentWarningField ? sage50AttributeDisplayNames[this.currentWarningField] : '';
   }
-  
+
 
   get previousSourceFieldDisplayName(): string {
     if (!this.previousSourceFieldValue) {

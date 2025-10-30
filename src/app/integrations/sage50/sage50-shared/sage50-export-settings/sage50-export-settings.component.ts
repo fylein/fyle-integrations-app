@@ -104,15 +104,12 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   vendorUploadDialogRef?: DynamicDialogRef;
 
-  // Track the last known good values to prevent race conditions
-  private lastReimbursableExportType: Sage50ReimbursableExportType | null = null;
-
+  // Track the last known good value to prevent race conditions
   private lastCCCExportType: Sage50CCCExportType | null = null;
 
   private pendingExportChange: {
-    expenseType: 'reimbursable' | 'ccc';
-    previousValue: Sage50ReimbursableExportType | Sage50CCCExportType | null;
-    newValue: Sage50ReimbursableExportType | Sage50CCCExportType;
+    previousValue: Sage50CCCExportType | null;
+    newValue: Sage50CCCExportType;
   } | null = null;
 
   // Subject for advanced search
@@ -207,13 +204,14 @@ export class Sage50ExportSettingsComponent implements OnInit {
     const { event, formControllerName } = changeEvent;
     const selectedExportType = event.value;
 
-    // Get the previous export type from our tracking variables (not from form control which is already updated)
-    const previousExportType = formControllerName === 'reimbursableExportType'
-      ? this.lastReimbursableExportType
-      : this.lastCCCExportType;
+    if (formControllerName !== 'cccExportType') {
+      return;
+    }
+
+    const previousExportType = this.lastCCCExportType;
 
     // Check if we need to show warning for purchases/payments
-    const needsWarning = this.shouldShowPurchasesWarning(selectedExportType, formControllerName);
+    const needsWarning = this.shouldShowPurchasesWarning(selectedExportType);
 
     if (needsWarning) {
       // Revert to the previous value immediately
@@ -222,7 +220,6 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
       // Store pending change and show warning
       this.pendingExportChange = {
-        expenseType: formControllerName === 'reimbursableExportType' ? 'reimbursable' : 'ccc',
         previousValue: previousExportType,
         newValue: selectedExportType
       };
@@ -233,28 +230,18 @@ export class Sage50ExportSettingsComponent implements OnInit {
       this.showPurchasesExportWarning = true;
     } else {
       // Update tracking variable with the new value since no warning is needed
-      if (formControllerName === 'reimbursableExportType') {
-        this.lastReimbursableExportType = selectedExportType;
-      } else {
-        this.lastCCCExportType = selectedExportType;
-      }
+      this.lastCCCExportType = selectedExportType;
     }
   }
 
-  private shouldShowPurchasesWarning(selectedExportType: any, formControllerName: string): boolean {
+  private shouldShowPurchasesWarning(selectedExportType: Sage50CCCExportType): boolean {
     const hasVendorsUploaded = this.vendors && this.vendors.length > 0;
 
     if (hasVendorsUploaded) {
       return false;
     }
 
-    if (formControllerName === 'reimbursableExportType') {
-      return selectedExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY;
-    } else if (formControllerName === 'cccExportType') {
-      return [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(selectedExportType);
-    }
-
-    return false;
+    return [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(selectedExportType);
   }
 
   acceptPurchasesExportWarning(data: ConfigurationWarningOut): void {
@@ -292,23 +279,17 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   private applyPendingExportTypeChange(): void {
     if (this.pendingExportChange) {
-      const { expenseType, newValue: selectedExportType } = this.pendingExportChange;
-      const formControl = expenseType === 'reimbursable'
-        ? this.exportSettingsForm.get('reimbursableExportType')
-        : this.exportSettingsForm.get('cccExportType');
+      const { newValue: selectedExportType } = this.pendingExportChange;
+      const formControl = this.exportSettingsForm.get('cccExportType');
 
       if (formControl) {
-        formControl.setValue(selectedExportType as any, { emitEvent: false });
+        formControl.setValue(selectedExportType, { emitEvent: false });
         formControl.markAsTouched();
         formControl.updateValueAndValidity();
       }
 
-      // Update tracking variables with the accepted value
-      if (expenseType === 'reimbursable') {
-        this.lastReimbursableExportType = selectedExportType as Sage50ReimbursableExportType;
-      } else {
-        this.lastCCCExportType = selectedExportType as Sage50CCCExportType;
-      }
+      // Update tracking variable with the accepted value
+      this.lastCCCExportType = selectedExportType;
     }
   }
 
@@ -488,8 +469,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
         exportSettings, this.isReimbursableEnabled, this.isCCCEnabled
       );
 
-      // Initialize tracking variables for warning dialog with current form values
-      this.lastReimbursableExportType = this.exportSettingsForm.get('reimbursableExportType')?.value || null;
+      // Initialize tracking variable for warning dialog with current form value
       this.lastCCCExportType = this.exportSettingsForm.get('cccExportType')?.value || null;
 
       this.addMissingOptionsAndSort(exportSettings);
