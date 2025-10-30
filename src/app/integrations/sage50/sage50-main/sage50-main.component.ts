@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterOutlet } from '@angular/router';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50CCCExportType, Sage50ReimbursableExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
-import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-core/sage50-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
@@ -43,8 +43,6 @@ export class Sage50MainComponent implements OnInit {
       {label: this.translocoService.translate('sage50Main.configuration'), routerLink: '/integrations/sage50/main/configuration'}
     ];
 
-    this.workspaceService.importFyleAttributes(false).subscribe();
-
     this.exportSettingsService.getExportSettings().subscribe((exportSettings) => {
       const hasMappings = exportSettings?.reimbursable_expense_export_type === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY ||
                           exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
@@ -65,6 +63,7 @@ export class Sage50MainComponent implements OnInit {
   refreshDimensions() {
     globalCacheBusterNotifier.next();
     this.accountingExportService.importExpensesFromFyle('v3').subscribe();
+    this.workspaceService.importFyleAttributes(true).subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50Main.syncDataDimensionsToast', { appName: AppName.SAGE50 }));
   }
 }

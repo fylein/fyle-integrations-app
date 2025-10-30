@@ -27,7 +27,7 @@ export class Sage50OnboardingService {
             active: false,
             completed: false,
             step: this.translocoService.translate('services.sage50Onboarding.prerequisites'),
-            icon: 'link-vertical-medium',
+            icon: 'upload',
             route: '/integrations/sage50/onboarding/prerequisites',
             styleClasses: ['step-name-pre-requisite--text'],
             onboardingState: Sage50OnboardingState.PRE_REQUISITES

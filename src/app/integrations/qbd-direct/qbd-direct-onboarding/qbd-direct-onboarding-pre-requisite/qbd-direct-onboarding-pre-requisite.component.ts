@@ -31,7 +31,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   QBDDirectInteractionType = QBDDirectInteractionType;
 
-  QBDconnectorArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
+  QBDconnectorArticleLink: string = brandingConfig.brandId === 'co' ? '' : brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 

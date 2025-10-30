@@ -108,7 +108,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       form: this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
     };
     const ref = this.dialogService.open(ScheduleDialogComponent, {
-      showHeader: false, data
+      showHeader: false, data, focusOnShow: false
     });
 
     ref.onClose.subscribe((result: {saved?: boolean}) => {

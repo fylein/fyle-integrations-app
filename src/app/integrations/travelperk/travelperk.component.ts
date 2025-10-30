@@ -4,7 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-core/sage300-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({

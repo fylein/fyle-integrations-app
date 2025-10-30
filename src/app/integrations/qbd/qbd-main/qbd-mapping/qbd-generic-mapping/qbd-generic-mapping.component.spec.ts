@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'primeng/api';
-import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mapping.service';
 import { of, throwError } from 'rxjs';
 import { MappingState, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';

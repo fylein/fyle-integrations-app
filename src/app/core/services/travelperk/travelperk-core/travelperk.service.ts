@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } from '../../models/travelperk/travelperk.model';
-import { ApiService } from '../common/api.service';
-import { OrgService } from '../org/org.service';
-import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
-import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
-import { HelperService } from '../common/helper.service';
-import { AppUrl } from '../../models/enum/enum.model';
+import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } from '../../../models/travelperk/travelperk.model';
+import { ApiService } from '../../common/api.service';
+import { OrgService } from '../../org/org.service';
+import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingPost } from '../../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { HelperService } from '../../common/helper.service';
+import { AppUrl } from '../../../models/enum/enum.model';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 

@@ -8,7 +8,7 @@ import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/se
 import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, pairwise, startWith, Subject } from 'rxjs';
 import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-mapping.service';
+import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-core/sage50-mapping.service';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { Router } from '@angular/router';
@@ -121,6 +121,15 @@ export class Sage50ExportSettingsComponent implements OnInit {
   // Utility methods for the template
   get isCCCExportDateDisabled(): boolean {
     return this.exportSettingsForm.get('cccExportGroup')?.value === Sage50ExpensesGroupedBy.REPORT;
+  }
+
+  get cccExportDateSubLabel(): string {
+    return this.isCCCExportDateDisabled ?
+      this.translocoService.translate('sage50ExportSettings.cccExportDateFixedSubLabel', {
+        selectedDateOption: this.getSelectedLabel('cccExportDate') ?? 'date',
+        brandName: brandingConfig.brandName
+      }) :
+      this.translocoService.translate('sage50ExportSettings.cccExportDateEditableSubLabel');
   }
 
   getSelectedLabel(field: keyof Sage50ExportSettingsForm): string | null{

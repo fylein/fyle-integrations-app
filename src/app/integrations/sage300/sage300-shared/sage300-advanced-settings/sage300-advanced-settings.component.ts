@@ -6,7 +6,7 @@ import { AppName, ConfigurationCta, CustomOperatorOption, Page, Sage300Onboardin
 import { Sage300AdvancedSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-core/sage300-helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';

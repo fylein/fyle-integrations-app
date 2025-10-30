@@ -8,7 +8,7 @@ import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.mode
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-core/sage300-helper.service';
 import { fyleFieldsResponse, importSettingsResponse, sage300FieldsResponse } from '../fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';

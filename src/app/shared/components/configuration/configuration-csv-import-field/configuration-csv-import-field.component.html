@@ -38,7 +38,7 @@
 
     <!-- Body -->
     @if (isEnabled) {
-    <div class="tw-flex tw-flex-col tw-gap-[48px]" [ngClass]="{
+    <div class="tw-flex tw-flex-col tw-gap-[48px] body-container" [ngClass]="{
         'tw-p-24-px tw-border-t tw-border-separator': !isSubfield,
         'tw-pb-24-px': isSubfield
     }">
@@ -46,24 +46,24 @@
         <div class="tw-flex tw-flex-col tw-gap-[8px]">
             <!-- Eg: Sage50 - Dimension | Fyle Field -->
             <div class="tw-flex tw-font-500 tw-text-14-px tw-text-text-primary">
-                <div class="tw-w-400-px">
+                <div class="responsive-field">
                     {{ appDisplayName }}{{ 'configurationCsvImportField.dimension' | transloco }}
                 </div>
-                <div>
+                <div class="tw-pl-[100px]">
                     {{ brandingConfig.brandName }}{{ 'configurationCsvImportField.field' | transloco }}
                 </div>
             </div>
             <!-- Destination field -> Source field -->
             <div class="tw-flex">
                 <div>
-                    <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="dimension" disabled>
+                    <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="dimension" disabled>
                 </div>
                 <div class="tw-pt-[17px]">
                     <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
                 </div>
                 <div class="tw-w-30-vw">
                     @if (isSourceFieldEditable) {
-                        <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="sourceField" [options]="sourceFieldOptions" [placeholder]="'configurationCsvImportField.selectSourceFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }">
+                        <p-dropdown appendTo="body" class="tw-w-28-vw responsive-field" formControlName="sourceField" [options]="sourceFieldOptions" [placeholder]="'configurationCsvImportField.selectSourceFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }">
                             <ng-template let-option pTemplate="item">
                                 <div [ngClass]="{'custom-option': option.value === 'custom_field'}" class="tw-align-middle">
                                     <div class="tw-ml-0 tw-mr-6-px ">
@@ -75,7 +75,7 @@
                         </p-dropdown>
                     }
                     @else {
-                        <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
+                        <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
                     }
                 </div>
 

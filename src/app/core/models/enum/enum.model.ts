@@ -40,7 +40,7 @@ export enum InAppIntegration {
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
   QBD_DIRECT = 'QuickBooks Connector',
-  SAGE50 = 'Sage 50 Accounting (US)'
+  SAGE50 = 'Sage 50 (US)'
 }
 
 export type IntegrationAppKey = keyof typeof InAppIntegration;
@@ -106,7 +106,7 @@ export enum AppName {
   NETSUITE = 'NetSuite',
   XERO = 'Xero',
   QBD_DIRECT = 'QuickBooks Desktop Connector',
-  SAGE50 = 'Sage 50 Accounting (US)'
+  SAGE50 = 'Sage 50 (US)'
 }
 
 export enum AppNameInService {

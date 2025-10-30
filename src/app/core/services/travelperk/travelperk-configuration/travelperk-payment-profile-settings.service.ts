@@ -1,7 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { SelectFormOption } from "../../models/common/select-form-option.model";
-import { TravelPerkUserRole } from "../../models/enum/enum.model";
-import { TravelperkPaymentProfileSettingGet, TravelperkPaymentProfileSettingPost } from "../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
+import { SelectFormOption } from "../../../models/common/select-form-option.model";
+import { TravelPerkUserRole } from "../../../models/enum/enum.model";
+import { TravelperkPaymentProfileSettingGet, TravelperkPaymentProfileSettingPost } from "../../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
 import { Injectable } from "@angular/core";
 import { TranslocoService } from "@jsverse/transloco";
 
