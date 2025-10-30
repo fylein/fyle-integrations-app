@@ -2528,7 +2528,14 @@
     "purchasesExportWarningContext": "Before switching the export type to {{exportType}}, ensure you have the Vendors CSV downloaded and ready. Vendor data is required to map employees in {{brandName}} to their corresponding records in Sage 50.",
     "purchasesExportWarningConfirmButton": "Yes, continue",
     "paymentsLabel": "Payments",
-    "purchasesLabel": "Purchases"
+    "purchasesLabel": "Purchases",
+    "noValidAccountsAlertTitle": "No valid accounts found.",
+    "noValidAccountsAlertMessage": "Please go back and re-upload your Chart of accounts CSV with at least one of these account types: Accounts Payable, Other Current Liabilities, or Long Term Liabilities.",
+    "noValidAccountsAlertTip": "Tip: Uploading your full chart of accounts prevents these issues.",
+    "noVendorsAlertTitle": "No vendors found.",
+    "noVendorsAlertMessage": "Please go back to prerequisites and upload your Vendor CSV.",
+    "noVendorsAlertTip": "Tip: Uploading your full vendor list ensures all mappings work correctly.",
+    "reimbursableDefaultAccountPayableAccountInfo": "Employees will be auto-mapped to Sage 50 vendors. When exporting as purchases, reimbursable expenses will be recorded against the corresponding vendor for each employee"
   },
   "sage50ImportSettings": {
     "headerText": "Import settings",
