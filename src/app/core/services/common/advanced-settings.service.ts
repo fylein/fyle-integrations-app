@@ -100,7 +100,7 @@ export class AdvancedSettingsService {
       category: 'Meals and Entertainment',
       purpose: 'Client Meeting',
       merchant: 'Pizza Hut',
-      card_merchant: 'Amazon',
+      card_merchant: 'AMZN MKTP US*ABC123',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
       spent_at: today.toLocaleDateString(),
