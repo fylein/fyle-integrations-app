@@ -6,8 +6,8 @@
             </div>
 
             <div>
-                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationHeaderText">
-                    {{ label | snakeCaseToSpaceCase}}
+                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
+                    <span>{{ label | snakeCaseToSpaceCase}}</span>
                     @if (isOneTimeField) {
                         <span class="tw-text-text-danger-dark"> {{ 'configurationSelectField.cannotBeEdited' | transloco }}</span>
                     }

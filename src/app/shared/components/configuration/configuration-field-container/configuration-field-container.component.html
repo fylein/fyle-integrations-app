@@ -8,7 +8,7 @@
         ></app-svg-icon>
     }
     <div class="tw-flex tw-flex-col tw-gap-[6px]">
-        <h5 class="tw-text-14-px tw-font-500">
+        <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
             <span>{{ label }}</span>
             @if (isMandatory) {
                 <app-mandatory-field></app-mandatory-field>
