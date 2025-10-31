@@ -1,6 +1,6 @@
 import { EventEmitter, inject, Injectable, Output } from '@angular/core';
 import { WorkspaceService } from '../../common/workspace.service';
-import { Observable } from 'rxjs';
+import { Observable, startWith } from 'rxjs';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingsPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { ApiService } from '../../common/api.service';
 import { HelperService } from '../../common/helper.service';
@@ -305,7 +305,9 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
-      form.controls[values.formController].valueChanges.subscribe((selectedValue) => {
+      form.controls[values.formController].valueChanges
+      .pipe(startWith(form?.get(values.formController)?.value))
+      .subscribe((selectedValue) => {
         this.mandatoryFormController = [];
         this.setupDynamicValidators(form, values, selectedValue);
       });
