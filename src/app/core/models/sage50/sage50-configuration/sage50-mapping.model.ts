@@ -1,5 +1,4 @@
-export type Sage50FyleField = {
-    field_name: string,
-    type: string,
-    is_custom: boolean
+export type Sage50SourceField = {
+    attribute_type: string,
+    display_name: string
 }
