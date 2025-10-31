@@ -14,6 +14,7 @@
     "format": "prettier --write \"src/**/*.{ts,js,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,html,scss,css,json}\"",
     "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id",
+    "generate:svg-sprite_v2": "node scripts/generate-svg-sprite.js",
     "stop": "kill $(lsof -t -i:4200) || true",
     "storybook": "ng run fyle-integrations-app:storybook",
     "build-storybook": "npm run setup:env && npm run setup:branding && ng run fyle-integrations-app:build-storybook",
@@ -80,7 +81,8 @@
     "prettier": "^3.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "svg2sprite-cli": "^2.0.1"
+    "svg2sprite-cli": "^2.0.1",
+    "svg-sprite": "^2.0.4"
   },
   "overrides": {
     "esbuild": "^0.25.0",
