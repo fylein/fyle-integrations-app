@@ -13,6 +13,8 @@ import { CSVImportFieldForm, CSVImportFieldFormWithMapping, CSVImportSourceField
 import { Router } from '@angular/router';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
 import { pairwise, startWith } from 'rxjs';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-configuration-csv-import-field',
@@ -112,7 +114,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     private formGroupDirective: FormGroupDirective,
     private dialogService: DialogService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private trackingService: TrackingService
   ) {}
 
   handleUploadClick() {
@@ -146,6 +149,11 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
         }
       }
     });
+  }
+
+  handlePreviewDialog() {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.PREVIEW_EXPENSE_FORM, {field: this.formGroupName});
+    this.showPreviewDialog = true;
   }
 
   handleCustomFieldSave() {

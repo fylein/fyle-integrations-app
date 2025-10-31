@@ -12,14 +12,14 @@
 
         <div class="tw-max-w-[664px]">
             <h3 class="tw-text-text-primary tw-text-16-px tw-font-500">
-                {{ label }}
+                <span>{{ label }}</span>
                 @if (isMandatory) {
                     <app-mandatory-field></app-mandatory-field>
                 }
             </h3>
             <h5 class="tw-text-text-tertiary tw-text-14-px tw-font-400 tw-pt-4-px">
                 {{ subLabel }}
-                <a (click)="showPreviewDialog = true" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
+                <a (click)="handlePreviewDialog()" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
                 <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
             </h5>
         </div>
@@ -114,7 +114,9 @@
 
             <div class="tw-flex tw-flex-col tw-gap-[16px]">
                 @if (infoText) {
-                    <app-alert [type]="'info'" [message]="infoText"></app-alert>
+                    <app-alert [type]="'info'" [variant]="'subtle'">
+                        <p>{{ infoText }}</p>
+                    </app-alert>
                 }
                 <app-uploaded-file-details
                     [file]="uploadedFile"

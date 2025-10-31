@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { brandingStyle } from 'src/app/branding/branding-config';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Component({
@@ -8,6 +9,8 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
   styleUrls: ['./configuration-radio-field.component.scss']
 })
 export class ConfigurationRadioFieldComponent implements OnInit {
+
+  readonly brandingStyle = brandingStyle;
 
   constructor() { }
 

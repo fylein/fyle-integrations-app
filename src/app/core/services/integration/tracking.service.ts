@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent, QbdDirectOnboardingState, QbdDirectUpdateEvent } from '../../models/enum/enum.model';
+import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent, QbdDirectOnboardingState, QbdDirectUpdateEvent, Sage50OnboardingState } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
@@ -96,8 +96,8 @@ export class TrackingService {
     this.eventTrack('Opened QBD Direct Landing Page');
   }
 
-  onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent): void {
-    this.eventTrack(`Click event: ${eventName}`, trackingApp, {});
+  onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent, additionalProperties: any = {}): void {
+    this.eventTrack(`Click event: ${eventName}`, trackingApp, additionalProperties);
   }
 
   trackTimeSpent(trackingApp: TrackingApp, page: Page, sessionStartTime: Date): void {
@@ -105,7 +105,7 @@ export class TrackingService {
     this.eventTrack(`Time Spent on ${page} page`, trackingApp, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[] | TravelperkAdvancedSettingPost): void {
+  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState | Sage50OnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[] | TravelperkAdvancedSettingPost | any): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 

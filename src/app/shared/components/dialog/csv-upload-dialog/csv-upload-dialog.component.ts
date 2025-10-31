@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sage50AttributeType, ButtonType, ButtonSize, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { Sage50AttributeType, ButtonType, ButtonSize, ToastSeverity, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
@@ -14,6 +14,7 @@ import { DynamicDialogComponent } from '../../core/dynamic-dialog/dynamic-dialog
 import { CSVImportAttributesInvalidResponse, CSVImportAttributesService, CSVImportAttributesValidResponse } from 'src/app/core/models/db/csv-import-attributes.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { downloadCSVFile } from 'src/app/core/util/downloadFile';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-csv-upload-dialog',
@@ -55,7 +56,8 @@ export class CsvUploadDialogComponent implements OnInit {
     private csvJsonTranslator: CsvJsonTranslatorService,
     private toastService: IntegrationsToastService,
     public dialogService: DialogService,
-    public translocoService: TranslocoService
+    public translocoService: TranslocoService,
+    private trackingService: TrackingService
   ) { }
 
   closeDialog(): void {
@@ -148,6 +150,7 @@ export class CsvUploadDialogComponent implements OnInit {
   }
 
   downloadErrorLog(): void {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_ERROR_LOG);
     downloadCSVFile(this.csv.data, this.csv.name);
   }
 

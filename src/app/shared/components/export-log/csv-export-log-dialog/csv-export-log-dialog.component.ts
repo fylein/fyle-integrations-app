@@ -6,6 +6,8 @@ import { ExpenseDetails } from 'src/app/core/models/db/expense-details.model';
 import { CsvExpensesTableComponent } from "../csv-expenses-table/csv-expenses-table.component";
 import { CsvExportLogItem } from 'src/app/core/models/db/csv-export-log.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-csv-export-log-dialog',
@@ -29,6 +31,12 @@ export class CsvExportLogDialogComponent {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    public exportLogService: ExportLogService
+    public exportLogService: ExportLogService,
+    private trackingService: TrackingService
   ) { }
+
+  downloadFile(exportLog: CsvExportLogItem) {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_CSV, {fileName: exportLog.file_name, fileId: exportLog.file_id, view: 'Export Log dialog view'});
+    this.exportLogService.downloadFile(exportLog);
+  }
 }
