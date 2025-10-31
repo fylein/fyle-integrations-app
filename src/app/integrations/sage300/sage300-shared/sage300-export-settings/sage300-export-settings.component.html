@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header
             [headerText]="'sage300ExportSettings.headerText' | transloco"
-            [contentText]="'sage300ExportSettings.contentText' | transloco:{ brandName: brandingConfig.brandName }"
+            [contentText]="'sage300ExportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"

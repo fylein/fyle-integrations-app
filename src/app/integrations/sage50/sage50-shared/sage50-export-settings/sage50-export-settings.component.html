@@ -7,7 +7,7 @@
     <div>
         <app-configuration-step-header
             [headerText]="'sage50ExportSettings.headerText' | transloco"
-            [contentText]="'sage50ExportSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+            [contentText]="'sage50ExportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
             [redirectLink]="redirectLink"
             [showSyncButton]="false"
             [appName]="appName">
@@ -37,6 +37,8 @@
                 [isFieldMandatory]="true"
                 [appName]="appName"
                 [iconPath]="'list'"
+                [showExportPreview]="true"
+                [exportTypeIconPathArray]="previewImagePaths"
                 (dropdownChange)="onExportTypeDropdownChange($event)"
             ></app-configuration-select-field>
 
@@ -165,6 +167,8 @@
                     [isFieldMandatory]="true"
                     [appName]="appName"
                     [iconPath]="'list'"
+                    [showExportPreview]="true"
+                    [exportTypeIconPathArray]="previewImagePaths"
                     (dropdownChange)="onExportTypeDropdownChange($event)"
                 ></app-configuration-select-field>
             @if (showField('cccDefaultCreditLineAccount')) {

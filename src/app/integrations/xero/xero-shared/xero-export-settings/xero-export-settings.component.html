@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'xero.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'xero.configuration.exportSetting.stepSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [contentText]="'xero.configuration.exportSetting.stepSubLabel' | transloco: {brandName: brandingService.getBrandFullName()}"
                 [redirectLink]="redirectLink"
                 [appName]="appName"
                 [showSyncButton]="isOnboarding"

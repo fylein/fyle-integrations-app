@@ -87,7 +87,8 @@
     "timeLabel": "Time",
     "selectTimePlaceholder": "Select time for export",
     "selectMeridiemPlaceholder": "Select meridiem of time",
-    "cannotBeEdited": "(cannot be edited later)"
+    "cannotBeEdited": "(cannot be edited later)",
+    "previewOfExportSage50Header": "Export Modules"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -258,7 +259,8 @@
     "exportButtonText": "Export",
     "exportingButtonText": "Exporting",
     "qbdInfoText": "Click ‘Update Selected’ in QuickBooks Web Connector to sync your expenses immediately",
-    "orSeparator": " or "
+    "orSeparator": " or ",
+    "exportingExpensesToAppSage50": "Processing {{processedCount}} of {{totalCount}} expenses for CSV export"
   },
   "intacctLocationEntity": {
     "headerText": "Connect to Sage Intacct",
@@ -1153,6 +1155,7 @@
     "employeeMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
     "corporateCardMappingDialogTitle": "Corporate card mapping",
     "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "resolvedErrorsOfTotal": "{{resolvedCount}}/{{totalCount}} errors resolved",
     "completed": "Completed",
     "skipped": "Skipped"
   },
@@ -2404,6 +2407,9 @@
       "generalJournalEntryDisplayName": "GENERAL_JOURNAL_ENTRY",
       "purchasesDisplayName": "PURCHASES",
       "paymentsDisplayName": "PAYMENTS"
+    },
+    "branding": {
+      "reBrandedFullName": "Sage Expense Management"
     }
   },
   "pipes": {
@@ -2590,9 +2596,6 @@
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
     "csvUploadAlt": "CSV upload icon"
   },
-  "integrations": {
-    "reBrandedName": "Sage Expense Management"
-  },
   "alert": {
     "infoIconAlt": "Info icon",
     "dangerIconAlt": "Danger icon"
@@ -2662,5 +2665,8 @@
     "header": "Expense details",
     "expenseType": "Expense type",
     "fileName": "File name"
+  },
+  "integrations": {
+    "reBrandedShortName": "Sage Exp Mgmt"
   }
 }

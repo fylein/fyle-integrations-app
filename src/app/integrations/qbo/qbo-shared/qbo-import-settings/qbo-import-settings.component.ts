@@ -19,6 +19,7 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbo-import-settings',
@@ -102,7 +103,8 @@ export class QboImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     public helper: HelperService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingService.getCustomFieldOption();
     this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();

@@ -44,6 +44,11 @@
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
                     {{ 'sage50Dashboard.employeeMappingTitle' | transloco }}
                 </h3>
+                @if (employeeMappingErrorStat) {
+                <p class="tw-text-12-px tw-text-text-secondary tw-mb-4-px tw-mt-4-px">
+                    {{ 'sage50Dashboard.resolvedErrorsOfTotal' | transloco: { resolvedCount: employeeMappingErrorStat.resolvedCount, totalCount: employeeMappingErrorStat.totalCount } }}
+                </p>
+                }
                 <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
                     {{ 'sage50Dashboard.employeeMappingDescription' | transloco }}
                 </p>
@@ -63,6 +68,11 @@
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
                     {{ 'sage50Dashboard.corporateCardMappingTitle' | transloco }}
                 </h3>
+                @if (corporateCardMappingErrorStat) {
+                <p class="tw-text-12-px tw-text-text-secondary tw-mb-4-px tw-mt-4-px">
+                    {{ 'sage50Dashboard.resolvedErrorsOfTotal' | transloco: { resolvedCount: corporateCardMappingErrorStat.resolvedCount, totalCount: corporateCardMappingErrorStat.totalCount } }}
+                </p>
+                }
                 <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
                     {{ 'sage50Dashboard.corporateCardMappingDescription' | transloco }}
                 </p>

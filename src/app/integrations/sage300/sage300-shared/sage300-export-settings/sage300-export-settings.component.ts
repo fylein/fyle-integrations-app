@@ -18,6 +18,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 
 @Component({
@@ -117,7 +118,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
     public helper: HelperService,
     private mappingService: MappingService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {

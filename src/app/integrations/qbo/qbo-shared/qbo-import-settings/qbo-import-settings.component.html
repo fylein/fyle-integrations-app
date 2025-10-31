@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
         <app-configuration-step-header [headerText]="'configuration.importSetting.stepName' | transloco"
-            [contentText]="'configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+            [contentText]="'configuration.importSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>

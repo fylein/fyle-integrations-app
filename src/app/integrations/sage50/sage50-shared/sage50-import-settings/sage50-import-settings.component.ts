@@ -20,6 +20,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { Sage50FyleField as Sage50FyleFieldGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-mapping.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -93,6 +94,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
+    public brandingService: BrandingService,
     private trackingService: TrackingService
   ) { }
 

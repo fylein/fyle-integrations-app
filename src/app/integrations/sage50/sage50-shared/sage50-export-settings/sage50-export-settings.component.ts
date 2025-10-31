@@ -22,6 +22,7 @@ import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage
 import { CsvUploadDialogComponent } from 'src/app/shared/components/dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -58,6 +59,18 @@ export class Sage50ExportSettingsComponent implements OnInit {
   readonly allowedAccountTypes: string[] = [
     'Accounts Payable', 'Long Term Liabilities', 'Other Current Liabilities'
   ] as const;
+
+  previewImagePaths = [
+    {
+      'GENERAL_JOURNAL_ENTRY': 'assets/illustrations/sage50/Reimbursable - General Journal Entry.jpg',
+      'PURCHASES_RECEIVE_INVENTORY': 'assets/illustrations/sage50/Reimbursable - Purchases Receive Inventory.jpg'
+    },
+    {
+      'PAYMENTS_JOURNAL': 'assets/illustrations/sage50/CCC - Payments Journal.jpg',
+      'GENERAL_JOURNAL_ENTRY': 'assets/illustrations/sage50/CCC - General Journal Entry.jpg',
+      'PURCHASES_RECEIVE_INVENTORY': 'assets/illustrations/sage50/CCC - Purchases Receive Inventory.jpg'
+    }
+  ];
 
   // Static options
   readonly reimbursableExportTypes = this.exportSettingService.sage50ReimbursableExportTypeOptions;
@@ -152,6 +165,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
     private userService: IntegrationsUserService,
     private sage50ImportAttributesService: Sage50ImportAttributesService,
     private dialogService: DialogService,
+    public brandingService: BrandingService,
     private trackingService: TrackingService
   ) { }
 

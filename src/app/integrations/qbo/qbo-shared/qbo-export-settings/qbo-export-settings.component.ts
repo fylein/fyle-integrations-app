@@ -22,6 +22,7 @@ import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-config
 import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -144,7 +145,8 @@ export class QboExportSettingsComponent implements OnInit {
     private employeeSettingService: QboEmployeeSettingsService,
     private qboExportSettingsService: QboExportSettingsService,
     private employeeSettingsService: EmployeeSettingsService,
-    private qboEmployeeSettingsService: QboEmployeeSettingsService
+    private qboEmployeeSettingsService: QboEmployeeSettingsService,
+    public brandingService: BrandingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();

@@ -23,6 +23,7 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-intacct-import-settings',
@@ -127,7 +128,8 @@ export class IntacctImportSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     public helper: HelperService,
     private translocoService: TranslocoService,
-    private importSettingsService: ImportSettingsService
+    private importSettingsService: ImportSettingsService,
+    public brandingService: BrandingService
   ) { }
 
   get expenseFieldsGetter() {
