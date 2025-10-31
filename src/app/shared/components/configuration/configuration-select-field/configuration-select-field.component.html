@@ -212,7 +212,7 @@
         [iconPath]="exportTypeIconPath" 
         (closeDialog)="closeDialog()" 
         [header]="dialogHeader"
-        [showNavigation]="appName === AppName.SAGE50 && showExportPreview"
+        [showNavigation]="appName === AppName.SAGE50 && showExportPreview && false"
         [currentModuleName]="availableExportTypes[currentExportTypeIndex]"
         (navigatePreview)="navigatePreview($event)">
     </app-preview-dialog>

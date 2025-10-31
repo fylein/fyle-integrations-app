@@ -155,17 +155,17 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   showExportPreviewDialog(exportType: string) {
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
-    
+
     // Get all available export types for navigation
     this.availableExportTypes = Object.keys(this.exportTypeIconPathArray[index]);
     this.currentExportTypeIndex = this.availableExportTypes.indexOf(exportType);
-    
+
     this.updatePreviewDialog(exportType);
     this.isPreviewDialogVisible = true;
   }
 
   updatePreviewDialog(exportType: string) {
-    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 && AppName.INTACCT ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
   }
