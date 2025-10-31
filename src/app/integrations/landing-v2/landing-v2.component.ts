@@ -73,8 +73,8 @@ export class LandingV2Component implements OnInit {
     [InAppIntegration.INTACCT]: TrackingApp.INTACCT,
     [InAppIntegration.NETSUITE]: TrackingApp.NETSUITE,
     [InAppIntegration.XERO]: TrackingApp.XERO,
-    [InAppIntegration.QBO]: TrackingApp.QBO,
-  }
+    [InAppIntegration.QBO]: TrackingApp.QBO
+  };
 
   constructor(
     private eventsService: EventsService,
