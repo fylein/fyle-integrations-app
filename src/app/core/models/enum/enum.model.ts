@@ -55,7 +55,10 @@ export enum UpdateEvent {
   CONNECT_QBD = 'Connect QuickBooks Desktop',
   EXPORT_SETTING_QBD = 'Export Settings QBD',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
-  ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD'
+  ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
+  EXPORT_SETTINGS = 'Export Settings',
+  IMPORT_SETTINGS = 'Import Settings',
+  ADVANCED_SETTINGS = 'Advanced Settings',
 }
 
 export enum IntacctUpdateEvent {
@@ -148,6 +151,8 @@ export enum Page {
 }
 
 export enum ClickEvent {
+  BACK = 'Back',
+  OPEN_INTEGRATION = 'Open Integration',
   OPEN_QBO_INTEGRATION = 'Open QBO Integration',
   OPEN_NETSUITE_INTEGRATION = 'Open NetSuite Integration',
   OPEN_SAGE_INTACCT_INTEGRATION = 'Open Sage Intacct Integration',
@@ -173,7 +178,15 @@ export enum ClickEvent {
   QBD_DIRECT_EXPORT = 'Direct Export Quickbooks Desktop',
   QBD_DIRECT_SYNC = 'Sync Quickbooks Desktop Direct',
   QBD_DIRECT_ASSISTED_SETUP_DIALOG = 'QBD Direct Assisted Setup Dialog Open',
-  QBD_DIRECT_ASSISTED_SETUP_BOOKED = 'QBD Direct Assisted Setup Booked'
+  QBD_DIRECT_ASSISTED_SETUP_BOOKED = 'QBD Direct Assisted Setup Booked',
+  CONNECT_INTEGRATION = 'Connect Integration',
+  UPLOAD_CSV = 'Upload CSV',
+  DOWNLOAD_ERROR_LOG = 'Download Error Log',
+  PREVIEW_EXPENSE_FORM = 'Preview Expense Form',
+  LAUNCH_INTEGRATION = 'Launch Integration',
+  EXPORT_EXPENSES = 'Export Expenses',
+  RESOLVE_MAPPING_ERROR = 'Resolve Mapping Error',
+  DOWNLOAD_CSV = 'Download CSV'
 }
 
 export enum ProgressPhase {

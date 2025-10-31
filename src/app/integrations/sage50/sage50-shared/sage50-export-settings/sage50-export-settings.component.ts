@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingKbArticles, brandingStyle, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, Sage50AttributeType, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, ProgressPhase, Sage50AttributeType, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
@@ -23,6 +23,7 @@ import { CsvUploadDialogComponent } from 'src/app/shared/components/dialog/csv-u
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-sage50-export-settings',
@@ -164,13 +165,14 @@ export class Sage50ExportSettingsComponent implements OnInit {
     private userService: IntegrationsUserService,
     private sage50ImportAttributesService: Sage50ImportAttributesService,
     private dialogService: DialogService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
+    private trackingService: TrackingService
   ) { }
 
   onSave(): void {
     this.isSaveInProgress = true;
     this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe({
-      next: () => {
+      next: (response: void) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(
           ToastSeverity.SUCCESS,
@@ -181,8 +183,15 @@ export class Sage50ExportSettingsComponent implements OnInit {
         this.mappingService.shouldShowMappingPage.emit(hasMappings);
 
         if (this.isOnboarding) {
+          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.EXPORT_SETTINGS, 2, response);
           this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
           this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.EXPORT_SETTINGS, {
+            phase: ProgressPhase.POST_ONBOARDING,
+            oldState: this.exportSettingsForm.value,
+            newState: response
+          });
         }
       },
       error: () => {
@@ -196,6 +205,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   onBackButtonClick(): void {
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.BACK);
     this.router.navigate(['/integrations/sage50/onboarding/prerequisites']);
   }
 

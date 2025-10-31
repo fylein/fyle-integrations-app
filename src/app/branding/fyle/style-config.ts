@@ -38,7 +38,8 @@ export const fyleStyles = {
         configurationAdvancedSettingCustomizationCardBody: 'tw-mt-12-px tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
         configurationAdvancedSettingNetsuiteCardBody: 'tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px',
         configurationAdvancedSettingDefaultFieldCard: 'tw-mb-16-px',
-        configurationAdvancedSettingSingleCard: 'tw-rounded-12-px tw-border-border-tertiary tw-border'
+        configurationAdvancedSettingSingleCard: 'tw-rounded-12-px tw-border-border-tertiary tw-border',
+        configurationFieldHeaderText: 'tw-text-text-secondary !tw-font-400'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm',
@@ -122,9 +123,9 @@ export const fyleStyles = {
             dataSyncIcon: 'tw-text-icon-tertiary',
             configurationHeaderText: 'tw-text-text-secondary !tw-font-500',
             configurationDescriptionText: '!tw-text-text-muted tw-text-pretty',
-            configurationToggleHeaderText: 'tw-text-text-secondary tw-text-14-px !tw-font-500',
+            configurationToggleHeaderText: 'tw-text-text-secondary tw-text-14-px !tw-font-400',
             configurationToggleDescriptionText: '!tw-text-text-muted tw-text-14-px !tw-font-400',
-            configurationSelectFieldHeaderText: 'tw-text-slightly-normal-text-color !tw-font-500',
+            configurationSelectFieldHeaderText: 'tw-text-slightly-normal-text-color !tw-font-400',
             configurationSelectFieldDescriptionText: 'tw-text-text-muted',
             configurationStepSubHeaderCard: 'tw-rounded-lg tw-bg-bg-tertiary-lighter',
             configurationStepSubHeaderText: '',

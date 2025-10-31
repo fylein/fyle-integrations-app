@@ -60,6 +60,8 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
 
             @if (showField('reimbursableDefaultAccountPayableAccount')) {
@@ -79,6 +81,14 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
+
+                <div class="tw-p-24-px tw-pt-0">
+                    <app-alert [type]="'info'" [variant]="'subtle-bordered'">
+                        <p>{{ 'sage50ExportSettings.reimbursableDefaultAccountPayableAccountInfo' | transloco }}</p>
+                    </app-alert>
+                </div>
             }
         </div>
         }
@@ -178,6 +188,8 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
             @if (showField('cccDefaultAccountPayableAccount')) {
                 <app-configuration-select-field
@@ -196,6 +208,8 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
             @if (showField('defaultCashAccount')) {
                 <app-configuration-select-field
@@ -214,6 +228,8 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
             @if (showField('defaultVendor')) {
                 <app-configuration-select-field
@@ -232,6 +248,8 @@
                     [iconPath]="'list'"
                     [infoTooltipText]="'sage50ExportSettings.cccDefaultVendorInfoTooltip' | transloco"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noVendorsAlert"></ng-container>
             }
 
             @if (showField('defaultPaymentMethod')) {
@@ -271,9 +289,7 @@
                 <app-configuration-select-field
                     [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.cccExpenseStateLabel' | transloco"
-                    [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco: {
-                        brandName: brandingConfig.brandName
-                    }"
+                    [subLabel]="'sage50ExportSettings.cccExpenseStateSubLabel' | transloco"
                     [formControllerName]="'cccExpenseState'"
                     [options]="cccExpenseStates"
                     [placeholder]="'sage50ExportSettings.cccExpenseStatePlaceholder' | transloco"
@@ -345,3 +361,31 @@
     [dialogWidth]="'770px'"
     [event]="ConfigurationWarningEvent.SAGE50_PURCHASES_EXPORT_TYPE">
 </app-configuration-confirmation-dialog>
+
+<ng-template #noValidAccountsAlert>
+    @if (!this.accounts || this.accounts.length === 0) {
+        <div class="tw-p-24-px tw-pt-0">
+            <app-alert
+                [type]="'danger'"
+                [title]="'sage50ExportSettings.noValidAccountsAlertTitle' | transloco"
+            >
+                <p>{{ 'sage50ExportSettings.noValidAccountsAlertMessage' | transloco }}</p>
+                <p>{{ 'sage50ExportSettings.noValidAccountsAlertTip' | transloco }}</p>
+            </app-alert>
+        </div>
+    }
+</ng-template>
+
+<ng-template #noVendorsAlert>
+    @if (!this.vendors || this.vendors.length === 0) {
+        <div class="tw-p-24-px tw-pt-0">
+            <app-alert
+                [type]="'danger'"
+                [title]="'sage50ExportSettings.noVendorsAlertTitle' | transloco"
+            >
+                <p>{{ 'sage50ExportSettings.noVendorsAlertMessage' | transloco }}</p>
+                <p>{{ 'sage50ExportSettings.noVendorsAlertTip' | transloco }}</p>
+            </app-alert>
+        </div>
+    }
+</ng-template>

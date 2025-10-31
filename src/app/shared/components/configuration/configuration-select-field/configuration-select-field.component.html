@@ -6,8 +6,8 @@
             </div>
 
             <div>
-                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationHeaderText">
-                    {{ label | snakeCaseToSpaceCase}}
+                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
+                    <span>{{ label | snakeCaseToSpaceCase}}</span>
                     @if (isOneTimeField) {
                         <span class="tw-text-text-danger-dark"> {{ 'configurationSelectField.cannotBeEdited' | transloco }}</span>
                     }
@@ -15,7 +15,7 @@
                     @if (infoTooltipText) {
                         <img
                             src='assets/icons/info-circle-fill-blue.svg'
-                            [class]="'tw-w-14-px tw-h-14-px tw-ml-8-px tw-inline'"
+                            [class]="'tw-w-14-px tw-h-14-px tw-ml-8-px tw-inline tw-relative tw-bottom-[3px]'"
                             [pTooltip]="infoTooltipText"
                             [tooltipPosition]="'top'"
                         >
