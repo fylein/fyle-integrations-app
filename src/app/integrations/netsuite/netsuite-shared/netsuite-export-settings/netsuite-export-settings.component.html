@@ -374,7 +374,7 @@
                         <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                     </div>
                     <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px !tw-font-500">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
+                        <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco }}</h5>
                     </div>
                 </div>

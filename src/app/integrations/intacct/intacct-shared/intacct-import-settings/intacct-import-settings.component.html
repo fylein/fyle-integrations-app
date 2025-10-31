@@ -261,13 +261,13 @@
         </div>
         <div class="tw-p-24-px">
             <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
-                {{ 'intacctImportSettings.fieldNameLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'intacctImportSettings.fieldNameLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
             </p>
             <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldTypePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'intacctImportSettings.validTypeErrorMessage' | transloco"></app-mandatory-error-message>
 
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                {{ 'intacctImportSettings.placeholderNameLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
+                {{ 'intacctImportSettings.placeholderNameLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
             </p>
             <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'intacctImportSettings.validNameErrorMessage' | transloco"></app-mandatory-error-message>

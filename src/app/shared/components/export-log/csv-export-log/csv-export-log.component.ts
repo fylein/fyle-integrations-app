@@ -106,8 +106,10 @@ export class CsvExportLogComponent implements OnInit {
     this.isExpensesDialogOpen = true;
   }
 
-  downloadFile(exportLog: CsvExportLogItem) {
+
+  downloadFile(event: Event, exportLog: CsvExportLogItem) {
     this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_CSV, {fileName: exportLog.file_name, fileId: exportLog.file_id, view: 'Export Log list view'});
+    event.stopPropagation();
     this.exportLogService.downloadFile(exportLog);
   }
 

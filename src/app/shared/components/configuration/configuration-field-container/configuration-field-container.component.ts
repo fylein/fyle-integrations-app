@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-field-container',
@@ -6,6 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './configuration-field-container.component.scss'
 })
 export class ConfigurationFieldContainerComponent {
+
+  readonly brandingStyle = brandingStyle;
 
   @Input() isMandatory = false;
 
