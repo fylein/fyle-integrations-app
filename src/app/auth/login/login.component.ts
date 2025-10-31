@@ -212,7 +212,7 @@ export class LoginComponent implements OnInit {
           this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
-        if (this.exposeApps?.SAGE50) {
+        if (this.exposeApps?.SAGE50 || this.brandingConfig.brandId === 'fyle') {
           this.helperService.setBaseApiURL(AppUrl.SAGE50, { auth: true });
           this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
