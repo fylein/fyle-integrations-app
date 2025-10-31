@@ -17,7 +17,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { CSVImportSourceFieldOption } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { Sage50FyleField as Sage50FyleFieldGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-mapping.model';
+import { Sage50SourceField } from 'src/app/core/models/sage50/sage50-configuration/sage50-mapping.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
@@ -199,24 +199,19 @@ export class Sage50ImportSettingsComponent implements OnInit {
     });
   }
 
-  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet | null, fyleFields: Sage50FyleFieldGet[]): void {
+  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet | null, fyleFields: Sage50SourceField[]): void {
 
     this.constructCOAOptions(importableChartOfAccounts);
 
-    const customFieldOptions = fyleFields.filter((field) => field.is_custom).map((field) => {
+    const customFieldOptions = fyleFields.map((field) => {
       return {
-        label: field.field_name,
-        value: field.field_name.split(' ')?.join('_')?.toUpperCase(),
+        label: field.display_name,
+        value: field.attribute_type,
         placeholder: null
       };
     });
 
     this.sourceFieldOptions = [
-      {
-        label: this.translocoService.translate('sage50ImportSettings.costCenterLabel'),
-        value: Sage50FyleField.COST_CENTER,
-        placeholder: null
-      },
       ...customFieldOptions,
       {
         label: this.translocoService.translate('sage50ImportSettings.customFieldLabel'),
@@ -439,10 +434,10 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importSettingService.getImportableChartOfAccounts(),
       this.importAttributesService.getAccountingImportDetailsByType(),
       this.exportSettingService.getExportSettings(),
-      this.mappingService.getFyleFields('v1'),
+      this.mappingService.getFyleFields(),
       this.importSettingService.getImportCodeFieldsConfig(),
       ...attributeStatsRequests
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, fyleFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
+    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, sourceFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
 
       this.importableChartOfAccounts = importableChartOfAccounts ?? null;
 
@@ -451,7 +446,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
         importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
       );
-      this.constructOptions(importableChartOfAccounts, fyleFields as unknown as Sage50FyleFieldGet[]);
+      this.constructOptions(importableChartOfAccounts, sourceFields as Sage50SourceField[]);
 
       this.setupWatchers();
 
