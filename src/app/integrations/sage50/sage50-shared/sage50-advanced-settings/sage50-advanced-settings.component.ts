@@ -7,13 +7,14 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { forkJoin, pairwise, startWith } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, ConfigurationCta, Sage50OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ProgressPhase, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ScheduleDialogData, ScheduleForm } from 'src/app/core/models/misc/schedule-dialog.model';
 import { Sage50AdvancedSettings, Sage50AdvancedSettingsForm } from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
 import { Sage50CCCExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ScheduleFormService } from 'src/app/core/services/misc/schedule-form.service';
 import { Sage50AdvancedSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-advanced-settings.service';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
@@ -67,7 +68,6 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
   lineLevelMemoPreviewText: string = '';
 
-
   // Form
   advancedSettingsForm!: FormGroup<Sage50AdvancedSettingsForm>;
 
@@ -100,7 +100,8 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     private skipExportService: SkipExportService,
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private trackingService: TrackingService
   ) { }
 
   editSchedule() {
@@ -185,12 +186,19 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     this.saveSkipExport();
     this.isSaveInProgress = true;
     this.advancedSettingsService.constructPayloadAndSave(this.advancedSettingsForm).subscribe({
-      next: () => {
+      next: (response: Sage50AdvancedSettings) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSavedSuccess'));
         if (this.isOnboarding) {
+          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.ADVANCED_SETTINGS, 4, response);
           this.workspaceService.setOnboardingState(Sage50OnboardingState.COMPLETE);
           this.router.navigate(['/integrations/sage50/onboarding/done']);
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.ADVANCED_SETTINGS, {
+            phase: ProgressPhase.POST_ONBOARDING,
+            oldState: this.advancedSettingsForm.value,
+            newState: response
+          });
         }
       },
       error: () => {

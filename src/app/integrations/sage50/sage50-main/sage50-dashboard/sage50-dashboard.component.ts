@@ -3,7 +3,7 @@ import { Subject, forkJoin, interval, from, Observable } from 'rxjs';
 import { map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
@@ -26,6 +26,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { SkipExportList, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-sage50-dashboard',
@@ -124,12 +125,14 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     private mappingService: MappingService,
     private skipExportService: SkipExportService,
     private exportLogService: ExportLogService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private trackingService: TrackingService
   ) { }
 
   export() {
     this.isExportInProgress = true;
     this.dashboardService.triggerAccountingExport("v2").subscribe(() => {
+      this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.EXPORT_EXPENSES);
       this.pollExportStatus();
     });
   }
@@ -178,6 +181,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.employeeFieldMapping = FyleField.VENDOR;
       this.currentMappingStats = this.corporateCardMappingStats;
     }
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.RESOLVE_MAPPING_ERROR, {field: mappingType, stats: this.currentMappingStats});
 
     // Fetch destination options and unmapped source attributes
     forkJoin([
