@@ -19,6 +19,7 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-netsuite-import-settings',
@@ -110,7 +111,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService,
     private translocoService: TranslocoService,
     private importSettingsService: ImportSettingsService,
-    private netsuiteImportSettingsService: NetsuiteImportSettingsService
+    private netsuiteImportSettingsService: NetsuiteImportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingsService.getCustomFieldOption();
     this.customrSegmentOptions = this.netsuiteImportSettingsService.getCustomSegmentOptions();

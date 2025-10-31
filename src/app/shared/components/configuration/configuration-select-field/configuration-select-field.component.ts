@@ -114,6 +114,10 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   dialogHeader: string;
 
+  currentExportTypeIndex: number = 0;
+
+  availableExportTypes: string[] = [];
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -150,14 +154,35 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = this.translocoService.translate('configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
+    const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
+    
+    // Get all available export types for navigation
+    this.availableExportTypes = Object.keys(this.exportTypeIconPathArray[index]);
+    this.currentExportTypeIndex = this.availableExportTypes.indexOf(exportType);
+    
+    this.updatePreviewDialog(exportType);
+    this.isPreviewDialogVisible = true;
+  }
+
+  updatePreviewDialog(exportType: string) {
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
-    this.isPreviewDialogVisible = true;
+  }
+
+  navigatePreview(direction: 'next' | 'previous') {
+    if (direction === 'next') {
+      this.currentExportTypeIndex = (this.currentExportTypeIndex + 1) % this.availableExportTypes.length;
+    } else {
+      this.currentExportTypeIndex = (this.currentExportTypeIndex - 1 + this.availableExportTypes.length) % this.availableExportTypes.length;
+    }
+    this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
   }
 
   closeDialog() {
     this.isPreviewDialogVisible = false;
+    this.currentExportTypeIndex = 0;
+    this.availableExportTypes = [];
   }
 
   simpleSearch(query: string) {

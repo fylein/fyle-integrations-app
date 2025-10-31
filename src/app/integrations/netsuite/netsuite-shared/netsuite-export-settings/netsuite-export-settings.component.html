@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'netsuite.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+                [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 [appName]="appName"

@@ -20,6 +20,7 @@ import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-confi
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-xero-import-settings',
@@ -96,7 +97,8 @@ export class XeroImportSettingsComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingService.getCustomFieldOption();
   }

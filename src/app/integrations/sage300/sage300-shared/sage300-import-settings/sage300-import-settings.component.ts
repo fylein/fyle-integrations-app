@@ -18,6 +18,7 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -109,7 +110,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) {
     this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.costCategoryOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];

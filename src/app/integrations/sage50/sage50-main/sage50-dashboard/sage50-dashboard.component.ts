@@ -6,6 +6,7 @@ import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { ErrorStat } from 'src/app/core/models/db/error.model';
 import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
@@ -23,9 +24,6 @@ import { MenuItem } from 'primeng/api';
 import { TranslocoService } from '@jsverse/transloco';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { SkipExportList, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
-import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage50-dashboard',
@@ -83,6 +81,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   corporateCardMappingStats: MappingStats | null = null;
 
   showPendingMappings: boolean = false;
+
+  employeeMappingErrorStat: ErrorStat | null = null;
+
+  corporateCardMappingErrorStat: ErrorStat | null = null;
 
   reimbursableExportType: Sage50ReimbursableExportType | null = null;
 
@@ -203,7 +205,48 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
       this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
     ]).subscribe((responses) => {
-      this.setPendingMappings(responses[0], responses[1]);
+      const newEmployeeMappingStats = responses[0];
+      const newCorporateCardMappingStats = responses[1];
+
+      if (this.employeeMappingStats) {
+        const previousUnmappedCount = this.employeeMappingStats.unmapped_attributes_count;
+        const currentUnmappedCount = newEmployeeMappingStats.unmapped_attributes_count;
+
+        // Initialize error stat on first time dialog closes
+        if (!this.employeeMappingErrorStat) {
+          this.employeeMappingErrorStat = {
+            resolvedCount: previousUnmappedCount - currentUnmappedCount,
+            totalCount: previousUnmappedCount
+          };
+        } else if (previousUnmappedCount !== currentUnmappedCount) {
+          // Update resolved count
+          this.employeeMappingErrorStat = {
+            resolvedCount: this.employeeMappingErrorStat.totalCount - currentUnmappedCount,
+            totalCount: this.employeeMappingErrorStat.totalCount
+          };
+        }
+      }
+
+      if (this.corporateCardMappingStats) {
+        const previousUnmappedCount = this.corporateCardMappingStats.unmapped_attributes_count;
+        const currentUnmappedCount = newCorporateCardMappingStats.unmapped_attributes_count;
+
+        // Initialize error stat on first time dialog closes
+        if (!this.corporateCardMappingErrorStat) {
+          this.corporateCardMappingErrorStat = {
+            resolvedCount: previousUnmappedCount - currentUnmappedCount,
+            totalCount: previousUnmappedCount
+          };
+        } else if (previousUnmappedCount !== currentUnmappedCount) {
+          // Update resolved count
+          this.corporateCardMappingErrorStat = {
+            resolvedCount: this.corporateCardMappingErrorStat.totalCount - currentUnmappedCount,
+            totalCount: this.corporateCardMappingErrorStat.totalCount
+          };
+        }
+      }
+
+      this.setPendingMappings(newEmployeeMappingStats, newCorporateCardMappingStats);
     });
   }
 

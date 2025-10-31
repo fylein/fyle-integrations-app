@@ -19,6 +19,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -136,7 +137,8 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
     ) {
     this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
     this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.getExpenseGroupingDateOptions();

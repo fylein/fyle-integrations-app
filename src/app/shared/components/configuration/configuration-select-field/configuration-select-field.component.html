@@ -207,6 +207,14 @@
 </div>
 
 <div *ngIf="isPreviewDialogVisible">
-    <app-preview-dialog [isPreviewDialogVisible]="true" [iconPath]="exportTypeIconPath" (closeDialog)="closeDialog()" [header]="dialogHeader"></app-preview-dialog>
+    <app-preview-dialog 
+        [isPreviewDialogVisible]="true" 
+        [iconPath]="exportTypeIconPath" 
+        (closeDialog)="closeDialog()" 
+        [header]="dialogHeader"
+        [showNavigation]="appName === AppName.SAGE50 && showExportPreview"
+        [currentModuleName]="availableExportTypes[currentExportTypeIndex]"
+        (navigatePreview)="navigatePreview($event)">
+    </app-preview-dialog>
 </div>
 

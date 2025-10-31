@@ -17,6 +17,7 @@ import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-confi
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-xero-export-settings',
@@ -101,7 +102,8 @@ export class XeroExportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingService.getReimbursableExpenseGroupingDateOptions();
     this.reimbursableExportTypes = this.xeroExportSettingService.getReimbursableExportTypes();

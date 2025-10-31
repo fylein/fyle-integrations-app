@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="'configuration.exportSetting.stepName' | transloco"
-                [contentText]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+                [contentText]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName() }"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimension)="refreshDimensions()">

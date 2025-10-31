@@ -7,7 +7,7 @@
     [isButtonDisabled]="!form.valid"
 >
     <div [formGroup]="form" class="tw-flex tw-flex-col tw-gap-24-px tw-p-24-px tw-border-t tw-border-b tw-border-border-tertiary">
-        <p class="tw-text-14-px tw-text-text-secondary">{{ 'scheduleDialog.contentText' | transloco: { brandName: brandingConfig.brandName } }}</p>
+        <p class="tw-text-14-px tw-text-text-secondary tw-max-w-[55ch]">{{ 'scheduleDialog.contentText' | transloco: { brandName: brandingConfig.brandName } }}</p>
 
         <div class="tw-flex tw-flex-col tw-gap-8-px tw-text-14-px tw-text-text-primary tw-font-500">
             <h5>{{ 'scheduleDialog.frequencyLabel' | transloco }}</h5>

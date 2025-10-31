@@ -5,7 +5,7 @@
     <div>
     <app-configuration-step-header
     [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
-    [contentText]="'intacctExportSettings.configureExportDescription' | transloco: { brandName: brandingConfig.brandName }"
+    [contentText]="'intacctExportSettings.configureExportDescription' | transloco: { brandName: brandingService.getBrandFullName() }"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
     [appName]="appName"
