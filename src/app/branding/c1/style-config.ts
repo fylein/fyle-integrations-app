@@ -38,7 +38,8 @@ export const c1Styles = {
         configurationAdvancedSettingCustomizationCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
         configurationAdvancedSettingNetsuiteCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px tw-bg-white tw-mb-16-px',
         configurationAdvancedSettingDefaultFieldCard: 'tw-pb-24-px tw-bg-white tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
-        configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border'
+        configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border',
+        configurationFieldHeaderText: 'tw-text-text-primary !tw-font-600'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',

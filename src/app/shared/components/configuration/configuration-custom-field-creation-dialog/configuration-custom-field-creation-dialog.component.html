@@ -19,13 +19,13 @@
             </div>
             <div class="tw-p-24-px">
                 <p class="tw-pb-8-px tw-text-form-label-text-color tw-text-label-text-size">
-                    {{'common.customFieldName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                    {{'common.customFieldName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
                 </p>
                 <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldTypePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
                 <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidTypeMessage' | transloco"></app-mandatory-error-message>
 
                 <p class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
-                    {{'common.customFieldPlaceholderName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                    {{'common.customFieldPlaceholderName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
                 </p>
                 <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
                 <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidNameMessage' | transloco"></app-mandatory-error-message>

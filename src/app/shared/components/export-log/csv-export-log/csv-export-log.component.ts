@@ -104,7 +104,8 @@ export class CsvExportLogComponent implements OnInit {
     this.isExpensesDialogOpen = true;
   }
 
-  downloadFile(exportLog: CsvExportLogItem) {
+  downloadFile(event: Event, exportLog: CsvExportLogItem) {
+    event.stopPropagation();
     this.exportLogService.downloadFile(exportLog);
   }
 
