@@ -12,20 +12,36 @@
             <div class="tw-flex tw-items-center tw-justify-center tw-gap-16-px tw-pb-24-px tw-px-24-px">
                 <button 
                     type="button"
-                    class="tw-flex tw-items-center tw-justify-center tw-w-32-px tw-h-32-px tw-cursor-pointer"
+                    [disabled]="isFirstPreview"
+                    [class]="'tw-flex tw-items-center tw-justify-center tw-w-32-px tw-h-32-px'"
                     (click)="onNavigate('previous')"
-                    [attr.aria-label]="'View previous module'">
-                    <app-svg-icon [svgSource]="'arrow-circle-left'" [width]="'32px'" [height]="'32px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
+                    [attr.aria-label]="'View previous module'"
+                    [attr.aria-disabled]="isFirstPreview">
+                    <app-svg-icon 
+                        [svgSource]="'arrow-circle-left'" 
+                        [width]="'32px'" 
+                        [height]="'32px'" 
+                        [isTextColorAllowed]="true"
+                        [styleClasses]="isFirstPreview ? 'tw-text-yin-030' : 'tw-text-icon-primary'">
+                    </app-svg-icon>
                 </button>
                 <span class="tw-ml-10-px tw-mr-10-px tw-text-14-px tw-font-500 tw-text-text-primary tw-min-w-200-px tw-text-center">
-                    {{ currentModuleName | snakeCaseToSpaceCase }}
+                    {{ ('previewDialog.' + currentModuleName) | transloco }}
                 </span>
                 <button 
                     type="button"
-                    class="tw-flex tw-items-center tw-justify-center tw-w-32-px tw-h-32-px tw-cursor-pointer"
+                    [disabled]="isLastPreview"
+                    [class]="'tw-flex tw-items-center tw-justify-center tw-w-32-px tw-h-32-px'"
                     (click)="onNavigate('next')"
-                    [attr.aria-label]="'View next module'">
-                    <app-svg-icon [svgSource]="'arrow-circle-right'" [width]="'32px'" [height]="'32px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
+                    [attr.aria-label]="'View next module'"
+                    [attr.aria-disabled]="isLastPreview">
+                    <app-svg-icon 
+                        [svgSource]="'arrow-circle-right'" 
+                        [width]="'32px'" 
+                        [height]="'32px'"
+                        [isTextColorAllowed]="true"
+                        [styleClasses]="isLastPreview ? 'tw-text-yin-030' : 'tw-text-icon-primary'">
+                    </app-svg-icon>
                 </button>
             </div>
         }

@@ -10,9 +10,11 @@ import { ErrorStat } from 'src/app/core/models/db/error.model';
 import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { FormBuilder } from '@angular/forms';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { Sage50ReimbursableExportType, Sage50CCCExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -114,6 +116,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   currentMappingStats: MappingStats | null = null;
 
+  isMultiLineOptionForMapping: boolean = false;
+
   @ViewChild(CsvExportLogComponent) csvExportLogComponent!: CsvExportLogComponent;
 
   shouldShowExportLog: boolean = false;
@@ -127,6 +131,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private sage50ExportSettingService: Sage50ExportSettingsService,
+    private sage50ImportSettingService: Sage50ImportSettingsService,
     private mappingService: MappingService,
     private skipExportService: SkipExportService,
     private exportLogService: ExportLogService,
@@ -188,14 +193,19 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     }
     this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.RESOLVE_MAPPING_ERROR, {field: mappingType, stats: this.currentMappingStats});
 
-    // Fetch destination options and unmapped source attributes
+    // Fetch destination options, unmapped source attributes, and import settings to check if codes should be shown
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(destinationType, undefined, undefined),
-      this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName)
+      this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName),
+      this.sage50ImportSettingService.getSage50ImportSettings()
     ]).subscribe(
-      ([destinationResponse, mappingsResponse]) => {
+      ([destinationResponse, mappingsResponse, importSettings]) => {
         this.mappingDestinationOptions = destinationResponse.results;
         this.filteredMappings = mappingsResponse.results;
+
+        // Check if codes should be exposed for this destination field
+        this.isMultiLineOptionForMapping = importSettings?.import_settings?.import_code_fields?.includes(destinationType as Sage50ImportableField) || false;
+
         this.isMappingDialogLoading = false;
       },
       () => {

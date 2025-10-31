@@ -19,6 +19,10 @@ export class PreviewDialogComponent implements OnInit {
 
   @Input() currentModuleName: string;
 
+  @Input() isFirstPreview: boolean = false;
+
+  @Input() isLastPreview: boolean = false;
+
   @Output() closeDialog = new EventEmitter();
 
   @Output() navigatePreview = new EventEmitter<'next' | 'previous'>();

@@ -2668,5 +2668,10 @@
   },
   "integrations": {
     "reBrandedShortName": "Sage Exp Mgmt"
+  },
+  "previewDialog": {
+    "PURCHASES_RECEIVE_INVENTORY": "Purchases",
+    "PAYMENTS_JOURNAL": "Payments",
+    "GENERAL_JOURNAL_ENTRY": "General journal entry"
   }
 }

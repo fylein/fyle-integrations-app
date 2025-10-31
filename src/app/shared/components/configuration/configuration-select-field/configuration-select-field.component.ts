@@ -165,18 +165,19 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   updatePreviewDialog(exportType: string) {
-    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 && AppName.INTACCT ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
   }
 
   navigatePreview(direction: 'next' | 'previous') {
-    if (direction === 'next') {
-      this.currentExportTypeIndex = (this.currentExportTypeIndex + 1) % this.availableExportTypes.length;
-    } else {
-      this.currentExportTypeIndex = (this.currentExportTypeIndex - 1 + this.availableExportTypes.length) % this.availableExportTypes.length;
+    if (direction === 'next' && this.currentExportTypeIndex < this.availableExportTypes.length - 1) {
+      this.currentExportTypeIndex++;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
+    } else if (direction === 'previous' && this.currentExportTypeIndex > 0) {
+      this.currentExportTypeIndex--;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
     }
-    this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
   }
 
   closeDialog() {
