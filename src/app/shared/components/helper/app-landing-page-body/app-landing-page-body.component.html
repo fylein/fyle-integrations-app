@@ -1,5 +1,5 @@
 <div class="tw-flex tw-justify-center tw-text-center tw-flex-col" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyStyle">
-    @if (brandingFeatureConfig.shouldShowOnboardingYouTubeVideo) {
+    @if (brandingFeatureConfig.shouldShowOnboardingYouTubeVideo || appName === AppName.SAGE50) {
       <p *ngIf="!headlineText" class="tw-text-normal-text-color" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">{{ 'appLandingPageBody.simpleTutorial' | transloco }}</p>
       <p *ngIf="headlineText" class="tw-text-text-primary"  [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">{{ headlineText }}</p>
       <p class="tw-text-text-tertiary tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
