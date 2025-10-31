@@ -152,7 +152,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
           this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.IMPORT_SETTINGS, {
             phase: ProgressPhase.POST_ONBOARDING,
             oldState: this.importSettingsForm.value,
-            newState: this.importSettingsForm.value
+            newState: response
           });
         }
       },
