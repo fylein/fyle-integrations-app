@@ -1,0 +1,221 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Feature Verification Methodology
+
+## Core Principle
+**Never assume feature existence based on similar keywords or partial matches. Always verify the EXACT feature implementation first, then use fuzzy matching as secondary verification.**
+
+## Systematic Verification Process
+
+### 1. Primary Verification: Feature Name Precision
+- **EXACT match required**: Search for the exact feature name/field, not similar terms
+- **Avoid keyword confusion**: Features like "name in journal entry" ≠ "merchant in journal line"
+- **Check multiple variations**: camelCase, snake_case, kebab-case, etc.
+
+### 2. Four-Layer Verification Protocol
+For EVERY feature, verify existence in ALL four layers:
+
+#### Layer 1: HTML Template
+```bash
+# Search for exact form field/toggle
+grep -r "formControllerName.*exactFeatureName" 
+grep -r "ngIf.*exactFeatureName"
+```
+
+#### Layer 2: TypeScript Component  
+```bash
+# Search for form control and methods
+grep -r "FormControl.*exactFeatureName"
+grep -r "get.*exactFeatureName"
+```
+
+#### Layer 3: Data Model
+```bash
+# Search for exact field in model
+grep -r "exactFeatureName:" model-file.ts
+```
+
+#### Layer 4: Service Implementation
+```bash
+# Search for service methods and payload construction
+grep -r "exactFeatureName" service-file.ts
+```
+
+### 3. Secondary Verification: Fuzzy Feature Matching
+
+**ONLY after exact matching fails**, perform fuzzy verification to catch:
+- Slight naming variations (1-2 character differences)
+- Alternative implementations of the same functionality
+- Features with different naming conventions but same purpose
+
+#### Fuzzy Search Strategies:
+```bash
+# 1. Partial word matching (remove common suffixes/prefixes)
+grep -r "coreFeatureName" # Remove "auto", "use", "enable" etc.
+
+# 2. Keyword-based functional search
+grep -r "vendor.*create" # For "auto-create vendors"
+grep -r "merchant.*journal" # For "merchant in journal line"
+
+# 3. Purpose-based search
+grep -r "exclude.*card.*memo" # For memo customization features
+grep -r "split.*expense" # For expense grouping features
+```
+
+#### Fuzzy Verification Rules:
+1. **Functional equivalence**: Does the found feature serve the same business purpose?
+2. **Implementation completeness**: Is it a full implementation or partial/different feature?
+3. **User-facing behavior**: Would end users see the same functionality?
+
+#### Example Fuzzy Matching:
+```
+Primary search: "autoCreateVendors" -> No results
+Secondary search: "vendor.*create" -> Found "createVendorAutomatically" 
+Verification: Check if this serves same purpose as auto-create vendors
+Result: Functional equivalent found with different naming
+```
+
+### 4. Disambiguation Rules
+
+#### When Similar Features Exist:
+1. **List all similar features found**
+2. **Clearly distinguish each feature's purpose**
+3. **Verify which specific feature is being asked about**
+4. **Never conflate similar-sounding features**
+
+#### Example Disambiguation:
+```
+❌ WRONG: "Found 'merchant' in nameInJE, so 'merchant in journal line' exists"
+✅ CORRECT: 
+- "name in journal entry" (nameInJE) = Choose EMPLOYEE or MERCHANT name
+- "merchant in journal line" (useMerchantInJournalLine) = Boolean toggle for merchant data
+- These are DIFFERENT features, only first one exists
+```
+
+### 5. Cross-Integration Verification
+
+#### Before marking "does not exist":
+1. **Check other integrations** to understand the feature's true nature
+2. **Compare implementations** across integrations
+3. **Verify feature flags** in branding configs
+4. **Understand the business logic** behind the feature
+
+### 6. Evidence Documentation
+
+#### For EXISTS claims:
+- **HTML**: Exact line showing form field
+- **TypeScript**: Form control and validation logic  
+- **Model**: Field definition with correct type
+- **Service**: Payload construction and API handling
+- **Fuzzy match note**: If found via secondary search, document the naming variation
+
+#### For DOES NOT EXIST claims:
+- **Exhaustive search results**: "No matches found" for exact terms
+- **Fuzzy search results**: "No functional equivalents found" after secondary verification
+- **Similar feature clarification**: Explain what similar features DO exist
+- **Cross-integration comparison**: Show feature exists elsewhere but not here
+
+### 7. Verification Checklist
+
+Before finalizing any feature assessment:
+
+- [ ] Searched for EXACT feature name (not similar terms)
+- [ ] Verified all four layers (HTML, TS, Model, Service)
+- [ ] **IF EXACT FAILS**: Performed fuzzy matching for functional equivalents
+- [ ] **IF FUZZY SUCCEEDS**: Verified functional equivalence and completeness
+- [ ] Distinguished from similar-sounding features
+- [ ] Checked feature flags in branding configs
+- [ ] Compared with other integrations for context
+- [ ] Documented clear evidence for conclusion
+
+### 8. Red Flags to Avoid
+
+#### Dangerous Assumptions:
+- ❌ "Contains similar keywords" = feature exists
+- ❌ "Partial implementation" = full feature exists  
+- ❌ "Works in other integrations" = works here too
+- ❌ "Feature flag exists" = implementation exists
+- ❌ "Fuzzy match found" = exact feature exists (mark as functional equivalent)
+
+#### Safe Verification:
+- ✅ Exact string matches in code
+- ✅ Complete implementation across all layers
+- ✅ Working form controls and validation
+- ✅ API payload construction
+- ✅ Functional equivalence verified for fuzzy matches
+
+### 9. When in Doubt
+
+#### Always:
+1. **Search more specifically** with exact terms
+2. **Try fuzzy matching** if exact fails
+3. **Ask for clarification** on feature definition
+4. **Compare with reference implementations**
+5. **Document uncertainty** rather than guess
+
+#### Never:
+1. Assume based on partial evidence
+2. Conflate similar features
+3. Mark as "exists" without complete verification
+4. Skip any layer of the verification process
+5. Use fuzzy matching as primary verification
+
+## Implementation Example
+
+```typescript
+// WRONG approach:
+// Found "merchant" in nameInJE options, so "merchant in journal line" exists
+
+// CORRECT approach:
+// 1. Primary: grep -r "useMerchantInJournalLine" -> No results
+// 2. Primary: grep -r "use_merchant_in_journal_line" -> No results  
+// 3. Secondary: grep -r "merchant.*journal" -> Found nameInJE with MERCHANT option
+// 4. Verification: nameInJE ≠ useMerchantInJournalLine (different features)
+// 5. Cross-check: Other integrations have useMerchantInJournalLine boolean
+// 6. Conclusion: "merchant in journal line" does NOT exist in QBD-Direct
+//    (but "name in journal entry" with merchant option DOES exist)
+```
+
+## Advanced Fuzzy Matching Examples
+
+### Example 1: Auto-create Vendors
+```bash
+# Primary search fails
+grep -r "autoCreateVendors" -> No results
+
+# Secondary fuzzy search
+grep -r "vendor.*creat" -> Found "createVendorAutomatically: boolean"
+grep -r "auto.*vendor" -> Found form control and validation
+
+# Verification: Functional equivalent confirmed
+# Result: EXISTS (with naming variation)
+```
+
+### Example 2: Exclude Card Details in Memo
+```bash
+# Primary search fails  
+grep -r "excludeCardNumber" -> No results
+
+# Secondary fuzzy search
+grep -r "card.*memo" -> Found memo customization options
+grep -r "exclude.*memo" -> Found exclude patterns
+
+# Verification: Same functionality, different implementation
+# Result: EXISTS (via memo customization feature)
+```
+
+## Success Metrics
+
+This methodology succeeds when:
+- Zero false positives (marking non-existent features as existing)
+- Zero false negatives (missing functional equivalents due to naming variations)
+- Clear distinction between similar features
+- Comprehensive evidence for all conclusions
+- Proper documentation of exact vs fuzzy matches
+- Consistent verification across all feature assessments
+
+
+
