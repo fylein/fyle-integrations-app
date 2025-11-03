@@ -22,7 +22,6 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -96,8 +95,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     public brandingService: BrandingService,
-    private trackingService: TrackingService,
-    private storageService: StorageService
+    private trackingService: TrackingService
   ) { }
 
   public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
@@ -146,7 +144,6 @@ export class Sage50ImportSettingsComponent implements OnInit {
         this.importStatuses[field] = true;
       }
     });
-    this.storageService.set(`sage50_import_code_config_${this.workspaceService.getWorkspaceId()}`, this.importStatuses);
   }
 
   public onSave() {
@@ -454,10 +451,6 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importableChartOfAccounts = importableChartOfAccounts ?? null;
 
       this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
-      const localConfig = this.storageService.get(`sage50_import_code_config_${this.workspaceService.getWorkspaceId()}`);
-      if (localConfig) {
-        this.importStatuses = { ...this.importStatuses, ...localConfig };
-      }
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
         importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
