@@ -84,11 +84,6 @@
 
                 <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
 
-                <div class="tw-p-24-px tw-pt-0">
-                    <app-alert [type]="'info'" [variant]="'subtle-bordered'">
-                        <p>{{ 'sage50ExportSettings.reimbursableDefaultAccountPayableAccountInfo' | transloco }}</p>
-                    </app-alert>
-                </div>
             }
 
             @if (isPerDiemEnabled) {
@@ -108,6 +103,8 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
 
             @if (isMileageEnabled) {
@@ -127,6 +124,16 @@
                     [iconPath]="'list'"
                     [isMultiLineOption]="true"
                 ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
+            }
+
+            @if (showField('reimbursableDefaultAccountPayableAccount')) {
+                <div class="tw-p-24-px tw-pt-0">
+                    <app-alert [type]="'info'" [variant]="'subtle-bordered'">
+                        <p>{{ 'sage50ExportSettings.reimbursableDefaultAccountPayableAccountInfo' | transloco }}</p>
+                    </app-alert>
+                </div>
             }
         </div>
         }
