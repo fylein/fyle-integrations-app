@@ -116,8 +116,6 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   currentMappingStats: MappingStats | null = null;
 
-  isMultiLineOptionForMapping: boolean = false;
-
   @ViewChild(CsvExportLogComponent) csvExportLogComponent!: CsvExportLogComponent;
 
   shouldShowExportLog: boolean = false;
@@ -196,15 +194,11 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     // Fetch destination options, unmapped source attributes, and import settings to check if codes should be shown
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(destinationType, undefined, undefined),
-      this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName),
-      this.sage50ImportSettingService.getSage50ImportSettings()
+      this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName)
     ]).subscribe(
-      ([destinationResponse, mappingsResponse, importSettings]) => {
+      ([destinationResponse, mappingsResponse]) => {
         this.mappingDestinationOptions = destinationResponse.results;
         this.filteredMappings = mappingsResponse.results;
-
-        // Check if codes should be exposed for this destination field
-        this.isMultiLineOptionForMapping = importSettings?.import_settings?.import_code_fields?.includes(destinationType as Sage50ImportableField) || false;
 
         this.isMappingDialogLoading = false;
       },
