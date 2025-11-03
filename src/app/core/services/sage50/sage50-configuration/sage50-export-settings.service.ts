@@ -22,9 +22,11 @@ export const FIELD_DEPENDENCIES = new Map<keyof Sage50ExportSettingsForm, Depend
   ['reimbursableDefaultAccountPayableAccount', (form) =>
     form.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY
   ],
-  ['defaultPerDiemAccount', (form) => !!form.get('reimbursableExportType')?.value
+  ['defaultPerDiemAccount', (form) =>
+    !!form.get('reimbursableExportType')?.value
   ],
-  ['defaultMileageAccount', (form) => !!form.get('reimbursableExportType')?.value
+  ['defaultMileageAccount', (form) =>
+    !!form.get('reimbursableExportType')?.value
   ],
   ['reimbursableExpenseState', (form) =>
     !!form.get('reimbursableExportType')?.value
