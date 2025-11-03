@@ -166,6 +166,7 @@ export class CsvExportLogComponent implements OnInit {
         this.dateOptions = this.accountingExportService.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
+        this.applyFilters();
       } else if (dateRange.length && dateRange[1]) {
         this.hideCalendar = true;
         this.selectedDateFilter = {
@@ -178,8 +179,8 @@ export class CsvExportLogComponent implements OnInit {
         setTimeout(() => {
           this.hideCalendar = false;
         }, 10);
+        this.applyFilters();
       }
-      this.applyFilters();
     });
   }
 
