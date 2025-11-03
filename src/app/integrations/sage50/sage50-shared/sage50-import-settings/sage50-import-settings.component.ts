@@ -22,6 +22,7 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-sage50-import-settings',
@@ -95,7 +96,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     public brandingService: BrandingService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private storageService: StorageService
   ) { }
 
   public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
@@ -138,6 +140,15 @@ export class Sage50ImportSettingsComponent implements OnInit {
     this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
   }
 
+  private updateImportCodeFieldConfig(): void {
+    Object.values(Sage50ImportableField).forEach((field) => {
+      if (this.importSettingsForm.get(field)?.get('importCode')?.value !== null) {
+        this.importStatuses[field] = true;
+      }
+    });
+    this.storageService.set(`sage50_import_code_config_${this.workspaceService.getWorkspaceId()}`, this.importStatuses);
+  }
+
   public onSave() {
     this.isSaveInProgress = true;
     this.importSettingService.constructPayloadAndPost(this.importSettingsForm).subscribe({
@@ -146,6 +157,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
         this.toastService.displayToastMessage(
           ToastSeverity.SUCCESS, this.translocoService.translate('sage50ImportSettings.importSettingsSavedSuccess')
         );
+        this.updateImportCodeFieldConfig();
         if (this.isOnboarding) {
           this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.IMPORT_SETTINGS, 3, response);
           this.workspaceService.setOnboardingState(Sage50OnboardingState.ADVANCED_SETTINGS);
@@ -442,6 +454,10 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.importableChartOfAccounts = importableChartOfAccounts ?? null;
 
       this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
+      const localConfig = this.storageService.get(`sage50_import_code_config_${this.workspaceService.getWorkspaceId()}`);
+      if (localConfig) {
+        this.importStatuses = { ...this.importStatuses, ...localConfig };
+      }
 
       this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
         importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
