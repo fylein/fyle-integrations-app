@@ -212,8 +212,10 @@
         [iconPath]="exportTypeIconPath" 
         (closeDialog)="closeDialog()" 
         [header]="dialogHeader"
-        [showNavigation]="appName === AppName.SAGE50 && showExportPreview && false"
+        [showNavigation]="appName === AppName.SAGE50 && showExportPreview"
         [currentModuleName]="availableExportTypes[currentExportTypeIndex]"
+        [isFirstPreview]="currentExportTypeIndex === 0"
+        [isLastPreview]="currentExportTypeIndex === availableExportTypes.length - 1"
         (navigatePreview)="navigatePreview($event)">
     </app-preview-dialog>
 </div>
