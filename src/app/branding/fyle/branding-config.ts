@@ -177,11 +177,11 @@ export const fyleKbArticles: KbArticle[string] = {
     postOnboardingArticles: {
         // TODO(sage50): Update links
         SAGE50: {
-            JOB: `${brandingConfig.helpArticleDomain}`,
-            PHASE: `${brandingConfig.helpArticleDomain}`,
-            VENDOR: `${brandingConfig.helpArticleDomain}`,
-            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
-            COST_CODE: `${brandingConfig.helpArticleDomain}`,
+            JOB: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            PHASE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            VENDOR: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
             EXPORT_LOG: `${brandingConfig.helpArticleDomain}/en/articles/12710101-how-to-export-expenses-from-sage-expense-management-to-sage-50-us#h_5309128026`
         }
     }
