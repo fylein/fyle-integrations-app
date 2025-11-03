@@ -90,6 +90,44 @@
                     </app-alert>
                 </div>
             }
+
+            @if (isPerDiemEnabled) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.defaultPerDiemAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.defaultPerDiemAccountSubLabel' | transloco"
+                    [formControllerName]="'defaultPerDiemAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.defaultPerDiemAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isMultiLineOption]="true"
+                ></app-configuration-select-field>
+            }
+
+            @if (isMileageEnabled) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.defaultMileageAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.defaultMileageAccountSubLabel' | transloco"
+                    [formControllerName]="'defaultMileageAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.defaultMileageAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isMultiLineOption]="true"
+                ></app-configuration-select-field>
+            }
         </div>
         }
 
