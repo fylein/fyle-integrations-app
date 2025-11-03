@@ -2541,7 +2541,7 @@
     "noVendorsAlertTitle": "No vendors found.",
     "noVendorsAlertMessage": "Please go back to prerequisites and upload your Vendor CSV.",
     "noVendorsAlertTip": "Tip: Uploading your full vendor list ensures all mappings work correctly.",
-    "reimbursableDefaultAccountPayableAccountInfo": "Employees will be auto-mapped to Sage 50 vendors. When exporting as purchases, reimbursable expenses will be recorded against the corresponding vendor for each employee"
+    "reimbursableDefaultAccountPayableAccountInfo": "Employees will be auto-mapped to Sage 50 vendors. When exporting as purchases, reimbursable expenses will be recorded against the corresponding vendor for each employee."
   },
   "sage50ImportSettings": {
     "headerText": "Import settings",
