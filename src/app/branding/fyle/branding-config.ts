@@ -175,7 +175,6 @@ export const fyleKbArticles: KbArticle[string] = {
         }
     },
     postOnboardingArticles: {
-        // TODO(sage50): Update links
         SAGE50: {
             JOB: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
             PHASE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,

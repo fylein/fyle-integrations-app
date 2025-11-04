@@ -114,6 +114,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   showPurchasesExportWarning: boolean = false;
 
+  // State
   selectedExportTypeName: string;
 
   vendorUploadDialogRef?: DynamicDialogRef;
@@ -125,6 +126,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
     previousValue: Sage50CCCExportType | null;
     newValue: Sage50CCCExportType;
   } | null = null;
+
+  // API response
+  exportSettingsResponse: Sage50ExportSettingsGet | null;
 
   // Subject for advanced search
   optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
@@ -171,7 +175,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   onSave(): void {
     this.isSaveInProgress = true;
-    this.exportSettingService.constructPayloadAndPost(this.exportSettingsForm).subscribe({
+    this.exportSettingService.constructPayloadAndPost(
+      this.exportSettingsForm, this.exportSettingsResponse, this.isReimbursableEnabled, this.isCCCEnabled
+    ).subscribe({
       next: (response: void) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(
@@ -473,6 +479,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
       ...attributesByAccountType,
       this.mappingService.getVendors()
     ]).subscribe(([exportSettings, workspaces, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
+
+      this.exportSettingsResponse = exportSettings;
 
       // Set the payment method enabled flags based on the workspace settings
       const paymentModes = workspaces?.[0]?.org_settings?.enabled_payment_modes;
