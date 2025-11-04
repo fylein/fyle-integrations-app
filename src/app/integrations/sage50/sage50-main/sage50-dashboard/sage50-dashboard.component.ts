@@ -3,7 +3,7 @@ import { Subject, forkJoin, interval, from, Observable } from 'rxjs';
 import { map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType, TrackingApp, ClickEvent, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ErrorStat } from 'src/app/core/models/db/error.model';
@@ -30,6 +30,8 @@ import { SkipExportList, SkipExportLogResponse } from 'src/app/core/models/intac
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sage50-dashboard',
@@ -134,7 +136,8 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     private skipExportService: SkipExportService,
     private exportLogService: ExportLogService,
     private translocoService: TranslocoService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private refinerService: RefinerService
   ) { }
 
   export() {
@@ -166,6 +169,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           this.isExportInProgress = false;
           this.csvExportLogComponent.applyFilters();
       }
+
+      this.refinerService.triggerSurvey(
+        AppName.SAGE50, environment.refiner_survey.sage50.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+      );
     });
   }
 
