@@ -120,15 +120,30 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     );
   }
 
-  constructPayloadAndPost(form: FormGroup<Sage50ExportSettingsForm>): Observable<void> {
+  constructPayloadAndPost(
+    form: FormGroup<Sage50ExportSettingsForm>,
+    exportSettingsResponse: Sage50ExportSettingsGet | null,
+    isReimbursableEnabled: boolean,
+    isCCCEnabled: boolean
+  ): Observable<void> {
+    const reimbursableExportType =
+      isReimbursableEnabled ?
+        form.get('reimbursableExportType')?.value :
+        exportSettingsResponse?.reimbursable_expense_export_type ?? null;
+
+    const cccExportType =
+      isCCCEnabled ?
+        form.get('cccExportType')?.value :
+        exportSettingsResponse?.credit_card_expense_export_type ?? null;
+
     return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {
-      reimbursable_expense_export_type: form.get('reimbursableExportType')?.value,
+      reimbursable_expense_export_type: reimbursableExportType,
       reimbursable_expense_state: form.get('reimbursableExpenseState')?.value,
       reimbursable_expense_date: form.get('reimbursableExportDate')?.value,
       reimbursable_expense_grouped_by: form.get('reimbursableExportGroup')?.value,
       reimbursable_default_credit_line_account: form.get('reimbursableDefaultCreditLineAccount')?.value?.id,
       reimbursable_default_account_payable_account: form.get('reimbursableDefaultAccountPayableAccount')?.value?.id,
-      credit_card_expense_export_type: form.get('cccExportType')?.value,
+      credit_card_expense_export_type: cccExportType,
       credit_card_expense_state: form.get('cccExpenseState')?.value,
       credit_card_expense_date: form.get('cccExportDate')?.value,
       credit_card_expense_grouped_by: form.get('cccExportGroup')?.value,
