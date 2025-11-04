@@ -188,15 +188,15 @@ export const fyleKbArticles: KbArticle[string] = {
 
 export const fyleDemoVideoLinks: DemoVideo[string] = {
     onboarding: {
-        INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-        SAGE300: 'https://www.youtube.com/embed/KTJ6IF271bc',
-        QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
+        INTACCT: 'https://www.youtube.com/embed/x40f7X08KXM',
+        SAGE300: 'https://www.youtube.com/embed/3P1eUe9uVdg',
+        QBO: 'https://www.youtube.com/embed/HUwzAEQVgd4',
         // TODO: Update link for MS Dynamics
         BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-        XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
-        NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8',
-        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
+        XERO: 'https://www.youtube.com/embed/61DoD8Zpu_U',
+        NETSUITE: 'https://www.youtube.com/embed/5T9Fz7iUtIQ',
+        QBD_DIRECT: 'https://www.youtube.com/embed/7JATuzpmoo8',
         SAGE50: 'https://www.youtube.com/embed/gexzZstip5o'
     },
     postOnboarding: {
