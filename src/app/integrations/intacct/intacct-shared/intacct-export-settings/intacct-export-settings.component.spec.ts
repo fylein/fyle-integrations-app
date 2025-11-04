@@ -329,7 +329,7 @@ describe('IntacctExportSettingsComponent', () => {
         component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
         tick();
 
-        expect(component.exportSettingsForm.get('employeeFieldMapping')?.enabled).toBeTrue();
+        expect(component.exportSettingsForm.get('employeeFieldMapping')?.enabled).toBeFalse();
         expect(component.exportSettingsForm.get('creditCard')?.hasValidator(Validators.required)).toBeTrue();
       }));
     });

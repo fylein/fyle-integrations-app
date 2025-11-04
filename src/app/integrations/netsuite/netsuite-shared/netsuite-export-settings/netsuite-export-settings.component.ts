@@ -157,9 +157,19 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       } else if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT) {
         this.exportSettingForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
         this.exportSettingForm.controls.employeeFieldMapping.disable();
-      } else if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.BILL) {
+      }
+
+      if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.BILL) {
         this.exportSettingForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         this.exportSettingForm.controls.employeeFieldMapping.disable();
+        this.creditCardExportTypes = this.creditCardExportTypes.filter(
+          option => option.value !== NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+        );
+        if (this.exportSettingForm.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+          this.exportSettingForm.controls.creditCardExportType.setValue(null);
+        }
+      } else {
+        this.creditCardExportTypes = this.netsuiteExportSettingsService.getCreditCardExportTypes();
       }
     });
     this.exportSettingForm.controls.employeeFieldMapping.valueChanges.subscribe((isemployeeFieldMappingSelected) => {
