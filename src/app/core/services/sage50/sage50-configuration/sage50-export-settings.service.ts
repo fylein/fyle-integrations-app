@@ -129,12 +129,12 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     const reimbursableExportType =
       isReimbursableEnabled ?
         form.get('reimbursableExportType')?.value :
-        exportSettingsResponse?.reimbursable_expense_export_type;
+        exportSettingsResponse?.reimbursable_expense_export_type ?? null;
 
     const cccExportType =
       isCCCEnabled ?
         form.get('cccExportType')?.value :
-        exportSettingsResponse?.credit_card_expense_export_type;
+        exportSettingsResponse?.credit_card_expense_export_type ?? null;
 
     return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/settings/export_settings/`, {
       reimbursable_expense_export_type: reimbursableExportType,
