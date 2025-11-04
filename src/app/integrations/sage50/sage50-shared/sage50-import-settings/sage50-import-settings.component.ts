@@ -138,6 +138,14 @@ export class Sage50ImportSettingsComponent implements OnInit {
     this.router.navigate(['/integrations/sage50/onboarding/export_settings']);
   }
 
+  private updateImportCodeFieldConfig(): void {
+    Object.values(Sage50ImportableField).forEach((field) => {
+      if (this.importSettingsForm.get(field)?.get('importCode')?.value !== null) {
+        this.importStatuses[field] = true;
+      }
+    });
+  }
+
   public onSave() {
     this.isSaveInProgress = true;
     this.importSettingService.constructPayloadAndPost(this.importSettingsForm).subscribe({
@@ -146,6 +154,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
         this.toastService.displayToastMessage(
           ToastSeverity.SUCCESS, this.translocoService.translate('sage50ImportSettings.importSettingsSavedSuccess')
         );
+        this.updateImportCodeFieldConfig();
         if (this.isOnboarding) {
           this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.IMPORT_SETTINGS, 3, response);
           this.workspaceService.setOnboardingState(Sage50OnboardingState.ADVANCED_SETTINGS);
