@@ -193,8 +193,8 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     apiResponse: Sage50ExportSettingsGet | null,
     isReimbursableEnabled: boolean,
     isCCCEnabled: boolean,
-    isPerDiemEnabled: boolean = false,
-    isMileageEnabled: boolean = false
+    isPerDiemEnabled: boolean,
+    isMileageEnabled: boolean
   ): FormGroup<Sage50ExportSettingsForm> {
     const { reimbursableExpenses, cccExpenses } = this.getEnabledExportTypes(apiResponse, isReimbursableEnabled, isCCCEnabled);
 
