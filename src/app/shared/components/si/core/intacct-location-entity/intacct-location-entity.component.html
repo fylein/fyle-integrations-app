@@ -14,7 +14,7 @@
     <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
       <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 align-center tw-cursor-default">
-          {{(brandingConfig.brandName | sentenceCase)}}
+          {{(brandingConfig.brandName)}}
         </h5>
         <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
           {{ fyleOrgName | trimCharacter: 26 }}
