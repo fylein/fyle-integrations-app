@@ -112,6 +112,10 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   isCCCExportGroupEditable = true;
 
+  isPerDiemEnabled = false;
+
+  isMileageEnabled = false;
+
   showPurchasesExportWarning: boolean = false;
 
   // State
@@ -331,6 +335,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
     const extraAccountOptions = [
       exportSettings?.reimbursable_default_credit_line_account,
       exportSettings?.reimbursable_default_account_payable_account,
+      exportSettings?.default_per_diem_account,
+      exportSettings?.default_mileage_account,
       exportSettings?.ccc_default_credit_line_account,
       exportSettings?.ccc_default_account_payable_account,
       exportSettings?.default_cash_account
@@ -489,6 +495,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
         this.isCCCEnabled = paymentModes.includes("CREDIT_CARD");
       }
 
+      this.isPerDiemEnabled = workspaces?.[0]?.org_settings.is_per_diem_enabled ?? false;
+      this.isMileageEnabled = workspaces?.[0]?.org_settings.is_mileage_enabled ?? false;
+
       this.accounts = [
         ...accountsPayable.results,
         ...longTermLiabilities.results,
@@ -498,7 +507,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
       this.vendors = vendors.results;
 
       this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
-        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled
+        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled, this.isPerDiemEnabled, this.isMileageEnabled
       );
 
       // Initialize tracking variable for warning dialog with current form value

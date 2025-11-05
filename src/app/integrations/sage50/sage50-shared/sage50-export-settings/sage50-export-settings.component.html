@@ -84,6 +84,51 @@
 
                 <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
 
+            }
+
+            @if (isPerDiemEnabled && showField('defaultPerDiemAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.defaultPerDiemAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.defaultPerDiemAccountSubLabel' | transloco"
+                    [formControllerName]="'defaultPerDiemAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.defaultPerDiemAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isMultiLineOption]="true"
+                ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
+            }
+
+            @if (isMileageEnabled && showField('defaultMileageAccount')) {
+                <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [label]="'sage50ExportSettings.defaultMileageAccountLabel' | transloco"
+                    [subLabel]="'sage50ExportSettings.defaultMileageAccountSubLabel' | transloco"
+                    [formControllerName]="'defaultMileageAccount'"
+                    [destinationAttributes]="accounts"
+                    [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.ACCOUNT"
+                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                    [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="onAdvancedSearch($event)"
+                    [placeholder]="'sage50ExportSettings.defaultMileageAccountPlaceholder' | transloco"
+                    [isFieldMandatory]="true"
+                    [appName]="appName"
+                    [iconPath]="'list'"
+                    [isMultiLineOption]="true"
+                ></app-configuration-select-field>
+
+                <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
+            }
+
+            @if (showField('reimbursableDefaultAccountPayableAccount')) {
                 <div class="tw-p-24-px tw-pt-0">
                     <app-alert [type]="'info'" [variant]="'subtle-bordered'">
                         <p>{{ 'sage50ExportSettings.reimbursableDefaultAccountPayableAccountInfo' | transloco }}</p>
