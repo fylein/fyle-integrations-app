@@ -507,7 +507,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
       this.vendors = vendors.results;
 
       this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
-        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled
+        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled, this.isPerDiemEnabled, this.isMileageEnabled
       );
 
       // Initialize tracking variable for warning dialog with current form value

@@ -189,7 +189,13 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
     };
   }
 
-  mapApiResponseToFormGroup(apiResponse: Sage50ExportSettingsGet | null, isReimbursableEnabled: boolean, isCCCEnabled: boolean): FormGroup<Sage50ExportSettingsForm> {
+  mapApiResponseToFormGroup(
+    apiResponse: Sage50ExportSettingsGet | null,
+    isReimbursableEnabled: boolean,
+    isCCCEnabled: boolean,
+    isPerDiemEnabled: boolean = false,
+    isMileageEnabled: boolean = false
+  ): FormGroup<Sage50ExportSettingsForm> {
     const { reimbursableExpenses, cccExpenses } = this.getEnabledExportTypes(apiResponse, isReimbursableEnabled, isCCCEnabled);
 
     return new FormGroup<Sage50ExportSettingsForm>({
@@ -232,6 +238,13 @@ export class Sage50ExportSettingsService extends ExportSettingsService {
           // If a field is required and empty, add an error
           const condition = FIELD_DEPENDENCIES.get(key as keyof Sage50ExportSettingsForm);
           if (condition && condition(form) && !form.get(key)?.value) {
+            // Additional check for feature-flag-dependent fields
+            if (key === 'defaultPerDiemAccount' && !isPerDiemEnabled) {
+              continue; // Skip validation if per diem is not enabled
+            }
+            if (key === 'defaultMileageAccount' && !isMileageEnabled) {
+              continue; // Skip validation if mileage is not enabled
+            }
             errors[key] = {
               required: true
             };
