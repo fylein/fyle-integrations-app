@@ -86,7 +86,7 @@
 
             }
 
-            @if (isPerDiemEnabled) {
+            @if (isPerDiemEnabled && showField('defaultPerDiemAccount')) {
                 <app-configuration-select-field
                     [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.defaultPerDiemAccountLabel' | transloco"
@@ -107,7 +107,7 @@
                 <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
             }
 
-            @if (isMileageEnabled) {
+            @if (isMileageEnabled && showField('defaultMileageAccount')) {
                 <app-configuration-select-field
                     [form]="exportSettingsForm"
                     [label]="'sage50ExportSettings.defaultMileageAccountLabel' | transloco"
