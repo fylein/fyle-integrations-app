@@ -20,7 +20,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
     shouldShowXeroPreviewImage: false,
-    shouldShowOnboardingYouTubeVideo: false,
+    shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: true,
     footerButtonsRightAligned: false,
     useMainMenuForSubmenu: false,
