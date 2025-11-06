@@ -957,11 +957,11 @@ p {
 }
 
 .mapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important}
+    @apply tw-text-[13px] tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-success-light tw-bg-bg-success-light tw-py-4-px tw-px-10-px tw-text-text-success tw-w-fit #{!important};
 }
 
 .unmapped {
-    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
+    @apply tw-text-[13px] tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important};
 }
 
 .p-calendar .p-inputtext {
