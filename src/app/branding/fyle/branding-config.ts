@@ -196,7 +196,7 @@ export const fyleDemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/61DoD8Zpu_U',
         NETSUITE: 'https://www.youtube.com/embed/5T9Fz7iUtIQ',
-        QBD_DIRECT: 'https://www.youtube.com/embed/7JATuzpmoo8',
+        QBD_DIRECT: 'https://www.youtube.com/embed/6KGhTU_OGes',
         SAGE50: 'https://www.youtube.com/embed/gexzZstip5o'
     },
     postOnboarding: {
