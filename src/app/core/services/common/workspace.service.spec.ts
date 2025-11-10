@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { QBDOnboardingState } from '../../models/enum/enum.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('WorkspaceService', () => {
+describe('WorkspaceService', () => {
   let service: WorkspaceService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

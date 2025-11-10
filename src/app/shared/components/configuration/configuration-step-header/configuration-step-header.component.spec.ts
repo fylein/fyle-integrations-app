@@ -4,7 +4,7 @@ import { ConfigurationStepHeaderComponent } from './configuration-step-header.co
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('ConfigurationStepHeaderComponent', () => {
+describe('ConfigurationStepHeaderComponent', () => {
   let component: ConfigurationStepHeaderComponent;
   let fixture: ComponentFixture<ConfigurationStepHeaderComponent>;
 

@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppLandingPageHeaderComponent } from './app-landing-page-header.component';
 
-xdescribe('AppLandingPageHeaderComponent', () => {
+describe('AppLandingPageHeaderComponent', () => {
   let component: AppLandingPageHeaderComponent;
   let fixture: ComponentFixture<AppLandingPageHeaderComponent>;
   let router: Router;

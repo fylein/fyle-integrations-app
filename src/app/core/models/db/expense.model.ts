@@ -24,13 +24,13 @@ export type Expense = {
     cost_center: string;
     purpose: string;
     report_id: string;
-    spent_at: string;
+    spent_at: Date;
     approved_at: Date;
     posted_at: Date;
     expense_created_at: Date;
     expense_updated_at: Date;
     created_at: Date;
-    updated_at: string;
+    updated_at: Date;
     fund_source: 'PERSONAL' | 'CCC';
     verified_at: Date;
     custom_properties: any[];

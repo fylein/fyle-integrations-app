@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UqboUonboardingService } from './qbo-onboarding.service';
+import { QboOnboardingService } from './qbo-onboarding.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UqboUonboardingService', () => {
-  let service: UqboUonboardingService;
+describe('QboOnboardingService', () => {
+  let service: QboOnboardingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UqboUonboardingService,
+        QboOnboardingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UqboUonboardingService);
+    service = TestBed.inject(QboOnboardingService);
   });
 
   it('should be created', () => {

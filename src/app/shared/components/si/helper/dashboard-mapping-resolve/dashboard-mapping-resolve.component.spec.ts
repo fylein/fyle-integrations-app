@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardMappingResolveComponent } from './dashboard-mapping-resolve.component';
 
-xdescribe('DashboardMappingResolveComponent', () => {
+describe('DashboardMappingResolveComponent', () => {
   let component: DashboardMappingResolveComponent;
   let fixture: ComponentFixture<DashboardMappingResolveComponent>;
 

@@ -4,7 +4,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { minimalUser } from '../../interceptor/jwt.fixture';
 
-xdescribe('UserService', () => {
+describe('UserService', () => {
   let service: UserService;
   let injector: TestBed;
 

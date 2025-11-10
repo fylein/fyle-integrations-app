@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardIntacctErrorsComponent } from './dashboard-intacct-errors.component';
 
-xdescribe('DashboardIntacctErrorsComponent', () => {
+describe('DashboardIntacctErrorsComponent', () => {
   let component: DashboardIntacctErrorsComponent;
   let fixture: ComponentFixture<DashboardIntacctErrorsComponent>;
 

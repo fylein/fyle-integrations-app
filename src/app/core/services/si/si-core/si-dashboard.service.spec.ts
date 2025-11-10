@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UsiUdashboardService } from './si-dashboard.service';
+import { DashboardService } from './si-dashboard.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UsiUdashboardService', () => {
-  let service: UsiUdashboardService;
+describe('DashboardService', () => {
+  let service: DashboardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UsiUdashboardService,
+        DashboardService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UsiUdashboardService);
+    service = TestBed.inject(DashboardService);
   });
 
   it('should be created', () => {

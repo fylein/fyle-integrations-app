@@ -8,7 +8,7 @@ import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 
 import { QBDExportSettingResponse, QBDExportSettingResponse2 } from 'src/app/integrations/qbd/qbd-shared/qbd-export-setting/qbd-export-setting.fixture';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdMappingService', () => {
+describe('QbdMappingService', () => {
   let service: QbdMappingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

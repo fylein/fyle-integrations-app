@@ -3,7 +3,7 @@ import { QBDExportDateType } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationLabelComponent } from './configuration-label.component';
 
-xdescribe('ConfigurationLabelComponent', () => {
+describe('ConfigurationLabelComponent', () => {
   let component: ConfigurationLabelComponent;
   let fixture: ComponentFixture<ConfigurationLabelComponent>;
 

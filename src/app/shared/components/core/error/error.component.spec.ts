@@ -3,7 +3,7 @@ import { MessageService } from 'primeng/api';
 
 import { ErrorComponent } from './error.component';
 
-xdescribe('ErrorComponent', () => {
+describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
 

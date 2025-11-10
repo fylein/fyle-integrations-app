@@ -7,7 +7,7 @@ import { QbdAdvancedSettingsService } from './qbd-advanced-settings.service';
 import { QBDAdvancedSettingsGet, QBDAdvancedSettingsPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdAdvancedSettingsService', () => {
+describe('QbdAdvancedSettingsService', () => {
   let service: QbdAdvancedSettingsService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

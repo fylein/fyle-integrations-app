@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardExportLogDialogComponent } from './dashboard-export-log-dialog.component';
 
-xdescribe('DashboardExportLogDialogComponent', () => {
+describe('DashboardExportLogDialogComponent', () => {
   let component: DashboardExportLogDialogComponent;
   let fixture: ComponentFixture<DashboardExportLogDialogComponent>;
 
