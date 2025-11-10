@@ -14,9 +14,10 @@ import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-generic-mapping-v2',
-  templateUrl: './generic-mapping-v2.component.html',
-  styleUrls: ['./generic-mapping-v2.component.scss']
+    selector: 'app-generic-mapping-v2',
+    templateUrl: './generic-mapping-v2.component.html',
+    styleUrls: ['./generic-mapping-v2.component.scss'],
+    standalone: false
 })
 export class GenericMappingV2Component implements OnInit {
 

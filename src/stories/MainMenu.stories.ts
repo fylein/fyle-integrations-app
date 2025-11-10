@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { TabMenuModule } from 'primeng/tabmenu';
+
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { MainMenuComponent } from 'src/app/shared/components/menu/main-menu/main-menu.component';
 
@@ -17,7 +17,7 @@ const meta: Meta<MainMenuComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [MainMenuComponent],
-      imports: [CommonModule, TabMenuModule, RouterModule],
+      imports: [CommonModule,   RouterModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: {

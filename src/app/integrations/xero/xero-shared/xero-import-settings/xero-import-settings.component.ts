@@ -23,9 +23,10 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-xero-import-settings',
-  templateUrl: './xero-import-settings.component.html',
-  styleUrls: ['./xero-import-settings.component.scss']
+    selector: 'app-xero-import-settings',
+    templateUrl: './xero-import-settings.component.html',
+    styleUrls: ['./xero-import-settings.component.scss'],
+    standalone: false
 })
 export class XeroImportSettingsComponent implements OnInit {
 

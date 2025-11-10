@@ -11,12 +11,11 @@ import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-impo
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-configuration-csv-upload-field',
-  standalone: true,
-  imports: [CommonModule, TranslocoModule, SharedModule, CsvUploadButtonComponent],
-  providers: [DialogService],
-  templateUrl: './configuration-csv-upload-field.component.html',
-  styleUrl: './configuration-csv-upload-field.component.scss'
+    selector: 'app-configuration-csv-upload-field',
+    imports: [CommonModule, TranslocoModule, SharedModule, CsvUploadButtonComponent],
+    providers: [DialogService],
+    templateUrl: './configuration-csv-upload-field.component.html',
+    styleUrl: './configuration-csv-upload-field.component.scss'
 })
 export class ConfigurationCsvUploadFieldComponent {
 
@@ -42,7 +41,7 @@ export class ConfigurationCsvUploadFieldComponent {
 
   readonly ButtonSize = ButtonSize;
 
-  ref?: DynamicDialogRef;
+  ref?: DynamicDialogRef | null;
 
   constructor(
     public dialogService: DialogService,
@@ -62,7 +61,7 @@ export class ConfigurationCsvUploadFieldComponent {
       }
     });
 
-    this.ref.onClose.subscribe((file: UploadedCSVFile | undefined) => {
+    this.ref?.onClose.subscribe((file: UploadedCSVFile | undefined) => {
       if (file?.name) {
         // Dialog was closed with a filename (successful upload)
         this.fileName = file.name;

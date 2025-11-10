@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { EventsService } from './core/services/common/events.service';
 import { brandingStyle } from './branding/branding-config';
 import { NavigationEnd, Router } from '@angular/router';
+import { PrimeNG } from 'primeng/config';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
 
@@ -16,7 +18,7 @@ export class AppComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig,
+    private primengConfig: PrimeNG,
     private router: Router
   ) { }
 
@@ -31,6 +33,6 @@ export class AppComponent implements OnInit {
       }
     });
     this.eventsService.receiveEvent();
-    this.primengConfig.ripple = true;
+    this.primengConfig.ripple.set(true);
   }
 }

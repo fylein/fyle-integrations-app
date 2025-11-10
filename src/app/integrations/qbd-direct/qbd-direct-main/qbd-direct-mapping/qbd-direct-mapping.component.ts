@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
@@ -12,19 +12,18 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-mapping',
-  standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-mapping.component.html',
-  styleUrl: './qbd-direct-mapping.component.scss'
+    selector: 'app-qbd-direct-mapping',
+    imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-mapping.component.html',
+    styleUrl: './qbd-direct-mapping.component.scss'
 })
 export class QbdDirectMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[];
+  mappingPages: TabMenuItem[];
 
-  activeModule: MenuItem;
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -48,7 +47,8 @@ export class QbdDirectMappingComponent implements OnInit {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
-              routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+              routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
+              value: 'mapping'
             });
           }
         });
@@ -56,15 +56,15 @@ export class QbdDirectMappingComponent implements OnInit {
       if (!brandingFeatureConfig.featureFlags.mapEmployees) {
         this.mappingPages.splice(0, 1);
       }
-      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.router.navigateByUrl(this.mappingPages[0].routerLink!);
       this.isLoading = false;
     });
   }
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee'},
-      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category'}
+      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee', value: 'employee'},
+      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category', value: 'category'}
     ];
     this.setupPage();
   }

@@ -1,5 +1,13 @@
 <div class="tw-flex tw-justify-between tw-bg-white main-menu-tabs tw-border-b-1-px tw-border-border-tertiary" [ngClass]="[brandingStyle.dashboard.dashboardMainMenu, styleClasses]">
-    <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
+    <p-tabs [value]="activeItem" (valueChange)="onTabChange($event)">
+        <p-tablist>
+            @for (module of modules; track module.value) {
+                <p-tab [value]="module.value">
+                    {{ module.label }}
+                </p-tab>
+            }
+        </p-tablist>
+    </p-tabs>
 
     <div class="tw-flex tw-items-center tw-gap-10-px main-menu-tab-btns">
 
@@ -57,7 +65,7 @@
         }
 
         @if (!brandingFeatureConfig.isDashboardButtonOutlined && showMoreDropdown) {
-            <p-dropdown
+            <p-select
                 [(ngModel)]="dropdownValue"
                 (onChange)="handleDropdownChange($event)"
                 (onClick)="handleDropdownClick()"
@@ -85,7 +93,7 @@
                         </span>
                     }
                 </ng-template>
-            </p-dropdown>
+            </p-select>
         }
     </div>
 </div>

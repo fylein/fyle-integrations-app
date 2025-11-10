@@ -23,9 +23,10 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-netsuite-export-settings',
-  templateUrl: './netsuite-export-settings.component.html',
-  styleUrls: ['./netsuite-export-settings.component.scss']
+    selector: 'app-netsuite-export-settings',
+    templateUrl: './netsuite-export-settings.component.html',
+    styleUrls: ['./netsuite-export-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteExportSettingsComponent implements OnInit {
 

@@ -21,11 +21,10 @@ import { environment } from 'src/environments/environment';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-dashboard',
-  standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-dashboard.component.html',
-  styleUrl: './qbd-direct-dashboard.component.scss'
+    selector: 'app-qbd-direct-dashboard',
+    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-dashboard.component.html',
+    styleUrl: './qbd-direct-dashboard.component.scss'
 })
 export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 

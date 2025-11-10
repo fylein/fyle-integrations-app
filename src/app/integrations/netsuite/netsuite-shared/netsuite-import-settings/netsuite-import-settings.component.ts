@@ -22,9 +22,10 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-netsuite-import-settings',
-  templateUrl: './netsuite-import-settings.component.html',
-  styleUrls: ['./netsuite-import-settings.component.scss']
+    selector: 'app-netsuite-import-settings',
+    templateUrl: './netsuite-import-settings.component.html',
+    styleUrls: ['./netsuite-import-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteImportSettingsComponent implements OnInit {
 

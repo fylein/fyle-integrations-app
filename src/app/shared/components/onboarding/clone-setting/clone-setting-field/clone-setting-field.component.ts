@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-clone-setting-field',
-  templateUrl: './clone-setting-field.component.html',
-  styleUrls: ['./clone-setting-field.component.scss']
+    selector: 'app-clone-setting-field',
+    templateUrl: './clone-setting-field.component.html',
+    styleUrls: ['./clone-setting-field.component.scss'],
+    standalone: false
 })
 export class CloneSettingFieldComponent implements OnInit, OnChanges {
 

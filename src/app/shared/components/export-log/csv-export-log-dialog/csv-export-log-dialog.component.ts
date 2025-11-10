@@ -10,11 +10,10 @@ import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-csv-export-log-dialog',
-  standalone: true,
-  imports: [SharedModule, CommonModule, CsvExpensesTableComponent],
-  templateUrl: './csv-export-log-dialog.component.html',
-  styleUrl: './csv-export-log-dialog.component.scss'
+    selector: 'app-csv-export-log-dialog',
+    imports: [SharedModule, CommonModule, CsvExpensesTableComponent],
+    templateUrl: './csv-export-log-dialog.component.html',
+    styleUrl: './csv-export-log-dialog.component.scss'
 })
 export class CsvExportLogDialogComponent {
 

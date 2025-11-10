@@ -17,9 +17,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-location-entity',
-  templateUrl: './intacct-location-entity.component.html',
-  styleUrls: ['./intacct-location-entity.component.scss']
+    selector: 'app-intacct-location-entity',
+    templateUrl: './intacct-location-entity.component.html',
+    styleUrls: ['./intacct-location-entity.component.scss'],
+    standalone: false
 })
 export class IntacctLocationEntityComponent implements OnInit {
 

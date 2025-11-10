@@ -76,9 +76,10 @@ const ICON_MAPPING = {
 };
 
 @Component({
-  selector: 'app-svg-icon',
-  templateUrl: './svg-icon.component.html',
-  styleUrls: ['./svg-icon.component.scss']
+    selector: 'app-svg-icon',
+    templateUrl: './svg-icon.component.html',
+    styleUrls: ['./svg-icon.component.scss'],
+    standalone: false
 })
 export class SvgIconComponent implements OnInit {
 

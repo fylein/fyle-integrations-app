@@ -14,9 +14,10 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-advanced-setting',
-  templateUrl: './qbd-advanced-setting.component.html',
-  styleUrls: ['./qbd-advanced-setting.component.scss']
+    selector: 'app-qbd-advanced-setting',
+    templateUrl: './qbd-advanced-setting.component.html',
+    styleUrls: ['./qbd-advanced-setting.component.scss'],
+    standalone: false
 })
 export class QbdAdvancedSettingComponent implements OnInit {
   isOnboarding: any;

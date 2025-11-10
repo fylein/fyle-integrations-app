@@ -1,7 +1,7 @@
 <router-outlet>
 </router-outlet>
 <p-toast position="bottom-center" [baseZIndex]="5000">
-    <ng-template let-message pTemplate="message">
+    <ng-template let-message #headless>
         <div class="{{brandingStyle.toast.class}}" [ngClass]="message.severity === 'success' ? brandingStyle.toast.backgroundClass.success : (message.severity === 'error' ? brandingStyle.toast.backgroundClass.error : brandingStyle.toast.backgroundClass.info)">
             <div [ngClass]="[brandingStyle.toast.leftIcon.class, message.severity === 'success' ? brandingStyle.toast.leftIcon.background.success : (message.severity === 'error' ? brandingStyle.toast.leftIcon.background.error : brandingStyle.toast.leftIcon.background.info)]">
                 <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'toast-success'" [c1SvgSource]="'grv-checkmark-encircled-success-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-alerts-success-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>

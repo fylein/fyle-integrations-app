@@ -4,9 +4,10 @@ import { SkipExportList } from 'src/app/core/models/intacct/db/expense-group.mod
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-skipped-export-log-table',
-  templateUrl: './skipped-export-log-table.component.html',
-  styleUrls: ['./skipped-export-log-table.component.scss']
+    selector: 'app-skipped-export-log-table',
+    templateUrl: './skipped-export-log-table.component.html',
+    styleUrls: ['./skipped-export-log-table.component.scss'],
+    standalone: false
 })
 export class SkippedExportLogTableComponent implements OnInit {
 

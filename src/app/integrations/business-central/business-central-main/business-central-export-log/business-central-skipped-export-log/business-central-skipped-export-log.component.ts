@@ -16,9 +16,10 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-business-central-skipped-export-log',
-  templateUrl: './business-central-skipped-export-log.component.html',
-  styleUrls: ['./business-central-skipped-export-log.component.scss']
+    selector: 'app-business-central-skipped-export-log',
+    templateUrl: './business-central-skipped-export-log.component.html',
+    styleUrls: ['./business-central-skipped-export-log.component.scss'],
+    standalone: false
 })
 export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
