@@ -42,12 +42,30 @@
                             </app-configuration-select-field>
 
                             <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
-                                <app-configuration-select-field
+                                <app-configuration-select-field *ngIf="exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY"
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
                                     [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="(exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY ? 'qboExportSettings.bankAccountJournalSubLabel' : 'qboExportSettings.bankAccountExportedSubLabel') | transloco: {brandName: brandingConfig.brandName}"
+                                    [subLabel]="'qboExportSettings.bankAccountJournalSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                                    [destinationAttributes]="bankAndLiabilityAccounts"
+                                    [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_LIABILITY_ACCOUNT"
+                                    [isOptionSearchInProgress]="isOptionSearchInProgress"
+                                    [isAdvanceSearchEnabled]="true"
+                                    (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                                    [optionLabel]="'name'"
+                                    [iconPath]="'list'"
+                                    [isMultiLineOption]="isMultilineOption"
+                                    [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
+                                    [formControllerName]="'bankAccount'">
+                                </app-configuration-select-field>
+
+                                <app-configuration-select-field *ngIf="exportSettingForm.get('reimbursableExportType')?.value !== QBOReimbursableExpensesObject.JOURNAL_ENTRY"
+                                    [form]="exportSettingForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
+                                    [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                                    [subLabel]="'qboExportSettings.bankAccountExportedSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                                     [destinationAttributes]="bankAccounts"
                                     [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
                                     [isOptionSearchInProgress]="isOptionSearchInProgress"
