@@ -34,10 +34,10 @@
     "addNewEmailAddressTitle": "Add new email address",
     "nameLabel": "Name",
     "enterNamePlaceholder": "Enter name",
-    "validNameError": "Enter a valid name",
-    "emailAddressLabel": "Email Address",
+    "validNameError": "Enter a valid name.",
+    "emailAddressLabel": "Email address",
     "enterEmailPlaceholder": "Enter email",
-    "validEmailError": "Enter a valid email",
+    "validEmailError": "Enter a valid email.",
     "cancelButton": "Cancel",
     "addAndSaveButton": "Add and save"
   },
@@ -2082,7 +2082,8 @@
     "dependentFieldWarningCostCodesAndTypes": "You have imported cost codes and cost types from Sage Intacct by mapping them to fields in {{brandName}}. By turning off the import, you would lose the mappings you've established for these fields.",
     "continueConfirmation": "Are you sure you want to continue?",
     "continueButton": "Continue",
-    "previewHeader": "Preview"
+    "previewHeader": "Preview",
+    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form."
   },
   "services": {
     "travelperkOnboarding": {

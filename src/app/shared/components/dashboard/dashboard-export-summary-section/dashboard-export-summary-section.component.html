@@ -36,7 +36,7 @@
                         }
                     </div>
                     <div  [ngClass]="brandingStyle.dashboard.exportSummaryCenterContent"></div>
-                    <div class="tw-flex tw-items-center tw-justify-between" [ngClass]="{'tw-py-10-px': !accountingExportSummary?.failed_accounting_export_count}">
+                    <div class="tw-flex tw-items-center tw-justify-between" [ngClass]="{'tw-pt-10-px': !accountingExportSummary?.failed_accounting_export_count}">
                         <div class="tw-flex tw-items-center">
                             <app-svg-icon [svgSource]="'danger-outline'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-danger ' + brandingStyle.dashboard.exportSummaryIcon" [isTextColorAllowed]="true"></app-svg-icon>
                             <p class="tw-text-14-px tw-pl-10-px tw-w-[160px]" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{'dashboard.lastExportFailedText' | transloco}}</p>

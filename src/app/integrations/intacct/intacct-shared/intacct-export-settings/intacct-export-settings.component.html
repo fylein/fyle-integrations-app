@@ -112,7 +112,7 @@
                         [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" >
+                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"

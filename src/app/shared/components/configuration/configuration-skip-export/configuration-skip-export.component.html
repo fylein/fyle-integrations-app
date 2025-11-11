@@ -125,7 +125,7 @@
               <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
               <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
