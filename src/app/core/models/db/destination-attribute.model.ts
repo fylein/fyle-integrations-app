@@ -24,7 +24,7 @@ export type DestinationAttribute = {
   created_at: Date;
   updated_at: Date;
   workspace: number;
-
+  detail: any;
 };
 
 export type DefaultDestinationAttribute = {
