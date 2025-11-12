@@ -12,8 +12,8 @@ import { DialogModule } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { DropdownModule } from 'primeng/dropdown';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { SelectModule } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -37,8 +37,8 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    InputSwitchModule,
-    DropdownModule,
+    ToggleSwitchModule,
+    SelectModule,
     MultiSelectModule,
     SkeletonModule,
     ProgressSpinnerModule,

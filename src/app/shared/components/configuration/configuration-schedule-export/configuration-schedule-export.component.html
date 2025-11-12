@@ -12,13 +12,12 @@
         <div>
             <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end">
                 <div class="tw-flex">
-                    <p-dropdown
+                    <p-select
                         class="dropdown-size-schedule"
                         appendTo="body"
                         [options]="options"
                         [formControlName]="formControllerName"
                         [placeholder]="placeholder"
-                        [autoDisplayFirst]="false"
                         [ngClass]="{
                             'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                             'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
@@ -40,7 +39,7 @@
                                 <i class="pi pi-chevron-down" [ngClass]="brandingStyle.common.configurationBrandingClass"></i>
                             </div>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                     <!-- Temporary hack to enable real-time export only for allowed apps - #q2_real_time_exports_integrations -->
                     @if (![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
                         <div class="tw-ml-16-px tw-border tw-border-input-read-only-border tw-rounded-4-px">

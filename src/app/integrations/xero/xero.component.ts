@@ -13,9 +13,10 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-  selector: 'app-xero',
-  templateUrl: './xero.component.html',
-  styleUrls: ['./xero.component.scss']
+    selector: 'app-xero',
+    templateUrl: './xero.component.html',
+    styleUrls: ['./xero.component.scss'],
+    standalone: false
 })
 export class XeroComponent implements OnInit {
 

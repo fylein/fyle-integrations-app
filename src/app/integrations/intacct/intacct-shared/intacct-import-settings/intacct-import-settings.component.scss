@@ -107,7 +107,7 @@
     @apply tw-text-14-px #{!important};
   }
 
-  :host ::ng-deep .selectedItem  .p-dropdown-trigger {
+  :host ::ng-deep .selectedItem  .p-select-dropdown {
     @apply tw-hidden #{!important};
   }
 

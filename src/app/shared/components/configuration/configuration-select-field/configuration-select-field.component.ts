@@ -19,9 +19,10 @@ import { interval } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-select-field',
-  templateUrl: './configuration-select-field.component.html',
-  styleUrls: ['./configuration-select-field.component.scss']
+    selector: 'app-configuration-select-field',
+    templateUrl: './configuration-select-field.component.html',
+    styleUrls: ['./configuration-select-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 

@@ -25,7 +25,9 @@ import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './transloco-http-loader';
 import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 @NgModule({ declarations: [
         AppComponent
@@ -39,6 +41,16 @@ import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat'
         IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
         Sage300ConfigurationModule], providers: [
         MessageService,
+        provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+                options: {
+                    darkModeSelector: false,
+                    cssLayer: true
+                }
+            }
+        }),
         provideTransloco({
             config: {
                 availableLangs: ['en'],

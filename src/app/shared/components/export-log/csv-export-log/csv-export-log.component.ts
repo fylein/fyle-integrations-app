@@ -23,11 +23,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 
 
 @Component({
-  selector: 'app-csv-export-log',
-  standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent, CsvExportLogDialogComponent],
-  templateUrl: './csv-export-log.component.html',
-  styleUrl: './csv-export-log.component.scss'
+    selector: 'app-csv-export-log',
+    imports: [CommonModule, SharedModule, ReactiveFormsModule, TableModule, CsvExpensesTableComponent, CsvExportLogDialogComponent],
+    templateUrl: './csv-export-log.component.html',
+    styleUrl: './csv-export-log.component.scss'
 })
 export class CsvExportLogComponent implements OnInit {
 

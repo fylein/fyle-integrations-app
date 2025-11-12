@@ -4,9 +4,10 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { NetsuiteOnboardingService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-onboarding.service';
 
 @Component({
-  selector: 'app-netsuite-onboarding-import-settings',
-  templateUrl: './netsuite-onboarding-import-settings.component.html',
-  styleUrls: ['./netsuite-onboarding-import-settings.component.scss']
+    selector: 'app-netsuite-onboarding-import-settings',
+    templateUrl: './netsuite-onboarding-import-settings.component.html',
+    styleUrls: ['./netsuite-onboarding-import-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteOnboardingImportSettingsComponent implements OnInit {
 

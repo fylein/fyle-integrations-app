@@ -136,7 +136,7 @@ export const c1Styles = {
     },
     buttons: {
         primary: {
-           class: 'p-button p-button-raised',
+           class: 'p-button p-button-raised tw-rounded-md',
            active: 'tw-bg-primary tw-font-600',
            disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
            progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',

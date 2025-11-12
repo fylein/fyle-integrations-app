@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-configuration-text-field',
-  templateUrl: './configuration-text-field.component.html',
-  styleUrls: ['./configuration-text-field.component.scss']
+    selector: 'app-configuration-text-field',
+    templateUrl: './configuration-text-field.component.html',
+    styleUrls: ['./configuration-text-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationTextFieldComponent implements OnInit {
 

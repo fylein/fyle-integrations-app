@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -9,9 +9,10 @@ import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-hel
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-xero-main',
-  templateUrl: './xero-main.component.html',
-  styleUrls: ['./xero-main.component.scss']
+    selector: 'app-xero-main',
+    templateUrl: './xero-main.component.html',
+    styleUrls: ['./xero-main.component.scss'],
+    standalone: false
 })
 export class XeroMainComponent {
 
@@ -19,7 +20,7 @@ export class XeroMainComponent {
 
   readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
 
-  modules: MenuItem[];
+  modules: TabMenuItem[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -33,10 +34,10 @@ export class XeroMainComponent {
     private translocoService: TranslocoService
   ) {
     this.modules = [
-      {label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard'},
-      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/xero/main/export_log'},
-      {label: this.translocoService.translate('xeroMain.mapping'), routerLink: '/integrations/xero/main/mapping'},
-      {label: this.translocoService.translate('xeroMain.configuration'), routerLink: '/integrations/xero/main/configuration'}
+      { label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard', value: 'dashboard' },
+      { label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/xero/main/export_log', value: 'export_log' },
+      { label: this.translocoService.translate('xeroMain.mapping'), routerLink: '/integrations/xero/main/mapping', value: 'mapping' },
+      { label: this.translocoService.translate('xeroMain.configuration'), routerLink: '/integrations/xero/main/configuration', value: 'configuration' }
     ];
   }
 

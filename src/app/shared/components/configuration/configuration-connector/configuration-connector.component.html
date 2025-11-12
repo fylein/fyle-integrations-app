@@ -22,7 +22,7 @@
         <div *ngIf="!accountingCompanyName && !isDisconnectClicked && !accountingCompanyConnectionInProgress" class="tw-flex tw-items-center tw-justify-center">
             <div>
                 <div class="tw-flex tw-items-center tw-justify-center">
-                    <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
+                    <p-select appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
                         [(ngModel)]="companyName" (onChange)="connect()"
                         [placeholder]="placeholder">
                         <ng-template let-option pTemplate="item">
@@ -38,7 +38,7 @@
                                 </span>
                             </div>
                         </ng-template>
-                    </p-dropdown>
+                    </p-select>
                 </div>
                 <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px" *ngIf="!accountingCompanyConnectionInProgress">
                     <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">{{subLabel}}</span>

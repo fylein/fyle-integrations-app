@@ -15,9 +15,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-onboarding-landing',
-  templateUrl: './business-central-onboarding-landing.component.html',
-  styleUrls: ['./business-central-onboarding-landing.component.scss']
+    selector: 'app-business-central-onboarding-landing',
+    templateUrl: './business-central-onboarding-landing.component.html',
+    styleUrls: ['./business-central-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDestroy {
 

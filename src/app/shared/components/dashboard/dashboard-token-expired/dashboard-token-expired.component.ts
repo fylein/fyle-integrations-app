@@ -15,9 +15,10 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 
 
 @Component({
-  selector: 'app-dashboard-token-expired',
-  templateUrl: './dashboard-token-expired.component.html',
-  styleUrl: './dashboard-token-expired.component.scss'
+    selector: 'app-dashboard-token-expired',
+    templateUrl: './dashboard-token-expired.component.html',
+    styleUrl: './dashboard-token-expired.component.scss',
+    standalone: false
 })
 export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   AppName = AppName;

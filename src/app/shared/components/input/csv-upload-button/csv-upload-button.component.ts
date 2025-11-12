@@ -6,11 +6,11 @@ import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'app-csv-upload-button',
-  standalone: true,
-  imports: [CommonModule, TranslocoModule, SharedModule, TooltipModule],
-  templateUrl: './csv-upload-button.component.html',
-  styleUrl: './csv-upload-button.component.scss'
+    selector: 'app-csv-upload-button',
+    imports: [CommonModule, TranslocoModule, SharedModule, TooltipModule],
+    standalone: true,
+    templateUrl: './csv-upload-button.component.html',
+    styleUrl: './csv-upload-button.component.scss'
 })
 export class CsvUploadButtonComponent {
 

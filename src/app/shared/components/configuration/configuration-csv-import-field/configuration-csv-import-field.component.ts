@@ -17,13 +17,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-configuration-csv-import-field',
-  standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
-  templateUrl: './configuration-csv-import-field.component.html',
-  styleUrl: './configuration-csv-import-field.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
-  providers: [DialogService]
+    selector: 'app-configuration-csv-import-field',
+    imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
+    templateUrl: './configuration-csv-import-field.component.html',
+    styleUrl: './configuration-csv-import-field.component.scss',
+    viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+    providers: [DialogService]
 })
 export class ConfigurationCsvImportFieldComponent implements OnInit {
 
@@ -129,7 +128,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
       }
     });
 
-    ref.onClose.subscribe((newFile?: UploadedCSVFile) => {
+    ref?.onClose.subscribe((newFile?: UploadedCSVFile) => {
       if (newFile?.name) {
         if (this.isOnboarding) {
           // During onboarding, update the 'Values ready to import' field

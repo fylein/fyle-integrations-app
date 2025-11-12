@@ -2,8 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
 @Pipe({
-  name: 'excludeSelectedOptions',
-  pure: false
+    name: 'excludeSelectedOptions',
+    pure: false,
+    standalone: false
 })
 export class ExcludeSelectedOptionsPipe implements PipeTransform {
 

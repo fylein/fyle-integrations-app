@@ -23,12 +23,11 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-sage50-advanced-settings',
-  standalone: true,
-  imports: [SharedModule, CommonModule],
-  templateUrl: './sage50-advanced-settings.component.html',
-  styleUrl: './sage50-advanced-settings.component.scss',
-  providers: [DialogService, SentenceCasePipe]
+    selector: 'app-sage50-advanced-settings',
+    imports: [SharedModule, CommonModule],
+    templateUrl: './sage50-advanced-settings.component.html',
+    styleUrl: './sage50-advanced-settings.component.scss',
+    providers: [DialogService, SentenceCasePipe]
 })
 export class Sage50AdvancedSettingsComponent implements OnInit {
 
@@ -112,7 +111,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       showHeader: false, data, focusOnShow: false
     });
 
-    ref.onClose.subscribe((result: {saved?: boolean}) => {
+    ref?.onClose.subscribe((result: {saved?: boolean}) => {
       if (result?.saved) {
         // Update the schedule preview
         this.schedulePreview = this.scheduleFormService.getSchedulePreview(

@@ -7,11 +7,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-sage50-onboarding-landing',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './sage50-onboarding-landing.component.html',
-  styleUrl: './sage50-onboarding-landing.component.scss'
+    selector: 'app-sage50-onboarding-landing',
+    imports: [SharedModule],
+    templateUrl: './sage50-onboarding-landing.component.html',
+    styleUrl: './sage50-onboarding-landing.component.scss'
 })
 export class Sage50OnboardingLandingComponent {
   brandingConfig = brandingConfig;

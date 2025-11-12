@@ -6,7 +6,7 @@ import { ConfigurationToggleFieldComponent } from 'src/app/shared/components/con
 import { setupStoryBookFormGroup } from './utility';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 const meta: Meta<ConfigurationToggleFieldComponent> = {
@@ -19,7 +19,7 @@ const meta: Meta<ConfigurationToggleFieldComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationToggleFieldComponent],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, InputSwitchModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
     })
   ],
   argTypes: {

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Calendar } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
-  selector: 'app-export-log-filter',
-  templateUrl: './export-log-filter.component.html',
-  styleUrls: ['./export-log-filter.component.scss']
+    selector: 'app-export-log-filter',
+    templateUrl: './export-log-filter.component.html',
+    styleUrls: ['./export-log-filter.component.scss'],
+    standalone: false
 })
 export class ExportLogFilterComponent implements OnInit, OnDestroy {
 
@@ -35,7 +36,7 @@ export class ExportLogFilterComponent implements OnInit, OnDestroy {
 
   isSelectionStartDate: boolean = true;
 
-  @ViewChild('calendar') calendar: Calendar;
+  @ViewChild('calendar') calendar: DatePicker;
 
 
   @ViewChild('calendarContainer', { static: true }) calendarContainer: any;

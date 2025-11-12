@@ -3,9 +3,10 @@ import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 
 @Component({
-  selector: 'app-split-menu-button',
-  templateUrl: './split-menu-button.component.html',
-  styleUrl: './split-menu-button.component.scss'
+    selector: 'app-split-menu-button',
+    templateUrl: './split-menu-button.component.html',
+    styleUrl: './split-menu-button.component.scss',
+    standalone: false
 })
 export class SplitMenuButtonComponent {
 

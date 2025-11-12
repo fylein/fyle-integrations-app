@@ -4,9 +4,10 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-qbd-landing',
-  templateUrl: './qbd-landing.component.html',
-  styleUrls: ['./qbd-landing.component.scss']
+    selector: 'app-qbd-landing',
+    templateUrl: './qbd-landing.component.html',
+    styleUrls: ['./qbd-landing.component.scss'],
+    standalone: false
 })
 export class QbdLandingComponent implements OnInit {
 

@@ -13,9 +13,10 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-base-mapping',
-  templateUrl: './qbo-base-mapping.component.html',
-  styleUrls: ['./qbo-base-mapping.component.scss']
+    selector: 'app-qbo-base-mapping',
+    templateUrl: './qbo-base-mapping.component.html',
+    styleUrls: ['./qbo-base-mapping.component.scss'],
+    standalone: false
 })
 export class QboBaseMappingComponent implements OnInit {
 

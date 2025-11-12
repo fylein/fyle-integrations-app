@@ -5,9 +5,10 @@ import { environment } from 'src/environments/environment';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-export-log-child-table-dialog',
-  templateUrl: './export-log-child-table-dialog.component.html',
-  styleUrls: ['./export-log-child-table-dialog.component.scss']
+    selector: 'app-export-log-child-table-dialog',
+    templateUrl: './export-log-child-table-dialog.component.html',
+    styleUrls: ['./export-log-child-table-dialog.component.scss'],
+    standalone: false
 })
 export class ExportLogChildTableDialogComponent implements OnInit {
 

@@ -24,11 +24,10 @@ import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-dir
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-qbd-direct-advanced-settings',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-advanced-settings.component.html',
-  styleUrl: './qbd-direct-advanced-settings.component.scss'
+    selector: 'app-qbd-direct-advanced-settings',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-advanced-settings.component.html',
+    styleUrl: './qbd-direct-advanced-settings.component.scss'
 })
 export class QbdDirectAdvancedSettingsComponent implements OnInit {
 

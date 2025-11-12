@@ -15,9 +15,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-  selector: 'app-configuration-import-field',
-  templateUrl: './configuration-import-field.component.html',
-  styleUrls: ['./configuration-import-field.component.scss']
+    selector: 'app-configuration-import-field',
+    templateUrl: './configuration-import-field.component.html',
+    styleUrls: ['./configuration-import-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationImportFieldComponent implements OnInit {
 
@@ -151,7 +152,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onDropdownChange(event: any, index: number) {
-    // Get the selected value from the <p-dropdown>
+    // Get the selected value from the <p-select>
     const selectedValue = event.value;
 
     // Find the selected field in 'fyleFields' based on the selected value

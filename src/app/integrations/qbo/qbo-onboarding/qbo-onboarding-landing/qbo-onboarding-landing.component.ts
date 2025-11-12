@@ -8,9 +8,10 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
-  selector: 'app-qbo-onboarding-landing',
-  templateUrl: './qbo-onboarding-landing.component.html',
-  styleUrls: ['./qbo-onboarding-landing.component.scss']
+    selector: 'app-qbo-onboarding-landing',
+    templateUrl: './qbo-onboarding-landing.component.html',
+    styleUrls: ['./qbo-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 

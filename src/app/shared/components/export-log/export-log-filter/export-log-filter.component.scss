@@ -6,15 +6,15 @@
     }
 }
 
-:host ::ng-deep .drop-down .p-calendar {
+:host ::ng-deep .drop-down .p-datepicker {
     @apply tw-w-200-px tw-h-30-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+:host ::ng-deep .selectedItem  .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .p-calendar ::placeholder {
+:host ::ng-deep .p-datepicker ::placeholder {
     @apply tw-text-date-picker-placeholder-text #{!important};
 }
 

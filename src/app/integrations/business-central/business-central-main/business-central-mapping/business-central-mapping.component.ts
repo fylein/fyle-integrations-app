@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
@@ -9,17 +9,18 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-business-central-mapping',
-  templateUrl: './business-central-mapping.component.html',
-  styleUrls: ['./business-central-mapping.component.scss']
+    selector: 'app-business-central-mapping',
+    templateUrl: './business-central-mapping.component.html',
+    styleUrls: ['./business-central-mapping.component.scss'],
+    standalone: false
 })
 export class BusinessCentralMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingPages: MenuItem[];
+  mappingPages: TabMenuItem[];
 
-  activeModule: MenuItem;
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -35,8 +36,8 @@ export class BusinessCentralMappingComponent implements OnInit {
     private translocoService: TranslocoService
   ) {
     this.mappingPages = [
-      {label: this.translocoService.translate('businessCentralMapping.employeeMapping'), routerLink: '/integrations/business_central/main/mapping/employee'},
-      {label: this.translocoService.translate('businessCentralMapping.categoryMapping'), routerLink: '/integrations/business_central/main/mapping/category'}
+      {label: this.translocoService.translate('businessCentralMapping.employeeMapping'), routerLink: '/integrations/business_central/main/mapping/employee', value: 'employee'},
+      {label: this.translocoService.translate('businessCentralMapping.categoryMapping'), routerLink: '/integrations/business_central/main/mapping/category', value: 'category'}
     ];
   }
 
@@ -48,12 +49,13 @@ export class BusinessCentralMappingComponent implements OnInit {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-              routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+              routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
+              value: 'mapping'
             });
           }
         });
       }
-      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.router.navigateByUrl(this.mappingPages[0].routerLink!);
       this.isLoading = false;
     });
   }

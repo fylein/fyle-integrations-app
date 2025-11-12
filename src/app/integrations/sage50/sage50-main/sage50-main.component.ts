@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -13,19 +13,18 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Component({
-  selector: 'app-sage50-main',
-  standalone: true,
-  imports: [SharedModule, RouterOutlet],
-  templateUrl: './sage50-main.component.html',
-  styleUrls: ['./sage50-main.component.scss']
+    selector: 'app-sage50-main',
+    imports: [SharedModule, RouterOutlet],
+    templateUrl: './sage50-main.component.html',
+    styleUrls: ['./sage50-main.component.scss']
 })
 export class Sage50MainComponent implements OnInit {
 
   appName: AppName = AppName.SAGE50;
 
-  modules: MenuItem[] = [];
+  modules: TabMenuItem[] = [];
 
-  activeModules: MenuItem[] = [];
+  activeModules: TabMenuItem[] = [];
 
   constructor(
     private accountingExportService: AccountingExportService,
@@ -38,9 +37,9 @@ export class Sage50MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('sage50Main.dashboard'), routerLink: '/integrations/sage50/main/dashboard'},
-      {label: this.translocoService.translate('sage50Main.mapping'), routerLink: '/integrations/sage50/main/mapping'},
-      {label: this.translocoService.translate('sage50Main.configuration'), routerLink: '/integrations/sage50/main/configuration'}
+      { label: this.translocoService.translate('sage50Main.dashboard'), routerLink: '/integrations/sage50/main/dashboard', value: 'dashboard' },
+      { label: this.translocoService.translate('sage50Main.mapping'), routerLink: '/integrations/sage50/main/mapping', value: 'mapping' },
+      { label: this.translocoService.translate('sage50Main.configuration'), routerLink: '/integrations/sage50/main/configuration', value: 'configuration' }
     ];
 
     this.exportSettingsService.getExportSettings().subscribe((exportSettings) => {

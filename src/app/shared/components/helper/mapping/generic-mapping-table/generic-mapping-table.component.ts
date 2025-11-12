@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
-import { DropdownFilterOptions } from 'primeng/dropdown';
+import { SelectFilterOptions } from 'primeng/select';
 import { Observable, Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -15,9 +15,10 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-  selector: 'app-generic-mapping-table',
-  templateUrl: './generic-mapping-table.component.html',
-  styleUrls: ['./generic-mapping-table.component.scss']
+    selector: 'app-generic-mapping-table',
+    templateUrl: './generic-mapping-table.component.html',
+    styleUrls: ['./generic-mapping-table.component.scss'],
+    standalone: false
 })
 export class GenericMappingTableComponent implements OnInit {
 
@@ -100,7 +101,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    const element = document.querySelector('.p-select-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
       element.style.width = '300px';
       if (this.isDashboardMappingResolve) {

@@ -11,14 +11,14 @@
             <tr *ngIf="!isLoading">
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
-                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                    <p-select appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="getCategoryMappingOptions()"
                     optionLabel="value"
                     [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
                     (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
-                    </p-dropdown>
+                    </p-select>
                 </td>
             </tr>
             <ng-container *ngTemplateOutlet="shimmers"></ng-container>
@@ -37,14 +37,14 @@
             <tr *ngIf="!isLoading">
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
-                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                    <p-select appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="fyleEmployeeOptions"
                     optionLabel="value"
                     [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
                     (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
-                    </p-dropdown>
+                    </p-select>
                 </td>
             </tr>
             <ng-container *ngTemplateOutlet="shimmers"></ng-container>

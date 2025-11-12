@@ -3,9 +3,10 @@ import { SafeHtml } from '@angular/platform-browser';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-configuration-step-sub-header',
-  templateUrl: './configuration-step-sub-header.component.html',
-  styleUrls: ['./configuration-step-sub-header.component.scss']
+    selector: 'app-configuration-step-sub-header',
+    templateUrl: './configuration-step-sub-header.component.html',
+    styleUrls: ['./configuration-step-sub-header.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepSubHeaderComponent implements OnInit {
 

@@ -11,9 +11,10 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-base-mapping',
-  templateUrl: './netsuite-base-mapping.component.html',
-  styleUrls: ['./netsuite-base-mapping.component.scss']
+    selector: 'app-netsuite-base-mapping',
+    templateUrl: './netsuite-base-mapping.component.html',
+    styleUrls: ['./netsuite-base-mapping.component.scss'],
+    standalone: false
 })
 export class NetsuiteBaseMappingComponent implements OnInit {
 

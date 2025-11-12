@@ -123,7 +123,7 @@
 
             <!-- Completed export log table with filters -->
             <div>
-                @if (activeExportLogModule.label === 'Completed') {
+                @if (activeExportLogModule === 'completed') {
                     <app-csv-export-log
                         [updateRecords]="updateExportLogs.bind(this)"
                     ></app-csv-export-log>
@@ -138,11 +138,18 @@
     </div>
 
     <div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
-        <p-header>
-            <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
-            <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-4-px">{{ mappingDialogDescription | transloco }}</p>
-        </p-header>
+    <p-dialog [dismissableMask]="false" [closable]="false" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
+        <ng-template #header>
+            <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+                <div class="tw-flex tw-flex-col">
+                    <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
+                    <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-4-px">{{ mappingDialogDescription | transloco }}</p>
+                </div>
+                <div class="tw-flex tw-self-center">
+                    <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleMappingDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+                </div>
+            </div>
+        </ng-template>
         <app-generic-mapping-table
             [employeeFieldMapping]="employeeFieldMapping"
             [appName]="appName"

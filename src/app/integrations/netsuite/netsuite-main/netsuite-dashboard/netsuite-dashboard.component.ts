@@ -15,9 +15,10 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 
 @Component({
-  selector: 'app-netsuite-dashboard',
-  templateUrl: './netsuite-dashboard.component.html',
-  styleUrls: ['./netsuite-dashboard.component.scss']
+    selector: 'app-netsuite-dashboard',
+    templateUrl: './netsuite-dashboard.component.html',
+    styleUrls: ['./netsuite-dashboard.component.scss'],
+    standalone: false
 })
 export class NetsuiteDashboardComponent implements OnInit, OnDestroy {
 

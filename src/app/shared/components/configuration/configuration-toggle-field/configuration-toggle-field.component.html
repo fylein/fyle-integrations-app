@@ -1,13 +1,13 @@
 <div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-pb-0': hasDependentFields && form.get(formControllerName)?.value}">
   <ng-template #toggleSwitch>
-    <p-inputSwitch
+    <p-toggleswitch
       [formControlName]="formControllerName"
       [tooltipPosition]="'top'"
       [pTooltip]="disabled && appName === AppName.XERO ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''"
       [attr.aria-label]="label"
       role="switch"
       [attr.aria-checked]="form.get(formControllerName)?.value"
-    ></p-inputSwitch>
+    ></p-toggleswitch>
   </ng-template>
     <div class="tw-flex tw-items-start" [ngClass]="{'tw-w-3/4': !hideToggle}">
       <div *ngIf="iconPath && !isConfigToggleLeftAligned" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">

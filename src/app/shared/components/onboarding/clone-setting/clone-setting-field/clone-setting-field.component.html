@@ -8,7 +8,7 @@
         </span>
     </div>
     <div>
-        <app-dropdown *ngIf="inputType === InputType.DROPDOWN"
+        <app-select *ngIf="inputType === InputType.DROPDOWN"
             [placeholder]="placeholder"
             [options]="options"
             [form]="form"
@@ -17,7 +17,7 @@
             [displayKey]="dropdownDisplayKey"
             [isMultiLineOption]="isMultiLineOption"
             [additionalClasses]="additionalClasses">
-        </app-dropdown>
+        </app-select>
         <app-toggle *ngIf="inputType === InputType.TOGGLE"
             [form]="form"
             [isDisabled]="isDisabled"

@@ -12,9 +12,10 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-export-setting',
-  templateUrl: './qbd-export-setting.component.html',
-  styleUrls: ['./qbd-export-setting.component.scss']
+    selector: 'app-qbd-export-setting',
+    templateUrl: './qbd-export-setting.component.html',
+    styleUrls: ['./qbd-export-setting.component.scss'],
+    standalone: false
 })
 export class QbdExportSettingComponent implements OnInit {
 

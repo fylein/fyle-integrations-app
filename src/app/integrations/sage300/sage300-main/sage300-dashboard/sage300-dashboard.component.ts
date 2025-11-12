@@ -16,9 +16,10 @@ import { Router } from '@angular/router';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
-  selector: 'app-sage300-dashboard',
-  templateUrl: './sage300-dashboard.component.html',
-  styleUrls: ['./sage300-dashboard.component.scss']
+    selector: 'app-sage300-dashboard',
+    templateUrl: './sage300-dashboard.component.html',
+    styleUrls: ['./sage300-dashboard.component.scss'],
+    standalone: false
 })
 export class Sage300DashboardComponent implements OnInit, OnDestroy {
 

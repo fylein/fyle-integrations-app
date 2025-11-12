@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppLandingPageHeaderComponent } from './components/helper/app-landing-page-header/app-landing-page-header.component';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -38,7 +38,7 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/configuration/configuration-label/configuration-label.component';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { QbdMappingTableComponent } from './components/qbd/mapping/qbd-mapping-table/qbd-mapping-table.component';
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
@@ -47,8 +47,8 @@ import { TableModule } from 'primeng/table';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import { ChipsModule } from 'primeng/chips';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TabsModule } from 'primeng/tabs';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
@@ -200,21 +200,21 @@ import { AlertComponent } from './components/core/alert/alert.component';
     ButtonModule,
     TooltipModule,
     SkeletonModule,
-    InputSwitchModule,
+    ToggleSwitchModule,
     RadioButtonModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     DialogModule,
     MultiSelectModule,
     DragDropModule,
     ProgressBarModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
+    AutoCompleteModule,
     TableModule,
-    TabMenuModule,
+    TabsModule,
     IconFieldModule,
     InputIconModule,
     CheckboxButtonComponent,
@@ -223,6 +223,7 @@ import { AlertComponent } from './components/core/alert/alert.component';
     SplitButtonModule
   ],
   exports: [
+    CommonModule,
     LoaderComponent,
     AppLandingPageBodyComponent,
     AppLandingPageHeaderComponent,
@@ -244,10 +245,10 @@ import { AlertComponent } from './components/core/alert/alert.component';
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
-    DropdownModule,
+    SelectModule,
     DialogModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
+    AutoCompleteModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,
