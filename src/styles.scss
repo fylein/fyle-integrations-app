@@ -71,6 +71,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     .p-autocomplete.p-focus>ul,
     input[type="password"]:focus,
     .custom-search-field-focus,
+    .p-toggleswitch:focus-within .p-toggleswitch-slider,
     input[type="checkbox"]:hover, input[type="checkbox"]:focus {
         @apply tw-shadow-focused #{!important};
     }
@@ -1115,33 +1116,58 @@ p {
 }
 
 
-// Custom Toggle Design applied to PrimeNG p-toggleswitch
+// .p-toggleswitch
 .p-toggleswitch {
-    @apply tw-relative tw-inline-block tw-w-40-px tw-h-24-px tw-cursor-pointer #{!important};
+    @apply tw-h-20-px tw-w-50-px tw-relative #{!important};
+}
 
-    &.p-disabled {
-        @apply tw-opacity-50 tw-cursor-not-allowed #{!important};
+.p-toggleswitch .p-toggleswitch-slider {
+    @apply tw-bg-toggle-disabled-bg tw-border-toggle-border tw-border-solid tw-border-toggle-border-width tw-w-toggle-width tw-h-toggle-height tw-rounded-full tw-absolute tw-inset-0 tw-transition-all tw-duration-200 #{!important};
+}
+
+.p-toggleswitch .p-toggleswitch-slider:before {
+    content: '';
+    @apply tw-absolute tw-bg-toggle-disabled-text-color tw-w-14-px tw-h-14-px tw-rounded-full tw-transition-all tw-duration-200 #{!important};
+    left: 3px !important;
+    top: 2px !important;
+}
+
+[data-theme='co'] {
+    .p-toggleswitch .p-toggleswitch-slider:before {
+        @apply tw-w-18-px tw-h-18-px #{!important};
+        left: 2px !important;
     }
 }
 
-.p-toggleswitch-input {
-    @apply tw-opacity-0 tw-w-0 tw-h-0 tw-absolute #{!important};
-}
-
-.p-toggleswitch-slider {
-    @apply tw-absolute tw-inset-0 tw-rounded-full tw-transition-all tw-duration-200 tw-bg-utility-major-300 #{!important};
-
-    &::before {
-        content: '';
-        @apply tw-absolute tw-w-18-px tw-h-18-px tw-left-[3px] tw-top-[3px] tw-bg-white tw-rounded-full tw-transition-all tw-duration-200 tw-shadow-base-shadow #{!important};
-    }
-}
-
-// Checked state
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-    @apply tw-bg-action-major-500 #{!important};
+    @apply tw-bg-toggle-enabled-bg tw-w-toggle-width tw-h-toggle-height #{!important};
+}
 
-    &::before {
-        transform: translateX(16px) !important;
-    }
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider:before {
+    @apply tw-bg-toggle-enabled-text-color tw-translate-x-toggle-circle-translate #{!important};
+}
+
+.p-toggleswitch .p-toggleswitch-slider {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-toggleswitch:focus-within {
+    --p-toggleswitch-focus-ring-width: 0 !important;
+    @apply tw-outline-0 tw-shadow-none #{!important};
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::after {
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-leading-[18.5px] #{!important};
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.p-toggleswitch:not(.p-toggleswitch-checked) .p-toggleswitch-slider::after {
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-leading-[18.5px] #{!important};
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.p-toggleswitch .p-toggleswitch-handle {
+    @apply tw-hidden #{!important};
 }
