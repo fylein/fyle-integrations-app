@@ -84,8 +84,19 @@ export class ExportSettingsService {
       };
   }
 
-  constructCCCOptions(brandId: string) {
+  constructCCCOptions(brandId: string, reimbursableExportType?: IntacctReimbursableExpensesObject | null) {
       if (brandId === 'fyle') {
+          // Allow CCC exports as Expense Reports only if
+          // 1. reimbursable expenses are exported as Expense Reports, OR
+          // 2. reimbursable expenses are not exported at all
+
+          const expenseReportOption = [];
+          if (reimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT || !reimbursableExportType) {
+            expenseReportOption.push({
+              label: this.translocoService.translate('services.exportSettings.expenseReport'),
+              value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
+            });
+          }
           return [
               {
                 label: this.translocoService.translate('services.exportSettings.bill'),
@@ -95,10 +106,7 @@ export class ExportSettingsService {
                 label: this.translocoService.translate('services.exportSettings.chargeCardTransaction'),
                 value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
               },
-              {
-                label: this.translocoService.translate('services.exportSettings.expenseReport'),
-                value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
-              },
+              ...expenseReportOption,
               {
                 label: this.translocoService.translate('services.exportSettings.journalEntry'),
                 value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
