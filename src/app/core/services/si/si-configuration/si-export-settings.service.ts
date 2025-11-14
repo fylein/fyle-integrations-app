@@ -6,7 +6,7 @@ import { ApiService } from '../../common/api.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject, SplitExpenseGrouping, ExportDateType } from 'src/app/core/models/enum/enum.model';
+import { ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject, SplitExpenseGrouping, ExportDateType, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +50,14 @@ export class SiExportSettingsService {
     const reimbursableExportGroup = exportSettingsForm.get('reimbursableExportGroup')?.value;
     const reimbursableExpenseGroupFields = getExpenseGroupFields(reimbursableExportGroup);
 
+
+    // 'Employee field mapping' is not visible to the user when CCC is exported as Expense report
+    // In this case, hard-code its value to EMPLOYEE
+    let employeeFieldMapping = exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : 'VENDOR';
+    if (exportSettingsForm.get('creditCardExportType')?.value === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+      employeeFieldMapping = EmployeeFieldMapping.EMPLOYEE;
+    }
+
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
         expense_state: getValueOrDefault(exportSettingsForm.get('reimbursableExpenseState')),
@@ -63,7 +71,7 @@ export class SiExportSettingsService {
       configurations: {
         reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
         corporate_credit_card_expenses_object: cccExportType,
-        employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : 'VENDOR',
+        employee_field_mapping: employeeFieldMapping,
         auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees')),
         use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalLine')?.value ? exportSettingsForm.get('useMerchantInJournalLine')?.value : false
       },
