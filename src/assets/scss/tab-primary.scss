@@ -20,7 +20,7 @@
 
 [data-theme='fyle'] {
     :host ::ng-deep .p-tabs .p-tablist .p-tab {
-         @apply tw-px-16-px tw-pt-12-px tw-leading-[21px] tw-border-3-px tw-border-transparent #{!important};
+         @apply tw-px-16-px tw-pt-12-px tw-leading-[21px] tw-border-3-px tw-border-transparent tw-mr-4-px #{!important};
     }
 }
 
