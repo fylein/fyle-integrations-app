@@ -38,4 +38,8 @@ export class CsvExportLogDialogComponent {
     this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_CSV, {fileName: exportLog.file_name, fileId: exportLog.file_id, view: 'Export Log dialog view'});
     this.exportLogService.downloadFile(exportLog);
   }
+
+  handleDialogClose(): void {
+    this.isDialogOpenChange.emit(false);
+  }
 }
