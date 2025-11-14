@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UxeroUcloneUsettingsService } from './xero-clone-settings.service';
+import { XeroCloneSettingsService } from './xero-clone-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UxeroUcloneUsettingsService', () => {
-  let service: UxeroUcloneUsettingsService;
+describe('XeroCloneSettingsServicee', () => {
+  let service: XeroCloneSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UxeroUcloneUsettingsService,
+        XeroCloneSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UxeroUcloneUsettingsService);
+    service = TestBed.inject(XeroCloneSettingsService);
   });
 
   it('should be created', () => {

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteConnectorComponent } from './netsuite-connector.component';
 
-xdescribe('NetsuiteConnectorComponent', () => {
+describe('NetsuiteConnectorComponent', () => {
   let component: NetsuiteConnectorComponent;
   let fixture: ComponentFixture<NetsuiteConnectorComponent>;
 

@@ -5,7 +5,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { environment } from 'src/environments/environment';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('CloneSettingsService', () => {
+describe('CloneSettingsService', () => {
   let service: CloneSettingsService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

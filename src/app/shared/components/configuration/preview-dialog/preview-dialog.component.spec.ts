@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PreviewDialogComponent } from './preview-dialog.component';
 
-xdescribe('PreviewDialogComponent', () => {
+describe('PreviewDialogComponent', () => {
   let component: PreviewDialogComponent;
   let fixture: ComponentFixture<PreviewDialogComponent>;
 

@@ -1,6 +1,6 @@
 import { SnakeCaseToSpaceCasePipe } from './snake-case-to-space-case.pipe';
 
-xdescribe('SnakeCaseToSpaceCasePipe', () => {
+describe('SnakeCaseToSpaceCasePipe', () => {
   it('create an instance', () => {
     const pipe = new SnakeCaseToSpaceCasePipe();
     expect(pipe).toBeTruthy();

@@ -12,7 +12,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 
 import { BambooHrComponent } from './bamboo-hr.component';
 
-xdescribe('BambooHrComponent', () => {
+describe('BambooHrComponent', () => {
   let component: BambooHrComponent;
   let fixture: ComponentFixture<BambooHrComponent>;
   let formBuilder: FormBuilder;

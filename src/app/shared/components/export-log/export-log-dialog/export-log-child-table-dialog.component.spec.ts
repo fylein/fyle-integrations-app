@@ -3,7 +3,7 @@ import { ExportLogChildTableDialogComponent } from './export-log-child-table-dia
 
 
 
-xdescribe('ExportLogChildTableComponent', () => {
+describe('ExportLogChildTableComponent', () => {
   let component: ExportLogChildTableDialogComponent;
   let fixture: ComponentFixture<ExportLogChildTableDialogComponent>;
 

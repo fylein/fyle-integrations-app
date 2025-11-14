@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationToggleFieldComponent } from './configuration-toggle-field.component';
 
-xdescribe('ConfigurationToggleFieldComponent', () => {
+describe('ConfigurationToggleFieldComponent', () => {
   let component: ConfigurationToggleFieldComponent;
   let fixture: ComponentFixture<ConfigurationToggleFieldComponent>;
 

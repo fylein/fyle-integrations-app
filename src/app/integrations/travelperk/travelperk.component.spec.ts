@@ -10,7 +10,7 @@ import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockDat
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { MessageService } from 'primeng/api';
 
-xdescribe('TravelperkComponent', () => {
+describe('TravelperkComponent', () => {
   let component: TravelperkComponent;
   let fixture: ComponentFixture<TravelperkComponent>;
   let orgService: OrgService;

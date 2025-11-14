@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationScheduleExportComponent } from './configuration-schedule-export.component';
 
-xdescribe('ConfigurationScheduleExportComponent', () => {
+describe('ConfigurationScheduleExportComponent', () => {
   let component: ConfigurationScheduleExportComponent;
   let fixture: ComponentFixture<ConfigurationScheduleExportComponent>;
 

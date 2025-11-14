@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QboTokenGuard } from './qbo-token.guard';
 
-xdescribe('QboTokenGuard', () => {
+describe('QboTokenGuard', () => {
   let guard: QboTokenGuard;
 
   beforeEach(() => {

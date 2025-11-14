@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UqbdUadvancedUsettingsService } from './qbd-advanced-settings.service';
+import { QbdAdvancedSettingsService } from './qbd-advanced-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UqbdUadvancedUsettingsService', () => {
-  let service: UqbdUadvancedUsettingsService;
+describe('QbdAdvancedSettingsService', () => {
+  let service: QbdAdvancedSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UqbdUadvancedUsettingsService,
+        QbdAdvancedSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UqbdUadvancedUsettingsService);
+    service = TestBed.inject(QbdAdvancedSettingsService);
   });
 
   it('should be created', () => {

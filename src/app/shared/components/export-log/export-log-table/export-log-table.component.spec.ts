@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExportLogTableComponent } from './export-log-table.component';
 
-xdescribe('ExportLogTableComponent', () => {
+describe('ExportLogTableComponent', () => {
   let component: ExportLogTableComponent;
   let fixture: ComponentFixture<ExportLogTableComponent>;
 

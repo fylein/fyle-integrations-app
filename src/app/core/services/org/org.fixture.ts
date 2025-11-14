@@ -14,7 +14,8 @@ export const orgMockData: Org = {
     created_at: new Date(),
     updated_at: new Date(),
     allow_dynamics: true,
-    allow_qbd_direct_integration: true
+    allow_qbd_direct_integration: true,
+    is_org_rebranded: false
 };
 
 export const generateTokenData = {

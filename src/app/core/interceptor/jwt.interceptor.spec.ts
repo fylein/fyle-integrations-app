@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/common/auth.service';
 import { tokenResponse, loginResponse, dummyErrorResponse } from './jwt.fixture';
 
-xdescribe('JwtInterceptor', () => {
+describe('JwtInterceptor', () => {
   let client: HttpClient;
   let controller: HttpTestingController;
   let service: ApiService;
