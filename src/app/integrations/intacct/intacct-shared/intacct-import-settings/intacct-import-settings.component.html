@@ -25,9 +25,9 @@
             </div>
         </div>
         <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-            <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
-            <div class="fields-header-text tw-w-30-vw">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
-            <div class="fields-header-text tw-flex tw-items-center tw-w-[10vw] tw-whitespace-nowrap">
+            <div class="fields-header-text tw-pl-48-px tw-w-450-px tw-wrap-normal">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+            <div class="fields-header-text tw-w-30-vw tw-wrap-normal">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
+            <div class="fields-header-text tw-flex tw-items-center tw-wrap-normal">
                 {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
                 <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
             </div>
@@ -36,7 +36,7 @@
             <div class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="intacctCategoryDestinationLabel" disabled>
             </div>
-            <div class="tw-pt-[17px] ">
+            <div class="tw-pt-[5px]">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <div class="tw-w-30-vw">
@@ -50,7 +50,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.vendorLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-[17px] ">
+            <div class="tw-pt-[5px]">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -64,7 +64,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxDetailLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-[17px] ">
+            <div class="tw-pt-[5px]">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -109,7 +109,7 @@
                                 {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
                             </p>
                         </div>
-                            <div class="tw-pt-[17px] ">
+                            <div class="tw-pt-[5px]">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
@@ -149,7 +149,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costCodeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-[17px] ">
+                            <div class="tw-pt-[5px]">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
@@ -168,7 +168,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costTypeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-[17px] ">
+                            <div class="tw-pt-[5px]">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
@@ -198,16 +198,16 @@
 
         <div class="tw-p-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && this.importSettingsForm.get('importCodeFields')?.value.length > 0 ">
             <div>
-                <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
-                    <div>
-                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
+                <div class="tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px">
+                    <div class="tw-px-24-px tw-pt-24-px">
+                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-font-500 tw-mb-8-px">
                             {{ 'intacctImportSettings.configureImportMethodTitle' | transloco }}
                         </h4>
                         <p class="tw-text-14-px tw-text-text-muted">
                             {{ 'intacctImportSettings.configureImportMethodDescription' | transloco }}
                         </p>
                     </div>
-                    <div class="tw-pt-16-px">
+                    <div class="tw-py-16-px">
                         <app-configuration-info-label
                             [infoText]="'intacctImportSettings.oneTimeSetupNote' | transloco: { brandName: brandingConfig.brandName }">
                         </app-configuration-info-label>
@@ -272,24 +272,25 @@
             <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'intacctImportSettings.validNameErrorMessage' | transloco"></app-mandatory-error-message>
 
-            <div>
+            <!-- <div>
                 <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                   {{ 'intacctImportSettings.fieldTypeLabel' | transloco }}
                 </h5>
                 <div class="tw-w-420-px tw-h-48-px">
                   <input class="tw-w-420-px form-input-disabled" type="text" [placeholder]="'intacctImportSettings.selectPlaceholder' | transloco" disabled>
                 </div>
-              </div>
+              </div> -->
 
               <div class="label-section tw-pt-8">
                 <div class="label-content tw-w-420-px">
-                  <h5 class="name-text sub-text-color tw-text-14-px">
-                    {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : ('intacctImportSettings.label' | transloco)}}
-                  </h5>
-                  <div class="form-field tw-pt-4-px">
-                    <input class="form-input tw-w-352-px" type="text"
-                    [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : ('intacctImportSettings.enterTextPlaceholder' | transloco)">
-                  </div>
+                    <p class="name-text sub-text-color tw-text-14-px">{{ 'intacctImportSettings.customFieldPreviewText' | transloco }}</p>
+                    <h5 class="name-text sub-text-color tw-text-14-px tw-font-500">
+                        {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : ('intacctImportSettings.label' | transloco)}}
+                    </h5>
+                    <div class="form-field tw-pt-4-px">
+                        <input class="form-input tw-w-352-px" type="text"
+                        [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : ('intacctImportSettings.enterTextPlaceholder' | transloco)">
+                    </div>
                 </div>
               </div>
 
