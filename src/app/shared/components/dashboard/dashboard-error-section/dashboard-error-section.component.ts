@@ -216,6 +216,15 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorExpenses = accountingError[this.exportKey]?.expenses;
   }
 
+  closeAccountingErrorDialog(): void {
+    this.isAccountingErrorDialogVisible = false;
+  }
+
+  closeMappingResolveDialog(): void {
+    this.isMappingResolveVisible = false;
+    this.handleResolvedMappingStat();
+  }
+
   private formatErrors(errors: Error[]): AccountingGroupedErrors {
     return ErrorModel.formatErrors(errors);
   }

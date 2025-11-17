@@ -14,12 +14,18 @@
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .p-datepicker ::placeholder {
+:host ::ng-deep .p-datepicker ::placeholder,
+:host ::ng-deep .p-datepicker .p-datepicker-input::placeholder {
     @apply tw-text-date-picker-placeholder-text #{!important};
 }
 
+:host ::ng-deep .p-datepicker .p-datepicker-input {
+    @apply tw-w-200-px tw-h-30-px #{!important};
+}
+
+:host ::ng-deep .p-datepicker .p-datepicker-input,
 :host ::ng-deep .p-inputtext {
-    @apply tw-text-date-picker-filled-text #{!important};
+    @apply tw-text-date-picker-filled-text tw-shadow-none #{!important};
 }
 
 :host ::ng-deep .p-dialog {
