@@ -98,6 +98,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   readonly brandingStyle = brandingStyle;
 
+  get showCCCEmployeeMapping(): boolean {
+    // The field is hidden only if reimbursable is toggled off and credit card export type is set to CCP
+    // It is visible and editable if reimbursable is disabled + CCC is set to JE
+    // It is visible and disabled if reimbursable is enabled + CCC is set to anything
+
+    const isCCCEnabled = !!this.exportSettingsForm.get('creditCardExportType')?.value;
+    const isReimbursableEnabled = !!this.exportSettingsForm.get('reimbursableExportType')?.value;
+    const isCCCJESelected = this.exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+
+    return isCCCEnabled && (isReimbursableEnabled || isCCCJESelected);
+  }
+
+  get isCCCEmployeeMappingDisabled(): boolean {
+    // Show whatever is set in reimbursable employee mapping field in CCC mapping as well.
+    const isReimbursableEnabled = !!this.exportSettingsForm.get('reimbursableExportType')?.value;
+    return isReimbursableEnabled;
+  }
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
@@ -404,6 +422,13 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  employeeFieldMappingWatcher() {
+    // Reimbursable employee field mapping overwrites the corresponding field in CCC
+    this.exportSettingsForm.get('employeeMapping')?.valueChanges.subscribe((reimbursableEmployeeMapping) => {
+      this.exportSettingsForm.get('CCCEmployeeMapping')?.setValue(reimbursableEmployeeMapping);
+    });
+  }
+
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
     return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
@@ -425,6 +450,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.cccExportGroupingWatcher();
 
     this.reimburesmentExpenseGroupingWatcher();
+
+    this.employeeFieldMappingWatcher();
   }
 
   private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
