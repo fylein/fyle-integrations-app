@@ -262,11 +262,12 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       nameInJournalEntry = exportSettingsForm.get('nameInJE')?.value;
     }
 
-    // Primary: reimbursable employee mapping; Fallback: CCC employee mapping (only when reimbursable is disabled and CCC = JE)
-    const employeeFieldMapping = exportSettingsForm.get('employeeMapping')?.value
-        ? exportSettingsForm.get('employeeMapping')?.value
-        : exportSettingsForm.get('CCCEmployeeMapping')?.value
+    // Primary: CCC employee mapping; Fallback: reimbursable employee mapping
+    // (since CCC employee mapping always has the latest value of reimbursable employee mapping, but not vice versa)
+    const employeeFieldMapping = exportSettingsForm.get('CCCEmployeeMapping')?.value
         ? exportSettingsForm.get('CCCEmployeeMapping')?.value
+        : exportSettingsForm.get('employeeMapping')?.value
+        ? exportSettingsForm.get('employeeMapping')?.value
         : null;
 
     const exportSettingPayload: QbdDirectExportSettingsPost = {
