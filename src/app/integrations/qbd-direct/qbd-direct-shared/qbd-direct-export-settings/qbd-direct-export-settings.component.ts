@@ -66,6 +66,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   employeeMappingOptions: SelectFormOption[] = [];
 
+  cccPurchasedFromFieldOptions: QBDExportSettingFormOption[] = [];
+
   appName: AppName = AppName.QBD_DIRECT;
 
   redirectLink: string = brandingKbArticles.topLevelArticles.QBD_DIRECT;
@@ -139,6 +141,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimbursableExportTypes = this.qbdDirectExportSettingsService.reimbursableExportTypes();
     this.nameInJEOptions = this.qbdDirectExportSettingsService.nameInJEOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+    this.cccPurchasedFromFieldOptions = this.qbdDirectExportSettingsService.cccPurchasedFromFieldOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {

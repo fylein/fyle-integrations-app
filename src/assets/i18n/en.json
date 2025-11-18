@@ -1726,7 +1726,8 @@
     "exportTypeChanged": "You have changed the export type of {{exportType}} expense from <b>{{existingConfig}}</b> to <b>{{updatedConfig}}</b>,",
     "itemsDisabledWarning": "{{content}} <br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursable": "reimbursable",
-    "creditCard": "credit card"
+    "creditCard": "credit card",
+    "selectCCCPurchasedFromFieldPlaceholder": "Select a value"
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",
@@ -2346,7 +2347,8 @@
       "closed": "Closed",
       "processing": "Processing",
       "lastSpendDate": "Last spend date",
-      "spendDate": "Spend date"
+      "spendDate": "Spend date",
+      "employeeOrVendor": "Employee/Vendor"
     },
     "netsuiteExportSettings": {
       "verificationDate": "Verification date",
@@ -2419,7 +2421,8 @@
     },
     "sentenceCase": {
       "quickbooksOnline": "QuickBooks Online",
-      "quickbooksDesktop": "QuickBooks Desktop"
+      "quickbooksDesktop": "QuickBooks Desktop",
+      "employeeOrVendor": "Employee/Vendor"
     }
   },
   "sage50OnboardingLanding": {
@@ -2680,5 +2683,15 @@
     "PURCHASES_RECEIVE_INVENTORY": "Purchases",
     "PAYMENTS_JOURNAL": "Payments",
     "GENERAL_JOURNAL_ENTRY": "General journal entry"
+  },
+  "qbd_direct": {
+    "configuration": {
+      "exportSetting": {
+        "corporateCard": {
+          "cccPurchasedFromFieldLabel": "Choose the value to post in the \"Purchased from\" field",
+          "cccPurchasedFromFieldSubLabel": "Choose which value to post to QBD's \"Purchased From\" field."
+        }
+      }
+    }
   }
 }

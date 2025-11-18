@@ -213,6 +213,20 @@
                             </app-configuration-select-field>
                         </div>
 
+                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'cccPurchasedFromField')">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
+                                [label]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldLabel' | transloco"
+                                [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldSubLabel' | transloco"
+                                [options]="cccPurchasedFromFieldOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'qbdDirectExportSettings.selectCCCPurchasedFromFieldPlaceholder' | transloco"
+                                [formControllerName]="'cccPurchasedFromField'">
+                            </app-configuration-select-field>
+                        </div>
+
                     </div>
                 </div>
 

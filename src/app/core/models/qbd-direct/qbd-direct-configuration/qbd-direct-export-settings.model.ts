@@ -1,4 +1,4 @@
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectCCCPurchasedFromField, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDReimbursableExpensesObject } from "../../enum/enum.model";
 
 export type QbdDirectExportSettingsPost = {
     reimbursable_expense_export_type: QBDReimbursableExpensesObject | null,
@@ -17,6 +17,7 @@ export type QbdDirectExportSettingsPost = {
     default_reimbursable_accounts_payable_account_id: string;
     default_ccc_accounts_payable_account_name: string;
     default_ccc_accounts_payable_account_id: string;
+    ccc_purchased_from_field: QbdDirectCCCPurchasedFromField | null;
 }
 
 export interface QbdDirectExportSettingGet extends QbdDirectExportSettingsPost {
