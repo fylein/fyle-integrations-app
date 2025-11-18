@@ -1972,11 +1972,11 @@
   "dashboardTokenExpired": {
     "integrationDisconnected": "Integration disconnected",
     "connectionExpired": "Connection expired",
-    "connectionExpiredDescription": "Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. ",
+    "connectionExpiredDescription": "Your integration with {{appName}} has been disconnected. This happens automatically when QuickBooks expires the connection token after a certain period for security reasons. Please reconnect your account to continue using the integration seamlessly. ",
     "integrationDisconnectedDescription": "The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. ",
     "syncingDataMessage": "We are syncing your data between your {{brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
-    "incorrectAccountSelectedContext": "You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings",
+    "incorrectAccountSelectedContext": "You had previously set up the integration with {{qboCompanyName}}. Please choose the same company to restore the settings and resume the integration.",
     "reconnectButton": "Reconnect",
     "reconectDialogHeaderText": "Reconnect to {{appName}}",
     "reconnectIntegrationButtonText": "Reconnect integration",
