@@ -4,6 +4,7 @@
     [employeeFieldMapping]="qbdDirectMappingService.getEmployeeFieldMapping()"
     [sourceField]="sourceField"
     [destinationField]="qbdDirectMappingService.getDestinationField()"
+    [destinationAttributes]="qbdDirectMappingService.getDestinationAttributes()"
     [showAutoMapEmployee]="false"
     [appName]="AppName.QBD_DIRECT"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
