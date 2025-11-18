@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { concatMap, forkJoin, map, Observable } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
@@ -47,6 +48,16 @@ export class QbdDirectMappingService {
     return this.destinationField;
   }
 
+  getDestinationFieldDisplayName(): string {
+    const destinationAttributes = this.getDestinationAttributes();
+    if (Array.isArray(destinationAttributes)) {
+      return this.translocoService.translate('services.qbdDirectMapping.employeeOrVendorLabel');
+    }
+
+    // If not an array, return the single attribute
+    return destinationAttributes;
+  }
+
   getDestinationOptions(): DestinationAttribute[] {
     return this.destinationOptions;
   }
@@ -58,7 +69,8 @@ export class QbdDirectMappingService {
   constructor(
     private mappingService: MappingService,
     private exportSettingService: QbdDirectExportSettingsService,
-    private importSettingService: QbdDirectImportSettingsService
+    private importSettingService: QbdDirectImportSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   private getDestinationFieldFromSettings(workspaceGeneralSetting: QbdDirectExportSettingGet, mappingSettings: MappingSetting[]): string {

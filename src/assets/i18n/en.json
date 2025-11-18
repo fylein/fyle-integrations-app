@@ -2413,6 +2413,9 @@
     },
     "branding": {
       "reBrandedFullName": "Sage Expense Management"
+    },
+    "qbdDirectMapping": {
+      "employeeOrVendorLabel": "Employee/Vendor"
     }
   },
   "pipes": {
