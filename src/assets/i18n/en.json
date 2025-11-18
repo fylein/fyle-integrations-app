@@ -2689,7 +2689,7 @@
       "exportSetting": {
         "corporateCard": {
           "cccPurchasedFromFieldLabel": "Choose the value to post in the \"Purchased from\" field",
-          "cccPurchasedFromFieldSubLabel": "Choose which value to post to QBD's \"Purchased From\" field."
+          "cccPurchasedFromFieldSubLabel": "You can decide whether the \"Purchased From\" field in QuickBooks Desktop should have the merchant value or the employee who made the purchase."
         }
       }
     }
