@@ -2690,6 +2690,9 @@
         "corporateCard": {
           "cccPurchasedFromFieldLabel": "Choose the value to post in the \"Purchased from\" field",
           "cccPurchasedFromFieldSubLabel": "You can decide whether the \"Purchased From\" field in QuickBooks Desktop should have the merchant value or the employee who made the purchase."
+        },
+        "reimbursable": {
+          "disabledCCCEmployeeMappingSubLabel": "How employees are represented in QuickBooks Desktop is auto-configured based on your reimbursable export configuration."
         }
       }
     }

@@ -118,6 +118,15 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return isReimbursableEnabled;
   }
 
+  get CCCEmployeeMappingSublabel(): string {
+    if (this.isCCCEmployeeMappingDisabled) {
+      return this.translocoService.translate('qbd_direct.configuration.exportSetting.reimbursable.disabledCCCEmployeeMappingSubLabel');
+    }
+    return this.translocoService.translate('qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel', {
+      brandName: this.brandingConfig.brandName
+    });
+  }
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
