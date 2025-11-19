@@ -33,7 +33,6 @@ type MappingWarningDialogState = {
     | 'reimbursableExportType'
     | 'creditCardExportType'
     | 'cccPurchasedFromField'
-    | 'employeeMapping'
     | 'CCCEmployeeMapping'
     | null;
   newValue: string | null;
@@ -512,6 +511,33 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.exportSettingsForm.get('employeeMapping')?.valueChanges.subscribe((reimbursableEmployeeMapping) => {
       this.exportSettingsForm.get('CCCEmployeeMapping')?.setValue(reimbursableEmployeeMapping);
     });
+
+    /**
+     * Employee warning dialog - CASE #4:
+     * 1. Employees and vendors are not allowed (if they are allowed, employee field mapping is ignored) AND
+     * 2. Employee field mapping is changed from a previously saved value to a new value
+     * (CCCEmployeeMapping is used because it captures both reimbursable and CCC fields' updates)
+     */
+    this.exportSettingsForm.get('CCCEmployeeMapping')?.valueChanges
+      .pipe(
+        startWith(this.exportSettingsForm.get('CCCEmployeeMapping')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        const savedValue = this.exportSettings?.employee_field_mapping;
+        const changedFromSavedValue = (
+          !!savedValue &&
+          currentValue !== savedValue &&
+          currentValue !== null
+        );
+        if (!this.isEmployeeAndVendorAllowed && changedFromSavedValue) {
+          this.showMappingWarningDialog({
+            triggerControl: 'CCCEmployeeMapping',
+            previousValue,
+            newValue: currentValue
+          });
+        }
+      });
   }
 
   purchasedFromFieldWatcher() {
