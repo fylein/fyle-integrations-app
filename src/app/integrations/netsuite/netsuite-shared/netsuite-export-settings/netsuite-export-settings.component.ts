@@ -230,7 +230,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       const exportSettingPayload = NetsuiteExportSettingsService.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: NetSuiteExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteExportSettings.exportSettingsSaved'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteExportSettings.exportSettingsSaved'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(NetsuiteOnboardingState.IMPORT_SETTINGS);

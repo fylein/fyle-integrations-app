@@ -313,7 +313,7 @@ export class QbdExportSettingComponent implements OnInit {
     const exportSettingPayload = QBDExportSettingModel.constructPayload(this.exportSettingsForm);
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdExportSetting.exportSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdExportSetting.exportSettingsSuccess'), undefined, this.isOnboarding);
       this.mappingService.refreshMappingPages();
       this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.EXPORT_SETTING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
