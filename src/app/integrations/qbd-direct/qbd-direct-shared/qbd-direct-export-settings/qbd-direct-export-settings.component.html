@@ -295,3 +295,14 @@
     [confirmBtnText]="'qbdDirectExportSettings.continueButtonLabel' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="handleMappingWarningClose($event)"
+    [isWarningVisible]="mappingWarningDialog.isVisible"
+    [headerText]="'qbdDirectExportSettings.mappingWarningDialogHeader' | transloco"
+    [contextText]="'qbdDirectExportSettings.mappingWarningDialogContext' | transloco: { brandName: brandingConfig.brandName, mappedEmployeesCount }"
+    [confirmationPromptText]="'qbdDirectExportSettings.mappingWarningDialogConfirmationPrompt' | transloco"
+    [confirmBtnText]="'qbdDirectExportSettings.proceedButtonLabel' | transloco"
+    [showSecondaryCTA]="true"
+    [dialogWidth]="'550px'"
+></app-configuration-confirmation-dialog>

@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject, FyleField } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
-import { QbdDirectImportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -17,15 +16,20 @@ import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyl
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
-import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
+
+
+type MappingWarningDialogState = {
+  isVisible: boolean;
+  triggeredBy: 'reimbursableToggle' | 'cccExportTypeChange' | 'cccPurchasedFromChange' | 'employeeMappingChange' | null;
+}
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -99,6 +103,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   sessionStartTime: Date = new Date();
 
   readonly brandingStyle = brandingStyle;
+
+  /** State for the mapping warning dialog */
+  mappingWarningDialog: MappingWarningDialogState = {
+    isVisible: false,
+    triggeredBy: null
+  };
+
+  mappedEmployeesCount: number;
 
   get showCCCEmployeeMapping(): boolean {
     // The field is hidden only if reimbursable is toggled off and credit card export type is set to CCP
@@ -553,6 +565,24 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return content;
   }
 
+  private showMappingWarningDialog({ triggeredBy }: { triggeredBy: MappingWarningDialogState['triggeredBy'] }): void {
+    if (this.mappingWarningDialog.isVisible) {
+      return;
+    }
+
+    this.mappingWarningDialog = {
+      isVisible: true,
+      triggeredBy
+    };
+  }
+
+  handleMappingWarningClose({ hasAccepted, event }: ConfigurationWarningOut): void {
+    this.mappingWarningDialog = {
+      isVisible: false,
+      triggeredBy: null
+    };
+  }
+
   private constructWarningMessage(): string {
     let content: string = '';
     const existingReimbursableExportType = this.exportSettings?.reimbursable_expense_export_type || 'None';
@@ -609,11 +639,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     forkJoin([
       this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       this.importSettingService.getImportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getMappingStats(FyleField.EMPLOYEE, EmployeeFieldMapping.VENDOR, this.appName),
       ...groupedAttributes
-    ]).subscribe(([exportSettingResponse, importSettingsResponse, ...paginatedAccounts]) => {
+    ]).subscribe(([exportSettingResponse, importSettingsResponse, employeeMappingStats, ...paginatedAccounts]) => {
 
       // Extract items status
       this.isImportItemsEnabled = importSettingsResponse?.import_settings?.import_item_as_category || false;
+
+      this.mappedEmployeesCount = employeeMappingStats.all_attributes_count - employeeMappingStats.unmapped_attributes_count;
 
       let accounts: DestinationAttribute[] = [];
       for (const response of paginatedAccounts) {

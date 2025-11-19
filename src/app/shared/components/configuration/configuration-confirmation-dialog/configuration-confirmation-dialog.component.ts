@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, ButtonSize, ButtonType, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -16,6 +17,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   @Input() headerText: string;
 
   @Input() contextText: string;
+
+  @Input() confirmationPromptText: string;
 
   @Input() confirmBtnText: string;
 
@@ -50,8 +53,13 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   brandIcon: string;
 
   constructor(
-    private windowService: WindowService
-  ) { }
+    private windowService: WindowService,
+    private translocoService: TranslocoService
+  ) {
+    if (!this.confirmationPromptText) {
+      this.confirmationPromptText = this.translocoService.translate('configurationConfirmationDialog.areYouSureToContinue');
+    }
+  }
 
   acceptWarning(isWarningAccepted: boolean) {
     this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
