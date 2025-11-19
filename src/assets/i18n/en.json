@@ -88,7 +88,8 @@
     "selectTimePlaceholder": "Select time for export",
     "selectMeridiemPlaceholder": "Select meridiem of time",
     "cannotBeEdited": "(cannot be edited later)",
-    "previewOfExportSage50Header": "Export Modules"
+    "previewOfExportSage50Header": "Export Modules",
+    "theOptions": " the options"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -2679,6 +2680,19 @@
   "previewDialog": {
     "PURCHASES_RECEIVE_INVENTORY": "Purchases",
     "PAYMENTS_JOURNAL": "Payments",
-    "GENERAL_JOURNAL_ENTRY": "General journal entry"
+    "GENERAL_JOURNAL_ENTRY": "General journal entry",
+    "paymentSyncHeader": "How does the sync behaviour work?",
+    "paymentSyncOption1Header": "Option 1: Export ACH Payments to Accounting",
+    "paymentSyncOption1SubHeader": "If the report is reimbursed and marked as Paid after the expenses are exported to {{appName}}, then the integration will automatically sync the status and mark the exported record as Paid in {{appName}}",
+    "paymentSyncOption1Info": "Predominantly used when processing reimbursements in {{brandName}} via ACH.",
+    "paymentSyncOption1LeftIllustration": "Report marked as PAID in {{brandName}}",
+    "paymentSyncOption1RightIllustration": "Record marked as PAID in {{appName}}",
+    "paymentSyncOption2Header": "Option 2: Import Accounting Payments to {{brandName}}",
+    "paymentSyncOption2SubHeader": "If the report is exported from the processing state and the report is reimbursed and marked as paid in {{appName}}, then the integration will automatically sync the status back to {{brandName}} and move the report to the closed state",
+    "paymentSyncOption2Info": "Predominantly used when performing and tracking the entire reimbursement process in {{appName}}.",
+    "paymentSyncOption2LeftIllustration": "Record marked as PAID in {{appName}}",
+    "paymentSyncOption2RightIllustration": "Report moved to CLOSED in {{brandName}}",
+    "autoSync": "Auto-sync",
+    "previewClose": "Got it"
   }
 }
