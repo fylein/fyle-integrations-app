@@ -1972,7 +1972,7 @@
   "dashboardTokenExpired": {
     "integrationDisconnected": "Integration disconnected",
     "connectionExpired": "Connection expired",
-    "connectionExpiredDescription": "Your integration with {{appName}} has been disconnected. This happens automatically when QuickBooks expires the connection token after a certain period for security reasons. Please reconnect your account to continue using the integration seamlessly. ",
+    "connectionExpiredDescription": "Your integration with {{appName}} has been disconnected. This happens automatically when QuickBooks expires the connection token after a certain period for security reasons.\nPlease reconnect your account to continue using the integration seamlessly. ",
     "integrationDisconnectedDescription": "The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. ",
     "syncingDataMessage": "We are syncing your data between your {{brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
