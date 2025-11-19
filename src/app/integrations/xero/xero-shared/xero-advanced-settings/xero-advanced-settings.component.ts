@@ -99,7 +99,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.COMPLETE);
