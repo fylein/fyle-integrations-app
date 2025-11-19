@@ -10,7 +10,7 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, filter, forkJoin, Observable, of, pairwise, startWith, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -24,11 +24,19 @@ import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-dir
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
+import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-mapping.service';
 
 
 type MappingWarningDialogState = {
   isVisible: boolean;
-  triggeredBy: 'reimbursableToggle' | 'cccExportTypeChange' | 'cccPurchasedFromChange' | 'employeeMappingChange' | null;
+  triggerControl:
+    | 'reimbursableExpense'
+    | 'creditCardExportType'
+    | 'cccPurchasedFromField'
+    | 'employeeMapping'
+    | 'CCCEmployeeMapping'
+    | null;
+  newValue: string | null;
 }
 
 @Component({
@@ -107,7 +115,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   /** State for the mapping warning dialog */
   mappingWarningDialog: MappingWarningDialogState = {
     isVisible: false,
-    triggeredBy: null
+    triggerControl: null,
+    newValue: null
   };
 
   mappedEmployeesCount: number;
@@ -139,6 +148,14 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  get isEmployeeAndVendorAllowed(): boolean {
+    if (!this.exportSettings) {
+      return false;
+    }
+    return this.qbdDirectMappingService.getIsEmployeeAndVendorAllowed(this.exportSettings);
+  }
+
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
@@ -152,7 +169,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private translocoService: TranslocoService,
     private qbdDirectExportSettingsService: QbdDirectExportSettingsService,
     private employeeSettingsService: EmployeeSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
+    private qbdDirectMappingService: QbdDirectMappingService
   ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
@@ -324,6 +342,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         }
 
         this.isSaveInProgress = false;
+        this.exportSettings = response;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'));
 
         if (this.isOnboarding) {
@@ -345,8 +364,27 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   cccExportTypeWatcher(): void {
-    this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
-      if (creditCardExportTypeValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+    this.exportSettingsForm.controls.creditCardExportType.valueChanges
+    .pipe(
+      startWith(this.exportSettingsForm.get('creditCardExportType')?.value),
+      pairwise()
+    )
+    .subscribe(([previousValue, currentValue]) => {
+      /* Employee warning dialog - CASE #1:
+       * Employees and vendors are allowed, and CCC module is changed from CCP
+       */
+      const changedFromCCP = (
+        previousValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+        currentValue !== QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      );
+
+      if (this.isEmployeeAndVendorAllowed && changedFromCCP) {
+        this.showMappingWarningDialog({
+          triggerControl: 'creditCardExportType',
+          previousValue,
+          newValue: currentValue
+        });
+      } else if (currentValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
         this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.qbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
       }
@@ -565,21 +603,43 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return content;
   }
 
-  private showMappingWarningDialog({ triggeredBy }: { triggeredBy: MappingWarningDialogState['triggeredBy'] }): void {
+  private showMappingWarningDialog({ triggerControl, previousValue, newValue }: {
+    triggerControl: MappingWarningDialogState['triggerControl'],
+    previousValue: string | null,
+    newValue: MappingWarningDialogState['newValue']
+  }): void {
     if (this.mappingWarningDialog.isVisible) {
       return;
     }
 
+    // As soon as the warning dialog is shown, go back to the previous value.
+    // We update to the new value only if the user accepts the warning.
+    if (triggerControl && previousValue) {
+      setTimeout(() => {
+        this.exportSettingsForm.get(triggerControl)?.setValue(previousValue);
+      }, 0);
+    }
+
     this.mappingWarningDialog = {
       isVisible: true,
-      triggeredBy
+      triggerControl,
+      newValue
     };
   }
 
   handleMappingWarningClose({ hasAccepted, event }: ConfigurationWarningOut): void {
+    const { triggerControl, newValue } = this.mappingWarningDialog;
+
+    // If the user accepts the warning, proceed with the update.
+    if (hasAccepted && triggerControl && newValue) {
+      this.exportSettingsForm.get(triggerControl)?.setValue(newValue);
+    }
+
+    // Reset the warning dialog state
     this.mappingWarningDialog = {
       isVisible: false,
-      triggeredBy: null
+      triggerControl: null,
+      newValue: null
     };
   }
 
