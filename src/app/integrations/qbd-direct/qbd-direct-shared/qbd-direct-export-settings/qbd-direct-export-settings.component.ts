@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject, FyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject, FyleField, QbdDirectCCCPurchasedFromField } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -375,7 +375,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
        */
       const changedFromCCP = (
         previousValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
-        currentValue !== QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        currentValue !== QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+        currentValue !== null
       );
 
       if (this.isEmployeeAndVendorAllowed && changedFromCCP) {
@@ -491,6 +492,32 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  purchasedFromFieldWatcher() {
+    /**
+     * Employee warning dialog - CASE #2:
+     * Employees and vendors are allowed, and 'Purchased From' field is changed from EMPLOYEE
+     */
+    this.exportSettingsForm.get('cccPurchasedFromField')?.valueChanges
+      .pipe(
+        startWith(this.exportSettingsForm.get('cccPurchasedFromField')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        const changedFromEmployee = (
+          previousValue === QbdDirectCCCPurchasedFromField.EMPLOYEE &&
+          currentValue !== QbdDirectCCCPurchasedFromField.EMPLOYEE &&
+          currentValue !== null
+        );
+        if (this.isEmployeeAndVendorAllowed && changedFromEmployee) {
+          this.showMappingWarningDialog({
+            triggerControl: 'cccPurchasedFromField',
+            previousValue,
+            newValue: currentValue
+          });
+        }
+      });
+  }
+
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
     return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
@@ -514,6 +541,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimburesmentExpenseGroupingWatcher();
 
     this.employeeFieldMappingWatcher();
+
+    this.purchasedFromFieldWatcher();
   }
 
   private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
