@@ -10,5 +10,6 @@
     [appName]="AppName.QBD_DIRECT"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
     [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false"
-    [searchHandler]="handleSearch">
-</app-generic-mapping-v2>
+    [searchHandler]="handleSearch"
+    [isEmployeeAndVendorAllowed]="qbdDirectMappingService.isEmployeeAndVendorAllowed"
+></app-generic-mapping-v2>

@@ -35,7 +35,7 @@ export class QbdDirectMappingService {
 
   private query: string | undefined;
 
-  private isEmployeeAndVendorAllowed: boolean = false;
+  public isEmployeeAndVendorAllowed: boolean = false;
 
   getDestinationField(): string {
     return this.destinationField;
