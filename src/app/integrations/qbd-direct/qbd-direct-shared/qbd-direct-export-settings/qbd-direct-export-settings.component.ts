@@ -30,13 +30,14 @@ import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-di
 type MappingWarningDialogState = {
   isVisible: boolean;
   triggerControl:
-    | 'reimbursableExpense'
+    | 'reimbursableExportType'
     | 'creditCardExportType'
     | 'cccPurchasedFromField'
     | 'employeeMapping'
     | 'CCCEmployeeMapping'
     | null;
   newValue: string | null;
+  postUpdateAction?: (newValue: string | null) => void;
 }
 
 @Component({
@@ -432,13 +433,34 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   employeeMappingWatcher() {
-    this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((reimbursableExportTypeValue) => {
-      if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL) {
-        this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
+    this.exportSettingsForm.controls.reimbursableExportType.valueChanges
+    .pipe(
+      startWith(this.exportSettingsForm.get('reimbursableExportType')?.value),
+      pairwise()
+    )
+    .subscribe(([previousValue, currentValue]) => {
+      /**
+       * Employee warning dialog - CASE #3:
+       * Employees and vendors are allowed, and reimbursable exports are turned on
+       */
+      const isReimbursableExportEnabled = previousValue === null && currentValue !== null;
+
+      // Only if the user accepts the warning, we update the dependent fields
+      const postUpdateAction = () => {
+        if (currentValue === QbdDirectReimbursableExpensesObject.BILL) {
+          this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
+        }
+      };
+      if (this.isEmployeeAndVendorAllowed && isReimbursableExportEnabled) {
+        this.showMappingWarningDialog({
+          triggerControl: 'reimbursableExportType',
+          previousValue,
+          newValue: currentValue,
+          postUpdateAction
+        });
+      } else {
+        postUpdateAction?.();
       }
-      // Else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
-      //   This.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.EMPLOYEE);
-      // }
     });
   }
 
@@ -632,10 +654,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return content;
   }
 
-  private showMappingWarningDialog({ triggerControl, previousValue, newValue }: {
+  private showMappingWarningDialog({ triggerControl, previousValue, newValue, postUpdateAction }: {
     triggerControl: MappingWarningDialogState['triggerControl'],
     previousValue: string | null,
-    newValue: MappingWarningDialogState['newValue']
+    newValue: MappingWarningDialogState['newValue'],
+    postUpdateAction?: MappingWarningDialogState['postUpdateAction']
   }): void {
     if (this.mappingWarningDialog.isVisible) {
       return;
@@ -652,16 +675,18 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.mappingWarningDialog = {
       isVisible: true,
       triggerControl,
-      newValue
+      newValue,
+      postUpdateAction
     };
   }
 
-  handleMappingWarningClose({ hasAccepted, event }: ConfigurationWarningOut): void {
-    const { triggerControl, newValue } = this.mappingWarningDialog;
+  handleMappingWarningClose({ hasAccepted }: ConfigurationWarningOut): void {
+    const { triggerControl, newValue, postUpdateAction } = this.mappingWarningDialog;
 
     // If the user accepts the warning, proceed with the update.
     if (hasAccepted && triggerControl && newValue) {
       this.exportSettingsForm.get(triggerControl)?.setValue(newValue);
+      postUpdateAction?.(newValue);
     }
 
     // Reset the warning dialog state
