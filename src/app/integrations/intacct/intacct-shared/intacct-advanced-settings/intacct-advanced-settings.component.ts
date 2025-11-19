@@ -101,6 +101,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: AdvancedSettingFormOption[];
 
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.INTACCT.DFV_READ_MORE;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;

@@ -34,6 +34,7 @@ export type KbArticle = {
                 ERROR_RESOLUTION_GUIDE_LINK: string;
             },
             INTACCT: {
+                DFV_READ_MORE: string;
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;
@@ -42,6 +43,7 @@ export type KbArticle = {
                 SKIP_EXPORT: string;
             },
             NETSUITE: {
+                DFV_READ_MORE: string;
                 CONNECTOR: string;
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;

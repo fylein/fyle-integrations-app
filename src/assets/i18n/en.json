@@ -65,7 +65,7 @@
     "generalLedger": "General Ledger",
     "preview": "Preview",
     "exportModule": "Export module",
-    "previewOfExport": "Preview of a {{exportType}} exported to {{appName}}",
+    "previewOfExport": "Preview of {{aOrAn}} {{exportType}} exported to {{appName}}",
     "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandName}}.",
     "click": "Click",
     "here": "here",
