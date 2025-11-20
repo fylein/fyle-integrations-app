@@ -110,14 +110,16 @@ export const c1KbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
-            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
+            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
         },
         NETSUITE: {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9471329-generate-credentials-to-connect-with-netsuite`,
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_cca32ec1be`,
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/een/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_c18c533ca1`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_b394546a8c`,
-            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         SAGE300: {
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration#h_e68fbd43da`,

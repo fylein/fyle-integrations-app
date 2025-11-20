@@ -89,6 +89,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.NETSUITE.DFV_READ_MORE;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   isSkipExportFormInvalid: boolean;

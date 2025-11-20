@@ -175,7 +175,9 @@
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
             <app-configuration-step-sub-header
                 [label]="'intacct.configuration.advancedSettings.dfvLabel' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [readMoreLink]="dfvReadMoreLink"
+                [readMoreLinkText]="'intacct.configuration.advancedSettings.dfvReadMoreLinkText' | transloco">
             </app-configuration-step-sub-header>
         </div>
             <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingDefaultFieldCard">
