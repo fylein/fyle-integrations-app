@@ -143,18 +143,18 @@
                             [showExportPreview]="false">
                         </app-configuration-select-field>
 
-                        <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'employeeMapping')">
+                        <div *ngIf="showCCCEmployeeMapping">
                             <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
                                 [label]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingLabel' | transloco"
-                                [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                                [subLabel]="CCCEmployeeMappingSublabel"
                                 [options]="employeeMappingOptions"
                                 [iconPath]="'user-two'"
                                 [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
-                                [formControllerName]="'employeeMapping'"
-                                [isDisabled]="isEmployeeMappingDisabled()">
+                                [formControllerName]="'CCCEmployeeMapping'"
+                                [isDisabled]="isCCCEmployeeMappingDisabled">
                             </app-configuration-select-field>
                         </div>
 
@@ -213,6 +213,20 @@
                             </app-configuration-select-field>
                         </div>
 
+                        <div *ngIf="helperService.isFieldRequired(exportSettingsForm, 'cccPurchasedFromField')">
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'qbdDirectExportSettings.option' | transloco"
+                                [label]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldLabel' | transloco"
+                                [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldSubLabel' | transloco"
+                                [options]="cccPurchasedFromFieldOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'qbdDirectExportSettings.selectCCCPurchasedFromFieldPlaceholder' | transloco"
+                                [formControllerName]="'cccPurchasedFromField'">
+                            </app-configuration-select-field>
+                        </div>
+
                     </div>
                 </div>
 
@@ -252,13 +266,13 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'qbdDirectExportSettings.exportDate' | transloco"
-                        [label]="('qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateLabel' | transloco) + (brandingConfig.brandId === 'co' ? '' : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco))" 
+                        [label]="('qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateLabel' | transloco) + (brandingConfig.brandId === 'co' ? '' : (exportSettingsForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase)  + ('qbdDirectExportSettings.dateAsSuffix' | transloco))"
                         [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseDateSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'qbdDirectExportSettings.selectDatePlaceholder' | transloco"
                         [formControllerName]="'creditCardExportDate'">
-                    </app-configuration-select-field> 
+                    </app-configuration-select-field>
                 </div>
 
             </div>
@@ -281,3 +295,14 @@
     [confirmBtnText]="'qbdDirectExportSettings.continueButtonLabel' | transloco"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="handleMappingWarningClose($event)"
+    [isWarningVisible]="mappingWarningDialog.isVisible"
+    [headerText]="'qbdDirectExportSettings.mappingWarningDialogHeader' | transloco"
+    [contextText]="'qbdDirectExportSettings.mappingWarningDialogContext' | transloco: { brandName: brandingConfig.brandName, mappedEmployeesCount }"
+    [confirmationPromptText]="'qbdDirectExportSettings.mappingWarningDialogConfirmationPrompt' | transloco"
+    [confirmBtnText]="'qbdDirectExportSettings.proceedButtonLabel' | transloco"
+    [showSecondaryCTA]="true"
+    [dialogWidth]="'550px'"
+></app-configuration-confirmation-dialog>

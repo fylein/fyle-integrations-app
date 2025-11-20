@@ -1,9 +1,9 @@
 import { FormGroup } from "@angular/forms";
-import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency } from "../../enum/enum.model";
+import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency, QbdDirectCCCPurchasedFromField } from "../../enum/enum.model";
 
 export type QBDExportSettingFormOption = {
     label: string,
-    value: ExpenseState | QBDReimbursableExpensesObject | QBDCorporateCreditCardExpensesObject | QBDExportDateType | QBDExpenseGroupedBy | QBDScheduleFrequency | QBDFyleField | string | QBDEntity;
+    value: ExpenseState | QBDReimbursableExpensesObject | QBDCorporateCreditCardExpensesObject | QBDExportDateType | QBDExpenseGroupedBy | QBDScheduleFrequency | QBDFyleField | string | QBDEntity | QbdDirectCCCPurchasedFromField;
 }
 
 export type QBDExportSettingGet = {
