@@ -3,7 +3,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { concatMap, forkJoin, map, Observable } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, AccountingField, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName, QBDReimbursableExpensesObject, QbdDirectCCCPurchasedFromField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, AccountingField, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName, QBDReimbursableExpensesObject, QbdDirectCCCPurchasedFromField, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -42,8 +42,8 @@ export class QbdDirectMappingService {
   }
 
   getDestinationAttributes(): string | string[] {
-    if (this.isEmployeeAndVendorAllowed) {
-      return [FyleField.EMPLOYEE, FyleField.VENDOR];
+    if (this.sourceField === FyleField.EMPLOYEE && this.isEmployeeAndVendorAllowed) {
+      return [EmployeeFieldMapping.EMPLOYEE, EmployeeFieldMapping.VENDOR];
     }
     return this.destinationField;
   }
