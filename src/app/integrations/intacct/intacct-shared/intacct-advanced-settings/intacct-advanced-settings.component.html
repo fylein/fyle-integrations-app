@@ -134,7 +134,6 @@
                     [placeholder]="'intacctAdvancedSettings.placeholderTopMemo' | transloco"
                     [formControllerName]="'setTopMemoField'"></app-configuration-multi-select>
                     <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
-                        <!-- <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{'intacct.common.descriptionText' | transloco}}</p> -->
                         <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                             <span>{{ topMemoPreviewText }}</span>
                         </div>
@@ -151,7 +150,6 @@
                 [placeholder]="'intacctAdvancedSettings.placeholderDescription' | transloco"
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
-                    <!-- <p class="tw-text-form-label-text-color tw-text-14-px tw-mb-12-px">{{ 'intacctAdvancedSettings.preview' | transloco }} {{'intacct.common.descriptionText' | transloco}}</p> -->
                     <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-text-muted tw-min-h-40-px">
                         <span>{{ memoPreviewText }}</span>
                     </div>
@@ -178,7 +176,9 @@
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
             <app-configuration-step-sub-header
                 [label]="'intacct.configuration.advancedSettings.dfvLabel' | transloco"
-                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+                [subLabel]="'intacct.configuration.advancedSettings.dfvSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [readMoreLink]="dfvReadMoreLink"
+                [readMoreLinkText]="'intacct.configuration.advancedSettings.dfvReadMoreLinkText' | transloco">
             </app-configuration-step-sub-header>
         </div>
             <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingDefaultFieldCard">

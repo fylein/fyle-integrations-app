@@ -27,7 +27,7 @@
         <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
             <div class="fields-header-text tw-pl-48-px tw-w-450-px tw-wrap-normal">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
             <div class="fields-header-text tw-w-30-vw tw-wrap-normal">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
-            <div class="fields-header-text tw-flex tw-items-center tw-wrap-normal">
+            <div class="fields-header-text tw-flex tw-items-center tw-wrap-normal tw-w-[10vw]">
                 {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
                 <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
             </div>
@@ -93,9 +93,9 @@
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-w-404-px tw-whitespace-nowrap">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
-                    <div class="fields-header-text tw-w-30-vw tw-whitespace-nowrap">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
-                    <div class="fields-header-text tw-flex tw-items-center tw-whitespace-nowrap">
+                    <div class="fields-header-text tw-w-404-px tw-wrap-normal">{{ 'intacctImportSettings.sageIntacctDimensions' | transloco }}</div>
+                    <div class="fields-header-text tw-w-30-vw tw-wrap-normal">{{ 'intacctImportSettings.brandNameFields' | transloco: { brandName: brandingConfig.brandName } }}</div>
+                    <div class="fields-header-text tw-flex tw-items-center tw-wrap-normal tw-w-[10vw]">
                         {{ 'intacctImportSettings.importToBrandName' | transloco: { brandName: brandingConfig.brandName } }}
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipText]="'intacctImportSettings.importTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
@@ -271,15 +271,6 @@
             </p>
             <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText [placeholder]="'intacctImportSettings.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'intacctImportSettings.validNameErrorMessage' | transloco"></app-mandatory-error-message>
-
-            <!-- <div>
-                <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
-                  {{ 'intacctImportSettings.fieldTypeLabel' | transloco }}
-                </h5>
-                <div class="tw-w-420-px tw-h-48-px">
-                  <input class="tw-w-420-px form-input-disabled" type="text" [placeholder]="'intacctImportSettings.selectPlaceholder' | transloco" disabled>
-                </div>
-              </div> -->
 
               <div class="label-section tw-pt-8">
                 <div class="label-content tw-w-420-px">
