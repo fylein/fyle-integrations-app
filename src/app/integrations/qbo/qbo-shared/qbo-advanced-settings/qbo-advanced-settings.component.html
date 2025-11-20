@@ -78,7 +78,8 @@
                     [subLabel]="'qboAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [placeholder]="'qboAdvancedSettings.paymentSyncPlaceholder' | transloco"
                     [formControllerName]="'paymentSync'"
-                    [showClearIcon]="true">
+                    [showClearIcon]="true"
+                    [appName]="appName">
                 </app-configuration-select-field>
 
                 <app-configuration-select-field *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo'"

@@ -27,6 +27,7 @@ export const c1Styles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-bg-blue',
         infoLabelIcon: 'tw-text-icon-blue',
+        autoSyncPaymentPreviewInfoLabelIcon: 'tw-text-muted',
         infoLabelText: 'tw-text-12-px tw-font-400 tw-self-center tw-text-text-primary',
         configurationExportCard: 'tw-border tw-border-solid tw-border-tertiary-lighter tw-rounded-8-px',
         configurationExportCardSecondary: 'tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-8-px',

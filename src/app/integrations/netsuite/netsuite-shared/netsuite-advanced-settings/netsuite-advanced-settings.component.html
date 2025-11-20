@@ -54,7 +54,8 @@
                         [label]="'netsuite.configuration.advancedSettings.paymentSyncLabel' | transloco"
                         [subLabel]="'netsuiteAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [placeholder]="'netsuiteAdvancedSettings.selectPaymentSyncPlaceholder' | transloco"
-                        [formControllerName]="'paymentSync'">
+                        [formControllerName]="'paymentSync'"
+                        [appName]="appName">
                     </app-configuration-select-field>
 
                     <app-configuration-select-field *ngIf="this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' && isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"

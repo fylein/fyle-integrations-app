@@ -27,6 +27,7 @@ export const fyleStyles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-py-8-px tw-px-16-px tw-border tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border-separate',
         infoLabelIcon: 'tw-text-info',
+        autoSyncPaymentPreviewInfoLabelIcon: 'tw-text-muted',
         infoLabelText: 'tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary',
         configurationExportCard: 'tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px',
         configurationExportCardSecondary: 'tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px',
