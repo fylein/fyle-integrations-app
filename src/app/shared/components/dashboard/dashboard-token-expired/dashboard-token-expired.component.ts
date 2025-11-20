@@ -32,6 +32,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   @Input() appName: string;
 
+  @Input() qboCompanyName: string;
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
