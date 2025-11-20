@@ -55,11 +55,7 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   constructor(
     private windowService: WindowService,
     private translocoService: TranslocoService
-  ) {
-    if (!this.confirmationPromptText) {
-      this.confirmationPromptText = this.translocoService.translate('configurationConfirmationDialog.areYouSureToContinue');
-    }
-  }
+  ) { }
 
   acceptWarning(isWarningAccepted: boolean) {
     this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
@@ -71,6 +67,9 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.brandIcon = `assets/${brandingConfig.brandId}/favicon.png`;
+    if (!this.confirmationPromptText) {
+      this.confirmationPromptText = this.translocoService.translate('configurationConfirmationDialog.areYouSureToContinue');
+    }
   }
 
 }
