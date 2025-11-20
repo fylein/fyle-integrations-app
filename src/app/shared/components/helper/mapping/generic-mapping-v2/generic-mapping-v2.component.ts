@@ -50,6 +50,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() searchHandler?: (query?: string) => Observable<void>;
 
+  @Input() isEmployeeAndVendorAllowed: boolean = false;
+
   isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;
@@ -107,7 +109,7 @@ export class GenericMappingV2Component implements OnInit {
 
   private getFilteredMappings() {
     const shouldSendAppName = this.appName !== AppName.BUSINESS_CENTRAL ? [this.appName] : [];
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...shouldSendAppName).subscribe((mappingResponse: GenericMappingResponse) => {
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...shouldSendAppName, this.isEmployeeAndVendorAllowed).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
@@ -163,8 +165,8 @@ export class GenericMappingV2Component implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
     const shouldSendAppName = this.appName !== AppName.BUSINESS_CENTRAL ? [this.appName] : [];
     forkJoin([
-      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...shouldSendAppName),
-      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
+      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...shouldSendAppName, this.isEmployeeAndVendorAllowed),
+      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName, this.isEmployeeAndVendorAllowed)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {
         this.totalCount = mappingResponse.count;

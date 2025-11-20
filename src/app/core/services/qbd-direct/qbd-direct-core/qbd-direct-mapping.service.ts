@@ -35,7 +35,7 @@ export class QbdDirectMappingService {
 
   private query: string | undefined;
 
-  private isEmployeeAndVendorAllowed: boolean = false;
+  public isEmployeeAndVendorAllowed: boolean = false;
 
   getDestinationField(): string {
     return this.destinationField;
@@ -48,14 +48,13 @@ export class QbdDirectMappingService {
     return this.destinationField;
   }
 
-  getDestinationFieldDisplayName(): string {
+  getDestinationFieldDisplayName(): string | undefined {
     const destinationAttributes = this.getDestinationAttributes();
     if (Array.isArray(destinationAttributes)) {
       return this.translocoService.translate('services.qbdDirectMapping.employeeOrVendorLabel');
     }
 
-    // If not an array, return the single attribute
-    return destinationAttributes;
+    return undefined;
   }
 
   getDestinationOptions(): DestinationAttribute[] {
@@ -64,6 +63,14 @@ export class QbdDirectMappingService {
 
   getEmployeeFieldMapping(): FyleField {
     return this.employeeFieldMapping;
+  }
+
+  getIsEmployeeAndVendorAllowed(exportSettings: QbdDirectExportSettingGet) {
+    return (
+      !exportSettings.reimbursable_expense_export_type &&
+      exportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+      exportSettings.ccc_purchased_from_field === QbdDirectCCCPurchasedFromField.EMPLOYEE
+    );
   }
 
   constructor(
@@ -158,11 +165,7 @@ export class QbdDirectMappingService {
         this.employeeFieldMapping = (exportSettings.employee_field_mapping as unknown as FyleField);
         this.nameInJE = exportSettings.name_in_journal_entry;
 
-        this.isEmployeeAndVendorAllowed = (
-          !exportSettings.reimbursable_expense_export_type &&
-          exportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
-          exportSettings.ccc_purchased_from_field === QbdDirectCCCPurchasedFromField.EMPLOYEE
-        );
+        this.isEmployeeAndVendorAllowed = this.getIsEmployeeAndVendorAllowed(exportSettings);
 
         // Extract items setting
         this.isImportItemsEnabled = importSettings.import_settings.import_item_as_category;

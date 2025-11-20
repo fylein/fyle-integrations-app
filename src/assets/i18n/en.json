@@ -1727,7 +1727,11 @@
     "itemsDisabledWarning": "{{content}} <br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursable": "reimbursable",
     "creditCard": "credit card",
-    "selectCCCPurchasedFromFieldPlaceholder": "Select a value"
+    "selectCCCPurchasedFromFieldPlaceholder": "Select a value",
+    "proceedButtonLabel": "Proceed",
+    "mappingWarningDialogHeader": "This action will change your existing mappings",
+    "mappingWarningDialogConfirmationPrompt": "Are you sure you want to proceed?",
+    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don’t fit the new selection will be removed. You currently have {{mappedEmployeesCount}} employees mapped."
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",
