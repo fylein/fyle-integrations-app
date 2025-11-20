@@ -10,5 +10,10 @@
             </a>
             {{ 'configurationStepSubHeader.toPreview' | transloco }}
         </div>
+        <div *ngIf="readMoreLink" class="tw-inline-flex">
+            <a class="link tw-pr-4-px tw-w-fit" (click)="readMoreClick()">
+                {{ readMoreLinkText | transloco }}
+            </a>
+        </div>
     </h5>
 </div>

@@ -162,7 +162,9 @@
             <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
                 <app-configuration-step-sub-header
                     [label]="'netsuite.configuration.advancedSettings.dfvLabel' | transloco"
-                    [subLabel]="'netsuite.configuration.advancedSettings.dfvSubLabel' | transloco">
+                    [subLabel]="'netsuite.configuration.advancedSettings.dfvSubLabel' | transloco"
+                    [readMoreLink]="dfvReadMoreLink"
+                    [readMoreLinkText]="'netsuite.configuration.advancedSettings.dfvReadMoreLinkText' | transloco">
                 </app-configuration-step-sub-header>
             </div>
             <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingDefaultFieldCard">
