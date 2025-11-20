@@ -115,7 +115,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     }
     this.isLoading = false;
     this.saveInProgress = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'), undefined, this.isOnboarding);
   }
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {

@@ -13,7 +13,7 @@
             <div class="tw-flex tw-justify-center tw-items-center">
               <app-netsuite-connection-form [connectNetsuiteForm]="connectNetsuiteForm"></app-netsuite-connection-form>
             </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
         </div>
+        <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
     </div>
 </div>

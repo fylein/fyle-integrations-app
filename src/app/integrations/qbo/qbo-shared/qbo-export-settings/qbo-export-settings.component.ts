@@ -221,7 +221,7 @@ export class QboExportSettingsComponent implements OnInit {
       ).subscribe({
         complete: () => {
           this.isSaveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboExportSettings.exportSettingsSuccess'));
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
           if (this.isOnboarding) {
             this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
             this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);

@@ -343,7 +343,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
         this.isSaveInProgress = false;
         this.exportSettings = response;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);

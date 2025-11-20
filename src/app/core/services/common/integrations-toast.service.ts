@@ -14,8 +14,9 @@ export class IntegrationsToastService {
 
   allowToastMessageInApps = brandingFeatureConfig.allowToastMessageInApps;
 
-  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
-    if (this.allowToastMessageInApps) {
+  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000, isOnboarding: boolean = false): void {
+    // Hide toast for onboarding pages in c1
+    if (this.allowToastMessageInApps || (!this.allowToastMessageInApps && !isOnboarding)) {
     this.messageService.add({
       severity,
         summary,

@@ -89,6 +89,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.NETSUITE.DFV_READ_MORE;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   isSkipExportFormInvalid: boolean;
@@ -184,7 +186,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.COMPLETE);

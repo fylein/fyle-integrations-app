@@ -211,7 +211,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = this.advancedSettingsService.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300AdvancedSettings.advancedSettingsSavedSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300AdvancedSettings.advancedSettingsSavedSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
