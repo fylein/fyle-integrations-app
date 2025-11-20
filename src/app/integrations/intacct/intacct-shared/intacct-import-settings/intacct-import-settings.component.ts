@@ -708,7 +708,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.dependentFieldSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);

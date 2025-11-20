@@ -263,7 +263,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
 
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'), undefined, this.isOnboarding);
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);

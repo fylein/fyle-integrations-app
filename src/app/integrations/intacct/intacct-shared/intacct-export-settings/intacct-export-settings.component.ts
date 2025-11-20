@@ -533,7 +533,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.saveInProgress = true;
         const exportSettingPayload = SiExportSettingsService.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);
           if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.EXPORT_SETTINGS) {
             this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
