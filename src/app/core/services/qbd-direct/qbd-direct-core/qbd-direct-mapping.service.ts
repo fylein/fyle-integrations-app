@@ -172,6 +172,8 @@ export class QbdDirectMappingService {
         this.chartOfAccounts = importSettings.import_settings.import_account_as_category ? importSettings.import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : this.importSettingService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
         this.destinationField = this.getDestinationFieldFromSettings(exportSettings, mappings.results);
 
+        // On mapping tab switch (Employee <-> Category <-> CC), reset the destination options
+        this.destinationOptions = [];
         return this.updateDestinationOptions();
       })
     );
