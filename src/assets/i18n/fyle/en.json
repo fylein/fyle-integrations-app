@@ -489,7 +489,8 @@
     "currentDate": "Export date",
     "loader": {
       "defaultLabel": "Loading..."
-    }
+    },
+    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form."
   },
   "qbdDirectOnboardingPreRequisite": {
     "learnMore": "Learn more",
