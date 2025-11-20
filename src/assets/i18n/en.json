@@ -334,10 +334,10 @@
     "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account."
   },
   "netsuiteConnectionForm": {
-    "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
+    "invalidAccountIdError": "Enter valid account ID.",
     "accountIdLabel": "Account ID",
     "accountIdPlaceholder": "Enter account ID",
-    "invalidTokenIdError": "Invalid token ID. Please enter valid token ID.",
+    "invalidTokenIdError": "Enter valid token ID.",
     "tokenIdLabel": "Token ID",
     "tokenIdPlaceholder": "Enter token ID",
     "incorrectTokenSecretError": "Incorrect token secret. Please enter correct token secret.",
@@ -1840,7 +1840,7 @@
     "followStepsInfo": "Follow the steps as shown below to access the necessary details on your NetSuite account.",
     "enterInternalId": "Enter {{value}} Internal ID",
     "enterInternalIdPlaceholder": "Enter internal ID",
-    "internalIdRequired": "Please enter internal id",
+    "internalIdRequired": "Enter internal id",
     "enterTransactionLineFieldId": "Enter transaction line field id",
     "transactionLineFieldIdPlaceholder": "Enter transaction line field id",
     "transactionLineFieldIdRequired": "Please enter transaction line field id",
