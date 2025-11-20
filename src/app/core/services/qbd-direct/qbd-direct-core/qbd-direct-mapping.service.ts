@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { concatMap, forkJoin, map, Observable } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, AccountingField, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName } from 'src/app/core/models/enum/enum.model';
+import { FyleField, AccountingField, QBDCorporateCreditCardExpensesObject, NameInJournalEntry, AccountingDisplayName, QBDReimbursableExpensesObject, QbdDirectCCCPurchasedFromField, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -34,8 +35,26 @@ export class QbdDirectMappingService {
 
   private query: string | undefined;
 
+  public isEmployeeAndVendorAllowed: boolean = false;
+
   getDestinationField(): string {
     return this.destinationField;
+  }
+
+  getDestinationAttributes(): string | string[] {
+    if (this.sourceField === FyleField.EMPLOYEE && this.isEmployeeAndVendorAllowed) {
+      return [EmployeeFieldMapping.EMPLOYEE, EmployeeFieldMapping.VENDOR];
+    }
+    return this.destinationField;
+  }
+
+  getDestinationFieldDisplayName(): string | undefined {
+    const destinationAttributes = this.getDestinationAttributes();
+    if (Array.isArray(destinationAttributes)) {
+      return this.translocoService.translate('services.qbdDirectMapping.employeeOrVendorLabel');
+    }
+
+    return undefined;
   }
 
   getDestinationOptions(): DestinationAttribute[] {
@@ -46,10 +65,19 @@ export class QbdDirectMappingService {
     return this.employeeFieldMapping;
   }
 
+  getIsEmployeeAndVendorAllowed(exportSettings: QbdDirectExportSettingGet) {
+    return (
+      !exportSettings.reimbursable_expense_export_type &&
+      exportSettings.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+      exportSettings.ccc_purchased_from_field === QbdDirectCCCPurchasedFromField.EMPLOYEE
+    );
+  }
+
   constructor(
     private mappingService: MappingService,
     private exportSettingService: QbdDirectExportSettingsService,
-    private importSettingService: QbdDirectImportSettingsService
+    private importSettingService: QbdDirectImportSettingsService,
+    private translocoService: TranslocoService
   ) { }
 
   private getDestinationFieldFromSettings(workspaceGeneralSetting: QbdDirectExportSettingGet, mappingSettings: MappingSetting[]): string {
@@ -81,7 +109,7 @@ export class QbdDirectMappingService {
       );
     }
     // Original single API call for other cases
-    return this.mappingService.getPaginatedDestinationAttributes(this.destinationField, this.query, this.displayName, '', detailAccountType).pipe(
+    return this.mappingService.getPaginatedDestinationAttributes(this.getDestinationAttributes(), this.query, this.displayName, '', detailAccountType).pipe(
       map((responses) => {
         return responses.results as QbdDirectDestinationAttribute[];
       })
@@ -132,15 +160,17 @@ export class QbdDirectMappingService {
       this.importSettingService.getImportSettings(),
       this.mappingService.getMappingSettings()
     ]).pipe(
-      concatMap((responses) => {
-        this.cccExpenseObject = responses[0].credit_card_expense_export_type;
-        this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
-        this.nameInJE = responses[0].name_in_journal_entry;
+      concatMap(([exportSettings, importSettings, mappings]) => {
+        this.cccExpenseObject = exportSettings.credit_card_expense_export_type;
+        this.employeeFieldMapping = (exportSettings.employee_field_mapping as unknown as FyleField);
+        this.nameInJE = exportSettings.name_in_journal_entry;
+
+        this.isEmployeeAndVendorAllowed = this.getIsEmployeeAndVendorAllowed(exportSettings);
 
         // Extract items setting
-        this.isImportItemsEnabled = responses[1].import_settings.import_item_as_category;
-        this.chartOfAccounts = responses[1].import_settings.import_account_as_category ? responses[1].import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : this.importSettingService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
-        this.destinationField = this.getDestinationFieldFromSettings(responses[0], responses[2].results);
+        this.isImportItemsEnabled = importSettings.import_settings.import_item_as_category;
+        this.chartOfAccounts = importSettings.import_settings.import_account_as_category ? importSettings.import_settings.chart_of_accounts.map((item: string) => item.replace(/\s+/g, '')) : this.importSettingService.getChartOfAccountTypesList().map((item: string) => item.replace(/\s+/g, ''));
+        this.destinationField = this.getDestinationFieldFromSettings(exportSettings, mappings.results);
 
         return this.updateDestinationOptions();
       })
