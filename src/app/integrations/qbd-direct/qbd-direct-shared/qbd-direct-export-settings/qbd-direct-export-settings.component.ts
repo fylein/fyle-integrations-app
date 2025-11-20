@@ -692,7 +692,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
     // As soon as the warning dialog is shown, go back to the previous value.
     // We update to the new value only if the user accepts the warning.
-    if (triggerControl && previousValue) {
+    if (triggerControl) {
       setTimeout(() => {
         this.exportSettingsForm.get(triggerControl)?.setValue(previousValue);
       }, 0);
