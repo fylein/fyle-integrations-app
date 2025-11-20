@@ -22,6 +22,7 @@ import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-config
 import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -45,6 +46,8 @@ export class QboExportSettingsComponent implements OnInit {
   employeeFieldMapping: EmployeeFieldMapping;
 
   bankAccounts: DefaultDestinationAttribute[];
+
+  bankAndLiabilityAccounts: DefaultDestinationAttribute[];
 
   cccAccounts: DefaultDestinationAttribute[];
 
@@ -144,7 +147,8 @@ export class QboExportSettingsComponent implements OnInit {
     private employeeSettingService: QboEmployeeSettingsService,
     private qboExportSettingsService: QboExportSettingsService,
     private employeeSettingsService: EmployeeSettingsService,
-    private qboEmployeeSettingsService: QboEmployeeSettingsService
+    private qboEmployeeSettingsService: QboEmployeeSettingsService,
+    public brandingService: BrandingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
@@ -217,7 +221,7 @@ export class QboExportSettingsComponent implements OnInit {
       ).subscribe({
         complete: () => {
           this.isSaveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboExportSettings.exportSettingsSuccess'));
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
           if (this.isOnboarding) {
             this.workspaceService.setOnboardingState(QBOOnboardingState.IMPORT_SETTINGS);
             this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
@@ -400,6 +404,8 @@ export class QboExportSettingsComponent implements OnInit {
         return this.accountsPayables;
       case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
         return this.bankAccounts;
+      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_LIABILITY_ACCOUNT:
+        return this.bankAndLiabilityAccounts;
       case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
         return this.cccAccounts;
       case QboExportSettingDestinationOptionKey.VENDOR:
@@ -435,6 +441,10 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private updateOptions(destinationOptionKey: QboExportSettingDestinationOptionKey, newResults: any[], existingOptions: DefaultDestinationAttribute[]): void {
+    if (destinationOptionKey === QboExportSettingDestinationOptionKey.BANK_ACCOUNT && this.exportSettingForm.get('reimbursableExportType')?.value !== QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
+      newResults = newResults.filter((option) => option.detail?.account_type === 'Bank');
+    }
+
     const newOptions = newResults.map(this.qboExportSettingsService.formatGeneralMappingPayload);
     const updatedOptions = this.mergeOptions(existingOptions, newOptions);
     this.setUpdatedOptions(destinationOptionKey as QboExportSettingDestinationOptionKey, updatedOptions);
@@ -457,6 +467,9 @@ export class QboExportSettingsComponent implements OnInit {
         break;
       case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
         this.bankAccounts = updatedOptions;
+        break;
+      case QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_LIABILITY_ACCOUNT:
+        this.bankAndLiabilityAccounts = updatedOptions;
         break;
       case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
         this.cccAccounts = updatedOptions;
@@ -505,9 +518,7 @@ export class QboExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.qboExportSettingsService.getExportSettings(),
-      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(error => {
-return of(null);
-})),
+      this.workspaceService.getWorkspaceGeneralSettings().pipe(catchError(() => of(null))),
       this.employeeSettingService.getDistinctQBODestinationAttributes([FyleField.EMPLOYEE, FyleField.VENDOR]),
       ...groupedAttributes
     ]).subscribe(([exportSetting, workspaceGeneralSettings, destinationAttributes, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
@@ -515,7 +526,12 @@ return of(null);
       this.exportSettings = exportSetting;
       this.employeeFieldMapping = workspaceGeneralSettings?.employee_field_mapping;
       this.setLiveEntityExample(destinationAttributes);
-      this.bankAccounts = bankAccounts.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
+
+      this.bankAndLiabilityAccounts = bankAccounts.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
+
+      const bankAccountOptions = bankAccounts.results.filter((option) => option.detail?.account_type === 'Bank');
+      this.bankAccounts = bankAccountOptions.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
+
       this.cccAccounts = cccAccounts.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
       this.accountsPayables = accountsPayables.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
       this.vendors = vendors.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));

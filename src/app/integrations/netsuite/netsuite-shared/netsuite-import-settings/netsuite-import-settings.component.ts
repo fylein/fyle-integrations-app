@@ -19,6 +19,7 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-netsuite-import-settings',
@@ -110,7 +111,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService,
     private translocoService: TranslocoService,
     private importSettingsService: ImportSettingsService,
-    private netsuiteImportSettingsService: NetsuiteImportSettingsService
+    private netsuiteImportSettingsService: NetsuiteImportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingsService.getCustomFieldOption();
     this.customrSegmentOptions = this.netsuiteImportSettingsService.getCustomSegmentOptions();
@@ -131,7 +133,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     const importSettingPayload = this.netsuiteImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.ADVANCED_CONFIGURATION);

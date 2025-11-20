@@ -88,6 +88,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
+  @Output() dropdownChange: EventEmitter<{event: any, formControllerName: string}> = new EventEmitter<{event: any, formControllerName: string}>();
+
   exportTypeIconPath: string;
 
   uiExposedAppName: string;
@@ -111,6 +113,10 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   exportTableData: { exportModule: string; employeeMapping: string; chartOfAccounts: string; sageIntacctModule: string; }[];
 
   dialogHeader: string;
+
+  currentExportTypeIndex: number = 0;
+
+  availableExportTypes: string[] = [];
 
   readonly brandingConfig = brandingConfig;
 
@@ -148,14 +154,36 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = this.translocoService.translate('configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
+    const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
+
+    // Get all available export types for navigation
+    this.availableExportTypes = Object.keys(this.exportTypeIconPathArray[index]);
+    this.currentExportTypeIndex = this.availableExportTypes.indexOf(exportType);
+
+    this.updatePreviewDialog(exportType);
+    this.isPreviewDialogVisible = true;
+  }
+
+  updatePreviewDialog(exportType: string) {
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
-    this.isPreviewDialogVisible = true;
+  }
+
+  navigatePreview(direction: 'next' | 'previous') {
+    if (direction === 'next' && this.currentExportTypeIndex < this.availableExportTypes.length - 1) {
+      this.currentExportTypeIndex++;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
+    } else if (direction === 'previous' && this.currentExportTypeIndex > 0) {
+      this.currentExportTypeIndex--;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
+    }
   }
 
   closeDialog() {
     this.isPreviewDialogVisible = false;
+    this.currentExportTypeIndex = 0;
+    this.availableExportTypes = [];
   }
 
   simpleSearch(query: string) {
@@ -203,5 +231,13 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
     this.optionsCopy = this.destinationAttributes;
     this.destinationAttributes = [...this.optionsCopy];
     }
+  }
+
+  onDropdownChange(event: any): void {
+    // Emit the change event to parent component for handling
+    this.dropdownChange.emit({
+      event,
+      formControllerName: this.formControllerName
+    });
   }
 }

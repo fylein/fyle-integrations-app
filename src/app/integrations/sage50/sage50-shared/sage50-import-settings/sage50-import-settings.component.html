@@ -7,7 +7,7 @@
     <div>
         <app-configuration-step-header
             [headerText]="'sage50ImportSettings.headerText' | transloco"
-            [contentText]="'sage50ImportSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+            [contentText]="'sage50ImportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
             [redirectLink]="redirectLink"
             [showSyncButton]="false"
             [appName]="appName">
@@ -128,4 +128,24 @@
         (save)="onSave()">
     </app-configuration-step-footer>
 </div>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="acceptTurnOffImportWarning($event)"
+    [isWarningVisible]="showTurnOffImportWarning"
+    [headerText]="'configurationCsvImportField.turnOffImportWarningHeader' | transloco"
+    [contextText]="'configurationCsvImportField.turnOffImportWarningContext' | transloco: { dimension: currentWarningDimension, appName: ('sage50ImportSettings.appDisplayName' | transloco), brandName: brandingConfig.brandName }"
+    [confirmBtnText]="'configurationCsvImportField.continue' | transloco"
+    [appName]="AppName.SAGE50"
+    [event]="ConfigurationWarningEvent.SAGE50_TURN_OFF_IMPORT">
+</app-configuration-confirmation-dialog>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="acceptChangeMappingWarning($event)"
+    [isWarningVisible]="showChangeMappingWarning"
+    [headerText]="'configurationCsvImportField.changeMappingWarningHeader' | transloco"
+    [contextText]="'configurationCsvImportField.changeMappingWarningContext' | transloco: { dimension: currentWarningDimension, appName: ('sage50ImportSettings.appDisplayName' | transloco), brandName: brandingConfig.brandName, sourceFieldName: previousSourceFieldDisplayName }"
+    [confirmBtnText]="'configurationCsvImportField.continue' | transloco"
+    [appName]="AppName.SAGE50"
+    [event]="ConfigurationWarningEvent.SAGE50_CHANGE_FIELD_MAPPING">
+</app-configuration-confirmation-dialog>
 }

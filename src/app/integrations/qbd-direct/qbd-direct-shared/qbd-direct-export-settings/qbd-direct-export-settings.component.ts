@@ -25,6 +25,7 @@ import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-dir
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbd-direct-export-settings',
@@ -109,7 +110,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private qbdDirectHelperService: QbdDirectHelperService,
     private translocoService: TranslocoService,
     private qbdDirectExportSettingsService: QbdDirectExportSettingsService,
-    private employeeSettingsService: EmployeeSettingsService
+    private employeeSettingsService: EmployeeSettingsService,
+    public brandingService: BrandingService
   ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
@@ -280,7 +282,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         }
 
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);

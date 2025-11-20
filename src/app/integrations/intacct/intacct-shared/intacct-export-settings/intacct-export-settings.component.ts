@@ -3,7 +3,7 @@ import { LowerCasePipe } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, debounceTime, filter, forkJoin, startWith } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -19,6 +19,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -136,11 +137,11 @@ export class IntacctExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
     ) {
     this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
     this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.getExpenseGroupingDateOptions();
-    this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('intacctExportSettings.expense'),
@@ -288,8 +289,10 @@ export class IntacctExportSettingsComponent implements OnInit {
 
 
     private reimbursableExportTypeWatcher(): void {
-      this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
+      this.exportSettingsForm.controls.reimbursableExportType.valueChanges
+      .pipe(startWith(this.exportSettingsForm.controls.reimbursableExportType.value))
+      .subscribe((selectedReimbursableExportType) => {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.glAccount.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
         } else {
@@ -297,16 +300,24 @@ export class IntacctExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.glAccount.clearValidators();
         }
 
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
         } else {
           this.exportSettingsForm.controls.reimbursableExpensePaymentType.setValue(null);
         }
 
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.BILL) {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.BILL) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
+        }
+
+        // Available CCC export type options are dependent on the reimbursable export type
+        this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId, selectedReimbursableExportType);
+
+        // If an invalid CCC export type was selected, reset it to null
+        if (!this.creditCardExportTypes.map(option => option.value).includes(this.exportSettingsForm.controls.cccExportType.value)) {
+          this.exportSettingsForm.controls.cccExportType.setValue(null);
         }
       });
     }
@@ -522,7 +533,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.saveInProgress = true;
         const exportSettingPayload = SiExportSettingsService.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);
           if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.EXPORT_SETTINGS) {
             this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);

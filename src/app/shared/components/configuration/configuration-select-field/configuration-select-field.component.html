@@ -1,13 +1,13 @@
 <div [formGroup]="form" >
     <div *ngIf="!isDefaultFields" [class]="'tw-flex tw-flex-row tw-justify-between tw-items-center tw-py-24-px ' + customClasses" [ngClass]="{'tw-px-6-px': isimportSettings, 'tw-px-24-px': !isimportSettings}">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
-            <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'noIcon']">
+            <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : !isimportSettings ? 'noIcon' : 'tw-pl-16-px']">
                 <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
             </div>
 
             <div>
-                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationHeaderText">
-                    {{ label | snakeCaseToSpaceCase}}
+                <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
+                    <span>{{ label | snakeCaseToSpaceCase}}</span>
                     @if (isOneTimeField) {
                         <span class="tw-text-text-danger-dark"> {{ 'configurationSelectField.cannotBeEdited' | transloco }}</span>
                     }
@@ -15,7 +15,7 @@
                     @if (infoTooltipText) {
                         <img
                             src='assets/icons/info-circle-fill-blue.svg'
-                            [class]="'tw-w-14-px tw-h-14-px tw-ml-8-px tw-inline'"
+                            [class]="'tw-w-14-px tw-h-14-px tw-ml-8-px tw-inline tw-relative tw-bottom-[3px]'"
                             [pTooltip]="infoTooltipText"
                             [tooltipPosition]="'top'"
                         >
@@ -85,7 +85,8 @@
                         'selectedItem': form.controls[formControllerName].value && !isMultiLineOption,
                         'filterDropdown': !form.controls[formControllerName].value,
                         'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
-                    }" [disabled]="isDisabled">
+                    }" [disabled]="isDisabled"
+                    (onChange)="onDropdownChange($event)">
 
                     <ng-template let-option pTemplate="item">
                         <div #textElement
@@ -173,7 +174,7 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px', formControllerName === 'import_code' && appName === AppName.INTACCT ? 'tw-ml-14-px' : '']">
+            <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
                 <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled && !isSearchFocused" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
             </div>
         </div>
@@ -206,6 +207,16 @@
 </div>
 
 <div *ngIf="isPreviewDialogVisible">
-    <app-preview-dialog [isPreviewDialogVisible]="true" [iconPath]="exportTypeIconPath" (closeDialog)="closeDialog()" [header]="dialogHeader"></app-preview-dialog>
+    <app-preview-dialog 
+        [isPreviewDialogVisible]="true" 
+        [iconPath]="exportTypeIconPath" 
+        (closeDialog)="closeDialog()" 
+        [header]="dialogHeader"
+        [showNavigation]="appName === AppName.SAGE50 && showExportPreview"
+        [currentModuleName]="availableExportTypes[currentExportTypeIndex]"
+        [isFirstPreview]="currentExportTypeIndex === 0"
+        [isLastPreview]="currentExportTypeIndex === availableExportTypes.length - 1"
+        (navigatePreview)="navigatePreview($event)">
+    </app-preview-dialog>
 </div>
 

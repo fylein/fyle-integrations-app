@@ -45,6 +45,8 @@ type Sage50ExportSettingsBase = {
 export interface Sage50ExportSettingsPost extends Sage50ExportSettingsBase {
     reimbursable_default_credit_line_account: number | null,
     reimbursable_default_account_payable_account: number | null,
+    default_per_diem_account: number | null,
+    default_mileage_account: number | null,
     ccc_default_credit_line_account: number | null,
     ccc_default_account_payable_account: number | null,
     default_cash_account: number | null,
@@ -54,6 +56,8 @@ export interface Sage50ExportSettingsPost extends Sage50ExportSettingsBase {
 export interface Sage50ExportSettingsGet extends Sage50ExportSettingsBase {
     reimbursable_default_credit_line_account: DestinationAttribute | null,
     reimbursable_default_account_payable_account: DestinationAttribute | null,
+    default_per_diem_account: DestinationAttribute | null,
+    default_mileage_account: DestinationAttribute | null,
     ccc_default_credit_line_account: DestinationAttribute | null,
     ccc_default_account_payable_account: DestinationAttribute | null,
     default_cash_account: DestinationAttribute | null,
@@ -73,6 +77,8 @@ export type Sage50ExportSettingsForm = {
     cccExportGroup: FormControl<Sage50ExpensesGroupedBy | null>,
     reimbursableDefaultCreditLineAccount: FormControl<DestinationAttribute | null>,
     reimbursableDefaultAccountPayableAccount: FormControl<DestinationAttribute | null>,
+    defaultPerDiemAccount: FormControl<DestinationAttribute | null>,
+    defaultMileageAccount: FormControl<DestinationAttribute | null>,
     cccDefaultCreditLineAccount: FormControl<DestinationAttribute | null>,
     cccDefaultAccountPayableAccount: FormControl<DestinationAttribute | null>,
     defaultCashAccount: FormControl<DestinationAttribute | null>,

@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
         <app-configuration-step-header [headerText]="'sage300ImportSettings.headerText' | transloco"
-            [contentText]="'sage300ImportSettings.contentText' | transloco:{ brandName: brandingConfig.brandName }"
+            [contentText]="'sage300ImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
         </app-configuration-step-header>

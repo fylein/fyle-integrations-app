@@ -3,15 +3,18 @@ import { Subject, forkJoin, interval, from, Observable } from 'rxjs';
 import { map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType, TrackingApp, ClickEvent, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { ErrorStat } from 'src/app/core/models/db/error.model';
 import { brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { FormBuilder } from '@angular/forms';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { Sage50ReimbursableExportType, Sage50CCCExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -26,6 +29,9 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { SkipExportList, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sage50-dashboard',
@@ -84,6 +90,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   showPendingMappings: boolean = false;
 
+  employeeMappingErrorStat: ErrorStat | null = null;
+
+  corporateCardMappingErrorStat: ErrorStat | null = null;
+
   reimbursableExportType: Sage50ReimbursableExportType | null = null;
 
   cccExportType: Sage50CCCExportType | null = null;
@@ -121,15 +131,19 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private sage50ExportSettingService: Sage50ExportSettingsService,
+    private sage50ImportSettingService: Sage50ImportSettingsService,
     private mappingService: MappingService,
     private skipExportService: SkipExportService,
     private exportLogService: ExportLogService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private trackingService: TrackingService,
+    private refinerService: RefinerService
   ) { }
 
   export() {
     this.isExportInProgress = true;
     this.dashboardService.triggerAccountingExport("v2").subscribe(() => {
+      this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.EXPORT_EXPENSES);
       this.pollExportStatus();
     });
   }
@@ -155,6 +169,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
           this.isExportInProgress = false;
           this.csvExportLogComponent.applyFilters();
       }
+
+      this.refinerService.triggerSurvey(
+        AppName.SAGE50, environment.refiner_survey.sage50.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+      );
     });
   }
 
@@ -178,8 +196,9 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.employeeFieldMapping = FyleField.VENDOR;
       this.currentMappingStats = this.corporateCardMappingStats;
     }
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.RESOLVE_MAPPING_ERROR, {field: mappingType, stats: this.currentMappingStats});
 
-    // Fetch destination options and unmapped source attributes
+    // Fetch destination options, unmapped source attributes, and import settings to check if codes should be shown
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(destinationType, undefined, undefined),
       this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName)
@@ -187,6 +206,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       ([destinationResponse, mappingsResponse]) => {
         this.mappingDestinationOptions = destinationResponse.results;
         this.filteredMappings = mappingsResponse.results;
+
         this.isMappingDialogLoading = false;
       },
       () => {
@@ -203,7 +223,48 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
       this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
     ]).subscribe((responses) => {
-      this.setPendingMappings(responses[0], responses[1]);
+      const newEmployeeMappingStats = responses[0];
+      const newCorporateCardMappingStats = responses[1];
+
+      if (this.employeeMappingStats) {
+        const previousUnmappedCount = this.employeeMappingStats.unmapped_attributes_count;
+        const currentUnmappedCount = newEmployeeMappingStats.unmapped_attributes_count;
+
+        // Initialize error stat on first time dialog closes
+        if (!this.employeeMappingErrorStat) {
+          this.employeeMappingErrorStat = {
+            resolvedCount: previousUnmappedCount - currentUnmappedCount,
+            totalCount: previousUnmappedCount
+          };
+        } else if (previousUnmappedCount !== currentUnmappedCount) {
+          // Update resolved count
+          this.employeeMappingErrorStat = {
+            resolvedCount: this.employeeMappingErrorStat.totalCount - currentUnmappedCount,
+            totalCount: this.employeeMappingErrorStat.totalCount
+          };
+        }
+      }
+
+      if (this.corporateCardMappingStats) {
+        const previousUnmappedCount = this.corporateCardMappingStats.unmapped_attributes_count;
+        const currentUnmappedCount = newCorporateCardMappingStats.unmapped_attributes_count;
+
+        // Initialize error stat on first time dialog closes
+        if (!this.corporateCardMappingErrorStat) {
+          this.corporateCardMappingErrorStat = {
+            resolvedCount: previousUnmappedCount - currentUnmappedCount,
+            totalCount: previousUnmappedCount
+          };
+        } else if (previousUnmappedCount !== currentUnmappedCount) {
+          // Update resolved count
+          this.corporateCardMappingErrorStat = {
+            resolvedCount: this.corporateCardMappingErrorStat.totalCount - currentUnmappedCount,
+            totalCount: this.corporateCardMappingErrorStat.totalCount
+          };
+        }
+      }
+
+      this.setPendingMappings(newEmployeeMappingStats, newCorporateCardMappingStats);
     });
   }
 

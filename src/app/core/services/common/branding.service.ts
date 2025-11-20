@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { BrandingConfiguration } from '../../models/branding/branding-configuration.model';
 import { updateBrandingConfigRegistry, defaultBrandingConfig } from 'src/app/branding/branding-config';
 import { FeatureConfiguration } from '../../models/branding/feature-configuration.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 const faviconMap = {
   'fyle': 'favicon.ico',
@@ -21,7 +22,8 @@ export class BrandingService {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private title: Title
+    private title: Title,
+    private translocoService: TranslocoService
   ) { }
 
   get brandingConfig(): BrandingConfiguration {
@@ -34,6 +36,14 @@ export class BrandingService {
     }
 
     return this.defaultBrandingConfig.brandId;
+  }
+
+  getBrandFullName(): string {
+    if (this.defaultBrandingConfig.brandId === 'fyle' && this.isOrgRebranded) {
+      return this.translocoService.translate('services.branding.reBrandedFullName');
+    }
+
+    return this.defaultBrandingConfig.brandName;
   }
 
   setOrgRebranded(isOrgRebranded: boolean): void {

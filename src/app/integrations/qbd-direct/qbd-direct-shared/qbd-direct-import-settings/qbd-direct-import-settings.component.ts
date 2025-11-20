@@ -24,6 +24,7 @@ import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-dir
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
   selector: 'app-qbd-direct-import-settings',
@@ -115,7 +116,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     public helper: HelperService,
     private trackingService: TrackingService,
     private translocoService: TranslocoService,
-    private qbdDirectImportSettingsService: QbdDirectImportSettingsService
+    private qbdDirectImportSettingsService: QbdDirectImportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.qbdDirectImportSettingsService.getCustomFieldOption();
     this.chartOfAccountTypesList = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
@@ -261,7 +263,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       }
 
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'), undefined, this.isOnboarding);
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);

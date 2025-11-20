@@ -91,7 +91,7 @@ export class IntegrationsComponent implements OnInit {
   }
 
   private setOrgRebranded(): void {
-    this.brandingService.updateBrandingConfig({ brandName: this.translocoService.translate('integrations.reBrandedName') });
+    this.brandingService.updateBrandingConfig({ brandName: this.translocoService.translate('integrations.reBrandedShortName') });
     this.brandingService.setOrgRebranded(true);
   }
 

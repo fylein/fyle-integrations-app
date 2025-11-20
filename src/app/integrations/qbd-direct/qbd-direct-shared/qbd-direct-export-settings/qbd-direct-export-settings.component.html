@@ -5,7 +5,7 @@
     <div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
         <div>
             <app-configuration-step-header [headerText]="'qbd_direct.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'qbd_direct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}" [redirectLink]="redirectLink"
+                [contentText]="'qbd_direct.configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}" [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding" [appName]="appName" (refreshDimension)="refreshDimensions()">
             </app-configuration-step-header>
         </div>

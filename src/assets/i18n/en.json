@@ -34,10 +34,10 @@
     "addNewEmailAddressTitle": "Add new email address",
     "nameLabel": "Name",
     "enterNamePlaceholder": "Enter name",
-    "validNameError": "Enter a valid name",
-    "emailAddressLabel": "Email Address",
+    "validNameError": "Enter a valid name.",
+    "emailAddressLabel": "Email address",
     "enterEmailPlaceholder": "Enter email",
-    "validEmailError": "Enter a valid email",
+    "validEmailError": "Enter a valid email.",
     "cancelButton": "Cancel",
     "addAndSaveButton": "Add and save"
   },
@@ -87,7 +87,8 @@
     "timeLabel": "Time",
     "selectTimePlaceholder": "Select time for export",
     "selectMeridiemPlaceholder": "Select meridiem of time",
-    "cannotBeEdited": "(cannot be edited later)"
+    "cannotBeEdited": "(cannot be edited later)",
+    "previewOfExportSage50Header": "Export Modules"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -258,7 +259,8 @@
     "exportButtonText": "Export",
     "exportingButtonText": "Exporting",
     "qbdInfoText": "Click ‘Update Selected’ in QuickBooks Web Connector to sync your expenses immediately",
-    "orSeparator": " or "
+    "orSeparator": " or ",
+    "exportingExpensesToAppSage50": "Processing {{processedCount}} of {{totalCount}} expenses for CSV export"
   },
   "intacctLocationEntity": {
     "headerText": "Connect to Sage Intacct",
@@ -332,10 +334,10 @@
     "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account."
   },
   "netsuiteConnectionForm": {
-    "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
+    "invalidAccountIdError": "Enter valid account ID.",
     "accountIdLabel": "Account ID",
     "accountIdPlaceholder": "Enter account ID",
-    "invalidTokenIdError": "Invalid token ID. Please enter valid token ID.",
+    "invalidTokenIdError": "Enter valid token ID.",
     "tokenIdLabel": "Token ID",
     "tokenIdPlaceholder": "Enter token ID",
     "incorrectTokenSecretError": "Incorrect token secret. Please enter correct token secret.",
@@ -1153,6 +1155,7 @@
     "employeeMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
     "corporateCardMappingDialogTitle": "Corporate card mapping",
     "corporateCardMappingDialogDescription": "Resolve the following to export your failed expenses successfully to Sage 50",
+    "resolvedErrorsOfTotal": "{{resolvedCount}}/{{totalCount}} errors resolved",
     "completed": "Completed",
     "skipped": "Skipped"
   },
@@ -1837,7 +1840,7 @@
     "followStepsInfo": "Follow the steps as shown below to access the necessary details on your NetSuite account.",
     "enterInternalId": "Enter {{value}} Internal ID",
     "enterInternalIdPlaceholder": "Enter internal ID",
-    "internalIdRequired": "Please enter internal id",
+    "internalIdRequired": "Enter internal id",
     "enterTransactionLineFieldId": "Enter transaction line field id",
     "transactionLineFieldIdPlaceholder": "Enter transaction line field id",
     "transactionLineFieldIdRequired": "Please enter transaction line field id",
@@ -2079,7 +2082,8 @@
     "dependentFieldWarningCostCodesAndTypes": "You have imported cost codes and cost types from Sage Intacct by mapping them to fields in {{brandName}}. By turning off the import, you would lose the mappings you've established for these fields.",
     "continueConfirmation": "Are you sure you want to continue?",
     "continueButton": "Continue",
-    "previewHeader": "Preview"
+    "previewHeader": "Preview",
+    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form."
   },
   "services": {
     "travelperkOnboarding": {
@@ -2404,6 +2408,9 @@
       "generalJournalEntryDisplayName": "GENERAL_JOURNAL_ENTRY",
       "purchasesDisplayName": "PURCHASES",
       "paymentsDisplayName": "PAYMENTS"
+    },
+    "branding": {
+      "reBrandedFullName": "Sage Expense Management"
     }
   },
   "pipes": {
@@ -2428,7 +2435,10 @@
     "chartOfAccountsLabel": "Upload Chart of accounts",
     "chartOfAccountsSublabel": "This helps set up your integration and is required for all exports.",
     "vendorLabel": "Upload Vendors",
-    "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now."
+    "vendorSublabel": "Needed for certain export types. If you only use General journal entry, you can skip this for now.",
+    "warningHeader": "Skip uploading Vendor list?",
+    "warningContext": "No vendor list has been uploaded. This is okay if you're only exporting via General Journal.",
+    "skipAndContinue": "Skip & continue"
   },
   "configurationCsvUploadField": {
     "csvUpload": "CSV upload icon"
@@ -2477,6 +2487,12 @@
     "reimbursableDefaultAccountPayableAccountLabel": "Default accounts payable account",
     "reimbursableDefaultAccountPayableAccountSubLabel": "Select the accounts payable account where invoices should be posted.",
     "reimbursableDefaultAccountPayableAccountPlaceholder": "Select accounts payable account",
+    "defaultPerDiemAccountLabel": "Default per diem account",
+    "defaultPerDiemAccountSubLabel": "Select the Sage 50 account to use when exporting per diem expenses.",
+    "defaultPerDiemAccountPlaceholder": "Select per diem account",
+    "defaultMileageAccountLabel": "Default mileage account",
+    "defaultMileageAccountSubLabel": "Select the Sage 50 account to use when exporting mileage expenses.",
+    "defaultMileageAccountPlaceholder": "Select mileage account",
     "reimbursableExpenseStateLabel": "State of export",
     "reimbursableExpenseStateSubLabel": "Choose whether to export expenses after the reimbursement is initiated (Processing) or after the reimbursement is settled (Closed).",
     "reimbursableExpenseStatePlaceholder": "Select export state",
@@ -2493,7 +2509,7 @@
     "cccDefaultCreditLineAccountSubLabel": "Select the Sage 50 account to be credited for expenses sent as journal entries.",
     "cccDefaultCreditLineAccountPlaceholder": "Select credit-line account",
     "cccExpenseStateLabel": "State of export",
-    "cccExpenseStateSubLabel": "Select when corporate card expenses should be exported from {{brandName}}: after they are approved (Approved) or after they are closed (Closed).",
+    "cccExpenseStateSubLabel": "Choose whether to export expenses after a report is submitted and verified (Approved) or after it is fully settled (Closed).",
     "cccExpenseStatePlaceholder": "Select export state",
     "cccExportGroupLabel": "Grouping method",
     "cccExportGroupSubLabel": "Choose whether to export each expense as an individual record (Expense) or group all expenses in a report into one record with line items (Expense Report).",
@@ -2516,11 +2532,23 @@
     "cccDefaultPaymentMethodSubLabel": "Enter the payment method to use for creating corporate card expenses in Sage 50 (e.g., Check, Credit card). ",
     "preview": "Preview",
     "forDetails": "for details.",
-    "cccDefaultPaymentMethodInputHint": "Use the exact payment method name as it appears in your Sage 50 settings.",
+    "cccDefaultPaymentMethodInputHint": "Enter payment method exactly as in Sage 50.",
     "exportSettingsSavedSuccess": "Export settings saved successfully",
     "exportSettingsSaveError": "Error saving export settings, please try again later",
     "cccDefaultVendorInfoTooltip": "We recommend using a value like \"Unknown Vendor\" for unmatched merchants.",
-    "paymentMethodPreviewHeader": "Locate your payment method"
+    "paymentMethodPreviewHeader": "Locate your payment method",
+    "purchasesExportWarningHeader": "Important",
+    "purchasesExportWarningContext": "Before switching the export type to {{exportType}}, ensure you have the Vendors CSV downloaded and ready. Vendor data is required to map employees in {{brandName}} to their corresponding records in Sage 50.",
+    "purchasesExportWarningConfirmButton": "Yes, continue",
+    "paymentsLabel": "Payments",
+    "purchasesLabel": "Purchases",
+    "noValidAccountsAlertTitle": "No valid accounts found.",
+    "noValidAccountsAlertMessage": "Please go back and re-upload your Chart of accounts CSV with at least one of these account types: Accounts Payable, Other Current Liabilities, or Long Term Liabilities.",
+    "noValidAccountsAlertTip": "Tip: Uploading your full chart of accounts prevents these issues.",
+    "noVendorsAlertTitle": "No vendors found.",
+    "noVendorsAlertMessage": "Please go back to prerequisites and upload your Vendor CSV.",
+    "noVendorsAlertTip": "Tip: Uploading your full vendor list ensures all mappings work correctly.",
+    "reimbursableDefaultAccountPayableAccountInfo": "Employees will be auto-mapped to Sage 50 vendors. When exporting as purchases, reimbursable expenses will be recorded against the corresponding vendor for each employee."
   },
   "sage50ImportSettings": {
     "headerText": "Import settings",
@@ -2560,7 +2588,12 @@
     "importNamesOnlySubLabel": "Example: Meals & Entertainment",
     "importFormatPlaceholder": "Select display name format",
     "selectSourceFieldPlaceholder": "Select field in {{brandName}}",
-    "previewHeader": "Preview of a {{brandName}} expense"
+    "previewHeader": "Preview of a {{brandName}} expense",
+    "turnOffImportWarningHeader": "Turn off import?",
+    "turnOffImportWarningContext": "<p class='tw-text-14-px tw-font-400 tw-text-text-secondary'>{{dimension}} will no longer be exported to {{appName}}.</p><p class='tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-16-px'>It will still be available for coding in {{brandName}}. To prevent employees from using it, disable this field in your Org Settings as well.</p>",
+    "changeMappingWarningHeader": "Change field mapping?",
+    "changeMappingWarningContext": "<p class='tw-text-14-px tw-font-400 tw-text-text-secondary'>You're about to change the mapping for {{appName}} {{dimension}}.</p><p class='tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-16-px'>Values already imported to the {{sourceFieldName}} field will remain active in {{brandName}}. To prevent employees from using it, you'll need to disable this field in your Org Settings as well.</p>",
+    "continue": "Continue"
   },
   "uploadedFileDetails": {
     "valuesReadyToImportLabel": "Values ready to import:",
@@ -2570,11 +2603,9 @@
     "reuploadTooltip": "{{dimension}} already uploaded. Re-upload only if you've made updates and want to sync them here.",
     "csvUploadAlt": "CSV upload icon"
   },
-  "integrations": {
-    "reBrandedName": "Sage Expense Management"
-  },
   "alert": {
-    "infoIconAlt": "Info icon"
+    "infoIconAlt": "Info icon",
+    "dangerIconAlt": "Danger icon"
   },
   "sage50AdvancedSettings": {
     "headerText": "Advanced settings",
@@ -2641,5 +2672,13 @@
     "header": "Expense details",
     "expenseType": "Expense type",
     "fileName": "File name"
+  },
+  "integrations": {
+    "reBrandedShortName": "Sage Exp Mgmt"
+  },
+  "previewDialog": {
+    "PURCHASES_RECEIVE_INVENTORY": "Purchases",
+    "PAYMENTS_JOURNAL": "Payments",
+    "GENERAL_JOURNAL_ENTRY": "General journal entry"
   }
 }

@@ -6,15 +6,15 @@
             <div class="tw-flex">
                 <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
                     {{ 'configurationSkipExport.conditionHeader' | transloco }}
-                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
                 </div>
                   <div class="tw-w-180-px tw-mr-24-px fields-header">
                     {{ 'configurationSkipExport.operatorHeader' | transloco }}
-                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
                 </div>
                 <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
                   {{ 'configurationSkipExport.valueHeader' | transloco }}
-                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
                 </div>
             </div>
             <div class="tw-flex dropdown-row tw-pb-24-px">
@@ -68,15 +68,15 @@
           <div class="tw-flex tw-ml-120-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   {{ 'configurationSkipExport.conditionHeader' | transloco }}
-                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
               </div>
                 <div class="tw-w-180-px fields-header tw-mr-24-px">
                   {{ 'configurationSkipExport.operatorHeader' | transloco }}
-                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
               </div>
               <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
                 {{ 'configurationSkipExport.valueHeader' | transloco }}
-                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
               </div>
           </div>
           <div class="tw-flex">
@@ -125,7 +125,7 @@
               <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
               <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
             </div>
             <div class="tw-w-296-px" *ngIf="showBooleanField(2)">

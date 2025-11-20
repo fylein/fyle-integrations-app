@@ -125,7 +125,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'), undefined, this.isOnboarding);
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {

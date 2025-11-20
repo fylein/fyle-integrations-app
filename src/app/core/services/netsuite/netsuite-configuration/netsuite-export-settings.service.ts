@@ -72,7 +72,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
     ];
   }
 
-  getCreditCardExportTypes(): SelectFormOption[] {
+  getCreditCardExportTypes(selectedReimbursableExportType: NetsuiteReimbursableExpensesObject): SelectFormOption[] {
 
     const exportType = [
       {
@@ -92,7 +92,13 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
-    if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+    const isExpenseReportAllowed =
+      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed &&
+      (
+        selectedReimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ||
+        !selectedReimbursableExportType
+      );
+    if (!isExpenseReportAllowed) {
       return exportType.filter((item) => item.value !== NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT);
     }
     return exportType;
@@ -288,6 +294,13 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
       }
 
+      // 'Employee field mapping' is not visible to the user when CCC is exported as Expense report
+      // In this case, hard-code its value to EMPLOYEE
+      let employeeFieldMapping = exportSettingsForm.get('employeeFieldMapping')?.value;
+      if (exportSettingsForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+        employeeFieldMapping = EmployeeFieldMapping.EMPLOYEE;
+      }
+
       const exportSettingPayload: NetSuiteExportSettingPost = {
         expense_group_settings: {
           expense_state: exportSettingsForm.get('expenseState')?.value,
@@ -301,7 +314,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         configuration: {
           reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
           corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
-          employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value,
+          employee_field_mapping: employeeFieldMapping,
           auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value,
           name_in_journal_entry: nameInJournalEntry
         },

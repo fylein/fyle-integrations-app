@@ -20,7 +20,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
     shouldShowXeroPreviewImage: false,
-    shouldShowOnboardingYouTubeVideo: false,
+    shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: true,
     footerButtonsRightAligned: false,
     useMainMenuForSubmenu: false,
@@ -100,8 +100,7 @@ export const fyleKbArticles: KbArticle[string] = {
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/6721333-setting-up-xero-integration`,
         QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
-        // TODO(sage50): update link
-        SAGE50: `${brandingConfig.helpArticleDomain}`
+        SAGE50: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration`
     },
     onboardingArticles: {
         INTACCT: {
@@ -168,49 +167,45 @@ export const fyleKbArticles: KbArticle[string] = {
             ERROR_RESOLUTION_GUIDE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/12585819-quickbooks-web-connector-qbw-error-resolution-guide`
         },
         SAGE50: {
-            // TODO(sage50)
-            PREREQUISITES: `${brandingConfig.helpArticleDomain}`,
-            LANDING: `${brandingConfig.helpArticleDomain}`,
-            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
-            IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
-            ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}`
+            LANDING: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration`,
+            PREREQUISITES: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_43b1096421`,
+            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_9cf3ddddf4`,
+            IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_fd96087cc5`
         }
     },
     postOnboardingArticles: {
-        // TODO(sage50): Update links
         SAGE50: {
-            JOB: `${brandingConfig.helpArticleDomain}`,
-            PHASE: `${brandingConfig.helpArticleDomain}`,
-            VENDOR: `${brandingConfig.helpArticleDomain}`,
-            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
-            COST_CODE: `${brandingConfig.helpArticleDomain}`,
-            EXPORT_LOG: `${brandingConfig.helpArticleDomain}`
+            JOB: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            PHASE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            VENDOR: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
+            EXPORT_LOG: `${brandingConfig.helpArticleDomain}/en/articles/12710101-how-to-export-expenses-from-sage-expense-management-to-sage-50-us#h_5309128026`
         }
     }
 };
 
 export const fyleDemoVideoLinks: DemoVideo[string] = {
     onboarding: {
-        INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-        SAGE300: 'https://www.youtube.com/embed/KTJ6IF271bc',
-        QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
+        INTACCT: 'https://www.youtube.com/embed/x40f7X08KXM',
+        SAGE300: 'https://www.youtube.com/embed/3P1eUe9uVdg',
+        QBO: 'https://www.youtube.com/embed/HUwzAEQVgd4',
         // TODO: Update link for MS Dynamics
         BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-        XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
-        NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8',
-        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
-        // TODO(sage50): Update link for Sage 50
-        SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        XERO: 'https://www.youtube.com/embed/61DoD8Zpu_U',
+        NETSUITE: 'https://www.youtube.com/embed/5T9Fz7iUtIQ',
+        QBD_DIRECT: 'https://www.youtube.com/embed/6KGhTU_OGes',
+        SAGE50: 'https://www.youtube.com/embed/gexzZstip5o'
     },
     postOnboarding: {
-        // TODO(sage50): Update links
         SAGE50: {
-            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            JOB: 'https://www.youtube.com/embed/aArP85o_xaU',
+            PHASE: 'https://www.youtube.com/embed/aArP85o_xaU',
+            VENDOR: 'https://www.youtube.com/embed/aArP85o_xaU',
+            ACCOUNT: 'https://www.youtube.com/embed/aArP85o_xaU',
+            COST_CODE: 'https://www.youtube.com/embed/aArP85o_xaU'
         }
     }
 };

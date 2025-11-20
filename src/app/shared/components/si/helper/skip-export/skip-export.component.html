@@ -6,15 +6,15 @@
             <div class="tw-flex">
                 <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
                     {{ 'skipExport.condition' | transloco }}
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span class="tw-text-text-danger-dark">*</span>
                 </div>
                   <div class="tw-w-180-px tw-mr-24-px fields-header">
                     {{ 'skipExport.operator' | transloco }}
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span class="tw-text-text-danger-dark">*</span>
                 </div>
                 <div class="tw-w-296-px fields-header" *ngIf="showValueHeader1()">
                   {{ 'skipExport.value' | transloco }}
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span class="tw-text-text-danger-dark">*</span>
                 </div>
             </div>
             <div class="tw-flex dropdown-row tw-mt-8-px">
@@ -58,15 +58,15 @@
           <div class="tw-flex tw-ml-120-px tw-mt-8-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   {{ 'skipExport.condition' | transloco }}
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span class="tw-text-text-danger-dark">*</span>
               </div>
                 <div class="tw-w-180-px fields-header tw-mr-24-px">
                   {{ 'skipExport.operator' | transloco }}
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span class="tw-text-text-danger-dark">*</span>
               </div>
               <div class="tw-w-296-px fields-header" *ngIf="showValueHeader2()">
                 {{ 'skipExport.value' | transloco }}
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span class="tw-text-text-danger-dark">*</span>
               </div>
           </div>
           <div class="tw-flex">
@@ -105,7 +105,7 @@
               <input type="text" formControlName="value2" [placeholder]="'skipExport.enterValue' | transloco" class="border p-2 rounded value-input-field">
             </div>
             <div *ngIf="showChipField2()" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" separator="," [placeholder]="'skipExport.enterValue' | transloco"></p-chips>
               <small class="chip-hint"><br>{{ 'skipExport.chipHint' | transloco }}</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
