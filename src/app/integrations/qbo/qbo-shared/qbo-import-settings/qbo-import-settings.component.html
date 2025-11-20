@@ -115,6 +115,7 @@
                 </div>
             </div>
             <app-configuration-step-footer
+                *ngIf="isOnboarding"
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [isButtonDisabled]="!importSettingForm.valid"
                 [showBackButton]="isOnboarding ? true : false"
@@ -124,6 +125,17 @@
         </form>
     </div>
 </div>
+
+<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [isButtonDisabled]="!importSettingForm.valid"
+        [showBackButton]="isOnboarding ? true : false"
+        (save)="save()"
+        (navigateToPreviousStep)="navigateToPreviousStep()">
+    </app-configuration-step-footer>
+</div>
+
 <div>
     <app-configuration-custom-field-creation-dialog
         [customFieldForm]="customFieldForm"

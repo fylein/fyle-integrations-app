@@ -45,7 +45,7 @@
                     (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
                 </app-configuration-mapping-fields>
             </div>
-            <div>
+            <div *ngIf="isOnboarding">
                 <app-configuration-step-footer
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                     [showBackButton] = "isOnboarding"
@@ -63,4 +63,14 @@
             [header]="'travelperkPaymentProfileSettings.previewHeader' | transloco">
         </app-preview-dialog>
     </div>
+</div>
+
+<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton] = "isOnboarding"
+        [isButtonDisabled]="!paymentProfileMappingForm.valid"
+        (navigateToPreviousStep)="navigateBack()"
+        (save)="save()">
+    </app-configuration-step-footer>
 </div>

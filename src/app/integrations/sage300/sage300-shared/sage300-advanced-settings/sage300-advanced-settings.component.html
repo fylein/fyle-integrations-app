@@ -90,10 +90,22 @@
             </div>
         </div>
         <app-configuration-step-footer
+            *ngIf="isOnboarding"
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            (save)="save()"
+            [showBackButton] = "isOnboarding"
+            (navigateToPreviousStep)="navigateBack()"
+            [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid">
+        </app-configuration-step-footer>
+    </form>
+</div>
+
+<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
         [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
         (save)="save()"
         [showBackButton] = "isOnboarding"
         (navigateToPreviousStep)="navigateBack()"
-        [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid"></app-configuration-step-footer>
-    </form>
+        [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid">
+    </app-configuration-step-footer>
 </div>
