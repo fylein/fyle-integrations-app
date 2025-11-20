@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UqbdUdirectUonboardingService } from './qbd-direct-onboarding.service';
+import { QbdDirectOnboardingService } from './qbd-direct-onboarding.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UqbdUdirectUonboardingService', () => {
-  let service: UqbdUdirectUonboardingService;
+describe('QbdDirectOnboardingService', () => {
+  let service: QbdDirectOnboardingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UqbdUdirectUonboardingService,
+        QbdDirectOnboardingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UqbdUdirectUonboardingService);
+    service = TestBed.inject(QbdDirectOnboardingService);
   });
 
   it('should be created', () => {

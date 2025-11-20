@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { loginResponse, minimalUser, tokenResponse } from '../../interceptor/jwt.fixture';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('AuthService', () => {
+describe('AuthService', () => {
   let service: AuthService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

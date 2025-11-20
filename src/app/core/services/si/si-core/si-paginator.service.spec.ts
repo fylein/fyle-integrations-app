@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UsiUpaginatorService } from './si-paginator.service';
+import { PaginatorService } from './si-paginator.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UsiUpaginatorService', () => {
-  let service: UsiUpaginatorService;
+describe('PaginatorService', () => {
+  let service: PaginatorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UsiUpaginatorService,
+        PaginatorService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UsiUpaginatorService);
+    service = TestBed.inject(PaginatorService);
   });
 
   it('should be created', () => {

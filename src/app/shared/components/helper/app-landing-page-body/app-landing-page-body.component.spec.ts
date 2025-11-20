@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppLandingPageBodyComponent } from './app-landing-page-body.component';
 
-xdescribe('AppLandingPageBodyComponent', () => {
+describe('AppLandingPageBodyComponent', () => {
   let component: AppLandingPageBodyComponent;
   let fixture: ComponentFixture<AppLandingPageBodyComponent>;
 

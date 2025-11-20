@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UemployeeUsettingsService } from './employee-settings.service';
+import { EmployeeSettingsService } from './employee-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UemployeeUsettingsService', () => {
-  let service: UemployeeUsettingsService;
+describe('EmployeeSettingsService', () => {
+  let service: EmployeeSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UemployeeUsettingsService,
+        EmployeeSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UemployeeUsettingsService);
+    service = TestBed.inject(EmployeeSettingsService);
   });
 
   it('should be created', () => {

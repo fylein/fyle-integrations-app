@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ZeroStateWithIllustrationComponent } from './zero-state-with-illustration.component';
 
-xdescribe('ZeroStateWithIllustrationComponent', () => {
+describe('ZeroStateWithIllustrationComponent', () => {
   let component: ZeroStateWithIllustrationComponent;
   let fixture: ComponentFixture<ZeroStateWithIllustrationComponent>;
 

@@ -7,7 +7,7 @@ import { QbdAuthService } from './qbd-auth.service';
 import { environment } from 'src/environments/environment';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdAuthService', () => {
+describe('QbdAuthService', () => {
   let service: QbdAuthService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

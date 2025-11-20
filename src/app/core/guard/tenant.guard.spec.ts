@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TenantGuard } from './tenant.guard';
 
-xdescribe('WorkspacesGuard', () => {
+describe('WorkspacesGuard', () => {
   let guard: TenantGuard;
 
   beforeEach(() => {

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SvgIconComponent } from './svg-icon.component';
 
-xdescribe('SvgIconComponent', () => {
+describe('SvgIconComponent', () => {
   let component: SvgIconComponent;
   let fixture: ComponentFixture<SvgIconComponent>;
 
