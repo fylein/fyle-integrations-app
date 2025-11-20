@@ -89,7 +89,8 @@
     "selectMeridiemPlaceholder": "Select meridiem of time",
     "cannotBeEdited": "(cannot be edited later)",
     "previewOfExportSage50Header": "Export Modules",
-    "theOptions": " the options"
+    "theOptions": " the options",
+    "paymentSyncHeader": "How does the sync behaviour work?"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -2681,7 +2682,6 @@
     "PURCHASES_RECEIVE_INVENTORY": "Purchases",
     "PAYMENTS_JOURNAL": "Payments",
     "GENERAL_JOURNAL_ENTRY": "General journal entry",
-    "paymentSyncHeader": "How does the sync behaviour work?",
     "paymentSyncOption1Header": "Option 1: Export ACH Payments to Accounting",
     "paymentSyncOption1SubHeader": "If the report is reimbursed and marked as Paid after the expenses are exported to {{appName}}, then the integration will automatically sync the status and mark the exported record as Paid in {{appName}}",
     "paymentSyncOption1Info": "Predominantly used when processing reimbursements in {{brandName}} via ACH.",

@@ -137,7 +137,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   ) { }
 
   previewClick() {
-    this.dialogHeader = this.translocoService.translate('previewDialog.paymentSyncHeader');
+    this.dialogHeader = this.translocoService.translate('configurationSelectField.paymentSyncHeader');
     this.isPreviewDialogVisible = true;
     this.autoSyncPaymentsPreviewClick = true;
   }
