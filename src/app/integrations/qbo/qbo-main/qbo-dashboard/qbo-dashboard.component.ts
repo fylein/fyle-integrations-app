@@ -13,6 +13,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
+import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 
 @Component({
   selector: 'app-qbo-dashboard',
@@ -78,6 +79,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>(); // Why this subject? -> to stop polling when the component is destroyed/page closed.
 
+  qboCompanyName: string = '';
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -85,7 +88,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService,
     private importSettingService: QboImportSettingsService,
     private router: Router,
-    private qboAdvancedSettingsService: QboAdvancedSettingsService
+    private qboAdvancedSettingsService: QboAdvancedSettingsService,
+    private qboConnectorService: QboConnectorService
   ) { }
 
   export() {
@@ -140,7 +144,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.qboExportSettingsService.getExportSettings(),
       this.importSettingService.getImportSettings(),
-      this.qboAdvancedSettingsService.getAdvancedSettings()
+      this.qboAdvancedSettingsService.getAdvancedSettings(),
+      this.qboConnectorService.getQBOCredentials()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -153,6 +158,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
       };
 
       this.isLoading = false;
+
+      this.qboCompanyName = responses[8].company_name;
 
       this.importCodeFields = responses[6].workspace_general_settings?.import_code_fields;
 

@@ -198,7 +198,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('qboOnboardingConnector.failedToConnectQBO');
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningHeader');
-        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent');
+        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent', { accountName: this.qboCompanyName || 'a different' });
         this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.reconnectButtonText');
         this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
         this.isWarningDialogVisible = true;

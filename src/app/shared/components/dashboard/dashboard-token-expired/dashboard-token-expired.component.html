@@ -11,7 +11,7 @@
     <p class="tw-text-18-px tw-text-text-primary"> {{ (isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired') | transloco }} </p>
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
-    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
+    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-pre-line">
       {{ 'dashboardTokenExpired.connectionExpiredDescription' | transloco:{ appName: appName } }} </p>
     } @else {
       <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
@@ -65,9 +65,10 @@
 </div>
 
 @if (isIncorrectAccountSelected) {
-<app-configuration-confirmation-dialog (warningAccepted)="acceptWarning($event)"
+<app-configuration-confirmation-dialog (warningAccepted)="initiateOAuth()"
+  [appName]="appName"
   [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco"
-  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco:{ appName: appName }"
+  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco:{ appName: appName, qboCompanyName: qboCompanyName }"
   [confirmBtnText]="'dashboardTokenExpired.reconnectButton' | transloco" [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 }
