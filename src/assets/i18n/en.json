@@ -775,7 +775,8 @@
     "newConfigurationWarning": "You have <b>selected a new export type</b> for the {{exportType}} expense, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows.",
     "productsServicesWarning": "<br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursableExpenseType": "reimbursable",
-    "creditCardExpenseType": "credit card"
+    "creditCardExpenseType": "credit card",
+    "warningMessageAboutAutoExpenseCreation": "Make sure to disable any bank rules or auto-expense creation workflows present in QuickBooks Online to prevent any duplicate expenses from being created."
   },
   "intacctMain": {
     "dashboardLabel": "Dashboard",
