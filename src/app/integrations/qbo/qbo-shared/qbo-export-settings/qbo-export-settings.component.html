@@ -222,6 +222,10 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
+                        <div class="tw-px-20-px " *ngIf="showWarningMessageAboutAutoExpenseCreation && (exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE)">
+                            <app-configuration-info-label [infoText]="'qboExportSettings.warningMessageAboutAutoExpenseCreation' | transloco" [showCloseIcon]="true" (closeInfoLabel)="closeInfoLabel()" [customClasses]="'!tw-bg-white !tw-border-border-info-lighter'"></app-configuration-info-label>
+                        </div>
+
                         <div *ngIf="showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"

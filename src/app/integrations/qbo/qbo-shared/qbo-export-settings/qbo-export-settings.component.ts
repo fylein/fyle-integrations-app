@@ -23,6 +23,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -135,6 +136,8 @@ export class QboExportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  showWarningMessageAboutAutoExpenseCreation: boolean;
+
   constructor(
     private translocoService: TranslocoService,
     public helperService: HelperService,
@@ -148,7 +151,8 @@ export class QboExportSettingsComponent implements OnInit {
     private qboExportSettingsService: QboExportSettingsService,
     private employeeSettingsService: EmployeeSettingsService,
     private qboEmployeeSettingsService: QboEmployeeSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
+    private storageService: StorageService
   ) {
     this.windowReference = this.windowService.nativeWindow;
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
@@ -161,6 +165,12 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
+    this.showWarningMessageAboutAutoExpenseCreation = this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') ? this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') : true;
+  }
+
+  closeInfoLabel(): void {
+    this.showWarningMessageAboutAutoExpenseCreation = false;
+    this.storageService.set('showWarningMessageAboutAutoExpenseCreationInQBO', false);
   }
 
   isEmployeeMappingDisabled(): boolean {
@@ -592,7 +602,7 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
-
+    this.showWarningMessageAboutAutoExpenseCreation = !this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') && this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') !== null ? this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') : true;
     this.getSettingsAndSetupForm();
   }
 
