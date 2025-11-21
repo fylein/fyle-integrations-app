@@ -1731,7 +1731,7 @@
     "proceedButtonLabel": "Proceed",
     "mappingWarningDialogHeader": "This action will change your existing mappings",
     "mappingWarningDialogConfirmationPrompt": "Are you sure you want to proceed?",
-    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don’t fit the new selection will be removed. You currently have {{mappedEmployeesCount}} employees mapped."
+    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don't fit the new selection will be removed. You currently have {{mappedEmployeesCount}} {mappedEmployeesCount, plural, one {employee} other {employees}} mapped."
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",
