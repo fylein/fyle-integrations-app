@@ -19,7 +19,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     loginToAllConnectedApps: true,
     hasAssistedSetupSupport: true,
     isDashboardButtonOutlined: true,
-    shouldShowXeroPreviewImage: false,
+    shouldShowXeroPreviewImage: true,
     shouldShowOnboardingYouTubeVideo: true,
     disableTextColorWhenChecked: true,
     footerButtonsRightAligned: false,
