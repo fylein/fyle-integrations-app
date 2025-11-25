@@ -78,15 +78,15 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   previewImagePaths =[
     {
-      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'BILL': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg'
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable-expense-report.png',
+      'BILL': 'assets/illustrations/sageIntacct/Reimbursable-bill.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable-journal-entry.png'
     },
     {
-      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/CCC Expense Report.jpg',
-      'BILL': 'assets/illustrations/sageIntacct/CCC Bill.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Journal Entry.jpg',
-      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/CCC Credit Card Purchase.jpg'
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/CCC-expense-report.png',
+      'BILL': 'assets/illustrations/sageIntacct/CCC-bill.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC-journal-entry.png',
+      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/CCC-credit-card-purchase.png'
     }
   ];
 

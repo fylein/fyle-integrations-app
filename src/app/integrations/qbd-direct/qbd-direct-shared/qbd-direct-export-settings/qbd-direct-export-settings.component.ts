@@ -98,6 +98,18 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   readonly brandingStyle = brandingStyle;
 
+  previewImagePaths =[
+    {
+      [QbdDirectReimbursableExpensesObject.BILL]: 'assets/illustrations/qbd-direct/Reimbursable-bill.png',
+      [QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/Reimbursable-journal-entry.png',
+      [QbdDirectReimbursableExpensesObject.CHECK]: 'assets/illustrations/qbd-direct/Reimbursable-check.png'
+    },
+    {
+      [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/illustrations/qbd-direct/CCC-credit-card-transaction.png',
+      [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/CCC-journal-entry.png'
+    }
+  ];
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,

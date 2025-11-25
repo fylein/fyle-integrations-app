@@ -34,7 +34,8 @@
                                 [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
-                                [showExportPreview]="false">
+                                [exportTypeIconPathArray]="previewImagePaths"
+                                [showExportPreview]="true">
                             </app-configuration-select-field>
                         </div>
                     </div>
@@ -140,7 +141,8 @@
                             [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
-                            [showExportPreview]="false">
+                            [exportTypeIconPathArray]="previewImagePaths"
+                            [showExportPreview]="true">
                         </app-configuration-select-field>
 
                         <div *ngIf="exportSettingsForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingsForm, 'employeeMapping')">
