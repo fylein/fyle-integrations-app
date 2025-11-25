@@ -2,7 +2,7 @@ import { CommonModule, LowerCasePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { Sage50FyleField, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
@@ -58,6 +58,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
+  readonly brandingStyle = brandingStyle;
+  
   readonly brandingConfig = brandingConfig;
 
   readonly importFormatOptions = [

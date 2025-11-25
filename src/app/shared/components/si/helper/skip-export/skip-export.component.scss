@@ -29,7 +29,7 @@
   @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px tw-border #{!important};
 }
 
-:host ::ng-deep .p-autocomplete-token {
+:host ::ng-deep .p-autocomplete-input-multiple-token {
   height: 24px;  /* Reduced height */
   align-items: center;  /* Center content */
   background-color: white !important;  /* Change background color to white */
@@ -38,14 +38,14 @@
 }
 
 /* To remove blue hover and other styles */
-:host ::ng-deep .p-autocomplete input:focus {
+:host ::ng-deep .p-autocomplete-input-multiple input:focus {
   outline: none !important;
   box-shadow: none !important;
   border-color: inherit !important;
 }
 
 /* Scrollable container */
-:host ::ng-deep .p-autocomplete-multiple-container {
+:host ::ng-deep .p-autocomplete-input-multiple-multiple-container {
   max-height: 80px;
   overflow-y: auto;
   width: 360px !important;
@@ -56,16 +56,16 @@
 }
 
 /* Change text color to black */
-:host ::ng-deep .p-autocomplete-token-label {
+:host ::ng-deep .p-autocomplete-input-multiple-token-label {
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
 
-:host ::ng-deep .p-autocomplete-token-icon {
+:host ::ng-deep .p-autocomplete-input-multiple-token-icon {
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
-:host ::ng-deep .p-autocomplete-multiple-container::-webkit-scrollbar {
+:host ::ng-deep .p-autocomplete-input-multiple-multiple-container::-webkit-scrollbar {
   background: transparent;  /* For WebKit browsers like Chrome and Safari */
 }
 

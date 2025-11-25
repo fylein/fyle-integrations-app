@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="tw-pl-34-px">
-        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [placeholder]="placeholder"
+        <p-multiselect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [placeholder]="placeholder"
         [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']"
         [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
         [selectionLimit]="maxSelections"
@@ -33,7 +33,7 @@
                     >{{ getMemo(memo) }}</p>
                 </div>
             </ng-template>
-        </p-multiSelect>
+        </p-multiselect>
         <div>
             <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.get(formControllerName)?.value?.length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div>

@@ -67,8 +67,12 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
 
     // Focused borders
     .p-select.p-focus, .p-inputwrapper-focus > .p-multiselect,
-    input[type="text"]:focus:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-token > input):not(.p-multiselect-chip input):not(p-datepicker input),
-    .p-autocomplete.p-focus>ul,
+    .p-multiselect.p-focus,
+    .p-multiselect.p-multiselect-open,
+    .p-multiselect-open.p-multiselect,
+    .p-autocomplete .p-autocomplete-input-multiple:focus, .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
+    input[type="text"]:focus:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input),
+    .p-autocomplete.p-focus .p-autocomplete-list,
     input[type="password"]:focus,
     .custom-search-field-focus,
     .p-toggleswitch:focus-within .p-toggleswitch-slider,
@@ -145,21 +149,21 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-pr-12-px #{!important};
     }
 
-    .p-multiselect-trigger, .p-multiselect-trigger > * {
+    .p-multiselect-dropdown, .p-multiselect-dropdown > * {
         content: url('./assets/icons/caret-large-down.svg') !important;
         @apply tw-w-18-px #{!important};
     }
 
-    // Text inputs
-    input[type="text"]:not(.p-autocomplete-input-token > input):not(p-datepicker input):not(.custom-search-field > input), input[type="password"] {
+    // Text inputs (PrimeNG v20: updated .p-autocomplete-input-chip)
+    input[type="text"]:not(.p-autocomplete-input-chip > input):not(p-datepicker input):not(.custom-search-field > input), input[type="password"] {
         @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-token > input):not(.p-multiselect-chip input):not(p-datepicker input) {
+    input[type="text"]:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input) {
         @apply tw-px-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-autocomplete-input-token > input):not(p-datepicker input):not(.custom-search-field > input):not(.p-select-filter > input):disabled, input[type="password"]:disabled {
+    input[type="text"]:not(.p-autocomplete-input-chip > input):not(p-datepicker input):not(.custom-search-field > input):not(.p-select-filter > input):disabled, input[type="password"]:disabled {
         @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
     }
 
@@ -267,7 +271,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     }
 
     // Multiselects
-    .p-multiselect .p-multiselect-trigger {
+    .p-multiselect .p-multiselect-dropdown {
         @apply tw-w-12-px #{!important};
     }
 
@@ -606,7 +610,11 @@ p {
 }
 
 .p-select-overlay .p-select-list {
-    @apply tw-mt-1-px tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
+    @apply tw-mt-0 tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
+}
+
+.p-select-overlay .p-select-list-container .p-select-list {
+    @apply tw-gap-0 #{!important};
 }
 
 .p-select-overlay .p-select-list .p-select-option {
@@ -653,20 +661,26 @@ p {
     @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
 }
 
+// PrimeNG v20: Hide the default label container when custom selectedItems template is used
+// The custom template renders inside label-container, hide the default label element
+.p-multiselect .p-multiselect-label-container .p-multiselect-label .tw-text-placeholder{
+    @apply tw-hidden #{!important};
+}
+
 .p-multiselect.p-focus:not(.p-disabled) {
     @apply tw-border-select-focused-border #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-header .p-checkbox {
+.p-multiselect-overlay .p-multiselect-header .p-checkbox {
     @apply tw-hidden;
 }
 
-.p-multiselect-panel .p-multiselect-header,
-.p-multiselect-panel .p-multiselect-items {
+.p-multiselect-overlay .p-multiselect-header,
+.p-multiselect-overlay .p-multiselect-list {
     @apply tw-p-0 #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-header {
+.p-multiselect-overlay .p-multiselect-header {
     @apply tw-border-none #{!important};
 }
 
@@ -674,11 +688,7 @@ p {
     @apply tw-hidden;
 }
 
-.p-multiselect-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-multiselect-panel {
+.p-multiselect-overlay {
     @apply tw-w-300-px;
 }
 
@@ -694,7 +704,7 @@ p {
     @apply tw-text-select-focused-placeholder-text #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-8-px #{!important};
 }
 
@@ -702,8 +712,54 @@ p {
     @apply tw-h-[revert] tw-w-[revert] #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mb-0 #{!important};
+
+// Remove any default padding/margin from the option content
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
+    @apply tw-gap-0 tw-relative #{!important};
+    z-index: 2 !important;
+}
+
+// For multiselect: ensure proper spacing for checkbox
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox {
+    @apply tw-mr-8-px tw-relative #{!important};
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+// Hide the native input and checkbox box - let the option handle clicks
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox input[type="checkbox"].p-checkbox-input {
+    @apply tw-w-16-px tw-h-16-px tw-absolute tw-opacity-100 #{!important};
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+// Checkbox box is visible but doesn't capture clicks
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box {
+    @apply tw-relative #{!important};
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+// Fyle theme: Multiselect checkbox - white background for both checked and unchecked
+[data-theme='fyle'] {
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box {
+        @apply tw-bg-white #{!important};
+    }
+
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box.p-highlight {
+        @apply tw-bg-white tw-border-checkbox-icon-color #{!important};
+    }
+
+    // Use check.svg icon for checked state
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box.p-highlight .p-icon {
+        content: url('./assets/icons/check.svg') !important;
+    }
+}
+
+[data-theme='co'] {
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox-checked .p-checkbox-box {
+        @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
+    }
 }
 
 .p-checkbox .p-checkbox-box {
@@ -718,19 +774,20 @@ p {
     @apply tw-border-[1.5px] #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight, .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option[aria-selected="true"], .p-multiselect-overlay .p-multiselect-list .p-multiselect-option.p-selected,
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:not([aria-selected="true"]):not(.p-selected):not(.p-disabled).p-focus {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:not([aria-selected="true"]):not(.p-selected):not(.p-disabled):hover {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:focus {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:hover {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
 }
 
@@ -742,7 +799,7 @@ p {
     @apply tw-border-sub-text-color #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-empty-message {
     @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
 
@@ -927,6 +984,10 @@ p {
     @apply tw-p-16-px #{!important};
 }
 
+.p-datepicker .p-datepicker-panel .p-datepicker-calendar-container .p-datepicker-calendar .p-datepicker-header .p-button {
+    @apply tw-bg-white tw-text-calendar-header-text-color #{!important};
+}
+
 .configuration {
     &--section {
         @apply tw-pb-100-px;
@@ -949,6 +1010,10 @@ p {
     @apply tw-h-40-px #{!important};
 }
 
+.p-select .p-select-label {
+    @apply tw-text-14-px #{!important};
+}
+
 .p-datepicker .p-datepicker-input,
 .p-datepicker .p-inputtext {
     @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
@@ -969,7 +1034,7 @@ p {
 }
 
 .p-select-overlay .p-select-list .p-select-empty-message {
-    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
+    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px !tw-text-14-px #{!important};
 }
 
 .p-select-overlay .p-select-list .p-select-option-group {
@@ -1040,18 +1105,20 @@ p {
     @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
 }
 
-
-
-.p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token {
-    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
+.p-autocomplete .p-autocomplete-input-multiple {
+    @apply tw-min-h-[40px] tw-max-h-[80px] tw-overflow-y-auto tw-flex tw-items-center tw-border tw-border-select-default-border tw-rounded-4-px tw-pl-14-px tw-pr-12-px #{!important};
 }
 
-.p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
-}
-
-.p-inputtext .p-autocomplete-multiple-container:enabled:focus, .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple {
     @apply tw-border tw-border-select-focused-border #{!important};
+}
+
+.p-autocomplete .p-autocomplete-input-multiple .p-autocomplete-input {
+    @apply tw-border-none tw-outline-none tw-shadow-none tw-bg-none tw-text-14-px tw-p-0 #{!important};
+}
+
+.p-autocomplete .p-autocomplete-chip-item .p-autocomplete-chip {
+    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border tw-border-chips-border-color tw-shadow-none tw-text-14-px #{!important};
 }
 
 .input1 .p-focus {

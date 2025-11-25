@@ -15,7 +15,7 @@
                 <div>
                     <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" value="{{ defaultField.destination_field | snakeCaseToSpaceCase | sentenceCase }}" disabled>
                 </div>
-                <div class="tw-pt-[17px]">
+                <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                     <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
                 </div>
                 <div class="tw-w-30-vw">
