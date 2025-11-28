@@ -14,9 +14,14 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  @Input() iconSrc: string;
+
+  @Input() customStyleClass: any;
+
+  @Input() customBackgroundColorClass: any;
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

@@ -24,7 +24,9 @@ export class ImportSettingsService {
       import_to_fyle: new FormControl(data.import_to_fyle || false),
       is_custom: new FormControl(data.is_custom || false),
       source_placeholder: new FormControl(data.source_placeholder || null),
-      import_code: new FormControl(data.import_code)
+      import_code: new FormControl(data.import_code),
+      is_auto_import_enabled: new FormControl(data.is_auto_import_enabled || true),
+      count: new FormControl(0)
     });
   }
 
@@ -54,7 +56,8 @@ export class ImportSettingsService {
           is_custom: false,
           source_field: '',
           source_placeholder: null,
-          import_code: null
+          import_code: null,
+          is_auto_import_enabled: true
       };
       if (mappingSetting) {
         fieldData.import_code = importCodeFieldCodeConfig ? this.getImportCodeField(importCodeFields, accountingAppField.attribute_type, importCodeFieldCodeConfig) : null;

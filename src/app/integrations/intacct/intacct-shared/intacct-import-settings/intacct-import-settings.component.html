@@ -209,6 +209,9 @@
                     </div>
                     <div class="tw-py-16-px">
                         <app-configuration-info-label
+                            [iconSrc]="'info-circle-fill-medium'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
                             [infoText]="'intacctImportSettings.oneTimeSetupNote' | transloco: { brandName: brandingConfig.brandName }">
                         </app-configuration-info-label>
                     </div>

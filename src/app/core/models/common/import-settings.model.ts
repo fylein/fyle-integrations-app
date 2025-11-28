@@ -26,7 +26,8 @@ export type ImportSettingMappingRow = {
   is_custom: boolean,
   source_field: string,
   source_placeholder: string | null,
-  import_code?: boolean
+  import_code?: boolean,
+  is_auto_import_enabled?: boolean
 }
 
 export type ImportSettingsCustomFieldRow = {

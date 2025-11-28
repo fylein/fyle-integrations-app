@@ -67,8 +67,17 @@
                       [label]="'configuration.importSetting.importItemsLabel' | transloco: {brandName: brandingConfig.brandName}"
                       [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                       [formControllerName]="'importItems'"
-                      [iconPath]="'arrow-tail-down'">
+                      [iconPath]="'arrow-tail-down'"
+                      (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
                     </app-configuration-toggle-field>
+                    <div *ngIf="importSettingForm.get('importItems')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Items', currentDestinationCount: attributeCounts['items_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
@@ -78,8 +87,18 @@
                       [subLabel]="('configuration.importSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('qboImportSettings.selectableFieldOnExpense' | transloco)"
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'"
-                      [hasDependentFields]="true">
+                      [hasDependentFields]="true"
+                      (importCodeEnabled)="updateCommonImportFields($event, 'tax_codes_count', 'taxCode')">
                     </app-configuration-toggle-field>
+                    <div *ngIf="importSettingForm.get('taxCode')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Tax code', currentDestinationCount: attributeCounts['tax_codes_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
+                    
 
                     <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [form]="importSettingForm"
@@ -100,8 +119,17 @@
                         [label]="'configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
                         [subLabel]="'qboImportSettings.importVendorsAsMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        (importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
                     </app-configuration-toggle-field>
+                    <div *ngIf="importSettingForm.get('importVendorsAsMerchants')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                   </div>
 
                 <div>
@@ -110,7 +138,8 @@
                         [appName]="appName"
                         [accountingFieldOptions]="qboFields"
                         [fyleFieldOptions]="fyleFields"
-                        [isDestinationFixedImport]="true">
+                        [isDestinationFixedImport]="true"
+                        (importCodeEnabled)="updateImportFields($event)">
                     </app-configuration-import-field>
                 </div>
             </div>

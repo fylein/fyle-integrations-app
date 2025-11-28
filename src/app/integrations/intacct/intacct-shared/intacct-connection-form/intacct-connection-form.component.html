@@ -24,6 +24,9 @@
              </div>
             <div [ngClass]="isReconnecting ? 'tw-pt-16-px' : 'tw-w-400-px'">
               <app-configuration-info-label
+                [iconSrc]="'info-circle-fill-medium'"
+                [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
                 [infoText]="'intacct.configuration.connector.connectorInfoLabel' | transloco" [showIcon]="brandingFeatureConfig.featureFlags.contentVersion === 'v2' ? false : true">
               </app-configuration-info-label>
             </div>
