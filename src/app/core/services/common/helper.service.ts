@@ -359,4 +359,16 @@ export class HelperService {
         }
     });
   }
+
+  getDestinationFieldPlural(destinationField: string): string {
+    const lastChar = destinationField.slice(-1).toLowerCase();
+    const lastTwoChars = destinationField.slice(-2).toLowerCase();
+
+    if (lastChar === 'y') {
+        return destinationField.slice(0, -1) + 'ies';
+    } else if (['s', 'x', 'z'].includes(lastChar) || ['sh', 'ch'].includes(lastTwoChars)) {
+        return destinationField + 'es';
+    }
+    return destinationField + 's';
+  }
 }
