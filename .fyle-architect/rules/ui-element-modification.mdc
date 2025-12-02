@@ -1,0 +1,183 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UI Element Modification Guide
+
+## Finding UI Elements in Component Hierarchies
+
+When modifying specific UI elements (buttons, forms, tables), follow these steps to locate them:
+
+1. **Identify the integration**: Determine which integration module contains the element (QBO, NetSuite, Xero)
+2. **Find the component path**: Use the component hierarchy to locate the correct file
+3. **Identify the element**: Search for specific element selectors, classes, or text
+
+## Component Path Patterns
+
+Components follow these common paths:
+
+- **Main flow**: `src/app/integrations/<integration>/<integration>-main/...`
+- **Onboarding flow**: `src/app/integrations/<integration>/<integration>-onboarding/...`
+- **Shared components**: `src/app/integrations/<integration>/<integration>-shared/...`
+
+## Examples for Common Tasks
+
+### Example 1: Remove a Button
+
+To remove a "Skip" button from QBO onboarding configuration:
+
+1. Find component location:
+   ```
+   src/app/integrations/qbo/qbo-onboarding/qbo-configuration/qbo-configuration.component.html
+   ```
+
+2. Search for the button:
+   ```html
+   <div class="form-actions">
+     <button pButton type="submit" label="Continue" [disabled]="!form.valid"></button>
+     <button pButton type="button" class="p-button-text" label="Skip" (click)="skipConfiguration()"></button>
+   </div>
+   ```
+
+3. Remove the button while preserving surrounding HTML:
+   ```html
+   <div class="form-actions">
+     <button pButton type="submit" label="Continue" [disabled]="!form.valid"></button>
+   </div>
+   ```
+
+### Example 2: Change Button Text
+
+To change a button label from "Connect" to "Authorize":
+
+1. Find component location:
+   ```
+   src/app/integrations/netsuite/netsuite-onboarding/netsuite-connector/netsuite-connector.component.html
+   ```
+
+2. Locate the button:
+   ```html
+   <button pButton type="button" label="Connect to NetSuite" (click)="connect()" class="connect-button"></button>
+   ```
+
+3. Change only the label:
+   ```html
+   <button pButton type="button" label="Authorize NetSuite" (click)="connect()" class="connect-button"></button>
+   ```
+
+## Element Identification Patterns
+
+### Button Patterns
+
+1. **PrimeNG Buttons**
+   ```html
+   <!-- Primary button -->
+   <button pButton type="button" label="Save"></button>
+   
+   <!-- Text button -->
+   <button pButton type="button" class="p-button-text" label="Cancel"></button>
+   
+   <!-- With click handler -->
+   <button pButton type="button" label="Connect" (click)="connect()"></button>
+   ```
+
+2. **Action Buttons by Location**
+   - Form action buttons are usually in elements with classes:
+     - `form-actions`
+     - `button-row`
+     - `button-container`
+
+### Form Element Patterns
+
+1. **Form Containers**
+   ```html
+   <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+     <!-- Form fields -->
+   </form>
+   ```
+
+2. **Form Groups**
+   ```html
+   <div class="form-group">
+     <label>Field Label</label>
+     <input pInputText formControlName="fieldName">
+   </div>
+   ```
+
+## Navigation in Complex Components
+
+### Multi-step Form Navigation
+
+Look for navigation containers:
+```html
+<!-- Common navigation pattern -->
+<div class="step-navigation">
+  <button pButton type="button" label="Back" (click)="goBack()" class="p-button-text"></button>
+  <button pButton type="button" label="Next" (click)="goNext()" [disabled]="!isValid"></button>
+</div>
+```
+
+### Child Component References
+
+Look for child component selectors:
+```html
+<!-- Parent component including child -->
+<div class="parent-container">
+  <app-configuration-form 
+    [settings]="settings" 
+    (settingsChange)="onSettingsChange($event)">
+  </app-configuration-form>
+</div>
+```
+
+## Conditional Elements
+
+Look for `*ngIf` directives when elements aren't found:
+```html
+<!-- Button that only appears under certain conditions -->
+<button 
+  *ngIf="isConnected" 
+  pButton 
+  type="button" 
+  label="Disconnect" 
+  (click)="disconnect()">
+</button>
+```
+
+## Function Handlers
+
+When modifying a button's behavior:
+1. Find the button's click handler: `(click)="methodName()"`
+2. Check the component `.ts` file for the method implementation
+3. Modify the method behavior or replace with a new method
+
+```typescript
+// Component class
+export class SomeComponent {
+  // Button click handler
+  methodName(): void {
+    // Method implementation to modify
+  }
+}
+```
+
+## Common UI Element Classes
+
+When searching for elements, look for these common classes:
+
+- Primary buttons: `.primary-button`, `.save-button`, `.connect-button`
+- Secondary buttons: `.secondary-button`, `.cancel-button`
+- Text buttons: `.p-button-text`
+- Form containers: `.configuration-form`, `.export-form`
+- Navigation: `.navigation-container`, `.step-navigation`
+
+## Best Practices
+
+1. **Preserve Surrounding Structure**: Only modify the specific element, not its parent containers
+2. **Check for References**: If removing an element, ensure it's not referenced elsewhere
+3. **Keep Styling Consistent**: Maintain existing styling patterns for buttons/forms
+4. **Always Verify Changes**: Test the modified UI to ensure it works as expected
+5. **Check Component Logic**: Ensure UI changes don't break component functionality
+
+
