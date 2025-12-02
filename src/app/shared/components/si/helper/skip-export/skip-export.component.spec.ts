@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('SkipExportComponent', () => {
+describe('SkipExportComponent', () => {
   let component: SkipExportComponent;
   let fixture: ComponentFixture<SkipExportComponent>;
 

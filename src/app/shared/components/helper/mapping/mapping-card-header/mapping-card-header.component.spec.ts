@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MappingCardHeaderComponent } from './mapping-card-header.component';
 
-xdescribe('MappingCardHeaderComponent', () => {
+describe('MappingCardHeaderComponent', () => {
   let component: MappingCardHeaderComponent;
   let fixture: ComponentFixture<MappingCardHeaderComponent>;
 

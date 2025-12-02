@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationStepSubHeaderComponent } from './configuration-step-sub-header.component';
 
-xdescribe('ConfigurationStepSubHeaderComponent', () => {
+describe('ConfigurationStepSubHeaderComponent', () => {
   let component: ConfigurationStepSubHeaderComponent;
   let fixture: ComponentFixture<ConfigurationStepSubHeaderComponent>;
 

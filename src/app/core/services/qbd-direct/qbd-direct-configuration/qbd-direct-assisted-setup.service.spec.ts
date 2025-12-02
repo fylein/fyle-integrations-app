@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UqbdUdirectUassistedUsetupService } from './qbd-direct-assisted-setup.service';
+import { QbdDirectAssistedSetupService } from './qbd-direct-assisted-setup.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UqbdUdirectUassistedUsetupService', () => {
-  let service: UqbdUdirectUassistedUsetupService;
+describe('QbdDirectAssistedSetupService', () => {
+  let service: QbdDirectAssistedSetupService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UqbdUdirectUassistedUsetupService,
+        QbdDirectAssistedSetupService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UqbdUdirectUassistedUsetupService);
+    service = TestBed.inject(QbdDirectAssistedSetupService);
   });
 
   it('should be created', () => {

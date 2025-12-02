@@ -9,7 +9,7 @@ import { orgMockData, generateTokenData } from './org.fixture';
 import { OrgService } from './org.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('OrgService', () => {
+describe('OrgService', () => {
   let service: OrgService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

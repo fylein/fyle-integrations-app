@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UexportUsettingsService } from './export-settings.service';
+import { ExportSettingsService } from './export-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UexportUsettingsService', () => {
-  let service: UexportUsettingsService;
+describe('ExportSettingsService', () => {
+  let service: ExportSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UexportUsettingsService,
+        ExportSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UexportUsettingsService);
+    service = TestBed.inject(ExportSettingsService);
   });
 
   it('should be created', () => {

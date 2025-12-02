@@ -7,7 +7,7 @@ import { QbdExportSettingsService } from './qbd-export-settings.service';
 import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdExportSettingsService', () => {
+describe('QbdExportSettingsService', () => {
   let service: QbdExportSettingsService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

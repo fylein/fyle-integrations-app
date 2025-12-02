@@ -11,7 +11,7 @@ import { IntacctComponent } from 'src/app/integrations/intacct/intacct.component
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
 
-xdescribe('IntacctConnectorComponent', () => {
+describe('IntacctConnectorComponent', () => {
   let component: IntacctConnectorComponent;
   let fixture: ComponentFixture<IntacctConnectorComponent>;
   let mockConnectorService: jasmine.SpyObj<IntacctConnectorService>;

@@ -4,7 +4,7 @@ import { MappingFilterComponent } from './mapping-filter.component';
 import { UntypedFormBuilder } from '@angular/forms';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 
-xdescribe('MappingFilterComponent', () => {
+describe('MappingFilterComponent', () => {
   let component: MappingFilterComponent;
   let fixture: ComponentFixture<MappingFilterComponent>;
   let formbuilder: UntypedFormBuilder;

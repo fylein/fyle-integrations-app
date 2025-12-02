@@ -3,7 +3,7 @@ import { ExpenseState } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationRadioFieldComponent } from './configuration-radio-field.component';
 
-xdescribe('ConfigurationRadioFieldComponent', () => {
+describe('ConfigurationRadioFieldComponent', () => {
   let component: ConfigurationRadioFieldComponent;
   let fixture: ComponentFixture<ConfigurationRadioFieldComponent>;
 

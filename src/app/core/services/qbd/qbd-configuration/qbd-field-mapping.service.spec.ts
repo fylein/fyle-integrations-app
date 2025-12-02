@@ -6,7 +6,7 @@ import { QbdFieldMappingService } from './qbd-field-mapping.service';
 import { QBDFieldMappingGet, QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdFieldMappingService', () => {
+describe('QbdFieldMappingService', () => {
   let service: QbdFieldMappingService;
   let httpMock: HttpTestingController;
   let injector: TestBed;

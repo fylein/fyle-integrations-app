@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardExportSectionComponent } from './dashboard-export-section.component';
 
-xdescribe('DashboardExportSectionComponent', () => {
+describe('DashboardExportSectionComponent', () => {
   let component: DashboardExportSectionComponent;
   let fixture: ComponentFixture<DashboardExportSectionComponent>;
 

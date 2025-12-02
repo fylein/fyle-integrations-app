@@ -7,7 +7,7 @@ import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHRMo
 import { BambooHrService } from './bamboo-hr.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('BambooHrService', () => {
+describe('BambooHrService', () => {
   let service: BambooHrService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

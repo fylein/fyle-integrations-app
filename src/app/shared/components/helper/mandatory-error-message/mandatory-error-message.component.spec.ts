@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 
 import { MandatoryErrorMessageComponent } from './mandatory-error-message.component';
 
-xdescribe('MandatoryErrorMessageComponent', () => {
+describe('MandatoryErrorMessageComponent', () => {
   let component: MandatoryErrorMessageComponent;
   let fixture: ComponentFixture<MandatoryErrorMessageComponent>;
 
