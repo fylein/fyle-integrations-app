@@ -102,16 +102,16 @@ export class QboExportSettingsComponent implements OnInit {
 
   previewImagePaths =[
     {
-      [QBOReimbursableExpensesObject.EXPENSE]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
-      [QBOReimbursableExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-reimburse-bill.png',
-      [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png',
-      [QBOReimbursableExpensesObject.CHECK]: 'assets/pngs/preview-screens/qbo-reimburse-check.png'
+      [QBOReimbursableExpensesObject.EXPENSE]: 'assets/illustrations/qbo/Reimbursable-expense.png',
+      [QBOReimbursableExpensesObject.BILL]: 'assets/illustrations/qbo/Reimbursable-bill.png',
+      [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbo/Reimbursable-journal-entry.png',
+      [QBOReimbursableExpensesObject.CHECK]: 'assets/illustrations/qbo/Reimbursable-check.png'
     },
     {
-      [QBOCorporateCreditCardExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-ccc-bill.png',
-      [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/pngs/preview-screens/qbo-ccc-expense.png',
-      [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-ccc-journal-entry.png',
-      [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: 'assets/pngs/preview-screens/qbo-ccc-debit-card.png'
+      [QBOCorporateCreditCardExpensesObject.BILL]: 'assets/illustrations/qbo/CCC-bill.png',
+      [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/illustrations/qbo/CCC-credit-card-purchase.png',
+      [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbo/CCC-journal-entry.png',
+      [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: 'assets/illustrations/qbo/CCC-debit-card-purchase.png'
     }
   ];
 

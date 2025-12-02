@@ -133,7 +133,11 @@
                 </div>
 
             </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
+            <app-configuration-step-footer *ngIf="isOnboarding" [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
         </form>
     </div>
+</div>
+
+<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
 </div>
