@@ -122,7 +122,7 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null, appName?: string): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null, appName?: string, isEmployeeAndVendorAllowed: boolean = false): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
@@ -131,7 +131,8 @@ export class MappingService {
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
       destination_type: destinationType,
       source_type: sourceType,
-      ...(appName && { app_name: appName })
+      ...(appName && { app_name: appName }),
+      employee_vendor_purchase_from: !!isEmployeeAndVendorAllowed
     };
 
     if (searchQuery) {
@@ -147,12 +148,13 @@ export class MappingService {
     return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/mappings/${endpoint}/`), params);
   }
 
-  getMappingStats(sourceType: string, destinationType: string, appName: AppName): Observable<MappingStats> {
+  getMappingStats(sourceType: string, destinationType: string, appName: AppName, isEmployeeAndVendorAllowed: boolean = false): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/mappings/stats/`), {
       source_type: sourceType,
       destination_type: destinationType,
-      app_name: appName
+      app_name: appName,
+      employee_vendor_purchase_from: !!isEmployeeAndVendorAllowed
     });
   }
 

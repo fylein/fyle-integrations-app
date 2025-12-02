@@ -48,6 +48,7 @@
             <div *ngIf="(reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL') && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                 [form]="advancedSettingsForm"
+                [appName]="appName"
                 [isFieldMandatory]="false"
                 [mandatoryErrorListName]="'intacctAdvancedSettings.mandatoryErrorListNamePaymentSync' | transloco"
                 [label]="'intacct.configuration.advancedSettings.autoSyncPayments' | transloco"

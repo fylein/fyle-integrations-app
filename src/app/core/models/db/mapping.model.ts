@@ -29,4 +29,5 @@ export type GenericMappingApiParams = {
     source_type: string;
     value?: string
     app_name?: string;
+    employee_vendor_purchase_from?: boolean;
 };
