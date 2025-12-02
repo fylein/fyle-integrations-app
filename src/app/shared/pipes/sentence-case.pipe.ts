@@ -11,7 +11,8 @@ export class SentenceCasePipe implements PipeTransform {
   constructor(private translocoService: TranslocoService) {
     this.WORDS_TO_PRESERVE_CASE = [
       this.translocoService.translate('pipes.sentenceCase.quickbooksOnline'),
-      this.translocoService.translate('pipes.sentenceCase.quickbooksDesktop')
+      this.translocoService.translate('pipes.sentenceCase.quickbooksDesktop'),
+      this.translocoService.translate('pipes.sentenceCase.employeeOrVendor')
     ];
   }
 

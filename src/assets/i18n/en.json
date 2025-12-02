@@ -1728,7 +1728,12 @@
     "exportTypeChanged": "You have changed the export type of {{exportType}} expense from <b>{{existingConfig}}</b> to <b>{{updatedConfig}}</b>,",
     "itemsDisabledWarning": "{{content}} <br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursable": "reimbursable",
-    "creditCard": "credit card"
+    "creditCard": "credit card",
+    "selectCCCPurchasedFromFieldPlaceholder": "Select a value",
+    "proceedButtonLabel": "Proceed",
+    "mappingWarningDialogHeader": "This action will change your existing mappings",
+    "mappingWarningDialogConfirmationPrompt": "Are you sure you want to proceed?",
+    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don’t fit the new selection will be removed. You currently have {{mappedEmployeesCount}} employees mapped."
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",
@@ -2348,7 +2353,8 @@
       "closed": "Closed",
       "processing": "Processing",
       "lastSpendDate": "Last spend date",
-      "spendDate": "Spend date"
+      "spendDate": "Spend date",
+      "employeeOrVendor": "Employee/Vendor"
     },
     "netsuiteExportSettings": {
       "verificationDate": "Verification date",
@@ -2413,6 +2419,9 @@
     },
     "branding": {
       "reBrandedFullName": "Sage Expense Management"
+    },
+    "qbdDirectMapping": {
+      "employeeOrVendorLabel": "Employee/Vendor"
     }
   },
   "pipes": {
@@ -2421,7 +2430,8 @@
     },
     "sentenceCase": {
       "quickbooksOnline": "QuickBooks Online",
-      "quickbooksDesktop": "QuickBooks Desktop"
+      "quickbooksDesktop": "QuickBooks Desktop",
+      "employeeOrVendor": "Employee/Vendor"
     }
   },
   "sage50OnboardingLanding": {
@@ -2694,5 +2704,18 @@
     "paymentSyncOption2RightIllustration": "Report moved to CLOSED in {{brandName}}",
     "autoSync": "Auto-sync",
     "previewClose": "Got it"
+  },
+  "qbd_direct": {
+    "configuration": {
+      "exportSetting": {
+        "corporateCard": {
+          "cccPurchasedFromFieldLabel": "Choose the value to post in the \"Purchased from\" field",
+          "cccPurchasedFromFieldSubLabel": "You can decide whether the \"Purchased From\" field in QuickBooks Desktop should have the merchant value or the employee who made the purchase."
+        },
+        "reimbursable": {
+          "disabledCCCEmployeeMappingSubLabel": "How employees are represented in QuickBooks Desktop is auto-configured based on your reimbursable export configuration."
+        }
+      }
+    }
   }
 }

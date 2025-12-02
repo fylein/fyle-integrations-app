@@ -202,11 +202,12 @@ export class GenericMappingTableComponent implements OnInit {
 
   getDropdownValue(genericMapping: ExtendedGenericMapping, isForDestinationType: boolean = false) {
     if (genericMapping.employeemapping?.length) {
-      if (this.employeeFieldMapping===FyleField.VENDOR) {
+      if (genericMapping?.employeemapping?.[0]?.destination_vendor) {
         return genericMapping?.employeemapping[0].destination_vendor;
-      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
+      } else if (genericMapping?.employeemapping?.[0]?.destination_employee) {
         return genericMapping?.employeemapping[0].destination_employee;
       }
+      return null;
     } else if (genericMapping.categorymapping?.length) {
       if (this.destinationField === 'ACCOUNT') {
         return genericMapping.categorymapping[0].destination_account;

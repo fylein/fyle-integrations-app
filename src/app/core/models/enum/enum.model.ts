@@ -473,6 +473,11 @@ export enum QbdDirectCCCExportDateType {
   LAST_SPEND_AT = "last_spend_at"
 }
 
+export enum QbdDirectCCCPurchasedFromField {
+  MERCHANT = 'MERCHANT',
+  EMPLOYEE = 'EMPLOYEE'
+}
+
 
 export enum QbdDirectExpenseGroupBy {
   REPORT = 'report_id',

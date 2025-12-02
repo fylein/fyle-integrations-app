@@ -14,11 +14,11 @@
                 <i [ngClass]="[appName!==AppName.QBD_DIRECT ? brandingStyle.common.configurationBrandingClass : brandingStyle.common.configurationBrandingClass + ' qbd']" class="tw-cursor-pointer pi pi-times" style="font-size: 12px" (click)="acceptWarning(false)"></i>
             </div>
         </div>
-        <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
+        <div class="tw-pl-24-px tw-pr-24-px tw-pt-16-px tw-pb-24-px">
             <div class="tw-text-14-px tw-font-400 tw-pb-14-px tw-text-text-secondary" [innerHTML]="contextText">
             </div>
             <div *ngIf="appName!==AppName.QBD_DIRECT && !(appName === AppName.QBO && headerText === ('dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco))" class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-text-secondary">
-                {{ 'configurationConfirmationDialog.areYouSureToContinue' | transloco }}
+                {{ confirmationPromptText }}
             </div>
             <div *ngIf="appName===AppName.QBD_DIRECT" class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px tw-cursor-pointer" (click)="redirect()">
                 <p class="tw-text-12-px tw-font-500 tw-text-text-primary">{{ 'configurationConfirmationDialog.qbdErrorsAndSolutions' | transloco }}</p>
