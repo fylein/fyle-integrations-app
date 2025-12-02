@@ -40,7 +40,7 @@
         </div>
         <div *ngIf="!isLoading && showSection">
             <div *ngIf="brandingConfig.brandId !== 'co'">
-                <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
+                <app-configuration-info-label [iconSrc]="'info-circle-fill-medium'" [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground" [customStyleClass]="brandingStyle.configuration.infoLabelIcon" [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
             </div>
             <div *ngIf="brandingConfig.brandId === 'co'">
                 <h4 class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDataSync.infoText' | transloco }}</h4>

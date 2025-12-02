@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -32,6 +32,8 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
   @Input() disabled: boolean = false;
 
   @Input() appName: string;
+
+  @Output() importCodeEnabled = new EventEmitter<boolean>();
 
   AppName = AppName;
 

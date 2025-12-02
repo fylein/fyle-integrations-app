@@ -186,7 +186,8 @@
     "selectImportMethodPlaceholder": "Select how to import {{destinationField}}",
     "howToImportLabel": "How to import the {{destinationFields}} from {{appName}}?",
     "howToImportSubLabel": "You have the option to import either just the names of your {{destinationFields}} or both the names and codes.",
-    "importMethodErrorMessage": "Please select how the {{destinationField}} should be imported"
+    "importMethodErrorMessage": "Please select how the {{destinationField}} should be imported",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "configurationSkipExport": {
     "conditionHeader": "Condition",
@@ -688,7 +689,8 @@
     "defaultTaxCodeSubLabel": "If an expense from {{brandName}} does not contain any tax group information during export, the default tax code will be used.",
     "selectTaxCodePlaceholder": "Select tax code",
     "importVendorsAsMerchantsSubLabel": "Vendors from QuickBooks Online will be imported as merchants in {{brandName}} and will be a selectable field while creating an expense.",
-    "previewHeader": "Preview"
+    "previewHeader": "Preview",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "qboAdvancedSettings": {
     "automation": "Automation",

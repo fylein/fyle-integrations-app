@@ -53,6 +53,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
+  @Output() importCodeEnabled = new EventEmitter<[boolean, string, number]>();
+
   isConfigToggleLeftAligned = brandingFeatureConfig.qbdDirect.configToggleLeftAligned;
 
   showDependentFieldWarning: boolean;
@@ -140,7 +142,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
       destination_field: '',
       import_to_fyle: true,
       is_custom: false,
-      source_placeholder: null
+      source_placeholder: null,
+      is_auto_import_enabled: true
     };
     expenseFields.push(this.importSettingsService.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
@@ -211,8 +214,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
   }
 
-  onSwitchChanged(event: any, formGroup: AbstractControl): void {
-    this.onShowWarningForDependentFields(event, formGroup);
+  onSwitchChanged(event: any, formGroup: AbstractControl, index: number): void {
+    this.onShowWarningForDependentFields(event, formGroup, index);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
@@ -230,11 +233,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+  onShowWarningForDependentFields(event: any, formGroup: AbstractControl, index: number): void {
     if (this.costCodeFieldOption?.length && this.costCodeFieldOption?.length) {
       if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field' && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field') {
         this.showWarningForDependentFields.emit();
       }
+    } else {
+      this.importCodeEnabled.emit([event.checked, this.getDestinationField(formGroup.get('destination_field')?.value), index]);
     }
   }
 
