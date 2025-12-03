@@ -138,6 +138,18 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     }
   }
 
+  previewImagePaths =[
+    {
+      [QbdDirectReimbursableExpensesObject.BILL]: 'assets/illustrations/qbd-direct/Reimbursable-bill.png',
+      [QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/Reimbursable-journal-entry.png',
+      [QbdDirectReimbursableExpensesObject.CHECK]: 'assets/illustrations/qbd-direct/Reimbursable-check.png'
+    },
+    {
+      [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/illustrations/qbd-direct/CCC-credit-card-transaction.png',
+      [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/CCC-journal-entry.png'
+    }
+  ];
+
   get showCCCEmployeeMapping(): boolean {
     // The field is hidden only if reimbursable is toggled off and credit card export type is set to CCP
     // It is visible and editable if reimbursable is disabled + CCC is set to JE

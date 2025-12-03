@@ -81,7 +81,9 @@ export class XeroExportSettingsComponent implements OnInit {
   XeroExportSettingDestinationOptionKey = XeroExportSettingDestinationOptionKey;
 
   previewImagePaths =[
-    {},
+    {
+      'PURCHASE BILL': 'assets/illustrations/xero/bill.png'
+    },
     {
       'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png'
     }

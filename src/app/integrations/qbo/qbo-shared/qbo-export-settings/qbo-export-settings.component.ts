@@ -23,6 +23,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -101,16 +102,16 @@ export class QboExportSettingsComponent implements OnInit {
 
   previewImagePaths =[
     {
-      [QBOReimbursableExpensesObject.EXPENSE]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
-      [QBOReimbursableExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-reimburse-bill.png',
-      [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png',
-      [QBOReimbursableExpensesObject.CHECK]: 'assets/pngs/preview-screens/qbo-reimburse-check.png'
+      [QBOReimbursableExpensesObject.EXPENSE]: 'assets/illustrations/qbo/Reimbursable-expense.png',
+      [QBOReimbursableExpensesObject.BILL]: 'assets/illustrations/qbo/Reimbursable-bill.png',
+      [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbo/Reimbursable-journal-entry.png',
+      [QBOReimbursableExpensesObject.CHECK]: 'assets/illustrations/qbo/Reimbursable-check.png'
     },
     {
-      [QBOCorporateCreditCardExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-ccc-bill.png',
-      [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/pngs/preview-screens/qbo-ccc-expense.png',
-      [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-ccc-journal-entry.png',
-      [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: 'assets/pngs/preview-screens/qbo-ccc-debit-card.png'
+      [QBOCorporateCreditCardExpensesObject.BILL]: 'assets/illustrations/qbo/CCC-bill.png',
+      [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/illustrations/qbo/CCC-credit-card-purchase.png',
+      [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbo/CCC-journal-entry.png',
+      [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: 'assets/illustrations/qbo/CCC-debit-card-purchase.png'
     }
   ];
 
@@ -135,6 +136,8 @@ export class QboExportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  showWarningMessageAboutAutoExpenseCreation: boolean;
+
   constructor(
     private translocoService: TranslocoService,
     public helperService: HelperService,
@@ -148,7 +151,8 @@ export class QboExportSettingsComponent implements OnInit {
     private qboExportSettingsService: QboExportSettingsService,
     private employeeSettingsService: EmployeeSettingsService,
     private qboEmployeeSettingsService: QboEmployeeSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
+    private storageService: StorageService
   ) {
     this.windowReference = this.windowService.nativeWindow;
     this.reimbursableExpenseGroupingDateOptions = this.qboExportSettingsService.getReimbursableExpenseGroupingDateOptions();
@@ -161,6 +165,12 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
+    this.showWarningMessageAboutAutoExpenseCreation = this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') ?? true;
+  }
+
+  closeInfoLabel(): void {
+    this.showWarningMessageAboutAutoExpenseCreation = false;
+    this.storageService.set('showWarningMessageAboutAutoExpenseCreationInQBO', false);
   }
 
   isEmployeeMappingDisabled(): boolean {
@@ -592,7 +602,6 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
-
     this.getSettingsAndSetupForm();
   }
 
