@@ -203,7 +203,7 @@ export class XeroImportSettingsComponent implements OnInit {
     const importSettingPayload = this.importSettingService.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);

@@ -278,7 +278,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'), undefined, true);
     });
   }
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { ButtonType, ButtonSize } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
@@ -24,11 +25,21 @@ export class PreviewDialogComponent implements OnInit {
 
   @Input() isLastPreview: boolean = false;
 
+  @Input() autoSyncPaymentsPreviewClick: boolean = false;
+
+  @Input() appName: string;
+
   @Output() closeDialog = new EventEmitter();
 
   @Output() navigatePreview = new EventEmitter<'next' | 'previous'>();
 
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     public helper: HelperService

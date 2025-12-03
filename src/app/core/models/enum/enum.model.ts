@@ -473,6 +473,11 @@ export enum QbdDirectCCCExportDateType {
   LAST_SPEND_AT = "last_spend_at"
 }
 
+export enum QbdDirectCCCPurchasedFromField {
+  MERCHANT = 'MERCHANT',
+  EMPLOYEE = 'EMPLOYEE'
+}
+
 
 export enum QbdDirectExpenseGroupBy {
   REPORT = 'report_id',
@@ -747,7 +752,8 @@ export enum QboExportSettingDestinationOptionKey {
   ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
   VENDOR = 'VENDOR',
   EXPENSE_ACCOUNT = 'EXPENSE_ACCOUNT',
-  BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT = 'BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT'
+  BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT = 'BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT',
+  BANK_ACCOUNT_AND_LIABILITY_ACCOUNT = 'BANK_ACCOUNT_AND_LIABILITY_ACCOUNT'
 }
 
 export enum XeroExportSettingDestinationOptionKey {

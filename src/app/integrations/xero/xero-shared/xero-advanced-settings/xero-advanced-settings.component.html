@@ -120,7 +120,6 @@
                     (changeInMultiSelect)="onMultiSelectChange()">
                 </app-configuration-multi-select>
                 <div class="preview-text">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'xeroAdvancedSettings.previewLabel' | transloco }}</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>
@@ -128,10 +127,22 @@
             </div>
         </div>
         <app-configuration-step-footer
+            *ngIf="isOnboarding"
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
             [isButtonDisabled]="!advancedSettingForm.valid"
             [showBackButton]="isOnboarding ? true : false"
             (save)="save()"
-            (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+        </app-configuration-step-footer>
     </form>
+</div>
+
+<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [isButtonDisabled]="!advancedSettingForm.valid"
+        [showBackButton]="isOnboarding ? true : false"
+        (save)="save()"
+        (navigateToPreviousStep)="navigateToPreviousStep()">
+    </app-configuration-step-footer>
 </div>

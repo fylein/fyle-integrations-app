@@ -3,7 +3,7 @@ import { LowerCasePipe } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { Observable, Subject, debounceTime, filter, forkJoin, startWith } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -79,15 +79,15 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   previewImagePaths =[
     {
-      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'BILL': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg'
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable-expense-report.png',
+      'BILL': 'assets/illustrations/sageIntacct/Reimbursable-bill.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable-journal-entry.png'
     },
     {
-      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/CCC Expense Report.jpg',
-      'BILL': 'assets/illustrations/sageIntacct/CCC Bill.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Journal Entry.jpg',
-      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/CCC Credit Card Purchase.jpg'
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/CCC-expense-report.png',
+      'BILL': 'assets/illustrations/sageIntacct/CCC-bill.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC-journal-entry.png',
+      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/CCC-credit-card-purchase.png'
     }
   ];
 
@@ -143,7 +143,6 @@ export class IntacctExportSettingsComponent implements OnInit {
     ) {
     this.splitExpenseGroupingOptions = this.exportSettingsService.getSplitExpenseGroupingOptions();
     this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.getExpenseGroupingDateOptions();
-    this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId);
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('intacctExportSettings.expense'),
@@ -291,8 +290,10 @@ export class IntacctExportSettingsComponent implements OnInit {
 
 
     private reimbursableExportTypeWatcher(): void {
-      this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
+      this.exportSettingsForm.controls.reimbursableExportType.valueChanges
+      .pipe(startWith(this.exportSettingsForm.controls.reimbursableExportType.value))
+      .subscribe((selectedReimbursableExportType) => {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.glAccount.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
         } else {
@@ -300,16 +301,24 @@ export class IntacctExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.glAccount.clearValidators();
         }
 
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
         } else {
           this.exportSettingsForm.controls.reimbursableExpensePaymentType.setValue(null);
         }
 
-        if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.BILL) {
+        if (selectedReimbursableExportType === IntacctReimbursableExpensesObject.BILL) {
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
+        }
+
+        // Available CCC export type options are dependent on the reimbursable export type
+        this.creditCardExportTypes = this.exportSettingsService.constructCCCOptions(brandingConfig.brandId, selectedReimbursableExportType);
+
+        // If an invalid CCC export type was selected, reset it to null
+        if (!this.creditCardExportTypes.map(option => option.value).includes(this.exportSettingsForm.controls.cccExportType.value)) {
+          this.exportSettingsForm.controls.cccExportType.setValue(null);
         }
       });
     }
@@ -525,7 +534,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.saveInProgress = true;
         const exportSettingPayload = SiExportSettingsService.constructPayload(this.exportSettingsForm);
         this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'));
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
           this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);
           if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.EXPORT_SETTINGS) {
             this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);

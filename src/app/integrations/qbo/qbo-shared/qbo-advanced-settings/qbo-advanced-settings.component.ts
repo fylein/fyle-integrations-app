@@ -147,7 +147,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.COMPLETE);

@@ -102,6 +102,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: AdvancedSettingFormOption[];
 
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.INTACCT.DFV_READ_MORE;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -363,7 +365,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.advancedSettingsService.deleteExpenseFilter(1).subscribe();
         this.advancedSettingsService.deleteExpenseFilter(2).subscribe();
       }
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);

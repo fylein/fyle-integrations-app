@@ -34,10 +34,10 @@
     "addNewEmailAddressTitle": "Add new email address",
     "nameLabel": "Name",
     "enterNamePlaceholder": "Enter name",
-    "validNameError": "Enter a valid name",
-    "emailAddressLabel": "Email Address",
+    "validNameError": "Enter a valid name.",
+    "emailAddressLabel": "Email address",
     "enterEmailPlaceholder": "Enter email",
-    "validEmailError": "Enter a valid email",
+    "validEmailError": "Enter a valid email.",
     "cancelButton": "Cancel",
     "addAndSaveButton": "Add and save"
   },
@@ -65,7 +65,7 @@
     "generalLedger": "General Ledger",
     "preview": "Preview",
     "exportModule": "Export module",
-    "previewOfExport": "Preview of a {{exportType}} exported to {{appName}}",
+    "previewOfExport": "Preview of {{aOrAn}} {{exportType}} exported to {{appName}}",
     "transactionRecordInfo": "Choose the type of transaction record that you would like to create in {{ uiExposedAppName }} while exporting expenses from {{brandName}}.",
     "click": "Click",
     "here": "here",
@@ -88,7 +88,9 @@
     "selectTimePlaceholder": "Select time for export",
     "selectMeridiemPlaceholder": "Select meridiem of time",
     "cannotBeEdited": "(cannot be edited later)",
-    "previewOfExportSage50Header": "Export Modules"
+    "previewOfExportSage50Header": "Export Modules",
+    "theOptions": " the options",
+    "paymentSyncHeader": "How does the sync behaviour work?"
   },
   "configurationCustomFieldCreationDialog": {
     "existingFieldError": "Oops! It looks like another field with the same name already exists in your {{brandName}} account. Would you please give the field a different name?",
@@ -334,10 +336,10 @@
     "contentText": "Provide your credentials to establish a secure connection between your {{brandName}} and NetSuite account."
   },
   "netsuiteConnectionForm": {
-    "invalidAccountIdError": "Invalid account ID. Please enter valid account ID.",
+    "invalidAccountIdError": "Enter valid account ID.",
     "accountIdLabel": "Account ID",
     "accountIdPlaceholder": "Enter account ID",
-    "invalidTokenIdError": "Invalid token ID. Please enter valid token ID.",
+    "invalidTokenIdError": "Enter valid token ID.",
     "tokenIdLabel": "Token ID",
     "tokenIdPlaceholder": "Enter token ID",
     "incorrectTokenSecretError": "Incorrect token secret. Please enter correct token secret.",
@@ -532,7 +534,7 @@
     "continueButtonText": "Continue",
     "failedToConnectQBO": "Failed to connect to QuickBooks Online. Please try again",
     "incorrectAccountWarningHeader": "Incorrect account selected",
-    "incorrectAccountWarningContent": "You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings",
+    "incorrectAccountWarningContent": "You had previously set up the integration with {{accountName}} QuickBooks Online account. Please choose the same to restore the settings",
     "reconnectButtonText": "Re connect",
     "somethingWentWrong": "Something went wrong, please try again."
   },
@@ -775,7 +777,8 @@
     "newConfigurationWarning": "You have <b>selected a new export type</b> for the {{exportType}} expense, which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the features that could help customize and automate your integration workflows.",
     "productsServicesWarning": "<br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursableExpenseType": "reimbursable",
-    "creditCardExpenseType": "credit card"
+    "creditCardExpenseType": "credit card",
+    "warningMessageAboutAutoExpenseCreation": "Make sure to disable any bank rules or auto-expense creation workflows present in QuickBooks Online to prevent any duplicate expenses from being created."
   },
   "intacctMain": {
     "dashboardLabel": "Dashboard",
@@ -1726,7 +1729,12 @@
     "exportTypeChanged": "You have changed the export type of {{exportType}} expense from <b>{{existingConfig}}</b> to <b>{{updatedConfig}}</b>,",
     "itemsDisabledWarning": "{{content}} <br><br>Also, Products/services previously imported as categories in {{brandName}} will be disabled.",
     "reimbursable": "reimbursable",
-    "creditCard": "credit card"
+    "creditCard": "credit card",
+    "selectCCCPurchasedFromFieldPlaceholder": "Select a value",
+    "proceedButtonLabel": "Proceed",
+    "mappingWarningDialogHeader": "This action will change your existing mappings",
+    "mappingWarningDialogConfirmationPrompt": "Are you sure you want to proceed?",
+    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don’t fit the new selection will be removed. You currently have {{mappedEmployeesCount}} employees mapped."
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",
@@ -1840,7 +1848,7 @@
     "followStepsInfo": "Follow the steps as shown below to access the necessary details on your NetSuite account.",
     "enterInternalId": "Enter {{value}} Internal ID",
     "enterInternalIdPlaceholder": "Enter internal ID",
-    "internalIdRequired": "Please enter internal id",
+    "internalIdRequired": "Enter internal id",
     "enterTransactionLineFieldId": "Enter transaction line field id",
     "transactionLineFieldIdPlaceholder": "Enter transaction line field id",
     "transactionLineFieldIdRequired": "Please enter transaction line field id",
@@ -1975,11 +1983,11 @@
   "dashboardTokenExpired": {
     "integrationDisconnected": "Integration disconnected",
     "connectionExpired": "Connection expired",
-    "connectionExpiredDescription": "Your connection to {{appName}} has been expired, to continue using the integration seamlessly, please reconnect your account. ",
+    "connectionExpiredDescription": "Your integration with {{appName}} has been disconnected. This happens automatically when QuickBooks expires the connection token after a certain period for security reasons.\nPlease reconnect your account to continue using the integration seamlessly. ",
     "integrationDisconnectedDescription": "The integration with {{appName}} has been disconnected, to continue using the integration seamlessly, please reconnect your account. ",
     "syncingDataMessage": "We are syncing your data between your {{brandName}} - {{appName}} account and this may take a few seconds. ",
     "incorrectAccountSelectedHeader": "Incorrect account selected",
-    "incorrectAccountSelectedContext": "You had previously set up the integration with a different {{appName}} account. Please choose the same to restore the settings",
+    "incorrectAccountSelectedContext": "You had previously set up the integration with {{qboCompanyName}}. Please choose the same company to restore the settings and resume the integration.",
     "reconnectButton": "Reconnect",
     "reconectDialogHeaderText": "Reconnect to {{appName}}",
     "reconnectIntegrationButtonText": "Reconnect integration",
@@ -2082,7 +2090,8 @@
     "dependentFieldWarningCostCodesAndTypes": "You have imported cost codes and cost types from Sage Intacct by mapping them to fields in {{brandName}}. By turning off the import, you would lose the mappings you've established for these fields.",
     "continueConfirmation": "Are you sure you want to continue?",
     "continueButton": "Continue",
-    "previewHeader": "Preview"
+    "previewHeader": "Preview",
+    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form."
   },
   "services": {
     "travelperkOnboarding": {
@@ -2345,7 +2354,8 @@
       "closed": "Closed",
       "processing": "Processing",
       "lastSpendDate": "Last spend date",
-      "spendDate": "Spend date"
+      "spendDate": "Spend date",
+      "employeeOrVendor": "Employee/Vendor"
     },
     "netsuiteExportSettings": {
       "verificationDate": "Verification date",
@@ -2410,6 +2420,9 @@
     },
     "branding": {
       "reBrandedFullName": "Sage Expense Management"
+    },
+    "qbdDirectMapping": {
+      "employeeOrVendorLabel": "Employee/Vendor"
     }
   },
   "pipes": {
@@ -2418,7 +2431,8 @@
     },
     "sentenceCase": {
       "quickbooksOnline": "QuickBooks Online",
-      "quickbooksDesktop": "QuickBooks Desktop"
+      "quickbooksDesktop": "QuickBooks Desktop",
+      "employeeOrVendor": "Employee/Vendor"
     }
   },
   "sage50OnboardingLanding": {
@@ -2678,6 +2692,31 @@
   "previewDialog": {
     "PURCHASES_RECEIVE_INVENTORY": "Purchases",
     "PAYMENTS_JOURNAL": "Payments",
-    "GENERAL_JOURNAL_ENTRY": "General journal entry"
+    "GENERAL_JOURNAL_ENTRY": "General journal entry",
+    "paymentSyncOption1Header": "Option 1: Export ACH Payments to Accounting",
+    "paymentSyncOption1SubHeader": "If the report is reimbursed and marked as Paid after the expenses are exported to {{appName}}, then the integration will automatically sync the status and mark the exported record as Paid in {{appName}}",
+    "paymentSyncOption1Info": "Predominantly used when processing reimbursements in {{brandName}} via ACH.",
+    "paymentSyncOption1LeftIllustration": "Report marked as PAID in {{brandName}}",
+    "paymentSyncOption1RightIllustration": "Record marked as PAID in {{appName}}",
+    "paymentSyncOption2Header": "Option 2: Import Accounting Payments to {{brandName}}",
+    "paymentSyncOption2SubHeader": "If the report is exported from the processing state and the report is reimbursed and marked as paid in {{appName}}, then the integration will automatically sync the status back to {{brandName}} and move the report to the closed state",
+    "paymentSyncOption2Info": "Predominantly used when performing and tracking the entire reimbursement process in {{appName}}.",
+    "paymentSyncOption2LeftIllustration": "Record marked as PAID in {{appName}}",
+    "paymentSyncOption2RightIllustration": "Report moved to CLOSED in {{brandName}}",
+    "autoSync": "Auto-sync",
+    "previewClose": "Got it"
+  },
+  "qbd_direct": {
+    "configuration": {
+      "exportSetting": {
+        "corporateCard": {
+          "cccPurchasedFromFieldLabel": "Choose the value to post in the \"Purchased from\" field",
+          "cccPurchasedFromFieldSubLabel": "You can decide whether the \"Purchased From\" field in QuickBooks Desktop should have the merchant value or the employee who made the purchase."
+        },
+        "reimbursable": {
+          "disabledCCCEmployeeMappingSubLabel": "How employees are represented in QuickBooks Desktop is auto-configured based on your reimbursable export configuration."
+        }
+      }
+    }
   }
 }

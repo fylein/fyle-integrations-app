@@ -38,6 +38,9 @@ jobs:
           NEW_TAG=${{ steps.generate-and-push-tag.outputs.new_tag }}
           cd ${{ vars.PROD_DEPLOY_REPO }}/${{ vars.PROD_US1_DEPLOY_DIR }}/integrations
           kustomize edit set image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app:$NEW_TAG
+          
+          cd ../../${{ vars.C1_PROD_US1_DEPLOY_DIR }}/integrations
+          kustomize edit set image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app:$NEW_TAG
 
       - name: Commit and push changes
         run: |

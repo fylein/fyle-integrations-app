@@ -82,7 +82,9 @@ export class XeroExportSettingsComponent implements OnInit {
   XeroExportSettingDestinationOptionKey = XeroExportSettingDestinationOptionKey;
 
   previewImagePaths =[
-    {},
+    {
+      'PURCHASE BILL': 'assets/illustrations/xero/bill.png'
+    },
     {
       'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png'
     }
@@ -148,7 +150,7 @@ export class XeroExportSettingsComponent implements OnInit {
       const exportSettingPayload = this.xeroExportSettingService.constructPayload(this.exportSettingForm);
       this.xeroExportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);

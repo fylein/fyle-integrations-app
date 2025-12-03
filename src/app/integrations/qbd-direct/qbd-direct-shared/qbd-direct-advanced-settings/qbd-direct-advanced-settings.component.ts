@@ -173,7 +173,7 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
       }
 
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectAdvancedSettings.advancedSettingsSavedSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectAdvancedSettings.advancedSettingsSavedSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
