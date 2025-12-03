@@ -205,16 +205,18 @@ export class SkipExportComponent implements OnInit {
     this.skipExportForm.controls.join_by.reset();
     this.skipExportForm.controls.condition2.reset();
     this.valueOption2=[];
+    this.skipExportForm.controls.value2.setValue([]);
   }
 
   resetFields(operator: AbstractControl, value: AbstractControl, conditionSelected: ConditionField, rank: number) {
 
     operator.reset();
-    value.reset();
     if (rank === 1) {
       this.valueOption1 = [];
+      this.skipExportForm.controls.value1.setValue([]);
     } else if (rank === 2) {
       this.valueOption2 = [];
+      this.skipExportForm.controls.value2.setValue([]);
     }
     if (conditionSelected) {
       if (conditionSelected.is_custom) {
@@ -590,7 +592,25 @@ export class SkipExportComponent implements OnInit {
       }
     }
     this.fieldWatcher();
+    this.normalizeChipFieldValues();
     this.isLoading = false;
+  }
+
+
+  private normalizeChipFieldValues(): void {
+    ['value1', 'value2'].forEach(controlName => {
+      const control = this.skipExportForm.get(controlName);
+      if (control) {
+        const currentValue = control.value;
+        if (!Array.isArray(currentValue)) {
+          if (currentValue === null || currentValue === undefined || currentValue === '') {
+            control.setValue([], { emitEvent: false });
+          } else {
+            control.setValue([currentValue], { emitEvent: false });
+          }
+        }
+      }
+    });
   }
 
   private getSettingsAndSetupForm(): void {

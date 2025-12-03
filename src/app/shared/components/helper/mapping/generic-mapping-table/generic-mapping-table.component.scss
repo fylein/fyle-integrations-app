@@ -11,6 +11,10 @@
     @apply tw-w-200-px #{!important}
 }
 
+:host ::ng-deep .p-inputwrapper.p-select {
+    @apply tw-min-w-[260px] tw-max-w-[300px] #{!important};
+}
+
 :host ::ng-deep .filterDropdown .p-select .p-select-label.p-inputtext {
     @apply tw-py-10-px #{!important};
 }

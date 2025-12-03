@@ -11,7 +11,7 @@
         </div>
         <div *ngIf="options" class="tw-flex tw-items-center tw-pl-34-px">
             <div *ngFor="let option of options" class="p-field-checkbox lg:tw-mr-20-px md:tw-mr-16-px">
-                <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"[inputId]="option.value" ></p-radioButton>
+                <p-radiobutton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"[inputId]="option.value" ></p-radiobutton>
                 <label class="!tw-text-14-px !tw-text-sub-text-color" [for]="option.value">{{option.label}}</label>
             </div>
         </div>

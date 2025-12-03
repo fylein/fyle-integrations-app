@@ -139,7 +139,7 @@
 
     <div>
     <p-dialog [dismissableMask]="false" [closable]="false" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
-        <ng-template #header>
+        <ng-template #header pTemplate="header">
             <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
                 <div class="tw-flex tw-flex-col">
                     <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>

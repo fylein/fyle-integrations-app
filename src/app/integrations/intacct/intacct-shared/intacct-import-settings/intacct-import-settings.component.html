@@ -36,7 +36,7 @@
             <div class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="intacctCategoryDestinationLabel" disabled>
             </div>
-            <div class="tw-pt-[17px] ">
+            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <div class="tw-w-30-vw">
@@ -50,7 +50,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.vendorLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-[17px] ">
+            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -64,7 +64,7 @@
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxDetailLabel' | transloco" disabled>
             </span>
-            <div class="tw-pt-[17px] ">
+            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
@@ -109,7 +109,7 @@
                                 {{ 'intacctImportSettings.uniqueSageIntacctFieldsError' | transloco }}
                             </p>
                         </div>
-                            <div class="tw-pt-[17px] ">
+                            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
@@ -149,7 +149,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costCodeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-[17px] ">
+                            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-select appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
@@ -168,7 +168,7 @@
                             <div>
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.costTypeLabel' | transloco" disabled>
                             </div>
-                            <div class="tw-pt-[17px] ">
+                            <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-select appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">

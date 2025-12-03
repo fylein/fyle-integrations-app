@@ -66,11 +66,16 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     }
 
     // Focused borders
-    .p-select.p-inputwrapper-focus, .p-inputwrapper-focus > .p-multiselect,
-    input[type="text"]:focus:not(.p-select-filter-container > input):not(.custom-search-field > input):not(.p-autocomplete-input-token > input):not(.p-multiselect-chip input):not(p-datepicker input),
-    .p-autocomplete.p-focus>ul,
+    .p-select.p-focus, .p-inputwrapper-focus > .p-multiselect,
+    .p-multiselect.p-focus,
+    .p-multiselect.p-multiselect-open,
+    .p-multiselect-open.p-multiselect,
+    .p-autocomplete .p-autocomplete-input-multiple:focus, .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
+    input[type="text"]:focus:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input),
+    .p-autocomplete.p-focus .p-autocomplete-list,
     input[type="password"]:focus,
     .custom-search-field-focus,
+    .p-toggleswitch:focus-within .p-toggleswitch-slider,
     input[type="checkbox"]:hover, input[type="checkbox"]:focus {
         @apply tw-shadow-focused #{!important};
     }
@@ -90,36 +95,39 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
 
 
     // Dropdown panel
-    .p-select-panel .p-select-items .p-select-item.p-highlight, .p-select-panel .p-select-items .p-select-item .p-highlight .p-focus
-    ,.p-select-panel .p-select-items .p-select-item.p-highlight:hover {
-        @apply tw-text-dd-menu-item-default-text-color tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
+    .p-select-overlay .p-select-list .p-select-option[aria-selected="true"], .p-select-overlay .p-select-list .p-select-option.p-selected,
+    .p-select-overlay .p-select-list .p-select-option[aria-selected="true"]:hover, .p-select-overlay .p-select-list .p-select-option.p-selected:hover {
+        @apply tw-text-text-brand-primary tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
 
         p {
             @apply tw-text-yin-065;
         }
     }
 
-    .p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus {
+    .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus,
+    .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus {
         @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
     }
 
-    .p-select-panel .p-select-items .p-select-item:hover, .p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus:hover{
-        @apply tw-bg-utility-major-100 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
+    .p-select-overlay .p-select-list .p-select-option:hover, 
+    .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus:hover,
+    .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus:hover {
+        @apply tw-text-slightly-normal-text-color tw-rounded-none #{!important};
     }
 
-    .p-select-panel .p-select-items .p-select-item:has(.custom-option) {
+    .p-select-overlay .p-select-list .p-select-option:has(.custom-option) {
         @apply tw-border-t tw-border-t-separator #{!important};
     }
 
-    .p-select-panel .p-select-items .p-select-item {
+    .p-select-overlay .p-select-list .p-select-option {
         @apply tw-min-h-dropdown-option-height #{!important};
     }
 
-    .p-select-panel .p-select-items .p-select-item p {
+    .p-select-overlay .p-select-list .p-select-option p {
         @apply tw-text-utility-major-400;
     }
 
-    .p-select-panel {
+    .p-select-overlay {
         @apply tw-translate-y-[7px] tw-shadow-base-shadow;
     }
 
@@ -141,21 +149,21 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-pr-12-px #{!important};
     }
 
-    .p-multiselect-trigger, .p-multiselect-trigger > * {
+    .p-multiselect-dropdown, .p-multiselect-dropdown > * {
         content: url('./assets/icons/caret-large-down.svg') !important;
         @apply tw-w-18-px #{!important};
     }
 
-    // Text inputs
-    input[type="text"]:not(.p-autocomplete-input-token > input):not(p-datepicker input):not(.custom-search-field > input), input[type="password"] {
+    // Text inputs (PrimeNG v20: updated .p-autocomplete-input-chip)
+    input[type="text"]:not(.p-autocomplete-input-chip > input):not(p-datepicker input):not(.custom-search-field > input), input[type="password"] {
         @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-select-filter-container > input):not(.custom-search-field > input):not(.p-autocomplete-input-token > input):not(.p-multiselect-chip input):not(p-datepicker input) {
+    input[type="text"]:not(.p-select-filter):not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input) {
         @apply tw-px-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-autocomplete-input-token > input):not(p-datepicker input):not(.custom-search-field > input):disabled, input[type="password"]:disabled {
+    input[type="text"]:not(.p-autocomplete-input-chip > input):not(p-datepicker input):not(.custom-search-field > input):not(.p-select-filter > input):disabled, input[type="password"]:disabled {
         @apply tw-bg-input-disabled-bg tw-border-input-disabled-border #{!important};
     }
 
@@ -243,7 +251,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         content: url('./assets/icons/co/grv-chevron-down.svg') !important;
     }
 
-    .p-select-panel .p-select-items .p-select-item p {
+    .p-select-overlay .p-select-list .p-select-option p {
         @apply tw-text-text-muted;
     }
 
@@ -263,7 +271,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     }
 
     // Multiselects
-    .p-multiselect .p-multiselect-trigger {
+    .p-multiselect .p-multiselect-dropdown {
         @apply tw-w-12-px #{!important};
     }
 
@@ -550,13 +558,13 @@ p {
         @apply tw-w-16-px tw-h-16-px tw-border-1-px tw-border-utility-major-300 #{!important};
     }
 
-    .p-radiobutton .p-radiobutton-box.p-highlight,
-    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+    .p-radiobutton.p-radiobutton-checked .p-radiobutton-box,
+    .p-radiobutton.p-radiobutton-checked .p-radiobutton-box:hover {
         @apply tw-shadow-none tw-border-utility-major-300 tw-bg-white #{!important};
     }
 
-    .p-radiobutton .p-radiobutton-box.p-focus,
-    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+    .p-radiobutton:focus-within .p-radiobutton-box,
+    .p-radiobutton.p-radiobutton-checked:focus-within .p-radiobutton-box {
         @apply tw-ring-2 tw-ring-black tw-border-2-px tw-border-border-focus #{!important};
     }
 
@@ -574,12 +582,12 @@ p {
         @apply tw-w-16-px tw-h-16-px tw-border #{!important};
     }
 
-    .p-radiobutton .p-radiobutton-box:hover {
+    .p-radiobutton:hover .p-radiobutton-box {
         @apply tw-border-slightly-normal-text-color #{!important};
     }
 
-    .p-radiobutton .p-radiobutton-box.p-highlight,
-    .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+    .p-radiobutton.p-radiobutton-checked .p-radiobutton-box,
+    .p-radiobutton.p-radiobutton-checked:hover .p-radiobutton-box {
         @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white #{!important};
     }
 
@@ -598,45 +606,46 @@ p {
 }
 
 .p-select .p-select-label {
-    &.p-inputtext {
-        @apply tw-px-3 tw-py-2 #{!important};
-    }
+    @apply tw-p-0 tw-flex tw-items-center tw-justify-between tw-text-select-default-text tw-h-full #{!important};
 }
 
-.p-select .p-select-label.p-inputtext {
-    @apply tw-p-0 tw-flex tw-items-center tw-justify-between tw-text-select-default-text #{!important};
+.p-select-overlay .p-select-list {
+    @apply tw-mt-0 tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
 }
 
-.p-select-panel .p-select-items {
-    @apply tw-mt-1-px tw-px-0 tw-pt-4-px tw-pb-5-px tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
+.p-select-overlay .p-select-list-container .p-select-list {
+    @apply tw-gap-0 #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item {
+.p-select-overlay .p-select-list .p-select-option {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-rounded-4-px #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item.p-highlight, .p-select-panel .p-select-items .p-select-item .p-highlight .p-focus
-,.p-select-panel .p-select-items .p-select-item.p-highlight:hover {
-    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-12-px tw-text-14-px #{!important};
+.p-select-overlay .p-select-list .p-select-option[aria-selected="true"], .p-select-overlay .p-select-list .p-select-option.p-selected,
+.p-select-overlay .p-select-list .p-select-option[aria-selected="true"]:hover, .p-select-overlay .p-select-list .p-select-option.p-selected:hover {
+    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-6-px tw-pl-12-px tw-text-14-px #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus {
-    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus,
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus {
+    @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item:hover, .p-select-panel .p-select-items .p-select-item:not(.p-highlight).p-focus:hover{
+.p-select-overlay .p-select-list .p-select-option:hover, 
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus:hover,
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus:hover {
     @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item {
-    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-none #{!important};
+.p-select-overlay .p-select-list .p-select-option {
+    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-6-px tw-pl-14-px tw-text-14-px tw-rounded-none #{!important};
 }
 
 .p-select .p-select-dropdown {
     @apply tw-w-18-px #{!important};
 }
 
-.p-select-panel .p-select-header {
+.p-select-overlay .p-select-header {
     @apply tw-p-6-px #{!important};
 }
 
@@ -652,36 +661,45 @@ p {
     @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
 }
 
+// PrimeNG v20: Hide the default label container when custom selectedItems template is used
+// The custom template renders inside label-container, hide the default label element
+.p-multiselect .p-multiselect-label-container .p-multiselect-label .tw-text-placeholder{
+    @apply tw-hidden #{!important};
+}
+
 .p-multiselect.p-focus:not(.p-disabled) {
     @apply tw-border-select-focused-border #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-header .p-checkbox {
+.p-multiselect-overlay .p-multiselect-header .p-checkbox {
     @apply tw-hidden;
 }
 
-.p-multiselect-panel .p-multiselect-header,
-.p-multiselect-panel .p-multiselect-items {
+.p-multiselect-overlay .p-multiselect-header,
+.p-multiselect-overlay .p-multiselect-list {
     @apply tw-p-0 #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-header {
+.p-multiselect-overlay .p-multiselect-header {
     @apply tw-border-none #{!important};
+    z-index: 1 !important;
+}
+
+// Ensure filter input in multiselect header is clickable
+.p-multiselect-overlay .p-multiselect-header input[type="text"] {
+    pointer-events: auto !important;
+    z-index: 2 !important;
 }
 
 .p-multiselect-filter-container {
     @apply tw-hidden;
 }
 
-.p-multiselect-close {
-    @apply tw-hidden #{!important};
-}
-
-.p-multiselect-panel {
+.p-multiselect-overlay {
     @apply tw-w-300-px;
 }
 
-.p-select-panel .p-select-items .p-select-item {
+.p-select-overlay .p-select-list .p-select-option {
     @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
 }
 
@@ -693,7 +711,7 @@ p {
     @apply tw-text-select-focused-placeholder-text #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-8-px #{!important};
 }
 
@@ -701,8 +719,59 @@ p {
     @apply tw-h-[revert] tw-w-[revert] #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mb-0 #{!important};
+
+// Remove any default padding/margin from the option content
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
+    @apply tw-gap-0 tw-relative #{!important};
+    z-index: 1 !important;
+}
+
+// Ensure the list doesn't overlay the header
+.p-multiselect-overlay .p-multiselect-list {
+    z-index: 1 !important;
+}
+
+// For multiselect: ensure proper spacing for checkbox
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox {
+    @apply tw-mr-8-px tw-relative #{!important};
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+// Hide the native input and checkbox box - let the option handle clicks
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox input[type="checkbox"].p-checkbox-input {
+    @apply tw-w-16-px tw-h-16-px tw-absolute tw-opacity-100 #{!important};
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+// Checkbox box is visible but doesn't capture clicks
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box {
+    @apply tw-relative #{!important};
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+// Fyle theme: Multiselect checkbox - white background for both checked and unchecked
+[data-theme='fyle'] {
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box {
+        @apply tw-bg-white #{!important};
+    }
+
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box.p-highlight {
+        @apply tw-bg-white tw-border-checkbox-icon-color #{!important};
+    }
+
+    // Use check.svg icon for checked state
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox .p-checkbox-box.p-highlight .p-icon {
+        content: url('./assets/icons/check.svg') !important;
+    }
+}
+
+[data-theme='co'] {
+    .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox-checked .p-checkbox-box {
+        @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
+    }
 }
 
 .p-checkbox .p-checkbox-box {
@@ -717,19 +786,20 @@ p {
     @apply tw-border-[1.5px] #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight, .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option[aria-selected="true"], .p-multiselect-overlay .p-multiselect-list .p-multiselect-option.p-selected,
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:not([aria-selected="true"]):not(.p-selected):not(.p-disabled).p-focus {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:not([aria-selected="true"]):not(.p-selected):not(.p-disabled):hover {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:focus {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-option:hover {
     @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
 }
 
@@ -741,7 +811,7 @@ p {
     @apply tw-border-sub-text-color #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+.p-multiselect-overlay .p-multiselect-list .p-multiselect-empty-message {
     @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
 
@@ -862,13 +932,13 @@ p {
     @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
 }
 
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-select-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-select-month {
     @apply tw-text-16-px tw-font-700 tw-text-text-primary #{!important};
 }
 
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-select-year:hover,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-select-month:hover {
     @apply tw-text-calendar-header-text-color #{!important};
 }
 
@@ -876,7 +946,7 @@ p {
     @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
 }
 
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-select-month {
     @apply tw-pr-6-px #{!important};
 }
 
@@ -884,33 +954,131 @@ p {
     @apply tw-p-0 #{!important};
 }
 
-.p-datepicker table th {
-    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
+.p-datepicker .p-datepicker-header .p-datepicker-prev-button,
+.p-datepicker .p-datepicker-header .p-datepicker-next-button {
+    @apply tw-w-auto tw-h-auto #{!important};
+}
 
-    [data-theme='fyle'] & {
-      @apply tw-text-utility-major-300 #{!important};
+.p-datepicker .p-datepicker-header .p-datepicker-prev-button:focus,
+.p-datepicker .p-datepicker-header .p-datepicker-next-button:focus {
+    @apply tw-shadow-none #{!important};
+}
+
+// PrimeNG 20: Weekday names (Sun, Mon, Tue, etc.)
+.p-datepicker .p-datepicker-weekday-cell,
+.p-datepicker .p-datepicker-weekday,
+.p-datepicker .p-datepicker-day-view table th,
+.p-datepicker .p-datepicker-calendar table th {
+    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px tw-text-center #{!important};
+}
+
+// Fyle theme: Weekday text color
+[data-theme='fyle'] {
+    .p-datepicker .p-datepicker-weekday-cell,
+    .p-datepicker .p-datepicker-weekday,
+    .p-datepicker .p-datepicker-day-view table th,
+    .p-datepicker .p-datepicker-calendar table th {
+        @apply tw-text-utility-major-300 #{!important};
     }
 }
 
-.p-datepicker table td {
+// PrimeNG 20: Day cells
+.p-datepicker .p-datepicker-day-cell,
+.p-datepicker .p-datepicker-day-view table td,
+.p-datepicker .p-datepicker-calendar table td {
     @apply tw-p-0 tw-pb-4-px #{!important};
 }
 
-.p-datepicker table td>span {
+// PrimeNG 20: Day elements
+.p-datepicker .p-datepicker-day-view .p-datepicker-day,
+.p-datepicker .p-datepicker-calendar .p-datepicker-day {
     @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+}
 
-    [data-theme='fyle'] & {
-      @apply tw-text-text-primary #{!important};
+// Fyle theme: Day text color
+[data-theme='fyle'] {
+    .p-datepicker .p-datepicker-day-view .p-datepicker-day,
+    .p-datepicker .p-datepicker-calendar .p-datepicker-day {
+        @apply tw-text-text-primary #{!important};
     }
 }
 
-.p-datepicker table td > span:focus {
-    @apply tw-relative tw-ring-2-px tw-ring-black tw-ring tw-border-2-px tw-border-border-focus #{!important};
+.p-datepicker .p-datepicker-day-view .p-datepicker-day:focus,
+.p-datepicker .p-datepicker-calendar .p-datepicker-day:focus {
+    @apply tw-relative tw-ring-2-px tw-ring-black tw-ring tw-border-2-px tw-border-border-focus tw-shadow-none #{!important};
 }
 
-.p-datepicker {
+.p-datepicker .p-datepicker-panel {
     @apply tw-p-16-px #{!important};
 }
+
+.p-datepicker .p-datepicker-panel .p-datepicker-calendar-container .p-datepicker-calendar .p-datepicker-header .p-button {
+    @apply tw-bg-white tw-shadow-none tw-text-calendar-header-text-color #{!important};
+}
+
+// PrimeNG 20: Selected day - replaces old table td>span.p-highlight
+.p-datepicker table td>span.p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-cell .p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-selected span {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// PrimeNG 20: Selected range (for date range picker)
+.p-datepicker table td>span.p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-cell .p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-selected-range span {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text stays white in all states for selected range days
+.p-datepicker .p-datepicker-day-selected-range *,
+.p-datepicker table td>span.p-datepicker-day-selected-range * {
+    @apply tw-text-white #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected range - keep white text
+.p-datepicker:not(.p-disabled) table td span.p-datepicker-day-selected-range:hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day-selected-range:hover,
+.p-datepicker table td>span.p-datepicker-day-selected-range:hover,
+.p-datepicker .p-datepicker-day-selected-range:hover {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text and all child elements stay white when hovering selected range days
+.p-datepicker .p-datepicker-day-selected-range:hover *,
+.p-datepicker table td>span.p-datepicker-day-selected-range:hover * {
+    @apply tw-text-white #{!important};
+}
+
+// Ensure text stays white in all states for selected days
+.p-datepicker .p-datepicker-day-selected *,
+.p-datepicker table td>span.p-datepicker-day-selected * {
+    @apply tw-text-white #{!important};
+}
+
+// PrimeNG 20: Hover on unselected days only (exclude selected and selected-range)
+.p-datepicker:not(.p-disabled) table td span:not(.p-datepicker-day-selected):not(.p-datepicker-day-selected-range):not(.p-disabled):hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day:not(.p-datepicker-day-selected):not(.p-datepicker-day-selected-range):not(.p-disabled):hover {
+    @apply tw-bg-calendar-month-hover-bg #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected day - keep white text
+.p-datepicker:not(.p-disabled) table td span.p-datepicker-day-selected:hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day-selected:hover,
+.p-datepicker table td>span.p-datepicker-day-selected:hover,
+.p-datepicker .p-datepicker-day-selected:hover {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text and all child elements stay white when hovering selected days
+.p-datepicker .p-datepicker-day-selected:hover *,
+.p-datepicker table td>span.p-datepicker-day-selected:hover * {
+    @apply tw-text-white #{!important};
+}
+
+
 
 .configuration {
     &--section {
@@ -930,78 +1098,98 @@ p {
     @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
+.p-datepicker .p-inputwrapper {
+    @apply tw-h-40-px #{!important};
+}
+
+.p-select .p-select-label {
+    @apply tw-text-14-px #{!important};
+}
+
+.p-datepicker .p-datepicker-input,
 .p-datepicker .p-inputtext {
     @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
 }
 
+.p-datepicker:not(.p-datepicker-disabled).p-focus > .p-datepicker-input,
 .p-datepicker:not(.p-datepicker-disabled).p-focus > .p-inputtext {
     @apply tw-shadow-none #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-datepicker .p-inputtext,
-.p-select-panel .p-select-items .p-select-item.p-highlight .p-datepicker .p-inputtext {
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):hover .p-datepicker .p-datepicker-input,
+.p-select-overlay .p-select-list .p-select-option[aria-selected="true"] .p-datepicker .p-datepicker-input,
+.p-select-overlay .p-select-list .p-select-option.p-selected .p-datepicker .p-datepicker-input,
+.p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):hover .p-datepicker .p-inputtext,
+.p-select-overlay .p-select-list .p-select-option[aria-selected="true"] .p-datepicker .p-inputtext,
+.p-select-overlay .p-select-list .p-select-option.p-selected .p-datepicker .p-inputtext {
     @apply tw-bg-input-read-only-bg #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-empty-message {
-    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
+.p-select-overlay .p-select-list .p-select-empty-message {
+    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px !tw-text-14-px #{!important};
 }
 
-.p-select-panel .p-select-items .p-select-item-group {
+.p-select-overlay .p-select-list .p-select-option-group {
     @apply tw-px-12-px tw-py-8-px;
 }
 
-.p-select-panel .p-element[aria-label=\[divider\]] {
+.p-select-overlay .p-element[aria-label=\[divider\]] {
     @apply tw-py-4-px tw-min-h-0 #{!important};
 }
 
+.p-datepicker .p-datepicker-input::placeholder,
 .p-datepicker ::placeholder {
     @apply tw-text-sub-text-color #{!important};
 }
 
-.p-monthpicker-month {
-    @apply tw-w-[25%] #{!important};
+.p-datepicker .p-datepicker-month-view .p-datepicker-month {
+    @apply tw-w-[25%] tw-p-0 tw-mt-10-px tw-text-14-px tw-text-calendar-month-text-color tw-h-32-px #{!important};
 }
 
-.p-datepicker .p-monthpicker .p-monthpicker-month {
-    @apply tw-p-0 tw-mt-10-px tw-text-14-px tw-text-calendar-month-text-color tw-h-32-px #{!important};
-}
-
-.p-datepicker .p-yearpicker .p-yearpicker-year {
-    @apply tw-p-0 tw-mt-10-px tw-h-32-px tw-text-14-px #{!important};
-}
-
-.p-yearpicker-year {
-    @apply tw-w-[25%] #{!important};
-}
-
-.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
+.p-datepicker:not(.p-disabled) .p-datepicker-month-view .p-datepicker-month:not(.p-disabled):focus {
     @apply tw-shadow-none #{!important};
 }
 
-.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+// PrimeNG 20: Month hover - only for unselected months
+.p-datepicker:not(.p-disabled) .p-datepicker-month-view .p-datepicker-month:not(.p-datepicker-month-selected):not(.p-disabled):hover {
     @apply tw-bg-calendar-month-hover-bg #{!important};
 }
 
-.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
+// PrimeNG 20: Selected month
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected,
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected * {
+    @apply tw-bg-mandatory-field-color tw-text-white tw-shadow-focused #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected month - keep white text
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected:hover,
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected:hover * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+.p-datepicker .p-datepicker-year-view .p-datepicker-year {
+    @apply tw-w-[25%] tw-p-0 tw-mt-10-px tw-h-32-px tw-text-14-px #{!important};
+}
+
+.p-datepicker:not(.p-disabled) .p-datepicker-year-view .p-datepicker-year:not(.p-disabled):focus {
     @apply tw-shadow-none #{!important};
 }
 
-.p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
-.p-datepicker .p-datepicker-header .p-datepicker-next:focus {
-    @apply tw-shadow-none #{!important};
+// PrimeNG 20: Year hover - only for unselected years
+.p-datepicker:not(.p-disabled) .p-datepicker-year-view .p-datepicker-year:not(.p-datepicker-year-selected):not(.p-disabled):hover {
+    @apply tw-bg-calendar-month-hover-bg #{!important};
 }
 
-.p-datepicker table td>span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
+// PrimeNG 20: Selected year
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected,
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
 }
 
-.p-datepicker table td>span:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-.p-datepicker table th {
-    @apply tw-text-center #{!important};
+// PrimeNG 20: Prevent hover color change on selected year - keep white text
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected:hover,
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected:hover * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
 }
 
 .p-datepicker-touch-ui,
@@ -1009,34 +1197,61 @@ p {
     @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
 }
 
-.p-select-filter {
-    @apply tw-h-32-px;
+.p-select-filter,
+input.p-select-filter,
+.p-select-header input.p-select-filter,
+.p-select-overlay .p-select-header input.p-select-filter {
+    @apply tw-h-32-px tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important};
 }
 
-.p-select-filter {
-    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important}
+.p-datepicker-date-focus-ring-shadow {
+    @apply tw-shadow-focused #{!important};
 }
 
 .p-inputtext:enabled:focus {
     @apply tw-border-border-primary #{!important};
 }
 
+.p-select-header .p-iconfield {
+    @apply tw-relative tw-w-full #{!important};
+}
+
+.p-select-header .p-iconfield .p-inputicon {
+    @apply tw-absolute tw-left-12-px tw-pointer-events-none tw-z-1 #{!important};
+}
+
+.p-select-header .p-iconfield .p-inputicon svg,
+.p-select-header .p-iconfield .p-inputicon i {
+    @apply tw-text-search-focused-search-icon #{!important};
+}
+
 .p-select-filter-icon {
-    @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
+    @apply tw-absolute tw-left-12-px tw-text-search-focused-search-icon #{!important};
 }
 
-
-
-.p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token {
-    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
+.p-select-header .p-select-filter,
+.p-select-header .p-iconfield input[type="text"],
+.p-select-header input.p-select-filter,
+.p-select-overlay .p-select-header .p-select-filter,
+.p-select-overlay .p-select-header input[type="text"],
+input[type="text"].p-select-filter {
+    @apply tw-pl-40-px #{!important};
 }
 
-.p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
+.p-autocomplete .p-autocomplete-input-multiple {
+    @apply tw-min-h-[40px] tw-max-h-[80px] tw-overflow-y-auto tw-flex tw-items-center tw-border tw-border-select-default-border tw-rounded-4-px tw-pl-14-px tw-pr-12-px tw-py-2-px #{!important};
 }
 
-.p-inputtext .p-autocomplete-multiple-container:enabled:focus, .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple {
     @apply tw-border tw-border-select-focused-border #{!important};
+}
+
+.p-autocomplete .p-autocomplete-input-multiple .p-autocomplete-input {
+    @apply tw-border-none tw-outline-none tw-shadow-none tw-bg-none tw-text-14-px tw-p-0 #{!important};
+}
+
+.p-autocomplete .p-autocomplete-chip-item .p-autocomplete-chip {
+    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border tw-border-chips-border-color tw-shadow-none tw-text-14-px #{!important};
 }
 
 .input1 .p-focus {
@@ -1115,33 +1330,58 @@ p {
 }
 
 
-// Custom Toggle Design applied to PrimeNG p-toggleswitch
+// .p-toggleswitch
 .p-toggleswitch {
-    @apply tw-relative tw-inline-block tw-w-40-px tw-h-24-px tw-cursor-pointer #{!important};
+    @apply tw-h-20-px tw-w-50-px tw-relative #{!important};
+}
 
-    &.p-disabled {
-        @apply tw-opacity-50 tw-cursor-not-allowed #{!important};
+.p-toggleswitch .p-toggleswitch-slider {
+    @apply tw-bg-toggle-disabled-bg tw-border-toggle-border tw-border-solid tw-border-toggle-border-width tw-w-toggle-width tw-h-toggle-height tw-rounded-full tw-absolute tw-inset-0 tw-transition-all tw-duration-200 #{!important};
+}
+
+.p-toggleswitch .p-toggleswitch-slider:before {
+    content: '';
+    @apply tw-absolute tw-bg-toggle-disabled-text-color tw-w-14-px tw-h-14-px tw-rounded-full tw-transition-all tw-duration-200 #{!important};
+    left: 3px !important;
+    top: 2px !important;
+}
+
+[data-theme='co'] {
+    .p-toggleswitch .p-toggleswitch-slider:before {
+        @apply tw-w-18-px tw-h-18-px #{!important};
+        left: 2px !important;
     }
 }
 
-.p-toggleswitch-input {
-    @apply tw-opacity-0 tw-w-0 tw-h-0 tw-absolute #{!important};
-}
-
-.p-toggleswitch-slider {
-    @apply tw-absolute tw-inset-0 tw-rounded-full tw-transition-all tw-duration-200 tw-bg-utility-major-300 #{!important};
-
-    &::before {
-        content: '';
-        @apply tw-absolute tw-w-18-px tw-h-18-px tw-left-[3px] tw-top-[3px] tw-bg-white tw-rounded-full tw-transition-all tw-duration-200 tw-shadow-base-shadow #{!important};
-    }
-}
-
-// Checked state
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-    @apply tw-bg-action-major-500 #{!important};
+    @apply tw-bg-toggle-enabled-bg tw-w-toggle-width tw-h-toggle-height #{!important};
+}
 
-    &::before {
-        transform: translateX(16px) !important;
-    }
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider:before {
+    @apply tw-bg-toggle-enabled-text-color tw-translate-x-toggle-circle-translate #{!important};
+}
+
+.p-toggleswitch .p-toggleswitch-slider {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-toggleswitch:focus-within {
+    --p-toggleswitch-focus-ring-width: 0 !important;
+    @apply tw-outline-0 tw-shadow-none #{!important};
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::after {
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-10-px tw-text-white tw-font-500 tw-left-8-px tw-leading-[18.5px] #{!important};
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.p-toggleswitch:not(.p-toggleswitch-checked) .p-toggleswitch-slider::after {
+    @apply tw-text-10-px tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-toggle-disabled-text-color tw-font-500 tw-left-24-px tw-leading-[18.5px] #{!important};
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.p-toggleswitch .p-toggleswitch-handle {
+    @apply tw-hidden #{!important};
 }

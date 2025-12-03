@@ -128,16 +128,15 @@ export class ConfigurationSkipExportComponent implements OnInit {
   resetAdditionalFilter() {
     this.skipExportForm.controls.join_by.reset();
     this.skipExportForm.controls.condition2.reset();
-    this.skipExportForm.controls.value2.reset();
+    this.skipExportForm.controls.value2.setValue([]);
   }
 
   resetFields(operator: AbstractControl, value: AbstractControl, conditionSelected: ConditionField, rank: number) {
     operator.reset();
-    value.reset();
     if (rank === 1) {
-      this.skipExportForm.controls.value1.reset();
+      this.skipExportForm.controls.value1.setValue([]);
     } else if (rank === 2) {
-      this.skipExportForm.controls.value2.reset();
+      this.skipExportForm.controls.value2.setValue([]);
     }
     if (conditionSelected) {
       if (conditionSelected.is_custom) {
@@ -331,6 +330,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);
     this.conditionFieldWatcher();
+    this.normalizeChipFieldValues();
     this.isLoading = false;
   }
 
@@ -368,5 +368,21 @@ export class ConfigurationSkipExportComponent implements OnInit {
       this.skipExportForm.get(formControlName)?.setValue(newValues);
       inputElement.value = ''; // Clear input after adding
     }
+  }
+
+  private normalizeChipFieldValues(): void {
+    ['value1', 'value2'].forEach(controlName => {
+      const control = this.skipExportForm.get(controlName);
+      if (control) {
+        const currentValue = control.value;
+        if (!Array.isArray(currentValue)) {
+          if (currentValue === null || currentValue === undefined || currentValue === '') {
+            control.setValue([], { emitEvent: false });
+          } else {
+            control.setValue([currentValue], { emitEvent: false });
+          }
+        }
+      }
+    });
   }
 }
