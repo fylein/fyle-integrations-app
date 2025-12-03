@@ -10,7 +10,6 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MultiSelectModule } from 'primeng/multiselect';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { TooltipModule } from 'primeng/tooltip';
 import { MandatoryErrorMessageComponent } from 'src/app/shared/components/helper/mandatory-error-message/mandatory-error-message.component';
@@ -25,7 +24,7 @@ const meta: Meta<EmailMultiSelectFieldComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [MandatoryErrorMessageComponent],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SharedModule, MultiSelectModule, DialogModule, TooltipModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })],
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SharedModule, MultiSelectModule, DialogModule, TooltipModule, ],
       providers: [MessageService, IntegrationsToastService]
     })
   ],

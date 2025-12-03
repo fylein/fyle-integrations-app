@@ -6,7 +6,6 @@ import { BambooHrComponent } from './bamboo-hr.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
@@ -43,7 +42,6 @@ import { MessageService } from 'primeng/api';
     SkeletonModule,
     ProgressSpinnerModule,
     ToastModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   providers: [
     MessageService

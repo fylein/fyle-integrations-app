@@ -5,7 +5,6 @@ import { moduleMetadata } from '@storybook/angular';
 import { ExportLogFilterComponent } from 'src/app/shared/components/export-log/export-log-filter/export-log-filter.component';
 import { setupStoryBookFormGroup } from './utility';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectModule } from 'primeng/select';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -20,7 +19,7 @@ const meta: Meta<ExportLogFilterComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule, ]
     })
   ],
   argTypes: {

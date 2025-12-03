@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TableModule } from 'primeng/table';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ExportLogTableComponent } from 'src/app/shared/components/export-log/export-log-table/export-log-table.component';
@@ -19,7 +18,7 @@ const meta: Meta<ExportLogTableComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule, ]
     })
   ],
   argTypes: {

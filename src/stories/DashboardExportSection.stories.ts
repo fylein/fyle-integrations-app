@@ -2,7 +2,6 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppName, LoaderType } from 'src/app/core/models/enum/enum.model';
@@ -19,7 +18,7 @@ const meta: Meta<DashboardExportSectionComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule, ]
     })
   ],
   argTypes: {

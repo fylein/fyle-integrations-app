@@ -103,6 +103,12 @@ export class SvgIconComponent implements OnInit {
 
   @Output() iconClick = new EventEmitter();
 
+  // Path to the SVG sprite file
+  private readonly spritePath = 'assets/sprites/sprite.svg';
+
+  // Computed sprite URL with icon reference
+  spriteUrl: string = '';
+
   constructor() { }
 
   iconClickEvent() {
@@ -125,6 +131,9 @@ export class SvgIconComponent implements OnInit {
         this.styleClasses += ' tw-text-icon-primary';
       }
     }
+
+    // Build the sprite URL: path#iconName
+    this.spriteUrl = `${this.spritePath}#${this.svgSource}`;
   }
 
   ngOnInit(): void {

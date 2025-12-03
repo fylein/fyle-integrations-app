@@ -14,7 +14,6 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 
 // External Libraries
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -218,7 +217,6 @@ import { AlertComponent } from './components/core/alert/alert.component';
     IconFieldModule,
     InputIconModule,
     CheckboxButtonComponent,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
     TranslocoModule,
     SplitButtonModule
   ],

@@ -59,6 +59,11 @@
               "sourceMap": {
                 "scripts": false,
                 "hidden": true
+              },
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
               }
             },
             "development": {

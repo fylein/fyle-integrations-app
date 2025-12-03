@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TooltipModule } from 'primeng/tooltip';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 import { QboOnboardingRoutingModule } from './qbo-onboarding-routing.module';
 import { QboOnboardingComponent } from './qbo-onboarding.component';
@@ -36,8 +35,7 @@ import { QboCloneSettingsComponent } from './qbo-clone-settings/qbo-clone-settin
     FormsModule,
     ReactiveFormsModule,
     ToggleSwitchModule,
-    TooltipModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    TooltipModule
   ]
 })
 export class QboOnboardingModule { }
