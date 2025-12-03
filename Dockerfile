@@ -15,8 +15,8 @@ ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
-COPY package.json /app/package.json
-RUN npm install --omit=dev
+COPY package.json package-lock.json /app/
+RUN npm ci
 
 # add app
 COPY . /app
