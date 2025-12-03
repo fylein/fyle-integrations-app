@@ -1053,8 +1053,11 @@ p {
 }
 
 // Ensure text stays white in all states for selected days
-.p-datepicker .p-datepicker-day-selected *,
-.p-datepicker table td>span.p-datepicker-day-selected * {
+// PrimeNG 20: Prevent hover color change on selected day - keep white text
+.p-datepicker:not(.p-disabled) table td span.p-datepicker-day-selected,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day-selected,
+.p-datepicker table td>span.p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-selected {
     @apply tw-text-white #{!important};
 }
 

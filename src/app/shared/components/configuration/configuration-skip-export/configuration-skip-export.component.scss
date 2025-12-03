@@ -19,7 +19,7 @@
 }
 
 .value-input-field {
-    @apply tw-border tw-border-line-inactive tw-rounded-4-px tw-py-6-px tw-px-10-px tw-inline-flex tw-items-center tw-w-296-px #{!important};
+  @apply tw-outline-none tw-border tw-border-line-inactive tw-ring-0 tw-rounded-4-px tw-py-6-px tw-px-10-px tw-inline-flex tw-items-center tw-w-296-px #{!important};
 }
 
 :host ::ng-deep .joinby-field .p-select {
