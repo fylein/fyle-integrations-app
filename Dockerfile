@@ -1,5 +1,5 @@
 # base image
-FROM node:22-slim as build
+FROM node:24-slim as build
 
 ARG SENTRY_AUTH_TOKEN
 
@@ -16,7 +16,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /app/package.json
-RUN npm install --omit=dev
+RUN npm install --legacy-peer-deps
 
 # add app
 COPY . /app

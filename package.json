@@ -90,6 +90,7 @@
     "trim-newlines": "^4.0.2",
     "vite": "5.4.19",
     "webpack-dev-server": "^5.2.0",
+    "rxjs": "^7.8.1",
     "@angular-devkit/build-angular": {
       "@babel/runtime": "^7.26.10"
     },
@@ -98,7 +99,8 @@
     },
     "ng-svg-icon-sprite": {
       "@angular/common": "^20.3.9",
-      "@angular/core": "^20.3.9"
+      "@angular/core": "^20.3.9",
+      "rxjs": "^7.8.1"
     }
   }
 }
