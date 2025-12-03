@@ -59,7 +59,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
 
   readonly brandingStyle = brandingStyle;
-  
+
   readonly brandingConfig = brandingConfig;
 
   readonly importFormatOptions = [

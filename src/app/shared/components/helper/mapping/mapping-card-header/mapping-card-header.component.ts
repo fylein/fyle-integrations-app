@@ -29,7 +29,7 @@ export class MappingCardHeaderComponent implements OnInit {
     sourceField = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
     const lastChar = sourceField.slice(-1).toLowerCase();
     const lastTwoChars = sourceField.slice(-2).toLowerCase();
-    const pattern = new RegExp('[^a-zA-Z\d\s:]');
+    const pattern = new RegExp('[^a-zA-Z0-9 :]');
 
     if (lastChar === 'y') {
         return sourceField.slice(0, -1) + 'ies';
