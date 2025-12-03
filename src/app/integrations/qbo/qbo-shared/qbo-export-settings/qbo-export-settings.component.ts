@@ -165,7 +165,7 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
-    this.showWarningMessageAboutAutoExpenseCreation = this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') ? this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') : true;
+    this.showWarningMessageAboutAutoExpenseCreation = this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') ?? true;
   }
 
   closeInfoLabel(): void {
@@ -602,7 +602,6 @@ export class QboExportSettingsComponent implements OnInit {
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
     this.autoMapEmployeeOptions = this.qboEmployeeSettingsService.getAutoMapEmployeeOptions();
-    this.showWarningMessageAboutAutoExpenseCreation = !this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') && this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') !== null ? this.storageService.get('showWarningMessageAboutAutoExpenseCreationInQBO') : true;
     this.getSettingsAndSetupForm();
   }
 
