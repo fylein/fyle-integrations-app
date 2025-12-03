@@ -456,7 +456,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     )
     .subscribe(([previousValue, currentValue]) => {
       /**
-       * Employee warning dialog - CASE #3:
+       * Employee warning dialog - CASE #2:
        * Employees and vendors are allowed, and reimbursable exports are turned on
        */
       const isReimbursableExportEnabled = previousValue === null && currentValue !== null;
@@ -530,7 +530,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
 
     /**
-     * Employee warning dialog - CASE #4:
+     * Employee warning dialog - CASE #3:
      * 1. Employees and vendors are not allowed (if they are allowed, employee field mapping is ignored) AND
      * 2. Employee field mapping is changed from a previously saved value to a new value
      * (CCCEmployeeMapping is used because it captures both reimbursable and CCC fields' updates)
@@ -550,32 +550,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         if (!this.isEmployeeAndVendorAllowed && changedFromSavedValue) {
           this.showMappingWarningDialog({
             triggerControl: 'CCCEmployeeMapping',
-            previousValue,
-            newValue: currentValue
-          });
-        }
-      });
-  }
-
-  purchasedFromFieldWatcher() {
-    /**
-     * Employee warning dialog - CASE #2:
-     * Employees and vendors are allowed, and 'Purchased From' field is changed from EMPLOYEE
-     */
-    this.exportSettingsForm.get('cccPurchasedFromField')?.valueChanges
-      .pipe(
-        startWith(this.exportSettingsForm.get('cccPurchasedFromField')?.value),
-        pairwise()
-      )
-      .subscribe(([previousValue, currentValue]) => {
-        const changedFromEmployee = (
-          previousValue === QbdDirectCCCPurchasedFromField.EMPLOYEE &&
-          currentValue !== QbdDirectCCCPurchasedFromField.EMPLOYEE &&
-          currentValue !== null
-        );
-        if (this.isEmployeeAndVendorAllowed && changedFromEmployee) {
-          this.showMappingWarningDialog({
-            triggerControl: 'cccPurchasedFromField',
             previousValue,
             newValue: currentValue
           });
@@ -606,8 +580,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimburesmentExpenseGroupingWatcher();
 
     this.employeeFieldMappingWatcher();
-
-    this.purchasedFromFieldWatcher();
   }
 
   private setupForm(accounts: DestinationAttribute[]): void {
