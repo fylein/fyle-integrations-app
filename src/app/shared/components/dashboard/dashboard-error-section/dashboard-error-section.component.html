@@ -155,6 +155,19 @@
         <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
             <p [ngClass]="brandingStyle.common.dialogSubDescriptionText">{{ 'dashboardErrorSection.resolveMappingErrorDescription' | transloco: { appName: uiExposedAppName } }}</p>
         </div>
-        <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading" [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType"></app-generic-mapping-table>
+        <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading"
+            [isLoading]="isLoading"
+            [appName]="appName"
+            [destinationAttributes]="destinationAttributes"
+            [isDashboardMappingResolve]="true"
+            [destinationField]="destinationField"
+            [destinationFieldDisplayName]="destinationFieldDisplayName"
+            [filteredMappings]="filteredMappings"
+            [sourceField]="sourceField"
+            [destinationOptions]="destinationOptions"
+            [displayName]="displayName"
+            [isMultiLineOption]="isMultiLineOption"
+            [detailAccountType]="detailAccountType"
+        ></app-generic-mapping-table>
     </p-dialog>
 </div>
