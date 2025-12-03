@@ -30,12 +30,12 @@
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="tw-p-6-px">
-                    <p-iconField iconPosition="left">
-                        <p-inputIcon>
+                    <p-iconfield iconPosition="left">
+                        <p-inputicon class="!tw-flex !tw-items-center">
                             <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
-                        </p-inputIcon>
-                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px !tw-pr-12-px !tw-py-12-px" (keyup)="options.filter($event)" pInputText [placeholder]="'emailMultiSelectField.searchByNameOrEmailPlaceholder' | transloco" formControlName="search"/>
-                    </p-iconField>
+                        </p-inputicon>
+                        <input #filterInput type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pr-12-px !tw-py-12-px !tw-border !tw-border-select-default-border" style="padding-left: 40px !important; box-shadow: none !important;"  (keyup)="options.filter($event)" (click)="filterInput.focus(); $event.stopPropagation()" (mousedown)="$event.stopPropagation()" pInputText [placeholder]="'emailMultiSelectField.searchByNameOrEmailPlaceholder' | transloco" formControlName="search"/>
+                    </p-iconfield>
                 </div>
             </ng-template>
             <ng-template let-user pTemplate="item">

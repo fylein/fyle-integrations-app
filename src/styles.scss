@@ -97,7 +97,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     // Dropdown panel
     .p-select-overlay .p-select-list .p-select-option[aria-selected="true"], .p-select-overlay .p-select-list .p-select-option.p-selected,
     .p-select-overlay .p-select-list .p-select-option[aria-selected="true"]:hover, .p-select-overlay .p-select-list .p-select-option.p-selected:hover {
-        @apply tw-text-dd-menu-item-default-text-color tw-bg-select-menu-item-active-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
+        @apply tw-text-text-brand-primary tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
 
         p {
             @apply tw-text-yin-065;
@@ -112,7 +112,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     .p-select-overlay .p-select-list .p-select-option:hover, 
     .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus:hover,
     .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus:hover {
-        @apply tw-bg-utility-major-100 tw-text-slightly-normal-text-color tw-rounded-none #{!important};
+        @apply tw-text-slightly-normal-text-color tw-rounded-none #{!important};
     }
 
     .p-select-overlay .p-select-list .p-select-option:has(.custom-option) {
@@ -159,7 +159,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-h-input-height tw-border tw-border-utility-major-300 tw-text-14-px #{!important};
     }
 
-    input[type="text"]:not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input) {
+    input[type="text"]:not(.p-select-filter):not(.p-select-filter > input):not(.custom-search-field > input):not(.p-autocomplete-input-chip > input):not(.p-multiselect-chip input):not(p-datepicker input) {
         @apply tw-px-14-px #{!important};
     }
 
@@ -682,6 +682,13 @@ p {
 
 .p-multiselect-overlay .p-multiselect-header {
     @apply tw-border-none #{!important};
+    z-index: 1 !important;
+}
+
+// Ensure filter input in multiselect header is clickable
+.p-multiselect-overlay .p-multiselect-header input[type="text"] {
+    pointer-events: auto !important;
+    z-index: 2 !important;
 }
 
 .p-multiselect-filter-container {
@@ -716,7 +723,12 @@ p {
 // Remove any default padding/margin from the option content
 .p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
     @apply tw-gap-0 tw-relative #{!important};
-    z-index: 2 !important;
+    z-index: 1 !important;
+}
+
+// Ensure the list doesn't overlay the header
+.p-multiselect-overlay .p-multiselect-list {
+    z-index: 1 !important;
 }
 
 // For multiselect: ensure proper spacing for checkbox
@@ -952,26 +964,42 @@ p {
     @apply tw-shadow-none #{!important};
 }
 
+// PrimeNG 20: Weekday names (Sun, Mon, Tue, etc.)
+.p-datepicker .p-datepicker-weekday-cell,
+.p-datepicker .p-datepicker-weekday,
 .p-datepicker .p-datepicker-day-view table th,
 .p-datepicker .p-datepicker-calendar table th {
     @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px tw-text-center #{!important};
+}
 
-    [data-theme='fyle'] & {
-      @apply tw-text-utility-major-300 #{!important};
+// Fyle theme: Weekday text color
+[data-theme='fyle'] {
+    .p-datepicker .p-datepicker-weekday-cell,
+    .p-datepicker .p-datepicker-weekday,
+    .p-datepicker .p-datepicker-day-view table th,
+    .p-datepicker .p-datepicker-calendar table th {
+        @apply tw-text-utility-major-300 #{!important};
     }
 }
 
+// PrimeNG 20: Day cells
+.p-datepicker .p-datepicker-day-cell,
 .p-datepicker .p-datepicker-day-view table td,
 .p-datepicker .p-datepicker-calendar table td {
     @apply tw-p-0 tw-pb-4-px #{!important};
 }
 
+// PrimeNG 20: Day elements
 .p-datepicker .p-datepicker-day-view .p-datepicker-day,
 .p-datepicker .p-datepicker-calendar .p-datepicker-day {
     @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+}
 
-    [data-theme='fyle'] & {
-      @apply tw-text-text-primary #{!important};
+// Fyle theme: Day text color
+[data-theme='fyle'] {
+    .p-datepicker .p-datepicker-day-view .p-datepicker-day,
+    .p-datepicker .p-datepicker-calendar .p-datepicker-day {
+        @apply tw-text-text-primary #{!important};
     }
 }
 
@@ -985,8 +1013,72 @@ p {
 }
 
 .p-datepicker .p-datepicker-panel .p-datepicker-calendar-container .p-datepicker-calendar .p-datepicker-header .p-button {
-    @apply tw-bg-white tw-text-calendar-header-text-color #{!important};
+    @apply tw-bg-white tw-shadow-none tw-text-calendar-header-text-color #{!important};
 }
+
+// PrimeNG 20: Selected day - replaces old table td>span.p-highlight
+.p-datepicker table td>span.p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-cell .p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-selected,
+.p-datepicker .p-datepicker-day-selected span {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// PrimeNG 20: Selected range (for date range picker)
+.p-datepicker table td>span.p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-cell .p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-selected-range,
+.p-datepicker .p-datepicker-day-selected-range span {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text stays white in all states for selected range days
+.p-datepicker .p-datepicker-day-selected-range *,
+.p-datepicker table td>span.p-datepicker-day-selected-range * {
+    @apply tw-text-white #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected range - keep white text
+.p-datepicker:not(.p-disabled) table td span.p-datepicker-day-selected-range:hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day-selected-range:hover,
+.p-datepicker table td>span.p-datepicker-day-selected-range:hover,
+.p-datepicker .p-datepicker-day-selected-range:hover {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text and all child elements stay white when hovering selected range days
+.p-datepicker .p-datepicker-day-selected-range:hover *,
+.p-datepicker table td>span.p-datepicker-day-selected-range:hover * {
+    @apply tw-text-white #{!important};
+}
+
+// Ensure text stays white in all states for selected days
+.p-datepicker .p-datepicker-day-selected *,
+.p-datepicker table td>span.p-datepicker-day-selected * {
+    @apply tw-text-white #{!important};
+}
+
+// PrimeNG 20: Hover on unselected days only (exclude selected and selected-range)
+.p-datepicker:not(.p-disabled) table td span:not(.p-datepicker-day-selected):not(.p-datepicker-day-selected-range):not(.p-disabled):hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day:not(.p-datepicker-day-selected):not(.p-datepicker-day-selected-range):not(.p-disabled):hover {
+    @apply tw-bg-calendar-month-hover-bg #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected day - keep white text
+.p-datepicker:not(.p-disabled) table td span.p-datepicker-day-selected:hover,
+.p-datepicker:not(.p-disabled) .p-datepicker-day-cell .p-datepicker-day-selected:hover,
+.p-datepicker table td>span.p-datepicker-day-selected:hover,
+.p-datepicker .p-datepicker-day-selected:hover {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
+}
+
+// Ensure text and all child elements stay white when hovering selected days
+.p-datepicker .p-datepicker-day-selected:hover *,
+.p-datepicker table td>span.p-datepicker-day-selected:hover * {
+    @apply tw-text-white #{!important};
+}
+
+
 
 .configuration {
     &--section {
@@ -1058,8 +1150,21 @@ p {
     @apply tw-shadow-none #{!important};
 }
 
-.p-datepicker:not(.p-disabled) .p-datepicker-month-view .p-datepicker-month:not(.p-disabled):hover {
+// PrimeNG 20: Month hover - only for unselected months
+.p-datepicker:not(.p-disabled) .p-datepicker-month-view .p-datepicker-month:not(.p-datepicker-month-selected):not(.p-disabled):hover {
     @apply tw-bg-calendar-month-hover-bg #{!important};
+}
+
+// PrimeNG 20: Selected month
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected,
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected * {
+    @apply tw-bg-mandatory-field-color tw-text-white tw-shadow-focused #{!important};
+}
+
+// PrimeNG 20: Prevent hover color change on selected month - keep white text
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected:hover,
+.p-datepicker .p-datepicker-month-view .p-datepicker-month-selected:hover * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
 }
 
 .p-datepicker .p-datepicker-year-view .p-datepicker-year {
@@ -1070,18 +1175,21 @@ p {
     @apply tw-shadow-none #{!important};
 }
 
-.p-datepicker:not(.p-disabled) .p-datepicker-year-view .p-datepicker-year:not(.p-disabled):hover {
+// PrimeNG 20: Year hover - only for unselected years
+.p-datepicker:not(.p-disabled) .p-datepicker-year-view .p-datepicker-year:not(.p-datepicker-year-selected):not(.p-disabled):hover {
     @apply tw-bg-calendar-month-hover-bg #{!important};
 }
 
-.p-datepicker:not(.p-disabled) .p-datepicker-day-view .p-datepicker-day:not(.p-highlight):not(.p-disabled):hover,
-.p-datepicker:not(.p-disabled) .p-datepicker-calendar .p-datepicker-day:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-bg-calendar-month-hover-bg #{!important};
+// PrimeNG 20: Selected year
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected,
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
 }
 
-.p-datepicker .p-datepicker-day-view .p-datepicker-day.p-highlight,
-.p-datepicker .p-datepicker-calendar .p-datepicker-day.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
+// PrimeNG 20: Prevent hover color change on selected year - keep white text
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected:hover,
+.p-datepicker .p-datepicker-year-view .p-datepicker-year-selected:hover * {
+    @apply tw-bg-mandatory-field-color tw-text-white #{!important};
 }
 
 .p-datepicker-touch-ui,
@@ -1089,24 +1197,49 @@ p {
     @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
 }
 
-.p-select-filter {
-    @apply tw-h-32-px;
+.p-select-filter,
+input.p-select-filter,
+.p-select-header input.p-select-filter,
+.p-select-overlay .p-select-header input.p-select-filter {
+    @apply tw-h-32-px tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important};
 }
 
-.p-select-filter {
-    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important}
+.p-datepicker-date-focus-ring-shadow {
+    @apply tw-shadow-focused #{!important};
 }
 
 .p-inputtext:enabled:focus {
     @apply tw-border-border-primary #{!important};
 }
 
+.p-select-header .p-iconfield {
+    @apply tw-relative tw-w-full #{!important};
+}
+
+.p-select-header .p-iconfield .p-inputicon {
+    @apply tw-absolute tw-left-12-px tw-pointer-events-none tw-z-1 #{!important};
+}
+
+.p-select-header .p-iconfield .p-inputicon svg,
+.p-select-header .p-iconfield .p-inputicon i {
+    @apply tw-text-search-focused-search-icon #{!important};
+}
+
 .p-select-filter-icon {
-    @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
+    @apply tw-absolute tw-left-12-px tw-text-search-focused-search-icon #{!important};
+}
+
+.p-select-header .p-select-filter,
+.p-select-header .p-iconfield input[type="text"],
+.p-select-header input.p-select-filter,
+.p-select-overlay .p-select-header .p-select-filter,
+.p-select-overlay .p-select-header input[type="text"],
+input[type="text"].p-select-filter {
+    @apply tw-pl-40-px #{!important};
 }
 
 .p-autocomplete .p-autocomplete-input-multiple {
-    @apply tw-min-h-[40px] tw-max-h-[80px] tw-overflow-y-auto tw-flex tw-items-center tw-border tw-border-select-default-border tw-rounded-4-px tw-pl-14-px tw-pr-12-px #{!important};
+    @apply tw-min-h-[40px] tw-max-h-[80px] tw-overflow-y-auto tw-flex tw-items-center tw-border tw-border-select-default-border tw-rounded-4-px tw-pl-14-px tw-pr-12-px tw-py-2-px #{!important};
 }
 
 .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple {

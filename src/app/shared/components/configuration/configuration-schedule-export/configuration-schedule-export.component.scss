@@ -10,7 +10,7 @@
     @apply tw-border-select-focused-border #{!important};
 }
 
-:host ::ng-deep  .dropdown-size-schedule .p-select {
+:host ::ng-deep .p-select {
     @apply tw-w-110-px #{!important};
 }
 
@@ -18,7 +18,7 @@
     @apply tw-opacity-100 tw-border-select-disabled-border;
 }
 
-:host ::ng-deep .selectedItem .p-select-dropdown {
+:host ::ng-deep .p-select-dropdown {
     @apply tw-hidden #{!important};
 }
 
