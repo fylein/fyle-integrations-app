@@ -117,7 +117,9 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
       netsuiteClass: new FormControl(advancedSettings?.general_mappings.netsuite_class?.id ? advancedSettings?.general_mappings.netsuite_class : null),
       netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_class_level) : this.getDefaultLevelOptions()[0]),
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
-      changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings?.configuration.change_accounting_period),
+      // If 'change accounting period' is set in the advanced settings, use it.
+      // Otherwise (while onboarding), use the value of shouldEnableAccountingPeriod.
+      changeAccountingPeriod: new FormControl(advancedSettings?.configuration?.change_accounting_period ?? shouldEnableAccountingPeriod),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
       singleCreditLineJE: new FormControl(advancedSettings?.configuration.je_single_credit_line),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
