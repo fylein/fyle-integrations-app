@@ -14,6 +14,7 @@ import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
+import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 
 @Component({
   selector: 'app-qbo-dashboard',
@@ -145,7 +146,7 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
       this.qboExportSettingsService.getExportSettings(),
       this.importSettingService.getImportSettings(),
       this.qboAdvancedSettingsService.getAdvancedSettings(),
-      this.qboConnectorService.getQBOCredentials()
+      this.qboConnectorService.getQBOCredentials().pipe(catchError(({ error }: { error: QBOCredential }) => of(error)))
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -159,7 +160,9 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
       this.isLoading = false;
 
-      this.qboCompanyName = responses[8].company_name;
+      if (responses[8]) {
+        this.qboCompanyName = responses[8].company_name;
+      }
 
       this.importCodeFields = responses[6].workspace_general_settings?.import_code_fields;
 
