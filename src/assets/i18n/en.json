@@ -245,7 +245,8 @@
     "mapCategoriesDescription": "Map categories in {{brandName}} to their corresponding records in {{appName}}.",
     "resolveAccountingErrorsPrompt": "Resolve these errors on your {{appName}} account before trying to export them again.",
     "resolveMappingErrorDescription": "Resolve the following mapping errors to export your failed expenses successfully to {{appName}}",
-    "allFilter": "All"
+    "allFilter": "All",
+    "employeeOrVendorLabel": "Employee/Vendor"
   },
   "dashboardExportSection": {
     "exportingExpensesToApp": "Exporting {{processedCount}} of {{totalCount}} {totalCount, plural, one {expense} other {expenses}} to your {{appName}} account",
@@ -1734,7 +1735,7 @@
     "proceedButtonLabel": "Proceed",
     "mappingWarningDialogHeader": "This action will change your existing mappings",
     "mappingWarningDialogConfirmationPrompt": "Are you sure you want to proceed?",
-    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don’t fit the new selection will be removed. You currently have {{mappedEmployeesCount}} employees mapped."
+    "mappingWarningDialogContext": "This update changes how {{brandName}} maps employees to Employees/Vendors in QuickBooks Desktop. Any existing mappings that don't fit the new selection will be removed. You currently have {{mappedEmployeesCount}} {mappedEmployeesCount, plural, one {employee} other {employees}} mapped."
   },
   "netsuiteMain": {
     "dashboardTab": "Dashboard",

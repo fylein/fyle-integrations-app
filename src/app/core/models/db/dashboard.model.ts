@@ -35,5 +35,4 @@ export class DashboardModel {
 export interface DestinationFieldMap {
   [ExportErrorSourceType.EMPLOYEE]: string;
   [ExportErrorSourceType.CATEGORY]: string;
-
 }
