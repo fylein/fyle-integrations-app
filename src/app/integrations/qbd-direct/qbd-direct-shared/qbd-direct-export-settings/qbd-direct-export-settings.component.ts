@@ -52,8 +52,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   isOnboarding: any;
 
-  exportSettings: QbdDirectExportSettingGet | null;
-
   isImportItemsEnabled: boolean;
 
   exportSettingsForm: FormGroup;
@@ -120,6 +118,25 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   };
 
   mappedEmployeesCount: number;
+
+  _exportSettings: QbdDirectExportSettingGet | null;
+
+  get exportSettings(): QbdDirectExportSettingGet | null {
+    return this._exportSettings;
+  }
+
+  set exportSettings(value: QbdDirectExportSettingGet | null) {
+    // Once we get / update export settings, use the employee field mapping to get the currently mapped employees count
+    this._exportSettings = value;
+    if (value) {
+      const employeeFieldMapping = value?.employee_field_mapping || FyleField.VENDOR;
+      this.mappingService.getMappingStats(
+        FyleField.EMPLOYEE, employeeFieldMapping, this.appName, this.isEmployeeAndVendorAllowed
+      ).subscribe(({all_attributes_count, unmapped_attributes_count}) => {
+        this.mappedEmployeesCount = all_attributes_count - unmapped_attributes_count;
+      });
+    }
+  }
 
   previewImagePaths =[
     {
@@ -451,7 +468,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     )
     .subscribe(([previousValue, currentValue]) => {
       /**
-       * Employee warning dialog - CASE #3:
+       * Employee warning dialog - CASE #2:
        * Employees and vendors are allowed, and reimbursable exports are turned on
        */
       const isReimbursableExportEnabled = previousValue === null && currentValue !== null;
@@ -525,7 +542,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
 
     /**
-     * Employee warning dialog - CASE #4:
+     * Employee warning dialog - CASE #3:
      * 1. Employees and vendors are not allowed (if they are allowed, employee field mapping is ignored) AND
      * 2. Employee field mapping is changed from a previously saved value to a new value
      * (CCCEmployeeMapping is used because it captures both reimbursable and CCC fields' updates)
@@ -545,32 +562,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         if (!this.isEmployeeAndVendorAllowed && changedFromSavedValue) {
           this.showMappingWarningDialog({
             triggerControl: 'CCCEmployeeMapping',
-            previousValue,
-            newValue: currentValue
-          });
-        }
-      });
-  }
-
-  purchasedFromFieldWatcher() {
-    /**
-     * Employee warning dialog - CASE #2:
-     * Employees and vendors are allowed, and 'Purchased From' field is changed from EMPLOYEE
-     */
-    this.exportSettingsForm.get('cccPurchasedFromField')?.valueChanges
-      .pipe(
-        startWith(this.exportSettingsForm.get('cccPurchasedFromField')?.value),
-        pairwise()
-      )
-      .subscribe(([previousValue, currentValue]) => {
-        const changedFromEmployee = (
-          previousValue === QbdDirectCCCPurchasedFromField.EMPLOYEE &&
-          currentValue !== QbdDirectCCCPurchasedFromField.EMPLOYEE &&
-          currentValue !== null
-        );
-        if (this.isEmployeeAndVendorAllowed && changedFromEmployee) {
-          this.showMappingWarningDialog({
-            triggerControl: 'cccPurchasedFromField',
             previousValue,
             newValue: currentValue
           });
@@ -601,13 +592,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimburesmentExpenseGroupingWatcher();
 
     this.employeeFieldMappingWatcher();
-
-    this.purchasedFromFieldWatcher();
   }
 
-  private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
-    this.exportSettings = exportSettingResponse;
-
+  private setupForm(accounts: DestinationAttribute[]): void {
     this.cccExpenseStateOptions = this.qbdDirectExportSettingsService.cccExpenseStateOptions();
     this.expenseStateOptions = this.qbdDirectExportSettingsService.expenseStateOptions();
 
@@ -698,7 +685,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     newValue: MappingWarningDialogState['newValue'],
     postUpdateAction?: MappingWarningDialogState['postUpdateAction']
   }): void {
-    if (this.mappingWarningDialog.isVisible) {
+    if (this.mappingWarningDialog.isVisible || !this.mappedEmployeesCount) {
       return;
     }
 
@@ -791,14 +778,12 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     forkJoin([
       this.exportSettingService.getQbdExportSettings().pipe(catchError(() => of(null))),
       this.importSettingService.getImportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getMappingStats(FyleField.EMPLOYEE, EmployeeFieldMapping.VENDOR, this.appName),
       ...groupedAttributes
-    ]).subscribe(([exportSettingResponse, importSettingsResponse, employeeMappingStats, ...paginatedAccounts]) => {
+    ]).subscribe(([exportSettingResponse, importSettingsResponse, ...paginatedAccounts]) => {
+      this.exportSettings = exportSettingResponse;
 
       // Extract items status
       this.isImportItemsEnabled = importSettingsResponse?.import_settings?.import_item_as_category || false;
-
-      this.mappedEmployeesCount = employeeMappingStats.all_attributes_count - employeeMappingStats.unmapped_attributes_count;
 
       let accounts: DestinationAttribute[] = [];
       for (const response of paginatedAccounts) {
@@ -812,10 +797,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       if (defaultAccountsObservable) {
         defaultAccountsObservable.subscribe((response) => {
           accounts = accounts.concat(response.results);
-          this.setupForm(exportSettingResponse, accounts);
+          this.setupForm(accounts);
         });
       } else {
-        this.setupForm(exportSettingResponse, accounts);
+        this.setupForm(accounts);
       }
     });
   }
