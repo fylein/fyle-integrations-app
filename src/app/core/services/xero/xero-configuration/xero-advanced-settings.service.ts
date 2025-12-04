@@ -78,7 +78,9 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     return new FormGroup({
       paymentSync: new FormControl(paymentSync),
       billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id) : null),
-      changeAccountingPeriod: new FormControl(shouldEnableAccountingPeriod ? true : advancedSettings.workspace_general_settings.change_accounting_period),
+      // If 'change accounting period' is set in the advanced settings, use it.
+      // Otherwise (while onboarding), use the value of shouldEnableAccountingPeriod.
+      changeAccountingPeriod: new FormControl(advancedSettings?.workspace_general_settings?.change_accounting_period ?? shouldEnableAccountingPeriod),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
       exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
