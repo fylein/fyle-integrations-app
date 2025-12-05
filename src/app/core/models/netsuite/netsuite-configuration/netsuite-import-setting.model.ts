@@ -45,4 +45,22 @@ export type NetsuiteImportSettingConfiguration = {
     updated_at?: Date;
     workspace?: number;
   };
+  export type NetsuiteImportFieldsAttributeCounts = {
+    id: number;
+    accounts_count: number;
+    expense_categories_count: number;
+    items_count: number;
+    currencies_count: number;
+    locations_count: number;
+    classifications_count: number;
+    departments_count: number;
+    vendors_count: number;
+    employees_count: number;
+    tax_items_count: number;
+    projects_count: number;
+    customers_count: number;
+    created_at: Date;
+    updated_at: Date;
+    workspace: number;
+  }
 
