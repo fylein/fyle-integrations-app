@@ -41,8 +41,18 @@
                         [label]="'netsuite.configuration.importSetting.importItemsLabel' | transloco"
                         [subLabel]="'netsuiteImportSettings.importItemsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importItems'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
                     </app-configuration-toggle-field>
+
+                    <div *ngIf="importSettingForm.get('importItems')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Items', currentDestinationCount: attributeCounts['items_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
@@ -51,8 +61,17 @@
                         [label]="'netsuite.configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
                         [subLabel]="'netsuiteImportSettings.importVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                         [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
                     </app-configuration-toggle-field>
+
+                    <div *ngIf="importSettingForm.get('importVendorsAsMerchants')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
@@ -61,8 +80,16 @@
                       [label]="'netsuite.configuration.importSetting.taxCodeLabel' | transloco"
                       [subLabel]="'netsuite.configuration.importSetting.taxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                       [formControllerName]="'taxCode'"
-                      [iconPath]="'arrow-tail-down'">
+                      [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'tax_items_count', 'taxCode')">
                     </app-configuration-toggle-field>
+                    <div *ngIf="importSettingForm.get('taxCode')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Tax code', currentDestinationCount: attributeCounts['tax_items_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
 
                     <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
                         [form]="importSettingForm"
@@ -83,7 +110,8 @@
                         [appName]="appName"
                         [accountingFieldOptions]="netsuiteFields"
                         [fyleFieldOptions]="fyleFields"
-                        [isDestinationFixedImport]="true">
+                        [isDestinationFixedImport]="true"
+                        (importCodeEnabled)="updateImportFields($event)">
                     </app-configuration-import-field>
                 </div>
 
