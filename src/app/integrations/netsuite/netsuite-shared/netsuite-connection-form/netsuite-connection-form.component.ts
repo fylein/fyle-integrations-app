@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
-  selector: 'app-netsuite-connection-form',
-  templateUrl: './netsuite-connection-form.component.html',
-  styleUrl: './netsuite-connection-form.component.scss'
+    selector: 'app-netsuite-connection-form',
+    templateUrl: './netsuite-connection-form.component.html',
+    styleUrl: './netsuite-connection-form.component.scss',
+    standalone: false
 })
 export class NetsuiteConnectionFormComponent {
 

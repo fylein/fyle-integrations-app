@@ -17,7 +17,7 @@
                                 <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{ 'netsuiteCustomSegmentDialog.chooseCustomFieldType' | transloco }}</label>
                             </div>
                             <div>
-                                <p-dropdown appendTo="body" [options]="options"
+                                <p-select appendTo="body" [options]="options"
                                     formControlName="customFieldType" [placeholder]="'netsuiteCustomSegmentDialog.selectCustomFieldType' | transloco"
                                     [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                                     [ngClass]="{
@@ -34,7 +34,7 @@
                                             {{ brandingConfig.brandId ==='co' ? (item.label| sentenceCase) : (item.label)}}
                                         </span>
                                     </ng-template>
-                                </p-dropdown>
+                                </p-select>
                                 <app-mandatory-error-message *ngIf="form.controls.customFieldType.touched && !form.controls.customFieldType.valid && !form.controls.customFieldType.disabled" [customErrorMessage]="'netsuiteCustomSegmentDialog.customFieldTypeRequired' | transloco"></app-mandatory-error-message>
                             </div>
                         </div>

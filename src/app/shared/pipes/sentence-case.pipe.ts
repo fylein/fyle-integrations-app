@@ -3,7 +3,8 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Pipe({
-  name: 'sentenceCase'
+    name: 'sentenceCase',
+    standalone: false
 })
 export class SentenceCasePipe implements PipeTransform {
   private WORDS_TO_PRESERVE_CASE: string[];

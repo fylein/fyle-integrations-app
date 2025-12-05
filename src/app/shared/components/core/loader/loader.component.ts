@@ -8,8 +8,9 @@ export type LoaderSpinnerSizes = 'horizontal-sm' | 'vertical-sm' | 'vertical-md'
 const DEFAULT_VARIANT: LoaderSpinnerVariants = 'neutral';
 
 @Component({
-  selector: 'app-loader',
-  templateUrl: './loader.component.html'
+    selector: 'app-loader',
+    templateUrl: './loader.component.html',
+    standalone: false
 })
 export class LoaderComponent implements OnInit {
   constructor(private translocoService: TranslocoService) {}

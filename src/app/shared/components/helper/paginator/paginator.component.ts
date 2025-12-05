@@ -3,9 +3,10 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-paginator',
-  templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+    selector: 'app-paginator',
+    templateUrl: './paginator.component.html',
+    styleUrls: ['./paginator.component.scss'],
+    standalone: false
 })
 export class PaginatorComponent implements OnInit {
 

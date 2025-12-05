@@ -33,9 +33,10 @@ import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuratio
 import { QboCloneSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-clone-settings.service';
 
 @Component({
-  selector: 'app-qbo-clone-settings',
-  templateUrl: './qbo-clone-settings.component.html',
-  styleUrls: ['./qbo-clone-settings.component.scss']
+    selector: 'app-qbo-clone-settings',
+    templateUrl: './qbo-clone-settings.component.html',
+    styleUrls: ['./qbo-clone-settings.component.scss'],
+    standalone: false
 })
 export class QboCloneSettingsComponent implements OnInit {
 

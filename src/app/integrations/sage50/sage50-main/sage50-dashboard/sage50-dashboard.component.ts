@@ -22,7 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { CsvExportLogComponent } from "src/app/shared/components/export-log/csv-export-log/csv-export-log.component";
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -34,11 +34,10 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-sage50-dashboard',
-  standalone: true,
-  imports: [SharedModule, CommonModule, DialogModule, CsvExportLogComponent],
-  templateUrl: './sage50-dashboard.component.html',
-  styleUrls: ['./sage50-dashboard.component.scss']
+    selector: 'app-sage50-dashboard',
+    imports: [SharedModule, CommonModule, DialogModule, CsvExportLogComponent],
+    templateUrl: './sage50-dashboard.component.html',
+    styleUrls: ['./sage50-dashboard.component.scss']
 })
 export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
@@ -122,9 +121,9 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   shouldShowExportLog: boolean = false;
 
-  exportLogModules: MenuItem[] = [];
+  exportLogModules: TabMenuItem[] = [];
 
-  activeExportLogModule: MenuItem;
+  activeExportLogModule: string;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -295,10 +294,10 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
   private setupPage(): void {
     this.exportLogModules = [
-      {label: this.translocoService.translate('sage50Dashboard.completed')},
-      {label: this.translocoService.translate('sage50Dashboard.skipped')}
+      { label: this.translocoService.translate('sage50Dashboard.completed'), value: 'completed' },
+      { label: this.translocoService.translate('sage50Dashboard.skipped'), value: 'skipped' }
     ];
-    this.activeExportLogModule = this.exportLogModules[0];
+    this.activeExportLogModule = this.exportLogModules[0].value;
 
     forkJoin([
       this.dashboardService.getExportableAccountingExportIds('v3'),

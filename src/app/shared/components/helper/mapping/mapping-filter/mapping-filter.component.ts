@@ -8,9 +8,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-mapping-filter',
-  templateUrl: './mapping-filter.component.html',
-  styleUrls: ['./mapping-filter.component.scss']
+    selector: 'app-mapping-filter',
+    templateUrl: './mapping-filter.component.html',
+    styleUrls: ['./mapping-filter.component.scss'],
+    standalone: false
 })
 export class MappingFilterComponent implements OnInit {
 

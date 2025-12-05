@@ -32,14 +32,14 @@
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'qbdDirectImportSettings.selectChartOfAccounts' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                                <p-multiselect [optionDisabled]="'Expense'" [placeholder]="'qbdDirectImportSettings.selectChartOfAccounts' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                     <ng-template let-value pTemplate="selectedItems">
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
                                             <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
                                         <div *ngIf="!value || value.length === 0">{{'qbdDirectImportSettings.selectChartOfAccountsSentenceCase' | transloco}}</div>
                                     </ng-template>
-                                </p-multiSelect>
+                                </p-multiselect>
                             </div>
                         </div>
                     </div>

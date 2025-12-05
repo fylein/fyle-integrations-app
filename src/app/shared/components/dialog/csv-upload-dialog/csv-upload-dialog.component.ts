@@ -17,11 +17,10 @@ import { downloadCSVFile } from 'src/app/core/util/downloadFile';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-csv-upload-dialog',
-  standalone: true,
-  imports: [SharedModule, FileUploadModule, DialogComponent],
-  templateUrl: './csv-upload-dialog.component.html',
-  styleUrl: './csv-upload-dialog.component.scss'
+    selector: 'app-csv-upload-dialog',
+    imports: [SharedModule, FileUploadModule, DialogComponent],
+    templateUrl: './csv-upload-dialog.component.html',
+    styleUrl: './csv-upload-dialog.component.scss'
 })
 export class CsvUploadDialogComponent implements OnInit {
 

@@ -26,7 +26,7 @@
                 <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO && subLabel === undefined && !(formControllerName === 'cccExportType' && brandingFeatureConfig.featureFlags.contentVersion === 'v2' && exportConfigurationIconPath && appName === AppName.INTACCT)" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                     {{ 'configurationSelectField.transactionRecordInfo' | transloco: { uiExposedAppName: uiExposedAppName, brandName: brandingConfig.brandName } }} <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">{{ 'configurationSelectField.click' | transloco }} <a (click)="showExportTable()" class="link">{{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forMoreDetails' | transloco }}</span>
                 </h5>
-                <h5 *ngIf="formControllerName === 'autoSyncPayments' || formControllerName === 'paymentSync'" class="tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px" [ngClass]="brandingStyle.common.inputLabelTextStyle">{{subLabel}}
+                <h5 *ngIf="formControllerName === 'autoSyncPayments' || formControllerName === 'paymentSync'" class="tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">{{subLabel}}
                     <a (click)="previewClick()" class="link">{{ 'configurationSelectField.preview' | transloco }}</a> <span>{{ 'configurationSelectField.theOptions' | transloco }}</span>
                 </h5>
                 <h5 *ngIf="subLabel && (exportConfigurationIconPath && appName === AppName.TRAVELPERK)" class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" >{{subLabel}}<span class="tw-pl-4-px">{{ 'configurationSelectField.click' | transloco }} <a (click)="showExportTable()" class="link">{{ 'configurationSelectField.here' | transloco }}</a> {{ 'configurationSelectField.forPreview' | transloco }}</span></h5>
@@ -35,7 +35,7 @@
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
+                <p-select appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
                     [formControlName]="formControllerName"
                     [placeholder]="placeholder"
                     [ngClass]="{
@@ -75,11 +75,11 @@
                     <ng-template pTemplate="filtericon">
                         <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
-                </p-dropdown>
+                </p-select>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                    <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
+                    <p-select appendTo="body" [options]="options" class="!tw-w-300-px"
                     [formControlName]="formControllerName" [placeholder]="placeholder"
                     [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                     [ngClass]="{
@@ -106,10 +106,10 @@
                             <span class="selected-item-text">
                                 {{ (item.label | sentenceCase) }}
                             </span>
-                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-flex-shrink-0'"></app-svg-icon>
                         </div>
                     </ng-template>
-                </p-dropdown>
+                </p-select>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="link !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">{{ 'configurationSelectField.previewLink' | transloco }}</a>
                         <span> {{ 'configurationSelectField.inApp' | transloco: {uiExposedAppName: uiExposedAppName} }}</span>
@@ -130,7 +130,7 @@
                 <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
                     <div *ngIf="formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+                        <p-select appendTo="body" [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                             <ng-template let-value pTemplate="selectedItem" >
                                 <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
                                     <p>{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
@@ -144,23 +144,23 @@
                                     <p class="tw-text-sub-text-color tw-text-14-px">{{ day | snakeCaseToSpaceCase | sentenceCase }}</p>
                                 </div>
                             </ng-template>
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div *ngIf="formControllerName === 'dayOfMonth'" class="p-field-checkbox tw-mr-20-px tw-pl-34-px">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.dayLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="options" class="dropdown-monthy" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"></p-dropdown>
+                        <p-select appendTo="body" [options]="options" class="dropdown-monthy" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"></p-select>
                     </div>
                     <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
                         <p class="tw-font-400 tw-text-text-muted tw-text-14-px">{{ 'configurationSelectField.timeLabel' | transloco }}</p>
-                        <p-dropdown appendTo="body" [options]="timeOption" formControlName="timeOfDay" [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco" ></p-dropdown>
+                        <p-select appendTo="body" [options]="timeOption" formControlName="timeOfDay" [placeholder]="'configurationSelectField.selectTimePlaceholder' | transloco" ></p-select>
                     </div>
                     <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
-                        <p-dropdown appendTo="body" [options]="meridiemOption" formControlName="meridiem" [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco" ></p-dropdown>
+                        <p-select appendTo="body" [options]="meridiemOption" formControlName="meridiem" [placeholder]="'configurationSelectField.selectMeridiemPlaceholder' | transloco" ></p-select>
                     </div>
                 </div>
             </div>
             <div *ngIf="simpleOptions && !options" class="p-field-checkbox tw-pl-34-px">
-                <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
+                <p-select appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [disabled]="isDisabled">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="form.get(formControllerName)?.value" class="tw-flex">
                             <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | snakeCaseToSpaceCase | sentenceCase }}</p>
@@ -175,7 +175,7 @@
                             <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | snakeCaseToSpaceCase | sentenceCase }}</p>
                         </div>
                     </ng-template>
-                </p-dropdown>
+                </p-select>
             </div>
             <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
                 <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled && !isSearchFocused" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
@@ -188,7 +188,7 @@
                 <label>{{label}}</label>
             </div>
             <div class="tw-pt-2 defaultFields">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
+                <p-select appendTo="body" [options]="destinationAttributes" optionLabel="name"
                 [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}">
                     <ng-template let-option pTemplate="item">
                         <div #textElement
@@ -198,12 +198,14 @@
                         </div>
                     </ng-template>
                     <ng-template pTemplate="selectedItem" let-item>
-                        <p>
-                            {{ (item.name | sentenceCase) }}
-                        </p>
-                        <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                        <div class="selected-item-container">
+                            <span class="selected-item-text">
+                                {{ (item.name | sentenceCase) }}
+                            </span>
+                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-flex-shrink-0'"></app-svg-icon>
+                        </div>
                     </ng-template>
-                </p-dropdown>
+                </p-select>
             </div>
         </div>
     </div>

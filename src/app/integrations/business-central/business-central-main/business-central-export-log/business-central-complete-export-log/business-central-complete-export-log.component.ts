@@ -17,9 +17,10 @@ import { Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-business-central-complete-export-log',
-  templateUrl: './business-central-complete-export-log.component.html',
-  styleUrls: ['./business-central-complete-export-log.component.scss']
+    selector: 'app-business-central-complete-export-log',
+    templateUrl: './business-central-complete-export-log.component.html',
+    styleUrls: ['./business-central-complete-export-log.component.scss'],
+    standalone: false
 })
 export class BusinessCentralCompleteExportLogComponent implements OnInit {
 

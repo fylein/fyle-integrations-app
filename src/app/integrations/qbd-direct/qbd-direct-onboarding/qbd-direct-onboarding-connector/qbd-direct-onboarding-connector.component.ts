@@ -22,11 +22,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-connector',
-  standalone: true,
-  imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-connector.component.html',
-  styleUrl: './qbd-direct-onboarding-connector.component.scss'
+    selector: 'app-qbd-direct-onboarding-connector',
+    imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-connector.component.html',
+    styleUrl: './qbd-direct-onboarding-connector.component.scss'
 })
 export class QbdDirectOnboardingConnectorComponent implements OnInit {
 

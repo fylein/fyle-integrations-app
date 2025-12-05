@@ -1,3 +1,11 @@
 <div class="tw-mb-16-px" [ngClass]="customStyles">
-    <p-tabMenu [model]="modules" [activeItem]="activeModule" (activeItemChange)="activeModuleChange.emit($event)"></p-tabMenu>
+    <p-tabs [value]="activeModule" (valueChange)="onTabChange($event)">
+        <p-tablist>
+            @for (module of modules; track module.value) {
+                <p-tab [value]="module.value">
+                    {{ module.label }}
+                </p-tab>
+            }
+        </p-tablist>
+    </p-tabs>
 </div>

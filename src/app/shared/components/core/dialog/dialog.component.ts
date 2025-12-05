@@ -3,11 +3,10 @@ import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-dialog',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+    selector: 'app-dialog',
+    imports: [SharedModule],
+    templateUrl: './dialog.component.html',
+    styleUrl: './dialog.component.scss'
 })
 export class DialogComponent implements OnInit {
 

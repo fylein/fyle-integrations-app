@@ -14,9 +14,10 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-business-central-dashboard',
-  templateUrl: './business-central-dashboard.component.html',
-  styleUrls: ['./business-central-dashboard.component.scss']
+    selector: 'app-business-central-dashboard',
+    templateUrl: './business-central-dashboard.component.html',
+    styleUrls: ['./business-central-dashboard.component.scss'],
+    standalone: false
 })
 export class BusinessCentralDashboardComponent implements OnInit, OnDestroy {
 

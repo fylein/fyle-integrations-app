@@ -9,11 +9,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'app-sage50',
-  standalone: true,
-  imports: [RouterOutlet, SharedModule],
-  templateUrl: './sage50.component.html',
-  styleUrl: './sage50.component.scss'
+    selector: 'app-sage50',
+    imports: [RouterOutlet, SharedModule],
+    templateUrl: './sage50.component.html',
+    styleUrl: './sage50.component.scss'
 })
 export class Sage50Component implements OnInit {
 

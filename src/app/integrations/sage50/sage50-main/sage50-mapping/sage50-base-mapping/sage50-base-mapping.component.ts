@@ -15,11 +15,10 @@ import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configu
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-sage50-base-mapping',
-  standalone: true,
-  imports: [SharedModule, CommonModule],
-  templateUrl: './sage50-base-mapping.component.html',
-  styleUrls: ['./sage50-base-mapping.component.scss']
+    selector: 'app-sage50-base-mapping',
+    imports: [SharedModule, CommonModule],
+    templateUrl: './sage50-base-mapping.component.html',
+    styleUrls: ['./sage50-base-mapping.component.scss']
 })
 export class Sage50BaseMappingComponent implements OnInit {
 

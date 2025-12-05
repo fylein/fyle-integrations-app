@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-xero-configuration',
-  templateUrl: './xero-configuration.component.html',
-  styleUrls: ['./xero-configuration.component.scss']
+    selector: 'app-xero-configuration',
+    templateUrl: './xero-configuration.component.html',
+    styleUrls: ['./xero-configuration.component.scss'],
+    standalone: false
 })
 export class XeroConfigurationComponent implements OnInit {
 
 
-  modules: MenuItem[] = [];
+  modules: TabMenuItem[] = [];
 
-  activeModule: MenuItem = this.modules[0];
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -31,11 +32,12 @@ export class XeroConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('xero.configuration.exportSetting.stepName'), routerLink: '/integrations/xero/main/configuration/export_settings'},
-      {label: this.translocoService.translate('xero.configuration.importSetting.stepName'), routerLink: '/integrations/xero/main/configuration/import_settings'},
-      {label: this.translocoService.translate('xero.configuration.advancedSettings.stepName'), routerLink: '/integrations/xero/main/configuration/advanced_settings'}
+      { label: this.translocoService.translate('xero.configuration.exportSetting.stepName'), routerLink: '/integrations/xero/main/configuration/export_settings', value: 'export_settings' },
+      { label: this.translocoService.translate('xero.configuration.importSetting.stepName'), routerLink: '/integrations/xero/main/configuration/import_settings', value: 'import_settings' },
+      { label: this.translocoService.translate('xero.configuration.advancedSettings.stepName'), routerLink: '/integrations/xero/main/configuration/advanced_settings', value: 'advanced_settings' }
     ];
 
+    this.activeModule = this.modules[0].value;
     this.router.navigate([this.modules[0].routerLink]);
   }
 

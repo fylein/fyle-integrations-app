@@ -26,9 +26,10 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
-  selector: 'app-qbo-export-settings',
-  templateUrl: './qbo-export-settings.component.html',
-  styleUrls: ['./qbo-export-settings.component.scss']
+    selector: 'app-qbo-export-settings',
+    templateUrl: './qbo-export-settings.component.html',
+    styleUrls: ['./qbo-export-settings.component.scss'],
+    standalone: false
 })
 export class QboExportSettingsComponent implements OnInit {
 

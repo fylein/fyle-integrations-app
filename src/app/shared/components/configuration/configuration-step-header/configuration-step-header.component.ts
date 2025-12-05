@@ -6,9 +6,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
-  selector: 'app-configuration-step-header',
-  templateUrl: './configuration-step-header.component.html',
-  styleUrls: ['./configuration-step-header.component.scss']
+    selector: 'app-configuration-step-header',
+    templateUrl: './configuration-step-header.component.html',
+    styleUrls: ['./configuration-step-header.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepHeaderComponent implements OnInit {
 

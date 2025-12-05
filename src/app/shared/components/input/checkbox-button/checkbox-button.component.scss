@@ -1,5 +1,5 @@
-:host ::ng-deep .p-button {
-    @apply tw-h-40-px tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
+::ng-deep .p-button {
+    @apply tw-flex tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 :host ::ng-deep .p-button:enabled:hover {

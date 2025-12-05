@@ -5,10 +5,10 @@ import { MainRoutingModule } from './qbd-main-routing.module';
 import { QbdConfigurationComponent } from './qbd-configuration/qbd-configuration.component';
 import { QbdDashboardComponent } from './qbd-dashboard/qbd-dashboard.component';
 import { QbdMappingComponent } from './qbd-mapping/qbd-mapping.component';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { DropdownModule } from 'primeng/dropdown';
+import { TabsModule } from 'primeng/tabs';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -19,11 +19,11 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     SharedModule,
-    TabMenuModule,
-    DropdownModule,
+    TabsModule,
+    SelectModule,
     TableModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    MainRoutingModule
+    MainRoutingModule,
+    TooltipModule
   ]
 })
 export class QbdMainModule { }

@@ -20,9 +20,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-import-settings',
-  templateUrl: './business-central-import-settings.component.html',
-  styleUrls: ['./business-central-import-settings.component.scss']
+    selector: 'app-business-central-import-settings',
+    templateUrl: './business-central-import-settings.component.html',
+    styleUrls: ['./business-central-import-settings.component.scss'],
+    standalone: false
 })
 export class BusinessCentralImportSettingsComponent implements OnInit {
 

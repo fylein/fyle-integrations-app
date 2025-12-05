@@ -4,9 +4,10 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-dashboard-intacct-errors',
-  templateUrl: './dashboard-intacct-errors.component.html',
-  styleUrls: ['./dashboard-intacct-errors.component.scss']
+    selector: 'app-dashboard-intacct-errors',
+    templateUrl: './dashboard-intacct-errors.component.html',
+    styleUrls: ['./dashboard-intacct-errors.component.scss'],
+    standalone: false
 })
 export class DashboardIntacctErrorsComponent implements OnInit {
 

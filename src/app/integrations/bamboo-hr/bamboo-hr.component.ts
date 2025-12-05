@@ -16,9 +16,10 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-bamboo-hr',
-  templateUrl: './bamboo-hr.component.html',
-  styleUrls: ['./bamboo-hr.component.scss']
+    selector: 'app-bamboo-hr',
+    templateUrl: './bamboo-hr.component.html',
+    styleUrls: ['./bamboo-hr.component.scss'],
+    standalone: false
 })
 export class BambooHrComponent implements OnInit {
 

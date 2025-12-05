@@ -22,11 +22,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-mapping.service';
 
 @Component({
-  selector: 'app-qbd-direct-dashboard',
-  standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-dashboard.component.html',
-  styleUrl: './qbd-direct-dashboard.component.scss'
+    selector: 'app-qbd-direct-dashboard',
+    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-dashboard.component.html',
+    styleUrl: './qbd-direct-dashboard.component.scss'
 })
 export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 

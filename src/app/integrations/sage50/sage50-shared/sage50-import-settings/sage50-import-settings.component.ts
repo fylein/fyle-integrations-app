@@ -24,11 +24,10 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-sage50-import-settings',
-  standalone: true,
-  imports: [SharedModule, CommonModule, ReactiveFormsModule, ConfigurationCsvImportFieldComponent, MultiSelectModule],
-  templateUrl: './sage50-import-settings.component.html',
-  styleUrl: './sage50-import-settings.component.scss'
+    selector: 'app-sage50-import-settings',
+    imports: [SharedModule, CommonModule, ReactiveFormsModule, ConfigurationCsvImportFieldComponent, MultiSelectModule],
+    templateUrl: './sage50-import-settings.component.html',
+    styleUrl: './sage50-import-settings.component.scss'
 })
 export class Sage50ImportSettingsComponent implements OnInit {
 

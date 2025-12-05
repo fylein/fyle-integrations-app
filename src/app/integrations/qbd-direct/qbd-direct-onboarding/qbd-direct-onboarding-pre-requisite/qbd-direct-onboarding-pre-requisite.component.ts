@@ -15,11 +15,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-pre-requisite',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-pre-requisite.component.html',
-  styleUrl: './qbd-direct-onboarding-pre-requisite.component.scss'
+    selector: 'app-qbd-direct-onboarding-pre-requisite',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-pre-requisite.component.html',
+    styleUrl: './qbd-direct-onboarding-pre-requisite.component.scss'
 })
 export class QbdDirectOnboardingPreRequisiteComponent {
 

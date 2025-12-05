@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Pipe({
-  name: 'search'
+    name: 'search',
+    standalone: false
 })
 export class SearchPipe implements PipeTransform {
 

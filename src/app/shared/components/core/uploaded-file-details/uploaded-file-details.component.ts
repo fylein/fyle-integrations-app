@@ -6,9 +6,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
-  selector: 'app-uploaded-file-details',
-  templateUrl: './uploaded-file-details.component.html',
-  styleUrl: './uploaded-file-details.component.scss'
+    selector: 'app-uploaded-file-details',
+    templateUrl: './uploaded-file-details.component.html',
+    styleUrl: './uploaded-file-details.component.scss',
+    standalone: false
 })
 export class UploadedFileDetailsComponent implements OnInit {
 

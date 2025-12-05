@@ -12,11 +12,10 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-sage50-onboarding-prerequisites',
-  standalone: true,
-  imports: [SharedModule, CommonModule, ConfigurationCsvUploadFieldComponent],
-  templateUrl: './sage50-onboarding-prerequisites.component.html',
-  styleUrl: './sage50-onboarding-prerequisites.component.scss'
+    selector: 'app-sage50-onboarding-prerequisites',
+    imports: [SharedModule, CommonModule, ConfigurationCsvUploadFieldComponent],
+    templateUrl: './sage50-onboarding-prerequisites.component.html',
+    styleUrl: './sage50-onboarding-prerequisites.component.scss'
 })
 export class Sage50OnboardingPrerequisitesComponent implements OnInit {
 

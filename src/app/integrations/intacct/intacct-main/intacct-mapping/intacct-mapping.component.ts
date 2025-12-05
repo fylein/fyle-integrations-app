@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
@@ -11,17 +11,18 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-mapping',
-  templateUrl: './intacct-mapping.component.html',
-  styleUrls: ['./intacct-mapping.component.scss']
+    selector: 'app-intacct-mapping',
+    templateUrl: './intacct-mapping.component.html',
+    styleUrls: ['./intacct-mapping.component.scss'],
+    standalone: false
 })
 export class IntacctMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[];
+  mappingPages: TabMenuItem[];
 
-  activeModule: MenuItem;
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -43,7 +44,7 @@ export class IntacctMappingComponent implements OnInit {
     if (!brandingFeatureConfig.featureFlags.mapEmployees) {
       this.mappingPages.splice(0, 1);
     }
-    this.router.navigateByUrl(this.mappingPages[0].routerLink);
+    this.router.navigateByUrl(this.mappingPages[0].routerLink!);
 
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
@@ -78,7 +79,8 @@ export class IntacctMappingComponent implements OnInit {
 
               this.mappingPages.push({
                 label,
-                routerLink: `/integrations/intacct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+                routerLink: `/integrations/intacct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
+                value: 'mapping_' + item.source_field.toLowerCase()
               });
             }
           });
@@ -92,10 +94,10 @@ export class IntacctMappingComponent implements OnInit {
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('intacctMapping.employeeLabel'), routerLink: '/integrations/intacct/main/mapping/employee'},
-      {label: this.translocoService.translate('intacctMapping.categoryLabel'), routerLink: '/integrations/intacct/main/mapping/category'}
+      {label: this.translocoService.translate('intacctMapping.employeeLabel'), routerLink: '/integrations/intacct/main/mapping/employee', value: 'employee'},
+      {label: this.translocoService.translate('intacctMapping.categoryLabel'), routerLink: '/integrations/intacct/main/mapping/category', value: 'category'}
     ];
-    this.activeModule = this.mappingPages[0];
+    this.activeModule = this.mappingPages[0].value;
     this.setupPages();
   }
 

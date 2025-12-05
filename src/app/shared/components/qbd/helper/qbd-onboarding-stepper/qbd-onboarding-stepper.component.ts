@@ -7,9 +7,10 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-onboarding-stepper',
-  templateUrl: './qbd-onboarding-stepper.component.html',
-  styleUrls: ['./qbd-onboarding-stepper.component.scss']
+    selector: 'app-qbd-onboarding-stepper',
+    templateUrl: './qbd-onboarding-stepper.component.html',
+    styleUrls: ['./qbd-onboarding-stepper.component.scss'],
+    standalone: false
 })
 export class QbdOnboardingStepperComponent implements OnInit {
 

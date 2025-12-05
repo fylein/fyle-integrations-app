@@ -10,11 +10,10 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
-  selector: 'app-sage50-onboarding',
-  standalone: true,
-  imports: [SharedModule, CommonModule, RouterOutlet],
-  templateUrl: './sage50-onboarding.component.html',
-  styleUrl: './sage50-onboarding.component.scss'
+    selector: 'app-sage50-onboarding',
+    imports: [SharedModule, CommonModule, RouterOutlet],
+    templateUrl: './sage50-onboarding.component.html',
+    styleUrl: './sage50-onboarding.component.scss'
 })
 export class Sage50OnboardingComponent implements OnInit {
 

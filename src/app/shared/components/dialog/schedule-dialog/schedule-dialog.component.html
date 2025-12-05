@@ -14,7 +14,7 @@
             <div class="tw-flex tw-items-center tw-gap-24-px">
                 @for (option of frequencyOptions; track option.value) {
                     <span class="tw-flex tw-items-center tw-gap-8-px">
-                        <p-radioButton [value]="option.value" [formControlName]="'frequency'" [inputId]="option.value"></p-radioButton>
+                        <p-radiobutton [value]="option.value" [formControlName]="'frequency'" [inputId]="option.value"></p-radiobutton>
                         <label [for]="option.value">{{option.label}}</label>
                     </span>
                 }
@@ -24,41 +24,43 @@
         @if (frequencyValue) {
             <div class="tw-flex tw-justify-between">
                 @if (['WEEKLY', 'MONTHLY'].includes(frequencyValue)) {
-                    <div class="tw-flex tw-flex-col tw-gap-8-px day-dropdown">
+                    <div class="tw-flex tw-flex-col tw-gap-8-px">
                         <h5 class="tw-font-500 tw-text-text-primary tw-text-14-px">{{ 'scheduleDialog.dayLabel' | transloco }}</h5>
                         @if (frequencyValue === 'WEEKLY') {
-                            <p-dropdown
+                            <p-select
                                 appendTo="body"
                                 [options]="dayOfWeekOptions"
                                 [formControlName]="'dayOfWeek'"
+                                class="day-dropdown"
                                 [placeholder]="'scheduleDialog.dayPlaceholder' | transloco"
-                            ></p-dropdown>
+                            ></p-select>
                         } @else if (frequencyValue === 'MONTHLY') {
-                            <p-dropdown
+                            <p-select
                                 appendTo="body"
                                 [options]="dayOfMonthOptions"
                                 [formControlName]="'dayOfMonth'"
+                                class="day-dropdown"
                                 [placeholder]="'scheduleDialog.dayPlaceholder' | transloco"
-                            ></p-dropdown>
+                            ></p-select>
                         }
                     </div>
                 }
                 <div class="tw-flex tw-flex-col tw-gap-8-px">
                     <h5 class="tw-font-500 tw-text-text-primary tw-text-14-px">{{ 'scheduleDialog.timeLabel' | transloco }}</h5>
                     <div class="tw-flex tw-gap-8-px">
-                        <p-dropdown
+                        <p-select
                             appendTo="body"
                             [options]="timeOptions"
                             [formControlName]="'timeOfDay'"
                             [placeholder]="'scheduleDialog.timePlaceholder' | transloco"
                             class="time-dropdown"
-                        ></p-dropdown>
-                        <p-dropdown
+                        ></p-select>
+                        <p-select
                             appendTo="body"
                             [options]="['AM', 'PM']"
                             [formControlName]="'meridiem'"
                             class="meridiem-dropdown"
-                        ></p-dropdown>
+                        ></p-select>
                     </div>
                 </div>
             </div>

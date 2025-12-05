@@ -15,9 +15,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-qbd-dashboard',
-  templateUrl: './qbd-dashboard.component.html',
-  styleUrls: ['./qbd-dashboard.component.scss']
+    selector: 'app-qbd-dashboard',
+    templateUrl: './qbd-dashboard.component.html',
+    styleUrls: ['./qbd-dashboard.component.scss'],
+    standalone: false
 })
 export class QbdDashboardComponent implements OnInit, OnDestroy {
 

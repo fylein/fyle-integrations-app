@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sage300-onboarding-done',
-  templateUrl: './sage300-onboarding-done.component.html',
-  styleUrls: ['./sage300-onboarding-done.component.scss']
+    selector: 'app-sage300-onboarding-done',
+    templateUrl: './sage300-onboarding-done.component.html',
+    styleUrls: ['./sage300-onboarding-done.component.scss'],
+    standalone: false
 })
 export class Sage300OnboardingDoneComponent implements OnInit {
 

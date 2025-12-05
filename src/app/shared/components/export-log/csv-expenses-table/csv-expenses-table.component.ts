@@ -6,11 +6,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ExpenseDetails } from 'src/app/core/models/db/expense-details.model';
 
 @Component({
-  selector: 'app-csv-expenses-table',
-  standalone: true,
-  imports: [SharedModule, CommonModule, TableModule],
-  templateUrl: './csv-expenses-table.component.html',
-  styleUrl: './csv-expenses-table.component.scss'
+    selector: 'app-csv-expenses-table',
+    imports: [SharedModule, CommonModule, TableModule],
+    templateUrl: './csv-expenses-table.component.html',
+    styleUrl: './csv-expenses-table.component.scss'
 })
 export class CsvExpensesTableComponent {
 

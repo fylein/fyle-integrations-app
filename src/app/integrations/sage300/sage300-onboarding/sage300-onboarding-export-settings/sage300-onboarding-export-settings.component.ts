@@ -4,9 +4,10 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
-  selector: 'app-sage300-onboarding-export-settings',
-  templateUrl: './sage300-onboarding-export-settings.component.html',
-  styleUrls: ['./sage300-onboarding-export-settings.component.scss']
+    selector: 'app-sage300-onboarding-export-settings',
+    templateUrl: './sage300-onboarding-export-settings.component.html',
+    styleUrls: ['./sage300-onboarding-export-settings.component.scss'],
+    standalone: false
 })
 export class Sage300OnboardingExportSettingsComponent implements OnInit {
 

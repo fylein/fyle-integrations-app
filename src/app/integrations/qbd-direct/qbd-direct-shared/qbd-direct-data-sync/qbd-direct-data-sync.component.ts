@@ -7,11 +7,10 @@ import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configur
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-qbd-direct-data-sync',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-data-sync.component.html',
-  styleUrl: './qbd-direct-data-sync.component.scss'
+    selector: 'app-qbd-direct-data-sync',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-data-sync.component.html',
+    styleUrl: './qbd-direct-data-sync.component.scss'
 })
 export class QbdDirectDataSyncComponent implements OnInit {
 

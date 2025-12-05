@@ -7,18 +7,18 @@
     container-name: body;
 }
 
-.responsive-field, :host ::ng-deep .responsive-field .p-dropdown {
+.responsive-field, :host ::ng-deep .responsive-field .p-select {
     width: 220px !important;
 }
 
 @container body (width > 870px) {
-    .responsive-field, :host ::ng-deep .responsive-field .p-dropdown {
+    .responsive-field, :host ::ng-deep .responsive-field .p-select {
         width: 270px !important;
     }
 }
 
 @container body (width > 940px) {
-    .responsive-field, :host ::ng-deep .responsive-field .p-dropdown{
+    .responsive-field, :host ::ng-deep .responsive-field .p-select{
         width: 300px !important;
     }
 }

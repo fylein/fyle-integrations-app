@@ -17,9 +17,10 @@ import { Subject } from 'rxjs';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-  selector: 'app-sage300-skipped-export-log',
-  templateUrl: './sage300-skipped-export-log.component.html',
-  styleUrls: ['./sage300-skipped-export-log.component.scss']
+    selector: 'app-sage300-skipped-export-log',
+    templateUrl: './sage300-skipped-export-log.component.html',
+    styleUrls: ['./sage300-skipped-export-log.component.scss'],
+    standalone: false
 })
 export class Sage300SkippedExportLogComponent implements OnInit {
 

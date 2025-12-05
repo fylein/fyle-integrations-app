@@ -1,8 +1,15 @@
-<p-dialog [header]="exportLogHeader + ' ' + ('dashboardExportLogDialog.headerSuffix' | transloco)" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" (onHide)="handleDialogClose()" [position]="'topright'" [style]="{ width: '50vw', height: '100vh' }">
-    <p-header>
-        <p [ngClass]="brandingStyle.common.dialogHeaderText">{{exportLogHeader}}</p>
-        <h3 [ngClass]="brandingStyle.common.dialogDescriptionText">{{exportLogSubHeader}}</h3>
-    </p-header>
+<p-dialog [dismissableMask]="false" [closable]="false" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" (onHide)="handleDialogClose()" [position]="'topright'" [style]="{ width: '50vw', height: '100vh' }">
+    <ng-template #header pTemplate="header">
+        <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+            <div class="tw-flex tw-flex-col">
+                <p [ngClass]="brandingStyle.common.dialogHeaderText">{{exportLogHeader}}</p>
+                <h3 [ngClass]="brandingStyle.common.dialogDescriptionText">{{exportLogSubHeader}}</h3>
+            </div>
+            <div class="tw-flex tw-self-center">
+                <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+            </div>
+        </div>
+    </ng-template>
     <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
         <h3 [ngClass]="brandingStyle.common.dialogSubDescriptionText">{{exportLogSubHeader}}</h3>
     </div>

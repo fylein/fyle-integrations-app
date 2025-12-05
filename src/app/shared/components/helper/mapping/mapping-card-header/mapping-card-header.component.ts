@@ -4,9 +4,10 @@ import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-card-mapping-header',
-  templateUrl: './mapping-card-header.component.html',
-  styleUrls: ['./mapping-card-header.component.scss']
+    selector: 'app-card-mapping-header',
+    templateUrl: './mapping-card-header.component.html',
+    styleUrls: ['./mapping-card-header.component.scss'],
+    standalone: false
 })
 export class MappingCardHeaderComponent implements OnInit {
 
@@ -28,7 +29,7 @@ export class MappingCardHeaderComponent implements OnInit {
     sourceField = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
     const lastChar = sourceField.slice(-1).toLowerCase();
     const lastTwoChars = sourceField.slice(-2).toLowerCase();
-    const pattern = new RegExp('[^a-zA-Z\d\s:]');
+    const pattern = new RegExp('[^a-zA-Z0-9 :]');
 
     if (lastChar === 'y') {
         return sourceField.slice(0, -1) + 'ies';

@@ -9,9 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-mapping-table',
-  templateUrl: './qbd-mapping-table.component.html',
-  styleUrls: ['./qbd-mapping-table.component.scss']
+    selector: 'app-qbd-mapping-table',
+    templateUrl: './qbd-mapping-table.component.html',
+    styleUrls: ['./qbd-mapping-table.component.scss'],
+    standalone: false
 })
 export class QbdMappingTableComponent implements OnInit {
 
@@ -36,6 +37,10 @@ export class QbdMappingTableComponent implements OnInit {
   fieldType = FieldType;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  get qbdMappings(): QBDMapping[] {
+    return this.mappings as QBDMapping[];
+  }
 
   constructor(
     public route: ActivatedRoute,

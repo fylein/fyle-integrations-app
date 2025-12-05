@@ -15,9 +15,10 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-intacct-skip-export-log',
-  templateUrl: './intacct-skip-export-log.component.html',
-  styleUrls: ['./intacct-skip-export-log.component.scss']
+    selector: 'app-intacct-skip-export-log',
+    templateUrl: './intacct-skip-export-log.component.html',
+    styleUrls: ['./intacct-skip-export-log.component.scss'],
+    standalone: false
 })
 export class IntacctSkipExportLogComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { brandingStyle } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-configuration-step-sub-header',
-  templateUrl: './configuration-step-sub-header.component.html',
-  styleUrls: ['./configuration-step-sub-header.component.scss']
+    selector: 'app-configuration-step-sub-header',
+    templateUrl: './configuration-step-sub-header.component.html',
+    styleUrls: ['./configuration-step-sub-header.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepSubHeaderComponent implements OnInit {
 

@@ -11,12 +11,11 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { ScheduleFormService } from 'src/app/core/services/misc/schedule-form.service';
 
 @Component({
-  selector: 'app-schedule-dialog',
-  standalone: true,
-  imports: [SharedModule, DialogComponent, RadioButtonModule],
-  templateUrl: './schedule-dialog.component.html',
-  styleUrl: './schedule-dialog.component.scss',
-  providers: [SentenceCasePipe]
+    selector: 'app-schedule-dialog',
+    imports: [SharedModule, DialogComponent, RadioButtonModule],
+    templateUrl: './schedule-dialog.component.html',
+    styleUrl: './schedule-dialog.component.scss',
+    providers: [SentenceCasePipe]
 })
 export class ScheduleDialogComponent implements OnInit {
 

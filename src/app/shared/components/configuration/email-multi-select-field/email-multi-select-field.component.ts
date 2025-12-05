@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DropdownFilterOptions } from 'primeng/dropdown';
+import { SelectFilterOptions } from 'primeng/select';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ButtonSize, ButtonType, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
@@ -12,9 +12,10 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-email-multi-select-field',
-  templateUrl: './email-multi-select-field.component.html',
-  styleUrls: ['./email-multi-select-field.component.scss']
+    selector: 'app-email-multi-select-field',
+    templateUrl: './email-multi-select-field.component.html',
+    styleUrls: ['./email-multi-select-field.component.scss'],
+    standalone: false
 })
 export class EmailMultiSelectFieldComponent implements OnInit {
 
@@ -76,7 +77,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  clearSearch(options: DropdownFilterOptions): void {
+  clearSearch(options: SelectFilterOptions): void {
     if (options.reset) {
       options.reset();
     }

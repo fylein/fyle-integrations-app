@@ -21,9 +21,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-xero-advanced-settings',
-  templateUrl: './xero-advanced-settings.component.html',
-  styleUrls: ['./xero-advanced-settings.component.scss']
+    selector: 'app-xero-advanced-settings',
+    templateUrl: './xero-advanced-settings.component.html',
+    styleUrls: ['./xero-advanced-settings.component.scss'],
+    standalone: false
 })
 export class XeroAdvancedSettingsComponent implements OnInit {
 
