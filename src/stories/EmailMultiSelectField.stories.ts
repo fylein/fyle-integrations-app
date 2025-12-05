@@ -24,7 +24,7 @@ const meta: Meta<EmailMultiSelectFieldComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [MandatoryErrorMessageComponent],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SharedModule, MultiSelectModule, DialogModule, TooltipModule, ],
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SharedModule, MultiSelectModule, DialogModule, TooltipModule ],
       providers: [MessageService, IntegrationsToastService]
     })
   ],

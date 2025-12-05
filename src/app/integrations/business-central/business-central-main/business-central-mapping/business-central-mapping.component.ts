@@ -50,7 +50,7 @@ export class BusinessCentralMappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
               routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping'
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });

@@ -34,16 +34,20 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  isPasswordField: any;
+  isPasswordField: boolean = false;
+
+  isPasswordVisible: boolean = false;
 
   constructor() { }
 
-  changeFormControllerType(state: boolean) {
-    this.type = state ? 'text' : 'password';
+  changeFormControllerType(showPassword: boolean) {
+    this.isPasswordVisible = showPassword;
+    this.type = showPassword ? 'text' : 'password';
   }
 
   ngOnInit(): void {
-    this.isPasswordField = this.type === 'password' ? true : false;
+    this.isPasswordField = this.type === 'password';
+    this.isPasswordVisible = false;
   }
 
 }

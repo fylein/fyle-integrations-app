@@ -24,7 +24,7 @@ import { LandingV2Component } from './landing-v2/landing-v2.component';
   imports: [
     CommonModule,
     IntegrationsRoutingModule,
-    SharedModule,
+    SharedModule
   ]
 })
 export class IntegrationsModule { }

@@ -18,7 +18,7 @@ import { IntacctBaseMappingComponent } from './intacct-base-mapping/intacct-base
     TableModule,
 
     SharedModule,
-    IntacctMappingRoutingModule,
+    IntacctMappingRoutingModule
   ]
 })
 export class IntacctMappingModule { }

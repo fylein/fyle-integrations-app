@@ -18,7 +18,7 @@ const meta: Meta<ExportLogTableComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule, ]
+      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule ]
     })
   ],
   argTypes: {

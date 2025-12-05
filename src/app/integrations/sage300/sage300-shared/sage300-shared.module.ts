@@ -15,7 +15,7 @@ import { Sage300AdvancedSettingsComponent } from './sage300-advanced-settings/sa
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    SharedModule
   ],
   exports: [
     Sage300ExportSettingsComponent,

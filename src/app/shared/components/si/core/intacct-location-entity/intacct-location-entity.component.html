@@ -44,10 +44,13 @@
               {{ 'intacctLocationEntity.selectLocationEntityToContinue' | transloco: { locationEntity: locationEntityLabel } }}
             </div>
 
-            <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              {{ 'intacctLocationEntity.fetchingData' | transloco }}
-              <app-loader *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+            @if(isRefreshDimensionInProgress) {
+              <div class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
+              <span>{{ 'intacctLocationEntity.fetchingData' | transloco }}</span>
             </div>
+            <br>
+              <app-loader *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+            }
         </form>
     </div>
   </div>

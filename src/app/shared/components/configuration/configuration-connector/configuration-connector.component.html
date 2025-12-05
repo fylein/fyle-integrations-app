@@ -52,7 +52,7 @@
             <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v2'">
                 {{ 'configurationConnector.fetchingData' | transloco: { appName: appName } }}</p> 
             <div [ngClass]="{'tw-mt-16-px': brandingFeatureConfig.featureFlags.contentVersion === 'v1'}">
-                <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
+                <app-loader [showSpinnerLabel]="false" [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
             </div>
         </div>
         <div class="tw-text-14-px tw-font-500 tw-text-center">

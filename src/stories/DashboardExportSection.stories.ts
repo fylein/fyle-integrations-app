@@ -18,7 +18,7 @@ const meta: Meta<DashboardExportSectionComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule, ]
+      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule ]
     })
   ],
   argTypes: {

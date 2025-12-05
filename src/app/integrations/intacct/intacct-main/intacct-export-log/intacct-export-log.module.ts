@@ -22,7 +22,7 @@ import { IntacctCompletedExportLogComponent } from './intacct-completed-export-l
     SharedModule,
     CommonModule,
     ExportLogRoutingModule,
-    TableModule,
+    TableModule
   ]
 })
 export class IntacctExportLogModule { }

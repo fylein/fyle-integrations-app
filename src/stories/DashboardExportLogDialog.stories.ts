@@ -21,7 +21,7 @@ const meta: Meta<DashboardExportLogDialogComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [DashboardExportLogDialogComponent, ExportLogTableComponent, ExportLogChildTableDialogComponent, SnakeCaseToSpaceCasePipe],
-      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule, ]
+      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule ]
     })
   ],
   argTypes: {

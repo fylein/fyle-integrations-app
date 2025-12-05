@@ -45,7 +45,7 @@ export class XeroMappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/xero/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping'
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });

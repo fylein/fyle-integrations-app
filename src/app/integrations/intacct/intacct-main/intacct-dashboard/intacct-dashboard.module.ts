@@ -21,7 +21,7 @@ import { TableModule } from 'primeng/table';
     DashboardRoutingModule,
     SkeletonModule,
     DialogModule,
-    TableModule,
+    TableModule
   ]
 })
 export class IntacctDashboardModule { }

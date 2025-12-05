@@ -16,7 +16,7 @@ export const c1Styles = {
         mappingHeaderBoxShadow: 'tw-shadow-shadow-level-1'
     },
     configuration: {
-        importSvgPadding: 'tw-pt-16-px',
+        importSvgPadding: 'tw-pt-10-px',
         importFieldDependentField: 'tw-pr-24-px tw-pl-[58px]',
         importFieldDependentFieldSvg: 'tw-pt-42-px',
         importFieldDropDownText: '!tw-font-600 tw-text-12-px',

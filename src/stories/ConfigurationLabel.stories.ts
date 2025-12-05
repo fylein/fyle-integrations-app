@@ -16,7 +16,7 @@ const meta: Meta<ConfigurationLabelComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationLabelComponent, MandatoryFieldComponent],
-      imports: [CommonModule, ]
+      imports: [CommonModule ]
     })
   ],
   argTypes: {

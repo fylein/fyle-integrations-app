@@ -19,7 +19,7 @@ const meta: Meta<ExportLogFilterComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule, ]
+      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule ]
     })
   ],
   argTypes: {

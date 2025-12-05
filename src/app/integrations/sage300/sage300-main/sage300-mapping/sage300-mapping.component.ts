@@ -49,7 +49,7 @@ export class Sage300MappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
               routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping'
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });

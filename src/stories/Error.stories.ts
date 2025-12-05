@@ -16,7 +16,7 @@ const meta: Meta<ErrorComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, ],
+      imports: [CommonModule ],
       providers: [MessageService, IntegrationsToastService]
     })
   ],

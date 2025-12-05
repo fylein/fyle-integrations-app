@@ -16,7 +16,7 @@ const meta: Meta<ConfigurationStepHeaderComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationStepHeaderComponent],
-      imports: [CommonModule, TooltipModule, ]
+      imports: [CommonModule, TooltipModule ]
     })
   ],
   argTypes: {

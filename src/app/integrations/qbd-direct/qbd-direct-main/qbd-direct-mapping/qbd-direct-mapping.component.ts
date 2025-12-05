@@ -48,7 +48,7 @@ export class QbdDirectMappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping'
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });

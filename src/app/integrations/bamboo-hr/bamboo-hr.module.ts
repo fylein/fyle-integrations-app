@@ -41,7 +41,7 @@ import { MessageService } from 'primeng/api';
     MultiSelectModule,
     SkeletonModule,
     ProgressSpinnerModule,
-    ToastModule,
+    ToastModule
   ],
   providers: [
     MessageService

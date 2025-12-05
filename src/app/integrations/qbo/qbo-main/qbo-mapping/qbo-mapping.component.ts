@@ -45,7 +45,7 @@ export class QboMappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/qbo/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: item.source_field.toLowerCase()
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });

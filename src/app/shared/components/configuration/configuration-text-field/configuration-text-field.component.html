@@ -17,7 +17,11 @@
             </div>
 
             <div class="lg:tw-w-300-px md:tw-w-260-px tw-flex tw-flex-col">
-                <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
+                <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '']" class="tw-relative">
+                    <i *ngIf="isPasswordField && !isPasswordVisible" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
+                    <i *ngIf="isPasswordField && isPasswordVisible" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash" (click)="changeFormControllerType(false)"></i>
+                    <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
+                </span>
                 <div class="tw-text-12-px tw-text-text-muted">
                     <ng-content select="[slot=inputHint]"></ng-content>
                 </div>
@@ -33,9 +37,9 @@
     </div>
 
     <div class="tw-mt-8-px">
-        <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '', styleClasses ? styleClasses : '']">
-            <i *ngIf="type === 'password'" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
-            <i *ngIf="type !== 'password' && isPasswordField" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash " (click)="changeFormControllerType(false)"></i>
+        <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '', styleClasses ? styleClasses : '']" class="tw-relative">
+            <i *ngIf="isPasswordField && !isPasswordVisible" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
+            <i *ngIf="isPasswordField && isPasswordVisible" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash" (click)="changeFormControllerType(false)"></i>
             <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
         </span>
     </div>

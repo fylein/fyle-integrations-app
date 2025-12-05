@@ -67,11 +67,15 @@
 }
 
 .selected-item-container {
-    @apply tw-flex tw-content-center tw-justify-between tw-w-full #{!important};
+    @apply tw-flex tw-items-start tw-justify-between tw-w-full #{!important};
 }
 
-  .selected-item-text {
+.selected-item-text {
     @apply tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis #{!important};
+}
+
+.selected-item-container app-svg-icon {
+    @apply tw-self-center #{!important};
 }
 
 .noIcon {

@@ -1388,3 +1388,25 @@ input[type="text"].p-select-filter {
 .p-toggleswitch .p-toggleswitch-handle {
     @apply tw-hidden #{!important};
 }
+
+.selectedAccItem {
+    @apply tw-bg-input-read-only-bg tw-opacity-100 tw-border tw-border-input-read-only-border #{!important}
+}
+
+.p-button {
+    @apply tw-w-fit #{!important};
+}
+
+[data-theme='fyle'] {
+.container .checkmark:after {
+    content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
+    @apply tw-left-[3px] tw-top-[-2px] tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-0-px tw-border-b-0-px tw-border-l-0-px tw-border-white;
+  }
+}
+
+[data-theme='co'] {
+.container .checkmark:after {
+    content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
+    @apply tw-left-[3px] tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-0-px tw-border-b-0-px tw-border-l-0-px tw-border-white;
+  }
+}

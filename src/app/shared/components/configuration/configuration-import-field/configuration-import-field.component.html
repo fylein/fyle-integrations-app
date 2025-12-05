@@ -39,7 +39,7 @@
                         </div>
                         } @else {
                         <div class="tw-pr-16-px">
-                            <app-svg-icon [svgSource]="'arrow-tail-down'" [width]="'24px'" [height]="'24px'" [styleClasses]="isCloneSettingView ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0' : 'tw-text-mandatory-field-color tw-block tw-ml-0'"></app-svg-icon>
+                            <app-svg-icon [svgSource]="'arrow-tail-down'" [width]="'24px'" [height]="'24px'" [styleClasses]="isCloneSettingView ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0' : 'tw-text-icon-primary tw-block tw-ml-0'"></app-svg-icon>
                         </div>
                         }
                       <div>
@@ -94,11 +94,13 @@
                                 {{ (option.display_name | sentenceCase) }}
                             </div>
                             </ng-template>
-                            <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
-                                <p>
-                                    {{ (item.display_name | sentenceCase) }}
-                                </p>
-                                <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                            <ng-template pTemplate="selectedItem" let-item>
+                                <div class="selected-item-container">
+                                    <span class="selected-item-text">
+                                        {{ (item.display_name | sentenceCase) }}
+                                    </span>
+                                    <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-flex-shrink-0'"></app-svg-icon>
+                                </div>
                             </ng-template>
                       </p-select>
                       <p *ngIf="(expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field'))" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
@@ -110,6 +112,8 @@
             <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
+                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="uiExposedAppName === AppName.SAGE300 ? false : undefined">
+                        <span class="checkmark"></span>
                         <ng-container *ngIf="uiExposedAppName === AppName.INTACCT; else elseBlock">{{ 'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName } }}</ng-container>
                         <ng-template #elseBlock>{{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }} </ng-template>
                         <a *ngIf="uiExposedAppName === AppName.SAGE300" class="link tw-w-fit tw-inline-flex tw-items-center"
@@ -119,8 +123,6 @@
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
                         </a>
-                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="uiExposedAppName === AppName.SAGE300 ? false : undefined">
-                        <span class="checkmark"></span>
                     </label>
                 </div>
                 <div *ngIf="form.get('isDependentImportEnabled')?.value && dependentImportFields">
@@ -151,13 +153,16 @@
                             </div>
                         </div>
                         @if (uiExposedAppName === AppName.INTACCT) {
-                            <p-toggleswitch class="input-toggle-section tw-pt-24-px" [formControlName]="dependentField.formController + 'ImportToggle'"></p-toggleswitch>
+                            <p-toggleswitch class="input-toggle-section" [formControlName]="dependentField.formController + 'ImportToggle'"></p-toggleswitch>
                         } @else {
-                            <p-toggleswitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-toggleswitch>
+                            <p-toggleswitch class="input-toggle-section" formControlName="dependentFieldImportToggle"></p-toggleswitch>
                         }
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
-                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
+                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
+                            <input type="checkbox" formControlName="addCommitmentDetails">
+                            <span class="checkmark"></span>
+                            {{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
                             <a class="link tw-w-fit tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
                                 {{ 'configurationImportField.readMore' | transloco }}
@@ -165,8 +170,6 @@
                                     class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                                 </app-svg-icon>
                             </a>
-                            <input type="checkbox" formControlName="addCommitmentDetails">
-                            <span class="checkmark"></span>
                         </label>
                     </div>
                 </div>

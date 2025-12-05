@@ -18,7 +18,7 @@ const meta: Meta<ConfigurationToggleFieldComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationToggleFieldComponent],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, ]
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule ]
     })
   ],
   argTypes: {

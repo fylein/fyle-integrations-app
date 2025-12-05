@@ -80,7 +80,7 @@ export class IntacctMappingComponent implements OnInit {
               this.mappingPages.push({
                 label,
                 routerLink: `/integrations/intacct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-                value: `mapping_${encodeURIComponent(item.source_field.toLowerCase())}`
+                value: 'mapping_' + item.source_field.toLowerCase()
               });
             }
           });
