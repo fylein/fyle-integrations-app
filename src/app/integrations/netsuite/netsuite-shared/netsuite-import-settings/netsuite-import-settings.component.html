@@ -45,7 +45,7 @@
                         (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
                     </app-configuration-toggle-field>
 
-                    <div *ngIf="importSettingForm.get('importItems')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                    <div *ngIf="importSettingForm.get('importItems')?.disabled" class="tw-pb-26-px tw-px-24-px">
                         <app-configuration-info-label 
                             [iconSrc]="'warning-filled'"
                             [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
@@ -82,7 +82,7 @@
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'tax_items_count', 'taxCode')">
                     </app-configuration-toggle-field>
-                    <div *ngIf="importSettingForm.get('taxCode')?.disabled" class="tw-pt-26-px tw-px-24-px">
+                    <div *ngIf="importSettingForm.get('taxCode')?.disabled" class="tw-pb-26-px tw-px-24-px">
                         <app-configuration-info-label 
                             [iconSrc]="'warning-filled'"
                             [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
