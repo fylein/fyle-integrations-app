@@ -19,6 +19,7 @@ import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-dire
 import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-mapping.service';
 
 @Component({
     selector: 'app-qbd-direct-dashboard',
@@ -83,6 +84,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
   chartOfAccounts: string[];
 
+  isEmployeeAndVendorAllowed: boolean = false;
+
   private destroy$ = new Subject<void>();
 
   redirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.ERROR_RESOLUTION_GUIDE_LINK;
@@ -95,6 +98,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
     private importSettingService: QbdDirectImportSettingsService,
     private refinerService: RefinerService,
     private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
+    private qbdDirectMappingService: QbdDirectMappingService,
     private translocoService: TranslocoService
   ) { }
 
@@ -183,6 +187,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
       this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
       this.isRealTimeExportEnabled = responses[6]?.is_real_time_export_enabled;
+
+      this.isEmployeeAndVendorAllowed = this.qbdDirectMappingService.getIsEmployeeAndVendorAllowed(responses[4]);
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
