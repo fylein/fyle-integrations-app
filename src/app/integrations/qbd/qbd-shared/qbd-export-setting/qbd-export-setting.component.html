@@ -33,26 +33,26 @@
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
-                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.accountPostingQuestion' | transloco: { accountName: accountName(), exportType: exportType(exportSettingsForm.get('reimbursableExportType')?.value, reimbursableExportTypes) } }}<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.accountNameHelpText' | transloco: { accountName: accountName(), brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
-                                    <div class="tw-pl-18-px">
+                                    <div class="tw-pl-18-px tw-flex-shrink-0">
                                         <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" [placeholder]="(exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.enterAccountsPayableName' : 'qbdExportSetting.enterBankName') | transloco" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
                             </div>
                             <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
-                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.mileageExpensePostingQuestion' | transloco }}</h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.mileageAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
-                                    <div class="tw-pl-18-px">
+                                    <div class="tw-pl-18-px tw-flex-shrink-0">
                                         <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco">
                                     </div>
                                 </div>
@@ -131,13 +131,13 @@
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.get('cccExportType')?.value">
-                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.enterCCCAccountNameLabel' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.cccAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
                                     </div>
 
-                                    <div class="tw-pl-18-px">
+                                    <div class="tw-pl-18-px tw-flex-shrink-0">
                                         <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco" [required]="exportSettingsForm.get('creditCardExpense')?.value">
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'qbdExportSetting.cccAccountNameError' | transloco"></app-mandatory-error-message>
                                     </div>

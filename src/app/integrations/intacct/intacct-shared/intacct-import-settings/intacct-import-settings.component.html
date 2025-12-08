@@ -112,7 +112,7 @@
                             <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <div class="tw-w-28-vw">
+                            <div class="tw-w-30-vw">
                                 <p-select (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'intacctImportSettings.chooseBrandNameExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
@@ -152,7 +152,8 @@
                             <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-select appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
+                            <div class="tw-w-30-vw">
+                            <p-select appendTo="body" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -161,7 +162,7 @@
                                         {{ option.display_name }}
                                     </div>
                                 </ng-template>
-                            </p-select>
+                            </p-select></div>
                             <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.get('isDependentImportEnabled')?.value">
@@ -171,7 +172,8 @@
                             <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <p-select appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
+                            <div class="tw-w-30-vw">
+                            <p-select appendTo="body" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" [placeholder]="'intacctImportSettings.selectExpenseFieldPlaceholder' | transloco">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">
@@ -179,7 +181,7 @@
                                         </div>
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
-                            </p-select>
+                            </p-select></div>
                             <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                         </div>
                     </div>

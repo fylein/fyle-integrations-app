@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="!isLoading && showSection">
+        <div *ngIf="!isLoading && showSection" class="tw-pb-24-px">
             <div *ngIf="brandingConfig.brandId !== 'co'">
                 <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
             </div>

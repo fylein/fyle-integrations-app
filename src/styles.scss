@@ -36,7 +36,9 @@
   src: url('./assets/fonts/sage-ui-bold.otf') format("opentype")
 }
 
-
+input {
+    @apply tw-outline-none #{!important};
+}
 
 // Make all pages take up the full screen height
 .page-layout-container,
@@ -60,6 +62,10 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
     /* ============= *\
     |* GLOBAL STYLES *|
     \* ============= */
+
+    input {
+        @apply tw-rounded-md #{!important};
+    }
 
     .link {
         @apply tw-underline;
