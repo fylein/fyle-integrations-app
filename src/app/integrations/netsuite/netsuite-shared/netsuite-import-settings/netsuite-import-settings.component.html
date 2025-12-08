@@ -21,8 +21,18 @@
                         [subLabel]="getCategorySubLabel() + ('netsuite.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName})"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        (importCodeEnabled)="updateCommonImportFields($event, 'expense_categories_count', 'importCategories')">
                     </app-configuration-toggle-field>
+
+                    <div *ngIf="importSettingForm.get('importCategories')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Categories', currentDestinationCount: attributeCounts['expense_categories_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
@@ -31,8 +41,18 @@
                         [label]="'netsuite.configuration.importSetting.importNetsuiteEmployeesLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [subLabel]="'netsuite.configuration.importSetting.importNetsuiteEmployeesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importNetsuiteEmployees'"
-                        [iconPath]="'arrow-tail-down'">
+                        [iconPath]="'arrow-tail-down'"
+                        (importCodeEnabled)="updateCommonImportFields($event, 'employees_count', 'importNetsuiteEmployees')">
                     </app-configuration-toggle-field>
+
+                    <div *ngIf="importSettingForm.get('importNetsuiteEmployees')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Employees', currentDestinationCount: attributeCounts['employees_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>
                 </div>
 
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportItemsAllowed && brandingFeatureConfig.featureFlags.importSettings.importItems">

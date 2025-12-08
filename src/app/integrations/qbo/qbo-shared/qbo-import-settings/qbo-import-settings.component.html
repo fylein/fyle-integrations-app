@@ -19,8 +19,17 @@
                         [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
+                        (importCodeEnabled)="updateCommonImportFields($event, 'accounts_count', 'importCategories')">
                     </app-configuration-toggle-field>
+
+                    <div *ngIf="importSettingForm.get('importCategories')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                        <app-configuration-info-label 
+                            [iconSrc]="'warning-filled'"
+                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                            [infoText]="'netsuiteImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Categories', currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
+                        </app-configuration-info-label>
+                    </div>]
 
                     <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.get('importCategories')?.value" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                         <div class="tw-flex tw-justify-between tw-items-center">
