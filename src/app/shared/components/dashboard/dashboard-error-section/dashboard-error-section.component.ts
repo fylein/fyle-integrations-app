@@ -4,7 +4,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ButtonSize, ButtonType, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ButtonSize, ButtonType, EmployeeFieldMapping, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -61,6 +61,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() isEmployeeAndVendorAllowed: boolean = false;
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
@@ -115,6 +117,20 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  get destinationAttributes(): string | string[] {
+    if (this.sourceField === ExportErrorSourceType.EMPLOYEE && this.isEmployeeAndVendorAllowed) {
+      return [EmployeeFieldMapping.EMPLOYEE, EmployeeFieldMapping.VENDOR];
+    }
+    return this.destinationField;
+  }
+
+  get destinationFieldDisplayName(): string | undefined {
+    if (this.sourceField === ExportErrorSourceType.EMPLOYEE && this.isEmployeeAndVendorAllowed) {
+      return this.translocoService.translate('dashboardErrorSection.employeeOrVendorLabel');
+    }
+    return undefined;
+  }
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -149,7 +165,7 @@ export class DashboardErrorSectionComponent implements OnInit {
       this.detailAccountType = undefined;
     }
 
-    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName, this.appName, this.detailAccountType).subscribe((response: any) => {
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, undefined, this.displayName, this.appName, this.detailAccountType).subscribe((response: any) => {
       this.destinationOptions = response.results;
 
       this.setErrors(errorType);
