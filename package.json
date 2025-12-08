@@ -87,7 +87,7 @@
   "overrides": {
     "esbuild": "0.25.12",
     "trim-newlines": "^4.0.2",
-    "vite": "5.4.19",
+    "vite": "5.4.21",
     "webpack-dev-server": "^5.2.0",
     "rxjs": "^7.8.1",
     "@angular-devkit/build-angular": {
