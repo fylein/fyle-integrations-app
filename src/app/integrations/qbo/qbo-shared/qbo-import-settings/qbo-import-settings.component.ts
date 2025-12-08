@@ -94,6 +94,8 @@ export class QboImportSettingsComponent implements OnInit {
 
   attributeCounts: QBOImportFieldsAttributeCounts;
 
+  showChartOfCategory: boolean = false;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: QboHelperService,
@@ -112,15 +114,17 @@ export class QboImportSettingsComponent implements OnInit {
     this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
   }
 
-  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof QBOImportFieldsAttributeCounts, formControlName: string): void {
+  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof QBOImportFieldsAttributeCounts, formControlName: string, isCategory: boolean = false): void {
     if (isImportCodeEnabled) {
       this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: QBOImportFieldsAttributeCounts) => {
         this.attributeCounts = importFieldsAttributeCounts;
         const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
         if (destinationFieldCount >= 30000) {
+          this.showChartOfCategory = false;
           this.importSettingForm.controls[formControlName].setValue(false);
           this.importSettingForm.controls[formControlName].disable();
         } else {
+          this.showChartOfCategory = isCategory ? true : false;
           this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
           this.importSettingForm.controls[formControlName].enable();
         }
