@@ -116,8 +116,8 @@
                 <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
                     <app-configuration-toggle-field
                         [form]="advancedSettingsForm"
-                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco"
-                        [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco"
+                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'">
                     </app-configuration-toggle-field>
