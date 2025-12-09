@@ -1,10 +1,12 @@
 @if (brandingFeatureConfig.usePrimaryLoader){
   <div [ngClass]="hostClasses">
-  <div class="tw-relative tw-w-[72px] tw-h-[72px]">
+    <div class="tw-relative tw-w-[72px] tw-h-[72px]">
       <div class="tw-absolute tw-inset-0 tw-border-[6px] tw-border-gray-200 tw-rounded-full"></div>
       <div class="tw-absolute tw-inset-0 tw-border-[6px] tw-border-transparent tw-border-t-border-blue tw-border-r-border-blue tw-border-b-border-blue tw-animate-spin tw-rounded-full"></div>
-  </div>
-  <div [ngClass]="'tw-mt-24-px tw-text-text-primary tw-font-600 tw-text-14-px'" *ngIf="showSpinnerLabel && spinnerLabel">{{ spinnerLabel }}</div>
+    </div>
+    @if (showSpinnerLabel && spinnerLabel) {
+      <div [ngClass]="'tw-mt-24-px tw-text-text-primary tw-font-600 tw-text-14-px'">{{ spinnerLabel }}</div>
+    }
   </div>
 } @else {
   <div [ngClass]="hostClasses">
@@ -14,6 +16,8 @@
         <circle [ngClass]="spinnerSegmentClasses" cx="25" cy="25" r="20"></circle>
       </svg>
     </div>
-    <div [ngClass]="titleClasses" *ngIf="showSpinnerLabel">{{ spinnerLabel }}</div>
+    @if (showSpinnerLabel) {
+      <div [ngClass]="titleClasses">{{ spinnerLabel }}</div>
+    }
   </div>
 }

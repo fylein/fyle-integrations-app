@@ -1,64 +1,74 @@
 <div [formGroup]="exportLogForm" class="tw-flex tw-items-end" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
-    <app-search class="tw-pt-22-px" *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'exportLog.searchPlaceholder' | transloco" [width]="'300-px'" [height]="'40-px'"></app-search>
-    <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
+  @if (isSimpleSearchRequired) {
+    <app-search class="tw-pt-22-px" [form]="exportLogForm" [placeholder]="'exportLog.searchPlaceholder' | transloco" [width]="'300-px'" [height]="'40-px'"></app-search>
+  }
+  @if (isSimpleSearchRequired) {
+    <div class="tw-flex tw-mr-4"></div>
+  }
 
-    @if (!hideCalendar && isSimpleSearchRequired) {
-        <div [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px tw-h-input-height': isSimpleSearchRequired}">
-        </div>
-    }
-    <div *ngIf="!hideCalendar">
-        <div class="tw-text-form-label-text-color tw-text-12-px tw-pb-8-px tw-font-nav-link-font-weight">{{ 'exportLogFilter.dateOfExportLabel' | transloco }}</div>
-        <div #calendarContainer class="tw-flex tw-items-center tw-rounded-4-px" [ngClass]="{'tw-shadow-focused': isDateFilterFocused}" (click)="showCalendar($event)">
-            <p-datepicker #calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" [placeholder]="'exportLogFilter.dateRangePlaceholder' | transloco" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
-                <ng-template #header pTemplate="header">
-                    <div class="tw-flex tw-items-center tw-justify-between">
-                        <div class="tw-pr-8-px">
-                            <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(0)">
-                                {{ 'exportLogFilter.thisWeekButton' | transloco }}
-                            </button>
-                        </div>
-                        <div>
-                            <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(1)">
-                                {{ 'exportLogFilter.lastWeekButton' | transloco }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="tw-pt-10-px tw-flex tw-items-center tw-justify-between">
-                        <div class="tw-pr-8-px">
-                            <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(2)">
-                                {{ 'exportLogFilter.thisMonthButton' | transloco }}
-                            </button>
-                        </div>
-                        <div>
-                            <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(3)">
-                                {{ 'exportLogFilter.lastMonthButton' | transloco }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
-                        <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
-                            {{ 'exportLog.dateRangeLabel' | transloco}}
-                        </span>
-                    </div>
-                    <div class="tw-pt-16-px tw-pb-8-px tw-w-218-px">
-                        <div class="tw-whitespace-nowrap tw-text-12-px tw-flex tw-items-center tw-justify-between tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
-                            <p>{{exportLogForm.get('start')?.value[0] ? (exportLogForm.get('start')?.value[0] | date): ('exportLogFilter.startDatePlaceholder' | transloco)}}</p>
-                            <app-svg-icon [svgSource]="'arrow-tail-right-small'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pr-10-px'" [isTextColorAllowed]="true"></app-svg-icon>
-                            <p>{{exportLogForm.get('start')?.value[1] ? (exportLogForm.get('start')?.value[1] | date) : ('exportLogFilter.endDatePlaceholder' | transloco)}}</p>
-                            <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text'" [isTextColorAllowed]="true"></app-svg-icon>
-                        </div>
-                    </div>
-                </ng-template>
-                <ng-template let-date pTemplate="date">
-                    <div>
-                        {{date.day}}
-                    </div>
-                </ng-template>
-            </p-datepicker>
-            <div (click)="showCalendar($event)" class="tw-py-7-px tw-border tw-cursor-pointer tw-border-select-default-border tw-border-l-0 tw-rounded-tr-4-px tw-rounded-br-4-px" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
-                <app-svg-icon *ngIf="!(exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
-                <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
-            </div>
-        </div>
+  @if (!hideCalendar && isSimpleSearchRequired) {
+    <div [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px tw-h-input-height': isSimpleSearchRequired}">
     </div>
+  }
+  @if (!hideCalendar) {
+    <div>
+      <div class="tw-text-form-label-text-color tw-text-12-px tw-pb-8-px tw-font-nav-link-font-weight">{{ 'exportLogFilter.dateOfExportLabel' | transloco }}</div>
+      <div #calendarContainer class="tw-flex tw-items-center tw-rounded-4-px" [ngClass]="{'tw-shadow-focused': isDateFilterFocused}" (click)="showCalendar($event)">
+        <p-datepicker #calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" [placeholder]="'exportLogFilter.dateRangePlaceholder' | transloco" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
+          <ng-template #header pTemplate="header">
+            <div class="tw-flex tw-items-center tw-justify-between">
+              <div class="tw-pr-8-px">
+                <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(0)">
+                  {{ 'exportLogFilter.thisWeekButton' | transloco }}
+                </button>
+              </div>
+              <div>
+                <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(1)">
+                  {{ 'exportLogFilter.lastWeekButton' | transloco }}
+                </button>
+              </div>
+            </div>
+            <div class="tw-pt-10-px tw-flex tw-items-center tw-justify-between">
+              <div class="tw-pr-8-px">
+                <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(2)">
+                  {{ 'exportLogFilter.thisMonthButton' | transloco }}
+                </button>
+              </div>
+              <div>
+                <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(3)">
+                  {{ 'exportLogFilter.lastMonthButton' | transloco }}
+                </button>
+              </div>
+            </div>
+            <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
+              <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
+                {{ 'exportLog.dateRangeLabel' | transloco}}
+              </span>
+            </div>
+            <div class="tw-pt-16-px tw-pb-8-px tw-w-218-px">
+              <div class="tw-whitespace-nowrap tw-text-12-px tw-flex tw-items-center tw-justify-between tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
+                <p>{{exportLogForm.get('start')?.value[0] ? (exportLogForm.get('start')?.value[0] | date): ('exportLogFilter.startDatePlaceholder' | transloco)}}</p>
+                <app-svg-icon [svgSource]="'arrow-tail-right-small'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pr-10-px'" [isTextColorAllowed]="true"></app-svg-icon>
+                <p>{{exportLogForm.get('start')?.value[1] ? (exportLogForm.get('start')?.value[1] | date) : ('exportLogFilter.endDatePlaceholder' | transloco)}}</p>
+                <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text'" [isTextColorAllowed]="true"></app-svg-icon>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template let-date pTemplate="date">
+            <div>
+              {{date.day}}
+            </div>
+          </ng-template>
+        </p-datepicker>
+        <div (click)="showCalendar($event)" class="tw-py-7-px tw-border tw-cursor-pointer tw-border-select-default-border tw-border-l-0 tw-rounded-tr-4-px tw-rounded-br-4-px" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
+          @if (!(exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1])) {
+            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
+          }
+          @if (exportLogForm.get('start')?.value[0] && exportLogForm.get('start')?.value[1]) {
+            <app-svg-icon (iconClick)="clearDateFilter()" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
+          }
+        </div>
+      </div>
+    </div>
+  }
 </div>

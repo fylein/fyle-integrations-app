@@ -9,36 +9,46 @@
       [attr.aria-checked]="form.get(formControllerName)?.value"
     ></p-toggleswitch>
   </ng-template>
-    <div class="tw-flex tw-items-start" [ngClass]="{'tw-w-3/4': !hideToggle}">
-      <div *ngIf="iconPath && !isConfigToggleLeftAligned" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
+  <div class="tw-flex tw-items-start" [ngClass]="{'tw-w-3/4': !hideToggle}">
+    @if (iconPath && !isConfigToggleLeftAligned) {
+      <div [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
         <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
       </div>
-      @if (isConfigToggleLeftAligned) {
-        <div>
-          <ng-container *ngTemplateOutlet="toggleSwitch"></ng-container>
-        </div>
-      }
-      <div class="tw-text-pretty">
-        <h4 [ngClass]="isSectionHeader ? 'tw-text-text-primary tw-text-16-px !tw-font-500' : brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">
-          {{label}}
-          <app-optional-field *ngIf="!isAsterikAllowed && !isSectionHeader && !(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT)"></app-optional-field>
-        </h4>
-        @if (subLabel) {
-          <h5 class="!tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
-            <span [innerHTML]="subLabel + ' '"></span>
-            <a *ngIf="redirectLink"
+    }
+    @if (isConfigToggleLeftAligned) {
+      <div>
+        <ng-container *ngTemplateOutlet="toggleSwitch"></ng-container>
+      </div>
+    }
+    <div class="tw-text-pretty">
+      <h4 [ngClass]="isSectionHeader ? 'tw-text-text-primary tw-text-16-px !tw-font-500' : brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">
+        {{label}}
+        @if (!isAsterikAllowed && !isSectionHeader && !(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT)) {
+          <app-optional-field></app-optional-field>
+        }
+      </h4>
+      @if (subLabel) {
+        <h5 class="!tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
+          <span [innerHTML]="subLabel + ' '"></span>
+          @if (redirectLink) {
+            <a
               class="link tw-w-fit tw-inline-flex tw-items-center"
               (click)="windowService.openInNewTab(redirectLink)">
               {{'common.readMoreText' | transloco}}
-              <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-              </app-svg-icon>
+              @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                  class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                </app-svg-icon>
+              }
             </a>
-          </h5>
-        }
-      </div>
-    </div>
-    <div *ngIf="!hideToggle && !isConfigToggleLeftAligned" class="configuration--input-toggle-section">
-      <ng-container *ngTemplateOutlet="toggleSwitch"></ng-container>
+          }
+        </h5>
+      }
     </div>
   </div>
+  @if (!hideToggle && !isConfigToggleLeftAligned) {
+    <div class="configuration--input-toggle-section">
+      <ng-container *ngTemplateOutlet="toggleSwitch"></ng-container>
+    </div>
+  }
+</div>

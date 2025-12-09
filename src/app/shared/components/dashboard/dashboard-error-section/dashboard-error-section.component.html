@@ -5,7 +5,7 @@
         </div>
         <div class="tw-border-border-tertiary tw-border-t-1-px tw-pb-24-px">
             <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
-                <div *ngIf="errors.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
+                <div *ngIf="errors.EMPLOYEE_MAPPING.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">
                         <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
                             <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.integrationErrorHeader' : 'dashboard.integrationErrorHeader') | transloco}}</h4>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
+                <div *ngIf="errors.EMPLOYEE_MAPPING.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngIf="errors.CATEGORY_MAPPING.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.ACCOUNTING_ERROR?.length" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngIf="errors.ACCOUNTING_ERROR.length" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
                             <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{uiExposedAppName}} {{'dashboard.qboErrorText' | transloco}}</h4>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                <div *ngFor="let error of errors?.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngFor="let error of errors.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>

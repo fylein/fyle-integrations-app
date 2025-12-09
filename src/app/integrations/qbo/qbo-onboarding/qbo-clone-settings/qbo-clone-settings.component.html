@@ -1,561 +1,593 @@
 <app-onboarding-steppers [isCloneSettingView]="true" [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
     <app-loader></app-loader>
-</div>
+  </div>
+}
 
 <div class=" tw-pb-48-px">
-    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
-        <app-clone-setting-header [headerText]="'qboCloneSettings.employeeMappingHeader' | transloco" [subHeaderText]="'qboCloneSettings.employeeMappingSubHeader' | transloco"></app-clone-setting-header>
-
-        <div class="clone-setting--field-section">
-            <div class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'user-two'"
-                    [label]="'qboCloneSettings.employeeRepresentationLabel' | transloco"
-                    [options]="employeeMappingOptions"
-                    [placeholder]="'qboCloneSettings.selectRepresentationPlaceholder' | transloco"
-                    [form]="employeeSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'employeeMapping'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.employeeRepresentationTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [options]="autoMapEmployeeOptions"
-                    [placeholder]="'qboCloneSettings.selectRepresentationPlaceholder' | transloco"
-                    [form]="employeeSettingForm"
-                    [isFieldMandatory]="false"
-                    [formControllerName]="'autoMapEmployee'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.employeeMatchingTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
+  @if (!isLoading) {
+    <div class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
+      <app-clone-setting-header [headerText]="'qboCloneSettings.employeeMappingHeader' | transloco" [subHeaderText]="'qboCloneSettings.employeeMappingSubHeader' | transloco"></app-clone-setting-header>
+      <div class="clone-setting--field-section">
+        <div class="clone-setting--field">
+          <app-clone-setting-field
+            [iconSource]="'user-two'"
+            [label]="'qboCloneSettings.employeeRepresentationLabel' | transloco"
+            [options]="employeeMappingOptions"
+            [placeholder]="'qboCloneSettings.selectRepresentationPlaceholder' | transloco"
+            [form]="employeeSettingForm"
+            [isFieldMandatory]="true"
+            [formControllerName]="'employeeMapping'"
+            [dropdownDisplayKey]="'label'"
+            [tooltipText]="'qboCloneSettings.employeeRepresentationTooltip' | transloco: { brandName: brandingConfig.brandName }">
+          </app-clone-setting-field>
         </div>
-
-        <app-clone-setting-header [headerText]="'qboCloneSettings.exportSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.exportSettingsSubHeader' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
-        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
-            <div class="clone-setting--field">
-                <div class="clone-setting--export-setting-header">
-                    <div class="tw-flex tw-items-center">
-                        {{ 'qboCloneSettings.exportReimbursableExpensesLabel' | transloco }}
-                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.exportReimbursableExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
-                    </div>
-                    <div>
-                        <p-toggleswitch formControlName="reimbursableExpense"></p-toggleswitch>
-                    </div>
-                </div>
+        <div class="clone-setting--field">
+          <app-clone-setting-field
+            [iconSource]="'question-square-outline'"
+            [label]="'qboCloneSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
+            [options]="autoMapEmployeeOptions"
+            [placeholder]="'qboCloneSettings.selectRepresentationPlaceholder' | transloco"
+            [form]="employeeSettingForm"
+            [isFieldMandatory]="false"
+            [formControllerName]="'autoMapEmployee'"
+            [dropdownDisplayKey]="'label'"
+            [tooltipText]="'qboCloneSettings.employeeMatchingTooltip' | transloco: { brandName: brandingConfig.brandName }">
+          </app-clone-setting-field>
+        </div>
+      </div>
+      <app-clone-setting-header [headerText]="'qboCloneSettings.exportSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.exportSettingsSubHeader' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
+      <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+        <div class="clone-setting--field">
+          <div class="clone-setting--export-setting-header">
+            <div class="tw-flex tw-items-center">
+              {{ 'qboCloneSettings.exportReimbursableExpensesLabel' | transloco }}
+              <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.exportReimbursableExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
             </div>
-
-            <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value" class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'list'"
-                    [label]="'qboCloneSettings.howExpensesExportedLabel' | transloco"
-                    [options]="reimbursableExportTypes"
-                    [placeholder]="'qboCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+            <div>
+              <p-toggleswitch formControlName="reimbursableExpense"></p-toggleswitch>
+            </div>
+          </div>
+        </div>
+        @if (exportSettingForm.get('reimbursableExpense')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'list'"
+              [label]="'qboCloneSettings.howExpensesExportedLabel' | transloco"
+              [options]="reimbursableExportTypes"
+              [placeholder]="'qboCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="false"
+              [formControllerName]="'reimbursableExportType'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.chooseTransactionTypeTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+            @if (exportSettingForm.get('reimbursableExportType')?.value) {
+              <div class="clone-setting--dependent-field">
+                @if (helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [options]="bankAccounts"
+                    [placeholder]="'qboCloneSettings.selectBankAccountPlaceholder' | transloco"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'bankAccount'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.bankAccountTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.expenseAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [options]="expenseAccounts"
+                    [placeholder]="'qboCloneSettings.selectExpenseAccountPlaceholder' | transloco"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'qboExpenseAccount'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.expenseAccountTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                @if ((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [options]="accountsPayables"
+                    [placeholder]="'qboCloneSettings.selectAccountsPayablePlaceholder' | transloco"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'accountsPayable'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.accountsPayableTooltip' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }">
+                  </app-clone-setting-field>
+                }
+              </div>
+            }
+          </div>
+        }
+        @if (exportSettingForm.get('reimbursableExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'question-square-outline'"
+              [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [options]="expenseStateOptions"
+              [placeholder]="'qboCloneSettings.selectExportStatePlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'expenseState'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.expenseExportStateTooltip' | transloco">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (exportSettingForm.get('reimbursableExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'question-square-outline'"
+              [label]="'qboCloneSettings.howExpensesGroupedLabel' | transloco"
+              [options]="expenseGroupByOptions"
+              [placeholder]="'qboCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'reimbursableExportGroup'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.expenseGroupingTooltip' | transloco">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (exportSettingForm.get('reimbursableExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'calendar'"
+              [label]="'qboCloneSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+              [options]="reimbursableExpenseGroupingDateOptions"
+              [placeholder]="'qboCloneSettings.selectExportDatePlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'reimbursableExportDate'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.exportDateTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+          </div>
+        }
+      </div>
+      <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+        <div class="clone-setting--field">
+          <div class="clone-setting--export-setting-header">
+            <div class="tw-flex tw-items-center">
+              {{ 'qboCloneSettings.exportCreditCardExpensesLabel' | transloco }}
+              <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.exportCreditCardExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
+            </div>
+            <div>
+              <p-toggleswitch formControlName="creditCardExpense"></p-toggleswitch>
+            </div>
+          </div>
+        </div>
+        @if (exportSettingForm.get('creditCardExpense')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'list'"
+              [label]="'qboCloneSettings.howExpensesExportedLabel' | transloco"
+              [options]="creditCardExportTypes"
+              [placeholder]="'qboCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="false"
+              [formControllerName]="'creditCardExportType'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.selectExpenseExportTypeTooltip' | transloco">
+            </app-clone-setting-field>
+            @if (exportSettingForm.get('creditCardExportType')?.value) {
+              <div class="clone-setting--dependent-field">
+                @if (showNameInJournalOption) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.nameInJournalEntryLabel' | transloco"
+                    [options]="nameInJournalOptions"
+                    [placeholder]="'qboCloneSettings.selectNamePlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="false"
-                    [formControllerName]="'reimbursableExportType'"
+                    [formControllerName]="'nameInJournalEntry'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.chooseTransactionTypeTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')"
-                        [label]="'qboCloneSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                        [options]="bankAccounts"
-                        [placeholder]="'qboCloneSettings.selectBankAccountPlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'bankAccount'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.bankAccountTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')"
-                        [label]="'qboCloneSettings.expenseAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                        [options]="expenseAccounts"
-                        [placeholder]="'qboCloneSettings.selectExpenseAccountPlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'qboExpenseAccount'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.expenseAccountTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <app-clone-setting-field *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))"
-                        [label]="'qboCloneSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                        [options]="accountsPayables"
-                        [placeholder]="'qboCloneSettings.selectAccountsPayablePlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'accountsPayable'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.accountsPayableTooltip' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }">
-                    </app-clone-setting-field>
-                </div>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [options]="expenseStateOptions"
-                    [placeholder]="'qboCloneSettings.selectExportStatePlaceholder' | transloco"
+                    [tooltipText]="'qboCloneSettings.nameInJournalEntryTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.defaultCreditCardAccountLabel' | transloco"
+                    [options]="expenseAccounts"
+                    [placeholder]="'qboCloneSettings.selectDefaultCreditCardAccountPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
-                    [formControllerName]="'expenseState'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.expenseExportStateTooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.howExpensesGroupedLabel' | transloco"
-                    [options]="expenseGroupByOptions"
-                    [placeholder]="'qboCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
+                    [formControllerName]="'defaultCCCAccount'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.defaultCreditCardAccountTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.defaultDebitCardAccountLabel' | transloco"
+                    [options]="bankAccounts"
+                    [placeholder]="'qboCloneSettings.selectDefaultDebitCardAccountPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
-                    [formControllerName]="'reimbursableExportGroup'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.expenseGroupingTooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'calendar'"
-                    [label]="'qboCloneSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                    [options]="reimbursableExpenseGroupingDateOptions"
-                    [placeholder]="'qboCloneSettings.selectExportDatePlaceholder' | transloco"
+                    [formControllerName]="'defaultDebitCardAccount'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.defaultDebitCardAccountTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.defaultCreditCardVendorLabel' | transloco"
+                    [options]="vendors"
+                    [placeholder]="'qboCloneSettings.selectDefaultCreditCardVendorPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
-                    [formControllerName]="'reimbursableExportDate'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.exportDateTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-        </div>
-
-        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
-            <div class="clone-setting--field">
-                <div class="clone-setting--export-setting-header">
-                    <div class="tw-flex tw-items-center">
-                        {{ 'qboCloneSettings.exportCreditCardExpensesLabel' | transloco }}
-                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.exportCreditCardExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
-                    </div>
-                    <div>
-                        <p-toggleswitch formControlName="creditCardExpense"></p-toggleswitch>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="exportSettingForm.get('creditCardExpense')?.value" class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'list'"
-                    [label]="'qboCloneSettings.howExpensesExportedLabel' | transloco"
-                    [options]="creditCardExportTypes"
-                    [placeholder]="'qboCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="false"
-                    [formControllerName]="'creditCardExportType'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.selectExpenseExportTypeTooltip' | transloco">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
-                    <app-clone-setting-field *ngIf="showNameInJournalOption"
-                        [label]="'qboCloneSettings.nameInJournalEntryLabel' | transloco"
-                        [options]="nameInJournalOptions"
-                        [placeholder]="'qboCloneSettings.selectNamePlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="false"
-                        [formControllerName]="'nameInJournalEntry'"
-                        [dropdownDisplayKey]="'label'"
-                        [tooltipText]="'qboCloneSettings.nameInJournalEntryTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')"
-                        [label]="'qboCloneSettings.defaultCreditCardAccountLabel' | transloco"
-                        [options]="expenseAccounts"
-                        [placeholder]="'qboCloneSettings.selectDefaultCreditCardAccountPlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'defaultCCCAccount'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.defaultCreditCardAccountTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')"
-                        [label]="'qboCloneSettings.defaultDebitCardAccountLabel' | transloco"
-                        [options]="bankAccounts"
-                        [placeholder]="'qboCloneSettings.selectDefaultDebitCardAccountPlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'defaultDebitCardAccount'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.defaultDebitCardAccountTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')"
-                        [label]="'qboCloneSettings.defaultCreditCardVendorLabel' | transloco"
-                        [options]="vendors"
-                        [placeholder]="'qboCloneSettings.selectDefaultCreditCardVendorPlaceholder' | transloco"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'defaultCreditCardVendor'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.defaultCreditCardVendorTooltip' | transloco">
-                    </app-clone-setting-field>
-
-                    <div [ngClass]="{'clone-setting--dependent-field': helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')}">
-                        <app-clone-setting-field *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))"
-                            [label]="'qboCloneSettings.creditCardAccountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                            [options]="accountsPayables"
-                            [placeholder]="'qboCloneSettings.selectAccountsPayablePlaceholder' | transloco"
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [formControllerName]="'accountsPayable'"
-                            [dropdownDisplayKey]="'name'"
-                            [tooltipText]="'qboCloneSettings.creditCardAccountsPayableTooltip' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }">
-                        </app-clone-setting-field>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [options]="cccExpenseStateOptions"
-                    [placeholder]="'qboCloneSettings.selectCccExpenseStatePlaceholder' | transloco"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'cccExpenseState'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.cccExpenseStateTooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.howExpensesGroupedLabel' | transloco"
-                    [options]="expenseGroupByOptions"
-                    [placeholder]="'qboCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'creditCardExportGroup'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.expenseGroupingTooltip' | transloco">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field
-                    *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
-                    exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
-                    [iconSource]="'question-square-outline'"
-                    [label]="'qboCloneSettings.howSplitExpensesGroupedLabel' | transloco"
-                    [options]="splitExpenseGroupingOptions"
-                    [placeholder]="'qboCloneSettings.selectSplitExpenseGroupingPlaceholder' | transloco"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'splitExpenseGrouping'"
-                    [dropdownDisplayKey]="'label'">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="exportSettingForm.get('creditCardExportType')?.value">
-                <app-clone-setting-field
-                    [iconSource]="'calendar'"
-                    [label]="'qboCloneSettings.creditCardExportDateLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                    [options]="cccExpenseGroupingDateOptions"
-                    [placeholder]="'qboCloneSettings.selectExportDatePlaceholder' | transloco"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'creditCardExportDate'"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.creditCardExportDateTooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-        </div>
-
-        <app-clone-setting-header [headerText]="'qboCloneSettings.importSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.importSettingsSubHeader' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
-
-        <div class="clone-setting--field-section">
-            <div class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'arrow-tail-down'"
-                    [label]="'qboCloneSettings.importChartOfAccountsLabel' | transloco"
-                    [form]="importSettingForm"
-                    [formControllerName]="'importCategories'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.importChartOfAccountsTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('importCategories')?.value">
+                    [formControllerName]="'defaultCreditCardVendor'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.defaultCreditCardVendorTooltip' | transloco">
+                  </app-clone-setting-field>
+                }
+                <div [ngClass]="{'clone-setting--dependent-field': helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')}">
+                  @if ((exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))) {
                     <app-clone-setting-field
-                        [label]="'qboCloneSettings.selectAccountsToImportLabel' | transloco"
-                        [options]="chartOfAccountTypesList"
-                        [placeholder]="'qboCloneSettings.selectChartOfAccountsPlaceholder' | transloco"
-                        [form]="importSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'chartOfAccountTypes'"
-                        [disabledOption]="'Expense'"
-                        [inputType]="InputType.MULTI_SELECT"
-                        [tooltipText]="'qboCloneSettings.selectAccountsToImportTooltip' | transloco">
+                      [label]="'qboCloneSettings.creditCardAccountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                      [options]="accountsPayables"
+                      [placeholder]="'qboCloneSettings.selectAccountsPayablePlaceholder' | transloco"
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="true"
+                      [formControllerName]="'accountsPayable'"
+                      [dropdownDisplayKey]="'name'"
+                      [tooltipText]="'qboCloneSettings.creditCardAccountsPayableTooltip' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }">
                     </app-clone-setting-field>
+                  }
                 </div>
-                <div class="clone-setting--dependent-field" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
-                    <app-clone-setting-field
-                        [form]="importSettingForm"
-                        [options]="importCodeSelectorOptions[DefaultImportFields.ACCOUNT]"
-                        [placeholder]="'qboCloneSettings.selectImportMethodPlaceholder' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()}"
-                        [label]="'qboCloneSettings.howToImportLabel' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName}"
-                        [tooltipText]="'qboCloneSettings.importNamesOrCodesTooltip' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()}"
-                        [isMultiLineOption]="true"
-                        [isFieldMandatory]="true"
-                        [dropdownDisplayKey]="'label'"
-                        [formControllerName]="'importCategoryCode'">
-                    </app-clone-setting-field>
-                </div>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                <app-clone-setting-field
-                    [iconSource]="'arrow-tail-down'"
-                    [label]="'qboCloneSettings.importProductsServicesLabel' | transloco"
-                    [form]="importSettingForm"
-                    [formControllerName]="'importItems'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.importProductsServicesTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
-                <app-clone-setting-field
-                    [iconSource]="'arrow-tail-down'"
-                    [label]="'qboCloneSettings.importTaxLabel' | transloco"
-                    [form]="importSettingForm"
-                    [formControllerName]="'taxCode'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.get('taxCode')?.value">
-                    <app-clone-setting-field *ngIf="importSettingForm.get('importCategories')?.value"
-                        [label]="'qboCloneSettings.selectDefaultTaxCodeLabel' | transloco"
-                        [options]="taxCodes"
-                        [placeholder]="'qboCloneSettings.selectTaxCodePlaceholder' | transloco"
-                        [form]="importSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'defaultTaxCode'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.selectDefaultTaxCodeTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                    </app-clone-setting-field>
-                </div>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isImportMerchantsAllowed">
-                <app-clone-setting-field
-                    [iconSource]="'arrow-tail-down'"
-                    [label]="'qboCloneSettings.importVendorsLabel' | transloco"
-                    [form]="importSettingForm"
-                    [formControllerName]="'importVendorsAsMerchants'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.importVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-
-            <app-configuration-import-field
+              </div>
+            }
+          </div>
+        }
+        @if (exportSettingForm.get('creditCardExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'question-square-outline'"
+              [label]="'qboCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [options]="cccExpenseStateOptions"
+              [placeholder]="'qboCloneSettings.selectCccExpenseStatePlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'cccExpenseState'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.cccExpenseStateTooltip' | transloco">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (exportSettingForm.get('creditCardExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'question-square-outline'"
+              [label]="'qboCloneSettings.howExpensesGroupedLabel' | transloco"
+              [options]="expenseGroupByOptions"
+              [placeholder]="'qboCloneSettings.selectExpenseGroupingPlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'creditCardExportGroup'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.expenseGroupingTooltip' | transloco">
+            </app-clone-setting-field>
+            @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
+              exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+              <app-clone-setting-field
+                [iconSource]="'question-square-outline'"
+                [label]="'qboCloneSettings.howSplitExpensesGroupedLabel' | transloco"
+                [options]="splitExpenseGroupingOptions"
+                [placeholder]="'qboCloneSettings.selectSplitExpenseGroupingPlaceholder' | transloco"
+                [form]="exportSettingForm"
+                [isFieldMandatory]="true"
+                [formControllerName]="'splitExpenseGrouping'"
+                [dropdownDisplayKey]="'label'">
+              </app-clone-setting-field>
+            }
+          </div>
+        }
+        @if (exportSettingForm.get('creditCardExportType')?.value) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'calendar'"
+              [label]="'qboCloneSettings.creditCardExportDateLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+              [options]="cccExpenseGroupingDateOptions"
+              [placeholder]="'qboCloneSettings.selectExportDatePlaceholder' | transloco"
+              [form]="exportSettingForm"
+              [isFieldMandatory]="true"
+              [formControllerName]="'creditCardExportDate'"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.creditCardExportDateTooltip' | transloco">
+            </app-clone-setting-field>
+          </div>
+        }
+      </div>
+      <app-clone-setting-header [headerText]="'qboCloneSettings.importSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.importSettingsSubHeader' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
+      <div class="clone-setting--field-section">
+        <div class="clone-setting--field">
+          <app-clone-setting-field
+            [iconSource]="'arrow-tail-down'"
+            [label]="'qboCloneSettings.importChartOfAccountsLabel' | transloco"
+            [form]="importSettingForm"
+            [formControllerName]="'importCategories'"
+            [inputType]="InputType.TOGGLE"
+            [tooltipText]="'qboCloneSettings.importChartOfAccountsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+          </app-clone-setting-field>
+          @if (importSettingForm.get('importCategories')?.value) {
+            <div class="clone-setting--dependent-field">
+              <app-clone-setting-field
+                [label]="'qboCloneSettings.selectAccountsToImportLabel' | transloco"
+                [options]="chartOfAccountTypesList"
+                [placeholder]="'qboCloneSettings.selectChartOfAccountsPlaceholder' | transloco"
                 [form]="importSettingForm"
-                [appName]="appName"
-                [accountingFieldOptions]="qboFields"
-                [fyleFieldOptions]="fyleFields"
-                [isDestinationFixedImport]="true"
+                [isFieldMandatory]="true"
+                [formControllerName]="'chartOfAccountTypes'"
+                [disabledOption]="'Expense'"
+                [inputType]="InputType.MULTI_SELECT"
+                [tooltipText]="'qboCloneSettings.selectAccountsToImportTooltip' | transloco">
+              </app-clone-setting-field>
+            </div>
+          }
+          @if (brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+            <div class="clone-setting--dependent-field">
+              <app-clone-setting-field
+                [form]="importSettingForm"
+                [options]="importCodeSelectorOptions[DefaultImportFields.ACCOUNT]"
+                [placeholder]="'qboCloneSettings.selectImportMethodPlaceholder' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()}"
+                [label]="'qboCloneSettings.howToImportLabel' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName}"
+                [tooltipText]="'qboCloneSettings.importNamesOrCodesTooltip' | transloco: {fieldName: helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()}"
+                [isMultiLineOption]="true"
+                [isFieldMandatory]="true"
+                [dropdownDisplayKey]="'label'"
+                [formControllerName]="'importCategoryCode'">
+              </app-clone-setting-field>
+            </div>
+          }
+        </div>
+        @if (cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'arrow-tail-down'"
+              [label]="'qboCloneSettings.importProductsServicesLabel' | transloco"
+              [form]="importSettingForm"
+              [formControllerName]="'importItems'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.importProductsServicesTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (isTaxGroupSyncAllowed) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'arrow-tail-down'"
+              [label]="'qboCloneSettings.importTaxLabel' | transloco"
+              [form]="importSettingForm"
+              [formControllerName]="'taxCode'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+            @if (importSettingForm.get('taxCode')?.value) {
+              <div class="clone-setting--dependent-field">
+                @if (importSettingForm.get('importCategories')?.value) {
+                  <app-clone-setting-field
+                    [label]="'qboCloneSettings.selectDefaultTaxCodeLabel' | transloco"
+                    [options]="taxCodes"
+                    [placeholder]="'qboCloneSettings.selectTaxCodePlaceholder' | transloco"
+                    [form]="importSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'defaultTaxCode'"
+                    [dropdownDisplayKey]="'name'"
+                    [tooltipText]="'qboCloneSettings.selectDefaultTaxCodeTooltip' | transloco: { brandName: brandingConfig.brandName }">
+                  </app-clone-setting-field>
+                }
+              </div>
+            }
+          </div>
+        }
+        @if (isImportMerchantsAllowed) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'arrow-tail-down'"
+              [label]="'qboCloneSettings.importVendorsLabel' | transloco"
+              [form]="importSettingForm"
+              [formControllerName]="'importVendorsAsMerchants'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.importVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+          </div>
+        }
+        <app-configuration-import-field
+          [form]="importSettingForm"
+          [appName]="appName"
+          [accountingFieldOptions]="qboFields"
+          [fyleFieldOptions]="fyleFields"
+          [isDestinationFixedImport]="true"
+          [isCloneSettingView]="true">
+        </app-configuration-import-field>
+      </div>
+      <app-clone-setting-header [headerText]="'qboCloneSettings.advancedSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.advancedSettingsSubHeader' | transloco"></app-clone-setting-header>
+      <div class="clone-setting--field-section">
+        <div class="clone-setting--field">
+          <app-clone-setting-field
+            [iconSource]="'calendar'"
+            [label]="'qboCloneSettings.scheduleAutomaticExportLabel' | transloco"
+            [form]="advancedSettingForm"
+            [formControllerName]="'exportSchedule'"
+            [inputType]="InputType.TOGGLE"
+            [tooltipText]="'qboCloneSettings.scheduleAutomaticExportTooltip' | transloco: { brandName: brandingConfig.brandName }">
+          </app-clone-setting-field>
+          @if (advancedSettingForm.get('exportSchedule')?.value) {
+            <div class="clone-setting--dependent-field tw-flex">
+              <app-clone-setting-field class="tw-flex-auto"
+                [label]="'qboCloneSettings.setupExportFrequencyLabel' | transloco"
+                [isFieldMandatory]="true"
+                [options]="scheduleIntervalHours"
+                [form]="advancedSettingForm"
+                [isFieldMandatory]="true"
+                [formControllerName]="'exportScheduleFrequency'"
+                [dropdownDisplayKey]="'label'"
+                [additionalClasses]="'dropdown-size-schedule'"
+                [tooltipText]="'qboCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              </app-clone-setting-field>
+              <div class="tw-ml-16-px">
+                <input type="text" class="tw-border tw-px-12-px tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? ('qboCloneSettings.hours' | transloco) : ('qboCloneSettings.hour' | transloco)">
+              </div>
+            </div>
+          }
+          @if (advancedSettingForm.get('exportSchedule')?.value) {
+            <div class="clone-setting--dependent-field tw-flex tw-justify-between">
+              <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
+                {{ 'qboCloneSettings.sendErrorNotificationToLabel' | transloco }}
+                <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.sendErrorNotificationToTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
+              </p>
+              <app-email-multi-select-field
+                [form]="advancedSettingForm"
+                [appName]="AppName.QBO"
+                [label]="'qboCloneSettings.sendErrorNotificationToLabel' | transloco"
+                [isFieldMandatory]="false"
+                [mandatoryErrorListName]="'qboCloneSettings.emailErrorNotificationError' | transloco"
+                [subLabel]="'qboCloneSettings.sendErrorNotificationToSubLabel' | transloco"
+                [options]="adminEmails"
+                [iconPath]="'list'"
+                [placeholder]="'qboCloneSettings.selectEmailAddressPlaceholder' | transloco"
+                [formControllerName]="'email'"
                 [isCloneSettingView]="true">
-            </app-configuration-import-field>
+              </app-email-multi-select-field>
+            </div>
+          }
         </div>
-
-        <app-clone-setting-header [headerText]="'qboCloneSettings.advancedSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.advancedSettingsSubHeader' | transloco"></app-clone-setting-header>
-        <div class="clone-setting--field-section">
-            <div class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'calendar'"
-                    [label]="'qboCloneSettings.scheduleAutomaticExportLabel' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'exportSchedule'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.scheduleAutomaticExportTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
-                    <app-clone-setting-field class="tw-flex-auto"
-                        [label]="'qboCloneSettings.setupExportFrequencyLabel' | transloco"
-                        [isFieldMandatory]="true"
-                        [options]="scheduleIntervalHours"
-                        [form]="advancedSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'exportScheduleFrequency'"
-                        [dropdownDisplayKey]="'label'"
-                        [additionalClasses]="'dropdown-size-schedule'"
-                        [tooltipText]="'qboCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                    </app-clone-setting-field>
-                    <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border tw-px-12-px tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? ('qboCloneSettings.hours' | transloco) : ('qboCloneSettings.hour' | transloco)">
-                    </div>
-                </div>
-
-                <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.get('exportSchedule')?.value">
-                    <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
-                        {{ 'qboCloneSettings.sendErrorNotificationToLabel' | transloco }}
-                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.sendErrorNotificationToTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
-                    </p>
-                    <app-email-multi-select-field
-                        [form]="advancedSettingForm"
-                        [appName]="AppName.QBO"
-                        [label]="'qboCloneSettings.sendErrorNotificationToLabel' | transloco"
-                        [isFieldMandatory]="false"
-                        [mandatoryErrorListName]="'qboCloneSettings.emailErrorNotificationError' | transloco"
-                        [subLabel]="'qboCloneSettings.sendErrorNotificationToSubLabel' | transloco"
-                        [options]="adminEmails"
-                        [iconPath]="'list'"
-                        [placeholder]="'qboCloneSettings.selectEmailAddressPlaceholder' | transloco"
-                        [formControllerName]="'email'"
-                        [isCloneSettingView]="true">
-                    </app-email-multi-select-field>
-                </div>
-            </div>
-
-            <div class="clone-setting--field">
-                <app-clone-setting-field
-                    [iconSource]="'calendar'"
-                    [label]="'qboCloneSettings.postEntriesCurrentPeriod' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'changeAccountingPeriod'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.postEntriesCurrentPeriodTooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isAutoCreateVendorsFieldVisible()">
-                <app-clone-setting-field
-                    [iconSource]="'user-plus'"
-                    [label]="'qboCloneSettings.autoCreateVendorsLabel' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'autoCreateVendors'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.autoCreateVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isPaymentSyncFieldVisible()">
-                <app-clone-setting-field
-                    [iconSource]="'arrow-rotate'"
-                    [label]="'qboCloneSettings.autoSyncPaymentStatusLabel' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'paymentSync'"
-                    [options]="paymentSyncOptions"
-                    [placeholder]="'qboCloneSettings.selectPaymentSyncPlaceholder' | transloco"
-                    [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'qboCloneSettings.autoSyncPaymentStatusTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-
-                <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo'">
-                    <app-clone-setting-field
-                        [label]="'qboCloneSettings.paymentAccountPostEntriesLabel' | transloco"
-                        [options]="billPaymentAccounts"
-                        [placeholder]="'qboCloneSettings.selectPaymentAccountPlaceholder' | transloco"
-                        [form]="advancedSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'billPaymentAccount'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'qboCloneSettings.paymentAccountPostEntriesTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                    </app-clone-setting-field>
-                </div>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isSingleCreditLineJEFieldVisible()">
-                <app-clone-setting-field
-                    [iconSource]="'list'"
-                    [label]="'qboCloneSettings.singleCreditLineJELabel' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'singleCreditLineJE'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.singleCreditLineJETooltip' | transloco">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field" *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()">
-                <app-clone-setting-field
-                    [iconSource]="'user-plus'"
-                    [label]="'qboCloneSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
-                    [form]="advancedSettingForm"
-                    [formControllerName]="'autoCreateMerchantsAsVendors'"
-                    [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'qboCloneSettings.autoCreateMerchantsAsVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
-                </app-clone-setting-field>
-            </div>
-
-            <div class="clone-setting--field">
-                <div class="tw-flex tw-justify-between">
-                    <div class="tw-flex tw-items-center">
-                        <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
-                        <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
-                            {{ 'qboCloneSettings.setDescriptionFieldLabel' | transloco }}
-                            <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.setDescriptionFieldTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
-                        </p>
-                    </div>
-                    <app-configuration-multi-select
-                        [form]="advancedSettingForm"
-                        [isFieldMandatory]="false"
-                        [mandatoryErrorListName]="'qboCloneSettings.itemLevelDescriptionError' | transloco"
-                        [label]="'qboCloneSettings.setLineItemDescriptionLabel' | transloco"
-                        [subLabel]="'qboCloneSettings.setLineItemDescriptionSubLabel' | transloco"
-                        [options]="defaultMemoOptions"
-                        [iconPath]="'list'"
-                        [placeholder]="'qboCloneSettings.setDescriptionPlaceholder' | transloco"
-                        [formControllerName]="'memoStructure'"
-                        [isCloneSettingView]="true"
-                        (changeInMultiSelect)="onMultiSelectChange()">
-                    </app-configuration-multi-select>
-                </div>
-                <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'qboCloneSettings.previewDescriptionFieldLabel' | transloco }}</h4>
-                    <div class="preview-box">
-                        {{memoPreviewText}}
-                    </div>
-                </div>
-            </div>
+        <div class="clone-setting--field">
+          <app-clone-setting-field
+            [iconSource]="'calendar'"
+            [label]="'qboCloneSettings.postEntriesCurrentPeriod' | transloco"
+            [form]="advancedSettingForm"
+            [formControllerName]="'changeAccountingPeriod'"
+            [inputType]="InputType.TOGGLE"
+            [tooltipText]="'qboCloneSettings.postEntriesCurrentPeriodTooltip' | transloco">
+          </app-clone-setting-field>
         </div>
-        <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!employeeSettingForm.valid || !exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
+        @if (isAutoCreateVendorsFieldVisible()) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'user-plus'"
+              [label]="'qboCloneSettings.autoCreateVendorsLabel' | transloco"
+              [form]="advancedSettingForm"
+              [formControllerName]="'autoCreateVendors'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.autoCreateVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (isPaymentSyncFieldVisible()) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'arrow-rotate'"
+              [label]="'qboCloneSettings.autoSyncPaymentStatusLabel' | transloco"
+              [form]="advancedSettingForm"
+              [formControllerName]="'paymentSync'"
+              [options]="paymentSyncOptions"
+              [placeholder]="'qboCloneSettings.selectPaymentSyncPlaceholder' | transloco"
+              [dropdownDisplayKey]="'label'"
+              [tooltipText]="'qboCloneSettings.autoSyncPaymentStatusTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+            @if (advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo') {
+              <div class="clone-setting--dependent-field">
+                <app-clone-setting-field
+                  [label]="'qboCloneSettings.paymentAccountPostEntriesLabel' | transloco"
+                  [options]="billPaymentAccounts"
+                  [placeholder]="'qboCloneSettings.selectPaymentAccountPlaceholder' | transloco"
+                  [form]="advancedSettingForm"
+                  [isFieldMandatory]="true"
+                  [formControllerName]="'billPaymentAccount'"
+                  [dropdownDisplayKey]="'name'"
+                  [tooltipText]="'qboCloneSettings.paymentAccountPostEntriesTooltip' | transloco: { brandName: brandingConfig.brandName }">
+                </app-clone-setting-field>
+              </div>
+            }
+          </div>
+        }
+        @if (isSingleCreditLineJEFieldVisible()) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'list'"
+              [label]="'qboCloneSettings.singleCreditLineJELabel' | transloco"
+              [form]="advancedSettingForm"
+              [formControllerName]="'singleCreditLineJE'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.singleCreditLineJETooltip' | transloco">
+            </app-clone-setting-field>
+          </div>
+        }
+        @if (isAutoCreateMerchantsAsVendorsFieldVisible()) {
+          <div class="clone-setting--field">
+            <app-clone-setting-field
+              [iconSource]="'user-plus'"
+              [label]="'qboCloneSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+              [form]="advancedSettingForm"
+              [formControllerName]="'autoCreateMerchantsAsVendors'"
+              [inputType]="InputType.TOGGLE"
+              [tooltipText]="'qboCloneSettings.autoCreateMerchantsAsVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            </app-clone-setting-field>
+          </div>
+        }
+        <div class="clone-setting--field">
+          <div class="tw-flex tw-justify-between">
+            <div class="tw-flex tw-items-center">
+              <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
+              <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
+                {{ 'qboCloneSettings.setDescriptionFieldLabel' | transloco }}
+                <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'qboCloneSettings.setDescriptionFieldTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
+              </p>
+            </div>
+            <app-configuration-multi-select
+              [form]="advancedSettingForm"
+              [isFieldMandatory]="false"
+              [mandatoryErrorListName]="'qboCloneSettings.itemLevelDescriptionError' | transloco"
+              [label]="'qboCloneSettings.setLineItemDescriptionLabel' | transloco"
+              [subLabel]="'qboCloneSettings.setLineItemDescriptionSubLabel' | transloco"
+              [options]="defaultMemoOptions"
+              [iconPath]="'list'"
+              [placeholder]="'qboCloneSettings.setDescriptionPlaceholder' | transloco"
+              [formControllerName]="'memoStructure'"
+              [isCloneSettingView]="true"
+              (changeInMultiSelect)="onMultiSelectChange()">
+            </app-configuration-multi-select>
+          </div>
+          <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">
+            <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'qboCloneSettings.previewDescriptionFieldLabel' | transloco }}</h4>
+            <div class="preview-box">
+              {{memoPreviewText}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!employeeSettingForm.valid || !exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
     </div>
+  }
 </div>
 
 <app-configuration-confirmation-dialog
-    (warningAccepted)="acceptWarning($event)"
-    [isWarningVisible]="isWarningDialogVisible"
-    [event]="warningEvent"
-    [headerText]="warningHeaderText"
-    [contextText]="warningContextText"
-    [confirmBtnText]="primaryButtonText"
-    [showSecondaryCTA]="true">
+  (warningAccepted)="acceptWarning($event)"
+  [isWarningVisible]="isWarningDialogVisible"
+  [event]="warningEvent"
+  [headerText]="warningHeaderText"
+  [contextText]="warningContextText"
+  [confirmBtnText]="primaryButtonText"
+  [showSecondaryCTA]="true">
 </app-configuration-confirmation-dialog>
 
 <app-configuration-custom-field-creation-dialog
-    [customFieldForm]="customFieldForm"
-    [showCustomFieldCreationDialog]="showCustomFieldDialog"
-    (saveCustomFieldFn)="saveFyleExpenseField()"
-    (closeModelFn)="closeModel()">
+  [customFieldForm]="customFieldForm"
+  [showCustomFieldCreationDialog]="showCustomFieldDialog"
+  (saveCustomFieldFn)="saveFyleExpenseField()"
+  (closeModelFn)="closeModel()">
 </app-configuration-custom-field-creation-dialog>
 
-<app-preview-dialog *ngIf="isPreviewDialogVisible"
+@if (isPreviewDialogVisible) {
+  <app-preview-dialog
     [isPreviewDialogVisible]="true"
     [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
     [header]="'qboCloneSettings.previewHeader' | transloco">
-</app-preview-dialog>
+  </app-preview-dialog>
+}

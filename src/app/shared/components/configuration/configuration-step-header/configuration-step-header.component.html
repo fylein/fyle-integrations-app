@@ -4,7 +4,7 @@
     <div>
       <span class="tw-flex tw-items-center tw-gap-[6px]">
         <h3 class="tw-text-text-primary tw-font-nav-link-font-weight tw-text-18-px"
-        [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
+          [ngClass]="brandingStyle.configuration.stepHeaderH3Text">
           {{ headerText }}
         </h3>
         @if (headerInfoTooltip) {
@@ -13,44 +13,50 @@
             [class]="'tw-w-14-px tw-h-14-px'"
             [pTooltip]="headerInfoTooltip"
             [tooltipPosition]="'top'"
-          >
+            >
         }
       </span>
       <h5 class="!tw-font-400 tw-text-pretty tw-pt-8-px tw-mr-4-px" [ngClass]="brandingStyle.configuration.stepDescriptionText">
         <span [innerHTML]="contentText"></span>
-        <a *ngIf="redirectLink" [ngClass]="!(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT && contentText === '') ? 'tw-pl-6-px' : ''"
-          class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center"
-          (click)="windowService.openInNewTab(redirectLink)">
-          {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.common.readMoreText' : 'common.readMoreText') | transloco}}
-          <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"
-            [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-          </app-svg-icon>
-        </a>
+        @if (redirectLink) {
+          <a [ngClass]="!(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT && contentText === '') ? 'tw-pl-6-px' : ''"
+            class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center"
+            (click)="windowService.openInNewTab(redirectLink)">
+            {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.common.readMoreText' : 'common.readMoreText') | transloco}}
+            @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+              <app-svg-icon [svgSource]="'open-in-new-tab'"
+                [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+              </app-svg-icon>
+            }
+          </a>
+        }
       </h5>
     </div>
 
     <div>
       @if(showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed){
         @if(brandingFeatureConfig.isDashboardButtonOutlined){
-            <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="refreshDimensions()"  tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }" [isIconLeftSide]="true" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [buttonText]="'configurationStepHeader.syncButtonText' | transloco"></app-button>
-            } @else {
-      <button
-        [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }"
-        (click)="refreshDimensions()" tooltipPosition="bottom"
-        class="tw-py-8-px tw-px-12-px tw-h-32-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-        <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'"
-          [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
-        <span class="tw-text-14-px">
-          {{ 'configurationStepHeader.syncButtonText' | transloco }}
-        </span>
-      </button> } }
+          <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="refreshDimensions()"  tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }" [isIconLeftSide]="true" [iconSize]="'20px'" [svgSource]="'arrow-rotate-sync-medium'" [buttonText]="'configurationStepHeader.syncButtonText' | transloco"></app-button>
+        } @else {
+          <button
+            [pTooltip]="'configurationStepHeader.syncButtonTooltip' | transloco: { appName: appName, brandName: brandingConfig.brandName }"
+            (click)="refreshDimensions()" tooltipPosition="bottom"
+            class="tw-py-8-px tw-px-12-px tw-h-32-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+            @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+              <app-svg-icon [svgSource]="'arrow-rotate-sync'"
+              [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
+            }
+            <span class="tw-text-14-px">
+              {{ 'configurationStepHeader.syncButtonText' | transloco }}
+            </span>
+          </button> } }
 
 
-      @if(!brandingFeatureConfig.isIconsInsideButtonAllowed && showSyncButton){
+          @if(!brandingFeatureConfig.isIconsInsideButtonAllowed && showSyncButton){
             <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" (buttonClick)="refreshDimensions()" tooltipPosition="bottom" [pTooltip]="'configurationStepHeader.refreshDataTooltip' | transloco: { appName: appName }" [buttonText]="'configurationStepHeader.refreshDataButtonText' | transloco"></app-button>
-      }
+          }
 
+        </div>
+
+      </div>
     </div>
-
-  </div>
-</div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
@@ -23,7 +23,7 @@ import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-di
 
 @Component({
     selector: 'app-qbd-direct-dashboard',
-    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+    imports: [RouterModule, SharedModule, TranslocoModule],
     templateUrl: './qbd-direct-dashboard.component.html',
     styleUrl: './qbd-direct-dashboard.component.scss'
 })

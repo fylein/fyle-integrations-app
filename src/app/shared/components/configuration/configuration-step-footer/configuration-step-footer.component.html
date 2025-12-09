@@ -1,28 +1,31 @@
 <div class="tw-flex tw-items-center tw-py-16-px tw-px-24-px" [ngClass]="[!showBackButton || brandingFeatureConfig.footerButtonsRightAligned ? 'tw-justify-end': 'tw-justify-between', brandingFeatureConfig.footerButtonsRightAligned ? 'tw-gap-10-px' : '', !(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? 'tw-border-t tw-border-t-border-tertiary' : '']">
-    <div class="tw-flex" *ngIf="showBackButton">
-        <div>
-            <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT ? 'qbd_direct.configurationStepFooter.back' : 'configurationStepFooter.back') | transloco"></app-button>
-        </div>
-
-        <div class="tw-ml-16-px">
-            @if (!brandingFeatureConfig.isDashboardButtonOutlined && showResetButton) {
-            <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="resetConfiguration()" [disabled]="isButtonDisabled" [buttonText]="'configurationStepFooter.resetConfiguration' | transloco"></app-button>
-            } @else {
-            <button *ngIf="showResetButton" type="button" class="p-button outline-sm" (click)="resetConfiguration()">
-                {{ 'configurationStepFooter.resetConfiguration' | transloco }}
-            </button> 
-            }
-        </div>
+  @if (showBackButton) {
+    <div class="tw-flex">
+      <div>
+        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT ? 'qbd_direct.configurationStepFooter.back' : 'configurationStepFooter.back') | transloco"></app-button>
+      </div>
+      <div class="tw-ml-16-px">
+        @if (!brandingFeatureConfig.isDashboardButtonOutlined && showResetButton) {
+          <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="resetConfiguration()" [disabled]="isButtonDisabled" [buttonText]="'configurationStepFooter.resetConfiguration' | transloco"></app-button>
+        } @else {
+          @if (showResetButton) {
+            <button type="button" class="p-button outline-sm" (click)="resetConfiguration()">
+              {{ 'configurationStepFooter.resetConfiguration' | transloco }}
+            </button>
+          }
+        }
+      </div>
     </div>
+  }
 
-    @if(shouldShowQBDAssistedSetup && brandingFeatureConfig.hasAssistedSetupSupport){
+  @if(shouldShowQBDAssistedSetup && brandingFeatureConfig.hasAssistedSetupSupport){
     <div class="tw-flex tw-w-full tw-self-start">
-        <app-qbd-direct-assisted-setup [interactionType]="qbdDirectInteractionType"></app-qbd-direct-assisted-setup>
+      <app-qbd-direct-assisted-setup [interactionType]="qbdDirectInteractionType"></app-qbd-direct-assisted-setup>
     </div>
-    }
-    
+  }
 
-    <div>
-        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? ButtonType.SECONDARY : ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-button>
-    </div>
+
+  <div>
+    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? ButtonType.SECONDARY : ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-button>
+  </div>
 </div>

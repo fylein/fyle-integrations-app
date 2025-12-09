@@ -1,23 +1,29 @@
 <router-outlet>
 </router-outlet>
 <p-toast position="bottom-center" [baseZIndex]="5000">
-    <ng-template let-message #headless>
-        <div class="{{brandingStyle.toast.class}}" [ngClass]="message.severity === 'success' ? brandingStyle.toast.backgroundClass.success : (message.severity === 'error' ? brandingStyle.toast.backgroundClass.error : brandingStyle.toast.backgroundClass.info)">
-            <div [ngClass]="[brandingStyle.toast.leftIcon.class, message.severity === 'success' ? brandingStyle.toast.leftIcon.background.success : (message.severity === 'error' ? brandingStyle.toast.leftIcon.background.error : brandingStyle.toast.leftIcon.background.info)]">
-                <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'toast-success'" [c1SvgSource]="'grv-checkmark-encircled-success-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-alerts-success-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
-                <app-svg-icon *ngIf="message.severity === 'error'" [svgSource]="'toast-info'" [c1SvgSource]="'grv-caution-triangle-critical-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
-                <app-svg-icon *ngIf="message.severity === 'info'" [svgSource]="'toast-info'" [c1SvgSource]="'grv-info-informational-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
-            </div>
-            
-            <div class="tw-flex-1 tw-text-sm tw-py-12-px" [ngClass]="brandingStyle.toast.message">
-              <div class="tw-font-400 tw-text-14-px">
-                {{ message.summary }}
-              </div>
-            </div>
+  <ng-template let-message #headless>
+    <div class="{{brandingStyle.toast.class}}" [ngClass]="message.severity === 'success' ? brandingStyle.toast.backgroundClass.success : (message.severity === 'error' ? brandingStyle.toast.backgroundClass.error : brandingStyle.toast.backgroundClass.info)">
+      <div [ngClass]="[brandingStyle.toast.leftIcon.class, message.severity === 'success' ? brandingStyle.toast.leftIcon.background.success : (message.severity === 'error' ? brandingStyle.toast.leftIcon.background.error : brandingStyle.toast.leftIcon.background.info)]">
+        @if (message.severity === 'success') {
+          <app-svg-icon [svgSource]="'toast-success'" [c1SvgSource]="'grv-checkmark-encircled-success-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-alerts-success-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+        }
+        @if (message.severity === 'error') {
+          <app-svg-icon [svgSource]="'toast-info'" [c1SvgSource]="'grv-caution-triangle-critical-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
+        }
+        @if (message.severity === 'info') {
+          <app-svg-icon [svgSource]="'toast-info'" [c1SvgSource]="'grv-info-informational-medium'" [width]="brandingStyle.toast.leftIcon.iconSize" [height]="brandingStyle.toast.leftIcon.iconSize" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
+        }
+      </div>
 
-            <div [ngClass]="brandingStyle.toast.close.class">
-                <app-svg-icon (iconClick)="closeToast()" [svgSource]="'toast-cross'" [c1SvgSource]="'cross-medium'" [width]="brandingStyle.toast.close.iconSize" [height]="brandingStyle.toast.close.iconSize" [styleClasses]="brandingStyle.toast.close.iconStyleClasses" [isTextColorAllowed]="true"></app-svg-icon>
-            </div>
+      <div class="tw-flex-1 tw-text-sm tw-py-12-px" [ngClass]="brandingStyle.toast.message">
+        <div class="tw-font-400 tw-text-14-px">
+          {{ message.summary }}
         </div>
-    </ng-template>
+      </div>
+
+      <div [ngClass]="brandingStyle.toast.close.class">
+        <app-svg-icon (iconClick)="closeToast()" [svgSource]="'toast-cross'" [c1SvgSource]="'cross-medium'" [width]="brandingStyle.toast.close.iconSize" [height]="brandingStyle.toast.close.iconSize" [styleClasses]="brandingStyle.toast.close.iconStyleClasses" [isTextColorAllowed]="true"></app-svg-icon>
+      </div>
+    </div>
+  </ng-template>
 </p-toast>

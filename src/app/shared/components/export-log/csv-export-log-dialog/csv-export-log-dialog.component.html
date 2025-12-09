@@ -1,44 +1,46 @@
 <p-dialog
-    [(visible)]="isDialogOpen"
-    [position]="'topright'"
-    [modal]="true" [draggable]="false"
-    [dismissableMask]="false"
-    [closable]="false" 
-    (onHide)="isDialogOpenChange.emit(false)"
-    [style]="{ height: '100vh', width: '800px' }"
->
-    <ng-template #header pTemplate="header">
-        <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
-            <div class="tw-flex tw-flex-col tw-gap-[16px]">
-                <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'csvExportLogDialog.header' | transloco}}</p>
-                <!-- Export log details section -->
-                <div class="tw-flex tw-gap-[16px]">
-                    <div>
-                        <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ 'csvExportLogDialog.expenseType' | transloco }}</h5>
-                        <p class="tw-font-400 !tw-text-14-px tw-text-text-secondary">{{ exportLogService.getExpenseType(exportLog) }}</p>
-                    </div>
-                    <!-- Separator -->
-                    <div class="tw-w-1-px tw-border-l tw-border-border-tertiary tw-my-4-px"></div>
-                    <div>
-                        <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ 'csvExportLogDialog.fileName' | transloco }}</h5>
-                        <a
-                            (click)="downloadFile(exportLog)"
-                            class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[8px] tw-text-14-px tw-font-400"
-                        >
-                            <span style="overflow-wrap: anywhere;">{{ exportLogService.constructFileName(exportLog) }}</span>
-                            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'download-medium'"
-                                [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-                            </app-svg-icon>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="tw-flex tw-self-center">
-                <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
-            </div>
+  [(visible)]="isDialogOpen"
+  [position]="'topright'"
+  [modal]="true" [draggable]="false"
+  [dismissableMask]="false"
+  [closable]="false"
+  (onHide)="isDialogOpenChange.emit(false)"
+  [style]="{ height: '100vh', width: '800px' }"
+  >
+  <ng-template #header pTemplate="header">
+    <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+      <div class="tw-flex tw-flex-col tw-gap-[16px]">
+        <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'csvExportLogDialog.header' | transloco}}</p>
+        <!-- Export log details section -->
+        <div class="tw-flex tw-gap-[16px]">
+          <div>
+            <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ 'csvExportLogDialog.expenseType' | transloco }}</h5>
+            <p class="tw-font-400 !tw-text-14-px tw-text-text-secondary">{{ exportLogService.getExpenseType(exportLog) }}</p>
+          </div>
+          <!-- Separator -->
+          <div class="tw-w-1-px tw-border-l tw-border-border-tertiary tw-my-4-px"></div>
+          <div>
+            <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ 'csvExportLogDialog.fileName' | transloco }}</h5>
+            <a
+              (click)="downloadFile(exportLog)"
+              class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[8px] tw-text-14-px tw-font-400"
+              >
+              <span style="overflow-wrap: anywhere;">{{ exportLogService.constructFileName(exportLog) }}</span>
+              @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                <app-svg-icon [svgSource]="'download-medium'"
+                  [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                </app-svg-icon>
+              }
+            </a>
+          </div>
         </div>
-    </ng-template>
-    <div class="tw-bg-white">
-        <app-csv-expenses-table [expenses]="expenses"></app-csv-expenses-table>
+      </div>
+      <div class="tw-flex tw-self-center">
+        <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+      </div>
     </div>
+  </ng-template>
+  <div class="tw-bg-white">
+    <app-csv-expenses-table [expenses]="expenses"></app-csv-expenses-table>
+  </div>
 </p-dialog>

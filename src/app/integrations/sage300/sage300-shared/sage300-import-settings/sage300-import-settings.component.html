@@ -1,96 +1,105 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
+  </div>
+}
+@if (!isLoading) {
+  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div>
+      <app-configuration-step-header [headerText]="'sage300ImportSettings.headerText' | transloco"
+        [contentText]="'sage300ImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
+        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+        (refreshDimension)="refreshDimensions($event)">
+      </app-configuration-step-header>
+    </div>
+    <div>
+      <form [formGroup]="importSettingForm">
+        <div class="tw-p-24-px">
+          <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+            <div>
+              <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
+                {{ 'sage300ImportSettings.importDimensionsTitle' | transloco }}
+              </h4>
+              <p class="tw-text-14-px tw-text-text-muted">
+                {{ 'sage300ImportSettings.importDimensionsDescription' | transloco:{ brandName: brandingConfig.brandName } }}<a
+                class="link tw-pl-4-px tw-w-fit tw-cursor-pointer"
+              (click)="showPreviewDialog(true)">{{ 'sage300ImportSettings.clickHere' | transloco }}</a>{{ 'sage300ImportSettings.toPreview' | transloco }}
+            </p>
+          </div>
+          <div class="tw-pt-16-px">
+            <app-configuration-info-label
+              [infoText]="'sage300ImportSettings.infoText' | transloco:{ brandName: brandingConfig.brandName }">
+            </app-configuration-info-label>
+          </div>
+        </div>
+        <div>
+          <app-configuration-import-field
+            [form]="importSettingForm"
+            [appName]="appName"
+            [defaultImportFields]="defaultImportFields"
+            [costCategoryOption]="costCategoryOption"
+            [costCodeFieldOption]="costCodeFieldOption"
+            [accountingFieldOptions]="sage300Fields"
+            [fyleFieldOptions]="fyleFields"
+            [dependentImportFields]="dependentImportFields"
+            [redirectLink]="supportArticleLink"
+            [dependantFieldSupportArticleLink]="dependantFieldSupportArticleLink"
+            [commitmentFieldSupportArticleLink]="commitmentFieldSupportArticleLink"
+            [dependentDestinationValue] = "'JOB'"
+            [importCodeFieldConfig] = "sage300ImportCodeFieldCodeConfig"
+            (showWarningForDependentFields)="showWarningForDependentFields()">
+          </app-configuration-import-field>
+        </div>
+      </div>
+      @if (isOnboarding) {
+        <app-configuration-step-footer
+          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [showBackButton] = "isOnboarding"
+          [isButtonDisabled]="!importSettingForm.valid"
+          (navigateToPreviousStep)="navigateBack()"
+          (save)="save()">
+        </app-configuration-step-footer>
+      }
+    </form>
+  </div>
+  <div>
+    <app-configuration-custom-field-creation-dialog
+      [customFieldForm]="customFieldForm"
+      [showCustomFieldCreationDialog]="showCustomFieldDialog"
+      (saveCustomFieldFn)="saveCustomField()"
+      (closeModelFn)="closeModel()">
+    </app-configuration-custom-field-creation-dialog>
+  </div>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
-    <div>
-        <app-configuration-step-header [headerText]="'sage300ImportSettings.headerText' | transloco"
-            [contentText]="'sage300ImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
-            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-            (refreshDimension)="refreshDimensions($event)">
-        </app-configuration-step-header>
-    </div>
-    <div>
-        <form [formGroup]="importSettingForm">
-            <div class="tw-p-24-px">
-                <div class="tw-p-24-px tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
-                    <div>
-                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                            {{ 'sage300ImportSettings.importDimensionsTitle' | transloco }}
-                        </h4>
-                        <p class="tw-text-14-px tw-text-text-muted">
-                            {{ 'sage300ImportSettings.importDimensionsDescription' | transloco:{ brandName: brandingConfig.brandName } }}<a
-                                class="link tw-pl-4-px tw-w-fit tw-cursor-pointer"
-                                (click)="showPreviewDialog(true)">{{ 'sage300ImportSettings.clickHere' | transloco }}</a>{{ 'sage300ImportSettings.toPreview' | transloco }}
-                        </p>
-                    </div>
-                    <div class="tw-pt-16-px">
-                        <app-configuration-info-label
-                            [infoText]="'sage300ImportSettings.infoText' | transloco:{ brandName: brandingConfig.brandName }">
-                        </app-configuration-info-label>
-                    </div>
-                </div>
-                <div>
-                    <app-configuration-import-field
-                        [form]="importSettingForm"
-                        [appName]="appName"
-                        [defaultImportFields]="defaultImportFields"
-                        [costCategoryOption]="costCategoryOption"
-                        [costCodeFieldOption]="costCodeFieldOption"
-                        [accountingFieldOptions]="sage300Fields"
-                        [fyleFieldOptions]="fyleFields"
-                        [dependentImportFields]="dependentImportFields"
-                        [redirectLink]="supportArticleLink"
-                        [dependantFieldSupportArticleLink]="dependantFieldSupportArticleLink"
-                        [commitmentFieldSupportArticleLink]="commitmentFieldSupportArticleLink"
-                        [dependentDestinationValue] = "'JOB'"
-                        [importCodeFieldConfig] = "sage300ImportCodeFieldCodeConfig"
-                        (showWarningForDependentFields)="showWarningForDependentFields()">
-                    </app-configuration-import-field>
-                </div>
-            </div>
-            <app-configuration-step-footer
-                *ngIf="isOnboarding"
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [showBackButton] = "isOnboarding"
-                [isButtonDisabled]="!importSettingForm.valid"
-                (navigateToPreviousStep)="navigateBack()"
-                (save)="save()">
-            </app-configuration-step-footer>
-        </form>
-    </div>
-    <div>
-        <app-configuration-custom-field-creation-dialog
-            [customFieldForm]="customFieldForm"
-            [showCustomFieldCreationDialog]="showCustomFieldDialog"
-            (saveCustomFieldFn)="saveCustomField()"
-            (closeModelFn)="closeModel()">
-        </app-configuration-custom-field-creation-dialog>
-    </div>
-</div>
+}
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [showBackButton] = "isOnboarding"
-        [isButtonDisabled]="!importSettingForm.valid"
-        (navigateToPreviousStep)="navigateBack()"
-        (save)="save()">
+      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [showBackButton] = "isOnboarding"
+      [isButtonDisabled]="!importSettingForm.valid"
+      (navigateToPreviousStep)="navigateBack()"
+      (save)="save()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}
 
 <div>
-    <app-configuration-confirmation-dialog
-        (warningAccepted)="acceptDependentFieldWarning($event)"
-        [isWarningVisible]="showDependentFieldWarning"
-        [headerText]="'sage300ImportSettings.warningHeaderText' | transloco"
-        [contextText]="'sage300ImportSettings.warningContextText' | transloco:{ brandName: brandingConfig.brandName }"
-        [confirmBtnText]="'sage300ImportSettings.continueButton' | transloco">
-    </app-configuration-confirmation-dialog>
+  <app-configuration-confirmation-dialog
+    (warningAccepted)="acceptDependentFieldWarning($event)"
+    [isWarningVisible]="showDependentFieldWarning"
+    [headerText]="'sage300ImportSettings.warningHeaderText' | transloco"
+    [contextText]="'sage300ImportSettings.warningContextText' | transloco:{ brandName: brandingConfig.brandName }"
+    [confirmBtnText]="'sage300ImportSettings.continueButton' | transloco">
+  </app-configuration-confirmation-dialog>
 </div>
-<div *ngIf="isPreviewDialogVisible">
+@if (isPreviewDialogVisible) {
+  <div>
     <app-preview-dialog
-        [isPreviewDialogVisible]="true"
-        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'sage300ImportSettings.previewHeader' | transloco">
+      [isPreviewDialogVisible]="true"
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+      [header]="'sage300ImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
-</div>
+  </div>
+}

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonSize, ButtonType, ClickEvent, Sage50AttributeType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
@@ -12,7 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 
 @Component({
     selector: 'app-configuration-csv-upload-field',
-    imports: [CommonModule, TranslocoModule, SharedModule, CsvUploadButtonComponent],
+    imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
     providers: [DialogService],
     templateUrl: './configuration-csv-upload-field.component.html',
     styleUrl: './configuration-csv-upload-field.component.scss'

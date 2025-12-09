@@ -1,18 +1,22 @@
-<div *ngIf="!isIncorrectXeroConnectedDialogVisible">
+@if (!isIncorrectXeroConnectedDialogVisible) {
+  <div>
     <div>
-        <app-landing-page-header [showXeroButton]="true" [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/xero-logo.png'" [appName]="'xeroOnboardingLanding.appName' | transloco" [appDescription]="'xero.landing.contentText' | transloco: {brandName: brandingConfig.brandName}" [isLoading]="false" [isIntegrationSetupInProgress]="xeroConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'xeroOnboardingLanding.connectButtonText' | transloco" [postConnectionRoute]="'xero/onboarding/connector'" (connectIntegration)="connectXero()"></app-landing-page-header>
+      <app-landing-page-header [showXeroButton]="true" [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/xero-logo.png'" [appName]="'xeroOnboardingLanding.appName' | transloco" [appDescription]="'xero.landing.contentText' | transloco: {brandName: brandingConfig.brandName}" [isLoading]="false" [isIntegrationSetupInProgress]="xeroConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'xeroOnboardingLanding.connectButtonText' | transloco" [postConnectionRoute]="'xero/onboarding/connector'" (connectIntegration)="connectXero()"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="'xero.landing.guideHeaderText' | transloco" [headerText]="'xeroOnboardingLanding.guideHeaderText' | transloco" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() +'-xero-data-flow.svg'" [appName]="appName" [embedVideo]="embedVideoLink"></app-landing-page-body>
+      <app-landing-page-body [headlineText]="'xero.landing.guideHeaderText' | transloco" [headerText]="'xeroOnboardingLanding.guideHeaderText' | transloco" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() +'-xero-data-flow.svg'" [appName]="appName" [embedVideo]="embedVideoLink"></app-landing-page-body>
     </div>
-</div>
+  </div>
+}
 
-<app-configuration-confirmation-dialog *ngIf="isIncorrectXeroConnectedDialogVisible"
+@if (isIncorrectXeroConnectedDialogVisible) {
+  <app-configuration-confirmation-dialog
     (warningAccepted)="acceptWarning($event)"
     [isWarningVisible]="isIncorrectXeroConnectedDialogVisible"
     [headerText]="'xeroOnboardingLanding.incorrectAccountHeader' | transloco"
     [contextText]="'xeroOnboardingLanding.incorrectAccountContext' | transloco"
     [confirmBtnText]="'xeroOnboardingLanding.reconnectButtonText' | transloco"
     [showSecondaryCTA]="false">
-</app-configuration-confirmation-dialog>
+  </app-configuration-confirmation-dialog>
+}
 
