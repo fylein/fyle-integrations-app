@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
@@ -12,6 +12,12 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   @Input() showIcon: boolean = true;
 
+  @Input() showCloseIcon: boolean = false;
+
+  @Input() customClasses: string = '';
+
+  @Output() closeInfoLabel = new EventEmitter<boolean>();
+
   readonly brandingStyle = brandingStyle;
 
   @Input() iconSrc: string;
@@ -21,6 +27,10 @@ export class ConfigurationInfoLabelComponent implements OnInit {
   @Input() customBackgroundColorClass: any;
 
   constructor() { }
+
+  clearSearch() {
+    this.closeInfoLabel.emit(true);
+  }
 
   ngOnInit(): void {
   }

@@ -23,6 +23,6 @@
     
 
     <div>
-    <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? ButtonType.SECONDARY : ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-button>
+        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT && ctaText === ConfigurationCta.NEXT) ? ButtonType.SECONDARY : ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [isLoading]="ctaText === 'Saving' || ctaText === 'Syncing'" (buttonClick)="saveChanges()" [disabled]="isButtonDisabled" [buttonText]="ctaText | sentenceCase" [svgSource]="ctaText !== 'Save' && AppName !== appName.QBD_DIRECT ? 'arrow-tail-right-medium' : ''"></app-button>
     </div>
 </div>

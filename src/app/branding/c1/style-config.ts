@@ -27,6 +27,7 @@ export const c1Styles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-bg-bg-blue',
         infoLabelIcon: 'tw-text-icon-blue',
+        autoSyncPaymentPreviewInfoLabelIcon: 'tw-text-muted',
         infoLabelText: 'tw-text-12-px tw-font-400 tw-self-center tw-text-text-primary',
         infoLabelWarningBackground: 'tw-bg-bg-warning-lighter tw-border-border-warning-lighter',
         infoLabelWarningIcon: 'tw-text-icon-warning',
